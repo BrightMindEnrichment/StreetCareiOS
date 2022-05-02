@@ -14,4 +14,9 @@ class Language {
     static var errorTitle: String {
         return NSLocalizedString("errorTitle", comment: "")
     }
-}
+    
+    static func locString(_ key: String) -> String {
+        return NSLocalizedString(key, comment: "")
+    }
+    
+} // end class

@@ -24,7 +24,7 @@ class LoginViewController: UIViewController {
     
     @IBAction func buttonLogin_touched(_ sender: UIButton) {
         
-        self.presentLoadingViewWithMessage("One moment...", withTimeoutOf: 10) {
+        self.presentLoadingViewWithMessage("One moment...", withTimeoutOf: 30) {
             // if timeout:
             self.presentInformationAlertWithTitle("Oops...", message: "Please try again later.") {
                 self.dismissLoadingView()

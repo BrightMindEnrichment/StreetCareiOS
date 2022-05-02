@@ -11,10 +11,8 @@ import FirebaseAuth
 
 class LandiingViewController: UIViewController {
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        
+    
+    override func viewWillAppear(_ animated: Bool) {
         if let user = Auth.auth().currentUser {
             // user already logged in
             print(user.uid)

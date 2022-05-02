@@ -6,6 +6,19 @@
   
 */
 "errorTitle" = "Oops.";
+"healthySnacks" = "Healthy Snacks";
+"healthySnacksDescription" = "Nonperishable and nutritious snacks such as nuts, pretzels, breakfast bars, applesauce, and dried fruit are best. Try to include items that are easy to chew for individuals without access to dental care. Remember to pack food items separately from any scented sanitary products.";
+"water" = "Water";
+"waterDescription" = "Finding potable water can be difficult for homeless individuals. Bottled water is a great donation item, as is carrying a jug and cups.";
+"firstAid" = "First Aid";
+"firstAidDescription" = "Infection prevention and first aid care are essential, especially for homeless people. Give sealed, clean items like bandages, wipes, ointments, and nail care kits to protect those in need. Avoid alcohol-based products.";
+"personalHygiene" = "Personal Hygiene";
+"personalHygieneDescription" = "Soaps should be fragrance-free, since sensitivities and allergies are common. Make sure hand sanitizers do not contain alcohol. Toothpaste and toothbrushes make practical and useful donation items.";
+"socksClothing" = "Socks & Clothing";
+"socksClothingDescription" = "Clothing items are essential through all seasons, notably warm clothes. Socks are especially crucial. They are affordable, easy to find, and overall great items to include.";
+"feminineHygiene" = "Feminine Hygiene";
+"feminineHygieneDescription" = "Tampons and pads are necessities, and yet something that many families experiencing homelessness struggle to obtain every month. Consider different needs such as heavy, moderate, and light flow.";
+
 //"welcome" = "Welcome to\nStreet Care";
 //"loginButtonTitle" = "Login";
 //"signUpButtonTitle" = "Sign Up";
@@ -37,18 +50,6 @@
 //"essentialResources" = "Essential Resources";
 //"healthTip" = "Click below for shareable wellness, health tips, and printable resources/information";
 //"keyResources":"Key Resources";
-//"healthySnacks" = "Healthy\nSnacks";
-//"healthySnacksDescription" = "Nonperishable and nutritious snacks such as nuts, pretzels, breakfast bars, applesauce, and dried fruit are best. Try to include items that are easy to chew for individuals without access to dental care. Remember to pack food items separately from any scented sanitary products.";
-//"water" = "Water";
-//"waterDescription" = "Finding potable water can be difficult for homeless individuals. Bottled water is a great donation item, as is carrying a jug and cups.";
-//"firstAid" = "First Aid";
-//"firstAidDescription" = "Infection prevention and first aid care are essential, especially for homeless people. Give sealed, clean items like bandages, wipes, ointments, and nail care kits to protect those in need. Avoid alcohol-based products.";
-//"personalHygiene" = "Personal\nHygiene";
-//"personalHygieneDescription" = "Soaps should be fragrance-free, since sensitivities and allergies are common. Make sure hand sanitizers do not contain alcohol. Toothpaste and toothbrushes make practical and useful donation items.";
-//"socksClothing" = "Socks &\nClothing";
-//"socksClothingDescription" = "Clothing items are essential through all seasons, notably warm clothes. Socks are especially crucial. They are affordable, easy to find, and overall great items to include.";
-//"feminineHygiene" = "Feminine\nHygiene";
-//"feminineHygieneDescription" = "Tampons and pads are necessities, and yet something that many families experiencing homelessness struggle to obtain every month. Consider different needs such as heavy, moderate, and light flow.";
 //
 //
 //"wouldYouLikeToLogYourVisit" = "Would you like to Log Your Visit?";

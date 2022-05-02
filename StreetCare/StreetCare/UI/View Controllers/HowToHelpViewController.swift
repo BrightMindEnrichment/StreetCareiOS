@@ -25,6 +25,15 @@ class HowToHelpViewController: UIViewController {
     
 
 
+    override func viewWillAppear(_ animated: Bool) {
+        
+        if let indexPath = tableView.indexPathForSelectedRow {
+            tableView.deselectRow(at: indexPath, animated: true)
+        }
+    }
+    
+    
+    
     override func viewDidDisappear(_ animated: Bool) {
         timer?.invalidate()
     }
@@ -98,11 +107,13 @@ extension HowToHelpViewController: UITableViewDelegate, UITableViewDataSource {
         case 0:
             return
         case 1:
-            return
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            if let vc = storyboard.instantiateViewController(withIdentifier: "FeaturedItemViewController") as? FeaturedItemViewController {
+                self.navigationController?.pushViewController(vc, animated: true)
+            }
         case 2:
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            if let vc = storyboard.instantiateViewController(withIdentifier: "YouTubeViewController") as? YouTubeViewController {
-                vc.playlistId = "PLh7GZtyt8qiLKwO_WoE0Vmcu6UMV1AtV9"
+            if let vc = storyboard.instantiateViewController(withIdentifier: "PlaylistsViewController") as? PlaylistsViewController {
                 self.navigationController?.pushViewController(vc, animated: true)
             }
         default:

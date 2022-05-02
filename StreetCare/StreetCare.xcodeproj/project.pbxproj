@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		BEA136F4281C67AC00D60856 /* HowToHelpTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA136F3281C67AC00D60856 /* HowToHelpTableViewCell.swift */; };
-		BEA136F8281C899C00D60856 /* categories.json in Resources */ = {isa = PBXBuildFile; fileRef = BEA136F7281C899B00D60856 /* categories.json */; };
+		BEA136F8281C899C00D60856 /* playlists.json in Resources */ = {isa = PBXBuildFile; fileRef = BEA136F7281C899B00D60856 /* playlists.json */; };
 		BEA136FC281C89B700D60856 /* VideoInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA136F9281C89B700D60856 /* VideoInformation.swift */; };
 		BEA136FD281C89B700D60856 /* PageInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA136FA281C89B700D60856 /* PageInfo.swift */; };
 		BEA136FE281C89B700D60856 /* Playlist.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA136FB281C89B700D60856 /* Playlist.swift */; };
@@ -19,6 +19,16 @@
 		BEA13709281C8C3800D60856 /* SafeNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA13707281C8C3800D60856 /* SafeNetwork.swift */; };
 		BEA1370A281C8C3800D60856 /* Endpoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA13708281C8C3800D60856 /* Endpoints.swift */; };
 		BEA1370C281C8C5B00D60856 /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA1370B281C8C5B00D60856 /* Log.swift */; };
+		BEA1370E2820589300D60856 /* PlaylistsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA1370D2820589300D60856 /* PlaylistsViewController.swift */; };
+		BEA13711282059DF00D60856 /* InformationCategoryController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA1370F282059DF00D60856 /* InformationCategoryController.swift */; };
+		BEA13712282059DF00D60856 /* InformationCategory.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA13710282059DF00D60856 /* InformationCategory.swift */; };
+		BEA1371428205A0400D60856 /* FileDataAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA1371328205A0400D60856 /* FileDataAdapter.swift */; };
+		BEA1371828205FF900D60856 /* FeaturedItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA1371728205FF900D60856 /* FeaturedItem.swift */; };
+		BEA1371A2820605100D60856 /* FeaturedItemController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA137192820605100D60856 /* FeaturedItemController.swift */; };
+		BEA1371C2820615300D60856 /* FeaturedItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA1371B2820615300D60856 /* FeaturedItemViewController.swift */; };
+		BEA1371D2820636400D60856 /* what_to_give.json in Resources */ = {isa = PBXBuildFile; fileRef = BEA1371528205F3A00D60856 /* what_to_give.json */; };
+		BEA1371F28206CB900D60856 /* InfoSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA1371E28206CB900D60856 /* InfoSheetViewController.swift */; };
+		BEA137212820728E00D60856 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA137202820728D00D60856 /* ProfileViewController.swift */; };
 		BEA9F947281C4E0500C4BCDF /* UIWindowExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA9F946281C4E0500C4BCDF /* UIWindowExtension.swift */; };
 		BEA9F949281C50DB00C4BCDF /* HowToHelpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA9F948281C50DB00C4BCDF /* HowToHelpViewController.swift */; };
 		BEAD2169281B137700DC8A8D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEAD2168281B137700DC8A8D /* AppDelegate.swift */; };
@@ -42,7 +52,7 @@
 
 /* Begin PBXFileReference section */
 		BEA136F3281C67AC00D60856 /* HowToHelpTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HowToHelpTableViewCell.swift; sourceTree = "<group>"; };
-		BEA136F7281C899B00D60856 /* categories.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = categories.json; sourceTree = "<group>"; };
+		BEA136F7281C899B00D60856 /* playlists.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = playlists.json; sourceTree = "<group>"; };
 		BEA136F9281C89B700D60856 /* VideoInformation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoInformation.swift; sourceTree = "<group>"; };
 		BEA136FA281C89B700D60856 /* PageInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PageInfo.swift; sourceTree = "<group>"; };
 		BEA136FB281C89B700D60856 /* Playlist.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Playlist.swift; sourceTree = "<group>"; };
@@ -53,6 +63,16 @@
 		BEA13707281C8C3800D60856 /* SafeNetwork.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SafeNetwork.swift; sourceTree = "<group>"; };
 		BEA13708281C8C3800D60856 /* Endpoints.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Endpoints.swift; sourceTree = "<group>"; };
 		BEA1370B281C8C5B00D60856 /* Log.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
+		BEA1370D2820589300D60856 /* PlaylistsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaylistsViewController.swift; sourceTree = "<group>"; };
+		BEA1370F282059DF00D60856 /* InformationCategoryController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InformationCategoryController.swift; sourceTree = "<group>"; };
+		BEA13710282059DF00D60856 /* InformationCategory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InformationCategory.swift; sourceTree = "<group>"; };
+		BEA1371328205A0400D60856 /* FileDataAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FileDataAdapter.swift; sourceTree = "<group>"; };
+		BEA1371528205F3A00D60856 /* what_to_give.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = what_to_give.json; sourceTree = "<group>"; };
+		BEA1371728205FF900D60856 /* FeaturedItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeaturedItem.swift; sourceTree = "<group>"; };
+		BEA137192820605100D60856 /* FeaturedItemController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeaturedItemController.swift; sourceTree = "<group>"; };
+		BEA1371B2820615300D60856 /* FeaturedItemViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeaturedItemViewController.swift; sourceTree = "<group>"; };
+		BEA1371E28206CB900D60856 /* InfoSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoSheetViewController.swift; sourceTree = "<group>"; };
+		BEA137202820728D00D60856 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		BEA9F946281C4E0500C4BCDF /* UIWindowExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIWindowExtension.swift; sourceTree = "<group>"; };
 		BEA9F948281C50DB00C4BCDF /* HowToHelpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HowToHelpViewController.swift; sourceTree = "<group>"; };
 		BEAD2165281B137700DC8A8D /* StreetCare.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StreetCare.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -102,6 +122,9 @@
 		BEA136F5281C893E00D60856 /* Video */ = {
 			isa = PBXGroup;
 			children = (
+				BEA1371328205A0400D60856 /* FileDataAdapter.swift */,
+				BEA13710282059DF00D60856 /* InformationCategory.swift */,
+				BEA1370F282059DF00D60856 /* InformationCategoryController.swift */,
 				BEA13708281C8C3800D60856 /* Endpoints.swift */,
 				BEA13707281C8C3800D60856 /* SafeNetwork.swift */,
 				BEA13703281C8B3900D60856 /* PlaylistController.swift */,
@@ -115,9 +138,19 @@
 		BEA136F6281C895200D60856 /* Data */ = {
 			isa = PBXGroup;
 			children = (
-				BEA136F7281C899B00D60856 /* categories.json */,
+				BEA136F7281C899B00D60856 /* playlists.json */,
+				BEA1371528205F3A00D60856 /* what_to_give.json */,
 			);
 			path = Data;
+			sourceTree = "<group>";
+		};
+		BEA1371628205FE500D60856 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				BEA1371728205FF900D60856 /* FeaturedItem.swift */,
+				BEA137192820605100D60856 /* FeaturedItemController.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 		BEAD215C281B137700DC8A8D = {
@@ -140,6 +173,7 @@
 		BEAD2167281B137700DC8A8D /* StreetCare */ = {
 			isa = PBXGroup;
 			children = (
+				BEA1371628205FE500D60856 /* Model */,
 				BEA136F6281C895200D60856 /* Data */,
 				BEAD2180281B25B300DC8A8D /* GoogleService-Info.plist */,
 				BEA136F5281C893E00D60856 /* Video */,
@@ -168,12 +202,16 @@
 		BEAD217D281B139400DC8A8D /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				BEA1370D2820589300D60856 /* PlaylistsViewController.swift */,
 				BEAD217E281B13BA00DC8A8D /* LandiingViewController.swift */,
 				BEAD2187281B29A900DC8A8D /* SignupViewController.swift */,
 				BEAD2192281C1C6400DC8A8D /* LoginViewController.swift */,
 				BEAD2194281C2B8A00DC8A8D /* ForgotPasswordViewController.swift */,
 				BEA9F948281C50DB00C4BCDF /* HowToHelpViewController.swift */,
 				BEA13701281C8ACE00D60856 /* YouTubeViewController.swift */,
+				BEA1371B2820615300D60856 /* FeaturedItemViewController.swift */,
+				BEA1371E28206CB900D60856 /* InfoSheetViewController.swift */,
+				BEA137202820728D00D60856 /* ProfileViewController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -265,8 +303,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BEA1371D2820636400D60856 /* what_to_give.json in Resources */,
 				BEAD219A281C328500DC8A8D /* Localizable.strings in Resources */,
-				BEA136F8281C899C00D60856 /* categories.json in Resources */,
+				BEA136F8281C899C00D60856 /* playlists.json in Resources */,
 				BEAD2175281B137900DC8A8D /* LaunchScreen.storyboard in Resources */,
 				BEAD2181281B25B300DC8A8D /* GoogleService-Info.plist in Resources */,
 				BEAD2172281B137900DC8A8D /* Assets.xcassets in Resources */,
@@ -290,18 +329,27 @@
 				BEAD219F281C36FE00DC8A8D /* Language.swift in Sources */,
 				BEAD2169281B137700DC8A8D /* AppDelegate.swift in Sources */,
 				BEA13706281C8C0200D60856 /* Extensions.swift in Sources */,
+				BEA13712282059DF00D60856 /* InformationCategory.swift in Sources */,
+				BEA1371F28206CB900D60856 /* InfoSheetViewController.swift in Sources */,
 				BEAD218F281C16D300DC8A8D /* UIViewControllerExtensions.swift in Sources */,
+				BEA137212820728E00D60856 /* ProfileViewController.swift in Sources */,
+				BEA1371428205A0400D60856 /* FileDataAdapter.swift in Sources */,
 				BEAD2188281B29A900DC8A8D /* SignupViewController.swift in Sources */,
 				BEA1370A281C8C3800D60856 /* Endpoints.swift in Sources */,
+				BEA1371A2820605100D60856 /* FeaturedItemController.swift in Sources */,
+				BEA1371828205FF900D60856 /* FeaturedItem.swift in Sources */,
 				BEA136FC281C89B700D60856 /* VideoInformation.swift in Sources */,
 				BEA13702281C8ACE00D60856 /* YouTubeViewController.swift in Sources */,
 				BEA136F4281C67AC00D60856 /* HowToHelpTableViewCell.swift in Sources */,
 				BEA13709281C8C3800D60856 /* SafeNetwork.swift in Sources */,
+				BEA1371C2820615300D60856 /* FeaturedItemViewController.swift in Sources */,
 				BEAD216B281B137700DC8A8D /* SceneDelegate.swift in Sources */,
 				BEA9F949281C50DB00C4BCDF /* HowToHelpViewController.swift in Sources */,
 				BEA13700281C8A4900D60856 /* VideoTableViewCell.swift in Sources */,
 				BEAD2191281C171900DC8A8D /* LoadingView.swift in Sources */,
 				BEA136FE281C89B700D60856 /* Playlist.swift in Sources */,
+				BEA1370E2820589300D60856 /* PlaylistsViewController.swift in Sources */,
+				BEA13711282059DF00D60856 /* InformationCategoryController.swift in Sources */,
 				BEA13704281C8B3900D60856 /* PlaylistController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
