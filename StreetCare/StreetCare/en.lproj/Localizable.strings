@@ -18,6 +18,14 @@
 "socksClothingDescription" = "Clothing items are essential through all seasons, notably warm clothes. Socks are especially crucial. They are affordable, easy to find, and overall great items to include.";
 "feminineHygiene" = "Feminine Hygiene";
 "feminineHygieneDescription" = "Tampons and pads are necessities, and yet something that many families experiencing homelessness struggle to obtain every month. Consider different needs such as heavy, moderate, and light flow.";
+"whereWillVisitPrompt" = "Where will be your visit?";
+"enterLocation" = "Enter location";
+"whenWasVisitPrompt" = "When was your visit?";
+"hoursSpentPrompt" = "Hours spent on outreach?";
+"canOutreachAgainPrompt" = "Can you perform outreach again?";
+"peopleCountPrompt" = "How many people joined you or helped you prepare?";
+"rateExperiencePrompt" = "Rate your outreach experience.";
+"questionsOrComments" = "Questions or comments?";
 
 //"welcome" = "Welcome to\nStreet Care";
 //"loginButtonTitle" = "Login";

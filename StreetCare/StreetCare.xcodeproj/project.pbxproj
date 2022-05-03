@@ -29,6 +29,9 @@
 		BEA1371D2820636400D60856 /* what_to_give.json in Resources */ = {isa = PBXBuildFile; fileRef = BEA1371528205F3A00D60856 /* what_to_give.json */; };
 		BEA1371F28206CB900D60856 /* InfoSheetViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA1371E28206CB900D60856 /* InfoSheetViewController.swift */; };
 		BEA137212820728E00D60856 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA137202820728D00D60856 /* ProfileViewController.swift */; };
+		BEA137232821978600D60856 /* VisitLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA137222821978600D60856 /* VisitLog.swift */; };
+		BEA137252821983100D60856 /* LogVisitViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA137242821983100D60856 /* LogVisitViewController.swift */; };
+		BEA137272821999C00D60856 /* DataCollectionDefinition.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA137262821999C00D60856 /* DataCollectionDefinition.swift */; };
 		BEA9F947281C4E0500C4BCDF /* UIWindowExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA9F946281C4E0500C4BCDF /* UIWindowExtension.swift */; };
 		BEA9F949281C50DB00C4BCDF /* HowToHelpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA9F948281C50DB00C4BCDF /* HowToHelpViewController.swift */; };
 		BEAD2169281B137700DC8A8D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEAD2168281B137700DC8A8D /* AppDelegate.swift */; };
@@ -48,6 +51,8 @@
 		BEAD2195281C2B8A00DC8A8D /* ForgotPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEAD2194281C2B8A00DC8A8D /* ForgotPasswordViewController.swift */; };
 		BEAD219A281C328500DC8A8D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = BEAD219C281C328500DC8A8D /* Localizable.strings */; };
 		BEAD219F281C36FE00DC8A8D /* Language.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEAD219E281C36FE00DC8A8D /* Language.swift */; };
+		BECBF2F42821AF6C0051C1E3 /* LogVisitController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BECBF2F32821AF6C0051C1E3 /* LogVisitController.swift */; };
+		BECBF2F62821B32A0051C1E3 /* DataCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BECBF2F52821B32A0051C1E3 /* DataCollectionViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -73,6 +78,9 @@
 		BEA1371B2820615300D60856 /* FeaturedItemViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeaturedItemViewController.swift; sourceTree = "<group>"; };
 		BEA1371E28206CB900D60856 /* InfoSheetViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoSheetViewController.swift; sourceTree = "<group>"; };
 		BEA137202820728D00D60856 /* ProfileViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
+		BEA137222821978600D60856 /* VisitLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisitLog.swift; sourceTree = "<group>"; };
+		BEA137242821983100D60856 /* LogVisitViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogVisitViewController.swift; sourceTree = "<group>"; };
+		BEA137262821999C00D60856 /* DataCollectionDefinition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataCollectionDefinition.swift; sourceTree = "<group>"; };
 		BEA9F946281C4E0500C4BCDF /* UIWindowExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIWindowExtension.swift; sourceTree = "<group>"; };
 		BEA9F948281C50DB00C4BCDF /* HowToHelpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HowToHelpViewController.swift; sourceTree = "<group>"; };
 		BEAD2165281B137700DC8A8D /* StreetCare.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StreetCare.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -94,6 +102,8 @@
 		BEAD219B281C328500DC8A8D /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		BEAD219D281C329400DC8A8D /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
 		BEAD219E281C36FE00DC8A8D /* Language.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Language.swift; sourceTree = "<group>"; };
+		BECBF2F32821AF6C0051C1E3 /* LogVisitController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogVisitController.swift; sourceTree = "<group>"; };
+		BECBF2F52821B32A0051C1E3 /* DataCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataCollectionViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -149,6 +159,9 @@
 			children = (
 				BEA1371728205FF900D60856 /* FeaturedItem.swift */,
 				BEA137192820605100D60856 /* FeaturedItemController.swift */,
+				BEA137222821978600D60856 /* VisitLog.swift */,
+				BEA137262821999C00D60856 /* DataCollectionDefinition.swift */,
+				BECBF2F32821AF6C0051C1E3 /* LogVisitController.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -212,6 +225,8 @@
 				BEA1371B2820615300D60856 /* FeaturedItemViewController.swift */,
 				BEA1371E28206CB900D60856 /* InfoSheetViewController.swift */,
 				BEA137202820728D00D60856 /* ProfileViewController.swift */,
+				BEA137242821983100D60856 /* LogVisitViewController.swift */,
+				BECBF2F52821B32A0051C1E3 /* DataCollectionViewController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -326,6 +341,7 @@
 				BEA9F947281C4E0500C4BCDF /* UIWindowExtension.swift in Sources */,
 				BEAD2193281C1C6400DC8A8D /* LoginViewController.swift in Sources */,
 				BEAD217F281B13BA00DC8A8D /* LandiingViewController.swift in Sources */,
+				BECBF2F62821B32A0051C1E3 /* DataCollectionViewController.swift in Sources */,
 				BEAD219F281C36FE00DC8A8D /* Language.swift in Sources */,
 				BEAD2169281B137700DC8A8D /* AppDelegate.swift in Sources */,
 				BEA13706281C8C0200D60856 /* Extensions.swift in Sources */,
@@ -333,6 +349,8 @@
 				BEA1371F28206CB900D60856 /* InfoSheetViewController.swift in Sources */,
 				BEAD218F281C16D300DC8A8D /* UIViewControllerExtensions.swift in Sources */,
 				BEA137212820728E00D60856 /* ProfileViewController.swift in Sources */,
+				BECBF2F42821AF6C0051C1E3 /* LogVisitController.swift in Sources */,
+				BEA137252821983100D60856 /* LogVisitViewController.swift in Sources */,
 				BEA1371428205A0400D60856 /* FileDataAdapter.swift in Sources */,
 				BEAD2188281B29A900DC8A8D /* SignupViewController.swift in Sources */,
 				BEA1370A281C8C3800D60856 /* Endpoints.swift in Sources */,
@@ -346,6 +364,8 @@
 				BEAD216B281B137700DC8A8D /* SceneDelegate.swift in Sources */,
 				BEA9F949281C50DB00C4BCDF /* HowToHelpViewController.swift in Sources */,
 				BEA13700281C8A4900D60856 /* VideoTableViewCell.swift in Sources */,
+				BEA137232821978600D60856 /* VisitLog.swift in Sources */,
+				BEA137272821999C00D60856 /* DataCollectionDefinition.swift in Sources */,
 				BEAD2191281C171900DC8A8D /* LoadingView.swift in Sources */,
 				BEA136FE281C89B700D60856 /* Playlist.swift in Sources */,
 				BEA1370E2820589300D60856 /* PlaylistsViewController.swift in Sources */,

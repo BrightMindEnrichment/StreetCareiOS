@@ -19,6 +19,14 @@
 "socksClothingDescription" = "Las prendas de vestir son imprescindibles en todas las estaciones, especialmente la ropa de abrigo. Los calcetines son especialmente importantes. Son artículos asequibles, fáciles de encontrar y, en general, excelentes para incluir.";
 "feminineHygiene" = "Higiene femenina";
 "feminineHygieneDescription" = "Los tampones y las toallas sanitarias son una necesidad y, sin embargo, algo que muchas familias sin hogar luchan por obtener todos los meses. Considere diferentes necesidades, como flujo pesado, moderado y ligero.";
+"whereWillVisitPrompt" = "¿Dónde será tu visita?";
+"whenWasVisitPrompt" = "¿Cuándo fue tu visita?";
+"hoursSpentPrompt" = "¿Horas dedicadas a la divulgación?";
+"canOutreachAgainPrompt" = "¿Puede realizar la divulgación de nuevo?";
+"peopleCountPrompt" = "¿Cuántas personas te acompañaron o te ayudaron a prepararte?";
+"rateExperiencePrompt" = "Califica tu experiencia de alcance";
+"questionsOrComments" = "Preguntas o comentarios";
+
 //"helloWorld" = "¡Hola Mundo!";
 //"welcome" = "Bienvenido a\nStreet Care";
 //"loginButtonTitle" = "Acceso";
@@ -58,11 +66,11 @@
 //"logYourVisit" = "Registre su visita";
 //
 //"beforeOutreachIntro" = "Complete todo lo que pueda de este formulario de planificación. Esto también nos permite obtener más apoyo y recursos, para brindarle más contenido y servicios a usted y a los que están en la calle.";
-//"beforeOutreachA" = "¿Dónde será tu visita?";
+//"whereWillVisit" = "¿Dónde será tu visita?";
 //"beforeOutreachB" = "¿Cuándo será tu visita?";
 //"afterOutreachIntro" = "Complete este formulario cada vez que salga. ¡Esto nos ayuda a construir Street Care, para brindarle más servicios a usted y a la comunidad!";
 //"afterOutreachA" = "¿Dónde fue tu visita?";
-//"afterOutreachB" = "¿Cuándo fue tu visita?";
+//"whenWasVisit" = "¿Cuándo fue tu visita?";
 //"step1of4" = "Paso 1 de 4";
 //
 //"beforeOutreachAStep2" = "¿Horas que se dedicarán a la divulgación?";
