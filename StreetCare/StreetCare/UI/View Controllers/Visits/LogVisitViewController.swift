@@ -13,36 +13,57 @@ class LogVisitViewController: UIViewController {
     
     var controller = LogVisitController()
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
     }
     
-
+    
+    
+    override func viewWillAppear(_ animated: Bool) {
+        tableView.reloadData()
+    }
+    
+    
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
         if let indexPath = tableView.indexPathForSelectedRow {
             
             let definition = controller.definitionForIndex(indexPath.row)
 
             if let vc = segue.destination as? DataCollectionViewController {
                 vc.def = definition
+                vc.onSave = controller.saveClosureForIndex(indexPath.row)
             }
         }
     }
     
-
+    
+    
+    @IBAction func buttonSave_touched(_ sender: Any) {
+    
+        controller.save()
+        self.navigationController?.popToRootViewController(animated: true)
+    }
+    
+    
 } // end class
 
 
 
 extension LogVisitViewController: UITableViewDelegate, UITableViewDataSource {
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return controller.count
     }
     
+    
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "logVisitCellView") else {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "visitLogDataCollectionCell") else {
             preconditionFailure()
         }
 

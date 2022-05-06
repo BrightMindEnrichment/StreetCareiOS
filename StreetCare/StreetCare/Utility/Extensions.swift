@@ -30,3 +30,12 @@ extension UIImageView {
         downloaded(from: url, contentMode: mode)
     }
 } // end extension
+
+
+
+public extension Array {
+    
+    func isValidIndex(_ index: Int) -> Bool {
+        return index >= 0 && index < self.count
+    }
+} // end extension

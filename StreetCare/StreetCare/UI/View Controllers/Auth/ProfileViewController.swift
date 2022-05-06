@@ -40,7 +40,7 @@ class ProfileViewController: UIViewController {
 
 
     @IBAction func buttonSignOut_touched(_ sender: Any) {
-        
+                
         if let _ = Auth.auth().currentUser {
             do {
                 try Auth.auth().signOut()
@@ -71,17 +71,26 @@ class ProfileViewController: UIViewController {
                         }
                     }
                 }
-            }
-            
+            }            
             
             buttonLogin.isUserInteractionEnabled = false
+            buttonLogin.isHidden = true
+            
             buttonSignUp.isUserInteractionEnabled = false
+            buttonSignUp.isHidden = true
+            
             buttonSignOut.isUserInteractionEnabled = true
+            buttonSignOut.isHidden = false
         }
         else {
             buttonLogin.isUserInteractionEnabled = true
+            buttonLogin.isHidden = false
+            
             buttonSignUp.isUserInteractionEnabled = true
+            buttonSignUp.isHidden = false
+            
             buttonSignOut.isUserInteractionEnabled = false
+            buttonSignOut.isHidden = true
         }
     }
     

@@ -11,10 +11,13 @@ import Foundation
 class VisitLog {
     
     var location: String?
-    var date: Date?
+    var date = Date()
     var hours: Int?
     var visitAgain: String?
     var peopleCount: Int?
-    var experience: Int?
+    var experience: String?
     var comments: String?
+    
 } // end class
+
+

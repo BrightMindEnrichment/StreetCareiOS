@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BE6A214028243D9500D7B473 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE6A213F28243D9500D7B473 /* Event.swift */; };
+		BE6A21422824450400D7B473 /* EventDataAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE6A21412824450400D7B473 /* EventDataAdapter.swift */; };
+		BE6A214428244CB900D7B473 /* EventsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE6A214328244CB900D7B473 /* EventsController.swift */; };
+		BE6A214728244F7B00D7B473 /* EventTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE6A214628244F7A00D7B473 /* EventTableViewCell.swift */; };
+		BE6A214928245A7600D7B473 /* EventsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE6A214828245A7600D7B473 /* EventsTableViewController.swift */; };
+		BE6A214C2825745000D7B473 /* VisitLogDataAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE6A214B2825745000D7B473 /* VisitLogDataAdapter.swift */; };
+		BE6A214E2825773900D7B473 /* VisitLogTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE6A214D2825773900D7B473 /* VisitLogTableViewCell.swift */; };
 		BEA136F4281C67AC00D60856 /* HowToHelpTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA136F3281C67AC00D60856 /* HowToHelpTableViewCell.swift */; };
 		BEA136F8281C899C00D60856 /* playlists.json in Resources */ = {isa = PBXBuildFile; fileRef = BEA136F7281C899B00D60856 /* playlists.json */; };
 		BEA136FC281C89B700D60856 /* VideoInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA136F9281C89B700D60856 /* VideoInformation.swift */; };
@@ -53,9 +60,19 @@
 		BEAD219F281C36FE00DC8A8D /* Language.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEAD219E281C36FE00DC8A8D /* Language.swift */; };
 		BECBF2F42821AF6C0051C1E3 /* LogVisitController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BECBF2F32821AF6C0051C1E3 /* LogVisitController.swift */; };
 		BECBF2F62821B32A0051C1E3 /* DataCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BECBF2F52821B32A0051C1E3 /* DataCollectionViewController.swift */; };
+		BECBF2FC2822E6D10051C1E3 /* WebViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BECBF2FB2822E6D00051C1E3 /* WebViewController.swift */; };
+		BECBF2FE2822FFED0051C1E3 /* VisitLogTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BECBF2FD2822FFEC0051C1E3 /* VisitLogTableViewController.swift */; };
+		BECBF300282300F90051C1E3 /* VisitLogController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BECBF2FF282300F90051C1E3 /* VisitLogController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		BE6A213F28243D9500D7B473 /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
+		BE6A21412824450400D7B473 /* EventDataAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDataAdapter.swift; sourceTree = "<group>"; };
+		BE6A214328244CB900D7B473 /* EventsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsController.swift; sourceTree = "<group>"; };
+		BE6A214628244F7A00D7B473 /* EventTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventTableViewCell.swift; sourceTree = "<group>"; };
+		BE6A214828245A7600D7B473 /* EventsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsTableViewController.swift; sourceTree = "<group>"; };
+		BE6A214B2825745000D7B473 /* VisitLogDataAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisitLogDataAdapter.swift; sourceTree = "<group>"; };
+		BE6A214D2825773900D7B473 /* VisitLogTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisitLogTableViewCell.swift; sourceTree = "<group>"; };
 		BEA136F3281C67AC00D60856 /* HowToHelpTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HowToHelpTableViewCell.swift; sourceTree = "<group>"; };
 		BEA136F7281C899B00D60856 /* playlists.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = playlists.json; sourceTree = "<group>"; };
 		BEA136F9281C89B700D60856 /* VideoInformation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoInformation.swift; sourceTree = "<group>"; };
@@ -104,6 +121,9 @@
 		BEAD219E281C36FE00DC8A8D /* Language.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Language.swift; sourceTree = "<group>"; };
 		BECBF2F32821AF6C0051C1E3 /* LogVisitController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogVisitController.swift; sourceTree = "<group>"; };
 		BECBF2F52821B32A0051C1E3 /* DataCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataCollectionViewController.swift; sourceTree = "<group>"; };
+		BECBF2FB2822E6D00051C1E3 /* WebViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebViewController.swift; sourceTree = "<group>"; };
+		BECBF2FD2822FFEC0051C1E3 /* VisitLogTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisitLogTableViewController.swift; sourceTree = "<group>"; };
+		BECBF2FF282300F90051C1E3 /* VisitLogController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisitLogController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -120,11 +140,37 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		BE6A213E28243D8400D7B473 /* Community */ = {
+			isa = PBXGroup;
+			children = (
+				BE6A213F28243D9500D7B473 /* Event.swift */,
+				BE6A21412824450400D7B473 /* EventDataAdapter.swift */,
+				BE6A214328244CB900D7B473 /* EventsController.swift */,
+				BE6A214828245A7600D7B473 /* EventsTableViewController.swift */,
+			);
+			path = Community;
+			sourceTree = "<group>";
+		};
+		BE6A214A282573A400D7B473 /* Visits */ = {
+			isa = PBXGroup;
+			children = (
+				BEA137222821978600D60856 /* VisitLog.swift */,
+				BE6A214B2825745000D7B473 /* VisitLogDataAdapter.swift */,
+				BECBF2F32821AF6C0051C1E3 /* LogVisitController.swift */,
+				BECBF2FF282300F90051C1E3 /* VisitLogController.swift */,
+				BECBF2FD2822FFEC0051C1E3 /* VisitLogTableViewController.swift */,
+				BEA137242821983100D60856 /* LogVisitViewController.swift */,
+			);
+			path = Visits;
+			sourceTree = "<group>";
+		};
 		BEA136F2281C678D00D60856 /* CellViews */ = {
 			isa = PBXGroup;
 			children = (
 				BEA136FF281C8A4900D60856 /* VideoTableViewCell.swift */,
 				BEA136F3281C67AC00D60856 /* HowToHelpTableViewCell.swift */,
+				BE6A214628244F7A00D7B473 /* EventTableViewCell.swift */,
+				BE6A214D2825773900D7B473 /* VisitLogTableViewCell.swift */,
 			);
 			path = CellViews;
 			sourceTree = "<group>";
@@ -159,9 +205,7 @@
 			children = (
 				BEA1371728205FF900D60856 /* FeaturedItem.swift */,
 				BEA137192820605100D60856 /* FeaturedItemController.swift */,
-				BEA137222821978600D60856 /* VisitLog.swift */,
 				BEA137262821999C00D60856 /* DataCollectionDefinition.swift */,
-				BECBF2F32821AF6C0051C1E3 /* LogVisitController.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -215,18 +259,16 @@
 		BEAD217D281B139400DC8A8D /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				BEA1370D2820589300D60856 /* PlaylistsViewController.swift */,
-				BEAD217E281B13BA00DC8A8D /* LandiingViewController.swift */,
-				BEAD2187281B29A900DC8A8D /* SignupViewController.swift */,
-				BEAD2192281C1C6400DC8A8D /* LoginViewController.swift */,
-				BEAD2194281C2B8A00DC8A8D /* ForgotPasswordViewController.swift */,
+				BE6A214A282573A400D7B473 /* Visits */,
+				BE6A213E28243D8400D7B473 /* Community */,
+				BECBF3032824198F0051C1E3 /* Unused */,
+				BECBF302282419500051C1E3 /* Youtube */,
+				BECBF301282419390051C1E3 /* Auth */,
 				BEA9F948281C50DB00C4BCDF /* HowToHelpViewController.swift */,
-				BEA13701281C8ACE00D60856 /* YouTubeViewController.swift */,
 				BEA1371B2820615300D60856 /* FeaturedItemViewController.swift */,
 				BEA1371E28206CB900D60856 /* InfoSheetViewController.swift */,
-				BEA137202820728D00D60856 /* ProfileViewController.swift */,
-				BEA137242821983100D60856 /* LogVisitViewController.swift */,
 				BECBF2F52821B32A0051C1E3 /* DataCollectionViewController.swift */,
+				BECBF2FB2822E6D00051C1E3 /* WebViewController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -249,6 +291,34 @@
 				BEA13705281C8C0200D60856 /* Extensions.swift */,
 			);
 			path = Utility;
+			sourceTree = "<group>";
+		};
+		BECBF301282419390051C1E3 /* Auth */ = {
+			isa = PBXGroup;
+			children = (
+				BEA137202820728D00D60856 /* ProfileViewController.swift */,
+				BEAD2194281C2B8A00DC8A8D /* ForgotPasswordViewController.swift */,
+				BEAD2192281C1C6400DC8A8D /* LoginViewController.swift */,
+				BEAD2187281B29A900DC8A8D /* SignupViewController.swift */,
+			);
+			path = Auth;
+			sourceTree = "<group>";
+		};
+		BECBF302282419500051C1E3 /* Youtube */ = {
+			isa = PBXGroup;
+			children = (
+				BEA13701281C8ACE00D60856 /* YouTubeViewController.swift */,
+				BEA1370D2820589300D60856 /* PlaylistsViewController.swift */,
+			);
+			path = Youtube;
+			sourceTree = "<group>";
+		};
+		BECBF3032824198F0051C1E3 /* Unused */ = {
+			isa = PBXGroup;
+			children = (
+				BEAD217E281B13BA00DC8A8D /* LandiingViewController.swift */,
+			);
+			path = Unused;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -335,15 +405,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BECBF2FC2822E6D10051C1E3 /* WebViewController.swift in Sources */,
 				BEA136FD281C89B700D60856 /* PageInfo.swift in Sources */,
+				BECBF2FE2822FFED0051C1E3 /* VisitLogTableViewController.swift in Sources */,
 				BEAD2195281C2B8A00DC8A8D /* ForgotPasswordViewController.swift in Sources */,
 				BEA1370C281C8C5B00D60856 /* Log.swift in Sources */,
+				BECBF300282300F90051C1E3 /* VisitLogController.swift in Sources */,
 				BEA9F947281C4E0500C4BCDF /* UIWindowExtension.swift in Sources */,
 				BEAD2193281C1C6400DC8A8D /* LoginViewController.swift in Sources */,
+				BE6A214E2825773900D7B473 /* VisitLogTableViewCell.swift in Sources */,
 				BEAD217F281B13BA00DC8A8D /* LandiingViewController.swift in Sources */,
 				BECBF2F62821B32A0051C1E3 /* DataCollectionViewController.swift in Sources */,
 				BEAD219F281C36FE00DC8A8D /* Language.swift in Sources */,
 				BEAD2169281B137700DC8A8D /* AppDelegate.swift in Sources */,
+				BE6A214428244CB900D7B473 /* EventsController.swift in Sources */,
 				BEA13706281C8C0200D60856 /* Extensions.swift in Sources */,
 				BEA13712282059DF00D60856 /* InformationCategory.swift in Sources */,
 				BEA1371F28206CB900D60856 /* InfoSheetViewController.swift in Sources */,
@@ -355,10 +430,13 @@
 				BEAD2188281B29A900DC8A8D /* SignupViewController.swift in Sources */,
 				BEA1370A281C8C3800D60856 /* Endpoints.swift in Sources */,
 				BEA1371A2820605100D60856 /* FeaturedItemController.swift in Sources */,
+				BE6A21422824450400D7B473 /* EventDataAdapter.swift in Sources */,
 				BEA1371828205FF900D60856 /* FeaturedItem.swift in Sources */,
+				BE6A214028243D9500D7B473 /* Event.swift in Sources */,
 				BEA136FC281C89B700D60856 /* VideoInformation.swift in Sources */,
 				BEA13702281C8ACE00D60856 /* YouTubeViewController.swift in Sources */,
 				BEA136F4281C67AC00D60856 /* HowToHelpTableViewCell.swift in Sources */,
+				BE6A214928245A7600D7B473 /* EventsTableViewController.swift in Sources */,
 				BEA13709281C8C3800D60856 /* SafeNetwork.swift in Sources */,
 				BEA1371C2820615300D60856 /* FeaturedItemViewController.swift in Sources */,
 				BEAD216B281B137700DC8A8D /* SceneDelegate.swift in Sources */,
@@ -369,7 +447,9 @@
 				BEAD2191281C171900DC8A8D /* LoadingView.swift in Sources */,
 				BEA136FE281C89B700D60856 /* Playlist.swift in Sources */,
 				BEA1370E2820589300D60856 /* PlaylistsViewController.swift in Sources */,
+				BE6A214C2825745000D7B473 /* VisitLogDataAdapter.swift in Sources */,
 				BEA13711282059DF00D60856 /* InformationCategoryController.swift in Sources */,
+				BE6A214728244F7B00D7B473 /* EventTableViewCell.swift in Sources */,
 				BEA13704281C8B3900D60856 /* PlaylistController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

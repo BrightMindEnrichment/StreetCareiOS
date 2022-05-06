@@ -37,6 +37,19 @@ class YouTubeViewController: UIViewController {
         tableView.reloadData()
     }
     
+    
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+
+        if let indexPath = tableView.indexPathForSelectedRow, let videoInfo = controller.videoInformationAtIndex(indexPath.row) {
+                        
+            if let vc = segue.destination as? WebViewController {
+                vc.youtubeId = videoInfo.videoId
+                vc.title = videoInfo.title
+            }
+        }
+    }
+    
 } // end class
 
 
