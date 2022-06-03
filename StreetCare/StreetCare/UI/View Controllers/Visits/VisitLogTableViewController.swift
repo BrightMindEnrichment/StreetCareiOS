@@ -6,7 +6,7 @@
 //
 
 import UIKit
-
+import FirebaseAuth
 
 
 
@@ -26,17 +26,19 @@ class VisitLogTableViewController: UITableViewController {
         controller.refresh()
     }
 
-
+        
+    
     func updateUI() {
         tableView.reloadData()
     }
     
     
+    
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of rows
         return controller.count
     }
 
+    
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 

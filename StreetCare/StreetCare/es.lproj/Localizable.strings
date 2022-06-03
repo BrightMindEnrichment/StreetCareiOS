@@ -26,6 +26,30 @@
 "peopleCountPrompt" = "¿Cuántas personas te acompañaron o te ayudaron a prepararte?";
 "rateExperiencePrompt" = "Califica tu experiencia de alcance";
 "questionsOrComments" = "Preguntas o comentarios";
+"startNow" = "Empezar ahora";
+"howToVideos" = "Videos de' cómo hacer";
+"whatToGive" = "Qué llevar y regalar";
+"toolkitToHelp" = "Su caja de herramientas para ayudar";
+"howToHelp" = "Como ayudar";
+
+"before_para1" = "Lo primero que hay que recordar es que las personas sin hogar son un grupo diverso de personas como todos los demás, sin importar cómo se vean, sin importar su género, edad o raza. Algunos han atravesado tiempos difíciles. Algunos pueden estar luchando contra una enfermedad mental. Pero todos quieren ser tratados con respeto y dignidad. Estos son algunos pasos a seguir antes de ir:";
+
+"before_title2" = "1. Hágale saber a alguien";
+"before_para2" = "Al hacer un acercamiento, es posible que se encuentre con nuevos vecindarios. Sería útil mantener a alguien informado sobre este acercamiento.";
+
+"before_title3" = "2. Cómo preparar sus bolsas de cuidados:";
+"before_para3" = "La entrega de bolsas individuales le da al destinatario una forma de mover los artículos sin atascarlos con más de lo que pueden cargar. Comparta artículos esenciales: los calcetines, el jabón y los refrigerios saludables son excelentes para las bolsas de cuidado. Siga leyendo para obtener más elementos para incluir, junto con información importante imprimible, que incluye tarjetas de información para entregar a los necesitados.";
+
+"before_title4" = "3. Debe llevar";
+"before_para4" = "IDs, our infographics for street outreach (print them if you can!), charged phone, water & snack for yourself. Avoid carrying too much cash.";
+
+"before_title5" = "4. Planifique una introducción";
+"before_para5" = "Acérquese con compasión, preséntese, sonría, sea abierto y sea sencillo.";
+
+"before" = "Antes";
+"onTheStreet" = "En la calle";
+"after" = "Después";
+
 
 //"helloWorld" = "¡Hola Mundo!";
 //"welcome" = "Bienvenido a\nStreet Care";
@@ -47,14 +71,14 @@
 //"errorOccured" = "Se ha producido un error";
 //"loading" = "Cargando.....";
 //"thankYou" = "Gracias";
-//"howToHelp" = "Como ayudar";
+//
 //
 //"startUsingTheApp" = "Comience a usar la aplicación";
 //"startUsingTheAppContent" = "La aplicación Street Care, que le proporcionaron expertos en bienestar y personas sin hogar, está llena de tutoriales y orientaciones claros y sencillos. Puedes ayudar sin gastar dinero. Los minutos durante su viaje pueden ayudar mucho. Si es nuevo en ayudar, le mostraremos cómo acercarse a alguien, distribuir artículos saludables y encontrar áreas seguras donde se encuentran las personas necesitadas.\n\nQué debe saber sobre esta versión inicial y nuestra aplicación. \n\n1. Cómo empezar (¡Empiece aquí!) = Pasos para prepararse para la divulgación en las calles mucho antes de ir y tener contacto directo con las personas sin hogar; \n\n2. Qué traer = instrucciones detalladas sobre los artículos que debe traer para su alcance. Esto le ayudará a decidir qué traer para tener el mayor impacto; \n\n3. Videos instructivos = videos de un minuto de duración que brindan ejemplos de encuentros que puede tener mientras realiza actividades de divulgación. Repasamos cada situación en profundidad para mostrarte qué hacer en cada caso. \n\n4. El panorama general = todas las herramientas funcionan para mejorar la salud física, emocional y mental, para ayudar a las familias y las personas sin hogar a salir de las calles. Seguro y probado, nuestro enfoque innovador se enfoca en la transformación (y cualquier cantidad o aspecto en el que trabajes ayuda mucho), de 3 maneras = \n\nA. Dar kits de atención o agua, lo que lleva a compartir consejos de salud y bienestar centrados en las personas sin hogar; \n \nB. Trabajar en el refuerzo de objetivos con las personas sin hogar, que es crucial para lograr la transformación; \n \n C. Ayude a construir una comunidad a través de un marco interactivo para voluntarios y personas sin hogar (nuestra aplicación pronto incluirá formas interactivas para que los voluntarios se conecten entre sí y brinden un mejor apoyo a las personas sin hogar a las que ayudan).";
 //"joinUs" = "Únete a nosotras";
 //"donate" = "Donar";
 //
-//"whatToGive" = "Qué llevar y regalar";
+//
 //"featuredItems" = "Elementos destacados";
 //"suggestedItems":"Artículos sugeridos para regalar";
 //"essentialResources":"Recursos esenciales";
@@ -97,14 +121,14 @@
 //
 //"streetCareTitle" = "Cuidado de la calle";
 //"welcomeTitle" = "Bienvenido";
-//"toolkitToHelp" = "Su caja de herramientas para ayudar\na las personas sin hogar";
+//
 //"homePara1" = "para1_es";
 //"homePara2" = "para2_es";
 //"homePara3" = "para3_es";
 //"homeTitle1" = "title1_es";
 //"homeTitle2" = "title2_es";
-//"startNow" = "Empezar ahora";
-//"howToVideos" = "Videos de' cómo hacer";
+//
+//
 //
 //"profileTitle" = "Perfil";
 //"recentVisitLog" = "Registro de visitas recientes";

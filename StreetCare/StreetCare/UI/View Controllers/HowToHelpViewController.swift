@@ -17,7 +17,7 @@ class HowToHelpViewController: UIViewController {
     var imageIndex = 0
     
     
-    var links = [("Start Now", "startNow"), ("What to Give", "soap"), ("How-to Videos", "howToVideos")]
+    var links = [("startNow", "startNow"), ("whatToGive", "soap"), ("howToVideos", "howToVideos")]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,6 +26,8 @@ class HowToHelpViewController: UIViewController {
 
 
     override func viewWillAppear(_ animated: Bool) {
+        
+        self.title = Language.locString("howToHelp")
         
         if let indexPath = tableView.indexPathForSelectedRow {
             tableView.deselectRow(at: indexPath, animated: true)
@@ -78,7 +80,7 @@ extension HowToHelpViewController: UITableViewDelegate, UITableViewDataSource {
     
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return "Your Toolkit to Help"
+        return Language.locString("toolkitToHelp")
     }
     
     
@@ -94,7 +96,7 @@ extension HowToHelpViewController: UITableViewDelegate, UITableViewDataSource {
         }
         
         let linkData = links[indexPath.row]
-        cell.textTitle.text = linkData.0
+        cell.textTitle.text = Language.locString(linkData.0)
         cell.imageIcon.image = UIImage(named: linkData.1)
         
         return cell
@@ -105,7 +107,11 @@ extension HowToHelpViewController: UITableViewDelegate, UITableViewDataSource {
         
         switch indexPath.row {
         case 0:
-            return
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            if let vc = storyboard.instantiateViewController(withIdentifier: "StartNowViewController") as? StartNowViewController {
+                self.navigationController?.pushViewController(vc, animated: true)
+            }
+
         case 1:
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             if let vc = storyboard.instantiateViewController(withIdentifier: "FeaturedItemViewController") as? FeaturedItemViewController {

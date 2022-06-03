@@ -6,6 +6,8 @@
 //
 
 import UIKit
+import FirebaseAuth
+
 
 class LogVisitViewController: UIViewController {
 
@@ -23,6 +25,16 @@ class LogVisitViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         tableView.reloadData()
+    }
+    
+    
+    override func viewDidAppear(_ animated: Bool) {
+        guard let _ = Auth.auth().currentUser else {
+            self.presentInformationAlertWithTitle("Login", message: "Login to log a visit.") { alertAction in
+                self.navigationController?.popViewController(animated: true)
+            }
+            return
+        }
     }
     
     

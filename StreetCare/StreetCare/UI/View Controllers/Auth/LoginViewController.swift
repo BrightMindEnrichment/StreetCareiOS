@@ -26,7 +26,7 @@ class LoginViewController: UIViewController {
         
         self.presentLoadingViewWithMessage("One moment...", withTimeoutOf: 30) {
             // if timeout:
-            self.presentInformationAlertWithTitle("Oops...", message: "Please try again later.") {
+            self.presentInformationAlertWithTitle("Oops...", message: "Please try again later.") { alertAction in
                 self.dismissLoadingView()
             }
             return
@@ -35,7 +35,7 @@ class LoginViewController: UIViewController {
         
         // get the user input
         guard let email = textEmail.text, let password = textPassword.text else {
-            self.presentInformationAlertWithTitle("Oops...", message: "Missing some required information") {
+            self.presentInformationAlertWithTitle("Oops...", message: "Missing some required information") { alertAction in
                 self.dismissLoadingView()
             }
             return
@@ -45,7 +45,7 @@ class LoginViewController: UIViewController {
         Auth.auth().signIn(withEmail: email, password: password) { authResult, error in
             
             if let error = error {
-                self.presentInformationAlertWithTitle("Oops...", message: "Error with login: \(error.localizedDescription)") {
+                self.presentInformationAlertWithTitle("Oops...", message: "Error with login: \(error.localizedDescription)") { alertAction in
                     self.dismissLoadingView()
                 }
             }

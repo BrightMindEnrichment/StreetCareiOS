@@ -40,7 +40,7 @@ class SignupViewController: UIViewController {
         // setup loading view - don't forget to dismiss it when errors happen!
         self.presentLoadingViewWithMessage("Creating user", withTimeoutOf: 10) {
             // if timeout:
-            self.presentInformationAlertWithTitle(Language.errorTitle, message: "Timeout creating account.  Please try again later.") {
+            self.presentInformationAlertWithTitle(Language.errorTitle, message: "Timeout creating account.  Please try again later.") { alertAction in
                 self.dismissLoadingView()
             }
         }
@@ -48,7 +48,7 @@ class SignupViewController: UIViewController {
         
         // make user all required fields have data
         guard let email = textEmail.text, let password = textPassword.text , let username = textUsername.text else {
-            self.presentInformationAlertWithTitle(Language.errorTitle, message: "Missing required information.") {
+            self.presentInformationAlertWithTitle(Language.errorTitle, message: "Missing required information.") { alertAction in
                 self.dismissLoadingView()
             }
             return
@@ -59,7 +59,7 @@ class SignupViewController: UIViewController {
         Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
             
             guard let db = self.db, let user = authResult?.user, error == nil else {
-                self.presentInformationAlertWithTitle(Language.errorTitle, message: "Problem creating user : \(error!.localizedDescription)") {
+                self.presentInformationAlertWithTitle(Language.errorTitle, message: "Problem creating user : \(error!.localizedDescription)") { alertAction in
                     self.dismissLoadingView()
                 }
                 return

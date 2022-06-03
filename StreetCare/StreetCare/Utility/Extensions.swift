@@ -39,3 +39,26 @@ public extension Array {
         return index >= 0 && index < self.count
     }
 } // end extension
+
+
+
+extension String {
+    
+  func size(font: UIFont, width: CGFloat) -> CGSize {
+      let attrString = NSAttributedString(string: self, attributes: [NSAttributedString.Key.font: font])
+        let bounds = attrString.boundingRect(with: CGSize(width: width, height: .greatestFiniteMagnitude), options: .usesLineFragmentOrigin, context: nil)
+        let size = CGSize(width: bounds.width, height: bounds.height)
+        return size
+    }
+} // end extension
+
+
+
+extension UITableView {
+    
+    func deselectAll() {
+        if let indexPath = self.indexPathForSelectedRow {
+            self.deselectRow(at: indexPath, animated: true)
+        }
+    }
+} // end extension

@@ -14,6 +14,10 @@
 		BE6A214928245A7600D7B473 /* EventsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE6A214828245A7600D7B473 /* EventsTableViewController.swift */; };
 		BE6A214C2825745000D7B473 /* VisitLogDataAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE6A214B2825745000D7B473 /* VisitLogDataAdapter.swift */; };
 		BE6A214E2825773900D7B473 /* VisitLogTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE6A214D2825773900D7B473 /* VisitLogTableViewCell.swift */; };
+		BE6A21502832FA3900D7B473 /* StartNowViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE6A214F2832FA3900D7B473 /* StartNowViewController.swift */; };
+		BE6A21522834367900D7B473 /* AccordianViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE6A21512834367900D7B473 /* AccordianViewController.swift */; };
+		BE6A2154283439C700D7B473 /* AccordianTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE6A2153283439C700D7B473 /* AccordianTableViewCell.swift */; };
+		BE6A215928353A7500D7B473 /* AccordianItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE6A215828353A7400D7B473 /* AccordianItem.swift */; };
 		BEA136F4281C67AC00D60856 /* HowToHelpTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA136F3281C67AC00D60856 /* HowToHelpTableViewCell.swift */; };
 		BEA136F8281C899C00D60856 /* playlists.json in Resources */ = {isa = PBXBuildFile; fileRef = BEA136F7281C899B00D60856 /* playlists.json */; };
 		BEA136FC281C89B700D60856 /* VideoInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA136F9281C89B700D60856 /* VideoInformation.swift */; };
@@ -73,6 +77,10 @@
 		BE6A214828245A7600D7B473 /* EventsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsTableViewController.swift; sourceTree = "<group>"; };
 		BE6A214B2825745000D7B473 /* VisitLogDataAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisitLogDataAdapter.swift; sourceTree = "<group>"; };
 		BE6A214D2825773900D7B473 /* VisitLogTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisitLogTableViewCell.swift; sourceTree = "<group>"; };
+		BE6A214F2832FA3900D7B473 /* StartNowViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartNowViewController.swift; sourceTree = "<group>"; };
+		BE6A21512834367900D7B473 /* AccordianViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccordianViewController.swift; sourceTree = "<group>"; };
+		BE6A2153283439C700D7B473 /* AccordianTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccordianTableViewCell.swift; sourceTree = "<group>"; };
+		BE6A215828353A7400D7B473 /* AccordianItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccordianItem.swift; sourceTree = "<group>"; };
 		BEA136F3281C67AC00D60856 /* HowToHelpTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HowToHelpTableViewCell.swift; sourceTree = "<group>"; };
 		BEA136F7281C899B00D60856 /* playlists.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = playlists.json; sourceTree = "<group>"; };
 		BEA136F9281C89B700D60856 /* VideoInformation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoInformation.swift; sourceTree = "<group>"; };
@@ -171,6 +179,7 @@
 				BEA136F3281C67AC00D60856 /* HowToHelpTableViewCell.swift */,
 				BE6A214628244F7A00D7B473 /* EventTableViewCell.swift */,
 				BE6A214D2825773900D7B473 /* VisitLogTableViewCell.swift */,
+				BE6A2153283439C700D7B473 /* AccordianTableViewCell.swift */,
 			);
 			path = CellViews;
 			sourceTree = "<group>";
@@ -206,6 +215,7 @@
 				BEA1371728205FF900D60856 /* FeaturedItem.swift */,
 				BEA137192820605100D60856 /* FeaturedItemController.swift */,
 				BEA137262821999C00D60856 /* DataCollectionDefinition.swift */,
+				BE6A215828353A7400D7B473 /* AccordianItem.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -269,6 +279,8 @@
 				BEA1371E28206CB900D60856 /* InfoSheetViewController.swift */,
 				BECBF2F52821B32A0051C1E3 /* DataCollectionViewController.swift */,
 				BECBF2FB2822E6D00051C1E3 /* WebViewController.swift */,
+				BE6A214F2832FA3900D7B473 /* StartNowViewController.swift */,
+				BE6A21512834367900D7B473 /* AccordianViewController.swift */,
 			);
 			path = "View Controllers";
 			sourceTree = "<group>";
@@ -408,7 +420,9 @@
 				BECBF2FC2822E6D10051C1E3 /* WebViewController.swift in Sources */,
 				BEA136FD281C89B700D60856 /* PageInfo.swift in Sources */,
 				BECBF2FE2822FFED0051C1E3 /* VisitLogTableViewController.swift in Sources */,
+				BE6A2154283439C700D7B473 /* AccordianTableViewCell.swift in Sources */,
 				BEAD2195281C2B8A00DC8A8D /* ForgotPasswordViewController.swift in Sources */,
+				BE6A215928353A7500D7B473 /* AccordianItem.swift in Sources */,
 				BEA1370C281C8C5B00D60856 /* Log.swift in Sources */,
 				BECBF300282300F90051C1E3 /* VisitLogController.swift in Sources */,
 				BEA9F947281C4E0500C4BCDF /* UIWindowExtension.swift in Sources */,
@@ -416,7 +430,9 @@
 				BE6A214E2825773900D7B473 /* VisitLogTableViewCell.swift in Sources */,
 				BEAD217F281B13BA00DC8A8D /* LandiingViewController.swift in Sources */,
 				BECBF2F62821B32A0051C1E3 /* DataCollectionViewController.swift in Sources */,
+				BE6A21522834367900D7B473 /* AccordianViewController.swift in Sources */,
 				BEAD219F281C36FE00DC8A8D /* Language.swift in Sources */,
+				BE6A21502832FA3900D7B473 /* StartNowViewController.swift in Sources */,
 				BEAD2169281B137700DC8A8D /* AppDelegate.swift in Sources */,
 				BE6A214428244CB900D7B473 /* EventsController.swift in Sources */,
 				BEA13706281C8C0200D60856 /* Extensions.swift in Sources */,
