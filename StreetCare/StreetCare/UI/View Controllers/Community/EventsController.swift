@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import FirebaseAuth
 
 
 protocol EventsControllerProtocol {
@@ -45,6 +46,18 @@ class EventsController {
     }
     
     
+    func canEditEventAtIndex(_ index: Int) -> Bool {
+        
+        guard let user = Auth.auth().currentUser else { return false }
+        
+        if events.isValidIndex(index) {
+            return events[index].uid == user.uid
+        }
+        else {
+            return false
+        }
+    }
+    
     
     func refresh() {
         adapter.refresh()
@@ -67,6 +80,18 @@ class EventsController {
         }
     }
     
+    
+    
+    func addErrorEvent() {
+        self.events.removeAll()
+        
+        let event = Event()
+        event.title = "Log in"
+        event.description = "Events are only available to logged in users."
+        event.date = Date()
+        self.events.append(event)
+    }
+
 } // end class
 
 

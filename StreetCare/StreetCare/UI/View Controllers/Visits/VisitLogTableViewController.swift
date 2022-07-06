@@ -24,6 +24,8 @@ class VisitLogTableViewController: UITableViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         controller.refresh()
+        
+        self.title = Language.locString("visitLog")
     }
 
         

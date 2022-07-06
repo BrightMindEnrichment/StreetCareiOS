@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import FirebaseAuth
 
 class EventsTableViewController: UITableViewController {
 
@@ -17,13 +18,22 @@ class EventsTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.clearsSelectionOnViewWillAppear = false
+        self.clearsSelectionOnViewWillAppear = true
         controller.delegate = self
+        
+        self.title = Language.locString("community")
     }
 
     
     
     override func viewWillAppear(_ animated: Bool) {
+        
+        guard let _ = Auth.auth().currentUser else {
+            controller.addErrorEvent()
+            updateUI()
+            return
+        }
+        
         controller.refresh()
     }
     
@@ -100,19 +110,22 @@ class EventsTableViewController: UITableViewController {
     
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        controller.likeEventForIndex(indexPath.row)
+        
+        if controller.canEditEventAtIndex(indexPath.row) {
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            if let vc = storyboard.instantiateViewController(withIdentifier: "AddEventViewController") as? AddEventViewController {
+                if let row = tableView.indexPathForSelectedRow?.row {
+                    vc.event = controller.eventForIndex(row)
+                    self.navigationController?.pushViewController(vc, animated: true)
+                }
+            }
+        }
+        else {
+            controller.likeEventForIndex(indexPath.row)
+        }
     }
     
     
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 } // end class
 

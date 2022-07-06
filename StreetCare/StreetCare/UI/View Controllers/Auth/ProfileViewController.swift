@@ -18,6 +18,7 @@ class ProfileViewController: UIViewController {
     @IBOutlet weak var buttonSignUp: UIButton!
     @IBOutlet weak var buttonSignOut: UIButton!
     @IBOutlet weak var textWelcome: UILabel!
+    @IBOutlet weak var buttonRemoveAccount: UIButton!
     
     var db: Firestore?
 
@@ -35,6 +36,11 @@ class ProfileViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         updateUI()
+        
+        self.buttonLogin.setTitle(Language.locString("loginButtonTitle"), for: .normal)
+        self.buttonSignUp.setTitle(Language.locString("signUpButtonTitle"), for: .normal)
+        self.buttonSignOut.setTitle(Language.locString("signUpButtonTitle"), for: .normal)
+        self.buttonRemoveAccount.setTitle(Language.locString("signUpButtonTitle"), for: .normal)
     }
     
 
@@ -55,9 +61,30 @@ class ProfileViewController: UIViewController {
     
     
     
+    @IBAction func buttonRemoveAccount_touched(_ sender: Any) {
+  
+        let alert = UIAlertController(title: "Are you sure?", message: "Delete yourself?", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Cancel", style: .default))
+        alert.addAction(UIAlertAction(title: "Delete", style: .destructive, handler: { alertAction in
+
+            if let user = Auth.auth().currentUser {
+                user.delete { error in
+                    if let error = error {
+                        print(error.localizedDescription)
+                    }
+                    self.updateUI()
+                }
+            }
+        }))
+        
+        self.present(alert, animated: true)
+    }
+    
+    
+    
     func updateUI() {
         
-        textWelcome.text = "Welcome"
+        textWelcome.text = Language.locString("welcome")
         
         if let user = Auth.auth().currentUser {
             
@@ -67,7 +94,7 @@ class ProfileViewController: UIViewController {
                 docRef.getDocument { doc, error in
                     if let doc = doc, doc.exists {
                         if let dict = doc.data(), let username = dict["username"] {
-                            self.textWelcome.text = "Welcome \(username)"
+                            self.textWelcome.text = "\(Language.locString("welcome")) \(username)"
                         }
                     }
                 }
@@ -81,6 +108,9 @@ class ProfileViewController: UIViewController {
             
             buttonSignOut.isUserInteractionEnabled = true
             buttonSignOut.isHidden = false
+
+            buttonRemoveAccount.isUserInteractionEnabled = true
+            buttonRemoveAccount.isHidden = false
         }
         else {
             buttonLogin.isUserInteractionEnabled = true
@@ -91,7 +121,12 @@ class ProfileViewController: UIViewController {
             
             buttonSignOut.isUserInteractionEnabled = false
             buttonSignOut.isHidden = true
+
+            buttonRemoveAccount.isUserInteractionEnabled = false
+            buttonRemoveAccount.isHidden = true
+
         }
     }
     
 } // end class
+

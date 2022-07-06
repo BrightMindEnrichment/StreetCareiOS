@@ -30,7 +30,7 @@ class LogVisitViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         guard let _ = Auth.auth().currentUser else {
-            self.presentInformationAlertWithTitle("Login", message: "Login to log a visit.") { alertAction in
+            self.presentInformationAlertWithTitle(Language.locString("loginButtonTitle"), message: Language.locString("guestCantLogVisitError")) { alertAction in
                 self.navigationController?.popViewController(animated: true)
             }
             return
@@ -90,6 +90,20 @@ extension LogVisitViewController: UITableViewDelegate, UITableViewDataSource {
 
         return cell
     }
+
+
+    
+    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let lbl = UILabel()
+        lbl.text = Language.locString("afterOutreachIntro")
+        lbl.numberOfLines = 3
+        
+        return lbl
+    }
     
     
+    
+    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 88.0
+    }
 } // end extension

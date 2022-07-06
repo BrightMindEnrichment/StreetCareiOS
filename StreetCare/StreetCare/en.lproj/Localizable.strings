@@ -49,8 +49,26 @@
 
 
 "before" = "Before";
-"onTheStreet" = "On The\n Street";
+"onTheStreet" = "On The Street";
 "after" = "After";
+
+"afterOutreachIntro" = "Please fill out this form after each time you go out. This helps us build Street Care, to bring more services to you and the community!";
+
+
+"vistLog" = "Visit Log";
+"community" = "Community";
+
+"welcome" = "Welcome";
+
+"loginButtonTitle" = "Login";
+"signUpButtonTitle" = "Sign Up";
+"logoutButtonTitle" = "Sign Out";
+"removeAccountButtonTitle" = "Remove Account";
+
+"guestCantLogVisitError" = "Login to record a visit.";
+"guestCantCommunityError" = "Login to add an event.";
+
+"missingDataError" = "Please fill out all information.";
 
 //"welcome" = "Welcome to\nStreet Care";
 //"loginButtonTitle" = "Login";

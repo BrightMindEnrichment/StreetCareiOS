@@ -17,4 +17,6 @@ class Event {
     var date: Date?
     var interest: Int?
     var liked = false
+    var uid: String?
+    
 } // end class

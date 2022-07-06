@@ -77,6 +77,10 @@ class VisitLogDataAdapter {
                 print(error.localizedDescription)
             }
             else {
+                
+                // clear out the existing logs
+                self.visitLogs.removeAll()
+                
                 for document in querySnapshot!.documents {
                     
                     print(document.data())

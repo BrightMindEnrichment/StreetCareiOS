@@ -28,6 +28,8 @@ class EventDataAdapter {
     
     func addEvent(title: String, description: String, date: Date) {
         
+        guard let user = Auth.auth().currentUser else { return }
+            
         let settings = FirestoreSettings()
         Firestore.firestore().settings = settings
         let db = Firestore.firestore()
@@ -37,6 +39,7 @@ class EventDataAdapter {
         eventData["description"] = description
         eventData["date"] = date
         eventData["interest"] = 1
+        eventData["uid"] = user.uid
         
         db.collection("events").document().setData(eventData) { error in
             
@@ -176,10 +179,14 @@ class EventDataAdapter {
                         event.date = d.dateValue()
                     }
                     
+                    if let uid = document["uid"] as? String {
+                        event.uid = uid
+                    }
+                    
                     self.events.append(event)
                 }
             }
-            
+                        
             self.refreshLiked()
         }
     }

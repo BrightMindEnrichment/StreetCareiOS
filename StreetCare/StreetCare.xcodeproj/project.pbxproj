@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BE0FF0E32864F00800F8C6BF /* AddEventViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE0FF0E22864F00800F8C6BF /* AddEventViewController.swift */; };
 		BE6A214028243D9500D7B473 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE6A213F28243D9500D7B473 /* Event.swift */; };
 		BE6A21422824450400D7B473 /* EventDataAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE6A21412824450400D7B473 /* EventDataAdapter.swift */; };
 		BE6A214428244CB900D7B473 /* EventsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE6A214328244CB900D7B473 /* EventsController.swift */; };
@@ -70,6 +71,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		BE0FF0E22864F00800F8C6BF /* AddEventViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddEventViewController.swift; sourceTree = "<group>"; };
 		BE6A213F28243D9500D7B473 /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
 		BE6A21412824450400D7B473 /* EventDataAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDataAdapter.swift; sourceTree = "<group>"; };
 		BE6A214328244CB900D7B473 /* EventsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsController.swift; sourceTree = "<group>"; };
@@ -155,6 +157,7 @@
 				BE6A21412824450400D7B473 /* EventDataAdapter.swift */,
 				BE6A214328244CB900D7B473 /* EventsController.swift */,
 				BE6A214828245A7600D7B473 /* EventsTableViewController.swift */,
+				BE0FF0E22864F00800F8C6BF /* AddEventViewController.swift */,
 			);
 			path = Community;
 			sourceTree = "<group>";
@@ -240,9 +243,9 @@
 		BEAD2167281B137700DC8A8D /* StreetCare */ = {
 			isa = PBXGroup;
 			children = (
+				BEAD2180281B25B300DC8A8D /* GoogleService-Info.plist */,
 				BEA1371628205FE500D60856 /* Model */,
 				BEA136F6281C895200D60856 /* Data */,
-				BEAD2180281B25B300DC8A8D /* GoogleService-Info.plist */,
 				BEA136F5281C893E00D60856 /* Video */,
 				BEAD218D281C16BD00DC8A8D /* Utility */,
 				BEAD217C281B138E00DC8A8D /* UI */,
@@ -436,6 +439,7 @@
 				BEAD2169281B137700DC8A8D /* AppDelegate.swift in Sources */,
 				BE6A214428244CB900D7B473 /* EventsController.swift in Sources */,
 				BEA13706281C8C0200D60856 /* Extensions.swift in Sources */,
+				BE0FF0E32864F00800F8C6BF /* AddEventViewController.swift in Sources */,
 				BEA13712282059DF00D60856 /* InformationCategory.swift in Sources */,
 				BEA1371F28206CB900D60856 /* InfoSheetViewController.swift in Sources */,
 				BEAD218F281C16D300DC8A8D /* UIViewControllerExtensions.swift in Sources */,
@@ -627,7 +631,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_TEAM = 9J7WJ274H6;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = StreetCare/Info.plist;
@@ -641,7 +645,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.4.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bme.StreetCare;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -656,7 +660,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_TEAM = 9J7WJ274H6;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = StreetCare/Info.plist;
@@ -670,7 +674,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0;
+				MARKETING_VERSION = 1.4.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bme.StreetCare;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;

@@ -41,7 +41,7 @@
 "before_para3" = "La entrega de bolsas individuales le da al destinatario una forma de mover los artículos sin atascarlos con más de lo que pueden cargar. Comparta artículos esenciales: los calcetines, el jabón y los refrigerios saludables son excelentes para las bolsas de cuidado. Siga leyendo para obtener más elementos para incluir, junto con información importante imprimible, que incluye tarjetas de información para entregar a los necesitados.";
 
 "before_title4" = "3. Debe llevar";
-"before_para4" = "IDs, our infographics for street outreach (print them if you can!), charged phone, water & snack for yourself. Avoid carrying too much cash.";
+"before_para4" = "Identificaciones, nuestras infografías para divulgación en la calle (¡imprímalas si puede!), Teléfono cargado, agua y bocadillos para usted. Evite llevar demasiado dinero en efectivo.";
 
 "before_title5" = "4. Planifique una introducción";
 "before_para5" = "Acérquese con compasión, preséntese, sonría, sea abierto y sea sencillo.";
@@ -50,6 +50,23 @@
 "onTheStreet" = "En la calle";
 "after" = "Después";
 
+"afterOutreachIntro" = "Complete este formulario cada vez que salga. ¡Esto nos ayuda a construir Street Care, para brindarle más servicios a usted y a la comunidad!";
+
+
+"visitLog" = "Registro de visitas";
+"community" = "Comunidad";
+
+"welcome" = "Bienvenidas";
+
+"loginButtonTitle" = "Acceso";
+"signUpButtonTitle" = "Inscribirse";
+"logoutButtonTitle" = "Desconectar";
+"removeAccountButtonTitle" = "Eliminar cuenta";
+
+"guestCantLogVisitError" = "Iniciar sesión para registrar una visita.";
+"guestCantCommunityError" = "Inicie sesión para agregar un evento.";
+
+"missingDataError" = "Por favor complete toda la información.";
 
 //"helloWorld" = "¡Hola Mundo!";
 //"welcome" = "Bienvenido a\nStreet Care";
