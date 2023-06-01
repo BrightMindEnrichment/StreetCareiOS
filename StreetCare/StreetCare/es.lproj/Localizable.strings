@@ -1,0 +1,217 @@
+/* 
+  Localizable.strings
+  StreetCare
+
+  Created by Michael Thornton on 4/29/22.
+  
+*/
+"errorTitle" = "Ups.";
+
+"healthySnacks" = "Snacks saludables";
+"healthySnacksDescription" = "Los bocadillos nutritivos y no perecederos como nueces, pretzels, barras de desayuno, puré de manzana y frutas secas son los mejores. Trate de incluir artículos que sean fáciles de masticar para personas sin acceso a atención dental. Recuerde empacar los alimentos por separado de los productos sanitarios perfumados.";
+"water" = "Agua";
+"waterDescription" = "Encontrar agua potable puede resultar difícil para las personas sin hogar. El agua embotellada es un gran artículo de donación, al igual que llevar una jarra y tazas.";
+"firstAid" = "Primeros auxilios";
+"firstAidDescription" = "La prevención de infecciones y la atención de primeros auxilios son esenciales, especialmente para las personas sin hogar. Proporcione artículos sellados y limpios como vendas, toallitas, ungüentos y kits para el cuidado de las uñas para proteger a los necesitados. Evite los productos a base de alcohol.";
+"personalHygiene" = "Higiene personal";
+"personalHygieneDescription" = "Los jabones no deben tener fragancias, ya que las sensibilidades y las alergias son comunes. Asegúrese de que los desinfectantes para manos no contengan alcohol. La pasta de dientes y los cepillos de dientes son artículos de donación prácticos y útiles.";
+"socksClothing" = "Calcetines y ropa";
+"socksClothingDescription" = "Las prendas de vestir son imprescindibles en todas las estaciones, especialmente la ropa de abrigo. Los calcetines son especialmente importantes. Son artículos asequibles, fáciles de encontrar y, en general, excelentes para incluir.";
+"feminineHygiene" = "Higiene femenina";
+"feminineHygieneDescription" = "Los tampones y las toallas sanitarias son una necesidad y, sin embargo, algo que muchas familias sin hogar luchan por obtener todos los meses. Considere diferentes necesidades, como flujo pesado, moderado y ligero.";
+"whereWillVisitPrompt" = "¿Dónde será tu visita?";
+"whenWasVisitPrompt" = "¿Cuándo fue tu visita?";
+"hoursSpentPrompt" = "¿Horas dedicadas a la divulgación?";
+"canOutreachAgainPrompt" = "¿Puede realizar la divulgación de nuevo?";
+"peopleCountPrompt" = "¿Cuántas personas te acompañaron o te ayudaron a prepararte?";
+"rateExperiencePrompt" = "Califica tu experiencia de alcance";
+"questionsOrComments" = "Preguntas o comentarios";
+"startNow" = "Empezar ahora";
+"howToVideos" = "Videos de' cómo hacer";
+"whatToGive" = "Qué llevar y regalar";
+"toolkitToHelp" = "Su caja de herramientas para ayudar";
+"howToHelp" = "Como ayudar";
+
+"before_para1" = "Lo primero que hay que recordar es que las personas sin hogar son un grupo diverso de personas como todos los demás, sin importar cómo se vean, sin importar su género, edad o raza. Algunos han atravesado tiempos difíciles. Algunos pueden estar luchando contra una enfermedad mental. Pero todos quieren ser tratados con respeto y dignidad. Estos son algunos pasos a seguir antes de ir:";
+
+"before_title2" = "1. Hágale saber a alguien";
+"before_para2" = "Al hacer un acercamiento, es posible que se encuentre con nuevos vecindarios. Sería útil mantener a alguien informado sobre este acercamiento.";
+
+"before_title3" = "2. Cómo preparar sus bolsas de cuidados:";
+"before_para3" = "La entrega de bolsas individuales le da al destinatario una forma de mover los artículos sin atascarlos con más de lo que pueden cargar. Comparta artículos esenciales: los calcetines, el jabón y los refrigerios saludables son excelentes para las bolsas de cuidado. Siga leyendo para obtener más elementos para incluir, junto con información importante imprimible, que incluye tarjetas de información para entregar a los necesitados.";
+
+"before_title4" = "3. Debe llevar";
+"before_para4" = "Identificaciones, nuestras infografías para divulgación en la calle (¡imprímalas si puede!), Teléfono cargado, agua y bocadillos para usted. Evite llevar demasiado dinero en efectivo.";
+
+"before_title5" = "4. Planifique una introducción";
+"before_para5" = "Acérquese con compasión, preséntese, sonría, sea abierto y sea sencillo.";
+
+"before" = "Antes";
+"onTheStreet" = "En la calle";
+"after" = "Después";
+
+"afterOutreachIntro" = "Complete este formulario cada vez que salga. ¡Esto nos ayuda a construir Street Care, para brindarle más servicios a usted y a la comunidad!";
+
+
+"visitLog" = "Registro de visitas";
+"community" = "Comunidad";
+
+"welcome" = "Bienvenidas";
+
+"loginButtonTitle" = "Acceso";
+"signUpButtonTitle" = "Inscribirse";
+"logoutButtonTitle" = "Desconectar";
+"removeAccountButtonTitle" = "Eliminar cuenta";
+
+"guestCantLogVisitError" = "Iniciar sesión para registrar una visita.";
+"guestCantCommunityError" = "Inicie sesión para agregar un evento.";
+
+"missingDataError" = "Por favor complete toda la información.";
+
+//"helloWorld" = "¡Hola Mundo!";
+//"welcome" = "Bienvenido a\nStreet Care";
+//"loginButtonTitle" = "Acceso";
+//"signUpButtonTitle" = "Inscribirse";
+//"continueAsGuestLink" = "Continuar como invitada";
+//"para1" = "para1_es";
+//"forgotPassword" = "¿Has olvidado tu contraseña?";
+//"forgotPasswordInstructions" = "Ingrese su correo electrónico y le enviaremos un enlace para volver a ingresar a su cuenta.";
+//"yourEmail" = "Tu correo electrónico";
+//"inputYourEmail" = "Ingrese su correo electrónico";
+//"troubleLoggingIn" = "¿Problemas para iniciar sesión?";
+//"sendCode" = "Enviar código";
+//"success" = "Éxito";
+//"returnToLogin" = "Volver a iniciar sesión";
+//"passwordResetFailed" = "Error al restablecer la contraseña";
+//"close" = "Close";
+//"error" = "Error";
+//"errorOccured" = "Se ha producido un error";
+//"loading" = "Cargando.....";
+//"thankYou" = "Gracias";
+//
+//
+//"startUsingTheApp" = "Comience a usar la aplicación";
+//"startUsingTheAppContent" = "La aplicación Street Care, que le proporcionaron expertos en bienestar y personas sin hogar, está llena de tutoriales y orientaciones claros y sencillos. Puedes ayudar sin gastar dinero. Los minutos durante su viaje pueden ayudar mucho. Si es nuevo en ayudar, le mostraremos cómo acercarse a alguien, distribuir artículos saludables y encontrar áreas seguras donde se encuentran las personas necesitadas.\n\nQué debe saber sobre esta versión inicial y nuestra aplicación. \n\n1. Cómo empezar (¡Empiece aquí!) = Pasos para prepararse para la divulgación en las calles mucho antes de ir y tener contacto directo con las personas sin hogar; \n\n2. Qué traer = instrucciones detalladas sobre los artículos que debe traer para su alcance. Esto le ayudará a decidir qué traer para tener el mayor impacto; \n\n3. Videos instructivos = videos de un minuto de duración que brindan ejemplos de encuentros que puede tener mientras realiza actividades de divulgación. Repasamos cada situación en profundidad para mostrarte qué hacer en cada caso. \n\n4. El panorama general = todas las herramientas funcionan para mejorar la salud física, emocional y mental, para ayudar a las familias y las personas sin hogar a salir de las calles. Seguro y probado, nuestro enfoque innovador se enfoca en la transformación (y cualquier cantidad o aspecto en el que trabajes ayuda mucho), de 3 maneras = \n\nA. Dar kits de atención o agua, lo que lleva a compartir consejos de salud y bienestar centrados en las personas sin hogar; \n \nB. Trabajar en el refuerzo de objetivos con las personas sin hogar, que es crucial para lograr la transformación; \n \n C. Ayude a construir una comunidad a través de un marco interactivo para voluntarios y personas sin hogar (nuestra aplicación pronto incluirá formas interactivas para que los voluntarios se conecten entre sí y brinden un mejor apoyo a las personas sin hogar a las que ayudan).";
+//"joinUs" = "Únete a nosotras";
+//"donate" = "Donar";
+//
+//
+//"featuredItems" = "Elementos destacados";
+//"suggestedItems":"Artículos sugeridos para regalar";
+//"essentialResources":"Recursos esenciales";
+//"healthTip" = "Haga clic a continuación para el bienestar compartible, consejos de salud, y imprimible resources/información";
+//"keyResources":"Recursos clave";
+
+//
+//"wouldYouLikeToLogYourVisit" = "¿Le gustaría registrar su visita?";
+//"logYourVisit" = "Registre su visita";
+//
+//"beforeOutreachIntro" = "Complete todo lo que pueda de este formulario de planificación. Esto también nos permite obtener más apoyo y recursos, para brindarle más contenido y servicios a usted y a los que están en la calle.";
+//"whereWillVisit" = "¿Dónde será tu visita?";
+//"beforeOutreachB" = "¿Cuándo será tu visita?";
+//"afterOutreachIntro" = "Complete este formulario cada vez que salga. ¡Esto nos ayuda a construir Street Care, para brindarle más servicios a usted y a la comunidad!";
+//"afterOutreachA" = "¿Dónde fue tu visita?";
+//"whenWasVisit" = "¿Cuándo fue tu visita?";
+//"step1of4" = "Paso 1 de 4";
+//
+//"beforeOutreachAStep2" = "¿Horas que se dedicarán a la divulgación?";
+//"beforeOutreachBStep2" = "¿Volverás a realizar actividades de divulgación?";
+//"beforeOutreachCStep2" = "¿Cuántas personas lo ayudarán a prepararse o se unirán a usted en este alcance?";
+//"afterOutreachAStep2" = "¿Horas dedicadas a la divulgación?";
+//"afterOutreachBStep2" = "¿Puede realizar la divulgación de nuevo?";
+//"afterOutreachCStep2" = "¿Cuántas personas te acompañaron o te ayudaron a prepararte?";
+//"step2of4" = "Paso 2 de 4";
+//
+//"beforeOutreachAStep3" = "¿Le gustaría compartir los correos electrónicos de los futuros miembros del grupo para que podamos informarles sobre Street Care?";
+//"beforeOutreachBStep3" = "¿Siente que su experiencia de alcance será buena?";
+//"afterOutreachAStep3" = "¿Le gustaría compartir los correos electrónicos de los miembros de su grupo para que podamos informarles sobre Street Care?";
+//"afterOutreachBStep3" = "Califica tu experiencia de alcance";
+//"step3of4" = "Paso 3 de 4";
+//
+//"beforeOutreachAStep4" = "¿Tiene alguna pregunta sobre la divulgación antes de ir? ¿Qué te inspiró? ¿Espera aprender las respuestas de esta experiencia de divulgación?";
+//"afterOutreachAStep4" = "¿Tuviste una buena experiencia? ¿Qué te inspiró? ¿Algún problema que pueda ayudar a otros a realizar actividades de divulgación? Esto puede ser específico para personas o ubicaciones particulares sin hogar.";
+//"step4of4" = "Paso 4 de 4";
+//"submitVisitLog" = "Enviar registro de visitas";
+//"questionsOrComments" = "Preguntas o comentarios";
+//"saveSurvey" = "Guardar encuesta en perfil";
+//"dontSaveSurvey" = "Do not save survey to profile";
+//
+//"streetCareTitle" = "Cuidado de la calle";
+//"welcomeTitle" = "Bienvenido";
+//
+//"homePara1" = "para1_es";
+//"homePara2" = "para2_es";
+//"homePara3" = "para3_es";
+//"homeTitle1" = "title1_es";
+//"homeTitle2" = "title2_es";
+//
+//
+//
+//"profileTitle" = "Perfil";
+//"recentVisitLog" = "Registro de visitas recientes";
+//"signIn" = "Registrarse";
+//"guest" = "Invitada";
+//"signOut" = "Desconectar";
+//"loginProfileMessage" = "Ha ocurrido un problema al cargar su nombre de usuario. Comprueba tu conexión a Internet y vuelve a intentarlo.";
+//"noImageSelected" = "No se seleccionó ninguna imagen.";
+//"profileImagePicker" = "Selector de imagen de perfil";
+//"recentVisitLog" = "Registro de visitas recientes";
+//"recentVisitLogError" = "No se pudo acceder a sus encuestas. Comprueba tu conexión a Internet e inténtalo de nuevo.";
+//"noLogMessage" = "No ha completado ningún registro de visitas. Por lo tanto, ninguno está disponible para su visualización.";
+//"submitAVisitLog" = "Envíe un registro de visitas";
+//
+//"beforePara1" = "para1_es";
+//"beforePara2" = "para2_es";
+//"beforePara3" = "para3_es";
+//"beforePara4" = "para4_es";
+//"beforePara5" = "para5_es";
+//"beforePara6" = "para6_es";
+//"beforeParaBold2" = "para2_bold_es";
+//"beforeParaBold3" = "para3_bold_es";
+//"beforeParaBold4" = "para4_bold_es";
+//"beforeParaBold5" = "para5_bold_es";
+//"beforeParaBold6" = "para6_bold_es";
+//"iWantToHelp" = "Quiero ayudar";
+//"listOfItems":"Lista de cosas que \n llevar para usted";
+//"carryYourID":"Lleva tu DNI";
+//"chargedPhone":"Teléfono cargado";
+//"food":"Comida";
+//"masksCoverings":"Máscaras/Revestimientos";
+//"thingsToPutForYourself":"Cosas para poner en Individual \nBolsa de Bienestar para Folleto";
+//"soap":"Jabón";
+//"socks":"Medias";
+//"snacks":"Aperitivos";
+//"streetCareWellnessInfo":"StreetCare Bienestar \nInformación para repartir";
+//
+//
+//"before" = "Antes";
+//"onTheStreet" = "En\nla calle";
+//"after" = "Después";
+//"startNowPara1" = "para1_es";
+//
+//"surveyCompleteMessage" = "Por tomarse el tiempo para completar la encuesta";
+//"returnHome" = "Volver a casa";
+//
+//"surveyCompleteMessage" = "Por tomarse el tiempo para completar la encuesta";
+//"returnHome" = "Volver a casa";
+//"userName" = "nombre de usuario";
+//"email" = "correo electrónico";
+//"password" = "contraseña";
+//"company" = "Empresa/Organización (Opcional)";
+//"privacyAgreement" = "Al registrarse, acepta las";
+//"privacyStatement" = "Declaracion de privacidad";
+//
+//
+//"userNameErrorMessage" = "por favor, ingrese un nombre de usuario";
+//"noShareMessage" = "No compartiremos su\ninformación de correo electrónico";
+//"emailErrorMessage" = "Please an email address";
+//"passwordErrorMessage" = "Por favor una dirección de correo electrónico";
+//"passwordLongerErrorMessage" = "La contraseña debe ser un poco más larga";
+//"signInFailed" = "Fallo al iniciar sesion";
+//
+//"otherFields" = "Otros campos";
+//"pleaseInput" = "Ingrese los siguientes campos obligatorios";
+//"pleaseInputAValue" = "Introduzca un valor.";
+//"organization" = "Organización";
+//"submit" = "Enviar";
+//"signUpFailed" = "Registro fallido";

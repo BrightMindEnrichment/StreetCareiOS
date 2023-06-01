@@ -1,0 +1,232 @@
+/* 
+  Localizable.strings
+  StreetCare
+
+  Created by Michael Thornton on 4/29/22.
+  
+*/
+
+"errorTitle" = "Oops.";
+
+"healthySnacks" = "Healthy Snacks";
+"healthySnacksDescription" = "Include items that are easy to chew and pack and nutritious, such as breakfast bars, beef jerky, and dried fruit. Pack food items in a ziplock bag separately from any scented sanitary products.";
+
+"water" = "Water";
+"waterDescription" = "Finding potable water can be difficult for homeless individuals. Bottled water is a great donation item, as is carrying a jug and cups.";
+
+"firstAid" = "First Aid";
+"firstAidDescription" = "Infection prevention and first aid care are essential, especially for homeless people. Give sealed, clean items like bandages, wipes, ointments, and nail care kits to protect those in need. Avoid alcohol-based products.";
+
+"personalHygiene" = "Personal Hygiene";
+"personalHygieneDescription" = "Soaps should be fragrance-free, since sensitivities and allergies are common. Make sure hand sanitizers do not contain alcohol. Toothpaste and toothbrushes make practical and useful donation items.";
+
+"socksClothing" = "Clothing";
+"socksClothingDescription" = "Clothing items are essential through all seasons, notably warm clothes. Socks are especially crucial. They are affordable, easy to find, and overall great items to include.";
+
+"feminineHygiene" = "Feminine Hygiene";
+"feminineHygieneDescription" = "Tampons and pads are necessities, and yet something that many families experiencing homelessness struggle to obtain every month. Consider different needs such as heavy, moderate, and light flow.";
+
+"userName" = "User name";
+"email" = "Email";
+"password" = "Password";
+"company" = "Company/Organization (Optional)";
+"signUpButtonTitle" = "Sign Up";
+"loginButtonTitle" = "Login";
+"welcome" = "Welcome";
+"howToVideos" = "How-to Videos";
+"logoutButtonTitle" = "Sign Out";
+"removeAccountButtonTitle" = "Remove Account";
+
+
+
+
+
+"whereWillVisitPrompt" = "Where will be your visit?";
+"enterLocation" = "Enter location";
+"whenWasVisitPrompt" = "When was your visit?";
+"hoursSpentPrompt" = "Hours spent on outreach?";
+"canOutreachAgainPrompt" = "Can you perform outreach again?";
+"peopleCountPrompt" = "How many people joined you or helped you prepare?";
+"rateExperiencePrompt" = "Rate your outreach experience.";
+"questionsOrComments" = "Questions or comments?";
+"startNow" = "Start Now";
+"whatToGive" = "What to Bring and Give";
+"toolkitToHelp" = "Your Toolkit to Help";
+"howToHelp" = "How to Help";
+
+
+"before_para1" = "The first thing to remember is that homeless people are a diverse group of people just like everyone else, no matter how they look, no matter their gender, age, or race. Some have fallen on hard times. Some may be struggling with mental illness. But everyone wants to be treated with respect and dignity. Here are some steps to follow before you go:";
+
+"before_title2" = "1. Let someone know";
+"before_para2" = "Doing an outreach, you may be run into new neighborhoods. It would help to keep someone informed about this outreach.";
+
+"before_title3" = "2. How to prepare your care bags";
+"before_para3" = "Handing out individual bags gives the recipient a way to move the items around while not bogging them down with more than they can carry. Share essential items - socks, soap, and healthy snacks are great for care bags. Read on for more items to include, along with important printable information, which includes info cards to hand out to those in need.";
+
+"before_title4" = "3. Must carry";
+"before_para4" = "IDs, our infographics for street outreach (print them if you can!), charged phone, water & snack for yourself. Avoid carrying too much cash.";
+
+"before_title5" = "4. Plan an introduction";
+"before_para5" = "Approach with compassion, introduce yourself, smile, be open, and keep it simple.";
+
+
+"before" = "Before";
+"onTheStreet" = "On The Street";
+"after" = "After";
+
+"afterOutreachIntro" = "Please fill out this form after each time you go out. This helps us build Street Care, to bring more services to you and the community!";
+
+
+"vistLog" = "Visit Log";
+"community" = "Community";
+
+
+
+
+
+
+"guestCantLogVisitError" = "Login to record a visit.";
+"guestCantCommunityError" = "Login to add an event.";
+
+"missingDataError" = "Please fill out all information.";
+
+//"welcome" = "Welcome to\nStreet Care";
+//"loginButtonTitle" = "Login";
+//"signUpButtonTitle" = "Sign Up";
+//"continueAsGuestLink" = "Continue as Guest";
+//"forgotPassword" = "Forgot Password";
+//"forgotPasswordInstructions" = "Enter your email and we'll send you a link to get back into your account.";
+//"yourEmail" = "Your Email";
+//"inputYourEmail" = "Please Input your Email";
+//"troubleLoggingIn" = "Trouble logging in?";
+//"sendCode" = "Send Code";
+//"success" = "Success";
+//"returnToLogin" = "Return to login";
+//"passwordResetFailed" = "Password reset failed";
+//"close" = "Close";
+//"error" = "Error";
+//"errorOccured" = "An Error Has Occured";
+//"loading" = "Loading.....";
+//"thankYou" = "Thank you";
+//
+//
+//"startUsingTheApp" = "Start Using The App";
+//"startUsingTheAppContent" = "The Street Care app —brought to you by homelessness and wellness experts— is full of clear, simple tutorials and guidance. You can help without spending money. Minutes during your commute can help a lot. If you are new to helping, we’ll show how to approach someone, distribute healthy items, and find safe areas where people in need are.\n\nWhat to know about this initial release and our app.\n\n1. How to Start (Start here!) = steps to prepare you for street outreach well before you go and have direct contact with homeless people;\n\n2. What to Bring = detailed instructions on items to bring for your outreach. This will help you decide what to bring in order to have the most impact;\n\n3. How-to Videos = minute long videos that give examples of encounters you may have while performing outreach. We go through each situation in depth to show you what to do in each case. \n\n 4. The Big Picture = Every tool works to improve physical, emotional and mental health, to help homeless families and individuals make it off the streets. Safe and proven, our innovative approach focuses on transformation (and any amount or aspect you work on helps a lot), in 3 ways = \n\n\nA. Giving care kits or water, which leads to sharing homelessness-focused wellness and health tips;\n\nB. Work on goal reinforcement with homeless people, which is crucial for bringing about transformation; \n\nC. Help build community through an interactive framework for both volunteers and homeless people (our app will soon include interactive ways for volunteers both to connect with one another and to better support the homeless people they are aiding).";
+//"joinUs" = "Join Us";
+//"donate" = "Donate";
+//
+//
+//"featuredItems" = "Featured Items";
+//"suggestedItems" = "Suggested Items to give";
+//"essentialResources" = "Essential Resources";
+//"healthTip" = "Click below for shareable wellness, health tips, and printable resources/information";
+//"keyResources":"Key Resources";
+//
+//
+//"wouldYouLikeToLogYourVisit" = "Would you like to Log Your Visit?";
+//"logYourVisit" = "Log your visit";
+//
+//"beforeOutreachIntro" = "Please fill out as much of this planning form as you can. This also allows us to get further support and resources, to bring more content and services to you and those on the street.";
+//"beforeOutreachA" = "Where will be your visit?";
+//"beforeOutreachB" = "When will your visit be?";
+//"afterOutreachIntro" = "Please fill out this form after each time you go out. This helps us build Street Care, to bring more services to you and the community!";
+//"afterOutreachA" = "Where was your visit?";
+//"afterOutreachB" = "When was your visit?";
+//"step1of4" = "Step 1 of 4";
+//
+//"beforeOutreachAStep2" = "Hours that will be spent on outreach?";
+//"beforeOutreachBStep2" = "Will you perform outreach again?";
+//"beforeOutreachCStep2" = "How many people will help you prepare or join you on this outreach?";
+//"afterOutreachAStep2" = "Hours spent on outreach?";
+//"afterOutreachBStep2" = "Can you perform outreach again?";
+//"afterOutreachCStep2" = "How many people joined you or helped you prepare?";
+//"step2of4" = "Step 2 of 4";
+//
+//"beforeOutreachAStep3" = "Would you like to share your future group members emails so that we can inform them about Street Care?";
+//"beforeOutreachBStep3" = "Do you feel like your outreach experience will be a good one?";
+//"afterOutreachAStep3" = "Would you like to share your group members emails so that we can inform them about Street Care?";
+//"afterOutreachBStep3" = "Rate your outreach experience";
+//"step3of4" = "Step 3 of 4";
+//
+//"beforeOutreachAStep4" = "Do you have any questions about outreach before go? What inspired you? Do you hope to learn answers from this outreach experience?";
+//"afterOutreachAStep4" = "Did you have a good experience? What inspired you? Any issues that would help others performing outreach? This can be specific to particular homeless people or locations.";
+//"step4of4" = "Step 4 of 4";
+//"submitVisitLog" = "Submit Visit Log";
+//"questionsOrComments" = "Questions or comments";
+//"saveSurvey" = "Save survey to profile";
+//"dontSaveSurvey" = "Do not save survey to profile";
+//
+//"streetCareTitle" = "Street Care";
+//"welcomeTitle" = "Welcome";
+//"toolkitToHelp" = "Your Toolkit to Help\nHomeless People";
+//"homePara1" = "para1";
+//"homePara2" = "para2";
+//"homePara3" = "para3";
+//"homeTitle1" = "title1";
+//"homeTitle2" = "title2";
+//
+//
+//
+//"profileTitle" = "Profile";
+//"recentVisitLog" = "Recent Visit Log";
+//"signIn" = "Sign in";
+//"guest" = "Guest";
+//"signOut" = "Sign Out";
+//"loginProfileMessage" = "An issue has occurred while loading your username. Please check your internet connection and try again.";
+//"noImageSelected" = "No image selected.";
+//"profileImagePicker" = "Profile Image Picker";
+//"recentVisitLog" = "Recent Visit Log";
+//"recentVisitLogError" = "Couldn't access your surveys. Please check your internet connection and try again";
+//"noLogMessage" = "You have not filled out any visit logs. Therefore none are available for display";
+//"submitAVisitLog" = "Submit a visit log";
+//
+//"beforePara1" = "para1";
+//"beforePara2" = "para2";
+//"beforePara3" = "para3";
+//"beforePara4" = "para4";
+//"beforePara5" = "para5";
+//"beforePara6" = "para6";
+//"beforeParaBold2" = "para2_bold";
+//"beforeParaBold3" = "para3_bold";
+//"beforeParaBold4" = "para4_bold";
+//"beforeParaBold5" = "para5_bold";
+//"beforeParaBold6" = "para6_bold";
+//"iWantToHelp" = "I want to help";
+//"listOfItems":"List of Things to \n Bring for Yourself";
+//"carryYourID":"Carry Your ID";
+//"chargedPhone":"Charged Phone";
+//"food":"Food";
+//"masksCoverings":"Masks/Coverings";
+//"thingsToPutForYourself":"Things to put in Individual \nWellness Bag to Handout";
+//"soap":"Soap";
+//"socks":"Socks";
+//"snacks":"Snacks";
+//"streetCareWellnessInfo" = "StreetCare Wellness \nInformation to pass out";
+//
+//
+//"before" = "Before";
+//"onTheStreet" = "On The\n Street";
+//"after" = "After";
+//"startNowPara1" = "para1";
+//
+//"surveyCompleteMessage" = "For taking the time to fill out the survey";
+//"returnHome" = "Return Home";
+//"userName" = "User name";
+//"email" = "Email";
+//"password" = "Password";
+//"company" = "Company/Organization (Optional)";
+//"privacyAgreement" = "By signing up you agree to Street Care's";
+//"privacyStatement" = "Privacy Statement";
+//"userNameErrorMessage" = "Please enter a username";
+//"noShareMessage" = "We won't share your\nemail information";
+//"emailErrorMessage" = "Please an email address";
+//"passwordErrorMessage" = "Please enter password";
+//"passwordLongerErrorMessage" = "Password needs to be a bit longer";
+//"signInFailed" = "Sign in failed";
+//
+//"otherFields" = "Other Fields";
+//"pleaseInput" = "Please input the following required fields";
+//"pleaseInputAValue" = "Please input a value!";
+//"organization" = "Organization";
+//"submit" = "Submit";
+//"signUpFailed" = "Sign up failed";
