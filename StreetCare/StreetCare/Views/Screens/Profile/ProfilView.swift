@@ -7,6 +7,8 @@
 
 import SwiftUI
 import FirebaseAuth
+import UIKit
+
 
 struct ProfilView: View {
     
@@ -24,17 +26,26 @@ struct ProfilView: View {
     @State var showErrorMessage = false
     @State var errorMessage = ""
         
+    @StateObject var storage = StorageManager(uid: "")
+    @State private var avatarImage: UIImage?
+
+    
     var body: some View {
         NavigationStack {
             VStack {
                 
-                Image(systemName: "person")
-                    .font(.largeTitle).padding(EdgeInsets(top: 100.0, leading: 0.0, bottom: 20.0, trailing: 0.0))
+                AvatarView(image: $avatarImage)
                 
                 if let user = self.user {
                     if let email = user.email {
                         Text("\(email)").padding()
                         Spacer()
+                    }
+                    
+                    NavigationLink {
+                        ProfileDetails()
+                    } label: {
+                        Text("Edit Profile")
                     }
                     
                     
@@ -72,8 +83,16 @@ struct ProfilView: View {
                     
                     adapter.delegate = self
                     adapter.refresh()
+                    
+                    storage.uid = user.uid
+                    storage.getImage()
                 }
             }
+            .onChange(of: storage.image, perform: { newValue in
+                if let img = newValue {
+                    self.avatarImage = img
+                }
+            })
             .alert("Error...", isPresented: $showErrorMessage, actions: {
                 Button("OK") {
                     // nothing to do
@@ -143,6 +162,7 @@ struct ProfilView: View {
     }
     
 } // end struct
+
 
 
 extension ProfilView: VisitLogDataAdapterProtocol {
