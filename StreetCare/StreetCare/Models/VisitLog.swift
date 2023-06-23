@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import CoreLocation
 
 
 class VisitLog: ObservableObject, Identifiable {
@@ -33,6 +34,25 @@ class VisitLog: ObservableObject, Identifiable {
     
     @Published var volunteerAgain = 0
     
+    @Published var location = CLLocationCoordinate2D.init(latitude: 0.0, longitude: 0.0)
+    
+
+    var didProvideSpecificHelp: Bool {
+        return foodAndDrinks || clothes || hygine || wellness || other
+    }
+    
+    
+    var volunteerAgainText: String {
+        switch(volunteerAgain) {
+        case 0:
+            return "No"
+        case 1:
+            return "Yes"
+        default:
+            return "Maybe"
+        }
+    }
+
     init(id: String) {
         self.id = id
     }

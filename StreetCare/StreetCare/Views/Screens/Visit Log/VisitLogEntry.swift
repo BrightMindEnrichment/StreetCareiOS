@@ -26,9 +26,8 @@ struct VisitLogEntry: View {
                                 
                 switch questionNumber {
                 case 1:
-                    InputTileString(questionNumber: 1, totalQuestions: 5, question: "Where was your visit?", textValue: $visitLog.whereVisit) {
+                    InputTileLocation(questionNumber: 1, totalQuestions: 5, question: "Where was your visit?", textValue: $visitLog.whereVisit, location: $visitLog.location) {
                         questionNumber += 1
-                        print("incrementing question to \(questionNumber)")
                     } previousAction: {
                         //
                     } skipAction: {
@@ -130,6 +129,8 @@ struct VisitLogEntry: View {
             .onAppear {
                 questionNumber = 1
             }
+            
+            //Text("\(visitLog.volunteerAgain)")
         }
     } // end body
     

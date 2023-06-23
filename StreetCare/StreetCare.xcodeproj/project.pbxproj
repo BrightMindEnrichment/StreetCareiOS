@@ -29,7 +29,7 @@
 		4C82441729ECD993003D1575 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C82441629ECD993003D1575 /* SignUpView.swift */; };
 		4C82448929EE40C5003D1575 /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C82448829EE40C5003D1575 /* LoginView.swift */; };
 		4C82448B29EE44E5003D1575 /* NotLoggedInProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C82448A29EE44E5003D1575 /* NotLoggedInProfileView.swift */; };
-		4C82448E29EF9E58003D1575 /* InputTileString.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C82448D29EF9E58003D1575 /* InputTileString.swift */; };
+		4C82448E29EF9E58003D1575 /* InputTileLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C82448D29EF9E58003D1575 /* InputTileLocation.swift */; };
 		4C82449029EF9EAB003D1575 /* InputTileDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C82448F29EF9EAB003D1575 /* InputTileDate.swift */; };
 		4C82449229EF9EE5003D1575 /* InputTileNumber.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C82449129EF9EE5003D1575 /* InputTileNumber.swift */; };
 		4C82449429F0D999003D1575 /* InputTileList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C82449329F0D999003D1575 /* InputTileList.swift */; };
@@ -78,6 +78,10 @@
 		BE9D1DD12A376B3800072835 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = BE9D1DD02A376B3800072835 /* FirebaseStorage */; };
 		BE9D1DD32A377E9100072835 /* StorgeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9D1DD22A377E9100072835 /* StorgeManager.swift */; };
 		BE9D1DD52A37819E00072835 /* AvatarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9D1DD42A37819E00072835 /* AvatarView.swift */; };
+		BE9D1DD72A37933500072835 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9D1DD62A37933500072835 /* LocationManager.swift */; };
+		BE9D1DD92A3A419A00072835 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9D1DD82A3A419A00072835 /* LoadingView.swift */; };
+		BE9D1DDB2A3F745400072835 /* ScreenLeft.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9D1DDA2A3F745400072835 /* ScreenLeft.swift */; };
+		BE9D1DDD2A43641400072835 /* RatingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9D1DDC2A43641400072835 /* RatingView.swift */; };
 		BEA872742A28D0330053D4F4 /* ProfileDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA872732A28D0330053D4F4 /* ProfileDetails.swift */; };
 		BEA872762A290F360053D4F4 /* ProfileDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA872752A290F360053D4F4 /* ProfileDetail.swift */; };
 		BEA872782A2910B90053D4F4 /* ProfileDetailsAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA872772A2910B90053D4F4 /* ProfileDetailsAdapter.swift */; };
@@ -106,7 +110,7 @@
 		4C82441629ECD993003D1575 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 		4C82448829EE40C5003D1575 /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		4C82448A29EE44E5003D1575 /* NotLoggedInProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotLoggedInProfileView.swift; sourceTree = "<group>"; };
-		4C82448D29EF9E58003D1575 /* InputTileString.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputTileString.swift; sourceTree = "<group>"; };
+		4C82448D29EF9E58003D1575 /* InputTileLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputTileLocation.swift; sourceTree = "<group>"; };
 		4C82448F29EF9EAB003D1575 /* InputTileDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputTileDate.swift; sourceTree = "<group>"; };
 		4C82449129EF9EE5003D1575 /* InputTileNumber.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputTileNumber.swift; sourceTree = "<group>"; };
 		4C82449329F0D999003D1575 /* InputTileList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputTileList.swift; sourceTree = "<group>"; };
@@ -152,6 +156,10 @@
 		BE9D1DCD2A37626C00072835 /* ImagePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerView.swift; sourceTree = "<group>"; };
 		BE9D1DD22A377E9100072835 /* StorgeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorgeManager.swift; sourceTree = "<group>"; };
 		BE9D1DD42A37819E00072835 /* AvatarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarView.swift; sourceTree = "<group>"; };
+		BE9D1DD62A37933500072835 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
+		BE9D1DD82A3A419A00072835 /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
+		BE9D1DDA2A3F745400072835 /* ScreenLeft.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScreenLeft.swift; sourceTree = "<group>"; };
+		BE9D1DDC2A43641400072835 /* RatingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingView.swift; sourceTree = "<group>"; };
 		BEA872732A28D0330053D4F4 /* ProfileDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileDetails.swift; sourceTree = "<group>"; };
 		BEA872752A290F360053D4F4 /* ProfileDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileDetail.swift; sourceTree = "<group>"; };
 		BEA872772A2910B90053D4F4 /* ProfileDetailsAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileDetailsAdapter.swift; sourceTree = "<group>"; };
@@ -201,7 +209,7 @@
 			isa = PBXGroup;
 			children = (
 				4CA8693229E3D05300BB6972 /* InputTile.swift */,
-				4C82448D29EF9E58003D1575 /* InputTileString.swift */,
+				4C82448D29EF9E58003D1575 /* InputTileLocation.swift */,
 				4C82448F29EF9EAB003D1575 /* InputTileDate.swift */,
 				4C82449129EF9EE5003D1575 /* InputTileNumber.swift */,
 				4C82449329F0D999003D1575 /* InputTileList.swift */,
@@ -284,6 +292,9 @@
 				4C7136BE2A0462410060EB7D /* TabButtonView.swift */,
 				4C85F0EE2A08A7A100FFEDC8 /* GrowingTextView.swift */,
 				BE9D1DCD2A37626C00072835 /* ImagePickerView.swift */,
+				BE9D1DD82A3A419A00072835 /* LoadingView.swift */,
+				BE9D1DDA2A3F745400072835 /* ScreenLeft.swift */,
+				BE9D1DDC2A43641400072835 /* RatingView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -335,6 +346,7 @@
 				BEA872752A290F360053D4F4 /* ProfileDetail.swift */,
 				BEA872772A2910B90053D4F4 /* ProfileDetailsAdapter.swift */,
 				BE9D1DD22A377E9100072835 /* StorgeManager.swift */,
+				BE9D1DD62A37933500072835 /* LocationManager.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -442,7 +454,9 @@
 				4C85F0E72A089F0A00FFEDC8 /* PlaylistDefinitionDataAdapter.swift in Sources */,
 				4C7136C32A0495630060EB7D /* EventDataAdapter.swift in Sources */,
 				4CB65E6029DA91C000684BD1 /* Playlist.swift in Sources */,
+				BE9D1DDD2A43641400072835 /* RatingView.swift in Sources */,
 				4CB7D8CC29F8D5B00002495E /* VisitLog.swift in Sources */,
+				BE9D1DD72A37933500072835 /* LocationManager.swift in Sources */,
 				4CB7D8C529F63AEC0002495E /* InputTileRate.swift in Sources */,
 				4CB65E5029DA6FE900684BD1 /* LinkData.swift in Sources */,
 				4C2F5A7229FF1D4500CFD288 /* VisitLogDataAdapter.swift in Sources */,
@@ -474,9 +488,11 @@
 				4CB65E6129DA91C000684BD1 /* SafeNetwork.swift in Sources */,
 				4C17ED532A00A4470013EF52 /* NavLinkButton.swift in Sources */,
 				4CB65E6329DA91C000684BD1 /* FileDataAdapter.swift in Sources */,
+				BE9D1DDB2A3F745400072835 /* ScreenLeft.swift in Sources */,
 				4CB65E6429DA91C000684BD1 /* InformationCategory.swift in Sources */,
 				4CB65E6629DA91C000684BD1 /* Endpoints.swift in Sources */,
 				4CB65E4A29DA6A1200684BD1 /* WhatToBringView.swift in Sources */,
+				BE9D1DD92A3A419A00072835 /* LoadingView.swift in Sources */,
 				4C0E4FF129DDF726009D33C1 /* DonateView.swift in Sources */,
 				BE9D1DD32A377E9100072835 /* StorgeManager.swift in Sources */,
 				4C7136BB2A01F7E90060EB7D /* ForgotPasswordView.swift in Sources */,
@@ -490,7 +506,7 @@
 				4C2F5A7029FE6B0A00CFD288 /* InputTileVolunteerAgain.swift in Sources */,
 				BEA872782A2910B90053D4F4 /* ProfileDetailsAdapter.swift in Sources */,
 				4CB65DA129D0DEC700684BD1 /* CommunityView.swift in Sources */,
-				4C82448E29EF9E58003D1575 /* InputTileString.swift in Sources */,
+				4C82448E29EF9E58003D1575 /* InputTileLocation.swift in Sources */,
 				4C82448B29EE44E5003D1575 /* NotLoggedInProfileView.swift in Sources */,
 				4C85F0E32A089E3200FFEDC8 /* PlaylistDefinition.swift in Sources */,
 				4CB65D9029D016AE00684BD1 /* StreetCareApp.swift in Sources */,

@@ -5,8 +5,10 @@
 //  Created by Michael on 4/19/23.
 //
 import SwiftUI
+import CoreLocation
+import CoreLocationUI
 
-struct InputTileString: View {
+struct InputTileLocation: View {
 
     var questionNumber: Int
     var totalQuestions: Int
@@ -15,6 +17,11 @@ struct InputTileString: View {
     var question: String
     
     @Binding var textValue: String
+    @Binding var location: CLLocationCoordinate2D
+    
+    @State var locationManager: LocationManager!
+    
+    @State var isLoading = false
         
     var nextAction: () -> ()
     var previousAction: () -> ()
@@ -41,15 +48,30 @@ struct InputTileString: View {
                     .foregroundColor(.gray)
                     .font(.footnote)
     
-                Text(question)
-                    .font(.headline)
-                    .padding()
-                
-                TextField("optional", text: $textValue)
-                    .textFieldStyle(.roundedBorder)
-                    .frame(width: 200.0)
-                
-                Spacer()
+                VStack {
+                    Text(question)
+                        .font(.headline)
+                        .padding()
+                    
+                    TextField("optional", text: $textValue)
+                        .textFieldStyle(.roundedBorder)
+                        .frame(width: 200.0)
+                    
+                    HStack {
+                        Rectangle()
+                            .frame(height: 2.0).foregroundColor(.gray).padding()
+                        Text("or").foregroundColor(.gray)
+                        Rectangle()
+                            .frame(height: 2.0).foregroundColor(.gray).padding()
+                    }
+    
+                    LocationButton {
+                        isLoading = true
+                        locationManager.requestLocation()
+                    }
+    
+                    Spacer()
+                }
                 
                 ProgressView(value: Double(questionNumber) / Double(totalQuestions))
                     .tint(.yellow)
@@ -60,10 +82,6 @@ struct InputTileString: View {
                 Spacer()
                 
                 HStack {
-//                    Button("Previous") {
-//                        previousAction()
-//                    }
-//                    .foregroundColor(.black)
                     Spacer()
                     Button("Next") {
                         nextAction()
@@ -74,18 +92,37 @@ struct InputTileString: View {
             }
         }
         .frame(width: size.width, height: size.height)
+        .loadingAnimation(isLoading: isLoading)
+        .onAppear {
+            locationManager = LocationManager {
+                isLoading = false
+                newLocation()
+                nextAction()
+            }
+        }
 
     } // end body
+    
+    
+    func newLocation() {
+        if let loc = locationManager.location {
+            self.location = loc
+        }
+        else {
+            print("missing location!")
+        }
+    }
 } // end struct
 
 
 struct InputTileString_Previews: PreviewProvider {
 
     @State static var inputText = ""
+    @State static var location = CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0)
 
     static var previews: some View {
 
-        InputTileString(questionNumber: 2, totalQuestions: 5, question: "Shall we play a game?", textValue: $inputText) {
+        InputTileLocation(questionNumber: 2, totalQuestions: 5, question: "Shall we play a game?", textValue: $inputText, location: $location) {
             //
         } previousAction: {
             //

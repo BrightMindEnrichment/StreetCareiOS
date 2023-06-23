@@ -8,6 +8,8 @@
 import SwiftUI
 import FirebaseAuth
 
+
+
 struct VisitImpactView: View {
     
     let adapter = VisitLogDataAdapter()
@@ -20,6 +22,8 @@ struct VisitImpactView: View {
     @State var itemsDonated = 0
     
     @State var showActionSheet = false
+    
+    @State var isLoading = false
     
     var body: some View {
         NavigationStack {
@@ -51,29 +55,36 @@ struct VisitImpactView: View {
                     .font(.title)
                 
                 List(history) { item in
-                    HStack {
-                        ListConnectorDecorationView()
-                        VStack {
-                            HStack {
-                                Text("\(item.whenVisit.formatted(date: .abbreviated, time: .omitted))")
-                                Spacer()
-                            }
-                            
-                            HStack {
-                                Text("\(item.whereVisit)")
-                                Spacer()
+                    NavigationLink {
+                        VisitLogView(log: item)
+                    } label: {
+                        HStack {
+                            ListConnectorDecorationView()
+                            VStack {
+                                HStack {
+                                    Text("\(item.whenVisit.formatted(date: .abbreviated, time: .omitted))")
+                                    Spacer()
+                                }
+                                
+                                HStack {
+                                    Text("\(item.whereVisit)")
+                                    Spacer()
+                                }
                             }
                         }
                     }
+
                 }
                 .scrollContentBackground(.hidden)
                 .background(Color.clear)
                 
             }
+            .loadingAnimation(isLoading: isLoading)
             .onAppear {
                 print("onAppear impact view")
                 adapter.delegate = self
                 adapter.refresh()
+                self.isLoading = true
             }
         }
         .confirmationDialog("Please fill out this form each time you perform an outreach. This helps you track your contributions and allows Street Care to bring more support and services to help the community!", isPresented: $showActionSheet, titleVisibility: .visible) {
@@ -136,6 +147,7 @@ extension VisitImpactView: VisitLogDataAdapterProtocol {
     func visitLogDataRefreshed(_ logs: [VisitLog]) {
         self.history = logs
         self.updateCounts()
+        self.isLoading = false
     }
 }
 

@@ -37,9 +37,16 @@ struct ProfilView: View {
                 AvatarView(image: $avatarImage)
                 
                 if let user = self.user {
-                    if let email = user.email {
-                        Text("\(email)").padding()
+                    
+                    if let displayName = user.displayName {
+                        Text("\(displayName)").padding()
                         Spacer()
+                    }
+                    else {
+                        if let email = user.email {
+                            Text("\(email)").padding()
+                            Spacer()
+                        }
                     }
                     
                     NavigationLink {

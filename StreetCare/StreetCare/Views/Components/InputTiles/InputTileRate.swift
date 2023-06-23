@@ -49,38 +49,7 @@ struct InputTileRate: View {
                     .font(.headline)
                     .padding()
                 
-                HStack {
-                    Image(systemName: starNameForStarNumber(1))
-                        .foregroundColor(starColorForStarNumber(1))
-                        .onTapGesture {
-                            rating = 1
-                        }
-                    Image(systemName: starNameForStarNumber(2))
-                        .foregroundColor(starColorForStarNumber(2))
-                        .onTapGesture {
-                            rating = 2
-                        }
-                    Image(systemName: starNameForStarNumber(3))
-                        .foregroundColor(starColorForStarNumber(3))
-                        .onTapGesture {
-                            rating = 3
-                        }
-
-                    Image(systemName: starNameForStarNumber(4))
-                        .foregroundColor(starColorForStarNumber(4))
-                        .onTapGesture {
-                            rating = 4
-                        }
-
-                    Image(systemName: starNameForStarNumber(5))
-                        .foregroundColor(starColorForStarNumber(5))
-                        .onTapGesture {
-                            rating = 5
-                        }
-
-                    //Text("\(rating)")
-                }
-                .padding()
+                RatingView(rating: $rating)
 
                 VStack {
                     Text("Questions/comments").font(.caption)

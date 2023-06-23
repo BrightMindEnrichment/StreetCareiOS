@@ -10,6 +10,7 @@ import FirebaseAuth
 import FirebaseCore
 import FirebaseFirestore
 import FirebaseFirestoreSwift
+import CoreLocation
 
 
 protocol VisitLogDataAdapterProtocol {
@@ -54,6 +55,11 @@ class VisitLogDataAdapter {
         userData["numberOfHelpers"] = visitLog.numberOfHelpers
         userData["volunteerAgain"] = visitLog.volunteerAgain
 
+        if visitLog.location.latitude != 0 {
+            userData["latitude"] = visitLog.location.latitude
+            userData["longitude"] = visitLog.location.longitude
+        }
+        
         userData["timestamp"] = Date()
         userData["uid"] = user.uid
         
@@ -91,17 +97,20 @@ class VisitLogDataAdapter {
                 self.visitLogs.removeAll()
                 
                 for document in querySnapshot!.documents {
-                    
-                    print(document.data())
-
+                                        
                     let log = VisitLog(id: document.documentID)
                     
                     if let whereVisit = document["whereVisit"] as? String {
                         log.whereVisit = whereVisit
                     }
                     
-                    if let whenVisit = document["whenVisit"] as? Date {
-                        log.whenVisit = whenVisit
+                    if let latitude = document["latitude"] as? Double, let longitude = document["longitude"] as? Double {
+                        log.location = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+                    }
+                    
+                    if let whenVisit = document["whenVisit"] as? Timestamp {
+                        //print(whenVisit.formatted())
+                        log.whenVisit = whenVisit.dateValue()
                     }
 
                     if let peopleHelped = document["peopleHelped"] as? Int {
