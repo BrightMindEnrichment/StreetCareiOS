@@ -58,17 +58,17 @@ struct LoginView: View {
                 .clipShape(Capsule())
                 
                 
-                Button(action: loginWithGoogle) {
-                    HStack {
-                        Image("Google")
-                        Text("Continue with Google")
-                            .padding(EdgeInsets(top: 8.0, leading: 20.0, bottom: 8.0, trailing: 20.0))
-                            .foregroundColor(Color("PrimaryColor"))
-                    }
-                }
-                .frame(width: 300.0)
-                .background(Color("SecondaryColor"))
-                .clipShape(Capsule())
+//                Button(action: loginWithGoogle) {
+//                    HStack {
+//                        Image("Google")
+//                        Text("Continue with Google")
+//                            .padding(EdgeInsets(top: 8.0, leading: 20.0, bottom: 8.0, trailing: 20.0))
+//                            .foregroundColor(Color("PrimaryColor"))
+//                    }
+//                }
+//                .frame(width: 300.0)
+//                .background(Color("SecondaryColor"))
+//                .clipShape(Capsule())
             }
         }
         .navigationTitle("loginButtonTitle")

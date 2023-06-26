@@ -46,10 +46,14 @@ struct MapLocation: Identifiable {
 
 struct VisitLogView: View {
     
+    @Environment(\.presentationMode) var presentation
+    
     @State var log: VisitLog
     
     @State private var region = MKCoordinateRegion(center: CLLocationCoordinate2D(), span: MKCoordinateSpan())
     @State private var mapLocations = [MapLocation(name: "dummy", latitude: 0.0, longitude: 0.0)]
+    
+    @State private var showDeleteDialog = false
     
     var body: some View {
         ScrollView {
@@ -132,14 +136,32 @@ struct VisitLogView: View {
                     VisitLogDetailRow(title: "How many people joined or helped you prepare?", detail: "\(log.numberOfHelpers)")
                 }
 
-                VisitLogDetailRow(title: "Would you like to volunteer again?", detail: "\(log.volunteerAgainText)")
+                // VisitLogDetailRow(title: "Would you like to volunteer again?", detail: "\(log.volunteerAgainText)")
                 
+                NavLinkButton(title: "Delete Log", width: 190.0, secondaryButton: true, noBorder: false, color: Color.red)
+                    .padding()
+                    .onTapGesture {
+                        showDeleteDialog = true
+                    }
             }
         }
         .onAppear {
             if log.location.latitude != 0 {
                 region = MKCoordinateRegion(center: log.location, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
                 mapLocations = [MapLocation(name: "Help", latitude: log.location.latitude, longitude: log.location.longitude)]
+            }
+        }
+        .alert("Delete visit log?", isPresented: $showDeleteDialog) {
+            Button("OK", role: .destructive)
+            {
+                let adapter = VisitLogDataAdapter()
+                adapter.deleteVisitLog(self.log.id) {
+                    presentation.wrappedValue.dismiss()
+                }
+            }
+            
+            Button("Cancel", role: .cancel) {
+                showDeleteDialog = false
             }
         }
         .navigationTitle("Visit Log")

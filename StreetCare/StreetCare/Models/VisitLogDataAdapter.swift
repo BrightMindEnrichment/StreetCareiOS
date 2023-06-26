@@ -74,6 +74,16 @@ class VisitLogDataAdapter {
     }
     
     
+    func deleteVisitLog(_ logId: String, completion: @escaping () -> ()) {
+
+        Firestore.firestore().settings = FirestoreSettings()
+        let db = Firestore.firestore()
+        
+        db.collection(collectionName).document(logId).delete { _ in
+            completion()
+        }
+    }
+    
     
     func refresh() {
         

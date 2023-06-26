@@ -38,6 +38,7 @@ struct InputTileComplete: View {
                         finishAction()
                     }
                     .buttonStyle(.borderedProminent)
+                    .foregroundColor(Color("TextButtonColor"))
                 }
                 .padding()
                 

@@ -22,6 +22,7 @@ struct InputTileLocation: View {
     @State var locationManager: LocationManager!
     
     @State var isLoading = false
+    @State var failedToFindLocation = false
         
     var nextAction: () -> ()
     var previousAction: () -> ()
@@ -97,9 +98,19 @@ struct InputTileLocation: View {
             locationManager = LocationManager {
                 isLoading = false
                 newLocation()
-                nextAction()
+                if !failedToFindLocation {
+                    nextAction()
+                }
             }
         }
+        .alert("Error...", isPresented: $failedToFindLocation, actions: {
+            Button("OK") {
+                // nothing to do
+            }
+        }, message: {
+            Text("Sorry, having a problem finding your current location.")
+        })
+        
 
     } // end body
     
@@ -107,8 +118,11 @@ struct InputTileLocation: View {
     func newLocation() {
         if let loc = locationManager.location {
             self.location = loc
+            failedToFindLocation = false
+            print("got a location")
         }
         else {
+            failedToFindLocation = true
             print("missing location!")
         }
     }

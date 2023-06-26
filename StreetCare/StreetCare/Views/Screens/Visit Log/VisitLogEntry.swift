@@ -130,7 +130,7 @@ struct VisitLogEntry: View {
                 questionNumber = 1
             }
             
-            //Text("\(visitLog.volunteerAgain)")
+            Text("\(visitLog.location.latitude)")
         }
     } // end body
     

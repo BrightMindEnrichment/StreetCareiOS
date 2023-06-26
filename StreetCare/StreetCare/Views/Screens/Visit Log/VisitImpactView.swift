@@ -81,7 +81,6 @@ struct VisitImpactView: View {
             }
             .loadingAnimation(isLoading: isLoading)
             .onAppear {
-                print("onAppear impact view")
                 adapter.delegate = self
                 adapter.refresh()
                 self.isLoading = true

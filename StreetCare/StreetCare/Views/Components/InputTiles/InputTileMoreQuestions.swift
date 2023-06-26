@@ -36,6 +36,7 @@ struct InputTileMoreQuestions: View {
                         yesAction()
                     }
                     .buttonStyle(.borderedProminent)
+                    .foregroundColor(Color("TextButtonColor"))
                     .padding()
                     
                     Button("No") {
