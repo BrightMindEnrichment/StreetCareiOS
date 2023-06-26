@@ -60,7 +60,7 @@ struct InputTileLocation: View {
                     HStack {
                         Rectangle()
                             .frame(height: 2.0).foregroundColor(.gray).padding()
-                        Text("or").foregroundColor(.gray)
+                        Text("and/or").foregroundColor(.gray)
                         Rectangle()
                             .frame(height: 2.0).foregroundColor(.gray).padding()
                     }
