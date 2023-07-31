@@ -57,4 +57,49 @@ class VisitLog: ObservableObject, Identifiable {
         self.id = id
     }
     
+    
+    func reverseGeocode(latitude: Double, longitude: Double) {
+        // Create the URL with the API endpoint and parameters
+        let baseUrl = "https://api.geoapify.com/v1/geocode/reverse"
+        let latLonParams = "lat=\(latitude)&lon=\(longitude)&apiKey=fd35651164a04eac9266ccfb75aa125d"
+        let urlString = "\(baseUrl)?\(latLonParams)"
+
+        // Create the URLSession and URLRequest
+        guard let url = URL(string: urlString) else {
+            print("Invalid URL")
+            return
+        }
+        let session = URLSession.shared
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+
+        // Send the request
+        let task = session.dataTask(with: request) { (data, response, error) in
+            if let error = error {
+                print("Error: \(error)")
+                return
+            }
+
+            // Check the response
+            guard let httpResponse = response as? HTTPURLResponse,
+                  (200...299).contains(httpResponse.statusCode) else {
+                print("Invalid response")
+                return
+            }
+
+            // Process the data
+            if let data = data {
+                if let json = try? JSONSerialization.jsonObject(with: data, options: []) {
+                    // Handle the JSON response
+                    print(json)
+                } else {
+                    print("Unable to parse JSON data")
+                }
+            } else {
+                print("No data received")
+            }
+        }
+
+        task.resume()
+    }
 } // end class
