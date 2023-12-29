@@ -26,6 +26,10 @@ class VisitLogDataAdapter {
     var visitLogs = [VisitLog]()
     var delegate: VisitLogDataAdapterProtocol?
     
+    func resetLogs() {
+        visitLogs = [VisitLog]()
+    }
+    
     func addVisitLog(_ visitLog: VisitLog) {
     
         guard let user = Auth.auth().currentUser else {
@@ -97,6 +101,7 @@ class VisitLogDataAdapter {
     func refresh() {
         
         guard let user = Auth.auth().currentUser else {
+            self.visitLogs = [VisitLog]()
             self.delegate?.visitLogDataRefreshed(self.visitLogs)
             return
         }

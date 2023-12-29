@@ -30,7 +30,7 @@ struct SignUpView: View {
                     .keyboardType(.emailAddress)
                     .textFieldStyle(.roundedBorder)
                 
-                TextField("password", text: $password)
+                SecureField("password", text: $password)
                     .textFieldStyle(.roundedBorder)
                 
                 TextField("company", text: $company)

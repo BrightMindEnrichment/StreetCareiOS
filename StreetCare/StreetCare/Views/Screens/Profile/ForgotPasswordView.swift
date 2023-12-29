@@ -36,7 +36,6 @@ struct ForgotPasswordView: View {
                     .padding(EdgeInsets(top: 8.0, leading: 20.0, bottom: 8.0, trailing: 20.0))
                     .foregroundColor(Color("PrimaryColor"))
             }
-            .frame(width: 100.0)
             .background(Color("SecondaryColor"))
             .clipShape(Capsule())
             .padding()

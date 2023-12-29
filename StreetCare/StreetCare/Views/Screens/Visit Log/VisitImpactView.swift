@@ -33,7 +33,6 @@ struct VisitImpactView: View {
                 Text("VISIT LOG")
                     .font(.largeTitle)
                 
-                
                 ImpactView(peopleHelped: peopleHelped, outreaches: outreaches, itemsDonated: itemsDonated)
                     .padding()                
                 
@@ -74,10 +73,24 @@ struct VisitImpactView: View {
             }
             .loadingAnimation(isLoading: isLoading)
             .onAppear {
-                if currentUser != nil {
-                    adapter.delegate = self
+                print("Imact view onAppear")
+                adapter.delegate = self
+                
+                // not sure why I need to do this, the refresh method
+                // checks for no user and if so calls
+                // delegate function
+                // but the loading animation never goes away
+                // despite the state flagging changing to false
+                if Auth.auth().currentUser != nil {
                     adapter.refresh()
                     self.isLoading = true
+                }
+                else {
+                    adapter.resetLogs()
+                    history = [VisitLog]()
+                    peopleHelped = 0
+                    outreaches = 0
+                    itemsDonated = 0
                 }
             }
         }

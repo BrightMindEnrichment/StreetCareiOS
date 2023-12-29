@@ -36,6 +36,9 @@ struct GrowingTextView: View {
                             .imageScale(.large)
                     }
                 }
+                onTapGesture {
+                    isOpen.toggle()
+                }
              
                 if isOpen {
                     HStack {
