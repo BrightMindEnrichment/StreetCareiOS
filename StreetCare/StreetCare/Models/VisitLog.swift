@@ -23,6 +23,13 @@ class VisitLog: ObservableObject, Identifiable {
     @Published var wellness = false
     @Published var other = false
     @Published var otherNotes = ""
+
+    @Published var furtherfoodAndDrinks = false
+    @Published var furtherClothes = false
+    @Published var furtherHygine = false
+    @Published var furtherWellness = false
+    @Published var furtherOther = false
+    @Published var furtherOtherNotes = ""
     
     @Published var rating = 0
     @Published var ratingNotes = ""
@@ -36,7 +43,10 @@ class VisitLog: ObservableObject, Identifiable {
     
     @Published var location = CLLocationCoordinate2D.init(latitude: 0.0, longitude: 0.0)
     
+    @Published var peopleNeedFurtherHelp = 0
+    @Published var followUpWhenVisit = Date()
 
+    
     var didProvideSpecificHelp: Bool {
         return foodAndDrinks || clothes || hygine || wellness || other
     }

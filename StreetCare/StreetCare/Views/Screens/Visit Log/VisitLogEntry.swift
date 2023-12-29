@@ -6,6 +6,8 @@
 //
 
 import SwiftUI
+import FirebaseAuth
+
 
 struct VisitLogEntry: View {
     
@@ -15,6 +17,9 @@ struct VisitLogEntry: View {
     @State var totalQuestions = 5
     
     @StateObject var visitLog = VisitLog(id: "")
+    
+    var currentUser = Auth.auth().currentUser
+    @State var isLoading = false
     
     
     var body: some View {
@@ -26,16 +31,7 @@ struct VisitLogEntry: View {
                                 
                 switch questionNumber {
                 case 1:
-                    InputTileLocation(questionNumber: 1, totalQuestions: 5, question: "Where was your visit?", textValue: $visitLog.whereVisit, location: $visitLog.location) {
-                        questionNumber += 1
-                    } previousAction: {
-                        //
-                    } skipAction: {
-                        questionNumber += 1
-                    }
-                    
-                case 2:
-                    InputTileDate(questionNumber: 2, totalQuestions: 5, question: "When was your visit?", datetimeValue: $visitLog.whenVisit) {
+                    InputTileDate(questionNumber: 1, totalQuestions: 5, question: "When was your visit?", datetimeValue: $visitLog.whenVisit) {
                         questionNumber += 1
                     } skipAction: {
                         questionNumber += 1
@@ -43,6 +39,14 @@ struct VisitLogEntry: View {
                         questionNumber -= 1
                     }
                     
+                case 2:
+                    InputTileLocation(questionNumber: 2, totalQuestions: 5, question: "Where was your visit?", textValue: $visitLog.whereVisit, location: $visitLog.location) {
+                        questionNumber += 1
+                    } previousAction: {
+                        //
+                    } skipAction: {
+                        questionNumber += 1
+                    }
                     
                 case 3:
                     InputTileNumber(questionNumber: 3, totalQuestions: 5, question: "How many people did you help?", number: $visitLog.peopleHelped) {
@@ -72,10 +76,10 @@ struct VisitLogEntry: View {
                     } skipAction: {
                         questionNumber += 1
                     }
-                    
+
                 case 6:
                     
-                    InputTileMoreQuestions(question: "Would you like to answer additional questions?") {
+                    InputTileMoreQuestions(question: "Do they need further help?") {
                         saveVisitLog()
                         questionNumber = 100
                     } skipAction: {
@@ -86,9 +90,9 @@ struct VisitLogEntry: View {
                         saveVisitLog()
                         questionNumber = 100
                     }
-                    
+
                 case 7:
-                    InputTileDuration(questionNumber: 1, totalQuestions: 3, question: "Approximate time spent on outreach?", hours: $visitLog.durationHours, minutes: $visitLog.durationMinutes) {
+                    InputTileList(questionNumber: 1, totalQuestions: 4, question: "What further help is needed?", foodAndDrinks: $visitLog.furtherfoodAndDrinks, clothes: $visitLog.furtherClothes, hygine: $visitLog.furtherHygine, wellness: $visitLog.furtherWellness, other: $visitLog.furtherOther, otherNotes: $visitLog.furtherOtherNotes) {
                         questionNumber += 1
                     } previousAction: {
                         questionNumber -= 1
@@ -97,23 +101,54 @@ struct VisitLogEntry: View {
                     }
                     
                 case 8:
-                    InputTileNumber(questionNumber: 2, totalQuestions: 3, question: "How many people joined or helped you prepare?", number: $visitLog.numberOfHelpers) {
+                    InputTileNumber(questionNumber: 2, totalQuestions: 4, question: "How many people need further help?", number: $visitLog.peopleNeedFurtherHelp) {
                         questionNumber += 1
-                        saveVisitLog()
                     } previousAction: {
                         questionNumber -= 1
                     } skipAction: {
                         questionNumber += 1
-                        saveVisitLog()
                     }
+                    
+//                case 8:
+//                    InputTileDuration(questionNumber: 2, totalQuestions: 5, question: "Approximate time spent on outreach?", hours: $visitLog.durationHours, minutes: $visitLog.durationMinutes) {
+//                        questionNumber += 1
+//                    } previousAction: {
+//                        questionNumber -= 1
+//                    } skipAction: {
+//                        questionNumber += 1
+//                    }
+                    
+
+                    
+//                case 8:
+//                    InputTileNumber(questionNumber: 2, totalQuestions: 3, question: "How many people joined or helped you prepare?", number: $visitLog.numberOfHelpers) {
+//                        questionNumber += 1
+//                        saveVisitLog()
+//                    } previousAction: {
+//                        questionNumber -= 1
+//                    } skipAction: {
+//                        questionNumber += 1
+//                        saveVisitLog()
+//                    }
                     
                     
                 case 9:
-                    InputTileVolunteerAgain(questionNumber: 3, totalQuestions: 3, question: "Would you like to volunteer again?", volunteerAgain: $visitLog.volunteerAgain) {
+                    InputTileDate(questionNumber: 3, totalQuestions: 4, question: "Is there a day for the follow-up visit?", datetimeValue: $visitLog.followUpWhenVisit) {
+                        questionNumber += 1
+                    } skipAction: {
+                        questionNumber += 1
+                    } previousAction: {
+                        questionNumber -= 1
+                    }
+                    
+                case 10:
+                    InputTileVolunteerAgain(questionNumber: 4, totalQuestions: 4, question: "Would you like to volunteer again?", volunteerAgain: $visitLog.volunteerAgain) {
+                        saveVisitLog()
                         questionNumber = 100
                     } previousAction: {
                         questionNumber -= 1
                     } skipAction: {
+                        saveVisitLog()
                         questionNumber = 100
                     }
                     
@@ -128,9 +163,16 @@ struct VisitLogEntry: View {
             }
             .onAppear {
                 questionNumber = 1
+                
+                if currentUser == nil {
+                    self.isLoading = true
+                    
+                    Auth.auth().signInAnonymously { result, error in
+                        print("signed in anon")
+                        self.isLoading = false
+                    }
+                }
             }
-            
-            Text("\(visitLog.location.latitude)")
         }
     } // end body
     

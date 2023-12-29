@@ -24,6 +24,7 @@ struct VisitImpactView: View {
     @State var showActionSheet = false
     
     @State var isLoading = false
+
     
     var body: some View {
         NavigationStack {
@@ -36,18 +37,11 @@ struct VisitImpactView: View {
                 ImpactView(peopleHelped: peopleHelped, outreaches: outreaches, itemsDonated: itemsDonated)
                     .padding()                
                 
-                if currentUser != nil {
-                    NavigationLink {
-                        VisitLogEntry()
-                    } label: {
-                        ZStack {
-                            NavLinkButton(title: "Add new+", width: 120.0)
-                        }
-                    }
-                }
-                else {
-                    Button("Add new+") {
-                        showActionSheet = true
+                NavigationLink {
+                    VisitLogEntry()
+                } label: {
+                    ZStack {
+                        NavLinkButton(title: "Add new+", width: 120.0)
                     }
                 }
                 
@@ -77,22 +71,13 @@ struct VisitImpactView: View {
                 }
                 .scrollContentBackground(.hidden)
                 .background(Color.clear)
-                
             }
             .loadingAnimation(isLoading: isLoading)
             .onAppear {
-                adapter.delegate = self
-                adapter.refresh()
-                self.isLoading = true
-            }
-        }
-        .confirmationDialog("Please fill out this form each time you perform an outreach. This helps you track your contributions and allows Street Care to bring more support and services to help the community!", isPresented: $showActionSheet, titleVisibility: .visible) {
-            Button("Log in") {
-                
-            }
-            Button("Guest") {
-                Auth.auth().signInAnonymously { result, error in
-                    // todo
+                if currentUser != nil {
+                    adapter.delegate = self
+                    adapter.refresh()
+                    self.isLoading = true
                 }
             }
         }

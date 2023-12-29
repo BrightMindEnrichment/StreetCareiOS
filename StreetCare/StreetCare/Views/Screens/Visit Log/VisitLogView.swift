@@ -127,9 +127,9 @@ struct VisitLogView: View {
                 }
                 
 
-                if log.durationHours > 0 || log.durationMinutes > 0 {
-                    VisitLogDetailRow(title: "Approximate time spent on outreach?", detail: "\(log.durationHours) hours and \(log.durationMinutes) minutes")
-                }
+//                if log.durationHours > 0 || log.durationMinutes > 0 {
+//                    VisitLogDetailRow(title: "Approximate time spent on outreach?", detail: "\(log.durationHours) hours and \(log.durationMinutes) minutes")
+//                }
                 
                 
                 if log.numberOfHelpers > 0 {

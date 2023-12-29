@@ -54,6 +54,15 @@ class VisitLogDataAdapter {
         userData["durationMinutes"] = visitLog.durationMinutes
         userData["numberOfHelpers"] = visitLog.numberOfHelpers
         userData["volunteerAgain"] = visitLog.volunteerAgain
+        userData["peopleNeedFurtherHelp"] = visitLog.peopleNeedFurtherHelp
+        userData["furtherFoodAndDrinks"] = visitLog.furtherfoodAndDrinks
+        userData["furtherClothes"] = visitLog.furtherClothes
+        userData["furtherHygine"] = visitLog.furtherHygine
+        userData["furtherWellness"] = visitLog.furtherWellness
+        userData["furtherOther"] = visitLog.furtherOther
+        userData["furtherOtherNotes"] = visitLog.furtherOtherNotes
+        userData["followUpWhenVisit"] = visitLog.followUpWhenVisit
+
 
         if visitLog.location.latitude != 0 {
             userData["latitude"] = visitLog.location.latitude
@@ -88,6 +97,7 @@ class VisitLogDataAdapter {
     func refresh() {
         
         guard let user = Auth.auth().currentUser else {
+            self.delegate?.visitLogDataRefreshed(self.visitLogs)
             return
         }
         
@@ -119,8 +129,11 @@ class VisitLogDataAdapter {
                     }
                     
                     if let whenVisit = document["whenVisit"] as? Timestamp {
-                        //print(whenVisit.formatted())
                         log.whenVisit = whenVisit.dateValue()
+                    }
+
+                    if let followUpWhenVisit = document["followUpWhenVisit"] as? Timestamp {
+                        log.followUpWhenVisit = followUpWhenVisit.dateValue()
                     }
 
                     if let peopleHelped = document["peopleHelped"] as? Int {
@@ -173,6 +186,34 @@ class VisitLogDataAdapter {
 
                     if let volunteerAgain = document["volunteerAgain"] as? Int {
                         log.volunteerAgain = volunteerAgain
+                    }
+
+                    if let peopleNeedFurtherHelp = document["peopleNeedFurtherHelp"] as? Int {
+                        log.peopleNeedFurtherHelp = peopleNeedFurtherHelp
+                    }
+                    
+                    if let furtherFoodAndDrinks = document["furtherFoodAndDrinks"] as? Bool {
+                        log.furtherfoodAndDrinks = furtherFoodAndDrinks
+                    }
+
+                    if let furtherClothes = document["furtherClothes"] as? Bool {
+                        log.furtherClothes = furtherClothes
+                    }
+
+                    if let furtherHygine = document["furtherHygine"] as? Bool {
+                        log.furtherHygine = furtherHygine
+                    }
+
+                    if let furtherWellness = document["furtherWellness"] as? Bool {
+                        log.furtherWellness = furtherWellness
+                    }
+
+                    if let furtherOther = document["furtherOther"] as? Bool {
+                        log.furtherOther = furtherOther
+                    }
+
+                    if let furtherOtherNotes = document["furtherOtherNotes"] as? String {
+                        log.furtherOtherNotes = furtherOtherNotes
                     }
 
                     self.visitLogs.append(log)
