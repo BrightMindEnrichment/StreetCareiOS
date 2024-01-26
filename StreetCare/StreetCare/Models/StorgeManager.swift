@@ -34,6 +34,7 @@ class StorageManager: ObservableObject {
         storageRef.getData(maxSize: .max) { data, error in
             
             if let error = error {
+                self.image = nil
                 print("error fetching image: \(error.localizedDescription)")
                 return
             }

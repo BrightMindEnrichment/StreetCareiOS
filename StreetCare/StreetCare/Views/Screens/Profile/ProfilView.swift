@@ -65,6 +65,7 @@ struct ProfilView: View {
                         .onTapGesture {
                             do {
                                 try Auth.auth().signOut()
+                                self.avatarImage = nil
                                 self.user = nil
                             }
                             catch {
