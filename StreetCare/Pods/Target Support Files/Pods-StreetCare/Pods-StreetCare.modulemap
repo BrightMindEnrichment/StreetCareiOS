@@ -1,0 +1,6 @@
+framework module Pods_StreetCare {
+  umbrella header "Pods-StreetCare-umbrella.h"
+
+  export *
+  module * { export * }
+}

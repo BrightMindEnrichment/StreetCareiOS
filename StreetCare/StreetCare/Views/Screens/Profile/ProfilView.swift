@@ -34,10 +34,10 @@ struct ProfilView: View {
         NavigationStack {
             VStack {
                 
-                AvatarView(image: $avatarImage)
-                
                 if let user = self.user {
                     
+                    AvatarView(image: $avatarImage)
+
                     if let displayName = user.displayName {
                         Text("\(displayName)").padding()
                         Spacer()
@@ -49,11 +49,29 @@ struct ProfilView: View {
                         }
                     }
                     
-                    NavigationLink {
-                        ProfileDetails()
-                    } label: {
-                        Text("Edit Profile")
-                    }
+                   
+                    
+                    NavLinkButton(title: "Edit Profile", width: 190.0, secondaryButton: true)
+                        .padding()
+                        .onTapGesture {
+                            do {
+                                ProfileDetails()
+                            }
+                            catch {
+                               
+                            }
+                        }
+                    
+                    NavLinkButton(title: "Badges Earned", width: 190.0, secondaryButton: true)
+                        .padding()
+                        .onTapGesture {
+                            do {
+                                ProfileDetails()
+                            }
+                            catch {
+                              
+                            }
+                        }
                     
                     
                     ImpactView(peopleHelped: peopleHelped, outreaches: outreaches, itemsDonated: itemsDonated)
@@ -73,7 +91,7 @@ struct ProfilView: View {
                             }
                         }
                     
-                    NavLinkButton(title: "Delete Account", width: 190.0, secondaryButton: true, noBorder: false, color: Color.red)
+                    NavLinkButton(title: "Delete Account", width: 190.0, secondaryButton: true, noBorder: true, color: Color.black)
                         .padding()
                         .onTapGesture {
                             showUserDeleteDialog = true
