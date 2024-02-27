@@ -10,8 +10,8 @@ import SwiftUI
 struct NotLoggedInProfileView: View {
     var body: some View {
             VStack {
-                Spacer()
-                
+                Spacer().frame(height: 70)
+
                 Text("welcome").font(.system(size: 36).bold())
                 Spacer().frame(height: 70)
 

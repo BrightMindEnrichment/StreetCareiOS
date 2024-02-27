@@ -19,7 +19,7 @@ struct NavLinkButton: View {
     var secondaryButton = false
     var noBorder = false
     var color = Color("SecondaryColor")
-    
+    var textColor = UIColor.black
     var body: some View {
 
         ZStack {
