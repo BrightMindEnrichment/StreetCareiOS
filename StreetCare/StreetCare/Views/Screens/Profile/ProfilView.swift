@@ -57,7 +57,7 @@ struct ProfilView: View {
                    // Spacer().frame(height: 10)
 
                     NavigationLink {
-                        ProfileDetails()
+                        BadgesView()
                     } label: {
                         NavLinkButton(title:"Badges Earned", width: 160.0, height: 40.0,secondaryButton: true,noBorder: true, color: .blue)
                     }

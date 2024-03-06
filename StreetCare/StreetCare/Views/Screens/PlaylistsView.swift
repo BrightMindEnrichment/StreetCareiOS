@@ -47,3 +47,6 @@ struct PlaylistsView_Previews: PreviewProvider {
         PlaylistsView()
     }
 }
+#Preview {
+    PlaylistsView()
+}
