@@ -8,7 +8,8 @@
 import Foundation
 
 struct Badges: Codable, Hashable, Identifiable {
-  var id: Int
+  var id = UUID()
+  var objectId : Int
   var title: String
   var description: String
   var imageName: String
