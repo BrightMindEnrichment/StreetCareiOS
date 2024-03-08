@@ -19,9 +19,9 @@ struct BadgesView: View {
     
     
     var badgesList: [Badges] = [
-        Badges(objectId : 1,title: "Neighborhood All-Star",description: "Joined > 3 Outreaches in the same neighborhood",imageName: "Clothes"),
-        Badges(objectId : 2,title: "Benevolent Donar",description:"Donated more than 10 items",imageName: "Clothes"),
-        Badges(objectId : 3,title: "Outreach All-Star",description:"Joined more than 15 \nOutreaches or has helped more than 60 people",imageName: "Clothes")
+        Badges(objectId : 1,title: "Neighborhood All-Star",description: "Joined > 3 Outreaches in the same neighborhood",imageName: "neighborhood_all_star_badge"),
+        Badges(objectId : 2,title: "Benevolent Donar",description:"Donated more than 10 items",imageName: "benevolent_donor_badge"),
+        Badges(objectId : 3,title: "Outreach All-Star",description:"Joined more than 15 \nOutreaches or has helped more than 60 people",imageName: "outreach_all_star_badge")
     ]
     let formatter = DateFormatter()
 
@@ -33,7 +33,7 @@ struct BadgesView: View {
                 List{
                     ForEach(badgesList){ badge in
                         
-                        Badge(description: badge.description, title: badge.title, imageName: badge.imageName, objectId: badge.objectId,peopleHelped: peopleHelped, outreaches: outreaches,itemsDonated: itemsDonated).border(.black).listRowSeparator(.hidden)
+                        Badge(description: badge.description, title: badge.title, imageName: badge.imageName, objectId: badge.objectId,peopleHelped: peopleHelped, outreaches: outreaches,itemsDonated: itemsDonated).cornerRadius(10.0).border(.black).listRowSeparator(.hidden)
                     }
                 }.navigationTitle("Your Badges").scrollContentBackground(.hidden).background(.clear)  .listStyle(.plain)
             }

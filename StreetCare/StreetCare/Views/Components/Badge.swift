@@ -21,17 +21,18 @@ struct Badge: View {
     
     var body: some View {
             HStack(alignment: .top) {
+                let state = objectId == 1 ? outreaches > 3 : objectId == 2 ? itemsDonated > 10 : (outreaches > 15 || peopleHelped > 60)
+
                 ZStack(alignment: .center) {
-                    RoundedRectangle(cornerRadius: 8.0)
-                        .strokeBorder(lineWidth: 0.0)
-                        .foregroundColor(Color("TextColor")).background(.lightGray)
-                        .frame(width: 60.0, height: 60.0)
-                    Image(imageName).resizable().aspectRatio(contentMode: .fit).frame(width: 50.0,height: 50.0).cornerRadius(15.0)
+//                    RoundedRectangle(cornerRadius: 8.0)
+//                        .strokeBorder(lineWidth: 0.0)
+//                        .foregroundColor(Color("TextColor")).background(.gray)
+                        //.frame(width: 60.0, height: 60.0)
+                    Image(imageName).resizable().aspectRatio(contentMode: .fit).frame(width: 60.0,height: 60.0).grayscale(state ? 0.0 : 0.9)
                 }
                 VStack{
-                    let state = objectId == 1 ? outreaches > 3 : objectId == 2 ? itemsDonated > 10 : (outreaches > 15 || peopleHelped > 60)
                     Text(title + "\n" + description)
-                        .foregroundColor(state ? .yellow : .green)  .multilineTextAlignment(.leading).listRowSeparator(.hidden)
+                        .foregroundColor(state ? .black : .gray)  .multilineTextAlignment(.leading).listRowSeparator(.hidden)
 
                 }
                 Spacer()
