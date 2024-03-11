@@ -34,28 +34,35 @@ struct ProfilView: View {
         NavigationStack {
             VStack {
                 
-                AvatarView(image: $avatarImage)
-                
                 if let user = self.user {
-                    
+                    //Spacer().frame(height: 20)
+                    AvatarView(image: $avatarImage)
+
                     if let displayName = user.displayName {
-                        Text("\(displayName)").padding()
-                        Spacer()
+                        Text("\(displayName)")
                     }
                     else {
                         if let email = user.email {
-                            Text("\(email)").padding()
-                            Spacer()
+                            Text("\(email)")
                         }
                     }
+                    Spacer().frame(height: 30)
+                    
                     
                     NavigationLink {
                         ProfileDetails()
                     } label: {
-                        Text("Edit Profile")
+                        NavLinkButton(title:"Edit Profile", width: 160.0, height: 40.0,secondaryButton: true,noBorder: true, color: .blue)
                     }
-                    
-                    
+                   // Spacer().frame(height: 10)
+
+                    NavigationLink {
+                        BadgesView()
+                    } label: {
+                        NavLinkButton(title:"Badges Earned", width: 160.0, height: 40.0,secondaryButton: true,noBorder: true, color: .blue)
+                    }
+                    Spacer()
+
                     ImpactView(peopleHelped: peopleHelped, outreaches: outreaches, itemsDonated: itemsDonated)
                         .padding()
                     
@@ -72,8 +79,8 @@ struct ProfilView: View {
                                 self.user = nil
                             }
                         }
-                    
-                    NavLinkButton(title: "Delete Account", width: 190.0, secondaryButton: true, noBorder: false, color: Color.red)
+
+                    NavLinkButton(title: "Delete Account", width: 190.0, secondaryButton: true, noBorder: true, color: Color.black)
                         .padding()
                         .onTapGesture {
                             showUserDeleteDialog = true

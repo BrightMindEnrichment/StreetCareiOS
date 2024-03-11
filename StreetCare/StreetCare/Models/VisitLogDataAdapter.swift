@@ -56,7 +56,7 @@ class VisitLogDataAdapter {
         userData["ratingNotes"] = visitLog.ratingNotes
         userData["durationHours"] = visitLog.durationHours
         userData["durationMinutes"] = visitLog.durationMinutes
-        userData["numberOfHelpers"] = visitLog.numberOfHelpers
+        userData["numberOfHelpers"] = visitLog.numberOfHelpers // totalpeoplecount
         userData["volunteerAgain"] = visitLog.volunteerAgain
         userData["peopleNeedFurtherHelp"] = visitLog.peopleNeedFurtherHelp
         userData["furtherFoodAndDrinks"] = visitLog.furtherfoodAndDrinks

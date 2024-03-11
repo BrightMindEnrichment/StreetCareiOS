@@ -22,7 +22,7 @@ struct AvatarView: View {
         }
         else {
             Image(systemName: "person")
-                .font(.largeTitle).padding(EdgeInsets(top: 100.0, leading: 0.0, bottom: 20.0, trailing: 0.0))
+                .font(.largeTitle).padding(EdgeInsets(top: 100.0, leading: 0.0, bottom: 0.0, trailing: 0.0))
         }
     }
 }

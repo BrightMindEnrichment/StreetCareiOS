@@ -15,22 +15,23 @@ struct NavLinkButton: View {
 
     var title: String
     var width: CGFloat
+    var height: CGFloat = 35.0
     var secondaryButton = false
     var noBorder = false
     var color = Color("SecondaryColor")
-    
+    var textColor = UIColor.black
     var body: some View {
 
         ZStack {
             if secondaryButton {
                 RoundedRectangle(cornerRadius: 16.0)
                     .strokeBorder(lineWidth: noBorder ? 0.0 : 2.0)
-                    .frame(width: width, height: 35.0)
+                    .frame(width: width, height: height)
                     .foregroundColor(color)
             }
             else {
                 RoundedRectangle(cornerRadius: 16.0)
-                    .frame(width: width, height: 35.0)
+                    .frame(width: width, height: height)
                     .foregroundColor(color)
             }
             
