@@ -13,7 +13,7 @@ struct SignUpView: View {
     @State private var email = ""
     @State private var password = ""
     @State private var company = ""
-    
+    @State private var name = ""
     @State private var errorMessage: String?
     
     @Environment(\.presentationMode) var presentation
@@ -25,18 +25,26 @@ struct SignUpView: View {
                 Text(errorMessage)
             }
             VStack(spacing: 12.0) {
+                
+                TextField("Name", text: self.$name)
+                    .textFieldStyle(MyTextFieldStyle()).padding([.leading, .trailing], 10)
+                Spacer().frame(height: 5)
 
-                TextField("email", text: $email)
-                    .keyboardType(.emailAddress)
-                    .textFieldStyle(.roundedBorder)
-                
-                SecureField("password", text: $password)
-                    .textFieldStyle(.roundedBorder)
-                
-                TextField("company", text: $company)
-                    .textFieldStyle(.roundedBorder)
+                TextField("Email", text: self.$email)
+                    .textFieldStyle(MyTextFieldStyle()).padding([.leading, .trailing], 10)
+                Spacer().frame(height: 5)
+
+                SecureField("password", text: self.$password)
+                    .textFieldStyle(MyTextFieldStyle()).padding([.leading, .trailing], 10)
+                Spacer().frame(height: 5)
+
+                TextField("company", text: self.$company)
+                    .textFieldStyle(MyTextFieldStyle()).padding([.leading, .trailing], 10)
+                Spacer().frame(height: 5)
+
             }
             .padding()
+         
             VStack {
                 Button {
                     register()
@@ -45,9 +53,29 @@ struct SignUpView: View {
                         .padding(EdgeInsets(top: 8.0, leading: 20.0, bottom: 8.0, trailing: 20.0))
                         .foregroundColor(Color("PrimaryColor"))
                 }
-                .frame(width: 300.0)
+                .frame(width: 250.0,height: 50.0)
                 .background(Color("SecondaryColor"))
                 .clipShape(Capsule())
+                
+                Spacer().frame(height: 25)
+                LabelledDivider(label: "or")
+                Spacer().frame(height: 25)
+                Button(action: {
+                    continueWithGoogle()
+                }) {
+                    HStack {
+                        Image("HelpingHands")
+                        Text("Continue with Google")
+                    }
+                    .padding().frame(width: 300.0,height: 50.0)
+                    .accentColor(Color(.black))
+                    .background(Color(.clear))
+                    .cornerRadius(4.0)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 20).stroke(Color(.black.withAlphaComponent(0.5)), lineWidth: 2)
+                    )
+                }
+                
 
             }
         }
@@ -55,11 +83,15 @@ struct SignUpView: View {
     } // end body
     
     
-
-    
+    func continueWithGoogle(){
+        
+    }
     
     func register() {
-
+        if name.count == 0{
+            errorMessage = "Name required"
+            return
+        }
         if email.count == 0 {
             errorMessage = "Email required"
             return
@@ -88,5 +120,45 @@ struct SignUpView: View {
 struct SignUpView_Previews: PreviewProvider {
     static var previews: some View {
         SignUpView()
+    }
+}
+
+struct MyTextFieldStyle: TextFieldStyle {
+    func _body(configuration: TextField<Self._Label>) -> some View {
+        configuration
+            .padding(1)
+        .background(
+            RoundedRectangle(cornerRadius: 20, style: .continuous)
+                .stroke(Color.clear, lineWidth: 0).foregroundColor(Color(.black.withAlphaComponent(0.5)))
+        ).padding(15).cornerRadius(4.0)
+            .overlay(
+                RoundedRectangle(cornerRadius: 10).stroke(Color(.black.withAlphaComponent(0.5)), lineWidth: 2)
+            )
+    }
+}
+
+
+struct LabelledDivider: View {
+
+    let label: String
+    let horizontalPadding: CGFloat
+    let color: Color
+
+    init(label: String, horizontalPadding: CGFloat = 20, color: Color = .black) {
+        self.label = label
+        self.horizontalPadding = horizontalPadding
+        self.color = color
+    }
+
+    var body: some View {
+        HStack {
+            line
+            Text(label).foregroundColor(color)
+            line
+        }
+    }
+
+    var line: some View {
+        VStack { Divider().background(color) }.padding(horizontalPadding)
     }
 }
