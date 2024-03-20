@@ -28,13 +28,17 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 struct StreetCareApp: App {
     
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
-    
+    @StateObject var userAuth: UserAuthModel =  UserAuthModel()
+
     var body: some Scene {
         WindowGroup {
             MainTabBarView()
                 .onOpenURL { url in
                           GIDSignIn.sharedInstance.handle(url)
                         }
+                .environmentObject(userAuth)
+                .navigationViewStyle(.stack)
         }
     }
+
 }

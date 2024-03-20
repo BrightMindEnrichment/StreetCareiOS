@@ -16,7 +16,8 @@ struct ProfilView: View {
     
     let adapter = VisitLogDataAdapter()
     @State var history = [VisitLog]()
-    
+    @EnvironmentObject var googleSignIn: UserAuthModel
+
     @State var peopleHelped = 0
     @State var outreaches = 0
     @State var itemsDonated = 0
@@ -72,6 +73,7 @@ struct ProfilView: View {
                         .onTapGesture {
                             do {
                                 try Auth.auth().signOut()
+                                googleSignIn.signOut()
                                 self.avatarImage = nil
                                 self.user = nil
                             }

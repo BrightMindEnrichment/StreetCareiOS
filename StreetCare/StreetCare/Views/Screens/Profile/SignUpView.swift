@@ -7,6 +7,7 @@
 
 import SwiftUI
 import FirebaseAuth
+import GoogleSignIn
 
 struct SignUpView: View {
     
@@ -15,7 +16,8 @@ struct SignUpView: View {
     @State private var company = ""
     @State private var name = ""
     @State private var errorMessage: String?
-    
+    @EnvironmentObject var googleSignIn: UserAuthModel
+
     @Environment(\.presentationMode) var presentation
     
     var body: some View {
@@ -80,11 +82,12 @@ struct SignUpView: View {
             }
         }
         .navigationTitle("signUpButtonTitle")
+
     } // end body
     
     
     func continueWithGoogle(){
-        
+        googleSignIn.signIn()
     }
     
     func register() {
