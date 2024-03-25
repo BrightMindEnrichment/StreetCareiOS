@@ -13,5 +13,7 @@ class ProfileDetail: ObservableObject, Identifiable {
     @Published var displayName = ""
     @Published var organization = ""
     @Published var country = ""
+    @Published var email = ""
+
     var documentId = ""
 }

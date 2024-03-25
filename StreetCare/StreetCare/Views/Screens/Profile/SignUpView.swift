@@ -17,6 +17,8 @@ struct SignUpView: View {
     @State private var name = ""
     @State private var errorMessage: String?
     @EnvironmentObject var googleSignIn: UserAuthModel
+    private var adapter = ProfileDetailsAdapter()
+    @StateObject var profileDetails = ProfileDetail()
 
     @Environment(\.presentationMode) var presentation
     
@@ -113,6 +115,10 @@ struct SignUpView: View {
             
             if let result = result {
                 print("created user \(result.user.uid)")
+                profileDetails.displayName = name
+                profileDetails.organization = company
+                profileDetails.email = email
+                adapter.addProfile(profileDetails)
                 presentation.wrappedValue.dismiss()
             }
         }
