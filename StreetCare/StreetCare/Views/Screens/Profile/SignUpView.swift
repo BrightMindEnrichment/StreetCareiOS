@@ -62,24 +62,25 @@ struct SignUpView: View {
                 .clipShape(Capsule())
                 
                 Spacer().frame(height: 25)
-                LabelledDivider(label: "or")
-                Spacer().frame(height: 25)
-                Button(action: {
-                    continueWithGoogle()
-                }) {
-                    HStack {
-                        Image("HelpingHands")
-                        Text("Continue with Google")
-                    }
-                    .padding().frame(width: 300.0,height: 50.0)
-                    .accentColor(Color(.black))
-                    .background(Color(.clear))
-                    .cornerRadius(4.0)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 20).stroke(Color(.black.withAlphaComponent(0.5)), lineWidth: 2)
-                    )
-                }
+//                LabelledDivider(label: "or")
+//                Spacer().frame(height: 25)
                 
+//                Button(action: {
+//                    continueWithGoogle()
+//                }) {
+//                    HStack {
+//                        Image("HelpingHands")
+//                        Text("Continue with Google")
+//                    }
+//                    .padding().frame(width: 300.0,height: 50.0)
+//                    .accentColor(Color(.black))
+//                    .background(Color(.clear))
+//                    .cornerRadius(4.0)
+//                    .overlay(
+//                        RoundedRectangle(cornerRadius: 20).stroke(Color(.black.withAlphaComponent(0.5)), lineWidth: 2)
+//                    )
+//                }
+//                
 
             }
         }
