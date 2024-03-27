@@ -13,11 +13,11 @@ struct BasicTile: View {
     
     var body: some View {
         ZStack {
-            RoundedRectangle(cornerRadius: 16.0)
+            RoundedRectangle(cornerRadius: 2.0)
                 .foregroundColor(Color("BackgroundColor"))
                 .frame(width: size.width, height: size.height)
-                .overlay(RoundedRectangle(cornerRadius: 16.0).stroke(Color.gray, lineWidth: 1))
-                .shadow(radius: 2.0)
+                .overlay(RoundedRectangle(cornerRadius: 2.0).stroke(Color.clear, lineWidth: 0.5))
+                .shadow(radius: 1.0)
         }
         
     } // end body
@@ -27,6 +27,6 @@ struct BasicTile: View {
 
 struct BasicTile_Previews: PreviewProvider {
     static var previews: some View {
-        BasicTile(size: CGSize(width: 300.0, height: 400.0))
+        BasicTile(size: CGSize(width: 165, height: 250))
     }
 }

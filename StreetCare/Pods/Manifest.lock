@@ -1,3 +1,20 @@
-PODFILE CHECKSUM: f65ba4c5782ec4a94301cd3e8328523973f6bb3e
+PODS:
+  - ExytePopupView (2.9.1):
+    - SwiftUIIntrospect
+  - SwiftUIIntrospect (1.1.3)
+
+DEPENDENCIES:
+  - ExytePopupView
+
+SPEC REPOS:
+  trunk:
+    - ExytePopupView
+    - SwiftUIIntrospect
+
+SPEC CHECKSUMS:
+  ExytePopupView: 9287a6d5705371d0ae10cc47d7af86f8421baf1e
+  SwiftUIIntrospect: 622899b318ecf437d0bef44b79bec10c69efb86f
+
+PODFILE CHECKSUM: 16cfbe1e666e9fe31e3cc39d239d71a3a55f57a7
 
 COCOAPODS: 1.15.2

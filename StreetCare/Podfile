@@ -6,5 +6,5 @@ target 'StreetCare' do
   use_frameworks!
 
   # Pods for StreetCare
-
+  pod 'ExytePopupView'
 end

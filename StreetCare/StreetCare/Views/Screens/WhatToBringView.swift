@@ -1,4 +1,4 @@
-//
+
 //  WhatToBringView.swift
 //  StreetCare
 //
@@ -6,8 +6,9 @@
 //
 
 import SwiftUI
+import ExytePopupView
 
-struct ItemToBring: Identifiable {
+struct ItemToBring: Identifiable, Equatable {
     let imageName: String
     let title: String
     let description: String
@@ -15,8 +16,11 @@ struct ItemToBring: Identifiable {
 }
 
 struct WhatToBringView: View {
-    let rows = [
-        GridItem(.flexible(minimum: 300.0)),
+    @State var showingPopup = false
+
+    let columns = [
+        GridItem(.fixed(160)),
+        GridItem(.fixed(160))
     ]
 
     let itemsToBring: [ItemToBring] = [
@@ -28,20 +32,29 @@ struct WhatToBringView: View {
         ItemToBring(imageName: "Woman", title: "feminineHygiene", description: "feminineHygieneDescription")
     ]
     
-    
     var body: some View {
-
-        ScrollView(.horizontal) {
-            LazyHGrid(rows: rows) {
-                HStack {
+            ScrollView {
+                Text("Featured Items").font(.title2.bold()).padding()
+                LazyVGrid(columns: columns, spacing: 10) {
                     ForEach(itemsToBring) { item in
-                        InfoTile(imageName: item.imageName, title: NSLocalizedString(item.title, comment: ""), description:
-                                    NSLocalizedString(item.description, comment: ""))
+                        InfoTile(tile: item).onTapGesture {
+                            print("tapped")
+                            Button(action: {
+                                showingPopup = true
+                            }, label: {
+                            }).popup(isPresented: $showingPopup) {
+                                Text("The popup")
+                                    .frame(width: 200, height: 60)
+                                    .background(Color(red: 0.85, green: 0.8, blue: 0.95))
+                                    .cornerRadius(30.0)
+                            } customize: {
+                                $0.autohideIn(2)
+                            }
+                        }
                     }
                 }
-            }.padding()
+            }
         }
-    }
 }
 
 struct WhatToBringView_Previews: PreviewProvider {
