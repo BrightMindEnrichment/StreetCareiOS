@@ -1,4 +1,5 @@
 
+
 //  WhatToBringView.swift
 //  StreetCare
 //
@@ -16,8 +17,8 @@ struct ItemToBring: Identifiable, Equatable {
 }
 
 struct WhatToBringView: View {
-    @State var showingPopup = false
-
+    @State var presentAlert = false
+    @State var selectedInfoTile: ItemToBring?
     let columns = [
         GridItem(.fixed(160)),
         GridItem(.fixed(160))
@@ -34,27 +35,25 @@ struct WhatToBringView: View {
     
     var body: some View {
             ScrollView {
-                Text("Featured Items").font(.title2.bold()).padding()
+                Text("featuredItems").font(.title2.bold()).padding()
                 LazyVGrid(columns: columns, spacing: 10) {
                     ForEach(itemsToBring) { item in
                         InfoTile(tile: item).onTapGesture {
-                            print("tapped")
-                            Button(action: {
-                                showingPopup = true
-                            }, label: {
-                            }).popup(isPresented: $showingPopup) {
-                                Text("The popup")
-                                    .frame(width: 200, height: 60)
-                                    .background(Color(red: 0.85, green: 0.8, blue: 0.95))
-                                    .cornerRadius(30.0)
-                            } customize: {
-                                $0.autohideIn(2)
+                                withAnimation {
+                                    presentAlert = true
+                                    selectedInfoTile = item
                             }
                         }
                     }
-                }
-            }
-        }
+                    }  .alert(isPresented: $presentAlert) {
+                        Alert(
+                            title: Text(NSLocalizedString(selectedInfoTile!.title, comment: "") + "\n").font(.title),
+                            message: Text(NSLocalizedString(selectedInfoTile!.description, comment: "") + "\n").font(.title).bold(),
+                            dismissButton: .default(Text(NSLocalizedString("ok", comment: "")).bold().foregroundColor(.green))
+                        )
+                    }
+                }.navigationTitle("whattoBringAndGive")
+    }
 }
 
 struct WhatToBringView_Previews: PreviewProvider {

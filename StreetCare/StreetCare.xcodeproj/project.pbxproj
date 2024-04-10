@@ -77,6 +77,7 @@
 		71392FAD2BAA40F900496CA5 /* GoogleUserAuthModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71392FAC2BAA40F900496CA5 /* GoogleUserAuthModel.swift */; };
 		71392FAF2BAA413400496CA5 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 71392FAE2BAA413400496CA5 /* GoogleSignIn */; };
 		71392FB12BAA413400496CA5 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 71392FB02BAA413400496CA5 /* GoogleSignInSwift */; };
+		7153D3F52BB5AA8300226F34 /* CustomAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7153D3F42BB5AA8300226F34 /* CustomAlertView.swift */; };
 		71B0D5C52B9214B70061033B /* BadgesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71B0D5C42B9214B70061033B /* BadgesView.swift */; };
 		71B0D5C72B92187A0061033B /* Badges.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71B0D5C62B92187A0061033B /* Badges.swift */; };
 		71B0D5CB2B9225670061033B /* Badge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71B0D5CA2B9225670061033B /* Badge.swift */; };
@@ -164,6 +165,7 @@
 		4CB7D8CF29F8DD040002495E /* InputTileDuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputTileDuration.swift; sourceTree = "<group>"; };
 		5B3FB734328ABC03284A67BF /* Pods_StreetCare.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_StreetCare.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		71392FAC2BAA40F900496CA5 /* GoogleUserAuthModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleUserAuthModel.swift; sourceTree = "<group>"; };
+		7153D3F42BB5AA8300226F34 /* CustomAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlertView.swift; sourceTree = "<group>"; };
 		71B0D5C42B9214B70061033B /* BadgesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BadgesView.swift; sourceTree = "<group>"; };
 		71B0D5C62B92187A0061033B /* Badges.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Badges.swift; sourceTree = "<group>"; };
 		71B0D5CA2B9225670061033B /* Badge.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Badge.swift; sourceTree = "<group>"; };
@@ -314,6 +316,7 @@
 				BE9D1DD82A3A419A00072835 /* LoadingView.swift */,
 				BE9D1DDA2A3F745400072835 /* ScreenLeft.swift */,
 				BE9D1DDC2A43641400072835 /* RatingView.swift */,
+				7153D3F42BB5AA8300226F34 /* CustomAlertView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -567,6 +570,7 @@
 				4CB65E6129DA91C000684BD1 /* SafeNetwork.swift in Sources */,
 				4C17ED532A00A4470013EF52 /* NavLinkButton.swift in Sources */,
 				71B0D5CB2B9225670061033B /* Badge.swift in Sources */,
+				7153D3F52BB5AA8300226F34 /* CustomAlertView.swift in Sources */,
 				4CB65E6329DA91C000684BD1 /* FileDataAdapter.swift in Sources */,
 				BE9D1DDB2A3F745400072835 /* ScreenLeft.swift in Sources */,
 				4CB65E6429DA91C000684BD1 /* InformationCategory.swift in Sources */,

@@ -18,8 +18,9 @@ struct NavLinkButton: View {
     var height: CGFloat = 35.0
     var secondaryButton = false
     var noBorder = false
+    var rightArrowNeeded = false
     var color = Color("SecondaryColor")
-    var textColor = UIColor.black
+    var textColor = Color("TextColor")
     var body: some View {
 
         ZStack {
@@ -34,10 +35,32 @@ struct NavLinkButton: View {
                     .frame(width: width, height: height)
                     .foregroundColor(color)
             }
-            
-            Text(title)
-                .padding(EdgeInsets(top: 8.0, leading: 20.0, bottom: 8.0, trailing: 20.0))
-                .foregroundColor(secondaryButton ? color : Color("PrimaryColor"))
+            if rightArrowNeeded{
+                HStack {
+                    Spacer()
+                    Text(NSLocalizedString(title, comment: ""))
+                        .fontWeight(.bold).foregroundColor(.black)
+                        .foregroundColor(Color("TextColor"))
+                    Spacer()
+                    Image(systemName: "greaterthan").aspectRatio(contentMode: .fit)
+                        .imageScale(.medium)
+                        .foregroundColor(Color("TextColor"))
+                }
+                .padding(EdgeInsets(top: 4.0, leading: 20.0, bottom: 4.0, trailing: 20.0))
+            }else{
+                HStack{
+                    Text(title)
+                        .padding(EdgeInsets(top: 8.0, leading: 20.0, bottom: 8.0, trailing: 20.0))
+                        .foregroundColor(secondaryButton ? color : Color("PrimaryColor"))
+                    if rightArrowNeeded{
+                        //Spacer()
+                        Image(systemName: "greaterthan").aspectRatio(contentMode: .fit)
+                            .imageScale(.medium)
+                            .foregroundColor(Color("TextColor")).multilineTextAlignment(.trailing)
+                    }
+                }
+            }
+
         }
 
     } // end body

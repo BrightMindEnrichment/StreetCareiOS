@@ -14,8 +14,8 @@
 "personalHygiene" = "Personal Hygiene";
 "socksClothing" = "Socks and Clothing";
 "feminineHygiene" = "Feminine Hygiene";
-
-"healthySnacksDescription" = "Include items that are easy to chew and pack and nutritious, such as breakfast bars, beef jerky, and dried fruit. Pack food items in a ziplock bag separately from any scented sanitary products.";
+"ok" = "OK";
+"healthySnacksDescription" = "Nonperishable and nutritious snacks such as nuts, pretzels, breakfast bars, applesauce, and dried fruits are best. Try to include items that are easy to chew for individual without access to dental care. Remember to pack food items seperately from any scented sanitary products.";
 
 "waterDescription" = "Finding potable water can be difficult for homeless individuals. Bottled water is a great donation item, as is carrying a jug and cups.";
 
@@ -37,7 +37,8 @@
 "howToVideos" = "How-to Videos";
 "logoutButtonTitle" = "Sign Out";
 "removeAccountButtonTitle" = "Remove Account";
-
+"featuredItems" = "Featured Items";
+"whattoBringAndGive" = "What to Bring and Give";
 
 
 
