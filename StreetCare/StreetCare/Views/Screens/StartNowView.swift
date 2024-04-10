@@ -17,28 +17,30 @@ struct StartNowView: View {
     
     var body: some View {
         VStack {
-            Spacer()
-            
-           // Image("HelpPhoto2").resizable().frame(width: 300.0, height: 200.0) .clipShape(RoundedRectangle(cornerRadius: 16.0))
-            
-            Spacer(minLength: 70.0)
-            
-            Text("The essential steps of ehlping the homeless at every stage of outreach.").padding(EdgeInsets(top: 5.0, leading: 20.0, bottom: 5.0, trailing: 20.0)).multilineTextAlignment(.center) .fontWeight(.bold).foregroundColor(.black)
-
-
             ScrollView {
+                Spacer()
+                
+                // Image("HelpPhoto2").resizable().frame(width: 300.0, height: 200.0) .clipShape(RoundedRectangle(cornerRadius: 16.0))
+                
+                Spacer(minLength: 70.0)
+                
+                Text("The essential steps of helping the homeless at every stage of outreach.").padding(EdgeInsets(top: 5.0, leading: 20.0, bottom: 5.0, trailing: 20.0)).multilineTextAlignment(.center) .fontWeight(.bold).foregroundColor(.black)
+                
+                
+                //ScrollView {
                 ForEach(links, id: \.id) { link in
                     NavigationLink {
                         link.view
                     } label: {
-                        NavigationRowLinkView(link: link) .padding(EdgeInsets(top: 5.0, leading: 20.0, bottom: 5.0, trailing: 20.0))
+                        NavigationRowLinkView(link: link).padding(EdgeInsets(top: 5.0, leading: 20.0, bottom: 5.0, trailing: 20.0))
                     }
                 }
+                // }
+                
+                // Spacer()
             }
-            
-           // Spacer()
         }
-        .navigationTitle("Start Now")
+        //.navigationTitle("Start Now")
     } // end body
 } // end struct
 

@@ -24,7 +24,7 @@ struct GrowingTextView: View {
             VStack {
                 HStack {
                     Text(title)
-                        .font(.headline)
+                        .font(.headline).bold()
                         .foregroundColor(Color("TextColor"))
                     Spacer()
                     
@@ -35,15 +35,18 @@ struct GrowingTextView: View {
                             .foregroundColor(Color("SecondaryColor"))
                             .imageScale(.large)
                     }
-                }
-                onTapGesture {
+                }.onTapGesture {
                     isOpen.toggle()
                 }
-             
+//                onTapGesture {
+//
+//                    isOpen.toggle()
+//                }
                 if isOpen {
                     HStack {
                         Text(description)
-                            .foregroundColor(Color("TextColor"))
+                            .foregroundColor(Color("TextColor")).font(.system(size: 16))
+
                         Spacer()
                     }
                 }

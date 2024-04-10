@@ -63,8 +63,13 @@ class ProfileDetailsAdapter {
         userData["uid"] = user.uid
         userData["username"] = profile.displayName
         userData["organization"] = profile.organization
-        userData["country"] = profile.country
+        userData["country"] = profile.country != "" ? profile.country : Locale.current.region
         userData["deviceType"] = "iOS"
+        if profile.email != ""{
+            userData["email"] = profile.email
+        }
+        userData["isValid"] = true
+
         
         db.collection(collectionName).document().setData(userData) { err in
             if let err = err {

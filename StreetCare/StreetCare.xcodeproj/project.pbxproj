@@ -74,6 +74,10 @@
 		4CB7D8CC29F8D5B00002495E /* VisitLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB7D8CB29F8D5B00002495E /* VisitLog.swift */; };
 		4CB7D8CE29F8DCBC0002495E /* TimeDurationPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB7D8CD29F8DCBC0002495E /* TimeDurationPicker.swift */; };
 		4CB7D8D029F8DD040002495E /* InputTileDuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB7D8CF29F8DD040002495E /* InputTileDuration.swift */; };
+		71392FAD2BAA40F900496CA5 /* GoogleUserAuthModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71392FAC2BAA40F900496CA5 /* GoogleUserAuthModel.swift */; };
+		71392FAF2BAA413400496CA5 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 71392FAE2BAA413400496CA5 /* GoogleSignIn */; };
+		71392FB12BAA413400496CA5 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 71392FB02BAA413400496CA5 /* GoogleSignInSwift */; };
+		7153D3F52BB5AA8300226F34 /* CustomAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7153D3F42BB5AA8300226F34 /* CustomAlertView.swift */; };
 		71B0D5C52B9214B70061033B /* BadgesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71B0D5C42B9214B70061033B /* BadgesView.swift */; };
 		71B0D5C72B92187A0061033B /* Badges.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71B0D5C62B92187A0061033B /* Badges.swift */; };
 		71B0D5CB2B9225670061033B /* Badge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71B0D5CA2B9225670061033B /* Badge.swift */; };
@@ -160,6 +164,8 @@
 		4CB7D8CD29F8DCBC0002495E /* TimeDurationPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeDurationPicker.swift; sourceTree = "<group>"; };
 		4CB7D8CF29F8DD040002495E /* InputTileDuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputTileDuration.swift; sourceTree = "<group>"; };
 		5B3FB734328ABC03284A67BF /* Pods_StreetCare.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_StreetCare.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		71392FAC2BAA40F900496CA5 /* GoogleUserAuthModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleUserAuthModel.swift; sourceTree = "<group>"; };
+		7153D3F42BB5AA8300226F34 /* CustomAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlertView.swift; sourceTree = "<group>"; };
 		71B0D5C42B9214B70061033B /* BadgesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BadgesView.swift; sourceTree = "<group>"; };
 		71B0D5C62B92187A0061033B /* Badges.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Badges.swift; sourceTree = "<group>"; };
 		71B0D5CA2B9225670061033B /* Badge.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Badge.swift; sourceTree = "<group>"; };
@@ -180,7 +186,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				71392FB12BAA413400496CA5 /* GoogleSignInSwift in Frameworks */,
 				4C7D61802A21F37B00ABC2A6 /* GoogleSignInSwift in Frameworks */,
+				71392FAF2BAA413400496CA5 /* GoogleSignIn in Frameworks */,
 				4CB65DB029D371B400684BD1 /* FirebaseAuth in Frameworks */,
 				4C7D617E2A21F37B00ABC2A6 /* GoogleSignIn in Frameworks */,
 				4CB65DB229D371B400684BD1 /* FirebaseFirestore in Frameworks */,
@@ -308,6 +316,7 @@
 				BE9D1DD82A3A419A00072835 /* LoadingView.swift */,
 				BE9D1DDA2A3F745400072835 /* ScreenLeft.swift */,
 				BE9D1DDC2A43641400072835 /* RatingView.swift */,
+				7153D3F42BB5AA8300226F34 /* CustomAlertView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -362,6 +371,7 @@
 				BEA872772A2910B90053D4F4 /* ProfileDetailsAdapter.swift */,
 				BE9D1DD22A377E9100072835 /* StorgeManager.swift */,
 				BE9D1DD62A37933500072835 /* LocationManager.swift */,
+				71392FAC2BAA40F900496CA5 /* GoogleUserAuthModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -394,6 +404,7 @@
 				4CB65D8829D016AE00684BD1 /* Sources */,
 				4CB65D8929D016AE00684BD1 /* Frameworks */,
 				4CB65D8A29D016AE00684BD1 /* Resources */,
+				F81206B8E0419C0F8F134578 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -407,6 +418,8 @@
 				4C7D617D2A21F37B00ABC2A6 /* GoogleSignIn */,
 				4C7D617F2A21F37B00ABC2A6 /* GoogleSignInSwift */,
 				BE9D1DD02A376B3800072835 /* FirebaseStorage */,
+				71392FAE2BAA413400496CA5 /* GoogleSignIn */,
+				71392FB02BAA413400496CA5 /* GoogleSignInSwift */,
 			);
 			productName = StreetCare;
 			productReference = 4CB65D8C29D016AE00684BD1 /* StreetCare.app */;
@@ -487,6 +500,23 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		F81206B8E0419C0F8F134578 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-StreetCare/Pods-StreetCare-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-StreetCare/Pods-StreetCare-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-StreetCare/Pods-StreetCare-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -540,6 +570,7 @@
 				4CB65E6129DA91C000684BD1 /* SafeNetwork.swift in Sources */,
 				4C17ED532A00A4470013EF52 /* NavLinkButton.swift in Sources */,
 				71B0D5CB2B9225670061033B /* Badge.swift in Sources */,
+				7153D3F52BB5AA8300226F34 /* CustomAlertView.swift in Sources */,
 				4CB65E6329DA91C000684BD1 /* FileDataAdapter.swift in Sources */,
 				BE9D1DDB2A3F745400072835 /* ScreenLeft.swift in Sources */,
 				4CB65E6429DA91C000684BD1 /* InformationCategory.swift in Sources */,
@@ -553,6 +584,7 @@
 				4CB65D9229D016AE00684BD1 /* LandingScreenView.swift in Sources */,
 				4C2F5A7829FF731A00CFD288 /* ListConnectorDecorationView.swift in Sources */,
 				4C0E4F9C29DAC977009D33C1 /* YoutubeCellView.swift in Sources */,
+				71392FAD2BAA40F900496CA5 /* GoogleUserAuthModel.swift in Sources */,
 				4CB65E6729DA91C000684BD1 /* PlaylistController.swift in Sources */,
 				4CA8693129E3CD5F00BB6972 /* BasicTile.swift in Sources */,
 				4C82441729ECD993003D1575 /* SignUpView.swift in Sources */,
@@ -833,6 +865,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 4CB65DAE29D371B400684BD1 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseFirestoreSwift;
+		};
+		71392FAE2BAA413400496CA5 /* GoogleSignIn */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4C7D617C2A21F37B00ABC2A6 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignIn;
+		};
+		71392FB02BAA413400496CA5 /* GoogleSignInSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 4C7D617C2A21F37B00ABC2A6 /* XCRemoteSwiftPackageReference "GoogleSignIn-iOS" */;
+			productName = GoogleSignInSwift;
 		};
 		BE9D1DD02A376B3800072835 /* FirebaseStorage */ = {
 			isa = XCSwiftPackageProductDependency;

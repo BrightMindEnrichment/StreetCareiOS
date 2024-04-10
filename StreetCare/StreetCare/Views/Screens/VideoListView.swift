@@ -10,7 +10,7 @@ import SwiftUI
 struct VideoListView: View {
     
     var playlistId: String
-    
+    var title : String
     @StateObject var controller = PlaylistController(playlistId: "")
     
     var body: some View {
@@ -29,13 +29,13 @@ struct VideoListView: View {
             .onAppear {
                 controller.refresh(playlistId: self.playlistId)
             }
-            .navigationTitle("howToVideos")
+            .navigationTitle(title)
         }
     }
 }
 
 struct VideoListView_Previews: PreviewProvider {
     static var previews: some View {
-        VideoListView(playlistId: "PLh7GZtyt8qiLKwO_WoE0Vmcu6UMV1AtV9")
+        VideoListView(playlistId: "PLh7GZtyt8qiLKwO_WoE0Vmcu6UMV1AtV9",title: "How to use Street Care App")
     }
 }
