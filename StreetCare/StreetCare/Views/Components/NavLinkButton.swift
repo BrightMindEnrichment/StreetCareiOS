@@ -16,22 +16,24 @@ struct NavLinkButton: View {
     var title: String
     var width: CGFloat
     var height: CGFloat = 35.0
+    var cornerRadius: CGFloat = 16.0
     var secondaryButton = false
     var noBorder = false
     var rightArrowNeeded = false
     var color = Color("SecondaryColor")
     var textColor = Color("TextColor")
+    var buttonColor =  Color("PrimaryColor")
     var body: some View {
 
         ZStack {
             if secondaryButton {
-                RoundedRectangle(cornerRadius: 16.0)
+                RoundedRectangle(cornerRadius: cornerRadius)
                     .strokeBorder(lineWidth: noBorder ? 0.0 : 2.0)
                     .frame(width: width, height: height)
                     .foregroundColor(color)
             }
             else {
-                RoundedRectangle(cornerRadius: 16.0)
+                RoundedRectangle(cornerRadius: cornerRadius)
                     .frame(width: width, height: height)
                     .foregroundColor(color)
             }
@@ -40,23 +42,23 @@ struct NavLinkButton: View {
                     Spacer()
                     Text(NSLocalizedString(title, comment: ""))
                         .fontWeight(.bold).foregroundColor(.black)
-                        .foregroundColor(Color("TextColor"))
+                      //  .foregroundColor(textColor)
                     Spacer()
                     Image(systemName: "greaterthan").aspectRatio(contentMode: .fit)
                         .imageScale(.medium)
-                        .foregroundColor(Color("TextColor"))
+                        .foregroundColor(textColor)
                 }
                 .padding(EdgeInsets(top: 4.0, leading: 20.0, bottom: 4.0, trailing: 20.0))
             }else{
                 HStack{
                     Text(title)
                         .padding(EdgeInsets(top: 8.0, leading: 20.0, bottom: 8.0, trailing: 20.0))
-                        .foregroundColor(secondaryButton ? color : Color("PrimaryColor"))
+                        .foregroundColor(secondaryButton ? color : buttonColor)
                     if rightArrowNeeded{
                         //Spacer()
                         Image(systemName: "greaterthan").aspectRatio(contentMode: .fit)
                             .imageScale(.medium)
-                            .foregroundColor(Color("TextColor")).multilineTextAlignment(.trailing)
+                            .foregroundColor(textColor).multilineTextAlignment(.trailing)
                     }
                 }
             }

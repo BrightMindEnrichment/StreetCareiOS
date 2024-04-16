@@ -173,7 +173,7 @@ struct VisitLogEntry: View {
                     }
                 }
             }
-        }
+        }.navigationTitle("Visit Log")
     } // end body
     
     
