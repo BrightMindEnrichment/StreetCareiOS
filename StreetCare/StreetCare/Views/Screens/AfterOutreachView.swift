@@ -15,10 +15,10 @@ struct AfterOutreachView: View {
             VStack {
                 ScrollView {
                     Spacer().frame(height: 90)
-                    Image("Clothes").resizable().frame(width: 60.0, height: 60.0)
+                    Image("log").resizable().frame(width: 60.0, height: 60.0)
                     Spacer().frame(height: 20)
                     Text("Would you like to Log your visit?")
-                        .font(.subheadline).padding(EdgeInsets(top: 15.0, leading: 0.0, bottom: 10.0, trailing:0.0)) .fontWeight(.bold).foregroundColor(.black)
+                        .font(.subheadline).padding(EdgeInsets(top: 15.0, leading: 0.0, bottom: 10.0, trailing:0.0)) .fontWeight(.bold).foregroundColor(Color("TextColor"))
                     Spacer().frame(height: 40)
                     
                     NavigationLink {

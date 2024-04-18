@@ -32,7 +32,7 @@ struct StreetCareApp: App {
 
     var body: some Scene {
         WindowGroup {
-            MainTabBarView()
+            SplashView()
                 .onOpenURL { url in
                           GIDSignIn.sharedInstance.handle(url)
                         }

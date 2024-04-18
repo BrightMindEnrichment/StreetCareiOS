@@ -29,7 +29,7 @@ struct WhatToBringView: View {
         ItemToBring(imageName: "Water", title: "water", description: "waterDescription"),
         ItemToBring(imageName: "DoctorsBag", title: "firstAid", description: "firstAidDescription"),
         ItemToBring(imageName: "PersonalHygyne", title: "personalHygiene", description: "personalHygieneDescription"),
-        ItemToBring(imageName: "Shirt", title: "socksClothing", description: "socksClothingDescription"),
+        ItemToBring(imageName: "Cloth", title: "socksClothing", description: "socksClothingDescription"),
         ItemToBring(imageName: "Woman", title: "feminineHygiene", description: "feminineHygieneDescription")
     ]
     

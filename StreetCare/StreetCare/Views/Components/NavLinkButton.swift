@@ -41,7 +41,7 @@ struct NavLinkButton: View {
                 HStack {
                     Spacer()
                     Text(NSLocalizedString(title, comment: ""))
-                        .fontWeight(.bold).foregroundColor(.black)
+                        .fontWeight(.bold).foregroundColor(textColor)
                       //  .foregroundColor(textColor)
                     Spacer()
                     Image(systemName: "greaterthan").aspectRatio(contentMode: .fit)

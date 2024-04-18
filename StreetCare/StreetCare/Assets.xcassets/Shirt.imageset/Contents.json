@@ -1,19 +1,8 @@
 {
   "images" : [
     {
-      "filename" : "T-Shirt.png",
-      "idiom" : "universal",
-      "scale" : "1x"
-    },
-    {
-      "filename" : "T-Shirt-2.png",
-      "idiom" : "universal",
-      "scale" : "2x"
-    },
-    {
-      "filename" : "T-Shirt-3.png",
-      "idiom" : "universal",
-      "scale" : "3x"
+      "filename" : "icon_t_shirt.png",
+      "idiom" : "universal"
     }
   ],
   "info" : {

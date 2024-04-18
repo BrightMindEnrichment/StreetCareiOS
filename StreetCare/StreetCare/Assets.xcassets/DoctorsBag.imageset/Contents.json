@@ -1,19 +1,8 @@
 {
   "images" : [
     {
-      "filename" : "Doctors Bag.png",
-      "idiom" : "universal",
-      "scale" : "1x"
-    },
-    {
-      "filename" : "Doctors Bag-2.png",
-      "idiom" : "universal",
-      "scale" : "2x"
-    },
-    {
-      "filename" : "Doctors Bag-3.png",
-      "idiom" : "universal",
-      "scale" : "3x"
+      "filename" : "icon_bandages.png",
+      "idiom" : "universal"
     }
   ],
   "info" : {
