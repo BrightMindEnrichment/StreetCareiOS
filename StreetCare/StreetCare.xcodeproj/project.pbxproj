@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1F5C885E2C1CA29C00684361 /* CommunityEventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F5C885D2C1CA29C00684361 /* CommunityEventView.swift */; };
+		1F5C88602C1CDF2D00684361 /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F5C885F2C1CDF2D00684361 /* Common.swift */; };
 		4C0E4F9829DA9450009D33C1 /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C0E4F9729DA9450009D33C1 /* Log.swift */; };
 		4C0E4F9A29DAC905009D33C1 /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C0E4F9929DAC905009D33C1 /* WebView.swift */; };
 		4C0E4F9C29DAC977009D33C1 /* YoutubeCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C0E4F9B29DAC977009D33C1 /* YoutubeCellView.swift */; };
@@ -99,6 +101,8 @@
 
 /* Begin PBXFileReference section */
 		1784B66B50CD8167A950C87D /* Pods-StreetCare.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StreetCare.release.xcconfig"; path = "Target Support Files/Pods-StreetCare/Pods-StreetCare.release.xcconfig"; sourceTree = "<group>"; };
+		1F5C885D2C1CA29C00684361 /* CommunityEventView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityEventView.swift; sourceTree = "<group>"; };
+		1F5C885F2C1CDF2D00684361 /* Common.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
 		2CBA18332B467FF476F7CBCC /* Pods-StreetCare.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StreetCare.debug.xcconfig"; path = "Target Support Files/Pods-StreetCare/Pods-StreetCare.debug.xcconfig"; sourceTree = "<group>"; };
 		4C0E4F9729DA9450009D33C1 /* Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
 		4C0E4F9929DAC905009D33C1 /* WebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
@@ -276,6 +280,7 @@
 				4CB65D9329D016B000684BD1 /* Assets.xcassets */,
 				4CB65D9529D016B000684BD1 /* Preview Content */,
 				4CB65E4F29DA6FE900684BD1 /* LinkData.swift */,
+				1F5C885F2C1CDF2D00684361 /* Common.swift */,
 			);
 			path = StreetCare;
 			sourceTree = "<group>";
@@ -336,6 +341,7 @@
 				4CB65E4929DA6A1200684BD1 /* WhatToBringView.swift */,
 				71B0D5C42B9214B70061033B /* BadgesView.swift */,
 				4CB65DA029D0DEC700684BD1 /* CommunityView.swift */,
+				1F5C885D2C1CA29C00684361 /* CommunityEventView.swift */,
 				4CB65E5329DA916600684BD1 /* VideoListView.swift */,
 				4C0E4FF029DDF726009D33C1 /* DonateView.swift */,
 				4C85F0E82A089F9600FFEDC8 /* PlaylistsView.swift */,
@@ -578,6 +584,7 @@
 				4C17ED532A00A4470013EF52 /* NavLinkButton.swift in Sources */,
 				71B0D5CB2B9225670061033B /* Badge.swift in Sources */,
 				7153D3F52BB5AA8300226F34 /* CustomAlertView.swift in Sources */,
+				1F5C88602C1CDF2D00684361 /* Common.swift in Sources */,
 				4CB65E6329DA91C000684BD1 /* FileDataAdapter.swift in Sources */,
 				BE9D1DDB2A3F745400072835 /* ScreenLeft.swift in Sources */,
 				4CB65E6429DA91C000684BD1 /* InformationCategory.swift in Sources */,
@@ -601,6 +608,7 @@
 				4CB65DA129D0DEC700684BD1 /* CommunityView.swift in Sources */,
 				4C82448E29EF9E58003D1575 /* InputTileLocation.swift in Sources */,
 				71B0D5C72B92187A0061033B /* Badges.swift in Sources */,
+				1F5C885E2C1CA29C00684361 /* CommunityEventView.swift in Sources */,
 				4C82448B29EE44E5003D1575 /* NotLoggedInProfileView.swift in Sources */,
 				4C85F0E32A089E3200FFEDC8 /* PlaylistDefinition.swift in Sources */,
 				4CB65D9029D016AE00684BD1 /* StreetCareApp.swift in Sources */,
@@ -763,7 +771,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.5.5;
+				MARKETING_VERSION = 1.5.6;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bme.StreetCare;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -796,7 +804,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.5.5;
+				MARKETING_VERSION = 1.5.6;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bme.StreetCare;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;

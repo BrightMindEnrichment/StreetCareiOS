@@ -26,10 +26,10 @@ enum ImageEnum: String {
 struct LandingScreenView: View {
     
     var links: [LinkData] = [
-        LinkData(icon: "startNow", title: "startNow", view: AnyView(StartNowView())),
-        LinkData(icon: "IconSoap", title: "whatToGive", view: AnyView(WhatToBringView())),
-        LinkData(icon: "IconVideo", title: "How-to Videos", view: AnyView(PlaylistsView())),
-        LinkData(icon: "IconStreetcare", title: "Donate", view: AnyView(DonateView()))
+        LinkData(icon: "startNow", title: "startNow", view: AnyView(StartNowView()), iden: 1),
+        LinkData(icon: "IconSoap", title: "whatToGive", view: AnyView(WhatToBringView()), iden: 1),
+        LinkData(icon: "IconVideo", title: "How-to Videos", view: AnyView(PlaylistsView()), iden: 1),
+        LinkData(icon: "IconStreetcare", title: "Donate", view: AnyView(DonateView()), iden: 1)
     ]
     @State private var img = ImageEnum.img1
     @State private var fadeOut = false

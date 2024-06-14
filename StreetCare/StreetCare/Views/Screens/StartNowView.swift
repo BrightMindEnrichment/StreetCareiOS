@@ -10,9 +10,9 @@ import SwiftUI
 struct StartNowView: View {
     
     var links: [LinkData] = [
-        LinkData(icon: "", title: "Before outreach", view: AnyView(BeforeOutreachView())),
-        LinkData(icon: "", title: "During outreach", view: AnyView(PlaylistsView())),
-        LinkData(icon: "", title: "After outreach", view: AnyView(AfterOutreachView())),
+        LinkData(icon: "", title: "Before outreach", view: AnyView(BeforeOutreachView()), iden: 1),
+        LinkData(icon: "", title: "During outreach", view: AnyView(PlaylistsView()), iden: 1),
+        LinkData(icon: "", title: "After outreach", view: AnyView(AfterOutreachView()), iden: 1),
     ]
     
     var body: some View {

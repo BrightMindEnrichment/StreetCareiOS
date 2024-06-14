@@ -14,4 +14,5 @@ struct LinkData: Identifiable {
     let icon: String
     let title: String
     let view: AnyView
+    var iden : Int
 }
