@@ -41,7 +41,7 @@
 "whattoBringAndGive" = "What to Bring and Give";
 "noFutureEventsAvailable" = "No Future Events Available";
 "noPastEventsAvailable" = "No Past Events Available";
-"noHelpingEventsAvailable" = "No Help Requests Available";
+"noHelpingRequestsAvailable" = "No Help Requests Available";
 
 
 "whereWillVisitPrompt" = "Where will be your visit?";
