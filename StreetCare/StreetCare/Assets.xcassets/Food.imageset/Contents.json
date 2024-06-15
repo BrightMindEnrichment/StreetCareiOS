@@ -1,19 +1,8 @@
 {
   "images" : [
     {
-      "filename" : "Food.png",
-      "idiom" : "universal",
-      "scale" : "1x"
-    },
-    {
-      "filename" : "Food@2.png",
-      "idiom" : "universal",
-      "scale" : "2x"
-    },
-    {
-      "filename" : "Food@3x.png",
-      "idiom" : "universal",
-      "scale" : "3x"
+      "filename" : "icon_snacks.png",
+      "idiom" : "universal"
     }
   ],
   "info" : {

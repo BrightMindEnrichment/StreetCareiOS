@@ -1,19 +1,8 @@
 {
   "images" : [
     {
-      "filename" : "Bottle of Water.png",
-      "idiom" : "universal",
-      "scale" : "1x"
-    },
-    {
-      "filename" : "Bottle of Water-2.png",
-      "idiom" : "universal",
-      "scale" : "2x"
-    },
-    {
-      "filename" : "Bottle of Water-3.png",
-      "idiom" : "universal",
-      "scale" : "3x"
+      "filename" : "icon_water.png",
+      "idiom" : "universal"
     }
   ],
   "info" : {

@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1F5C885E2C1CA29C00684361 /* CommunityEventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F5C885D2C1CA29C00684361 /* CommunityEventView.swift */; };
+		1F5C88602C1CDF2D00684361 /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F5C885F2C1CDF2D00684361 /* Common.swift */; };
 		4C0E4F9829DA9450009D33C1 /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C0E4F9729DA9450009D33C1 /* Log.swift */; };
 		4C0E4F9A29DAC905009D33C1 /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C0E4F9929DAC905009D33C1 /* WebView.swift */; };
 		4C0E4F9C29DAC977009D33C1 /* YoutubeCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C0E4F9B29DAC977009D33C1 /* YoutubeCellView.swift */; };
@@ -81,6 +83,8 @@
 		71B0D5C52B9214B70061033B /* BadgesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71B0D5C42B9214B70061033B /* BadgesView.swift */; };
 		71B0D5C72B92187A0061033B /* Badges.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71B0D5C62B92187A0061033B /* Badges.swift */; };
 		71B0D5CB2B9225670061033B /* Badge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71B0D5CA2B9225670061033B /* Badge.swift */; };
+		71FA51032BCEC4B300D0DA6C /* AfterOutreachView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71FA51022BCEC4B300D0DA6C /* AfterOutreachView.swift */; };
+		71FA51052BD1909500D0DA6C /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71FA51042BD1909500D0DA6C /* SplashView.swift */; };
 		A459D493C5D37756A585D3EA /* Pods_StreetCare.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B3FB734328ABC03284A67BF /* Pods_StreetCare.framework */; };
 		BE9D1DCE2A37626C00072835 /* ImagePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9D1DCD2A37626C00072835 /* ImagePickerView.swift */; };
 		BE9D1DD12A376B3800072835 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = BE9D1DD02A376B3800072835 /* FirebaseStorage */; };
@@ -97,6 +101,8 @@
 
 /* Begin PBXFileReference section */
 		1784B66B50CD8167A950C87D /* Pods-StreetCare.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StreetCare.release.xcconfig"; path = "Target Support Files/Pods-StreetCare/Pods-StreetCare.release.xcconfig"; sourceTree = "<group>"; };
+		1F5C885D2C1CA29C00684361 /* CommunityEventView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityEventView.swift; sourceTree = "<group>"; };
+		1F5C885F2C1CDF2D00684361 /* Common.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
 		2CBA18332B467FF476F7CBCC /* Pods-StreetCare.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StreetCare.debug.xcconfig"; path = "Target Support Files/Pods-StreetCare/Pods-StreetCare.debug.xcconfig"; sourceTree = "<group>"; };
 		4C0E4F9729DA9450009D33C1 /* Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
 		4C0E4F9929DAC905009D33C1 /* WebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
@@ -169,6 +175,8 @@
 		71B0D5C42B9214B70061033B /* BadgesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BadgesView.swift; sourceTree = "<group>"; };
 		71B0D5C62B92187A0061033B /* Badges.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Badges.swift; sourceTree = "<group>"; };
 		71B0D5CA2B9225670061033B /* Badge.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Badge.swift; sourceTree = "<group>"; };
+		71FA51022BCEC4B300D0DA6C /* AfterOutreachView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AfterOutreachView.swift; sourceTree = "<group>"; };
+		71FA51042BD1909500D0DA6C /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
 		BE9D1DCD2A37626C00072835 /* ImagePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerView.swift; sourceTree = "<group>"; };
 		BE9D1DD22A377E9100072835 /* StorgeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorgeManager.swift; sourceTree = "<group>"; };
 		BE9D1DD42A37819E00072835 /* AvatarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarView.swift; sourceTree = "<group>"; };
@@ -272,6 +280,7 @@
 				4CB65D9329D016B000684BD1 /* Assets.xcassets */,
 				4CB65D9529D016B000684BD1 /* Preview Content */,
 				4CB65E4F29DA6FE900684BD1 /* LinkData.swift */,
+				1F5C885F2C1CDF2D00684361 /* Common.swift */,
 			);
 			path = StreetCare;
 			sourceTree = "<group>";
@@ -328,13 +337,16 @@
 				4C17ED4F2A00A3390013EF52 /* Visit Log */,
 				4CB65DA429D0DEEE00684BD1 /* MainTabBarView.swift */,
 				4CB65D9129D016AE00684BD1 /* LandingScreenView.swift */,
+				71FA51022BCEC4B300D0DA6C /* AfterOutreachView.swift */,
 				4CB65E4929DA6A1200684BD1 /* WhatToBringView.swift */,
 				71B0D5C42B9214B70061033B /* BadgesView.swift */,
 				4CB65DA029D0DEC700684BD1 /* CommunityView.swift */,
+				1F5C885D2C1CA29C00684361 /* CommunityEventView.swift */,
 				4CB65E5329DA916600684BD1 /* VideoListView.swift */,
 				4C0E4FF029DDF726009D33C1 /* DonateView.swift */,
 				4C85F0E82A089F9600FFEDC8 /* PlaylistsView.swift */,
 				4C85F0EA2A08A4E800FFEDC8 /* StartNowView.swift */,
+				71FA51042BD1909500D0DA6C /* SplashView.swift */,
 				4C85F0EC2A08A6F000FFEDC8 /* BeforeOutreachView.swift */,
 			);
 			path = Screens;
@@ -526,6 +538,7 @@
 			files = (
 				4CB7D8CE29F8DCBC0002495E /* TimeDurationPicker.swift in Sources */,
 				4CB65D9F29D0DEAE00684BD1 /* VisitLogView.swift in Sources */,
+				71FA51052BD1909500D0DA6C /* SplashView.swift in Sources */,
 				4C7136BF2A0462410060EB7D /* TabButtonView.swift in Sources */,
 				4C82448929EE40C5003D1575 /* LoginView.swift in Sources */,
 				4CB65E6229DA91C000684BD1 /* VideoInformation.swift in Sources */,
@@ -571,6 +584,7 @@
 				4C17ED532A00A4470013EF52 /* NavLinkButton.swift in Sources */,
 				71B0D5CB2B9225670061033B /* Badge.swift in Sources */,
 				7153D3F52BB5AA8300226F34 /* CustomAlertView.swift in Sources */,
+				1F5C88602C1CDF2D00684361 /* Common.swift in Sources */,
 				4CB65E6329DA91C000684BD1 /* FileDataAdapter.swift in Sources */,
 				BE9D1DDB2A3F745400072835 /* ScreenLeft.swift in Sources */,
 				4CB65E6429DA91C000684BD1 /* InformationCategory.swift in Sources */,
@@ -584,6 +598,7 @@
 				4CB65D9229D016AE00684BD1 /* LandingScreenView.swift in Sources */,
 				4C2F5A7829FF731A00CFD288 /* ListConnectorDecorationView.swift in Sources */,
 				4C0E4F9C29DAC977009D33C1 /* YoutubeCellView.swift in Sources */,
+				71FA51032BCEC4B300D0DA6C /* AfterOutreachView.swift in Sources */,
 				71392FAD2BAA40F900496CA5 /* GoogleUserAuthModel.swift in Sources */,
 				4CB65E6729DA91C000684BD1 /* PlaylistController.swift in Sources */,
 				4CA8693129E3CD5F00BB6972 /* BasicTile.swift in Sources */,
@@ -593,6 +608,7 @@
 				4CB65DA129D0DEC700684BD1 /* CommunityView.swift in Sources */,
 				4C82448E29EF9E58003D1575 /* InputTileLocation.swift in Sources */,
 				71B0D5C72B92187A0061033B /* Badges.swift in Sources */,
+				1F5C885E2C1CA29C00684361 /* CommunityEventView.swift in Sources */,
 				4C82448B29EE44E5003D1575 /* NotLoggedInProfileView.swift in Sources */,
 				4C85F0E32A089E3200FFEDC8 /* PlaylistDefinition.swift in Sources */,
 				4CB65D9029D016AE00684BD1 /* StreetCareApp.swift in Sources */,
@@ -755,7 +771,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.5.4;
+				MARKETING_VERSION = 1.5.6;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bme.StreetCare;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -788,7 +804,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.5.4;
+				MARKETING_VERSION = 1.5.6;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bme.StreetCare;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;

@@ -18,7 +18,7 @@ struct NavigationRowLinkView: View {
                 Image("\(link.icon)")
                 Spacer()
                 Text(NSLocalizedString(link.title, comment: ""))
-                    .fontWeight(.bold).foregroundColor(.black)
+                    .fontWeight(.bold)
                     .foregroundColor(Color("TextColor"))
                 Spacer()
                 Image(systemName: "greaterthan").aspectRatio(contentMode: .fit)

@@ -20,4 +20,12 @@ class Event: Identifiable {
     var interest: Int?
     var liked = false
     var uid: String?
+    var location : String?
+}
+
+
+class EventData : Identifiable{
+    var monthYear : String?
+    var date : String?
+    var event : Event?
 }

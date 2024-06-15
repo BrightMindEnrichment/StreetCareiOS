@@ -159,7 +159,6 @@ class EventDataAdapter {
                     
                     print(document.data())
                     
-                    
                     let event = Event()
                     event.eventId = document.documentID
                     
@@ -174,7 +173,9 @@ class EventDataAdapter {
                     if let interest = document["interest"] as? Int {
                         event.interest = interest
                     }
-                                        
+                    if let location = document["location"] as? String {
+                        event.location = location
+                    }
                     if let d = document["date"] as? Timestamp {
                         print(d)
                         event.date = d.dateValue()
