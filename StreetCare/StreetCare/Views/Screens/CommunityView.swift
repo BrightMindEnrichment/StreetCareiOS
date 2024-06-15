@@ -43,7 +43,6 @@ struct CommunityView: View {
                                             .strokeBorder(lineWidth: 1.2)
                                             .foregroundColor(Color("SecondaryColor"))
                                             .frame(width: 66.0)
-                                        Image("Community").frame(width: 15.0, height: 15.0)
                                     }
                                     Text(NSLocalizedString("futureEvents", comment: "")).fontWeight(.regular).foregroundColor(Color("TextColor"))
                                 }
