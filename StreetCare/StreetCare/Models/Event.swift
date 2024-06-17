@@ -26,6 +26,6 @@ class Event: Identifiable {
 
 class EventData : Identifiable{
     var monthYear : String?
-    var date : String?
+    var date : (String?, String?, String?) = ("","","")
     var event : Event?
 }
