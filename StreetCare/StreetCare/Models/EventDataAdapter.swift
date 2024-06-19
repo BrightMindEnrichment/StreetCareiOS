@@ -16,6 +16,7 @@ import FirebaseFirestoreSwift
 
 protocol EventDataAdapterProtocol {
     func eventDataRefreshed(_ events: [Event])
+    func helpRequestDataRefreshed(_ events: [HelpRequest])
 }
 
 
@@ -23,7 +24,7 @@ protocol EventDataAdapterProtocol {
 class EventDataAdapter {
     
     var events = [Event]()
-    
+    var helpRequests = [HelpRequest]()
     var delegate: EventDataAdapterProtocol?
     
     
@@ -138,26 +139,22 @@ class EventDataAdapter {
     
     
     func refresh() {
-        
         let settings = FirestoreSettings()
         Firestore.firestore().settings = settings
         let db = Firestore.firestore()
-        
-        let _ = db.collection("outreachEvents").getDocuments { querySnapshot, error in
-            
+            let _ = db.collection("outreachEvents").getDocuments { querySnapshot, error in
+
             // clear out all the old data
             self.events.removeAll()
             
             if let error = error {
                 print(error.localizedDescription)
                 return
-                //TODO : what to do on db fail
             }
 
             if let querySnapshot = querySnapshot {
                 for document in querySnapshot.documents {
-                    print(document.data())
-                    
+                 //   print(document.data())
                     let event = Event()
                     event.eventId = document.documentID
                     
@@ -167,13 +164,25 @@ class EventDataAdapter {
                     if let description = document["description"] as? String {
                         event.description = description
                     }
-                    if let location = document["location"] as? String {
-                        var location = location["street"] + ", " + location["city"] + ", " + location["state"]
-                        event.location = location
+                    if let location = document["location"] as? NSDictionary {
+                        var field = ""
+                        if let street = location["street"] as? String{
+                            field += street
+                        }
+                        if let ciity = location["city"] as? String{
+                            field +=  ", " + ciity
+                        }
+                        if let state = location["state"] as? String{
+                            field +=  ", " + state
+                        }
+                        if let zipcode = location["zipcode"] as? String{
+                            field +=  " " + zipcode
+                        }
+                        event.location = field
                     }else{
                         event.location = "UnKnown"
                     }
-                    if let interest = document["interest"] as? Int {
+                    if let interest = document["interests"] as? Int {
                         event.interest = interest
                     }
                     if let eventDate = document["eventDate"] as? Timestamp {
@@ -219,5 +228,83 @@ class EventDataAdapter {
             self.refreshLiked()
         }
     }
+    
+    
+    func getHelpRequest() {
+        let settings = FirestoreSettings()
+        Firestore.firestore().settings = settings
+        let db = Firestore.firestore()
+            let _ = db.collection("helpRequests").getDocuments { querySnapshot, error in
+
+            // clear out all the old data
+            self.helpRequests.removeAll()
+            
+            if let error = error {
+                print(error.localizedDescription)
+                return
+            }
+
+            if let querySnapshot = querySnapshot {
+                for document in querySnapshot.documents {
+                    print(document.data())
+                    
+                    let helpRequest = HelpRequest()
+                    helpRequest.id = document.documentID
+                    
+                    if let title = document["title"] as? String {
+                        helpRequest.title = title
+                    }
+                    if let description = document["description"] as? String {
+                        helpRequest.description = description
+                    }
+                    if let identification = document["identification"] as? String {
+                        helpRequest.identification = identification
+                    }
+                    if let location = document["location"] as? NSDictionary {
+                        var field = ""
+                        if let street = location["street"] as? String{
+                            if street != ""{
+                                field += street
+                            }
+                        }
+                        if let ciity = location["city"] as? String{
+                            if ciity != ""{
+                                field +=  ", " + ciity
+                            }
+                        }
+                        if let state = location["state"] as? String{
+                            if state != ""{
+                                field +=  ", " + state
+                            }
+                        }
+                        if let zipcode = location["zipcode"] as? String{
+                            if zipcode != ""{
+                                field +=  " " + zipcode
+                            }
+                        }
+                        helpRequest.location = field == "" ? "UnKnown" : field
+                    }else{
+                        helpRequest.location = "UnKnown"
+                    }
+                    if let status = document["status"] as? String {
+                        helpRequest.status = status
+                    }
+                 
+                    if let uid = document["uid"] as? String {
+                        helpRequest.uid = uid
+                    }
+                    if let createdAt = document["createdAt"] as? String {
+                        helpRequest.createdAt = createdAt
+                    }
+                    if let skills = document["skills"] as? Array<String> {
+                        helpRequest.skills = skills
+                    }
+                    self.helpRequests.append(helpRequest)
+                }
+            }
+                self.delegate?.helpRequestDataRefreshed(self.helpRequests)
+        }
+    }
+    
     
 } // end class

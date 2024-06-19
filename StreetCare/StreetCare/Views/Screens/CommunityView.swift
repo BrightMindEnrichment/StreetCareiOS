@@ -72,7 +72,7 @@ struct CommunityView: View {
                         Spacer().frame(height: 10)
                         
                         NavigationLink {
-                            CommunityEventView(eventType: .helpinghands)
+                            HelpRequestView()
                         } label:{
                             VStack{
                                 ZStack {
@@ -119,6 +119,8 @@ struct CommunityView: View {
 
 
 extension CommunityView: EventDataAdapterProtocol {
+    func helpRequestDataRefreshed(_ events: [HelpRequest]) {
+    }
     
     func eventDataRefreshed(_ events: [Event]) {
         self.events = events

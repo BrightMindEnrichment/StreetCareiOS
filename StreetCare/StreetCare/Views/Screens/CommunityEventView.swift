@@ -20,24 +20,33 @@ struct CommunityEventView: View {
     @State var user: User?
     
     let adapter = EventDataAdapter()
-    @State var events = [Event]()
-    
+    @StateObject private var viewModel = SearchCommunityModel()
+
     let formatter = DateFormatter()
     var eventType : EventType
-    @State var sectionsAndItems: [[String: [EventData]]] = [[String: [EventData]]]()
-    
+  
     var body: some View {
         
         VStack {
-       
+            HStack {
+                    Image(systemName: "magnifyingglass").padding(.horizontal, 10)
+                              .foregroundColor(.black)
+                    TextField("Search...", text: $viewModel.searchText).frame(height: 50.0)
+                }.overlay(
+                        RoundedRectangle(cornerRadius: 15.0)
+                            .stroke(Color.black, lineWidth: 1))
+                .padding()
+            if viewModel.filteredData.isEmpty{
+                Text(NSLocalizedString(eventType == .future ? "noFutureEventsAvailable" : eventType == .past ? "noPastEventsAvailable" : "noHelpingRequestsAvailable", comment: "")).fontWeight(.bold).foregroundColor(Color("TextColor"))
+            }
             if let _ = self.user {
-                if sectionsAndItems.isEmpty{
-                    Text(NSLocalizedString(eventType == .future ? "noFutureEventsAvailable" : eventType == .past ? "noPastEventsAvailable" : "noHelpingRequestsAvailable", comment: "")).fontWeight(.bold).foregroundColor(Color("TextColor"))
+                if viewModel.filteredData.isEmpty{
+                    Spacer(minLength: 50.0)
                 }else{
                     List {
-                        ForEach(0..<sectionsAndItems.count, id: \.self) { index in
-                            if let date = sectionsAndItems[index].keys.first,
-                               let eventObj = sectionsAndItems[index][date] {
+                        ForEach(0..<viewModel.filteredData.count, id: \.self) { index in
+                            if let date = viewModel.filteredData[index].keys.first,
+                               let eventObj = viewModel.filteredData[index][date] {
                                 Section(header: SectionHeaderView(date: date)){
                                     ForEach(eventObj) { event in
                                         HStack{
@@ -53,7 +62,6 @@ struct CommunityEventView: View {
                                             }
                                             EventCardView(event: event)
                                         }
-                                        //.listRowInsets(EdgeInsets(top: 10.0, leading: 10.0, bottom: 10.0, trailing: 10.0))
                                     }
                                 }
                             }
@@ -63,43 +71,12 @@ struct CommunityEventView: View {
                         .navigationTitle(eventType == .future ? NSLocalizedString("futureEvents", comment: "") : eventType == .past ? NSLocalizedString("pastEvents", comment: "") : NSLocalizedString("helpRequests", comment: ""))
                     .scrollContentBackground(.hidden)
                     .background(Color.clear)
-                   // .listRowSeparator(.hidden, edges: .all)
-                    
 
                 }
             }  else {
                 Image("CommunityOfThree").padding()
                 Text("Log in to connect with your local community.")
             }
-                    
-//                    VStack {
-//                        if let d = event.date {
-//                            HStack {
-//                                Text(d.formatted(date: .abbreviated, time: .shortened))
-//                                    .foregroundColor(Color("SecondaryColor"))
-//                                Spacer()
-//                            }
-//                        }
-//
-//                        HStack {
-//                            Text(event.title  ?? "")
-//                                .font(.headline)
-//                                .foregroundColor(Color("TextColor"))
-//                            Spacer()
-//                        }
-//                        
-//                        HStack {
-//                            Text(event.description ?? "")
-//                                .foregroundColor(Color("TextColor"))
-//                            Spacer()
-//                        }
-//                    }
-              //  }
-                //.scrollContentBackground(.hidden)
-               // .background(Color.clear)
-           // }
-          
-
         }
         .onAppear {
             if let user = Auth.auth().currentUser {
@@ -109,74 +86,17 @@ struct CommunityEventView: View {
             }
         }
     }
-    
-    func filterEvents(){
-        var result = [EventData]()
-        if events.count != 0{
-            if eventType == .future{
-                let filteredArray = self.events.sorted { firstEvent, secondEvent in
-                    return firstEvent.eventDate! > secondEvent.eventDate!
-                }
-                
-                for each in filteredArray{
-                    if let dateValue = each.eventDate{
-                        let dateObj = convertDateToEst(date: "\(dateValue)")
-                        if dateObj > Date(){
-                            let data = EventData()
-                            data.monthYear = formatDateString("\(dateObj)")
-                            data.date.0 = formatDateString("\(dateObj)",format: "dd")
-                            data.date.1 = formatDateString("\(dateObj)",format: "EEE").uppercased()
-                            data.date.2 = formatDateString("\(dateObj)",format: "hh:mm a")
-                            data.event = each
-                            result.append(data)
-                        }
-                    }
-                }
-                let scheduledEventss = result.group(by: {$0.monthYear!})
-                
-                let newEvents = scheduledEventss.sorted { object1, object2 in
-                    return convertDate(from: object1.key)! < convertDate(from: object2.key)!
-                }
-                for each in newEvents{
-                    sectionsAndItems.append(["\(each.key)": each.value])
-                }
-            }else if eventType == .past{
-                let filteredArray = self.events.sorted { firstEvent, secondEvent in
-                    return firstEvent.eventDate! < secondEvent.eventDate!
-                }
-                
-                
-                for each in filteredArray{
-                    if let dateValue = each.eventDate{
-                        let dateObj = convertDateToEst(date: "\(dateValue)")
-                        if dateObj < Date(){
-                            let data = EventData()
-                            data.monthYear = formatDateString("\(dateObj)")
-                            data.date.0 = formatDateString("\(dateObj)",format: "dd")
-                            data.date.1 = formatDateString("\(dateObj)",format: "EEE").uppercased()
-                            data.date.2 = formatDateString("\(dateObj)",format: "hh:mm a")
-                            data.event = each
-                            result.append(data)
-                        }
-                    }                }
-                let scheduledEventss = result.group(by: {$0.monthYear!})
-                let newEvents = scheduledEventss.sorted { object1, object2 in
-                    return convertDate(from: object1.key)! > convertDate(from: object2.key)!
-                }
-                for each in newEvents{
-                    sectionsAndItems.append(["\(each.key)": each.value])
-                }
-            }
-        }
-    }
 }
 
 
 
 extension CommunityEventView: EventDataAdapterProtocol {
+    func helpRequestDataRefreshed(_ events: [HelpRequest]) {
+    }
+    
     func eventDataRefreshed(_ events: [Event]) {
-        self.events = events
-        filterEvents()
+        viewModel.events = events
+        viewModel.filterEvents(eventType: eventType)
     }
 }
 
@@ -210,42 +130,42 @@ struct EventCardView: View {
     var body: some View {
 
         VStack(alignment: .leading, spacing: 10) {
-            Text(event.event!.title!)
+            Text(event.event.title.capitalized)
                 .font(.headline)
             
             HStack {
                 Image(systemName: "mappin.and.ellipse")
-                Text(event.event!.location!)
-                    .font(.subheadline)
+                Text(event.event.location!)
+                    .font(.system(size: 13))
             }
             
             HStack {
                 Image(systemName: "clock")
                 if let date = event.date.2{
                     Text("\(date)")
-                        .font(.subheadline)
+                        .font(.system(size: 13))
                 }
             }
             
             HStack {
-                Image(systemName: "hands.clap")
-                Text(event.event!.helpType!)
-                    .font(.subheadline)
+                Image("HelpType").resizable().frame(width: 20.0,height: 20.0)
+                Text(event.event.helpType!.capitalized).font(.system(size: 13))
                     .padding(.horizontal, 10)
                     .padding(.vertical, 5)
-                    .background(Color.gray.opacity(0.2))
+                    .background(Color("Color87CEEB").opacity(0.4))
                     .cornerRadius(5)
             }
-            if let participants = event.event!.participants?.first{
-                if let slots = event.event?.totalSlots{
-                    Text("participants: \(participants) / \(slots)")
-                        .font(.subheadline)
-                }
-            }
+           
             
             HStack {
+                if let interest = event.event.interest{
+                    if let slots = event.event.totalSlots{
+                        Text("Participants: \(interest) / \(slots)")
+                            .font(.system(size: 13))
+                    }
+                }
                 Spacer()
-                NavLinkButton(title: "RSVP", width: 90.0)
+                NavLinkButton(title: "RSVP", width: 90.0).fontWeight(.semibold)
                     .onTapGesture {
                     }
             }
@@ -264,5 +184,91 @@ struct SectionHeaderView: View {
         Text(date)
             .font(.system(size: 14, weight: .bold))
             .foregroundColor(Color("TextColor")).padding(EdgeInsets(top: 0.0, leading: 0.0, bottom: 5.0, trailing: 0.0))
+    }
+}
+
+class SearchCommunityModel: ObservableObject {
+    @Published var searchText: String = ""
+    @Published var sectionsAndItems: [[String: [EventData]]] = [[String: [EventData]]]()
+    @Published var tempSectionsAndItems: [[String: [EventData]]] = [[String: [EventData]]]()
+    @Published var events = [Event]()
+
+    
+    var filteredData: [[String: [EventData]]] {
+          if searchText.isEmpty {
+              return tempSectionsAndItems
+              defer{
+                  sectionsAndItems = tempSectionsAndItems
+              }
+          } else {
+              return self.sectionsAndItems.map { dict in
+                  dict.mapValues { events in
+                      events.filter { $0.event.title.localizedCaseInsensitiveContains(searchText)}
+                  }.filter { !$0.value.isEmpty }
+              }.filter { !$0.isEmpty }
+          }
+      }
+    
+    
+    func filterEvents(eventType : EventType){
+        var result = [EventData]()
+        if events.count != 0{
+            if eventType == .future{
+                let filteredArray = self.events.sorted { firstEvent, secondEvent in
+                    return firstEvent.eventDate! > secondEvent.eventDate!
+                }
+                
+                for each in filteredArray{
+                    if let dateValue = each.eventDate{
+                        let dateObj = convertDateToEst(date: "\(dateValue)")
+                        if dateObj > Date(){
+                            let data = EventData()
+                            data.monthYear = formatDateString("\(dateObj)")
+                            data.date.0 = formatDateString("\(dateObj)",format: "dd")
+                            data.date.1 = formatDateString("\(dateObj)",format: "EEE").uppercased()
+                            data.date.2 = formatDateString("\(dateObj)",format: "hh:mm a")
+                            data.event = each
+                            result.append(data)
+                        }
+                    }
+                }
+                let scheduledEventss = result.group(by: {$0.monthYear})
+                
+                let newEvents = scheduledEventss.sorted { object1, object2 in
+                    return convertDate(from: object1.key)! < convertDate(from: object2.key)!
+                }
+                for each in newEvents{
+                    sectionsAndItems.append(["\(each.key)": each.value])
+                }
+                tempSectionsAndItems = sectionsAndItems
+
+            }else if eventType == .past{
+                let filteredArray = self.events.sorted { firstEvent, secondEvent in
+                    return firstEvent.eventDate! < secondEvent.eventDate!
+                }
+                
+                for each in filteredArray{
+                    if let dateValue = each.eventDate{
+                        let dateObj = convertDateToEst(date: "\(dateValue)")
+                        if dateObj < Date(){
+                            let data = EventData()
+                            data.monthYear = formatDateString("\(dateObj)")
+                            data.date.0 = formatDateString("\(dateObj)",format: "dd")
+                            data.date.1 = formatDateString("\(dateObj)",format: "EEE").uppercased()
+                            data.date.2 = formatDateString("\(dateObj)",format: "hh:mm a")
+                            data.event = each
+                            result.append(data)
+                        }
+                    }                }
+                let scheduledEventss = result.group(by: {$0.monthYear})
+                let newEvents = scheduledEventss.sorted { object1, object2 in
+                    return convertDate(from: object1.key)! > convertDate(from: object2.key)!
+                }
+                for each in newEvents{
+                    sectionsAndItems.append(["\(each.key)": each.value])
+                }
+                tempSectionsAndItems = sectionsAndItems
+            }
+        }
     }
 }

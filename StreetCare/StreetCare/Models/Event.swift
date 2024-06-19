@@ -11,10 +11,8 @@ import Foundation
 class Event: Identifiable {
 
     var id = UUID()
-    
     var eventId: String?
-    
-    var title: String?
+    var title: String = ""
     var description: String?
     var eventDate: Date?
     var location : String?
@@ -34,7 +32,23 @@ class Event: Identifiable {
 
 
 class EventData : Identifiable{
-    var monthYear : String?
+    var monthYear : String = ""
     var date : (String?, String?, String?) = ("","","")
-    var event : Event?
+    var event =  Event()
+}
+
+class HelpRequest {
+    var id: String?
+    var description: String?
+    var identification: String?
+    var status: String?
+    var street: String?
+    var city: String?
+    var state: String?
+    var zipcode: String?
+    var location: String?
+    var title: String?
+    var uid: String?
+    var createdAt: String?
+    var skills : Array<String>?
 }
