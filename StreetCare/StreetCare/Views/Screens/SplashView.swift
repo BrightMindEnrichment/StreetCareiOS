@@ -18,7 +18,7 @@ struct SplashView: View {
                 MainTabBarView()
             } else {
                 VStack(content: {
-                    Image("IconStreetcare")
+                    Image("Icon")
                         .resizable()
                         .scaledToFit()
                         .frame(width: 150, height: 150)

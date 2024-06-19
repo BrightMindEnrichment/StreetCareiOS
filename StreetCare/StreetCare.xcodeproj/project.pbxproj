@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		1F5C885E2C1CA29C00684361 /* CommunityEventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F5C885D2C1CA29C00684361 /* CommunityEventView.swift */; };
 		1F5C88602C1CDF2D00684361 /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F5C885F2C1CDF2D00684361 /* Common.swift */; };
+		1F96F05B2C236AD3009E3A49 /* HelpRequestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F96F05A2C236AD3009E3A49 /* HelpRequestView.swift */; };
 		4C0E4F9829DA9450009D33C1 /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C0E4F9729DA9450009D33C1 /* Log.swift */; };
 		4C0E4F9A29DAC905009D33C1 /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C0E4F9929DAC905009D33C1 /* WebView.swift */; };
 		4C0E4F9C29DAC977009D33C1 /* YoutubeCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C0E4F9B29DAC977009D33C1 /* YoutubeCellView.swift */; };
@@ -103,6 +104,7 @@
 		1784B66B50CD8167A950C87D /* Pods-StreetCare.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StreetCare.release.xcconfig"; path = "Target Support Files/Pods-StreetCare/Pods-StreetCare.release.xcconfig"; sourceTree = "<group>"; };
 		1F5C885D2C1CA29C00684361 /* CommunityEventView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityEventView.swift; sourceTree = "<group>"; };
 		1F5C885F2C1CDF2D00684361 /* Common.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
+		1F96F05A2C236AD3009E3A49 /* HelpRequestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpRequestView.swift; sourceTree = "<group>"; };
 		2CBA18332B467FF476F7CBCC /* Pods-StreetCare.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StreetCare.debug.xcconfig"; path = "Target Support Files/Pods-StreetCare/Pods-StreetCare.debug.xcconfig"; sourceTree = "<group>"; };
 		4C0E4F9729DA9450009D33C1 /* Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
 		4C0E4F9929DAC905009D33C1 /* WebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
@@ -342,6 +344,7 @@
 				71B0D5C42B9214B70061033B /* BadgesView.swift */,
 				4CB65DA029D0DEC700684BD1 /* CommunityView.swift */,
 				1F5C885D2C1CA29C00684361 /* CommunityEventView.swift */,
+				1F96F05A2C236AD3009E3A49 /* HelpRequestView.swift */,
 				4CB65E5329DA916600684BD1 /* VideoListView.swift */,
 				4C0E4FF029DDF726009D33C1 /* DonateView.swift */,
 				4C85F0E82A089F9600FFEDC8 /* PlaylistsView.swift */,
@@ -541,6 +544,7 @@
 				71FA51052BD1909500D0DA6C /* SplashView.swift in Sources */,
 				4C7136BF2A0462410060EB7D /* TabButtonView.swift in Sources */,
 				4C82448929EE40C5003D1575 /* LoginView.swift in Sources */,
+				1F96F05B2C236AD3009E3A49 /* HelpRequestView.swift in Sources */,
 				4CB65E6229DA91C000684BD1 /* VideoInformation.swift in Sources */,
 				4C85F0E92A089F9600FFEDC8 /* PlaylistsView.swift in Sources */,
 				4C17ED512A00A3610013EF52 /* VisitLogUnauthorized.swift in Sources */,
