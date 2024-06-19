@@ -16,16 +16,25 @@ class Event: Identifiable {
     
     var title: String?
     var description: String?
-    var date: Date?
+    var eventDate: Date?
+    var location : String?
+    var eventStartTime : Date?
+    var eventEndTime : Date?
     var interest: Int?
     var liked = false
     var uid: String?
-    var location : String?
+    var createdAt : String?
+    var helpRequest : Array<String>?
+    var helpType : String?
+    var participants : Array<String>?
+    var skills : Array<String>?
+    var approved : Bool?
+    var totalSlots : Int?
 }
 
 
 class EventData : Identifiable{
     var monthYear : String?
-    var date : String?
+    var date : (String?, String?, String?) = ("","","")
     var event : Event?
 }

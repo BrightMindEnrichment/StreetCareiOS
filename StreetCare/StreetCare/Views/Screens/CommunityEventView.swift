@@ -39,18 +39,33 @@ struct CommunityEventView: View {
                             if let date = sectionsAndItems[index].keys.first,
                                let eventObj = sectionsAndItems[index][date] {
                                 Section(header: SectionHeaderView(date: date)){
-                                    //Section(header: Text(date)) {
                                     ForEach(eventObj) { event in
-                                        EventCardView(event: event)
+                                        HStack{
+                                            VStack{
+                                                if let date = event.date.0{
+                                                    Text("\(date)").font(.system(size: 14, weight: .bold))
+                                                        .foregroundColor(Color("TextColor"))
+                                                }
+                                                if let date = event.date.1{
+                                                    Text("\(date)").font(.system(size: 12, weight: .regular))
+                                                        .foregroundColor(Color("TextColor"))
+                                                }
+                                            }
+                                            EventCardView(event: event)
+                                        }
+                                        //.listRowInsets(EdgeInsets(top: 10.0, leading: 10.0, bottom: 10.0, trailing: 10.0))
                                     }
                                 }
                             }
-                        }
-                    }//.listStyle(GroupedListStyle())
-                    .navigationTitle("Upcoming Events")
+                        }.listRowSeparatorTint(.clear, edges: .all)
+                            .listSectionSeparatorTint(.clear, edges: .all)
+                    }.listStyle(PlainListStyle())
+                        .navigationTitle(eventType == .future ? NSLocalizedString("futureEvents", comment: "") : eventType == .past ? NSLocalizedString("pastEvents", comment: "") : NSLocalizedString("helpRequests", comment: ""))
                     .scrollContentBackground(.hidden)
                     .background(Color.clear)
-                    .listRowSeparator(.hidden, edges: .all)
+                   // .listRowSeparator(.hidden, edges: .all)
+                    
+
                 }
             }  else {
                 Image("CommunityOfThree").padding()
@@ -100,16 +115,21 @@ struct CommunityEventView: View {
         if events.count != 0{
             if eventType == .future{
                 let filteredArray = self.events.sorted { firstEvent, secondEvent in
-                    return firstEvent.date! > secondEvent.date!
+                    return firstEvent.eventDate! > secondEvent.eventDate!
                 }
                 
                 for each in filteredArray{
-                    if each.date! > Date(){
-                        let data = EventData()
-                        data.monthYear = formatDateString("\(each.date!)")
-                        data.date = formatDateString("\(each.date!)",format: "dd")
-                        data.event = each
-                        result.append(data)
+                    if let dateValue = each.eventDate{
+                        let dateObj = convertDateToEst(date: "\(dateValue)")
+                        if dateObj > Date(){
+                            let data = EventData()
+                            data.monthYear = formatDateString("\(dateObj)")
+                            data.date.0 = formatDateString("\(dateObj)",format: "dd")
+                            data.date.1 = formatDateString("\(dateObj)",format: "EEE").uppercased()
+                            data.date.2 = formatDateString("\(dateObj)",format: "hh:mm a")
+                            data.event = each
+                            result.append(data)
+                        }
                     }
                 }
                 let scheduledEventss = result.group(by: {$0.monthYear!})
@@ -122,18 +142,23 @@ struct CommunityEventView: View {
                 }
             }else if eventType == .past{
                 let filteredArray = self.events.sorted { firstEvent, secondEvent in
-                    return firstEvent.date! < secondEvent.date!
+                    return firstEvent.eventDate! < secondEvent.eventDate!
                 }
                 
+                
                 for each in filteredArray{
-                    if each.date! < Date(){
-                        let data = EventData()
-                        data.monthYear = formatDateString("\(each.date!)")
-                        data.date = formatDateString("\(each.date!)",format: "dd")
-                        data.event = each
-                        result.append(data)
-                    }
-                }
+                    if let dateValue = each.eventDate{
+                        let dateObj = convertDateToEst(date: "\(dateValue)")
+                        if dateObj < Date(){
+                            let data = EventData()
+                            data.monthYear = formatDateString("\(dateObj)")
+                            data.date.0 = formatDateString("\(dateObj)",format: "dd")
+                            data.date.1 = formatDateString("\(dateObj)",format: "EEE").uppercased()
+                            data.date.2 = formatDateString("\(dateObj)",format: "hh:mm a")
+                            data.event = each
+                            result.append(data)
+                        }
+                    }                }
                 let scheduledEventss = result.group(by: {$0.monthYear!})
                 let newEvents = scheduledEventss.sorted { object1, object2 in
                     return convertDate(from: object1.key)! > convertDate(from: object2.key)!
@@ -183,6 +208,7 @@ struct EventCardView: View {
     var event: EventData
 
     var body: some View {
+
         VStack(alignment: .leading, spacing: 10) {
             Text(event.event!.title!)
                 .font(.headline)
@@ -192,37 +218,36 @@ struct EventCardView: View {
                 Text(event.event!.location!)
                     .font(.subheadline)
             }
-
+            
             HStack {
                 Image(systemName: "clock")
-                Text("\(event.event!.date)")
-                    .font(.subheadline)
+                if let date = event.date.2{
+                    Text("\(date)")
+                        .font(.subheadline)
+                }
             }
-
+            
             HStack {
                 Image(systemName: "hands.clap")
-                Text(event.event!.description!)
+                Text(event.event!.helpType!)
                     .font(.subheadline)
                     .padding(.horizontal, 10)
                     .padding(.vertical, 5)
                     .background(Color.gray.opacity(0.2))
                     .cornerRadius(5)
             }
-
-            Text("participants: \(event.event!.interest)")
-                .font(.subheadline)
-
+            if let participants = event.event!.participants?.first{
+                if let slots = event.event?.totalSlots{
+                    Text("participants: \(participants) / \(slots)")
+                        .font(.subheadline)
+                }
+            }
+            
             HStack {
                 Spacer()
-                Button(action: {
-                    // RSVP Action
-                }) {
-                    Text("RSVP")
-                        .foregroundColor(.white)
-                        .padding()
-                        .background(Color.green)
-                        .cornerRadius(10)
-                }
+                NavLinkButton(title: "RSVP", width: 90.0)
+                    .onTapGesture {
+                    }
             }
         }
         .padding()
@@ -237,8 +262,7 @@ struct SectionHeaderView: View {
 
     var body: some View {
         Text(date)
-            .font(.title3)
-            .foregroundColor(.gray)
-            .padding(.vertical)
+            .font(.system(size: 14, weight: .bold))
+            .foregroundColor(Color("TextColor")).padding(EdgeInsets(top: 0.0, leading: 0.0, bottom: 5.0, trailing: 0.0))
     }
 }

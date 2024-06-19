@@ -35,3 +35,12 @@ func convertDate(from inputDate: String) -> Date? {
         return nil
     }
 }
+
+func convertDateToEst(date : String) -> Date{
+    let formatter = DateFormatter()
+    formatter.dateFormat = "yyyy-MM-dd HH:mm:ss Z"
+    formatter.timeZone = TimeZone(abbreviation: "EST")
+    let estDate = formatter.date(from: date)
+    print("\(estDate!)")
+    return estDate!
+}

@@ -143,7 +143,7 @@ class EventDataAdapter {
         Firestore.firestore().settings = settings
         let db = Firestore.firestore()
         
-        let _ = db.collection("events").getDocuments { querySnapshot, error in
+        let _ = db.collection("outreachEvents").getDocuments { querySnapshot, error in
             
             // clear out all the old data
             self.events.removeAll()
@@ -156,7 +156,6 @@ class EventDataAdapter {
 
             if let querySnapshot = querySnapshot {
                 for document in querySnapshot.documents {
-                    
                     print(document.data())
                     
                     let event = Event()
@@ -165,26 +164,54 @@ class EventDataAdapter {
                     if let title = document["title"] as? String {
                         event.title = title
                     }
-                    
                     if let description = document["description"] as? String {
                         event.description = description
                     }
-                    
+                    if let location = document["location"] as? String {
+                        var location = location["street"] + ", " + location["city"] + ", " + location["state"]
+                        event.location = location
+                    }else{
+                        event.location = "UnKnown"
+                    }
                     if let interest = document["interest"] as? Int {
                         event.interest = interest
                     }
-                    if let location = document["location"] as? String {
-                        event.location = location
+                    if let eventDate = document["eventDate"] as? Timestamp {
+                        print(eventDate)
+                        event.eventDate = eventDate.dateValue()
                     }
-                    if let d = document["date"] as? Timestamp {
-                        print(d)
-                        event.date = d.dateValue()
+                    if let eventStartTime = document["eventStartTime"] as? Timestamp {
+                        print(eventStartTime)
+                        event.eventStartTime = eventStartTime.dateValue()
                     }
-                    
+                    if let eventEndTime = document["eventEndTime"] as? Timestamp {
+                        print(eventEndTime)
+                        event.eventEndTime = eventEndTime.dateValue()
+                    }
                     if let uid = document["uid"] as? String {
                         event.uid = uid
                     }
-                    
+                    if let createdAt = document["createdAt"] as? String {
+                        event.createdAt = createdAt
+                    }
+                    if let helpType = document["helpType"] as? String {
+                        event.helpType = helpType
+                    }
+                    if let approved = document["approved"] as? Bool {
+                        event.approved = approved
+                    }
+                    if let totalSlots = document["totalSlots"] as? String {
+                        event.totalSlots = Int(totalSlots)
+                    }
+                    if let helpRequest = document["helpRequest"] as? Array<String> {
+                        event.helpRequest = helpRequest
+                    }
+                    if let participants = document["participants"] as? Array<String> {
+                        event.participants = participants
+                    }
+                    if let skills = document["skills"] as? Array<String> {
+                        event.skills = skills
+                    }
                     self.events.append(event)
                 }
             }
