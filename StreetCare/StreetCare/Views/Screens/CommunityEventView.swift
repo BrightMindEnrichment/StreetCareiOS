@@ -115,11 +115,11 @@ struct CommunityEventView: View {
         if events.count != 0{
             if eventType == .future{
                 let filteredArray = self.events.sorted { firstEvent, secondEvent in
-                    return firstEvent.date! > secondEvent.date!
+                    return firstEvent.eventDate! > secondEvent.eventDate!
                 }
                 
                 for each in filteredArray{
-                    if let dateValue = each.date{
+                    if let dateValue = each.eventDate{
                         let dateObj = convertDateToEst(date: "\(dateValue)")
                         if dateObj > Date(){
                             let data = EventData()
@@ -142,12 +142,12 @@ struct CommunityEventView: View {
                 }
             }else if eventType == .past{
                 let filteredArray = self.events.sorted { firstEvent, secondEvent in
-                    return firstEvent.date! < secondEvent.date!
+                    return firstEvent.eventDate! < secondEvent.eventDate!
                 }
                 
                 
                 for each in filteredArray{
-                    if let dateValue = each.date{
+                    if let dateValue = each.eventDate{
                         let dateObj = convertDateToEst(date: "\(dateValue)")
                         if dateObj < Date(){
                             let data = EventData()
@@ -229,16 +229,18 @@ struct EventCardView: View {
             
             HStack {
                 Image(systemName: "hands.clap")
-                Text(event.event!.description!)
+                Text(event.event!.helpType!)
                     .font(.subheadline)
                     .padding(.horizontal, 10)
                     .padding(.vertical, 5)
                     .background(Color.gray.opacity(0.2))
                     .cornerRadius(5)
             }
-            if let interest = event.event!.interest{
-                Text("participants: \(interest)")
-                    .font(.subheadline)
+            if let participants = event.event!.participants?.first{
+                if let slots = event.event?.totalSlots{
+                    Text("participants: \(participants) / \(slots)")
+                        .font(.subheadline)
+                }
             }
             
             HStack {
