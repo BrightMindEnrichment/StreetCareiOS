@@ -62,9 +62,12 @@ struct VisitImpactView: View {
                                         NavLinkButton(title:"Details", width: 80.0,secondaryButton: false,noBorder: true, rightArrowNeeded: false,color: .black).frame(maxWidth: .infinity, alignment: .trailing)
                                     }
                                 }
+                                Divider().frame(maxWidth: UIScreen.main.bounds.width - 50 ,minHeight: 0.5)
+                                    .background(Color.gray.opacity(0.4))
                             }
-                        }
-                }.listStyle(GroupedListStyle())
+                        }.listRowSeparatorTint(.clear, edges: .all)
+                        .listSectionSeparatorTint(.clear, edges: .all)
+                }.listStyle(PlainListStyle())
                 .scrollContentBackground(.hidden)
                 .background(Color.clear)
             }
