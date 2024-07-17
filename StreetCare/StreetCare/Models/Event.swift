@@ -6,7 +6,10 @@
 //
 
 import Foundation
-
+import FirebaseAuth
+import FirebaseCore
+import FirebaseFirestore
+import FirebaseFirestoreSwift
 
 class Event: Identifiable {
 
@@ -28,6 +31,14 @@ class Event: Identifiable {
     var skills : Array<String>?
     var approved : Bool?
     var totalSlots : Int?
+    var street : String?
+    var city : String?
+    var state : String?
+    var zipcode : String?
+    var eventDateStamp : Timestamp?
+    var eventStartTimeStamp : Timestamp?
+    var eventEndTimeStamp : Timestamp?
+    //var isRegistered : Bool
 }
 
 

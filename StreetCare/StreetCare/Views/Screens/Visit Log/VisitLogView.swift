@@ -18,11 +18,11 @@ struct VisitLogDetailRow: View {
         VStack {
             Text(title)
                 .screenLeft()
-                .font(.headline)
+                .font(.system(size: 16.0)).bold()
                 .padding(EdgeInsets(top: 10.0, leading: 20.0, bottom: 0.0, trailing: 20.0))
             
             Text(detail)
-                .screenLeft()
+                .screenLeft().font(.system(size: 15.0))
                 .padding(EdgeInsets(top: 10.0, leading: 20.0, bottom: 10.0, trailing: 20.0))
             
             Rectangle()
@@ -58,8 +58,8 @@ struct VisitLogView: View {
     var body: some View {
         ScrollView {
             VStack {
-                Text(log.whenVisit.formatted(date: .abbreviated, time: .omitted))
-                    .font(.largeTitle)
+                let location = log.whenVisit.formatted(date: .abbreviated, time: .omitted) + ", " + log.whereVisit
+                Text(location).font(.system(size: 17.0)).bold()
                 
                 if log.location.latitude != 0 {
                     Map(coordinateRegion: $region, annotationItems: mapLocations) { location in
@@ -67,12 +67,7 @@ struct VisitLogView: View {
                     }
                         .frame(width: 350, height: 300)
                 }
-                
-                Text(log.whereVisit)
-                    .font(.largeTitle)
-                
-                Spacer()
-                
+                Spacer(minLength: 20.0)
                 if log.peopleHelped > 0 {
                     VisitLogDetailRow(title: "People helped", detail: "\(log.peopleHelped)")
                 }
@@ -81,28 +76,28 @@ struct VisitLogView: View {
                     VStack {
                         Text("Type of help provided")
                             .screenLeft()
-                            .font(.headline)
+                            .font(.system(size: 16.0)).bold()
                             .padding(EdgeInsets(top: 10.0, leading: 20.0, bottom: 0.0, trailing: 20.0))
                         
                         VStack {
                             if log.foodAndDrinks {
-                                Text("Food & Drinks").screenLeft().padding(EdgeInsets(top: 10.0, leading: 20.0, bottom: 10.0, trailing: 20.0))
+                                Text("Food & Drinks").screenLeft().padding(EdgeInsets(top: 10.0, leading: 20.0, bottom: 10.0, trailing: 20.0)).font(.system(size: 15.0))
                             }
                             
                             if log.clothes {
-                                Text("Clothes").screenLeft().padding(EdgeInsets(top: 10.0, leading: 20.0, bottom: 10.0, trailing: 20.0))
+                                Text("Clothes").screenLeft().padding(EdgeInsets(top: 10.0, leading: 20.0, bottom: 10.0, trailing: 20.0)).font(.system(size: 15.0))
                             }
                             
                             if log.hygine {
-                                Text("Hygiene Products").screenLeft().padding(EdgeInsets(top: 10.0, leading: 20.0, bottom: 10.0, trailing: 20.0))
+                                Text("Hygiene Products").screenLeft().padding(EdgeInsets(top: 10.0, leading: 20.0, bottom: 10.0, trailing: 20.0)).font(.system(size: 15.0))
                             }
                             
                             if log.wellness {
-                                Text("Wellness/Emotional Support").screenLeft().padding(EdgeInsets(top: 10.0, leading: 20.0, bottom: 10.0, trailing: 20.0))
+                                Text("Wellness/Emotional Support").screenLeft().padding(EdgeInsets(top: 10.0, leading: 20.0, bottom: 10.0, trailing: 20.0)).font(.system(size: 15.0))
                             }
                             
                             if log.other && log.otherNotes.count > 0 {
-                                Text(log.otherNotes).screenLeft().padding(EdgeInsets(top: 10.0, leading: 20.0, bottom: 10.0, trailing: 20.0))
+                                Text(log.otherNotes).screenLeft().padding(EdgeInsets(top: 10.0, leading: 20.0, bottom: 10.0, trailing: 20.0)).font(.system(size: 15.0))
                             }
                         }
                         
