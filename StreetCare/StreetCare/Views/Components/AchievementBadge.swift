@@ -18,7 +18,7 @@ struct AchievementBadge: View {
             RoundedRectangle(cornerRadius: 8.0)
                 .strokeBorder(lineWidth: 2.0)
                 .foregroundColor(Color("SecondaryColor"))
-                .frame(width: 116.0, height: 107.0)
+                .frame(width: 116.0, height: 110.0)
             ZStack {
                 Circle()
                     .fill(Color("BackgroundColor"))

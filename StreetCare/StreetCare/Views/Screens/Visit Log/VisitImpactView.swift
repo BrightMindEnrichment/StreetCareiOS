@@ -30,44 +30,41 @@ struct VisitImpactView: View {
         NavigationStack {
             VStack {
                 
-                Text("VISIT LOG")
-                    .font(.largeTitle)
-                
+                Text("VISIT LOG").font(.system(size: 18)).padding()
                 ImpactView(peopleHelped: peopleHelped, outreaches: outreaches, itemsDonated: itemsDonated)
-                    .padding()                
                 
                 NavigationLink {
                     VisitLogEntry()
                 } label: {
                     ZStack {
-                        NavLinkButton(title: "Add new+", width: 120.0)
+                        NavLinkButton(title: "Add new +", width: 120.0, height: 30.0)
                     }
                 }
-                
-                Text("HISTORY")
-                    .font(.title)
-                
+                Spacer(minLength: 10.0)
+                Divider().frame(maxWidth: UIScreen.main.bounds.width - 50 ,minHeight: 0.5)
+                    .background(Color.black)
+                Spacer(minLength: 10.0)
+                Text("HISTORY").font(.system(size: 16)).bold()
                 List(history) { item in
-                    NavigationLink {
-                        VisitLogView(log: item)
-                    } label: {
-                        HStack {
-                            ListConnectorDecorationView()
+                    HStack(spacing: 0) {
+                           // ListConnectorDecorationView()
                             VStack {
                                 HStack {
-                                    Text("\(item.whenVisit.formatted(date: .abbreviated, time: .omitted))")
+                                    Text("\(item.whereVisit)").font(.system(size: 15.0)).bold()
                                     Spacer()
                                 }
-                                
                                 HStack {
-                                    Text("\(item.whereVisit)")
+                                    Text("\(item.whenVisit.formatted(date: .abbreviated, time: .omitted))").font(.system(size: 15.0))
                                     Spacer()
+                                    NavigationLink {
+                                        VisitLogView(log: item)
+                                    } label: {
+                                        NavLinkButton(title:"Details", width: 80.0,secondaryButton: false,noBorder: true, rightArrowNeeded: false,color: .black).frame(maxWidth: .infinity, alignment: .trailing)
+                                    }
                                 }
                             }
                         }
-                    }
-
-                }
+                }.listStyle(GroupedListStyle())
                 .scrollContentBackground(.hidden)
                 .background(Color.clear)
             }

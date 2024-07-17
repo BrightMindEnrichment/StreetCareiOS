@@ -123,7 +123,9 @@ extension CommunityView: EventDataAdapterProtocol {
     }
     
     func eventDataRefreshed(_ events: [Event]) {
-        self.events = events
+        self.events = events.filter({ event in
+            return event.eventDate != nil
+        })
     }
 }
 

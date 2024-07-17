@@ -57,8 +57,8 @@ class EventDataAdapter {
     
     
     
-    func setLikeEvent(_ eventId: String, setTo doesLike: Bool) {
-        
+    func setLikeEvent(_ event: Event, setTo doesLike: Bool) {
+        print(event.interest)
         if let user = Auth.auth().currentUser {
                         
             let settings = FirestoreSettings()
@@ -67,11 +67,35 @@ class EventDataAdapter {
             
             var likedData = [String: Any]()
             likedData["uid"] = user.uid
-            likedData["eventId"] = eventId
-            
+            likedData["eventId"] = event.eventId
+//            likedData["title"] = event.title
+//            likedData["description"] = event.description
+//            likedData["interests"] = event.interest
+//            likedData["createdAt"] = event.createdAt
+//            likedData["helpType"] = event.helpType
+//            likedData["approved"] = event.approved
+//            likedData["totalSlots"] = event.totalSlots
+//            likedData["helpRequest"] = event.helpRequest
+//            likedData["participants"] = event.participants
+//            likedData["skills"] = event.skills
+//            likedData["location"] = event.skills
+//            let dict = ["city" : event.city, "state" : event.state, "street": event.street, "zipcode" : event.zipcode]
+//            likedData["location"] = dict
+//            likedData["eventDate"] = event.eventDateStamp
+//            likedData["eventStartTime"] = event.eventStartTimeStamp
+//            likedData["eventEndTime"] = event.eventEndTimeStamp
+
+         
             if doesLike {
-                db.collection("likedEvents").document().setData(likedData) { error in
-                    
+                
+                
+                
+//                db.collection("outreachEvents").document().updateData(likedData) { error in
+//                    <#code#>
+//                }
+                db.collection("outreachEvents").document().setData(likedData) { error in
+               //db.collection("outreachEvents").document().updateData(likedData) { error in
+
                     if let error = error  {
                         print(error.localizedDescription)
                     }
@@ -82,7 +106,7 @@ class EventDataAdapter {
                 }
             }
             else {
-                let _ = db.collection("likedEvents").whereField("uid", isEqualTo: user.uid).whereField("eventId", isEqualTo: eventId).getDocuments { querySnapshot, error in
+                let _ = db.collection("outreachEvents").whereField("uid", isEqualTo: user.uid).whereField("eventId", isEqualTo: event.eventId!).getDocuments { querySnapshot, error in
                     
                     if let error = error {
                         print(error.localizedDescription)
@@ -91,7 +115,7 @@ class EventDataAdapter {
                     
                     if let querySnapshot = querySnapshot {
                         for document in querySnapshot.documents {
-                            db.collection("likedEvents").document(document.documentID).delete()
+                            db.collection("outreachEvents").document(document.documentID).delete()
                         }
                     }
                     
@@ -154,7 +178,7 @@ class EventDataAdapter {
 
             if let querySnapshot = querySnapshot {
                 for document in querySnapshot.documents {
-                 //   print(document.data())
+                   print(document.data())
                     let event = Event()
                     event.eventId = document.documentID
                     
@@ -167,15 +191,19 @@ class EventDataAdapter {
                     if let location = document["location"] as? NSDictionary {
                         var field = ""
                         if let street = location["street"] as? String{
+                            event.street = street
                             field += street
                         }
                         if let ciity = location["city"] as? String{
+                            event.city = ciity
                             field +=  ", " + ciity
                         }
                         if let state = location["state"] as? String{
+                            event.state = state
                             field +=  ", " + state
                         }
                         if let zipcode = location["zipcode"] as? String{
+                            event.zipcode = zipcode
                             field +=  " " + zipcode
                         }
                         event.location = field
@@ -187,16 +215,20 @@ class EventDataAdapter {
                     }
                     if let eventDate = document["eventDate"] as? Timestamp {
                         print(eventDate)
+                        event.eventDateStamp = eventDate
                         event.eventDate = eventDate.dateValue()
                     }
                     if let eventStartTime = document["eventStartTime"] as? Timestamp {
                         print(eventStartTime)
+                        event.eventStartTimeStamp = eventStartTime
                         event.eventStartTime = eventStartTime.dateValue()
                     }
                     if let eventEndTime = document["eventEndTime"] as? Timestamp {
                         print(eventEndTime)
+                        event.eventEndTimeStamp = eventEndTime
                         event.eventEndTime = eventEndTime.dateValue()
                     }
+                    
                     if let uid = document["uid"] as? String {
                         event.uid = uid
                     }
@@ -228,8 +260,9 @@ class EventDataAdapter {
             self.refreshLiked()
         }
     }
-    
-    
+//    GEDryQS4B9iq95ha11gF
+//    Printing description of user._userID:
+//    3wHp4nrtTlMv3ArzjmYW3vMAlUH2
     func getHelpRequest() {
         let settings = FirestoreSettings()
         Firestore.firestore().settings = settings

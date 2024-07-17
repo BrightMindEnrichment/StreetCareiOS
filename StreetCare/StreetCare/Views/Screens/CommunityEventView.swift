@@ -18,9 +18,10 @@ enum EventType: Int{
 struct CommunityEventView: View {
     
     @State var user: User?
-    
+    @State var currentData =  EventData()
     let adapter = EventDataAdapter()
     @StateObject private var viewModel = SearchCommunityModel()
+    @State private var isBottomSheetPresented = false
 
     let formatter = DateFormatter()
     var eventType : EventType
@@ -60,7 +61,14 @@ struct CommunityEventView: View {
                                                         .foregroundColor(Color("TextColor"))
                                                 }
                                             }
-                                            EventCardView(event: event)
+                                            Button(action: {
+                                                           isBottomSheetPresented.toggle()
+                                                            currentData.date = event.date
+                                                            currentData.monthYear = event.monthYear
+                                                            currentData.event = event.event
+                                                       }) {
+                                                           EventCardView(event: event,eventType: eventType)
+                                                       }
                                         }
                                     }
                                 }
@@ -77,6 +85,13 @@ struct CommunityEventView: View {
                 Image("CommunityOfThree").padding()
                 Text("Log in to connect with your local community.")
             }
+        }.bottomSheet(isPresented: $isBottomSheetPresented) {
+            VStack {
+                EventPopupView(event: currentData,eventType: eventType, delegate: self)
+            }
+            .frame(maxWidth: .infinity)
+            .padding()
+            
         }
         .onAppear {
             if let user = Auth.auth().currentUser {
@@ -84,18 +99,27 @@ struct CommunityEventView: View {
                 adapter.delegate = self
                 adapter.refresh()
             }
+        }.onDisappear {
+            isBottomSheetPresented = false
         }
     }
 }
 
-
+extension CommunityEventView:EventPopupViewDelegate{
+  
+    func close() {
+        isBottomSheetPresented.toggle()
+    }
+}
 
 extension CommunityEventView: EventDataAdapterProtocol {
     func helpRequestDataRefreshed(_ events: [HelpRequest]) {
     }
     
     func eventDataRefreshed(_ events: [Event]) {
-        viewModel.events = events
+        viewModel.events = events.filter({ event in
+            return event.eventDate != nil
+        })
         viewModel.filterEvents(eventType: eventType)
     }
 }
@@ -126,6 +150,7 @@ extension Sequence where Element: Hashable {
 
 struct EventCardView: View {
     var event: EventData
+    var eventType : EventType
 
     var body: some View {
 
@@ -158,16 +183,20 @@ struct EventCardView: View {
            
             
             HStack {
-                if let interest = event.event.interest{
+                if let interest = event.event.participants?.count{
                     if let slots = event.event.totalSlots{
                         Text("Participants: \(interest) / \(slots)")
                             .font(.system(size: 13))
                     }
                 }
                 Spacer()
-                NavLinkButton(title: "RSVP", width: 90.0).fontWeight(.semibold)
-                    .onTapGesture {
-                    }
+                if eventType == .past{
+                    Text("Completed").font(.system(size: 13))
+                }else{
+                    NavLinkButton(title: event.event.liked ? "Deregister" : "RSVP", width: event.event.liked ? 110.0 : 90.0).fontWeight(.semibold)
+                        .onTapGesture {
+                        }
+                }
             }
         }
         .padding()
