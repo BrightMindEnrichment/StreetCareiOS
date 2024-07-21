@@ -166,7 +166,9 @@ class EventDataAdapter {
         let settings = FirestoreSettings()
         Firestore.firestore().settings = settings
         let db = Firestore.firestore()
-            let _ = db.collection("outreachEvents").getDocuments { querySnapshot, error in
+            let _ = db.collection("outreachEvents")
+            .order(by: "eventDate", descending: true)
+            .getDocuments { querySnapshot, error in
 
             // clear out all the old data
             self.events.removeAll()
