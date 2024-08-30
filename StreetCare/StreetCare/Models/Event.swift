@@ -13,7 +13,7 @@ import FirebaseFirestoreSwift
 
 class Event: Identifiable {
 
-    var id = UUID()
+    var id = UUID() // test
     var eventId: String?
     var title: String = ""
     var description: String?
