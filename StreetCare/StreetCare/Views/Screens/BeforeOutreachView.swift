@@ -33,7 +33,7 @@ struct BeforeOutreachView: View {
                 }
                 
                 HStack {
-                    Text("\nHomeless people are a diverse group of people just like everyone else, no matter their appearance gender, age or race.\n\nSome have fallen on hard times. Some may be struggling with mental illness. But everyone wants to be treated with respect and dignity. \n\nHere are some steps to follow before outreach.\n").multilineTextAlignment(.leading)
+                    Text("\nHomeless individuals are a diverse group of people just like everyone else, no matter their appearance gender, age or race.\n\nSome have fallen on hard times. Some may be struggling with mental illness. But everyone wants to be treated with respect and dignity. \n\nHere are some steps to follow before outreach.\n").multilineTextAlignment(.leading)
                         .foregroundColor(Color("TextColor"))
                     Spacer()
                 }
