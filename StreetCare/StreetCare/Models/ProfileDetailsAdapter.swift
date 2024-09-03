@@ -58,17 +58,19 @@ class ProfileDetailsAdapter {
         Firestore.firestore().settings = settings
         let db = Firestore.firestore()
         
-        var userData = [String: Any]()
-        userData["dateCreated"] = Date()
-        userData["uid"] = user.uid
-        userData["username"] = profile.displayName
-        userData["organization"] = profile.organization
-        userData["country"] = profile.country != "" ? profile.country : Locale.current.region
-        userData["deviceType"] = "iOS"
-        if profile.email != ""{
+        var userData: [String: Any] = [
+            "dateCreated": Date(),
+            "uid": user.uid,
+            "username": profile.displayName,
+            "organization": profile.organization,
+            "country": profile.country != "" ? profile.country : (Locale.current.region?.identifier ?? "Unknown"),
+            "deviceType": "iOS",
+            "isValid": true
+        ]
+
+        if !profile.email.isEmpty {
             userData["email"] = profile.email
         }
-        userData["isValid"] = true
 
         
         db.collection(collectionName).document().setData(userData) { err in
@@ -112,7 +114,10 @@ class ProfileDetailsAdapter {
                     }
                     
                     if let username = document["username"] as? String {
+                        print("Username retrieved: \(username)")  // Debugging: Ensure the username is retrieved
                         self.profile.displayName = username
+                    } else {
+                        print("Username not found in document")  // Debugging: Check if username exists in the document
                     }
 
                     if let organization = document["organization"] as? String {
