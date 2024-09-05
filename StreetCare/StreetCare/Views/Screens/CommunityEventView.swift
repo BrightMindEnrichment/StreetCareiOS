@@ -264,10 +264,20 @@ class SearchCommunityModel: ObservableObject {
                 let scheduledEventss = result.group(by: {$0.monthYear})
                 
                 let newEvents = scheduledEventss.sorted { object1, object2 in
-                    return convertDate(from: object1.key)! > convertDate(from: object2.key)!
+                    return convertDate(from: object1.key)! < convertDate(from: object2.key)!
                 }
-                for each in newEvents{
-                    sectionsAndItems.append(["\(each.key)": each.value])
+                let newEventsValuesSorted = newEvents.map { (key, events) -> (String, [EventData]) in
+                    let sortedEvents = events.sorted { event1, event2 in
+                        guard let day1 = event1.date.0, let day2 = event2.date.0,
+                              let day1Int = Int(day1), let day2Int = Int(day2) else {
+                            return false
+                        }
+                        return day1Int < day2Int
+                    }
+                    return (key, sortedEvents)
+                }
+                for (month, events) in newEventsValuesSorted {
+                    sectionsAndItems.append(["\(month)": events])
                 }
                 tempSectionsAndItems = sectionsAndItems
 
