@@ -84,13 +84,19 @@ struct EventPopupView: View {
                     VStack(alignment: .center, spacing: 10){
                         NavLinkButton(title: likeStatus ?  "Deregister" : "Sign up for the Event", width: UIScreen.main.bounds.width - 30.0).fontWeight(.semibold)
                         .onTapGesture {
-                            adapter.setLikeEvent(event.event, setTo: likeStatus ? false :true)
-                            self.delegate?.close()
+                            DispatchQueue.global().async {
+                                adapter.setLikeEvent(event.event, setTo: likeStatus ? false : true)
+                            }
+                            DispatchQueue.main.async {
+                                self.delegate?.close()
+                            }
                         }
                         
                         NavLinkButton(title: "Close", width: UIScreen.main.bounds.width - 30.0,secondaryButton: true).fontWeight(.semibold)
                         .onTapGesture {
-                            self.delegate?.close()
+                            DispatchQueue.main.async {
+                                self.delegate?.close()
+                            }
                         }
                 }
 
