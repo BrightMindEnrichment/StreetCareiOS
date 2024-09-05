@@ -61,14 +61,12 @@ struct CommunityEventView: View {
                                                         .foregroundColor(Color("TextColor"))
                                                 }
                                             }
-                                            Button(action: {
-                                                           isBottomSheetPresented.toggle()
-                                                            currentData.date = event.date
-                                                            currentData.monthYear = event.monthYear
-                                                            currentData.event = event.event
-                                                       }) {
-                                                           EventCardView(event: event,eventType: eventType)
-                                                       }
+                                            EventCardView(event: event, eventType: eventType) {
+                                                currentData.date = event.date
+                                                currentData.monthYear = event.monthYear
+                                                currentData.event = event.event
+                                                isBottomSheetPresented.toggle()
+                                            }
                                         }
                                     }
                                 }
@@ -151,6 +149,7 @@ extension Sequence where Element: Hashable {
 struct EventCardView: View {
     var event: EventData
     var eventType : EventType
+    var onCardTap: () -> Void
 
     var body: some View {
 
@@ -195,6 +194,7 @@ struct EventCardView: View {
                 }else{
                     NavLinkButton(title: event.event.liked ? "Deregister" : "RSVP", width: event.event.liked ? 110.0 : 90.0).fontWeight(.semibold)
                         .onTapGesture {
+                            onCardTap()
                         }
                 }
             }
@@ -203,6 +203,9 @@ struct EventCardView: View {
         .background(Color.white)
         .cornerRadius(15)
         .shadow(radius: 5)
+        .onTapGesture {
+            onCardTap()
+        }
     }
 }
 
