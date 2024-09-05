@@ -222,92 +222,67 @@ class SearchCommunityModel: ObservableObject {
     @Published var tempSectionsAndItems: [[String: [EventData]]] = [[String: [EventData]]]()
     @Published var events = [Event]()
 
-    
     var filteredData: [[String: [EventData]]] {
-          if searchText.isEmpty {
-              return tempSectionsAndItems
-              defer{
-                  sectionsAndItems = tempSectionsAndItems
-              }
-          } else {
-              return self.sectionsAndItems.map { dict in
-                  dict.mapValues { events in
-                      events.filter { $0.event.title.localizedCaseInsensitiveContains(searchText)}
-                  }.filter { !$0.value.isEmpty }
-              }.filter { !$0.isEmpty }
-          }
-      }
-    
-    
-    func filterEvents(eventType : EventType){
-        var result = [EventData]()
-        if events.count != 0{
-            if eventType == .future{
-                let filteredArray = self.events.sorted { firstEvent, secondEvent in
-                    return firstEvent.eventDate! > secondEvent.eventDate!
-                }
-                
-                for each in filteredArray{
-                    if let dateValue = each.eventDate{
-                        let dateObj = convertDateToEst(date: "\(dateValue)")
-                        if dateObj > Date(){
-                            let data = EventData()
-                            data.monthYear = formatDateString("\(dateObj)")
-                            data.date.0 = formatDateString("\(dateObj)",format: "dd")
-                            data.date.1 = formatDateString("\(dateObj)",format: "EEE").uppercased()
-                            data.date.2 = formatDateString("\(dateObj)",format: "hh:mm a")
-                            data.event = each
-                            result.append(data)
-                        }
-                    }
-                }
-                let scheduledEventss = result.group(by: {$0.monthYear})
-                
-                let newEvents = scheduledEventss.sorted { object1, object2 in
-                    return convertDate(from: object1.key)! > convertDate(from: object2.key)!
-                }
-                for each in newEvents{
-                    sectionsAndItems.append(["\(each.key)": each.value])
-                }
-                tempSectionsAndItems = sectionsAndItems
+        if searchText.isEmpty {
+            return tempSectionsAndItems
+        } else {
+            return self.sectionsAndItems.map { dict in
+                dict.mapValues { events in
+                    events.filter { $0.event.title.localizedCaseInsensitiveContains(searchText) }
+                }.filter { !$0.value.isEmpty }
+            }.filter { !$0.isEmpty }
+        }
+    }
 
-            }else if eventType == .past{
-                let filteredArray = self.events.sorted { firstEvent, secondEvent in
-                    return firstEvent.eventDate! < secondEvent.eventDate!
+    func filterEvents(eventType: EventType) {
+        if events.isEmpty { return }
+        if eventType == .future {
+            filterAndSortEvents(eventType: .future, dateComparison: { $0 > $1 }, dayComparison: { $0 < $1 }, monthComparison: { $0 < $1 })
+        } else if eventType == .past {
+            filterAndSortEvents(eventType: .past, dateComparison: { $0 < $1 }, dayComparison: { $0 > $1 }, monthComparison: { $0 > $1 })
+        }
+    }
+
+    private func filterAndSortEvents(eventType: EventType, dateComparison: @escaping (Date, Date) -> Bool, dayComparison: @escaping (Int, Int) -> Bool, monthComparison: @escaping (Date, Date) -> Bool) {
+        var result = [EventData]()
+        
+        let filteredArray = self.events.sorted { firstEvent, secondEvent in
+            return dateComparison(firstEvent.eventDate!, secondEvent.eventDate!)
+        }
+        
+        for each in filteredArray {
+            if let dateValue = each.eventDate {
+                let dateObj = convertDateToEst(date: "\(dateValue)")
+                if dateComparison(dateObj, Date()) {
+                    let data = EventData()
+                    data.monthYear = formatDateString("\(dateObj)")
+                    data.date.0 = formatDateString("\(dateObj)", format: "dd")
+                    data.date.1 = formatDateString("\(dateObj)", format: "EEE").uppercased()
+                    data.date.2 = formatDateString("\(dateObj)", format: "hh:mm a")
+                    data.event = each
+                    result.append(data)
                 }
-                
-                for each in filteredArray{
-                    if let dateValue = each.eventDate{
-                        let dateObj = convertDateToEst(date: "\(dateValue)")
-                        if dateObj < Date(){
-                            let data = EventData()
-                            data.monthYear = formatDateString("\(dateObj)")
-                            data.date.0 = formatDateString("\(dateObj)",format: "dd")
-                            data.date.1 = formatDateString("\(dateObj)",format: "EEE").uppercased()
-                            data.date.2 = formatDateString("\(dateObj)",format: "hh:mm a")
-                            data.event = each
-                            result.append(data)
-                        }
-                    }                }
-                let scheduledEventss = result.group(by: {$0.monthYear})
-                let newEvents = scheduledEventss.sorted { object1, object2 in
-                    return convertDate(from: object1.key)! > convertDate(from: object2.key)!
-                }
-                let newEventsValuesSorted = newEvents.map { (key, events) -> (String, [EventData]) in
-                    let sortedEvents = events.sorted { event1, event2 in
-                        guard let day1 = event1.date.0, let day2 = event2.date.0,
-                              let day1Int = Int(day1), let day2Int = Int(day2) else {
-                            return false
-                        }
-                        return day1Int > day2Int
-                    }
-                    return (key, sortedEvents)
-                }
-                for (month, events) in newEventsValuesSorted {
-                    sectionsAndItems.append(["\(month)": events])
-                }
-                tempSectionsAndItems = sectionsAndItems
             }
         }
+        
+        let groupedEvents = result.group(by: { $0.monthYear })
+        let sortedEventsByMonth = groupedEvents.sorted { object1, object2 in
+            return monthComparison(convertDate(from: object1.key)!, convertDate(from: object2.key)!)
+        }
+        
+        let newEventsValuesSorted = sortedEventsByMonth.map { (key, events) -> (String, [EventData]) in
+            let sortedEvents = events.sorted { event1, event2 in
+                guard let day1 = event1.date.0, let day2 = event2.date.0,
+                      let day1Int = Int(day1), let day2Int = Int(day2) else { return false }
+                return dayComparison(day1Int, day2Int)
+            }
+            return (key, sortedEvents)
+        }
+        
+        sectionsAndItems.removeAll()
+        for (month, events) in newEventsValuesSorted {
+            sectionsAndItems.append(["\(month)": events])
+        }
+        tempSectionsAndItems = sectionsAndItems
     }
 }

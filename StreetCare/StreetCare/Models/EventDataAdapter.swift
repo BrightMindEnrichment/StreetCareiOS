@@ -87,15 +87,7 @@ class EventDataAdapter {
 
          
             if doesLike {
-                
-                
-                
-//                db.collection("outreachEvents").document().updateData(likedData) { error in
-//                    <#code#>
-//                }
-                db.collection("outreachEvents").document().setData(likedData) { error in
-               //db.collection("outreachEvents").document().updateData(likedData) { error in
-
+                db.collection("outreachEventsDev").document().setData(likedData) { error in
                     if let error = error  {
                         print(error.localizedDescription)
                     }
@@ -106,7 +98,7 @@ class EventDataAdapter {
                 }
             }
             else {
-                let _ = db.collection("outreachEvents").whereField("uid", isEqualTo: user.uid).whereField("eventId", isEqualTo: event.eventId!).getDocuments { querySnapshot, error in
+                let _ = db.collection("outreachEventsDev").whereField("uid", isEqualTo: user.uid).whereField("eventId", isEqualTo: event.eventId!).getDocuments { querySnapshot, error in
                     
                     if let error = error {
                         print(error.localizedDescription)
@@ -115,7 +107,7 @@ class EventDataAdapter {
                     
                     if let querySnapshot = querySnapshot {
                         for document in querySnapshot.documents {
-                            db.collection("outreachEvents").document(document.documentID).delete()
+                            db.collection("outreachEventsDev").document(document.documentID).delete()
                         }
                     }
                     
@@ -166,7 +158,7 @@ class EventDataAdapter {
         let settings = FirestoreSettings()
         Firestore.firestore().settings = settings
         let db = Firestore.firestore()
-            let _ = db.collection("outreachEvents")
+            let _ = db.collection("outreachEventsDev")
             .order(by: "eventDate", descending: true)
             .getDocuments { querySnapshot, error in
 
