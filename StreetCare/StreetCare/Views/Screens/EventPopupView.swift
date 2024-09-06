@@ -63,13 +63,13 @@ struct EventPopupView: View {
                 }
             }
             }
-            
-            if let interest = event.event.participants?.count{
-                if let slots = event.event.totalSlots{
-                    Text("Participants: \(interest) / \(slots)")
-                        .font(.system(size: 13))
-                }
-            }
+// TODO: need to persist data from previous screens
+//            if let interest = event.event.participants?.count{
+//                if let slots = event.event.totalSlots{
+//                    Text("Participants: \(interest) / \(slots)")
+//                        .font(.system(size: 13))
+//                }
+//            }
             if eventType == .past{
                 VStack(alignment: .center, spacing: 10){
                     Text("Completed").font(.system(size: 13)).frame(width: UIScreen.main.bounds.width - 30.0)
@@ -82,11 +82,11 @@ struct EventPopupView: View {
                 if let user = Auth.auth().currentUser  {
                     let likeStatus =  self.event.event.liked//event.event.uid == user.uid ? false : true
                     VStack(alignment: .center, spacing: 10){
-                        NavLinkButton(title: likeStatus ?  "Deregister" : "Sign up for the Event", width: UIScreen.main.bounds.width - 30.0).fontWeight(.semibold)
-                        .onTapGesture {
-                            adapter.setLikeEvent(event.event, setTo: likeStatus ? false :true)
-                            self.delegate?.close()
-                        }
+//                        NavLinkButton(title: likeStatus ?  "Deregister" : "Sign up for the Event", width: UIScreen.main.bounds.width - 30.0).fontWeight(.semibold)
+//                        .onTapGesture {
+//                            adapter.setLikeEvent(event.event, setTo: likeStatus ? false :true)
+//                            self.delegate?.close()
+//                        }
                         
                         NavLinkButton(title: "Close", width: UIScreen.main.bounds.width - 30.0,secondaryButton: true).fontWeight(.semibold)
                         .onTapGesture {
