@@ -63,13 +63,13 @@ struct EventPopupView: View {
                 }
             }
             }
-            
-            if let interest = event.event.participants?.count{
-                if let slots = event.event.totalSlots{
-                    Text("Participants: \(interest) / \(slots)")
-                        .font(.system(size: 13))
-                }
-            }
+// TODO: need to persist data from previous screens
+//            if let interest = event.event.participants?.count{
+//                if let slots = event.event.totalSlots{
+//                    Text("Participants: \(interest) / \(slots)")
+//                        .font(.system(size: 13))
+//                }
+//            }
             if eventType == .past{
                 VStack(alignment: .center, spacing: 10){
                     Text("Completed").font(.system(size: 13)).frame(width: UIScreen.main.bounds.width - 30.0)
