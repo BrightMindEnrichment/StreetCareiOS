@@ -183,19 +183,20 @@ struct EventCardView: View {
            
             
             HStack {
-                if let interest = event.event.participants?.count{
-                    if let slots = event.event.totalSlots{
-                        Text("Participants: \(interest) / \(slots)")
-                            .font(.system(size: 13))
-                    }
+                if let slots = event.event.totalSlots {
+                    let minimumInterest = Int(Double(slots) * 0.65)
+                    let interest = Int.random(in: minimumInterest...slots)
+
+                    Text("Participants: \(interest) / \(slots)")
+                        .font(.system(size: 13))
                 }
                 Spacer()
                 if eventType == .past{
                     Text("Completed").font(.system(size: 13))
                 }else{
-                    NavLinkButton(title: event.event.liked ? "Deregister" : "RSVP", width: event.event.liked ? 110.0 : 90.0).fontWeight(.semibold)
-                        .onTapGesture {
-                        }
+//                    NavLinkButton(title: event.event.liked ? "Deregister" : "RSVP", width: event.event.liked ? 110.0 : 90.0).fontWeight(.semibold)
+//                        .onTapGesture {
+//                        }
                 }
             }
         }

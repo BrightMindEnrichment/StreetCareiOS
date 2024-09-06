@@ -28,7 +28,7 @@ struct CommunityView: View {
                 ScrollView{
                     VStack{
                         Spacer().frame(height: 10)
-                        Text("City: Unavailable").bold()
+//                        Text("City: Unavailable").bold()
                         Spacer().frame(height: 35)
                         HStack{
                             NavigationLink {
