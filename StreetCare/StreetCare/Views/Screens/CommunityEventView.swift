@@ -182,13 +182,14 @@ struct EventCardView: View {
            
             
             HStack {
-                if let slots = event.event.totalSlots {
-                    let minimumInterest = Int(Double(slots) * 0.65)
-                    let interest = Int.random(in: minimumInterest...slots)
-
-                    Text("Participants: \(interest) / \(slots)")
-                        .font(.system(size: 13))
-                }
+// TODO: hide participants and RSVP visibility until functionality complete
+//                if let slots = event.event.totalSlots {
+//                    let minimumInterest = Int(Double(slots) * 0.65)
+//                    let interest = Int.random(in: minimumInterest...slots)
+//
+//                    Text("Participants: \(interest) / \(slots)")
+//                        .font(.system(size: 13))
+//                }
                 Spacer()
                 if eventType == .past{
                     Text("Completed").font(.system(size: 13))
