@@ -78,6 +78,7 @@ extension HelpRequestView: EventDataAdapterProtocol {
 
 struct HelpRequestCardView: View {
     var event: HelpRequest
+    @State private var showICanHelpPopup = false
 
     var body: some View {
 
@@ -121,9 +122,20 @@ struct HelpRequestCardView: View {
             }
             HStack{
                 Spacer()
-                NavLinkButton(title: "I can Help", width: 120.0).fontWeight(.semibold)
-                    .onTapGesture {
-                    }
+                Button("I can help"){
+                    showICanHelpPopup = true
+                }
+                .padding()
+                .background(Color(#colorLiteral(red: 0.208, green: 0.290, blue: 0.129, alpha: 1)))
+                .foregroundColor(.yellow)
+                .cornerRadius(15)
+                .sheet(isPresented: $showICanHelpPopup, content: {
+                    ICanHelpView(isPresented: $showICanHelpPopup)
+                })
+//                NavLinkButton(title: "I can Help", width: 120.0).fontWeight(.semibold)
+//                    .onTapGesture {
+//                        NavigationLink("", destination: ICanHelpView(isPresented: $showICanHelpPopup ))
+//                    }
             }
         }
         .padding()
