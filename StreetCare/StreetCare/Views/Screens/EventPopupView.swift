@@ -82,6 +82,7 @@ struct EventPopupView: View {
                 if let user = Auth.auth().currentUser  {
                     let likeStatus =  self.event.event.liked//event.event.uid == user.uid ? false : true
                     VStack(alignment: .center, spacing: 10){
+// TODO: hide RSVP visibility until functionality complete
 //                        NavLinkButton(title: likeStatus ?  "Deregister" : "Sign up for the Event", width: UIScreen.main.bounds.width - 30.0).fontWeight(.semibold)
 //                        .onTapGesture {
 //                            adapter.setLikeEvent(event.event, setTo: likeStatus ? false :true)
