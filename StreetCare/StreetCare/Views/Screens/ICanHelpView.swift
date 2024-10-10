@@ -41,43 +41,39 @@ struct ICanHelpView: View {
                         // Action for RSVP EXISTING OUTREACH
                     }) {
                         Text("RSVP EXISTING OUTREACH")
-                            .frame(maxWidth: .infinity)
-                            .padding()
-                            .background(Color(#colorLiteral(red: 0.208, green: 0.290, blue: 0.129, alpha: 1)))
-                            .foregroundColor(.yellow)
-                            .cornerRadius(8)
+//                            .frame(maxWidth: .infinity)
+                            .padding(EdgeInsets(top: 8.0, leading: 20.0, bottom: 8.0, trailing: 20.0))
+                            .foregroundColor(Color("PrimaryColor"))
+                            
                     }
+                    .background(Color("SecondaryColor"))
+                    .clipShape(Capsule())
                     
                     Button(action: {
                         isPresented = false
                     }) {
                         Text("CANCEL")
-                            .frame(maxWidth: .infinity)
-                            .padding()
-                            .background(Color(#colorLiteral(red: 0.208, green: 0.290, blue: 0.129, alpha: 1)))
-                            .foregroundColor(.yellow)
-                            .cornerRadius(8)
+                            .padding(EdgeInsets(top: 8.0, leading: 20.0, bottom: 8.0, trailing: 20.0))
+                            .foregroundColor(Color("PrimaryColor"))
                     }
+                    .background(Color("SecondaryColor"))
+                    .clipShape(Capsule())
                     
                     Button(action: {
                         isOutreachCreated = true
                     }) {
                         Text("CREATE AN OUTREACH")
-                            .frame(maxWidth: .infinity)
-                            .padding()
-                            .background(Color(#colorLiteral(red: 0.208, green: 0.290, blue: 0.129, alpha: 1)))
-                            .foregroundColor(.yellow)
-                            .cornerRadius(8)
+                            .padding(EdgeInsets(top: 8.0, leading: 20.0, bottom: 8.0, trailing: 20.0))
+                            .foregroundColor(Color("PrimaryColor"))
                     }
+                    .background(Color("SecondaryColor"))
+                    .clipShape(Capsule())
                 }
                 .padding()
                 .frame(maxWidth: 300)
                 .background(Color.white)
                 .cornerRadius(12)
                 .shadow(radius: 10)
-                .alert(isPresented: $isOutreachCreated) {
-                    Alert(title: Text("Outreach Created"), message: Text("Your outreach has been created successfully."), dismissButton: .default(Text("OK")))
-                }
             }
     }
 

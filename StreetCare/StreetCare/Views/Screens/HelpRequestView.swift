@@ -122,20 +122,18 @@ struct HelpRequestCardView: View {
             }
             HStack{
                 Spacer()
-                Button("I can help"){
+                Button {
                     showICanHelpPopup = true
+                } label: {
+                    Text("I can help")
+                        .padding(EdgeInsets(top: 8.0, leading: 20.0, bottom: 8.0, trailing: 20.0))
+                        .foregroundColor(Color("PrimaryColor"))
                 }
-                .padding()
-                .background(Color(#colorLiteral(red: 0.208, green: 0.290, blue: 0.129, alpha: 1)))
-                .foregroundColor(.yellow)
-                .cornerRadius(15)
+                .background(Color("SecondaryColor"))
+                .clipShape(Capsule())
                 .sheet(isPresented: $showICanHelpPopup, content: {
                     ICanHelpView(isPresented: $showICanHelpPopup)
                 })
-//                NavLinkButton(title: "I can Help", width: 120.0).fontWeight(.semibold)
-//                    .onTapGesture {
-//                        NavigationLink("", destination: ICanHelpView(isPresented: $showICanHelpPopup ))
-//                    }
             }
         }
         .padding()
