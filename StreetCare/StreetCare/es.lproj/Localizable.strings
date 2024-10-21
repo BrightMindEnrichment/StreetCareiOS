@@ -68,6 +68,16 @@
 
 "missingDataError" = "Por favor complete toda la información.";
 
+"rsvpExistingOutreach" = "CONFIRMAR ASISTENCIA A OUTREACH EXISTENTE";
+"cancel" = "CANCELAR";
+"createAnOutreach" = "CREAR UN OUTREACH";
+
+"iCanHelpText1" = "Asegúrate de no ir solo.";
+"iCanHelpText2" = "La presencia en grupo ofrece seguridad y eficacia para enfrentar situaciones y personas desconocidas, beneficiando tanto a los voluntarios como a las personas sin hogar.";
+"iCanHelpText3" = "¿Cómo funciona el outreach en Street Care?";
+"iCanHelpText4" = "Publicamos el outreach para ti, y otros voluntarios pueden inscribirse para acompañarte.";
+
+
 //"helloWorld" = "¡Hola Mundo!";
 //"welcome" = "Bienvenido a\nStreet Care";
 //"loginButtonTitle" = "Acceso";

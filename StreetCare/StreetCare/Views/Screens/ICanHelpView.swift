@@ -22,25 +22,25 @@ struct ICanHelpView: View {
                         }
                     }
                     
-                    Text("Make sure you are not going alone")
+                    Text(NSLocalizedString("iCanHelpText1", comment: ""))
                         .font(.headline)
                     
-                    Text("Group presence offers security and effectiveness in engaging with unfamiliar situations and individuals, benefiting both volunteers and the homeless.")
+                    Text(NSLocalizedString("iCanHelpText2", comment: ""))
                         .font(.subheadline)
                         .foregroundColor(.secondary)
                     
-                    Text("How outreach on Street Care works?")
+                    Text(NSLocalizedString("iCanHelpText3", comment: ""))
                         .font(.subheadline)
                         .fontWeight(.semibold)
                     
-                    Text("We post the outreach for you and other volunteers can sign up to go with you.")
+                    Text(NSLocalizedString("iCanHelpText4", comment: ""))
                         .font(.subheadline)
                         .foregroundColor(.secondary)
                     
                     Button(action: {
                         // Action for RSVP EXISTING OUTREACH
                     }) {
-                        Text("RSVP EXISTING OUTREACH")
+                        Text(NSLocalizedString("rsvpExistingOutreach", comment: ""))
 //                            .frame(maxWidth: .infinity)
                             .padding(EdgeInsets(top: 8.0, leading: 20.0, bottom: 8.0, trailing: 20.0))
                             .foregroundColor(Color("PrimaryColor"))
@@ -52,7 +52,7 @@ struct ICanHelpView: View {
                     Button(action: {
                         isPresented = false
                     }) {
-                        Text("CANCEL")
+                        Text(NSLocalizedString("cancel", comment: ""))
                             .padding(EdgeInsets(top: 8.0, leading: 20.0, bottom: 8.0, trailing: 20.0))
                             .foregroundColor(Color("PrimaryColor"))
                     }
@@ -62,7 +62,7 @@ struct ICanHelpView: View {
                     Button(action: {
                         isOutreachCreated = true
                     }) {
-                        Text("CREATE AN OUTREACH")
+                        Text(NSLocalizedString("createAnOutreach", comment: ""))
                             .padding(EdgeInsets(top: 8.0, leading: 20.0, bottom: 8.0, trailing: 20.0))
                             .foregroundColor(Color("PrimaryColor"))
                     }
