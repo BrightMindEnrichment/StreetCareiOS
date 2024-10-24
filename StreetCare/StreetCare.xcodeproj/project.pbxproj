@@ -87,6 +87,7 @@
 		71B0D5CB2B9225670061033B /* Badge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71B0D5CA2B9225670061033B /* Badge.swift */; };
 		71FA51032BCEC4B300D0DA6C /* AfterOutreachView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71FA51022BCEC4B300D0DA6C /* AfterOutreachView.swift */; };
 		71FA51052BD1909500D0DA6C /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71FA51042BD1909500D0DA6C /* SplashView.swift */; };
+		74FE994C2CC9F23F00D0C5D0 /* EventEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74FE994B2CC9F23F00D0C5D0 /* EventEnums.swift */; };
 		A459D493C5D37756A585D3EA /* Pods_StreetCare.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B3FB734328ABC03284A67BF /* Pods_StreetCare.framework */; };
 		BE9D1DCE2A37626C00072835 /* ImagePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9D1DCD2A37626C00072835 /* ImagePickerView.swift */; };
 		BE9D1DD12A376B3800072835 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = BE9D1DD02A376B3800072835 /* FirebaseStorage */; };
@@ -181,6 +182,7 @@
 		71B0D5CA2B9225670061033B /* Badge.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Badge.swift; sourceTree = "<group>"; };
 		71FA51022BCEC4B300D0DA6C /* AfterOutreachView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AfterOutreachView.swift; sourceTree = "<group>"; };
 		71FA51042BD1909500D0DA6C /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
+		74FE994B2CC9F23F00D0C5D0 /* EventEnums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventEnums.swift; sourceTree = "<group>"; };
 		BE9D1DCD2A37626C00072835 /* ImagePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerView.swift; sourceTree = "<group>"; };
 		BE9D1DD22A377E9100072835 /* StorgeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorgeManager.swift; sourceTree = "<group>"; };
 		BE9D1DD42A37819E00072835 /* AvatarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarView.swift; sourceTree = "<group>"; };
@@ -285,6 +287,7 @@
 				4CB65D9529D016B000684BD1 /* Preview Content */,
 				4CB65E4F29DA6FE900684BD1 /* LinkData.swift */,
 				1F5C885F2C1CDF2D00684361 /* Common.swift */,
+				74FE994B2CC9F23F00D0C5D0 /* EventEnums.swift */,
 			);
 			path = StreetCare;
 			sourceTree = "<group>";
@@ -579,6 +582,7 @@
 				4C85F0EB2A08A4E800FFEDC8 /* StartNowView.swift in Sources */,
 				4C82449429F0D999003D1575 /* InputTileList.swift in Sources */,
 				4CB65E4E29DA6FBB00684BD1 /* NavigationRowLinkView.swift in Sources */,
+				74FE994C2CC9F23F00D0C5D0 /* EventEnums.swift in Sources */,
 				4C7136C12A04952A0060EB7D /* Event.swift in Sources */,
 				BE9D1DCE2A37626C00072835 /* ImagePickerView.swift in Sources */,
 				4CB65DA329D0DEDA00684BD1 /* ProfilView.swift in Sources */,
