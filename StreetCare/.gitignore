@@ -1,0 +1,118 @@
+# Xcode project files
+########################
+
+# User-specific files
+xcuserdata/
+*.xcuserstate
+
+# Scheme management
+*.xcscheme
+!xcshareddata/xcschemes/*
+
+# Build and derived data
+########################
+build/
+DerivedData/
+
+# iOS and macOS specific settings
+########################
+*.pbxuser
+!default.pbxuser
+*.mode1v3
+*.mode2v3
+*.perspectivev3
+!default.perspectivev3
+*.xcworkspace
+*.xccheckout
+*.xcscmblueprint
+
+# macOS Finder related files
+########################
+.DS_Store
+
+# Temporary and system files
+########################
+*.swp
+*.lock
+*.lockfile
+*.bak
+*.moved-aside
+*.local
+*.tmp
+*.xcuserdatad
+
+# Playgrounds
+########################
+timeline.xctimeline
+playground.xcworkspace
+
+# Swift Package Manager
+########################
+.build/
+Packages/
+Package.pins
+Package.resolved
+
+# CocoaPods
+########################
+Pods/
+Podfile.lock
+
+# Carthage
+########################
+Carthage/Build/
+
+# Fastlane
+########################
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots/
+fastlane/test_output/
+*.junit
+
+# Xcode Archives
+########################
+*.xcarchive
+
+# SwiftPM
+.build/
+.swiftpm/
+
+# App metadata
+########################
+*.ipa
+*.dSYM.zip
+*.dSYM
+
+# Bundle products
+########################
+*.app
+*.dSYM
+*.framework
+*.ipa
+*.xcarchive
+
+# IDE Files
+########################
+.idea/
+*.hmap
+*.xcworkspace/xcuserdata/
+
+# Logs and reporting
+########################
+*.log
+*.tlog
+*.syslog
+*.out
+
+# Coverage files
+########################
+*.profraw
+
+# Google Firebase & Secrets (optional, if using Firebase or other APIs)
+GoogleService-Info.plist
+*.key
+*.p8
+*.p12
+*.mobileprovision
+*.cer
