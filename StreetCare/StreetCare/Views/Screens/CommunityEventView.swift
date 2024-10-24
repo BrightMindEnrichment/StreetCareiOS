@@ -31,28 +31,6 @@ struct CommunityEventView: View {
                     .foregroundColor(.black)
                 TextField("Search...", text: $viewModel.searchText)
                     .frame(height: 50.0)
-                
-               /* // Filter Menu on the right, inside the search bar
-                Menu {
-                    ForEach(FilterType.allCases, id: \.self) { filter in
-                        Button(action: {
-                            selectedFilter = filter
-                            applyFilter(filterType: selectedFilter)
-                        }) {
-                            Text(filter.rawValue)
-                        }
-                    }
-                } label: {
-                    HStack {
-                        // Change icon color when a filter is active
-                        Image(systemName: "line.horizontal.3.decrease.circle")
-                            .foregroundColor(selectedFilter == .none ? .black : .red) // Red if filter is active
-                        // Show filter name if a filter is selected, otherwise show "Filter"
-                        Text(selectedFilter == .none ? "Filter" : selectedFilter.rawValue)
-                    }
-                    .padding(.horizontal, 10)
-                    .foregroundColor(.black)
-                }*/
                 Menu {
                     ForEach(FilterType.allCases, id: \.self) { filter in
                         Button(action: {
@@ -190,10 +168,10 @@ extension CommunityEventView: EventDataAdapterProtocol {
     func helpRequestDataRefreshed(_ events: [HelpRequest]) {}
     
     func eventDataRefreshed(_ events: [Event]) {
-        viewModel.events = events.filter { event in
+        viewModel.allEvents = events.filter { event in
             return event.eventDate != nil
         }
-        viewModel.filterEvents(eventType: eventType)
+        viewModel.filterEvents(eventType: eventType, events: events)
     }
 }
 
@@ -276,7 +254,8 @@ class SearchCommunityModel: ObservableObject {
     @Published var searchText: String = ""
     @Published var sectionsAndItems: [[String: [EventData]]] = [[String: [EventData]]]()
     @Published var tempSectionsAndItems: [[String: [EventData]]] = [[String: [EventData]]]()
-    @Published var events = [Event]()
+    @Published var allEvents = [Event]() // This holds the original, unfiltered data
+    @Published var filteredEvents = [Event]() // This will hold the filtered data
 
     var filteredData: [[String: [EventData]]] {
         if searchText.isEmpty {
@@ -293,10 +272,12 @@ class SearchCommunityModel: ObservableObject {
     func filterByDate(filterType: FilterType) {
         let calendar = Calendar.current
         let now = Date()
-
+        // Always start filtering from the original allEvents list
+        filteredEvents = allEvents
+        
         switch filterType {
         case .next7Days:
-            events = events.filter { event in
+            filteredEvents = allEvents.filter { event in
                 if let eventDate = event.eventDate {
                     return calendar.isDate(eventDate, inRangeOfDays: 7)
                 }
@@ -304,7 +285,7 @@ class SearchCommunityModel: ObservableObject {
             }
 
         case .next30Days:
-            events = events.filter { event in
+            filteredEvents = allEvents.filter { event in
                 if let eventDate = event.eventDate {
                     return calendar.isDate(eventDate, inRangeOfDays: 30)
                 }
@@ -312,7 +293,7 @@ class SearchCommunityModel: ObservableObject {
             }
 
         case .next60Days:
-            events = events.filter { event in
+            filteredEvents = allEvents.filter { event in
                 if let eventDate = event.eventDate {
                     return calendar.isDate(eventDate, inRangeOfDays: 60)
                 }
@@ -320,7 +301,7 @@ class SearchCommunityModel: ObservableObject {
             }
 
         case .next90Days:
-            events = events.filter { event in
+            filteredEvents = allEvents.filter { event in
                 if let eventDate = event.eventDate {
                     return calendar.isDate(eventDate, inRangeOfDays: 90)
                 }
@@ -328,7 +309,7 @@ class SearchCommunityModel: ObservableObject {
             }
 
         case .otherUpcoming:
-            events = events.filter { event in
+            filteredEvents = allEvents.filter { event in
                 if let eventDate = event.eventDate {
                     return eventDate > now.addingTimeInterval(90 * 24 * 60 * 60) // After 90 days from now
                 }
@@ -336,27 +317,27 @@ class SearchCommunityModel: ObservableObject {
             }
 
         case .reset:
-            events = events // Reset to original, unfiltered data
+            filteredEvents = allEvents // Reset to original, unfiltered data
         case .none:
             break
         }
 
             // Update filtered events
-        filterEvents(eventType: .future) // Or based on the current event type
+        filterEvents(eventType: .future, events: filteredEvents) // Or based on the current event type
         }
         
-    func filterEvents(eventType: EventType) {
+    func filterEvents(eventType: EventType, events: [Event]) {
             if events.isEmpty { return }
             if eventType == .future {
-                filterAndSortEvents(eventType: .future, dateComparison: { $0 > $1 }, dayComparison: { $0 < $1 }, monthComparison: { $0 < $1 })
+                filterAndSortEvents(eventType: .future, dateComparison: { $0 > $1 }, dayComparison: { $0 < $1 }, monthComparison: { $0 < $1 }, events: events)
             } else if eventType == .past {
-                filterAndSortEvents(eventType: .past, dateComparison: { $0 < $1 }, dayComparison: { $0 > $1 }, monthComparison: { $0 > $1 })
+                filterAndSortEvents(eventType: .past, dateComparison: { $0 < $1 }, dayComparison: { $0 > $1 }, monthComparison: { $0 > $1 }, events: events)
             }
         }
-    private func filterAndSortEvents(eventType: EventType, dateComparison: @escaping (Date, Date) -> Bool, dayComparison: @escaping (Int, Int) -> Bool, monthComparison: @escaping (Date, Date) -> Bool) {
+    private func filterAndSortEvents(eventType: EventType, dateComparison: @escaping (Date, Date) -> Bool, dayComparison: @escaping (Int, Int) -> Bool, monthComparison: @escaping (Date, Date) -> Bool, events: [Event]) {
             var result = [EventData]()
             
-            let filteredArray = self.events.sorted { firstEvent, secondEvent in
+            let filteredArray = events.sorted { firstEvent, secondEvent in
                 return dateComparison(firstEvent.eventDate!, secondEvent.eventDate!)
             }
             
