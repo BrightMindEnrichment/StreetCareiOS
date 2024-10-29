@@ -43,7 +43,7 @@ struct LoginView: View {
                 NavigationLink {
                     ForgotPasswordView()
                 } label: {
-                    NavLinkButton(title: "Forgot password", width: 150.0, secondaryButton: true, noBorder: true)
+                    NavLinkButton(title: "Forgot password?", width: 150.0, secondaryButton: true, noBorder: true)
                 }
 
                 Button {
