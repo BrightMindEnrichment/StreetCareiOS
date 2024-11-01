@@ -46,12 +46,13 @@ struct EventCardView: View {
                     let minimumInterest = Int(Double(slots) * 0.65)
                     let interest = Int.random(in: minimumInterest...slots)
 
-                    Text("Participants: \(interest) / \(slots)")
+                    Text(String(format: NSLocalizedString("participantsCount", comment: "Number of participants out of total slots"), interest, slots))
                         .font(.system(size: 13))
                 }
                 Spacer()
                 if eventType == .past {
-                    Text("Completed").font(.system(size: 13))
+                    Text(NSLocalizedString("completedText", comment: "Label for completed events"))
+                            .font(.system(size: 13))
                 }
             }
         }

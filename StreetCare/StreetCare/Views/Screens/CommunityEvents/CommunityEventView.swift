@@ -12,24 +12,23 @@ import FirebaseAuth
 struct CommunityEventView: View {
     
     @State var user: User?
-    @State var currentData =  EventData()
+    @State var currentData = EventData()
     let adapter = EventDataAdapter()
     @StateObject private var viewModel = SearchCommunityModel()
     @State private var isBottomSheetPresented = false
     @State private var selectedFilter: FilterType = .none
 
     let formatter = DateFormatter()
-    var eventType : EventType
-  
+    var eventType: EventType
+    
     var body: some View {
-        
         VStack {
+            // Search and Filter UI
             HStack {
-                // Search Bar on the left
                 Image(systemName: "magnifyingglass")
                     .padding(.horizontal, 10)
                     .foregroundColor(.black)
-                TextField("Search...", text: $viewModel.searchText)
+                TextField(NSLocalizedString("searchPlaceholder", comment: "Search bar placeholder"), text: $viewModel.searchText)
                     .frame(height: 50.0)
                 Menu {
                     ForEach(FilterType.allCases, id: \.self) { filter in
@@ -40,10 +39,9 @@ struct CommunityEventView: View {
                             HStack {
                                 Text(filter.rawValue)
                                 Spacer()
-                                // Checkmark if the filter is selected
                                 if selectedFilter == filter {
                                     Image(systemName: "checkmark")
-                                        .foregroundColor(.blue) // You can change the color if needed
+                                        .foregroundColor(.blue)
                                 }
                             }
                         }
@@ -51,16 +49,13 @@ struct CommunityEventView: View {
                 } label: {
                     HStack {
                         ZStack(alignment: .topTrailing) {
-                            // Main Filter icon
                             Image(systemName: "line.horizontal.3.decrease.circle")
                                 .foregroundColor(.black)
-                            
-                            // Red dot indicator when a filter is active
                             if selectedFilter != .none {
                                 Circle()
                                     .fill(Color.red)
-                                    .frame(width: 8, height: 8) // Adjust size as needed
-                                    .offset(x: 10, y: -5) // Position the red dot
+                                    .frame(width: 8, height: 8)
+                                    .offset(x: 10, y: -5)
                             }
                         }
                         Text("Filter")
@@ -89,7 +84,7 @@ struct CommunityEventView: View {
                         ForEach(0..<viewModel.filteredData.count, id: \.self) { index in
                             if let date = viewModel.filteredData[index].keys.first,
                                let eventObj = viewModel.filteredData[index][date] {
-                                Section(header: SectionHeaderView(date: date)) {
+                                Section(header: SectionHeaderView(date: date, eventCount: eventObj.count)) {
                                     ForEach(eventObj) { event in
                                         HStack {
                                             VStack {
@@ -149,12 +144,9 @@ struct CommunityEventView: View {
     
     // Method to apply the filter based on user selection
     private func applyFilter(filterType: FilterType) {
-        // Update the selected filter and apply the changes
         selectedFilter = filterType
         viewModel.filterByDate(filterType: selectedFilter)
-
-        // Trigger a UI refresh by updating the published filtered data in viewModel
-        viewModel.objectWillChange.send()  // This will notify the view to update
+        viewModel.objectWillChange.send()
     }
 }
 
@@ -183,11 +175,19 @@ struct CommunityEventView_Previews: PreviewProvider {
 
 struct SectionHeaderView: View {
     var date: String
+    var eventCount: Int
 
     var body: some View {
-        Text(date)
-            .font(.system(size: 14, weight: .bold))
-            .foregroundColor(Color("TextColor"))
-            .padding(EdgeInsets(top: 0.0, leading: 0.0, bottom: 5.0, trailing: 0.0))
+        HStack {
+            Text(date)
+                .font(.system(size: 14, weight: .bold))
+                .foregroundColor(Color("TextColor"))
+            Spacer()
+            Text("(\(eventCount) events)")
+                .font(.system(size: 14, weight: .regular))
+                .foregroundColor(Color("TextColor"))
+        }
+        .padding(EdgeInsets(top: 0.0, leading: 0.0, bottom: 5.0, trailing: 0.0))
     }
 }
+
