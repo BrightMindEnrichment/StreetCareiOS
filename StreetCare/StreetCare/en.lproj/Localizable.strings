@@ -94,6 +94,17 @@
 
 "missingDataError" = "Please fill out all information.";
 
+
+"rsvpExistingOutreach" = "RSVP EXISTING OUTREACH";
+"cancel" = "CANCEL";
+"createAnOutreach" = "CREATE AN OUTREACH";
+
+"iCanHelpText1" = "Make sure you are not going alone.";
+"iCanHelpText2" = "Group presence offers security and effectiveness in engaging with unfamiliar situations and individuals, benefiting both volunteers and the homeless.";
+"iCanHelpText3" = "How outreach on Street Care works?";
+"iCanHelpText4" = "We post the outreach for you and other volunteers can sign up to go with you.";
+
+
 //"welcome" = "Welcome to\nStreet Care";
 //"loginButtonTitle" = "Login";
 //"signUpButtonTitle" = "Sign Up";

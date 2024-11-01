@@ -102,6 +102,7 @@
 		BEA872742A28D0330053D4F4 /* ProfileDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA872732A28D0330053D4F4 /* ProfileDetails.swift */; };
 		BEA872762A290F360053D4F4 /* ProfileDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA872752A290F360053D4F4 /* ProfileDetail.swift */; };
 		BEA872782A2910B90053D4F4 /* ProfileDetailsAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA872772A2910B90053D4F4 /* ProfileDetailsAdapter.swift */; };
+		E2646D162CA74A5000D8AA42 /* ICanHelpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2646D152CA74A5000D8AA42 /* ICanHelpView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -197,6 +198,7 @@
 		BEA872732A28D0330053D4F4 /* ProfileDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileDetails.swift; sourceTree = "<group>"; };
 		BEA872752A290F360053D4F4 /* ProfileDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileDetail.swift; sourceTree = "<group>"; };
 		BEA872772A2910B90053D4F4 /* ProfileDetailsAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileDetailsAdapter.swift; sourceTree = "<group>"; };
+		E2646D152CA74A5000D8AA42 /* ICanHelpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ICanHelpView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -355,6 +357,7 @@
 				4CB65DA029D0DEC700684BD1 /* CommunityView.swift */,
 				1F4A6E7D2C2E136700F4D07F /* EventPopupView.swift */,
 				1F96F05A2C236AD3009E3A49 /* HelpRequestView.swift */,
+				E2646D152CA74A5000D8AA42 /* ICanHelpView.swift */,
 				4CB65E5329DA916600684BD1 /* VideoListView.swift */,
 				4C0E4FF029DDF726009D33C1 /* DonateView.swift */,
 				4C85F0E82A089F9600FFEDC8 /* PlaylistsView.swift */,
@@ -587,6 +590,7 @@
 				4CB65E5429DA916600684BD1 /* VideoListView.swift in Sources */,
 				4CB7D8D029F8DD040002495E /* InputTileDuration.swift in Sources */,
 				4CA8693529E3FA8600BB6972 /* VisitLogEntry.swift in Sources */,
+				E2646D162CA74A5000D8AA42 /* ICanHelpView.swift in Sources */,
 				4C82449229EF9EE5003D1575 /* InputTileNumber.swift in Sources */,
 				4C82449029EF9EAB003D1575 /* InputTileDate.swift in Sources */,
 				4C85F0ED2A08A6F000FFEDC8 /* BeforeOutreachView.swift in Sources */,
