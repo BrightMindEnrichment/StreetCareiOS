@@ -139,6 +139,7 @@ struct CommunityEventView: View {
         }
         .onDisappear {
             isBottomSheetPresented = false
+            selectedFilter = .none
         }
     }
     
