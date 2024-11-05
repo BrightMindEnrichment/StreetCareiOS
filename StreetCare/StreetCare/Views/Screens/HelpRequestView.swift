@@ -113,17 +113,14 @@ struct HelpRequestCardView: View {
                     ForEach(skills.prefix(4), id: \.self) { skill in
                         Text(skill)
                             .font(.system(size: 10))
-                            .padding(.horizontal, 6)
+                            .padding(.horizontal, 12)
                             .padding(.vertical, 4)
-                            .frame(maxWidth: .infinity)
                             .multilineTextAlignment(.center)
                             .background(RoundedRectangle(cornerRadius: 10).stroke(Color.gray.opacity(0.8), lineWidth: 0.7))
                             .lineLimit(2)
                     }
                 }
             }
-            .padding(.top, 8)
-            .frame(maxWidth: .infinity, alignment: .leading)
             
 //            TODO: pending implementation of button actions
 //            HStack{
