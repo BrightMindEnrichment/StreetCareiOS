@@ -121,6 +121,8 @@ struct HelpRequestCardView: View {
                     }
                 }
             }
+            .padding(.top, 8)
+            .frame(maxWidth: .infinity, alignment: .leading)
             
 //            TODO: pending implementation of button actions
 //            HStack{
