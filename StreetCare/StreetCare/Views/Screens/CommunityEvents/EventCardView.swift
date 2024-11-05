@@ -42,13 +42,14 @@ struct EventCardView: View {
             }
             
             HStack {
-                if let slots = event.event.totalSlots {
-                    let minimumInterest = Int(Double(slots) * 0.65)
-                    let interest = Int.random(in: minimumInterest...slots)
-
-                    Text(String(format: NSLocalizedString("participantsCount", comment: "Number of participants out of total slots"), interest, slots))
-                        .font(.system(size: 13))
-                }
+                // TODO: hide participant count until feature is completed
+//                if let slots = event.event.totalSlots {
+//                    let minimumInterest = Int(Double(slots) * 0.65)
+//                    let interest = Int.random(in: minimumInterest...slots)
+//
+//                    Text(String(format: NSLocalizedString("participantsCount", comment: "Number of participants out of total slots"), interest, slots))
+//                        .font(.system(size: 13))
+//                }
                 Spacer()
                 if eventType == .past {
                     Text(NSLocalizedString("completedText", comment: "Label for completed events"))

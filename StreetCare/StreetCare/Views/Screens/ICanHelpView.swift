@@ -36,38 +36,38 @@ struct ICanHelpView: View {
                     Text(NSLocalizedString("iCanHelpText4", comment: ""))
                         .font(.subheadline)
                         .foregroundColor(.secondary)
-                    
-                    Button(action: {
-                        // Action for RSVP EXISTING OUTREACH
-                    }) {
-                        Text(NSLocalizedString("rsvpExistingOutreach", comment: ""))
-//                            .frame(maxWidth: .infinity)
-                            .padding(EdgeInsets(top: 8.0, leading: 20.0, bottom: 8.0, trailing: 20.0))
-                            .foregroundColor(Color("PrimaryColor"))
-                            
-                    }
-                    .background(Color("SecondaryColor"))
-                    .clipShape(Capsule())
-                    
-                    Button(action: {
-                        isPresented = false
-                    }) {
-                        Text(NSLocalizedString("cancel", comment: ""))
-                            .padding(EdgeInsets(top: 8.0, leading: 20.0, bottom: 8.0, trailing: 20.0))
-                            .foregroundColor(Color("PrimaryColor"))
-                    }
-                    .background(Color("SecondaryColor"))
-                    .clipShape(Capsule())
-                    
-                    Button(action: {
-                        isOutreachCreated = true
-                    }) {
-                        Text(NSLocalizedString("createAnOutreach", comment: ""))
-                            .padding(EdgeInsets(top: 8.0, leading: 20.0, bottom: 8.0, trailing: 20.0))
-                            .foregroundColor(Color("PrimaryColor"))
-                    }
-                    .background(Color("SecondaryColor"))
-                    .clipShape(Capsule())
+            // TODO: hide RSVP outreach buttons until feature is completed
+//                    Button(action: {
+//                        // Action for RSVP EXISTING OUTREACH
+//                    }) {
+//                        Text(NSLocalizedString("rsvpExistingOutreach", comment: ""))
+////                            .frame(maxWidth: .infinity)
+//                            .padding(EdgeInsets(top: 8.0, leading: 20.0, bottom: 8.0, trailing: 20.0))
+//                            .foregroundColor(Color("PrimaryColor"))
+//                            
+//                    }
+//                    .background(Color("SecondaryColor"))
+//                    .clipShape(Capsule())
+//                    
+//                    Button(action: {
+//                        isPresented = false
+//                    }) {
+//                        Text(NSLocalizedString("cancel", comment: ""))
+//                            .padding(EdgeInsets(top: 8.0, leading: 20.0, bottom: 8.0, trailing: 20.0))
+//                            .foregroundColor(Color("PrimaryColor"))
+//                    }
+//                    .background(Color("SecondaryColor"))
+//                    .clipShape(Capsule())
+//                    
+//                    Button(action: {
+//                        isOutreachCreated = true
+//                    }) {
+//                        Text(NSLocalizedString("createAnOutreach", comment: ""))
+//                            .padding(EdgeInsets(top: 8.0, leading: 20.0, bottom: 8.0, trailing: 20.0))
+//                            .foregroundColor(Color("PrimaryColor"))
+//                    }
+//                    .background(Color("SecondaryColor"))
+//                    .clipShape(Capsule())
                 }
                 .padding()
                 .frame(maxWidth: 300)
