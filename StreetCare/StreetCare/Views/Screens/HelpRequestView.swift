@@ -115,6 +115,8 @@ struct HelpRequestCardView: View {
                             .font(.system(size: 10))
                             .padding(.horizontal, 6)
                             .padding(.vertical, 4)
+                            .frame(maxWidth: .infinity)
+                            .multilineTextAlignment(.center)
                             .background(RoundedRectangle(cornerRadius: 10).stroke(Color.gray.opacity(0.8), lineWidth: 0.7))
                             .lineLimit(2)
                     }
