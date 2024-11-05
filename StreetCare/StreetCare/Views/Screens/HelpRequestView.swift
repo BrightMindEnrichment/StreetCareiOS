@@ -109,32 +109,37 @@ struct HelpRequestCardView: View {
                 Text(event.description == "" ? "No date available" : event.description!).font(.system(size: 13))
            
             HStack {
-                if let skills = event.skills{
-                    ForEach(0..<skills.count, id: \.self) { index in
-                    HStack {
-                        Text("  \(skills[index])  ")
+                if let skills = event.skills {
+                    ForEach(skills.prefix(4), id: \.self) { skill in
+                        Text(skill)
                             .font(.system(size: 10))
-                    }.frame(height: 30.0).overlay(
-                        RoundedRectangle(cornerRadius: 15.0)
-                            .stroke(Color.gray.opacity(0.8), lineWidth: 0.7))
+                            .padding(.horizontal, 12)
+                            .padding(.vertical, 4)
+                            .multilineTextAlignment(.center)
+                            .background(RoundedRectangle(cornerRadius: 10).stroke(Color.gray.opacity(0.8), lineWidth: 0.7))
+                            .lineLimit(2)
+                    }
                 }
             }
-            }
-            HStack{
-                Spacer()
-                Button {
-                    showICanHelpPopup = true
-                } label: {
-                    Text("I can help")
-                        .padding(EdgeInsets(top: 8.0, leading: 20.0, bottom: 8.0, trailing: 20.0))
-                        .foregroundColor(Color("PrimaryColor"))
-                }
-                .background(Color("SecondaryColor"))
-                .clipShape(Capsule())
-                .sheet(isPresented: $showICanHelpPopup, content: {
-                    ICanHelpView(isPresented: $showICanHelpPopup)
-                })
-            }
+            .padding(.top, 8)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            
+//            TODO: pending implementation of button actions
+//            HStack{
+//                Spacer()
+//                Button {
+//                    showICanHelpPopup = true
+//                } label: {
+//                    Text("I can help")
+//                        .padding(EdgeInsets(top: 8.0, leading: 20.0, bottom: 8.0, trailing: 20.0))
+//                        .foregroundColor(Color("PrimaryColor"))
+//                }
+//                .background(Color("SecondaryColor"))
+//                .clipShape(Capsule())
+//                .sheet(isPresented: $showICanHelpPopup, content: {
+//                    ICanHelpView(isPresented: $showICanHelpPopup)
+//                })
+//            }
         }
         .padding()
         .background(Color.white)
