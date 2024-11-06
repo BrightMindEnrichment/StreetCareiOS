@@ -26,13 +26,14 @@ class SearchCommunityModel: ObservableObject {
         }
     }
     
-    func filterByDate(filterType: FilterType) {
+    func filterByDate(filterType: FilterType, eventType: EventType) {
         let calendar = Calendar.current
         let now = Date()
         // Always start filtering from the original allEvents list
         filteredEvents = allEvents
         
         switch filterType {
+        // Future Event Filters (as it already is)
         case .next7Days:
             filteredEvents = allEvents.filter { event in
                 if let eventDate = event.eventDate {
@@ -40,7 +41,6 @@ class SearchCommunityModel: ObservableObject {
                 }
                 return false
             }
-
         case .next30Days:
             filteredEvents = allEvents.filter { event in
                 if let eventDate = event.eventDate {
@@ -48,7 +48,6 @@ class SearchCommunityModel: ObservableObject {
                 }
                 return false
             }
-
         case .next60Days:
             filteredEvents = allEvents.filter { event in
                 if let eventDate = event.eventDate {
@@ -56,7 +55,6 @@ class SearchCommunityModel: ObservableObject {
                 }
                 return false
             }
-
         case .next90Days:
             filteredEvents = allEvents.filter { event in
                 if let eventDate = event.eventDate {
@@ -64,7 +62,6 @@ class SearchCommunityModel: ObservableObject {
                 }
                 return false
             }
-
         case .otherUpcoming:
             filteredEvents = allEvents.filter { event in
                 if let eventDate = event.eventDate {
@@ -72,17 +69,58 @@ class SearchCommunityModel: ObservableObject {
                 }
                 return false
             }
-
+        
+        // Past Event Filters (Newly added)
+        case .last7Days:
+            filteredEvents = allEvents.filter { event in
+                if let eventDate = event.eventDate {
+                    return eventDate >= now.addingTimeInterval(-7 * 24 * 60 * 60) && eventDate <= now
+                }
+                return false
+            }
+        case .last30Days:
+            filteredEvents = allEvents.filter { event in
+                if let eventDate = event.eventDate {
+                    return eventDate >= now.addingTimeInterval(-30 * 24 * 60 * 60) && eventDate <= now
+                }
+                return false
+            }
+        case .last60Days:
+            filteredEvents = allEvents.filter { event in
+                if let eventDate = event.eventDate {
+                    return eventDate >= now.addingTimeInterval(-60 * 24 * 60 * 60) && eventDate <= now
+                }
+                return false
+            }
+        case .last90Days:
+            filteredEvents = allEvents.filter { event in
+                if let eventDate = event.eventDate {
+                    return eventDate >= now.addingTimeInterval(-90 * 24 * 60 * 60) && eventDate <= now
+                }
+                return false
+            }
+        case .otherPast:
+            filteredEvents = allEvents.filter { event in
+                if let eventDate = event.eventDate {
+                    return eventDate < now.addingTimeInterval(-90 * 24 * 60 * 60) // More than 90 days ago
+                }
+                return false
+            }
+        
         case .reset:
             filteredEvents = allEvents // Reset to original, unfiltered data
         case .none:
             break
         }
 
-            // Update filtered events
-        filterEvents(eventType: .future, events: filteredEvents) // Or based on the current event type
-        }
-        
+        // Apply sorting and event grouping based on type
+        filterEvents(eventType: eventType, events: filteredEvents)
+    }
+
+
+
+
+
     func filterEvents(eventType: EventType, events: [Event]) {
             if events.isEmpty { return }
             if eventType == .future {
