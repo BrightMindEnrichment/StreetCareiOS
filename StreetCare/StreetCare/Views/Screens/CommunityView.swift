@@ -11,48 +11,70 @@ import FirebaseAuth
 struct CommunityView: View {
     
     @State var user: User?
+    @StateObject var viewModel = MapViewModel()
     
     let adapter = EventDataAdapter()
     @State var events = [Event]()
     
     let formatter = DateFormatter()
- 
+    
     
     var body: some View {
         NavigationView {
-        VStack {
-            Text("Community")
-                .font(.title)
-            
-            if let _ = self.user {
-                ScrollView{
-                    VStack{
-                        Spacer().frame(height: 10)
-//                        Text("City: Unavailable").bold()
-                        Spacer().frame(height: 35)
-                        HStack{
-                            NavigationLink {
-                                CommunityEventView(eventType: .future)
-                            } label: {
-                                VStack{
-                                    ZStack {
-                                        Circle()
-                                            .fill(Color("BackgroundColor"))
-                                            .frame(width: 66.0)
-                                        Circle()
-                                            .strokeBorder(lineWidth: 1.2)
-                                            .foregroundColor(Color("SecondaryColor"))
-                                            .frame(width: 66.0)
-                                        Image("community").frame(width: 15.0, height: 15.0)
+            VStack {
+                Text("Community")
+                    .font(.title)
+                
+                if let _ = self.user {
+                    ScrollView{
+                        VStack{
+                            Spacer().frame(height: 10)
+                            //                        Text("City: Unavailable").bold()
+                            Spacer().frame(height: 35)
+                            HStack{
+                                NavigationLink {
+                                    CommunityEventView(eventType: .future)
+                                } label: {
+                                    VStack{
+                                        ZStack {
+                                            Circle()
+                                                .fill(Color("BackgroundColor"))
+                                                .frame(width: 66.0)
+                                            Circle()
+                                                .strokeBorder(lineWidth: 1.2)
+                                                .foregroundColor(Color("SecondaryColor"))
+                                                .frame(width: 66.0)
+                                            Image("community").frame(width: 15.0, height: 15.0)
+                                        }
+                                        Text(NSLocalizedString("futureEvents", comment: "")).fontWeight(.regular).foregroundColor(Color("TextColor"))
                                     }
-                                    Text(NSLocalizedString("futureEvents", comment: "")).fontWeight(.regular).foregroundColor(Color("TextColor"))
+                                }
+                                Spacer().frame(width: (UIScreen.main.bounds.width / 2) / 2)
+                                
+                                NavigationLink {
+                                    CommunityEventView(eventType: .past)
+                                } label: {
+                                    VStack{
+                                        ZStack {
+                                            Circle()
+                                                .fill(Color("BackgroundColor"))
+                                                .frame(width: 66.0)
+                                            Circle()
+                                                .strokeBorder(lineWidth: 1.2)
+                                                .foregroundColor(Color("SecondaryColor"))
+                                                .frame(width: 66.0)
+                                            Image("community").frame(width: 15.0, height: 15.0)
+                                        }
+                                        Text(NSLocalizedString("pastEvents", comment: "")).fontWeight(.regular).foregroundColor(Color("TextColor"))
+                                    }
                                 }
                             }
-                            Spacer().frame(width: (UIScreen.main.bounds.width / 2) / 2)
+                            
+                            Spacer().frame(height: 10)
                             
                             NavigationLink {
-                                CommunityEventView(eventType: .past)
-                            } label: {
+                                HelpRequestView()
+                            } label:{
                                 VStack{
                                     ZStack {
                                         Circle()
@@ -62,57 +84,52 @@ struct CommunityView: View {
                                             .strokeBorder(lineWidth: 1.2)
                                             .foregroundColor(Color("SecondaryColor"))
                                             .frame(width: 66.0)
-                                        Image("community").frame(width: 15.0, height: 15.0)
+                                        Image("HelpingHands").frame(width: 15.0, height: 15.0)
                                     }
-                                    Text(NSLocalizedString("pastEvents", comment: "")).fontWeight(.regular).foregroundColor(Color("TextColor"))
+                                    Text(NSLocalizedString("helpRequests", comment: "")).fontWeight(.regular).foregroundColor(Color("TextColor"))
                                 }
                             }
-                        }
-                        
-                        Spacer().frame(height: 10)
-                        
-                        NavigationLink {
-                            HelpRequestView()
-                        } label:{
+                            
                             VStack{
+                                Spacer().frame(height: 30)
+                                
+                                Text("Map (Coming Soon)").bold()
+                                    .frame(maxWidth: .infinity, alignment: .leading).padding()
                                 ZStack {
-                                    Circle()
-                                        .fill(Color("BackgroundColor"))
-                                        .frame(width: 66.0)
-                                    Circle()
-                                        .strokeBorder(lineWidth: 1.2)
-                                        .foregroundColor(Color("SecondaryColor"))
-                                        .frame(width: 66.0)
-                                    Image("HelpingHands").frame(width: 15.0, height: 15.0)
+                                    GoogleMapView(viewModel: viewModel)
+                                        .edgesIgnoringSafeArea(.all)
+                                    
+                                    if viewModel.isLoading {
+                                        ProgressView()
+                                            .scaleEffect(1.5)
+                                            .progressViewStyle(CircularProgressViewStyle(tint: .blue))
+                                    }
                                 }
-                                Text(NSLocalizedString("helpRequests", comment: "")).fontWeight(.regular).foregroundColor(Color("TextColor"))
+                                .onAppear {
+                                    viewModel.fetchMarkers()
+                                }
+                                .frame(height: 300)
+                                
+                                //                            Image("Map").resizable().aspectRatio(contentMode: .fit).frame(width: (UIScreen.main.bounds.width - 20),height: (UIScreen.main.bounds.width - 0)).padding(EdgeInsets(top: -50, leading: 0.0, bottom: 0.0, trailing: 0.0))
                             }
                         }
                         
-                        VStack{
-                            Spacer().frame(height: 30)
-                            Text("Map (Coming Soon)").bold()
-                                .frame(maxWidth: .infinity, alignment: .leading).padding()
-                            Image("Map").resizable().aspectRatio(contentMode: .fit).frame(width: (UIScreen.main.bounds.width - 20),height: (UIScreen.main.bounds.width - 0)).padding(EdgeInsets(top: -50, leading: 0.0, bottom: 0.0, trailing: 0.0))
-                        }
                     }
-                    
+                }
+                else {
+                    Image("CommunityOfThree").padding()
+                    Text("Log in to connect with your local community.")
                 }
             }
-            else {
-                Image("CommunityOfThree").padding()
-                Text("Log in to connect with your local community.")
+            .onAppear {
+                if let user = Auth.auth().currentUser {
+                    self.user = user
+                    
+                    adapter.delegate = self
+                    adapter.refresh()
+                }
             }
         }
-        .onAppear {
-            if let user = Auth.auth().currentUser {
-                self.user = user
-                
-                adapter.delegate = self
-                adapter.refresh()
-            }
-        }
-    }
     }
 }
 
