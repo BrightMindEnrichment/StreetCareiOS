@@ -15,8 +15,11 @@ struct EventCardView: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
-            Text(event.event.title.capitalized)
-                .font(.headline)
+            
+            HStack{
+                Text(event.event.title.capitalized)
+                    .font(.headline)
+            }
             
             HStack {
                 Image(systemName: "mappin.and.ellipse")

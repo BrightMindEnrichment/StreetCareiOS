@@ -22,8 +22,12 @@ struct EventPopupView: View {
         
         VStack(alignment: .leading, spacing: 10) {
            // Spacer()
-            Text(event.event.title.capitalized)
-                .font(.headline)
+            HStack{
+                Text(event.event.title.capitalized)
+                    .font(.headline)
+                Spacer()
+                Image("blueCheckMark")
+            }
             
             HStack {
                 Image(systemName: "mappin.and.ellipse")
