@@ -8,23 +8,40 @@
 import SwiftUI
 import WebKit
 
-
 struct WebView: UIViewRepresentable {
-    
-    var url: URL?
-    
-    
-    func makeUIView(context: Context) -> WKWebView {
-        WKWebView()
-    }
-    
+    let url: URL?
 
-    func updateUIView(_ webView: WKWebView, context: Context) {
+    func makeUIView(context: Context) -> WKWebView {
+        let webView = WKWebView()
+        webView.navigationDelegate = context.coordinator
         if let url = url {
-            let request = URLRequest(url: url)
-            webView.load(request)
+            webView.load(URLRequest(url: url))
+        }
+        return webView
+    }
+
+    func updateUIView(_ uiView: WKWebView, context: Context) {
+
+    }
+
+    func makeCoordinator() -> Coordinator {
+        Coordinator(self)
+    }
+
+    class Coordinator: NSObject, WKNavigationDelegate {
+        var parent: WebView
+
+        init(_ parent: WebView) {
+            self.parent = parent
+        }
+
+        func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, decisionHandler: @escaping (WKNavigationActionPolicy) -> Void) {
+            if navigationAction.navigationType == .linkActivated, let url = navigationAction.request.url {
+                webView.load(URLRequest(url: url))
+                decisionHandler(.cancel)
+            } else {
+                decisionHandler(.allow)
+            }
         }
     }
-    
-    
-} // end struct
+}
