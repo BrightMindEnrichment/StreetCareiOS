@@ -93,7 +93,8 @@
 "guestCantCommunityError" = "Login to add an event.";
 
 "missingDataError" = "Please fill out all information.";
-
+"saveEventButtonTitle" = "Save";
+"discardButtonTitle" = "Discard";
 
 "rsvpExistingOutreach" = "RSVP EXISTING OUTREACH";
 "cancel" = "CANCEL";

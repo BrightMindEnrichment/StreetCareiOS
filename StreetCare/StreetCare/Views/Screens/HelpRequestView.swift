@@ -125,21 +125,21 @@ struct HelpRequestCardView: View {
             .frame(maxWidth: .infinity, alignment: .leading)
             
 //            TODO: pending implementation of button actions
-//            HStack{
-//                Spacer()
-//                Button {
-//                    showICanHelpPopup = true
-//                } label: {
-//                    Text("I can help")
-//                        .padding(EdgeInsets(top: 8.0, leading: 20.0, bottom: 8.0, trailing: 20.0))
-//                        .foregroundColor(Color("PrimaryColor"))
-//                }
-//                .background(Color("SecondaryColor"))
-//                .clipShape(Capsule())
-//                .sheet(isPresented: $showICanHelpPopup, content: {
-//                    ICanHelpView(isPresented: $showICanHelpPopup)
-//                })
-//            }
+            HStack{
+                Spacer()
+                Button {
+                    showICanHelpPopup = true
+                } label: {
+                    Text("I can help")
+                        .padding(EdgeInsets(top: 8.0, leading: 20.0, bottom: 8.0, trailing: 20.0))
+                        .foregroundColor(Color("PrimaryColor"))
+                }
+                .background(Color("SecondaryColor"))
+                .clipShape(Capsule())
+                .sheet(isPresented: $showICanHelpPopup, content: {
+                    ICanHelpView(isPresented: $showICanHelpPopup)
+                })
+            }
         }
         .padding()
         .background(Color.white)
