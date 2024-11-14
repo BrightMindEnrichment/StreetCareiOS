@@ -42,7 +42,7 @@ struct OutreachFormView: View {
             "skillsDescription": skillsDescription  // Add skills description to Firestore data
         ]
 
-        db.collection("helpRequests").addDocument(data: formData) { error in
+        db.collection("outreachEventsDev").addDocument(data: formData) { error in
             if let error = error {
                 alertMessage = "Error saving data: \(error.localizedDescription)"
                 showAlert = true
