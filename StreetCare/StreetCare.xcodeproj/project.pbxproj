@@ -87,6 +87,13 @@
 		71B0D5CB2B9225670061033B /* Badge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71B0D5CA2B9225670061033B /* Badge.swift */; };
 		71FA51032BCEC4B300D0DA6C /* AfterOutreachView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71FA51022BCEC4B300D0DA6C /* AfterOutreachView.swift */; };
 		71FA51052BD1909500D0DA6C /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71FA51042BD1909500D0DA6C /* SplashView.swift */; };
+<<<<<<< HEAD
+=======
+		74FE994C2CC9F23F00D0C5D0 /* EventEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74FE994B2CC9F23F00D0C5D0 /* EventEnums.swift */; };
+		74FE994F2CC9FF5F00D0C5D0 /* SearchCommunityModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74FE994E2CC9FF5F00D0C5D0 /* SearchCommunityModel.swift */; };
+		74FE99512CC9FFAB00D0C5D0 /* EventCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74FE99502CC9FFAB00D0C5D0 /* EventCardView.swift */; };
+		A459D493C5D37756A585D3EA /* Pods_StreetCare.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B3FB734328ABC03284A67BF /* Pods_StreetCare.framework */; };
+>>>>>>> main
 		BE9D1DCE2A37626C00072835 /* ImagePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9D1DCD2A37626C00072835 /* ImagePickerView.swift */; };
 		BE9D1DD12A376B3800072835 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = BE9D1DD02A376B3800072835 /* FirebaseStorage */; };
 		BE9D1DD32A377E9100072835 /* StorgeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9D1DD22A377E9100072835 /* StorgeManager.swift */; };
@@ -199,6 +206,9 @@
 		71B0D5CA2B9225670061033B /* Badge.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Badge.swift; sourceTree = "<group>"; };
 		71FA51022BCEC4B300D0DA6C /* AfterOutreachView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AfterOutreachView.swift; sourceTree = "<group>"; };
 		71FA51042BD1909500D0DA6C /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
+		74FE994B2CC9F23F00D0C5D0 /* EventEnums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventEnums.swift; sourceTree = "<group>"; };
+		74FE994E2CC9FF5F00D0C5D0 /* SearchCommunityModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchCommunityModel.swift; sourceTree = "<group>"; };
+		74FE99502CC9FFAB00D0C5D0 /* EventCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventCardView.swift; sourceTree = "<group>"; };
 		BE9D1DCD2A37626C00072835 /* ImagePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerView.swift; sourceTree = "<group>"; };
 		BE9D1DD22A377E9100072835 /* StorgeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorgeManager.swift; sourceTree = "<group>"; };
 		BE9D1DD42A37819E00072835 /* AvatarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarView.swift; sourceTree = "<group>"; };
@@ -307,6 +317,7 @@
 				4CB65D9529D016B000684BD1 /* Preview Content */,
 				4CB65E4F29DA6FE900684BD1 /* LinkData.swift */,
 				1F5C885F2C1CDF2D00684361 /* Common.swift */,
+				74FE994B2CC9F23F00D0C5D0 /* EventEnums.swift */,
 			);
 			path = StreetCare;
 			sourceTree = "<group>";
@@ -359,6 +370,7 @@
 		4CB65E4C29DA6D8500684BD1 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				74FE994D2CC9FEDB00D0C5D0 /* CommunityEvents */,
 				4C7136B92A01F2A60060EB7D /* Profile */,
 				4C17ED4F2A00A3390013EF52 /* Visit Log */,
 				4CB65DA429D0DEEE00684BD1 /* MainTabBarView.swift */,
@@ -367,7 +379,6 @@
 				4CB65E4929DA6A1200684BD1 /* WhatToBringView.swift */,
 				71B0D5C42B9214B70061033B /* BadgesView.swift */,
 				4CB65DA029D0DEC700684BD1 /* CommunityView.swift */,
-				1F5C885D2C1CA29C00684361 /* CommunityEventView.swift */,
 				1F4A6E7D2C2E136700F4D07F /* EventPopupView.swift */,
 				1F96F05A2C236AD3009E3A49 /* HelpRequestView.swift */,
 				E2646D152CA74A5000D8AA42 /* ICanHelpView.swift */,
@@ -415,6 +426,16 @@
 				71392FAC2BAA40F900496CA5 /* GoogleUserAuthModel.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		74FE994D2CC9FEDB00D0C5D0 /* CommunityEvents */ = {
+			isa = PBXGroup;
+			children = (
+				1F5C885D2C1CA29C00684361 /* CommunityEventView.swift */,
+				74FE994E2CC9FF5F00D0C5D0 /* SearchCommunityModel.swift */,
+				74FE99502CC9FFAB00D0C5D0 /* EventCardView.swift */,
+			);
+			path = CommunityEvents;
 			sourceTree = "<group>";
 		};
 		BE9D1DCF2A376B3800072835 /* Frameworks */ = {
@@ -626,13 +647,16 @@
 				4C82449229EF9EE5003D1575 /* InputTileNumber.swift in Sources */,
 				4C82449029EF9EAB003D1575 /* InputTileDate.swift in Sources */,
 				4C85F0ED2A08A6F000FFEDC8 /* BeforeOutreachView.swift in Sources */,
+				74FE994F2CC9FF5F00D0C5D0 /* SearchCommunityModel.swift in Sources */,
 				71B0D5C52B9214B70061033B /* BadgesView.swift in Sources */,
 				4C0E4F9829DA9450009D33C1 /* Log.swift in Sources */,
 				4CB65DA529D0DEEE00684BD1 /* MainTabBarView.swift in Sources */,
+				74FE99512CC9FFAB00D0C5D0 /* EventCardView.swift in Sources */,
 				4C85F0EB2A08A4E800FFEDC8 /* StartNowView.swift in Sources */,
 				E20D156C2CBF0CD80004C645 /* GoogleMapView.swift in Sources */,
 				4C82449429F0D999003D1575 /* InputTileList.swift in Sources */,
 				4CB65E4E29DA6FBB00684BD1 /* NavigationRowLinkView.swift in Sources */,
+				74FE994C2CC9F23F00D0C5D0 /* EventEnums.swift in Sources */,
 				4C7136C12A04952A0060EB7D /* Event.swift in Sources */,
 				BE9D1DCE2A37626C00072835 /* ImagePickerView.swift in Sources */,
 				4CB65DA329D0DEDA00684BD1 /* ProfilView.swift in Sources */,
@@ -833,7 +857,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.5.8;
+				MARKETING_VERSION = 1.5.10;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bme.StreetCare;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -866,7 +890,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.5.8;
+				MARKETING_VERSION = 1.5.10;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bme.StreetCare;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;

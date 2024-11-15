@@ -85,7 +85,10 @@
 "vistLog" = "Visit Log";
 "community" = "Community";
 
+"searchPlaceholder" = "Search...";
 
+"participantsCount" = "Participants: %d / %d";
+"completedText" = "Completed";
 "guestCantLogVisitError" = "Login to record a visit.";
 "guestCantCommunityError" = "Login to add an event.";
 

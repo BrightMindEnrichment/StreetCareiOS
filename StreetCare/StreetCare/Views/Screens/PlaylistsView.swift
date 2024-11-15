@@ -11,7 +11,7 @@ import SwiftUI
 struct PlaylistsView: View {
 
     var links: [PlaylistDefinition] = [        
-        PlaylistDefinition(title: "How to use Street Care App", playlistId: "PLh7GZtyt8qiLKwO_WoE0Vmcu6UMV1AtV9R"),
+        PlaylistDefinition(title: "How to use Street Care App", playlistId: "PLh7GZtyt8qiJKRJ0O_oJ5qRlvGeZUH2Zk"),
         PlaylistDefinition(title: "An Introduction to Street Outreach", playlistId: "PLh7GZtyt8qiLKwO_WoE0Vmcu6UMV1AtV9"),
         PlaylistDefinition(title: "Homeless Veterans", playlistId: "PLh7GZtyt8qiKevwz9gkTs0OyaglNnfUcl"),
         PlaylistDefinition(title: "Street Safety", playlistId: "PLh7GZtyt8qiJsEwIitzTaZ2l3aA1Kiyx0"),
