@@ -87,13 +87,10 @@
 		71B0D5CB2B9225670061033B /* Badge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71B0D5CA2B9225670061033B /* Badge.swift */; };
 		71FA51032BCEC4B300D0DA6C /* AfterOutreachView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71FA51022BCEC4B300D0DA6C /* AfterOutreachView.swift */; };
 		71FA51052BD1909500D0DA6C /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71FA51042BD1909500D0DA6C /* SplashView.swift */; };
-<<<<<<< HEAD
-=======
 		74FE994C2CC9F23F00D0C5D0 /* EventEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74FE994B2CC9F23F00D0C5D0 /* EventEnums.swift */; };
 		74FE994F2CC9FF5F00D0C5D0 /* SearchCommunityModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74FE994E2CC9FF5F00D0C5D0 /* SearchCommunityModel.swift */; };
 		74FE99512CC9FFAB00D0C5D0 /* EventCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74FE99502CC9FFAB00D0C5D0 /* EventCardView.swift */; };
 		A459D493C5D37756A585D3EA /* Pods_StreetCare.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B3FB734328ABC03284A67BF /* Pods_StreetCare.framework */; };
->>>>>>> main
 		BE9D1DCE2A37626C00072835 /* ImagePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9D1DCD2A37626C00072835 /* ImagePickerView.swift */; };
 		BE9D1DD12A376B3800072835 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = BE9D1DD02A376B3800072835 /* FirebaseStorage */; };
 		BE9D1DD32A377E9100072835 /* StorgeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9D1DD22A377E9100072835 /* StorgeManager.swift */; };
