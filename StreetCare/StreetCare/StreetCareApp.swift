@@ -8,6 +8,7 @@
 import SwiftUI
 import Firebase
 import GoogleSignIn
+import GoogleMaps
 
 
 class AppDelegate: NSObject, UIApplicationDelegate {
@@ -15,6 +16,12 @@ class AppDelegate: NSObject, UIApplicationDelegate {
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
 
         FirebaseApp.configure()
+        
+        print("Initializing Google Maps...")
+        //GMSServices.provideAPIKey("AIzaSyDjWi5sE_do337K32ie9iZ7xdBjqGgTA54")
+        GMSServices.provideAPIKey("AIzaSyBpaLVj2EjhjCeHbTUXfcBhBoaQLVathvE")
+        print("Is Google Maps initialized")
+        
 
         if let uid = Auth.auth().currentUser?.uid {
             print("User : \(uid)")
