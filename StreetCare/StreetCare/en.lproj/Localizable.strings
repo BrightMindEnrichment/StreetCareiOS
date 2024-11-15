@@ -1,10 +1,8 @@
-/* 
-  Localizable.strings
-  StreetCare
+//  Localizable.strings
+//  StreetCare
 
-  Created by Michael Thornton on 4/29/22.
+//  Created by Michael Thornton on 4/29/22.
   
-*/
 
 "errorTitle" = "Oops.";
 
@@ -99,7 +97,7 @@
 "rsvpExistingOutreach" = "RSVP EXISTING OUTREACH";
 "cancel" = "CANCEL";
 "createAnOutreach" = "CREATE AN OUTREACH";
-
+"selectSkillsButtonTitle" = "SELECT SKILLS";
 "iCanHelpText1" = "Make sure you are not going alone.";
 "iCanHelpText2" = "Group presence offers security and effectiveness in engaging with unfamiliar situations and individuals, benefiting both volunteers and the homeless.";
 "iCanHelpText3" = "How outreach on Street Care works?";
