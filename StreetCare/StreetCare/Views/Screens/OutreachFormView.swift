@@ -99,7 +99,7 @@ struct OutreachFormView: View {
                     
                     Spacer()
                     
-                    Text("Add New")
+                    Text(NSLocalizedString("addNew", comment: ""))
                         .font(.title2)  // Larger font size
                         .fontWeight(.bold)
                         .frame(maxWidth: .infinity, alignment: .center)  // Center-align title text
@@ -112,10 +112,10 @@ struct OutreachFormView: View {
                 ScrollView {
                     VStack(alignment: .leading, spacing: 18) {
                         // Title field with character counter
-                        Text("Title")
+                        Text(NSLocalizedString("title", comment: ""))
                             .font(.headline)
                         
-                        TextField("Enter Event Title", text: $title)
+                        TextField((NSLocalizedString("enterEventTitle", comment: "")), text: $title)
                             .textFieldStyle(RoundedBorderTextFieldStyle())
                             .onChange(of: title) { newValue in
                                 if newValue.count > titleLimit {
@@ -131,50 +131,50 @@ struct OutreachFormView: View {
                                 .foregroundColor(.gray)
                         }
                         
-                        Text("Location")
+                        Text(NSLocalizedString("location", comment: ""))
                             .font(.headline)
                         
-                        TextField("Street", text: $street)
+                        TextField((NSLocalizedString("street", comment: "")), text: $street)
                             .textFieldStyle(RoundedBorderTextFieldStyle())
                         
-                        TextField("State", text: $state)
+                        TextField((NSLocalizedString("state", comment: "")), text: $state)
                             .textFieldStyle(RoundedBorderTextFieldStyle())
                         
-                        TextField("City", text: $city)
+                        TextField((NSLocalizedString("city", comment: "")), text: $city)
                             .textFieldStyle(RoundedBorderTextFieldStyle())
                         
-                        TextField("Zipcode", text: $zipcode)
+                        TextField((NSLocalizedString("zipcode", comment: "")), text: $zipcode)
                             .textFieldStyle(RoundedBorderTextFieldStyle())
                         
-                        DatePicker("Start Date", selection: $startDate, displayedComponents: .date)
+                        DatePicker((NSLocalizedString("startDate", comment: "")), selection: $startDate, displayedComponents: .date)
                             .datePickerStyle(CompactDatePickerStyle())
                         
-                        DatePicker("Start Time", selection: $startTime, displayedComponents: .hourAndMinute)
+                        DatePicker((NSLocalizedString("startTime", comment: "")), selection: $startTime, displayedComponents: .hourAndMinute)
                             .datePickerStyle(CompactDatePickerStyle())
                         
-                        DatePicker("End Date", selection: $endDate, displayedComponents: .date)
+                        DatePicker((NSLocalizedString("endDate", comment: "")), selection: $endDate, displayedComponents: .date)
                             .datePickerStyle(CompactDatePickerStyle())
                         
-                        DatePicker("End Time", selection: $endTime, displayedComponents: .hourAndMinute)
+                        DatePicker((NSLocalizedString("endTime", comment: "")), selection: $endTime, displayedComponents: .hourAndMinute)
                             .datePickerStyle(CompactDatePickerStyle())
                         
-                        Text("Help Type")
+                        Text(NSLocalizedString("helpType", comment: ""))
                             .font(.headline)
                         
-                        TextField("Help Type Required", text: $helpType)
+                        TextField(NSLocalizedString("eghelpType", comment: ""), text: $helpType)
                             .textFieldStyle(RoundedBorderTextFieldStyle())
                         
-                        Text("Maximum capacity")
+                        Text(NSLocalizedString("maximumCapacity", comment: ""))
                             .font(.headline)
                         
-                        TextField("Maximum capacity of participants allowed", text: $maxCapacity)
+                        TextField(NSLocalizedString("egmaximumCapacity", comment: ""), text: $maxCapacity)
                             .textFieldStyle(RoundedBorderTextFieldStyle())
                             .keyboardType(.numberPad)
                         
                         // Event Description with character counter
-                        Text("Event Description")
+                        Text(NSLocalizedString("eventDescription", comment: ""))
                             .font(.headline)
-                        
+                
                         TextEditor(text: $eventDescription)
                             .frame(height: 200)  // Larger frame for description
                             .border(Color.gray, width: 0.5)
