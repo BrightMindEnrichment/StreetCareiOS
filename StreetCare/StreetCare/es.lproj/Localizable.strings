@@ -93,7 +93,7 @@
 "startTime" = "Hora de inicio";
 "endDate" = "Fecha de finalización";
 "endTime" = "Hora de finalización";
-"helptype" = "Tipo de ayuda";
+"helpType" = "Tipo de ayuda";
 "eghelpType" = "Por ejemplo, Se necesita especialista en niños";
 "maximumCapacity" = "Capacidad máxima";
 "egmaximumCapacity" = "Capacidad máxima de participantes permitida";
