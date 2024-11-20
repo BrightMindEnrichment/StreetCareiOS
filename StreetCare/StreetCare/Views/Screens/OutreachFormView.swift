@@ -9,7 +9,6 @@ import FirebaseFirestore
 
 struct OutreachFormView: View {
     @Environment(\.presentationMode) var presentationMode  // Environment property to dismiss view
-    @State private var navigateToCommunityView = false
     @State private var title = ""
     @State private var street = ""
     @State private var state = ""
@@ -226,7 +225,7 @@ struct OutreachFormView: View {
                                     message: Text(alertMessage),
                                     dismissButton: .default(Text("OK")) {
                                         if alertMessage == "Event saved successfully!" {
-                                            navigateToCommunityView = true
+                                            presentationMode.wrappedValue.dismiss()
                                         }
                                     }
                                 )
@@ -234,7 +233,7 @@ struct OutreachFormView: View {
                         
                         NavLinkButton(title: NSLocalizedString("discardButtonTitle", comment: ""), width: 300, secondaryButton: true)
                             .onTapGesture {
-                                navigateToCommunityView = true
+                                presentationMode.wrappedValue.dismiss()
                             }
                             .padding()
                             .background(Color.clear)
@@ -248,10 +247,7 @@ struct OutreachFormView: View {
                 .sheet(isPresented: $isSkillSheetPresented) {
                     SkillSelectionView(selectedSkills: $selectedSkills, skills: skills)
                 }
-                // NavigationLink to CommunityView
-                NavigationLink(destination: CommunityView(), isActive: $navigateToCommunityView) {
-                EmptyView()
-                }
+                
             }
             .overlay(
                 isLoading ? ProgressView("Saving...").padding().background(Color.white.opacity(0.8)).cornerRadius(10) : nil
