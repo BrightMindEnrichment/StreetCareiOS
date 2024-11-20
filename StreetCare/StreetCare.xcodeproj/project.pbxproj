@@ -102,6 +102,7 @@
 		BEA872742A28D0330053D4F4 /* ProfileDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA872732A28D0330053D4F4 /* ProfileDetails.swift */; };
 		BEA872762A290F360053D4F4 /* ProfileDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA872752A290F360053D4F4 /* ProfileDetail.swift */; };
 		BEA872782A2910B90053D4F4 /* ProfileDetailsAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA872772A2910B90053D4F4 /* ProfileDetailsAdapter.swift */; };
+		C26F78C72CE4637500AAE187 /* OutreachFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26F78C62CE4635F00AAE187 /* OutreachFormView.swift */; };
 		E2646D162CA74A5000D8AA42 /* ICanHelpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2646D152CA74A5000D8AA42 /* ICanHelpView.swift */; };
 /* End PBXBuildFile section */
 
@@ -198,6 +199,7 @@
 		BEA872732A28D0330053D4F4 /* ProfileDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileDetails.swift; sourceTree = "<group>"; };
 		BEA872752A290F360053D4F4 /* ProfileDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileDetail.swift; sourceTree = "<group>"; };
 		BEA872772A2910B90053D4F4 /* ProfileDetailsAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileDetailsAdapter.swift; sourceTree = "<group>"; };
+		C26F78C62CE4635F00AAE187 /* OutreachFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutreachFormView.swift; sourceTree = "<group>"; };
 		E2646D152CA74A5000D8AA42 /* ICanHelpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ICanHelpView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -350,6 +352,7 @@
 				4C7136B92A01F2A60060EB7D /* Profile */,
 				4C17ED4F2A00A3390013EF52 /* Visit Log */,
 				4CB65DA429D0DEEE00684BD1 /* MainTabBarView.swift */,
+				C26F78C62CE4635F00AAE187 /* OutreachFormView.swift */,
 				4CB65D9129D016AE00684BD1 /* LandingScreenView.swift */,
 				71FA51022BCEC4B300D0DA6C /* AfterOutreachView.swift */,
 				4CB65E4929DA6A1200684BD1 /* WhatToBringView.swift */,
@@ -581,6 +584,7 @@
 				BE9D1DD72A37933500072835 /* LocationManager.swift in Sources */,
 				4CB7D8C529F63AEC0002495E /* InputTileRate.swift in Sources */,
 				4CB65E5029DA6FE900684BD1 /* LinkData.swift in Sources */,
+				C26F78C72CE4637500AAE187 /* OutreachFormView.swift in Sources */,
 				4C2F5A7229FF1D4500CFD288 /* VisitLogDataAdapter.swift in Sources */,
 				4CB65E6529DA91C000684BD1 /* InformationCategoryController.swift in Sources */,
 				4CB7D8C929F687100002495E /* InputTileComplete.swift in Sources */,

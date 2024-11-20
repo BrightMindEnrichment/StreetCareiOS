@@ -1,10 +1,8 @@
-/* 
-  Localizable.strings
-  StreetCare
+//  Localizable.strings
+//  StreetCare
 
-  Created by Michael Thornton on 4/29/22.
+//  Created by Michael Thornton on 4/29/22.
   
-*/
 
 "errorTitle" = "Oops.";
 
@@ -93,8 +91,9 @@
 "guestCantCommunityError" = "Login to add an event.";
 
 "missingDataError" = "Please fill out all information.";
-
-
+"saveEventButtonTitle" = "Save";
+"discardButtonTitle" = "Discard";
+"selectSkillsButtonTitle" = "SELECT SKILLS";
 "rsvpExistingOutreach" = "RSVP EXISTING OUTREACH";
 "cancel" = "CANCEL";
 "createAnOutreach" = "CREATE AN OUTREACH";
@@ -103,6 +102,24 @@
 "iCanHelpText2" = "Group presence offers security and effectiveness in engaging with unfamiliar situations and individuals, benefiting both volunteers and the homeless.";
 "iCanHelpText3" = "How outreach on Street Care works?";
 "iCanHelpText4" = "We post the outreach for you and other volunteers can sign up to go with you.";
+
+"addNew" = "Add New";
+"title" = "Title";
+"enterEventTitle" = "Enter Event Title";
+"location" = "Location";
+"street" = "Street";
+"state" = "State";
+"city" = "City";
+"zipcode" = "Zip Code";
+"startDate" = "Start Date";
+"startTime" = "Start Time";
+"endDate" = "End Date";
+"endTime" = "End Time";
+"helpType" = "Help Type";
+"eghelpType" = "E.g, Children Specialist Needed";
+"maximumCapacity" = "Maximum Capacity";
+"egmaximumCapacity" = "Maximum capacity of participants allowed";
+"eventDescription" = "Event Description";
 
 
 //"welcome" = "Welcome to\nStreet Care";

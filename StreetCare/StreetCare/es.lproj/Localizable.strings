@@ -55,6 +55,7 @@
 
 "visitLog" = "Registro de visitas";
 "community" = "Comunidad";
+"searchPlaceholder" = "Buscar...";
 
 "welcome" = "Bienvenidas";
 
@@ -76,6 +77,29 @@
 "iCanHelpText2" = "La presencia en grupo ofrece seguridad y eficacia para enfrentar situaciones y personas desconocidas, beneficiando tanto a los voluntarios como a las personas sin hogar.";
 "iCanHelpText3" = "¿Cómo funciona el outreach en Street Care?";
 "iCanHelpText4" = "Publicamos el outreach para ti, y otros voluntarios pueden inscribirse para acompañarte.";
+"saveEventButtonTitle" = "Guardar";
+"discardButtonTitle" = "Descartar";
+"selectSkillsButtonTitle" = "SELECCIONAR HABILIDADES";
+
+"addNew" = "Agregar Nuevo";
+"title" = "Título";
+"enterEventTitle" = "Ingrese el título del evento";
+"location" = "Ubicación";
+"street" = "Calle";
+"state" = "Estado";
+"city" = "Ciudad";
+"zipcode" = "Código Postal";
+"startDate" = "Fecha de inicio";
+"startTime" = "Hora de inicio";
+"endDate" = "Fecha de finalización";
+"endTime" = "Hora de finalización";
+"helpType" = "Tipo de ayuda";
+"eghelpType" = "Por ejemplo, Se necesita especialista en niños";
+"maximumCapacity" = "Capacidad máxima";
+"egmaximumCapacity" = "Capacidad máxima de participantes permitida";
+"eventDescription" = "Descripción del evento";
+
+
 
 
 //"helloWorld" = "¡Hola Mundo!";
