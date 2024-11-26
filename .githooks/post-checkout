@@ -1,0 +1,5 @@
+# .git/hooks/post-checkout
+#!/bin/sh
+if [ -f "Podfile" ]; then
+    pod install
+fi
