@@ -2,4 +2,5 @@
 #!/bin/sh
 if [ -f "Podfile" ]; then
     pod install
+    echo "pod install ran from .githooks"	
 fi
