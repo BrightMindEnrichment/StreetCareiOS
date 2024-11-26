@@ -121,6 +121,10 @@
 "egmaximumCapacity" = "Maximum capacity of participants allowed";
 "eventDescription" = "Event Description";
 
+"additionalNotes" = "Additional Notes";
+"blueshirt" = "E.g., Blue Shirt";
+"selecthelp" = "SELECT THE HELP THEY NEED*";
+"description" = "Description";
 
 //"welcome" = "Welcome to\nStreet Care";
 //"loginButtonTitle" = "Login";
