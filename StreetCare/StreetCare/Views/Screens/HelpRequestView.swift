@@ -85,11 +85,14 @@ struct HelpRequestCardView: View {
         VStack(alignment: .leading, spacing: 10) {
             
             HStack {
-                Text(event.status!.capitalized).font(.system(size: 13))
-                    .padding(.horizontal, 10)
-                    .padding(.vertical, 5)
-                    .background(Color.yellow)
-                    .cornerRadius(5)
+                if let status = event.status {
+                    Text(status.capitalized)
+                        .font(.system(size: 13))
+                        .padding(.horizontal, 10)
+                        .padding(.vertical, 5)
+                        .background(Color.yellow)
+                        .cornerRadius(5)
+                } 
                 
                 Spacer()
                 
