@@ -103,6 +103,7 @@
 		BEA872762A290F360053D4F4 /* ProfileDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA872752A290F360053D4F4 /* ProfileDetail.swift */; };
 		BEA872782A2910B90053D4F4 /* ProfileDetailsAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA872772A2910B90053D4F4 /* ProfileDetailsAdapter.swift */; };
 		C26F78C72CE4637500AAE187 /* OutreachFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26F78C62CE4635F00AAE187 /* OutreachFormView.swift */; };
+		C2ED16342CFA538600EB8A59 /* UpcomingEventsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2ED16332CFA536000EB8A59 /* UpcomingEventsView.swift */; };
 		E2646D162CA74A5000D8AA42 /* ICanHelpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2646D152CA74A5000D8AA42 /* ICanHelpView.swift */; };
 /* End PBXBuildFile section */
 
@@ -200,6 +201,7 @@
 		BEA872752A290F360053D4F4 /* ProfileDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileDetail.swift; sourceTree = "<group>"; };
 		BEA872772A2910B90053D4F4 /* ProfileDetailsAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileDetailsAdapter.swift; sourceTree = "<group>"; };
 		C26F78C62CE4635F00AAE187 /* OutreachFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutreachFormView.swift; sourceTree = "<group>"; };
+		C2ED16332CFA536000EB8A59 /* UpcomingEventsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpcomingEventsView.swift; sourceTree = "<group>"; };
 		E2646D152CA74A5000D8AA42 /* ICanHelpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ICanHelpView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -355,6 +357,7 @@
 				C26F78C62CE4635F00AAE187 /* OutreachFormView.swift */,
 				4CB65D9129D016AE00684BD1 /* LandingScreenView.swift */,
 				71FA51022BCEC4B300D0DA6C /* AfterOutreachView.swift */,
+				C2ED16332CFA536000EB8A59 /* UpcomingEventsView.swift */,
 				4CB65E4929DA6A1200684BD1 /* WhatToBringView.swift */,
 				71B0D5C42B9214B70061033B /* BadgesView.swift */,
 				4CB65DA029D0DEC700684BD1 /* CommunityView.swift */,
@@ -634,6 +637,7 @@
 				4CB65D9229D016AE00684BD1 /* LandingScreenView.swift in Sources */,
 				4C2F5A7829FF731A00CFD288 /* ListConnectorDecorationView.swift in Sources */,
 				4C0E4F9C29DAC977009D33C1 /* YoutubeCellView.swift in Sources */,
+				C2ED16342CFA538600EB8A59 /* UpcomingEventsView.swift in Sources */,
 				71FA51032BCEC4B300D0DA6C /* AfterOutreachView.swift in Sources */,
 				71392FAD2BAA40F900496CA5 /* GoogleUserAuthModel.swift in Sources */,
 				4CB65E6729DA91C000684BD1 /* PlaylistController.swift in Sources */,

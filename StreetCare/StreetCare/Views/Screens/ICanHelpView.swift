@@ -11,6 +11,7 @@ struct ICanHelpView: View {
     
     @Binding var isPresented: Bool
     @State private var isOutreachCreated = false
+    @State private var navigateToUpcomingEvents = false // Navigation State
     
     var body: some View {
         NavigationStack {
@@ -39,7 +40,7 @@ struct ICanHelpView: View {
                     .foregroundColor(.secondary)
                 
                 Button(action: {
-                    // Action for RSVP EXISTING OUTREACH
+                    navigateToUpcomingEvents = true
                 }) {
                     Text(NSLocalizedString("rsvpExistingOutreach", comment: ""))
                         .padding(EdgeInsets(top: 8.0, leading: 20.0, bottom: 8.0, trailing: 20.0))
@@ -47,7 +48,13 @@ struct ICanHelpView: View {
                 }
                 .background(Color("SecondaryColor"))
                 .clipShape(Capsule())
-                
+                .background(
+                    NavigationLink(
+                        destination: UpcomingEventsView(), // Navigate to the renamed view
+                        isActive: $navigateToUpcomingEvents,
+                        label: { EmptyView() }
+                    )
+                )
                 Button(action: {
                     isPresented = false
                 }) {
@@ -82,4 +89,5 @@ struct ICanHelpView: View {
 
 //#Preview {
 //    ICanHelpView(isPresented: )
-//}
+//}import SwiftUI
+
