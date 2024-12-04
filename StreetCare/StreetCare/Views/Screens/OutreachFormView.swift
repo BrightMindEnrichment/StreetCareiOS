@@ -8,7 +8,7 @@ import SwiftUI
 import Firebase
 
 struct OutreachFormView: View {
-    @Binding var isPresented: Bool // Binding to dismiss the view
+    @Binding var isPresented: Bool
     @Environment(\.dismiss) var dismiss
 
     @State private var title = ""
@@ -57,7 +57,6 @@ struct OutreachFormView: View {
             isLoading = false
             alertMessage = "Event saved successfully!"
             showAlert = true
-            isPresented = false // Close the view after saving
         }
     }
 
@@ -181,6 +180,23 @@ struct OutreachFormView: View {
                 .padding()
             }
             .padding()
+        }
+        .overlay(
+            isLoading ? ProgressView("Saving...")
+                .padding()
+                .background(Color.white.opacity(0.8))
+                .cornerRadius(10) : nil
+        )
+        .alert(isPresented: $showAlert) {
+            Alert(
+                title: Text("Message"),
+                message: Text(alertMessage),
+                dismissButton: .default(Text("OK")) {
+                    if alertMessage == "Event saved successfully!" {
+                        dismiss()
+                    }
+                }
+            )
         }
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
