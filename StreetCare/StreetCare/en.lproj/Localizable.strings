@@ -104,13 +104,13 @@
 "iCanHelpText4" = "We post the outreach for you and other volunteers can sign up to go with you.";
 
 "addNew" = "Add New";
-"title" = "Title";
+"title" = "Title*";
 "enterEventTitle" = "Enter Event Title";
-"location" = "Location";
-"street" = "Street";
-"state" = "State";
-"city" = "City";
-"zipcode" = "Zip Code";
+"location" = "Location*";
+"street" = "Street*";
+"state" = "State*";
+"city" = "City*";
+"zipcode" = "Zip Code*";
 "startDate" = "Start Date";
 "startTime" = "Start Time";
 "endDate" = "End Date";

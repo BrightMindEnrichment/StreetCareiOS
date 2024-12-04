@@ -21,7 +21,7 @@ struct AddHelpRequestForm: View {
     @State private var ishelpneeded = false
     @State private var alertMessage = ""
     @State private var showAlert = false
-    @State private var isLoading = false // Track the loading state
+    @State private var isLoading = false
 
     let skills = ["Childcare", "Counselling and Support", "Clothing", "Education", "Personal Care", "Employment and Training", "Food and Water", "Healthcare", "Chinese", "Spanish", "Language (please specify)", "Legal", "Shelter", "Transportation", "LGBTQ Support", "Technology Access", "Social Integration", "Pet Care"]
 
@@ -86,7 +86,9 @@ struct AddHelpRequestForm: View {
                     text: $additionalNotes,
                     limit: additionalnotesLimit
                 )
-
+                
+                LocationView()
+                
                 LocationFields(
                     street: $street,
                     state: $state,
@@ -165,7 +167,7 @@ struct FormButtons: View {
         VStack(spacing: 16) {
             // Save Button
             HStack {
-                Spacer() // Push content to center
+                Spacer() 
                 NavLinkButton(title: NSLocalizedString("saveEventButtonTitle", comment: ""), width: 300, secondaryButton: false)
                     .padding()
                     .background(Color.clear)
@@ -189,43 +191,63 @@ struct FormButtons: View {
                             }
                         )
                     }
-                Spacer() // Push content to center
+                Spacer()
             }
 
-            // Discard Button
+            
             HStack {
-                Spacer() // Push content to center
+                Spacer()
                 NavLinkButton(title: NSLocalizedString("discardButtonTitle", comment: ""), width: 300, secondaryButton: true)
                     .padding()
                     .background(Color.clear)
                     .onTapGesture {
                         discardAction()
                     }
-                Spacer() // Push content to center
+                Spacer()
             }
         }
-        .frame(maxWidth: .infinity) // Ensure the VStack takes full width for proper centering
+        .frame(maxWidth: .infinity)
     }
 }
 
 struct FormHeaderView: View {
     var body: some View {
-        VStack(alignment: .leading, spacing: 20) {
+        VStack(alignment: .leading, spacing: 24) {
             Text("🙌 Need extra help?\nLet us spread the word!")
-                .font(.largeTitle)
+                .font(.title)
                 .fontWeight(.bold)
                 .multilineTextAlignment(.leading)
+                .frame(maxWidth: .infinity, alignment: .center)
+            Spacer()
 
             Text("Publish a request to Community Hub")
-                .font(.title2)
+                .font(.title3)
                 .fontWeight(.semibold)
+                
 
             Text("If this homeless person requires further assistance, please provide additional details so we can share with the community and rally support to help them.")
                 .font(.subheadline)
                 .foregroundColor(.gray)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
-        .padding(.top, 0) // Remove or reduce top padding
+        .padding(.top, -32)
+    }
+}
+
+
+struct LocationView: View {
+    var body: some View {
+        VStack(alignment: .leading, spacing: 16){
+            Text("Help other volunteers to find them")
+                .font(.title3)
+                .fontWeight(.semibold)
+                
+            
+            Text("Please provide as many details as you can to help us locate them")
+                .font(.subheadline)
+                .foregroundColor(.gray)
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
     }
 }
 
@@ -246,14 +268,13 @@ struct TextFieldWithLimit: View {
                 set: { text = String($0.prefix(limit)) }
             ))
             .frame(height:50)
-            .textFieldStyle(PlainTextFieldStyle()) // Use PlainTextFieldStyle to customize the border
-            .padding() // Padding inside the TextField for spacing
-            // Apply the border with corner radius and gray color without adding padding
-            .background(Color.white) // White background
-            .cornerRadius(5) // Rounded corners
+            .textFieldStyle(PlainTextFieldStyle())
+            .padding()
+            .background(Color.white)
+            .cornerRadius(5)
             .overlay(
-                RoundedRectangle(cornerRadius: 5) // Rounded corners for the border
-                    .stroke(Color.gray, lineWidth: 0.5) // Gray border with width of 0.5
+                RoundedRectangle(cornerRadius: 5)
+                    .stroke(Color.gray, lineWidth: 0.5)
             )
             
             
@@ -279,19 +300,19 @@ struct TextEditorWithLimit: View {
         VStack(alignment: .leading) {
             Text(title).font(.headline)
             
-            // Apply rounded border style similar to TextField
+            
             TextEditor(text: Binding(
                 get: { text },
                 set: { text = String($0.prefix(limit)) }
             ))
-            .padding(8) // Padding inside the TextEditor for spacing
-            .background(Color.white) // White background
-            .cornerRadius(5) // Rounded corners
+            .padding(8)
+            .background(Color.white)
+            .cornerRadius(5)
             .overlay(
-                RoundedRectangle(cornerRadius: 5) // Rounded corners for the border
-                    .stroke(Color.gray, lineWidth: 0.5) // Gray border with width of 0.5
+                RoundedRectangle(cornerRadius: 5)
+                    .stroke(Color.gray, lineWidth: 0.5)
             )
-            .frame(height: 150) // Set the height of the TextEditor
+            .frame(height: 150)
 
             HStack {
                 Spacer()
@@ -357,24 +378,24 @@ struct HelpSelectionSection: View {
     var skills: [String]
 
     var body: some View {
-        VStack(alignment: .center, spacing: 10) { // Center alignment for all content
-            // Center-align the "Select Help" button
+        VStack(alignment: .center, spacing: 10) {
+            
             HStack {
-                Spacer() // Push content to the center
+                Spacer()
                 NavLinkButton(title: NSLocalizedString("selecthelp", comment: ""), width: 300, secondaryButton: false)
                     .padding()
                     .background(Color.clear)
                     .onTapGesture {
                         ishelpneeded.toggle()
                     }
-                Spacer() // Push content to the center
+                Spacer()
             }
 
-            // Display selected skills
+            
             if !selectedhelp.isEmpty {
                 Text("Selected Help:")
                     .font(.headline)
-                    .multilineTextAlignment(.center) // Center-align the text
+                    .multilineTextAlignment(.center)
                     .padding(.top)
 
                 ScrollView(.horizontal, showsIndicators: false) {
@@ -391,7 +412,7 @@ struct HelpSelectionSection: View {
                 .padding(.vertical)
             }
         }
-        .frame(maxWidth: .infinity) // Ensure VStack takes full width for proper centering
+        .frame(maxWidth: .infinity)
     }
 }
 
