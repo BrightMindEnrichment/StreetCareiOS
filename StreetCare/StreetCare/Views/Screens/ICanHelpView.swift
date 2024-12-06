@@ -38,25 +38,15 @@ struct ICanHelpView: View {
                     .font(.subheadline)
                     .foregroundColor(.secondary)
                 
-                Button(action: {
-                    // Action for RSVP EXISTING OUTREACH
-                }) {
-                    Text(NSLocalizedString("rsvpExistingOutreach", comment: ""))
-                        .padding(EdgeInsets(top: 8.0, leading: 20.0, bottom: 8.0, trailing: 20.0))
-                        .foregroundColor(Color("PrimaryColor"))
-                }
-                .background(Color("SecondaryColor"))
-                .clipShape(Capsule())
-                
-                Button(action: {
-                    isPresented = false // Close this view
-                }) {
-                    Text(NSLocalizedString("cancel", comment: ""))
-                        .padding(EdgeInsets(top: 8.0, leading: 20.0, bottom: 8.0, trailing: 20.0))
-                        .foregroundColor(Color("PrimaryColor"))
-                }
-                .background(Color("SecondaryColor"))
-                .clipShape(Capsule())
+//                Button(action: {
+//                    // Action for RSVP EXISTING OUTREACH
+//                }) {
+//                    Text(NSLocalizedString("rsvpExistingOutreach", comment: ""))
+//                        .padding(EdgeInsets(top: 8.0, leading: 20.0, bottom: 8.0, trailing: 20.0))
+//                        .foregroundColor(Color("PrimaryColor"))
+//                }
+//                .background(Color("SecondaryColor"))
+//                .clipShape(Capsule())
                 
                 Button(action: {
                     isOutreachCreated = true // Open OutreachFormView
@@ -72,6 +62,17 @@ struct ICanHelpView: View {
                         OutreachFormView(isPresented: $isPresented) // Pass binding
                     }
                 }
+                
+                Button(action: {
+                    isPresented = false // Close this view
+                }) {
+                    Text(NSLocalizedString("cancel", comment: ""))
+                        .padding(EdgeInsets(top: 8.0, leading: 20.0, bottom: 8.0, trailing: 20.0))
+                        .foregroundColor(Color("PrimaryColor"))
+                }
+                .background(Color("SecondaryColor"))
+                .clipShape(Capsule())
+                
             }
             .padding()
             .frame(maxWidth: 300)
