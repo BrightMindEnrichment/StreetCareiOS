@@ -127,7 +127,7 @@ struct OutreachFormView: View {
                     .keyboardType(.numberPad)
 
                 // Event Description
-                Text(NSLocalizedString("eventDescription", comment: ""))
+                /*Text(NSLocalizedString("eventDescription", comment: ""))
                     .font(.headline)
 
                 TextEditor(text: $eventDescription)
@@ -145,7 +145,13 @@ struct OutreachFormView: View {
                     Text("\(eventDescription.count)/\(descriptionLimit)")
                         .font(.caption)
                         .foregroundColor(.gray)
-                }
+                }*/
+                TextFieldWithLimit(
+                    title: NSLocalizedString("eventDescription", comment: ""),
+                    placeholder: NSLocalizedString("enterEventDescription", comment: ""),
+                    text: $eventDescription,
+                    limit: descriptionLimit
+                )
 
                 // Buttons Section
                 VStack(spacing: 20) {
@@ -189,11 +195,11 @@ struct OutreachFormView: View {
         )
         .alert(isPresented: $showAlert) {
             Alert(
-                title: Text("Message"),
+                title: Text("New Outreach Event Created"),
                 message: Text(alertMessage),
                 dismissButton: .default(Text("OK")) {
                     if alertMessage == "Event saved successfully!" {
-                        dismiss()
+                        isPresented = false
                     }
                 }
             )
@@ -269,6 +275,84 @@ struct SkillSelectionView: View {
                     }
             }
             .padding()
+        }
+    }
+}
+
+/*struct TextEditorWithLimit: View {
+    var title: String
+    var placeholder: String
+    @Binding var text: String
+    var limit: Int
+
+    var body: some View {
+        VStack(alignment: .leading) {
+            Text(title).font(.headline)
+            
+            // ZStack to overlay placeholder and TextEditor
+            ZStack(alignment: .topLeading) {
+                if text.isEmpty {
+                    Text(placeholder)
+                        .foregroundColor(.gray)
+                        .padding(.horizontal, 8)
+                        .padding(.vertical, 12)
+                }
+
+                TextEditor(placeholder, text: Binding(
+                    get: { text },
+                    set: { text = String($0.prefix(limit)) }
+                ))
+                .padding(4)
+                .background(Color.white)
+                .cornerRadius(5)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 5)
+                        .stroke(Color.gray, lineWidth: 0.5)
+                )
+            }
+            .frame(height: 150)
+
+            HStack {
+                Spacer()
+                Text("\(text.count)/\(limit)")
+                    .font(.caption)
+                    .foregroundColor(.gray)
+            }
+        }
+    }
+}*/
+struct TextFieldWithLimit: View {
+    var title: String
+    var placeholder: String
+    @Binding var text: String
+    var limit: Int
+
+    var body: some View {
+        VStack(alignment: .leading) {
+            Text(title).font(.headline)
+            
+            // TextField with border
+            TextField(placeholder, text: Binding(
+                get: { text },
+                set: { text = String($0.prefix(limit)) }
+            ))
+            .frame(height:150, alignment: .top)
+            .textFieldStyle(PlainTextFieldStyle())
+            .padding()
+            .background(Color.white)
+            .cornerRadius(5)
+            .overlay(
+                RoundedRectangle(cornerRadius: 5)
+                    .stroke(Color.gray, lineWidth: 0.5)
+            )
+            
+            
+            HStack {
+                Spacer()
+                Text("\(text.count)/\(limit)")
+                    .font(.caption)
+                    .foregroundColor(.gray)
+            }
         }
     }
 }
