@@ -125,7 +125,7 @@
 		191C2C32128C317154432453BD697303 /* SecureField.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SecureField.swift; path = Sources/ViewTypes/SecureField.swift; sourceTree = "<group>"; };
 		1975DE76F6E7F7552FB2F371C815157D /* ListWithSidebarStyle.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ListWithSidebarStyle.swift; path = Sources/ViewTypes/ListWithSidebarStyle.swift; sourceTree = "<group>"; };
 		1B6DDC9B5CDB5BCEDF7114E56C8F7003 /* Table.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Table.swift; path = Sources/ViewTypes/Table.swift; sourceTree = "<group>"; };
-		1C8031220F7ECC04F0D76F050E0655F4 /* SwiftUIIntrospect.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = SwiftUIIntrospect.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		1C8031220F7ECC04F0D76F050E0655F4 /* SwiftUIIntrospect */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = SwiftUIIntrospect; path = SwiftUIIntrospect.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1E3DD0532212CDE10FFAA0E94560B94B /* ProgressViewWithCircularStyle.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ProgressViewWithCircularStyle.swift; path = Sources/ViewTypes/ProgressViewWithCircularStyle.swift; sourceTree = "<group>"; };
 		1F8F637997D6C1CF0F5D996A876ED7B6 /* PlatformViewVersion.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PlatformViewVersion.swift; path = Sources/PlatformViewVersion.swift; sourceTree = "<group>"; };
 		212074A107718B7D27C6B557C8DF77D4 /* ListWithInsetGroupedStyle.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ListWithInsetGroupedStyle.swift; path = Sources/ViewTypes/ListWithInsetGroupedStyle.swift; sourceTree = "<group>"; };
@@ -145,7 +145,7 @@
 		3FC2554343F82544BAEE71C7B6AA9B16 /* PlatformView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PlatformView.swift; path = Sources/PlatformView.swift; sourceTree = "<group>"; };
 		40238156A1DE88FC7F9FB5026D30F074 /* TextEditor.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TextEditor.swift; path = Sources/ViewTypes/TextEditor.swift; sourceTree = "<group>"; };
 		417DBC69925967BB2674B5CCA713541C /* Form.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Form.swift; path = Sources/ViewTypes/Form.swift; sourceTree = "<group>"; };
-		46DD59DE759324C7920A8447CD4B0D72 /* ExytePopupView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = ExytePopupView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		46DD59DE759324C7920A8447CD4B0D72 /* ExytePopupView */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = ExytePopupView; path = ExytePopupView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		486281A5F3F837F7EEE6F97019B32C90 /* View.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = View.swift; path = Sources/ViewTypes/View.swift; sourceTree = "<group>"; };
 		4B52ED036117EEA16EEB0CA2AD0EB216 /* Weak.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Weak.swift; path = Sources/Weak.swift; sourceTree = "<group>"; };
 		4DFEB57FD729064717BE0270B8099A00 /* ListWithBorderedStyle.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ListWithBorderedStyle.swift; path = Sources/ViewTypes/ListWithBorderedStyle.swift; sourceTree = "<group>"; };
@@ -170,7 +170,7 @@
 		94E002CEB8DE71A8C6F1963F9F0BA879 /* Introspect.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Introspect.swift; path = Sources/Introspect.swift; sourceTree = "<group>"; };
 		972A25073BBE51C7C8611EAEA04DB1A2 /* NavigationSplitView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NavigationSplitView.swift; path = Sources/ViewTypes/NavigationSplitView.swift; sourceTree = "<group>"; };
 		98F7D54E83003A5B4C49615210C250C9 /* ScrollView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ScrollView.swift; path = Sources/ViewTypes/ScrollView.swift; sourceTree = "<group>"; };
-		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		A0B70ED16F32C7F8D60F7A6249A9F376 /* SwiftUIIntrospect-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SwiftUIIntrospect-umbrella.h"; sourceTree = "<group>"; };
 		A31AC51E1A380753233FF6C2DB422473 /* DatePickerWithCompactStyle.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DatePickerWithCompactStyle.swift; path = Sources/ViewTypes/DatePickerWithCompactStyle.swift; sourceTree = "<group>"; };
 		A95BE003C6032394F260D0C6DBB7103C /* ExytePopupView-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "ExytePopupView-Info.plist"; sourceTree = "<group>"; };
@@ -301,6 +301,7 @@
 				895FD5CEDD0EB4AF9D37283C7342A333 /* Window.swift */,
 				E342113C7BA545CA72866E6332DE284E /* Support Files */,
 			);
+			name = SwiftUIIntrospect;
 			path = SwiftUIIntrospect;
 			sourceTree = "<group>";
 		};
@@ -340,15 +341,16 @@
 				F6512BCD0DF630A1E30D0557391371A7 /* Utils.swift */,
 				BED5EEF8CBD0D02665DF187D3FF75AA1 /* Support Files */,
 			);
+			name = ExytePopupView;
 			path = ExytePopupView;
 			sourceTree = "<group>";
 		};
 		BBC779BF31A07D6FFFA78C418A7010FE /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				46DD59DE759324C7920A8447CD4B0D72 /* ExytePopupView.framework */,
+				46DD59DE759324C7920A8447CD4B0D72 /* ExytePopupView */,
 				87169C5EC0CF6B40519E17AD43862A7A /* Pods-StreetCare */,
-				1C8031220F7ECC04F0D76F050E0655F4 /* SwiftUIIntrospect.framework */,
+				1C8031220F7ECC04F0D76F050E0655F4 /* SwiftUIIntrospect */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -466,7 +468,7 @@
 			);
 			name = ExytePopupView;
 			productName = ExytePopupView;
-			productReference = 46DD59DE759324C7920A8447CD4B0D72 /* ExytePopupView.framework */;
+			productReference = 46DD59DE759324C7920A8447CD4B0D72 /* ExytePopupView */;
 			productType = "com.apple.product-type.framework";
 		};
 		F198CA05A691D631E99E0D5AD57F3790 /* Pods-StreetCare */ = {
@@ -504,7 +506,7 @@
 			);
 			name = SwiftUIIntrospect;
 			productName = SwiftUIIntrospect;
-			productReference = 1C8031220F7ECC04F0D76F050E0655F4 /* SwiftUIIntrospect.framework */;
+			productReference = 1C8031220F7ECC04F0D76F050E0655F4 /* SwiftUIIntrospect */;
 			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
@@ -525,6 +527,8 @@
 				en,
 			);
 			mainGroup = CF1408CF629C7361332E53B88F7BD30C;
+			minimizedProjectReferenceProxies = 0;
+			preferredProjectObjectVersion = 77;
 			productRefGroup = BBC779BF31A07D6FFFA78C418A7010FE /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
