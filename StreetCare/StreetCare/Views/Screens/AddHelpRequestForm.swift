@@ -230,7 +230,7 @@ struct FormHeaderView: View {
                 .foregroundColor(.gray)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
-        .padding(.top, -32)
+        .padding(.top, 12)
     }
 }
 
