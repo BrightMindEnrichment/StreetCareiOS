@@ -26,6 +26,7 @@ struct OutreachFormView: View {
     @State private var selectedSkills: [String] = []
     @State private var isSkillSheetPresented = false
     @State private var alertMessage = ""
+    @State private var alertTitle = ""
     @State private var showAlert = false
     @State private var isLoading = false
 
@@ -47,6 +48,7 @@ struct OutreachFormView: View {
     func saveToFirestore() {
         guard allFieldsFilled else {
             alertMessage = "Please fill in all required fields."
+            alertTitle = "New Outreach Event"
             showAlert = true
             return
         }
@@ -55,6 +57,7 @@ struct OutreachFormView: View {
         // Simulate save action
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             isLoading = false
+            alertTitle = "New Outreach Event Created"
             alertMessage = "Event saved successfully!"
             showAlert = true
         }
@@ -126,26 +129,6 @@ struct OutreachFormView: View {
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .keyboardType(.numberPad)
 
-                // Event Description
-                /*Text(NSLocalizedString("eventDescription", comment: ""))
-                    .font(.headline)
-
-                TextEditor(text: $eventDescription)
-                    .frame(height: 200)
-                    .border(Color.gray, width: 0.5)
-                    .cornerRadius(5)
-                    .onChange(of: eventDescription) { newValue in
-                        if newValue.count > descriptionLimit {
-                            eventDescription = String(newValue.prefix(descriptionLimit))
-                        }
-                    }
-
-                HStack {
-                    Spacer()
-                    Text("\(eventDescription.count)/\(descriptionLimit)")
-                        .font(.caption)
-                        .foregroundColor(.gray)
-                }*/
                 TextFieldWithLimit(
                     title: NSLocalizedString("eventDescription", comment: ""),
                     placeholder: NSLocalizedString("enterEventDescription", comment: ""),
@@ -195,7 +178,7 @@ struct OutreachFormView: View {
         )
         .alert(isPresented: $showAlert) {
             Alert(
-                title: Text("New Outreach Event Created"),
+                title: Text(alertTitle),
                 message: Text(alertMessage),
                 dismissButton: .default(Text("OK")) {
                     if alertMessage == "Event saved successfully!" {
@@ -279,48 +262,6 @@ struct SkillSelectionView: View {
     }
 }
 
-/*struct TextEditorWithLimit: View {
-    var title: String
-    var placeholder: String
-    @Binding var text: String
-    var limit: Int
-
-    var body: some View {
-        VStack(alignment: .leading) {
-            Text(title).font(.headline)
-            
-            // ZStack to overlay placeholder and TextEditor
-            ZStack(alignment: .topLeading) {
-                if text.isEmpty {
-                    Text(placeholder)
-                        .foregroundColor(.gray)
-                        .padding(.horizontal, 8)
-                        .padding(.vertical, 12)
-                }
-
-                TextEditor(placeholder, text: Binding(
-                    get: { text },
-                    set: { text = String($0.prefix(limit)) }
-                ))
-                .padding(4)
-                .background(Color.white)
-                .cornerRadius(5)
-                .overlay(
-                    RoundedRectangle(cornerRadius: 5)
-                        .stroke(Color.gray, lineWidth: 0.5)
-                )
-            }
-            .frame(height: 150)
-
-            HStack {
-                Spacer()
-                Text("\(text.count)/\(limit)")
-                    .font(.caption)
-                    .foregroundColor(.gray)
-            }
-        }
-    }
-}*/
 struct TextFieldWithLimit: View {
     var title: String
     var placeholder: String
