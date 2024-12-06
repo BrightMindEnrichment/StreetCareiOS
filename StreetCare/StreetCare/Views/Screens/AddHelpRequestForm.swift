@@ -267,7 +267,7 @@ private struct TextFieldWithLimit: View {
                 get: { text },
                 set: { text = String($0.prefix(limit)) }
             ))
-            .frame(height:50)
+            .frame(height:20)
             .textFieldStyle(PlainTextFieldStyle())
             .padding()
             .background(Color.white)
