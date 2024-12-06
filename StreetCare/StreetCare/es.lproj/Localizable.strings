@@ -98,7 +98,7 @@
 "maximumCapacity" = "Capacidad máxima";
 "egmaximumCapacity" = "Capacidad máxima de participantes permitida";
 "eventDescription" = "Descripción del evento";
-
+"enterEventDescription" = "Ingrese la descripción del evento";
 
 
 

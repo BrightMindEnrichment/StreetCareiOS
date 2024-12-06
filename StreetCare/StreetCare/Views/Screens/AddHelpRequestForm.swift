@@ -252,7 +252,7 @@ struct LocationView: View {
 }
 
 /// Text Field with Character Limit
-struct TextFieldWithLimit: View {
+private struct TextFieldWithLimit: View {
     var title: String
     var placeholder: String
     @Binding var text: String
@@ -267,7 +267,7 @@ struct TextFieldWithLimit: View {
                 get: { text },
                 set: { text = String($0.prefix(limit)) }
             ))
-            .frame(height:50)
+            .frame(height:20)
             .textFieldStyle(PlainTextFieldStyle())
             .padding()
             .background(Color.white)
@@ -337,23 +337,23 @@ struct LocationFields: View {
         VStack(alignment: .leading) {
             Text(NSLocalizedString("location", comment: ""))
                 .font(.headline)
-                .padding(.vertical)
+                .padding(.vertical, 4)
 
             TextField(NSLocalizedString("street", comment: ""), text: $street)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
-                .padding(.vertical)
+                .padding(.vertical, 4)
 
             TextField(NSLocalizedString("state", comment: ""), text: $state)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
-                .padding(.vertical)
+                .padding(.vertical, 4)
 
             TextField(NSLocalizedString("city", comment: ""), text: $city)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
-                .padding(.vertical)
+                .padding(.vertical, 4)
 
             TextField(NSLocalizedString("zipcode", comment: ""), text: $zipcode)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
-                .padding(.vertical)
+                .padding(.vertical, 4)
         }
     }
 }
