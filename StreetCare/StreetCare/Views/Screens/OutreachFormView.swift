@@ -262,7 +262,7 @@ struct SkillSelectionView: View {
     }
 }
 
-struct TextFieldWithLimit: View {
+private struct TextFieldWithLimit: View {
     var title: String
     var placeholder: String
     @Binding var text: String

@@ -120,15 +120,12 @@
 "maximumCapacity" = "Maximum Capacity";
 "egmaximumCapacity" = "Maximum capacity of participants allowed";
 "eventDescription" = "Event Description";
-<<<<<<< HEAD
 "enterEventDescription" = "Enter Event Description";
-=======
-
 "additionalNotes" = "Additional Notes";
 "blueshirt" = "E.g., Blue Shirt";
 "selecthelp" = "SELECT THE HELP THEY NEED*";
 "description" = "Description";
->>>>>>> main
+
 
 //"welcome" = "Welcome to\nStreet Care";
 //"loginButtonTitle" = "Login";
