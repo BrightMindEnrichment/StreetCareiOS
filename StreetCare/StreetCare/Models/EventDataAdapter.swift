@@ -261,7 +261,7 @@ class EventDataAdapter {
         let settings = FirestoreSettings()
         Firestore.firestore().settings = settings
         let db = Firestore.firestore()
-            let _ = db.collection("helpRequests").getDocuments { querySnapshot, error in
+        let _ = db.collection("helpRequests").order(by: "createdAt") .getDocuments { querySnapshot, error in
 
             // clear out all the old data
             self.helpRequests.removeAll()

@@ -31,7 +31,8 @@ struct CommunityEventView: View {
                 TextField(NSLocalizedString("searchPlaceholder", comment: "Search bar placeholder"), text: $viewModel.searchText)
                     .frame(height: 50.0)
                 Menu {
-                    ForEach(FilterType.allCases, id: \.self) { filter in
+                    // Dynamically show filters based on eventType
+                    ForEach(availableFilterOptions(), id: \.self) { filter in
                         Button(action: {
                             selectedFilter = filter
                             applyFilter(filterType: selectedFilter)
@@ -143,13 +144,25 @@ struct CommunityEventView: View {
         }
     }
     
-    // Method to apply the filter based on user selection
     private func applyFilter(filterType: FilterType) {
         selectedFilter = filterType
-        viewModel.filterByDate(filterType: selectedFilter)
+        // Apply the filter based on event type (future or past)
+        viewModel.filterByDate(filterType: selectedFilter, eventType: eventType)  // Make sure `eventType` is passed here
         viewModel.objectWillChange.send()
     }
+
+    // Method to return filter options dynamically based on eventType
+    private func availableFilterOptions() -> [FilterType] {
+        if eventType == .past {
+            return [.last7Days, .last30Days, .last60Days, .last90Days, .otherPast, .reset]
+        } else if eventType == .future {
+            return [.next7Days, .next30Days, .next60Days, .next90Days, .otherUpcoming, .reset]
+        } else {
+            return []  // If eventType is "helping hands" or something else, we could define another filter set
+        }
+    }
 }
+
 
 extension CommunityEventView: EventPopupViewDelegate {
     func close() {
@@ -191,4 +204,3 @@ struct SectionHeaderView: View {
         .padding(EdgeInsets(top: 0.0, leading: 0.0, bottom: 5.0, trailing: 0.0))
     }
 }
-

@@ -10,7 +10,7 @@ import SwiftUI
 import FirebaseAuth
 
 struct HelpRequestView: View {
-    
+    @Environment(\.presentationMode) var presentationMode // Add this line
     @State var user: User?
     
     let adapter = EventDataAdapter()
@@ -20,13 +20,13 @@ struct HelpRequestView: View {
         
         VStack {
             HStack {
-                    Image(systemName: "magnifyingglass").padding(.horizontal, 10)
-                              .foregroundColor(.black)
-                    TextField("Search...", text: $viewModel.searchText).frame(height: 50.0)
-                }.overlay(
-                        RoundedRectangle(cornerRadius: 15.0)
-                            .stroke(Color.black, lineWidth: 1))
-                .padding()
+                Image(systemName: "magnifyingglass").padding(.horizontal, 10)
+                    .foregroundColor(.black)
+                TextField("Search...", text: $viewModel.searchText).frame(height: 50.0)
+            }.overlay(
+                RoundedRectangle(cornerRadius: 15.0)
+                    .stroke(Color.black, lineWidth: 1))
+            .padding()
             if viewModel.filteredItems.isEmpty{
                 Text(NSLocalizedString("noHelpingRequestsAvailable", comment: "")).fontWeight(.bold).foregroundColor(Color("TextColor"))
             }
@@ -36,18 +36,18 @@ struct HelpRequestView: View {
                 }else{
                     List {
                         ForEach(0..<viewModel.filteredItems.count, id: \.self) { index in
-                             let event = viewModel.filteredItems[index]
-                                HStack{
-                                    HelpRequestCardView(event: event)
-                                }
+                            let event = viewModel.filteredItems[index]
+                            HStack{
+                                HelpRequestCardView(event: event)
+                            }
                             
                         }.listRowSeparatorTint(.clear, edges: .all)
                             .listSectionSeparatorTint(.clear, edges: .all)
                     }.listStyle(PlainListStyle())
                         .navigationTitle(NSLocalizedString("helpRequests", comment: ""))
-                    .scrollContentBackground(.hidden)
-                    .background(Color.clear)
-
+                        .scrollContentBackground(.hidden)
+                        .background(Color.clear)
+                    
                 }
             }  else {
                 Image("CommunityOfThree").padding()
@@ -61,9 +61,16 @@ struct HelpRequestView: View {
                 adapter.getHelpRequest()
             }
         }
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                NavigationLink(destination: AddHelpRequestForm()) {
+                    Image(systemName: "plus")
+                        .foregroundColor(Color("SecondaryColor"))
+                }
+            }
+        }
     }
 }
-
 
 
 extension HelpRequestView: EventDataAdapterProtocol {
@@ -85,11 +92,18 @@ struct HelpRequestCardView: View {
         VStack(alignment: .leading, spacing: 10) {
             
             HStack {
-                Text(event.status!.capitalized).font(.system(size: 13))
-                    .padding(.horizontal, 10)
-                    .padding(.vertical, 5)
-                    .background(Color.yellow)
-                    .cornerRadius(5)
+                if let status = event.status {
+                    Text(status.capitalized)
+                        .font(.system(size: 13))
+                        .padding(.horizontal, 10)
+                        .padding(.vertical, 5)
+                        .background(Color.yellow)
+                        .cornerRadius(5)
+                } 
+                
+                Spacer()
+                
+                Image("blueCheckMark")
             }
             
             

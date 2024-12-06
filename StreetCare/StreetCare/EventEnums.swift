@@ -21,4 +21,9 @@ enum FilterType: String, CaseIterable {
     case next90Days = "Next 90 Days"
     case otherUpcoming = "Other Upcoming Events"
     case reset = "Reset"
+    case last7Days = "Last 7 Days"  // For past events
+    case last30Days = "Last 30 Days" // For past events
+    case last60Days = "Last 60 Days" // For past events
+    case last90Days = "Last 90 Days" // For past events
+    case otherPast = "Other Past Events" // For past events
 }

@@ -103,6 +103,7 @@
 		BEA872762A290F360053D4F4 /* ProfileDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA872752A290F360053D4F4 /* ProfileDetail.swift */; };
 		BEA872782A2910B90053D4F4 /* ProfileDetailsAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA872772A2910B90053D4F4 /* ProfileDetailsAdapter.swift */; };
 		C26F78C72CE4637500AAE187 /* OutreachFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26F78C62CE4635F00AAE187 /* OutreachFormView.swift */; };
+		C2CCCA6A2CF00CEB001C9BE0 /* AddHelpRequestForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2CCCA692CF00CEB001C9BE0 /* AddHelpRequestForm.swift */; };
 		E2646D162CA74A5000D8AA42 /* ICanHelpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2646D152CA74A5000D8AA42 /* ICanHelpView.swift */; };
 /* End PBXBuildFile section */
 
@@ -200,6 +201,8 @@
 		BEA872752A290F360053D4F4 /* ProfileDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileDetail.swift; sourceTree = "<group>"; };
 		BEA872772A2910B90053D4F4 /* ProfileDetailsAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileDetailsAdapter.swift; sourceTree = "<group>"; };
 		C26F78C62CE4635F00AAE187 /* OutreachFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutreachFormView.swift; sourceTree = "<group>"; };
+		C2CCCA682CF00CC2001C9BE0 /* Untitled.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Untitled.swift; sourceTree = "<group>"; };
+		C2CCCA692CF00CEB001C9BE0 /* AddHelpRequestForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddHelpRequestForm.swift; sourceTree = "<group>"; };
 		E2646D152CA74A5000D8AA42 /* ICanHelpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ICanHelpView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -362,6 +365,7 @@
 				1F96F05A2C236AD3009E3A49 /* HelpRequestView.swift */,
 				E2646D152CA74A5000D8AA42 /* ICanHelpView.swift */,
 				4CB65E5329DA916600684BD1 /* VideoListView.swift */,
+				C2CCCA692CF00CEB001C9BE0 /* AddHelpRequestForm.swift */,
 				4C0E4FF029DDF726009D33C1 /* DonateView.swift */,
 				4C85F0E82A089F9600FFEDC8 /* PlaylistsView.swift */,
 				4C85F0EA2A08A4E800FFEDC8 /* StartNowView.swift */,
@@ -430,6 +434,7 @@
 			children = (
 				2CBA18332B467FF476F7CBCC /* Pods-StreetCare.debug.xcconfig */,
 				1784B66B50CD8167A950C87D /* Pods-StreetCare.release.xcconfig */,
+				C2CCCA682CF00CC2001C9BE0 /* Untitled.swift */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -584,6 +589,7 @@
 				BE9D1DD72A37933500072835 /* LocationManager.swift in Sources */,
 				4CB7D8C529F63AEC0002495E /* InputTileRate.swift in Sources */,
 				4CB65E5029DA6FE900684BD1 /* LinkData.swift in Sources */,
+				C2CCCA6A2CF00CEB001C9BE0 /* AddHelpRequestForm.swift in Sources */,
 				C26F78C72CE4637500AAE187 /* OutreachFormView.swift in Sources */,
 				4C2F5A7229FF1D4500CFD288 /* VisitLogDataAdapter.swift in Sources */,
 				4CB65E6529DA91C000684BD1 /* InformationCategoryController.swift in Sources */,
