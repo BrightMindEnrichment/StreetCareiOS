@@ -98,6 +98,10 @@ struct CommunityView: View {
                                 ZStack {
                                     GoogleMapView(viewModel: viewModel)
                                         .edgesIgnoringSafeArea(.all)
+                                        .task {
+                                            print("GoogleMapView appeared, calling fetchMarkers()")
+                                            await viewModel.fetchMarkers()
+                                        }
                                     
                                     if viewModel.isLoading {
                                         ProgressView()
@@ -105,9 +109,7 @@ struct CommunityView: View {
                                             .progressViewStyle(CircularProgressViewStyle(tint: .blue))
                                     }
                                 }
-                                .onAppear {
-                                    viewModel.fetchMarkers()
-                                }
+                                
                                 .frame(height: 300)
                                 
                                 //                            Image("Map").resizable().aspectRatio(contentMode: .fit).frame(width: (UIScreen.main.bounds.width - 20),height: (UIScreen.main.bounds.width - 0)).padding(EdgeInsets(top: -50, leading: 0.0, bottom: 0.0, trailing: 0.0))
