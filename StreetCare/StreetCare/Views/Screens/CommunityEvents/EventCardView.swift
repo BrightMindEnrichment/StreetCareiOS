@@ -23,9 +23,18 @@ struct EventCardView: View {
             
             HStack {
                 Image(systemName: "mappin.and.ellipse")
-                Text(event.event.location!)
+                //Text(event.event.location!)
+                Text(event.event.location ?? "Location not available")
                     .font(.system(size: 13))
             }
+            
+            HStack {
+                            Image(systemName: "mappin.and.ellipse")
+                                .foregroundColor(.secondary)
+                            Text(event.event.location ?? "Location not available")
+                                .font(.system(size: 13))
+                                .foregroundColor(.secondary)
+                        }
             
             HStack {
                 Image(systemName: "clock")

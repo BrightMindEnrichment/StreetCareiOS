@@ -11,6 +11,8 @@ struct ICanHelpView: View {
     
     @Binding var isPresented: Bool // Binding to control dismissal of this view
     @State private var isOutreachCreated = false
+    @State private var isSupportRequestViewPresented = false // State to present SupportRequestView
+    @State private var helpRequests: [HelpRequest] = []
     
     var body: some View {
         NavigationStack {
@@ -38,8 +40,8 @@ struct ICanHelpView: View {
                     .font(.subheadline)
                     .foregroundColor(.secondary)
                 
-                Button(action: {
-                    // Action for RSVP EXISTING OUTREACH
+                /*Button(action: {
+                    isSupportRequestViewPresented = true // Navigate to SupportRequestView
                 }) {
                     Text(NSLocalizedString("rsvpExistingOutreach", comment: ""))
                         .padding(EdgeInsets(top: 8.0, leading: 20.0, bottom: 8.0, trailing: 20.0))
@@ -47,7 +49,21 @@ struct ICanHelpView: View {
                 }
                 .background(Color("SecondaryColor"))
                 .clipShape(Capsule())
-                
+                .sheet(isPresented: $isSupportRequestViewPresented) {
+                    NavigationStack {
+                        EventListView()
+                    }
+                    
+                }*/
+                // NavigationLink for AddHelpRequestForm
+                NavigationLink(destination: EventListView()) {
+                                Text(NSLocalizedString("rsvpExistingOutreach", comment: ""))
+                                    .padding(EdgeInsets(top: 8.0, leading: 20.0, bottom: 8.0, trailing: 20.0))
+                                    .foregroundColor(Color("PrimaryColor"))
+                            }
+                            .background(Color("SecondaryColor"))
+                            .clipShape(Capsule())
+
                 Button(action: {
                     isPresented = false // Close this view
                 }) {
@@ -81,7 +97,6 @@ struct ICanHelpView: View {
         }
     }
 }
-
 
 //#Preview {
 //    ICanHelpView(isPresented: )

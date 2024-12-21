@@ -11,6 +11,9 @@ import FirebaseAuth
 import FirebaseCore
 import FirebaseFirestore
 import FirebaseFirestoreSwift
+import Foundation
+import Combine
+
 
 
 
@@ -335,3 +338,167 @@ class EventDataAdapter {
     
     
 } // end class
+/*class EventViewModel: ObservableObject {
+    @Published var events: [EventData] = [] // Now uses EventData to match EventCardView
+    private var db = Firestore.firestore()
+
+    func fetchEvents() {
+        let timestamp = Timestamp(seconds: 1732664850, nanoseconds: 165000000)
+
+        db.collection("outreachEventsDev")
+            .whereField("eventDate", isGreaterThanOrEqualTo: timestamp)
+            .whereField("helpRequest", arrayContains: "PsfYiBOrzRMd3IC1hA07")
+            .order(by: "eventDate")
+            .getDocuments { snapshot, error in
+                if let error = error {
+                    print("Error fetching events: \(error)")
+                    return
+                }
+
+                // Map Firestore documents to EventData
+                self.events = snapshot?.documents.compactMap { document in
+                    let data = document.data()
+                    let event = Event()
+                    event.eventId = document.documentID
+                    event.title = data["title"] as? String ?? "Untitled Event"
+                    event.description = data["description"] as? String
+                    event.eventDate = (data["eventDate"] as? Timestamp)?.dateValue()
+                    event.location = data["location"] as? String
+                    event.helpRequest = data["helpRequest"] as? [String]
+                    event.skills = data["skills"] as? [String]
+                    event.interest = data["interest"] as? Int
+                    event.helpType = data["helpType"] as? String
+
+                    // Wrap Event in EventData
+                    let eventData = EventData()
+                    eventData.event = event
+                    if let eventDate = event.eventDate {
+                        let formatter = DateFormatter()
+                        formatter.dateFormat = "dd-MM-yyyy"
+                        eventData.date.2 = formatter.string(from: eventDate)
+                    }
+                    return eventData
+                } ?? []
+            }
+    }
+}*/
+/*class EventViewModel: ObservableObject {
+    @Published var events: [EventData] = [] // Now uses EventData to match EventCardView
+    private var db = Firestore.firestore()
+
+    func fetchEvents() {
+        let timestamp = Timestamp(seconds: 1732664850, nanoseconds: 165000000)
+
+        db.collection("outreachEventsDev")
+            .whereField("eventDate", isGreaterThanOrEqualTo: timestamp)
+            .whereField("helpRequest", arrayContains: "PsfYiBOrzRMd3IC1hA07")
+            //.whereField("status", arrayContains: "Approved")
+            .order(by: "eventDate")
+            .getDocuments { snapshot, error in
+                if let error = error {
+                    print("Error fetching events: \(error)")
+                    return
+                }
+
+                // Map Firestore documents to EventData
+                self.events = snapshot?.documents.compactMap { document in
+                    let data = document.data()
+                    let event = Event()
+                    event.eventId = document.documentID
+                    event.title = data["title"] as? String ?? "Untitled Event"
+                    event.description = data["description"] as? String
+                    event.eventDate = (data["eventDate"] as? Timestamp)?.dateValue()
+                    event.location = data["location"] as? String
+                    event.helpRequest = data["helpRequest"] as? [String]
+                    event.skills = data["skills"] as? [String]
+                    event.interest = data["interest"] as? Int
+                    event.helpType = data["helpType"] as? String
+
+                    // Wrap Event in EventData
+                    let eventData = EventData()
+                    eventData.event = event
+                    return eventData
+                } ?? []
+            }
+    }
+
+    func groupedEvents() -> [String: [EventData]] {
+        Dictionary(grouping: events) { eventData in
+            guard let eventDate = eventData.event.eventDate else { return "Unknown Date" }
+            let formatter = DateFormatter()
+            formatter.dateFormat = "MMMM yyyy"
+            return formatter.string(from: eventDate)
+        }
+    }
+}*/
+
+class EventViewModel: ObservableObject {
+    @Published var events: [EventData] = [] // All events fetched from Firestore
+    @Published var searchText: String = "" // For filtering based on search text
+    @Published var filteredEvents: [EventData] = [] // Filtered events based on search text
+    @Published var groupedEvents: [String: [EventData]] = [:] // Grouped events by date
+    
+    private var db = Firestore.firestore()
+    private var cancellables = Set<AnyCancellable>()
+    
+    init() {
+        // Observe changes to `searchText` and `events` to dynamically update `filteredEvents` and `groupedEvents`
+        Publishers.CombineLatest($searchText, $events)
+            .map { searchText, events in
+                // Filter events based on the search text
+                let filtered = events.filter { event in
+                    let title = event.event.title ?? ""
+                    let location = event.event.location ?? ""
+                    return searchText.isEmpty ||
+                        title.localizedCaseInsensitiveContains(searchText) ||
+                        location.localizedCaseInsensitiveContains(searchText)
+                }
+                return filtered
+            }
+            .sink { [weak self] filtered in
+                self?.filteredEvents = filtered
+                self?.groupedEvents = Dictionary(grouping: filtered) { eventData -> String in
+                    guard let eventDate = eventData.event.eventDate else { return "Unknown Date" }
+                    let formatter = DateFormatter()
+                    formatter.dateFormat = "MMMM yyyy"
+                    return formatter.string(from: eventDate)
+                }
+            }
+            .store(in: &cancellables)
+    }
+    
+    func fetchEvents(order: Bool = false) {
+        let targetDate = Timestamp(date: Date()) // Current date and time
+        
+        db.collection("outreachEvents")
+            .whereField("status", isEqualTo: "approved")
+            .whereField("eventDate", isGreaterThanOrEqualTo: targetDate)
+            .order(by: "eventDate", descending: order) // Use the order parameter to toggle sorting
+            .getDocuments { snapshot, error in
+                if let error = error {
+                    print("Error fetching events: \(error)")
+                    return
+                }
+                
+                // Map Firestore documents to EventData
+                self.events = snapshot?.documents.compactMap { document in
+                    let data = document.data()
+                    let event = Event()
+                    event.eventId = document.documentID
+                    event.title = data["title"] as? String ?? "Untitled Event"
+                    event.description = data["description"] as? String
+                    event.eventDate = (data["eventDate"] as? Timestamp)?.dateValue()
+                    event.location = data["location"] as? String
+                    event.helpRequest = data["helpRequest"] as? [String]
+                    event.skills = data["skills"] as? [String]
+                    event.interest = data["interest"] as? Int
+                    event.helpType = data["helpType"] as? String
+                    
+                    // Wrap Event in EventData
+                    let eventData = EventData()
+                    eventData.event = event
+                    return eventData
+                } ?? []
+            }
+    }
+}
