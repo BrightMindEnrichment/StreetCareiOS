@@ -40,22 +40,6 @@ struct ICanHelpView: View {
                     .font(.subheadline)
                     .foregroundColor(.secondary)
                 
-                /*Button(action: {
-                    isSupportRequestViewPresented = true // Navigate to SupportRequestView
-                }) {
-                    Text(NSLocalizedString("rsvpExistingOutreach", comment: ""))
-                        .padding(EdgeInsets(top: 8.0, leading: 20.0, bottom: 8.0, trailing: 20.0))
-                        .foregroundColor(Color("PrimaryColor"))
-                }
-                .background(Color("SecondaryColor"))
-                .clipShape(Capsule())
-                .sheet(isPresented: $isSupportRequestViewPresented) {
-                    NavigationStack {
-                        EventListView()
-                    }
-                    
-                }*/
-                // NavigationLink for AddHelpRequestForm
                 NavigationLink(destination: EventListView()) {
                                 Text(NSLocalizedString("rsvpExistingOutreach", comment: ""))
                                     .padding(EdgeInsets(top: 8.0, leading: 20.0, bottom: 8.0, trailing: 20.0))
