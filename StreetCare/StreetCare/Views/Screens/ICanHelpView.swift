@@ -11,6 +11,7 @@ struct ICanHelpView: View {
     
     @Binding var isPresented: Bool // Binding to control dismissal of this view
     @State private var isOutreachCreated = false
+    @State private var isEventListPresented = false
     
     var body: some View {
         NavigationStack {
@@ -38,15 +39,20 @@ struct ICanHelpView: View {
                     .font(.subheadline)
                     .foregroundColor(.secondary)
                 
-//                Button(action: {
-//                    // Action for RSVP EXISTING OUTREACH
-//                }) {
-//                    Text(NSLocalizedString("rsvpExistingOutreach", comment: ""))
-//                        .padding(EdgeInsets(top: 8.0, leading: 20.0, bottom: 8.0, trailing: 20.0))
-//                        .foregroundColor(Color("PrimaryColor"))
-//                }
-//                .background(Color("SecondaryColor"))
-//                .clipShape(Capsule())
+                Button(action: {
+                    isEventListPresented = true
+                }) {
+                    Text(NSLocalizedString("rsvpExistingOutreach", comment: ""))
+                        .padding(EdgeInsets(top: 8.0, leading: 20.0, bottom: 8.0, trailing: 20.0))
+                        .foregroundColor(Color("PrimaryColor"))
+                }
+                .background(Color("SecondaryColor"))
+                .clipShape(Capsule())
+                .sheet(isPresented: $isEventListPresented) {
+                    NavigationStack {
+                        EventListView() // Present EventListView
+                    }
+                }
                 
                 Button(action: {
                     isOutreachCreated = true // Open OutreachFormView
