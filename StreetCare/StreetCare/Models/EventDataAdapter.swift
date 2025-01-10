@@ -32,9 +32,9 @@ class EventDataAdapter {
     
     // Add new properties for map data
     var mapOutreachEvents: [(location: CLLocationCoordinate2D, title: String, description: String?)] = []
-    var mapHelpRequests: [(location: CLLocationCoordinate2D, helpType: String, description: String?)] = []
+    var mapHelpRequests: [(location: CLLocationCoordinate2D, identification: String?, description: String?)] = []
     
-    
+   
     
     func addEvent(title: String, description: String, date: Date) {
         
@@ -79,390 +79,314 @@ class EventDataAdapter {
         return (street, city, state, zipcode)
     }
     
-    // Geocoding function with completion handler
-    private func geocodeAddress(_ address: String, completion: @escaping (Result<CLLocationCoordinate2D, Error>) -> Void) {
+    //geocode only outReachEvents
+    private func geocodeOutReachAddress(_ address: String) async throws -> CLLocationCoordinate2D {
         //print("\nStarting geocoding for address: \(address)") - 512
         //above print statements print all the addresses but not all get geoCoded
-        geocoder.geocodeAddressString(address) { placemarks, error in
-            if let error = error {
-                print("Geocoding error: \(error.localizedDescription)")
-                completion(.failure(error))
-                return
-            }
+        return try await withCheckedThrowingContinuation { continuation in
             
-            guard let coordinate = placemarks?.first?.location?.coordinate else {
-                print("No coordinates found for address: \(address)")
-                completion(.failure(NSError(domain: "Geocoding", code: -1,
-                                            userInfo: [NSLocalizedDescriptionKey: "No coordinates found"])))
-                return
-            }
+            let geocoder = CLGeocoder()
             
-            print("Successfully geocoded to: \(coordinate.latitude), \(coordinate.longitude)")
-            completion(.success(coordinate)) // return 1
+            geocoder.geocodeAddressString(address){ placemarkers, error in
+                //error
+                if let error = error {
+                    print("Geocoding error: \(error.localizedDescription)")
+                    continuation.resume(throwing: error)
+                    return
+                }
+                
+                guard let coordinate = placemarkers?.first?.location?.coordinate else {
+                    let error = NSError(domain: "Geocoding",
+                                        code: -1,
+                                        userInfo: [NSLocalizedDescriptionKey: "No coordinates found"])
+                    print("No coordinates found for address: \(address)")
+                    continuation.resume(throwing: error)
+                    return
+                }
+                
+                //print("Successfully geocoded data\(coordinate.latitude), \(coordinate.longitude)")
+                continuation.resume(returning: coordinate)
+                
+            }
+        }
+    }
+    
+    //geocode helpRequests
+    private func geocodeHelpAddress(_ address: String) async throws -> CLLocationCoordinate2D {
+        //print("\nStarting geocoding for address: \(address)") - 512
+        //above print statements print all the addresses but not all get geoCoded
+        return try await withCheckedThrowingContinuation { continuation in
+            
+            let geocoder = CLGeocoder()
+            
+            geocoder.geocodeAddressString(address){ placemarkers, error in
+                //error
+                if let error = error {
+                    print("Geocoding error: \(error.localizedDescription)")
+                    continuation.resume(throwing: error)
+                    return
+                }
+                
+                guard let coordinate = placemarkers?.first?.location?.coordinate else {
+                    let error = NSError(domain: "Geocoding",
+                                        code: -1,
+                                        userInfo: [NSLocalizedDescriptionKey: "No coordinates found"])
+                    print("No coordinates found for address: \(address)")
+                    continuation.resume(throwing: error)
+                    return
+                }
+                
+                //print("Successfully geocoded data\(coordinate.latitude), \(coordinate.longitude)")
+                continuation.resume(returning: coordinate)
+                
+            }
         }
     }
     
     
-    func fetchMapMarkers(completion: @escaping (Bool) -> Void) {
-        print("Starting fetchMapMarkers...")
-        let group = DispatchGroup()
-        var success = true
-        
-        // Fetch outreach events
-        group.enter()
-        fetchOutreachEventLocations { result in
-            print("Outreach events fetch completed")
-            switch result {
-            case .success:
-                print("Successfully fetched outreach events: \(self.mapOutreachEvents.count)")
-            case .failure(let error):
-                print("Error fetching outreach events: \(error.localizedDescription)")
-                success = false
-            }
-            group.leave()
-        }
-        
-        // Fetch help requests
-        group.enter()
-        fetchHelpRequestLocations { result in
-            print("Help requests fetch completed")
-            switch result {
-            case .success:
-                print("Successfully fetched help requests: \(self.mapHelpRequests.count)")
-            case .failure(let error):
-                print("Error fetching help requests: \(error.localizedDescription)")
-                success = false
-            }
-            group.leave()
-        }
-        
-        group.notify(queue: .main) {
-            print("All fetches completed. Success: \(success)")
-            completion(success)
+    func fetchMapMarkers() async -> Bool {
+        print("In fetchMapMarkers...")
+        do{
+            //            try await fetchOutreachEventLocations()
+            //            print("MapOutReach Events markers - \(mapOutreachEvents.count)")
+            //            print("Successfully Fetched Map Markers")
+            //            return true
+            // Fetch both types of locations concurrently
+            try await fetchOutreachEventLocations()
+            try await fetchHelpRequestLocations()
+            
+            print("MapOutReach Events markers - \(mapOutreachEvents.count)")
+            print("Help Request markers - \(mapHelpRequests.count)")
+            print("Successfully Fetched Map Markers")
+            return true
+        }catch{
+            print("Error Fetching Map Markers\(error.localizedDescription)")
+            return false
         }
     }
     
+    //1. Access the document from firebase - outReachEvents
+    //2. document - String format - convert that to coordinates ?
+    //3. Convert = Geocoding = it helps to convert the string to coordinates (lat, lon)
+    //4. Step 3 takes a looooot time - async, await - setting timer
+    //5. Test Step 4, try to check only 15 outReachEvents - 512 total
+    //
     
-    
-    private func fetchOutreachEventLocations(completion: @escaping (Result<Void, Error>) -> Void) {
+    private func fetchOutreachEventLocations() async throws {
         let db = Firestore.firestore()
         print("Fetching outreach events from Firebase...")
         
-        db.collection("outreachEventsDev").getDocuments { [weak self] snapshot, error in
-            guard let self = self else { return }
+        let snapshot = try await db.collection("outreachEvents").getDocuments()
+        let documents = snapshot.documents
+        print("Found \(documents.count) outreach event documents")
+        
+        // Store all events data first
+        var events: [(address: String, title: String, description: String?)] = []
+        
+        // First collect all valid addresses and their details
+        for document in documents {
+            let data = document.data()
             
-            if let error = error {
-                print("Firebase error fetching outreach events: \(error.localizedDescription)")
-                completion(.failure(error))
-                return
-            }
-            
-            guard let documents = snapshot?.documents else {
-                print("No documents found in outreachEventsDev")
-                completion(.success(()))
-                return
-            }
-            
-            print("Found \(documents.count) outreach event documents")
-            
-            //1. Access the document from firebase - outReachEvents
-            //2. document - String format - convert that to coordinates ?
-            //3. Convert = Geocoding = it helps to convert the string to coordinates (lat, lon)
-            //4. Step 3 takes a looooot time - async, await - setting timer
-            //5. Test Step 4, try to check only 15 outReachEvents - 512 total
-            //
-            
-            //Geocoding
-            //1. You would need a Geocode Group -
-            
-            let geocodingGroup = DispatchGroup()
-            var temporaryEvents: [(location: CLLocationCoordinate2D, title: String, description: String?)] = []
-            var geocodingError: Error?
-            let syncQueue = DispatchQueue(label: "com.app.geocoding.sync")
-            
-            
-            for (index, document) in documents.enumerated() {
-                let data = document.data()
-                //print("\n--- Processing document \(index + 1) ---")
+            // More specific error handling for location
+            if let location = data["location"] as? [String: String] {  // Changed to [String: String]
+                //print("Processing location: \(location)")
                 
-//                // Debug print the entire location object
-//                if let location = data["location"] {
-//                    //print("Location data type: \(type(of: location))")
-//                    //print("Raw location data: \(location)")
-//                }
-                
-                // Extract location data with detailed debugging
-                guard let location = data["location"] as? [String: Any] else {
-                    print("Failed to cast location to dictionary for document \(index + 1)")
-                    continue
-                }
-                
-                // Debug print each field
-                // print("Attempting to extract address components...")
-                
-                let street = location["street"] as? String
-                // print("Street: \(street ?? "nil")")
-                
-                let city = location["city"] as? String
-                // print("City: \(city ?? "nil")")
-                
-                let state = location["state"] as? String
-                //print("State: \(state ?? "nil")")
-                
-                let zipcode = location["zipcode"] as? String
-                //print("Zipcode: \(zipcode ?? "nil")")
-                
+                // Extract values using dictionary keys
+                let street = location["street"]
+                let city = location["city"]
+                let state = location["state"]  // Changed back to state instead of stateAbbv
+                let zipcode = location["zipcode"]
                 let title = data["title"] as? String
-                //print("Title: \(title ?? "nil")")
-                
                 let description = data["description"] as? String
                 
                 // Verify all required fields
-                guard let street = street,
-                      let city = city,
-                      let state = state,
-                      let zipcode = zipcode,
-                      let title = title else {
-                    //                    print("Missing required fields in document \(index + 1)")
-                    //                    print("street: \(street != nil)")
-                    //                    print("city: \(city != nil)")
-                    //                    print("state: \(state != nil)")
-                    //                    print("zipcode: \(zipcode != nil)")
-                    //                    print("title: \(title != nil)")
-                    continue
-                }
-                //Create a set to avoid duplicates
-                let address = "\(street), \(city), \(state) \(zipcode)"
-                //print("Created address string: \(address)")
-                
-                //add String elements
-                var addressSet : Set<String> = []
-                addressSet.insert(address)
-                
-                insertNewEvent(title: title, description: description, addressSet: addressSet)
-                
-            }
-            
-            func insertNewEvent(title: String, description: String?, addressSet: Set<String>){
-                for address in addressSet{
-                    print("AddressSet Data -> \(address)")
-                    //DispatchQueue.main.asyncAfter(deadline: .now() + Double(index) * 0.5){
-                    print("Enter Geocoding Group")
-                        geocodingGroup.enter()
-                        self.geocodeAddress(address) { result in
-                            switch result {
-                            case .success(let coordinates):
-                                print("Successfully geocoded address: \(address)")
-                                print("Coordinates: \(coordinates.latitude), \(coordinates.longitude)")
-                                
-                                let event = (
-                                    location: coordinates,
-                                    title: title,
-                                    description: description
-                                )
-                                print("Event - \(event)")
-                                
-                                syncQueue.sync {
-                                    //print("Appending event for address: \(address) to mapOutreachEvents")
-                                    self.mapOutreachEvents.append(event)
-                                    print("mapOutreachEvents now contains \(self.mapOutreachEvents.count) items")
-                                }
-                                
-                            case .failure(let error):
-                                print("Geocoding failed for address \(address)")
-                                print("Error: \(error.localizedDescription)")
-                                syncQueue.sync {
-                                    if geocodingError == nil {
-                                        geocodingError = error
-                                    }
-                                }
-                            }
-                            geocodingGroup.leave()
-                        }
-                }
-            }
-            
-            
-                
-
-            
-            geocodingGroup.notify(queue: .main) { [weak self] in
-                print("\n--- Geocoding group completed ---")
-                if let error = geocodingError {
-                    print("Geocoding completed with errors: \(error.localizedDescription)")
-                    completion(.failure(error))
-                } else {
-                    print("Geocoding completed successfully")
-                    print("Final number of processed events: \(self?.mapOutreachEvents.count)")
-                    //self?.mapOutreachEvents = temporaryEvents
+                if let street = street,
+                   let city = city,
+                   let state = state,
+                   let zipcode = zipcode,
+                   let title = title {
                     
-                    completion(.success(()))
+                    let address = "\(street), \(city), \(state) \(zipcode)"
+                    events.append((address: address, title: title, description: description))
+                    //print("Successfully parsed address: \(address)")
+                } else {
+                    print("Missing required fields for location in document: \(document.documentID)")
                 }
+            } else {
+                print("Failed to cast location for document ID: \(document.documentID)")
             }
         }
+        
+        print("Collected \(events.count) valid addresses")
+        
+        // Process all events with delays
+        for (index, event) in events.enumerated() {
+            do {
+                // Add delay between requests
+                if index <= 40 {
+                    //try await Task.sleep(nanoseconds: 100_000_000)  // 3 second delay
+                
+                //print("Attempting to geocode address: \(event.address)")
+                let coordinate = try await geocodeOutReachAddress(event.address)
+                //print("Successfully geocoded: \(event.address)")
+                
+                let mapEvent = (
+                    location: coordinate,
+                    title: event.title,
+                    description: event.description
+                )
+                mapOutreachEvents.append(mapEvent)
+            }
+            } catch {
+                print("Detailed geocoding error for \(event.address): \(error)")
+                continue
+            }
+        }
+        
+        print("Successfully processed \(mapOutreachEvents.count) addresses")
     }
     
-    // Updated help requests fetch
-    
-    private func fetchHelpRequestLocations(completion: @escaping (Result<Void, Error>) -> Void) {
+    private func fetchHelpRequestLocations() async throws {
         let db = Firestore.firestore()
         print("Fetching help requests from Firebase...")
         
-        db.collection("helpRequests").getDocuments { [weak self] snapshot, error in
-            guard let self = self else { return }
+        let snapshot = try await db.collection("helpRequests").getDocuments()
+        let documents = snapshot.documents
+        print("Found \(documents.count) help request documents")
+        
+        // Store all help requests data first
+        var requests: [(address: String, identification: String?, description: String?)] = []
+        
+        // First collect all valid addresses and their details
+        for document in documents {
+            let data = document.data()
             
-            if let error = error {
-                print("Firebase error fetching help requests: \(error.localizedDescription)")
-                completion(.failure(error))
-                return
-            }
-            
-            guard let documents = snapshot?.documents else {
-                print("No documents found in helpRequests")
-                completion(.success(()))
-                return
-            }
-            
-            print("Found \(documents.count) help request documents")
-            
-            let geocodingGroup = DispatchGroup()
-            var temporaryRequests: [(location: CLLocationCoordinate2D, helpType: String, description: String?)] = []
-            var geocodingError: Error?
-            let syncQueue = DispatchQueue(label: "com.app.geocoding.sync")
-            
-            for (index, document) in documents.enumerated() {
-                let data = document.data()
+            // More specific error handling for location
+            if let location = data["location"] as? [String: String] {
+                print("Processing location: \(location)")
                 
-                // Extract location data
-                guard let location = data["location"] as? [String: Any] else {
-                    print("Failed to cast location to dictionary for document \(index + 1)")
-                    continue
-                }
-                
-                let street = location["street"] as? String
-                let city = location["city"] as? String
-                let state = location["state"] as? String
-                let zipcode = location["zipcode"] as? String
-                let helpType = data["helpType"] as? String
+                // Extract values using dictionary keys
+                let street = location["street"]
+                let city = location["city"]
+                let state = location["state"]
+                let zipcode = location["zipcode"]
+                let identification = data["identification"] as? String
+                let description = data["description"] as? String
                 
                 // Verify all required fields
-                guard let street = street,
-                      let city = city,
-                      let state = state,
-                      let zipcode = zipcode,
-                      let helpType = helpType else {
-                    continue
-                }
-                
-                let address = "\(street), \(city), \(state) \(zipcode)"
-                
-                geocodingGroup.enter()
-                self.geocodeAddress(address) { result in
-                    switch result {
-                    case .success(let coordinates):
-                        print("Successfully geocoded address: \(address)")
-                        print("Coordinates: \(coordinates.latitude), \(coordinates.longitude)")
-                        
-                        let request = (
-                            location: coordinates,
-                            helpType: helpType,
-                            description: data["description"] as? String
-                        )
-                        print("Help Request - \(request)")
-                        
-                        syncQueue.sync {
-                            self.mapHelpRequests.append(request)
-                            print("mapHelpRequests now contains \(self.mapHelpRequests.count) items")
-                        }
-                        
-                    case .failure(let error):
-                        print("Geocoding failed for address \(address)")
-                        print("Error: \(error.localizedDescription)")
-                        syncQueue.sync {
-                            if geocodingError == nil {
-                                geocodingError = error
-                            }
-                        }
-                    }
-                    geocodingGroup.leave()
-                }
-            }
-            
-            geocodingGroup.notify(queue: .main) { [weak self] in
-                print("\n--- Help Requests Geocoding group completed ---")
-                if let error = geocodingError {
-                    print("Geocoding completed with errors: \(error.localizedDescription)")
-                    completion(.failure(error))
+                if let street = street,
+                   let city = city,
+                   let state = state,
+                   let zipcode = zipcode,
+                   let helpType = identification {
+                    
+                    let address = "\(street), \(city), \(state) \(zipcode)"
+                    requests.append((address: address, identification: identification, description: description))
+                    print("Successfully parsed address: \(address)")
                 } else {
-                    print("Geocoding completed successfully")
-                    print("Final number of processed help requests: \(self?.mapHelpRequests.count ?? 0)")
-                    completion(.success(()))
+                    print("Missing required fields for location in document: \(document.documentID)")
                 }
+            } else {
+                print("Failed to cast location for document ID: \(document.documentID)")
             }
         }
+        
+        print("Collected \(requests.count) valid addresses")
+        
+        // Process all requests with delays
+        for (index, request) in requests.enumerated() {
+            do {
+                // Add delay between requests if needed
+                if index <= 40 {
+                    //try await Task.sleep(nanoseconds: 100_000_000)  // Optional delay
+                }
+                
+                let coordinate = try await geocodeHelpAddress(request.address)
+                
+                let mapRequest = (
+                    location: coordinate,
+                    identification: request.identification,
+                    description: request.description
+                )
+                mapHelpRequests.append(mapRequest)
+            } catch {
+                print("Detailed geocoding error for \(request.address): \(error)")
+                continue
+            }
+        }
+        
+        print("Successfully processed help \(mapHelpRequests.count) addresses")
     }
+    
+    
+
 //    private func fetchHelpRequestLocations(completion: @escaping (Result<Void, Error>) -> Void) {
 //        let db = Firestore.firestore()
+//        print("Fetching help requests from Firebase...")
 //        
 //        db.collection("helpRequests").getDocuments { [weak self] snapshot, error in
 //            guard let self = self else { return }
 //            
 //            if let error = error {
+//                print("Firebase error fetching help requests: \(error.localizedDescription)")
 //                completion(.failure(error))
 //                return
 //            }
 //            
 //            guard let documents = snapshot?.documents else {
+//                print("No documents found in helpRequests")
 //                completion(.success(()))
 //                return
 //            }
+//            
+//            print("Found \(documents.count) help request documents")
 //            
 //            let geocodingGroup = DispatchGroup()
 //            var temporaryRequests: [(location: CLLocationCoordinate2D, helpType: String, description: String?)] = []
 //            var geocodingError: Error?
 //            let syncQueue = DispatchQueue(label: "com.app.geocoding.sync")
 //            
-//            for document in documents {
+//            for (index, document) in documents.enumerated() {
 //                let data = document.data()
 //                
-//                guard let street = data["street"] as? String,
-//                      let city = data["city"] as? String,
-//                      let state = data["state"] as? String,
-//                      let zipcode = data["zipcode"] as? String,
-//                      let helpType = data["helpType"] as? String else {
+//                // Extract location data
+//                guard let location = data["location"] as? [String: Any] else {
+//                    print("Failed to cast location to dictionary for document \(index + 1)")
+//                    continue
+//                }
+//                
+//                let street = location["street"] as? String
+//                let city = location["city"] as? String
+//                let state = location["state"] as? String
+//                let zipcode = location["zipcode"] as? String
+//                let helpType = data["helpType"] as? String
+//                
+//                // Verify all required fields
+//                guard let street = street,
+//                      let city = city,
+//                      let state = state,
+//                      let zipcode = zipcode,
+//                      let helpType = helpType else {
 //                    continue
 //                }
 //                
 //                let address = "\(street), \(city), \(state) \(zipcode)"
 //                
 //                geocodingGroup.enter()
-//                self.geocodeAddress(address) { result in
-//                    switch result {
-//                    case .success(let coordinates):
-//                        let request = (
-//                            location: coordinates,
-//                            helpType: helpType,
-//                            description: data["description"] as? String
-//                        )
-//                        syncQueue.sync {
-//                            temporaryRequests.append(request)
-//                        }
-//                    case .failure(let error):
-//                        syncQueue.sync {
-//                            if geocodingError == nil {
-//                                geocodingError = error
-//                            }
-//                        }
-//                    }
-//                    geocodingGroup.leave()
+//                Task{
+//                    let coordinate = try await self.geocodeAddress(address)
 //                }
+//                geocodingGroup.leave()
 //            }
 //            
 //            geocodingGroup.notify(queue: .main) { [weak self] in
+//                print("\n--- Help Requests Geocoding group completed ---")
 //                if let error = geocodingError {
+//                    print("Geocoding completed with errors: \(error.localizedDescription)")
 //                    completion(.failure(error))
 //                } else {
-//                    self?.mapHelpRequests = temporaryRequests
+//                    print("Geocoding completed successfully")
+//                    print("Final number of processed help requests: \(self?.mapHelpRequests.count ?? 0)")
 //                    completion(.success(()))
 //                }
 //            }

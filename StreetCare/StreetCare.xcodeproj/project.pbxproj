@@ -90,7 +90,6 @@
 		74FE994C2CC9F23F00D0C5D0 /* EventEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74FE994B2CC9F23F00D0C5D0 /* EventEnums.swift */; };
 		74FE994F2CC9FF5F00D0C5D0 /* SearchCommunityModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74FE994E2CC9FF5F00D0C5D0 /* SearchCommunityModel.swift */; };
 		74FE99512CC9FFAB00D0C5D0 /* EventCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74FE99502CC9FFAB00D0C5D0 /* EventCardView.swift */; };
-		A459D493C5D37756A585D3EA /* Pods_StreetCare.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B3FB734328ABC03284A67BF /* Pods_StreetCare.framework */; };
 		BE9D1DCE2A37626C00072835 /* ImagePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9D1DCD2A37626C00072835 /* ImagePickerView.swift */; };
 		BE9D1DD12A376B3800072835 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = BE9D1DD02A376B3800072835 /* FirebaseStorage */; };
 		BE9D1DD32A377E9100072835 /* StorgeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9D1DD22A377E9100072835 /* StorgeManager.swift */; };
@@ -102,6 +101,7 @@
 		BEA872742A28D0330053D4F4 /* ProfileDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA872732A28D0330053D4F4 /* ProfileDetails.swift */; };
 		BEA872762A290F360053D4F4 /* ProfileDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA872752A290F360053D4F4 /* ProfileDetail.swift */; };
 		BEA872782A2910B90053D4F4 /* ProfileDetailsAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA872772A2910B90053D4F4 /* ProfileDetailsAdapter.swift */; };
+		E20214BA2D1A18500011AF59 /* ChangesEventDataAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20214B92D1A18410011AF59 /* ChangesEventDataAdapter.swift */; };
 		E20D156C2CBF0CD80004C645 /* GoogleMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20D156B2CBF0CD80004C645 /* GoogleMapView.swift */; };
 		E2646D162CA74A5000D8AA42 /* ICanHelpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2646D152CA74A5000D8AA42 /* ICanHelpView.swift */; };
 		E2B1EFDE2CCFF9330079F02F /* Pods_StreetCare.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B3FB734328ABC03284A67BF /* Pods_StreetCare.framework */; };
@@ -216,6 +216,7 @@
 		BEA872732A28D0330053D4F4 /* ProfileDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileDetails.swift; sourceTree = "<group>"; };
 		BEA872752A290F360053D4F4 /* ProfileDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileDetail.swift; sourceTree = "<group>"; };
 		BEA872772A2910B90053D4F4 /* ProfileDetailsAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileDetailsAdapter.swift; sourceTree = "<group>"; };
+		E20214B92D1A18410011AF59 /* ChangesEventDataAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangesEventDataAdapter.swift; sourceTree = "<group>"; };
 		E20D156B2CBF0CD80004C645 /* GoogleMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleMapView.swift; sourceTree = "<group>"; };
 		E2646D152CA74A5000D8AA42 /* ICanHelpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ICanHelpView.swift; sourceTree = "<group>"; };
 		E2B1EFE12CD482200079F02F /* MapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewModel.swift; sourceTree = "<group>"; };
@@ -409,6 +410,7 @@
 		4CB7D8CA29F8D5980002495E /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				E20214B92D1A18410011AF59 /* ChangesEventDataAdapter.swift */,
 				71B0D5C62B92187A0061033B /* Badges.swift */,
 				4CB7D8CB29F8D5B00002495E /* VisitLog.swift */,
 				4C2F5A7129FF1D4500CFD288 /* VisitLogDataAdapter.swift */,
@@ -627,6 +629,7 @@
 				4C7136C32A0495630060EB7D /* EventDataAdapter.swift in Sources */,
 				4CB65E6029DA91C000684BD1 /* Playlist.swift in Sources */,
 				BE9D1DDD2A43641400072835 /* RatingView.swift in Sources */,
+				E20214BA2D1A18500011AF59 /* ChangesEventDataAdapter.swift in Sources */,
 				4CB7D8CC29F8D5B00002495E /* VisitLog.swift in Sources */,
 				BE9D1DD72A37933500072835 /* LocationManager.swift in Sources */,
 				4CB7D8C529F63AEC0002495E /* InputTileRate.swift in Sources */,

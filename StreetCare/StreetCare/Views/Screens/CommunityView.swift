@@ -11,7 +11,8 @@ import FirebaseAuth
 struct CommunityView: View {
     
     @State var user: User?
-    @StateObject var viewModel = MapViewModel()
+    @StateObject var mapViewModel = MapViewModel()
+    //@StateObject var googleViewModel = GoogleMapView()
     
     let adapter = EventDataAdapter()
     @State var events = [Event]()
@@ -96,14 +97,14 @@ struct CommunityView: View {
                                 Text("Map (Coming Soon)").bold()
                                     .frame(maxWidth: .infinity, alignment: .leading).padding()
                                 ZStack {
-                                    GoogleMapView(viewModel: viewModel)
+                                    GoogleMapView(viewModel: mapViewModel)
                                         .edgesIgnoringSafeArea(.all)
                                         .task {
                                             print("GoogleMapView appeared, calling fetchMarkers()")
-                                            await viewModel.fetchMarkers()
+                                            await mapViewModel.fetchMarkers()
                                         }
                                     
-                                    if viewModel.isLoading {
+                                    if mapViewModel.isLoading {
                                         ProgressView()
                                             .scaleEffect(1.5)
                                             .progressViewStyle(CircularProgressViewStyle(tint: .blue))
