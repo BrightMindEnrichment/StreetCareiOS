@@ -24,6 +24,7 @@ class Event: Identifiable {
     var interest: Int?
     var liked = false
     var uid: String?
+    var userType: String? 
     var createdAt : String?
     var helpRequest : Array<String>?
     var helpType : String?
