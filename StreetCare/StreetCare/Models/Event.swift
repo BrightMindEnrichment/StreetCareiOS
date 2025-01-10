@@ -60,6 +60,7 @@ class HelpRequest {
     var location: String?
     var title: String?
     var uid: String?
+    var userType: String?
     var createdAt: String?
     var skills : Array<String>?
 }

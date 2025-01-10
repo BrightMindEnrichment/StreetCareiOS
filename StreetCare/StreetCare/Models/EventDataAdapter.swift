@@ -316,10 +316,21 @@ class EventDataAdapter {
                     if let status = document["status"] as? String {
                         helpRequest.status = status
                     }
-                 
+                    
                     if let uid = document["uid"] as? String {
                         helpRequest.uid = uid
+                                        
+                        // Fetch the user type for this uid
+                        db.collection("users").document(uid).getDocument { userDoc, error in
+                            if let error = error {
+                                print("Error fetching user type: \(error)")
+                            } else if let userDoc = userDoc, let userType = userDoc["Type"] as? String {
+                                helpRequest.userType = userType // Assign the user type
+                                self.delegate?.helpRequestDataRefreshed(self.helpRequests) // Refresh the UI
+                            }
+                        }
                     }
+                    
                     if let createdAt = document["createdAt"] as? String {
                         helpRequest.createdAt = createdAt
                     }
