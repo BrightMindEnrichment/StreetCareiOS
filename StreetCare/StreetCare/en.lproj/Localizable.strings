@@ -125,8 +125,14 @@
 "blueshirt" = "E.g., Blue Shirt";
 "selecthelp" = "SELECT THE HELP THEY NEED*";
 "description" = "Description";
-
-
+"cmtitle" = "Chapter Membership Form";
+"cmintrotext"="Street Care members work to help homeless people and are passionate about serving the community. Street Care is an initiative of Bright Mind, an award-winning 501(c)(3) nonprofit organization.";
+"cmintrotext2"="We want you to help us continue to reach even more people in need. You and your friends can significantly impact your community by being a part of the team.";
+"cmintrotext3" = "Please share your availability to volunteer with Street Care and help us make a bigger impact in our community.";
+"cmintrotext4" = "By signing below, I agree to be a volunteer member of Street Care and to uphold the chapter's regulations and values.";
+"cmintrotext5" = "If you are under 18 years of age, your parent or guardian must sign this form as well.";
+"cmintrowithlink1" = "Click here to find out what chapter membership entails.";
+"cmintrowithlink2" = "If you prefer to sign and send ina copy or save it for later reference, please download the form here.";
 //"welcome" = "Welcome to\nStreet Care";
 //"loginButtonTitle" = "Login";
 //"signUpButtonTitle" = "Sign Up";
