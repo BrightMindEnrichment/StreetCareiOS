@@ -256,6 +256,7 @@ struct ChapterMembershipForm: View {
                                 ForEach(countries, id: \.self) { country in
                                     Button(action: {
                                         selectedCountry = country
+                                        self.country = country
                                     }) {
                                         Text(country)
                                     }
@@ -285,6 +286,9 @@ struct ChapterMembershipForm: View {
         }
     }
 
+    @State private var selectedDays: Set<String> = [] // Track selected days
+    let daysOfWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+
     var availabilityView: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 20) {
@@ -295,10 +299,135 @@ struct ChapterMembershipForm: View {
                 Text(NSLocalizedString("cmintrotext3", comment: ""))
                     .font(.body)
 
-                TextField("Days Available", text: $daysAvailable).textFieldStyle(RoundedBorderTextFieldStyle())
-                TextField("Hours Available Weekly", text: $hoursAvailable).textFieldStyle(RoundedBorderTextFieldStyle())
-                TextField("How did you hear about us?", text: $heardAbout).textFieldStyle(RoundedBorderTextFieldStyle())
-                TextField("Why do you want to volunteer?", text: $reason).textFieldStyle(RoundedBorderTextFieldStyle())
+                // Days Available Multi-Select Dropdown
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("Days Available")
+                        .font(.body)
+                        .fontWeight(.bold)
+
+                    Menu {
+                        VStack {
+                            ForEach(daysOfWeek, id: \.self) { day in
+                                Button(action: {
+                                    if selectedDays.contains(day) {
+                                        selectedDays.remove(day)
+                                    } else {
+                                        selectedDays.insert(day)
+                                    }
+                                }) {
+                                    HStack {
+                                        Text(day)
+                                        Spacer()
+                                        if selectedDays.contains(day) {
+                                            Image(systemName: "checkmark")
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    } label: {
+                        HStack {
+                            Text(selectedDays.isEmpty ? "Select Days" : selectedDays.joined(separator: ", "))
+                                .foregroundColor(selectedDays.isEmpty ? .gray : .black)
+                                .lineLimit(1)
+                                .truncationMode(.tail)
+                            Spacer()
+                            Image(systemName: "chevron.down")
+                                .foregroundColor(.gray)
+                        }
+                        .padding(.horizontal)
+                        .frame(height: 40) // Match the text field's height
+                        .background(Color.white)
+                        .cornerRadius(5)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 5)
+                                .stroke(Color.gray, lineWidth: 0.5)
+                        )
+                    }
+                }
+
+                // Hours Available Weekly
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("Hours Available Weekly")
+                        .font(.body)
+                        .fontWeight(.bold)
+                    TextField("Enter Hours", text: $hoursAvailable)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                        .frame(height: 40)
+                }
+
+                // Under 18 Dropdown
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("Are you under 18?")
+                        .font(.body)
+                        .fontWeight(.bold)
+                    Menu {
+                        ForEach(["Yes", "No"], id: \.self) { option in
+                            Button(action: {
+                                guardianSignature = option
+                            }) {
+                                Text(option)
+                            }
+                        }
+                    } label: {
+                        HStack {
+                            Text(guardianSignature.isEmpty ? "Select Option" : guardianSignature)
+                                .foregroundColor(guardianSignature.isEmpty ? .gray : .black)
+                            Spacer()
+                            Image(systemName: "chevron.down")
+                                .foregroundColor(.gray)
+                        }
+                        .padding(.horizontal)
+                        .frame(height: 40)
+                        .background(Color.white)
+                        .cornerRadius(5)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 5)
+                                .stroke(Color.gray, lineWidth: 0.5)
+                        )
+                    }
+                }
+
+                // How did you hear about us Dropdown
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("How did you hear about us?")
+                        .font(.body)
+                        .fontWeight(.bold)
+                    Menu {
+                        ForEach(["Friend", "Social Media", "Website", "Flyer", "Other"], id: \.self) { source in
+                            Button(action: {
+                                heardAbout = source
+                            }) {
+                                Text(source)
+                            }
+                        }
+                    } label: {
+                        HStack {
+                            Text(heardAbout.isEmpty ? "Select Source" : heardAbout)
+                                .foregroundColor(heardAbout.isEmpty ? .gray : .black)
+                            Spacer()
+                            Image(systemName: "chevron.down")
+                                .foregroundColor(.gray)
+                        }
+                        .padding(.horizontal)
+                        .frame(height: 40)
+                        .background(Color.white)
+                        .cornerRadius(5)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 5)
+                                .stroke(Color.gray, lineWidth: 0.5)
+                        )
+                    }
+                }
+
+                // Why do you want to volunteer
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("Why do you want to volunteer?")
+                        .font(.body)
+                        .fontWeight(.bold)
+                    TextField("Enter your reason", text: $reason)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                }
             }
             .padding()
         }
