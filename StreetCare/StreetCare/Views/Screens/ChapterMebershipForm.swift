@@ -39,28 +39,26 @@ struct ChapterMembershipForm: View {
     func saveFormDataToFirestore() {
         // Reference to Firestore
         let db = Firestore.firestore()
-        
-        // Data to save from the form
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "MM/dd/yyyy"
+        let formattedDateOfSignature = dateFormatter.string(from: signatureDate)
+        // Data to save from the form (only the specified fields)
         let formData: [String: Any] = [
-            "firstName": firstName,
-            "lastName": lastName,
-            "email": email,
-            "phoneNumber": phoneNumber,
-            "addressLine1": addressLine1,
-            "addressLine2": addressLine2,
-            "city": city,
-            "state": state,
-            "zipCode": zipCode,
-            "country": selectedCountry,
-            "daysAvailable": Array(selectedDays),
-            "hoursAvailable": hoursAvailable,
-            "heardAbout": heardAbout,
-            "reason": reason,
-            "signature": signature,
-            "fullname": fullname,
-            "signatureDate": Timestamp(date: signatureDate),
-            "comments": comments,
-            "submissionDate": Timestamp(date: Date()) // Additional field for submission timestamp
+            "Address": "\(addressLine1), \(addressLine2), \(city), \(state), \(zipCode), \(country)",
+            "Comments. You can add more information on how you heard about us and share any other relevant information.": comments,
+            "Date of Signature": formattedDateOfSignature,
+            "Days of the week available to volunteer": Array(selectedDays), // Store selected days as an array
+            "Email": email,
+            "How did you hear about us?": heardAbout,
+            "If under 18, please provide written consent from a parent or guardian.": guardianSignature,
+            "Name": "\(firstName) \(lastName)",
+            "Number of hours available to volunteer (weekly)": hoursAvailable,
+            "Phone Number": phoneNumber,
+            "Signature (If minor, Guardian's signature)": signature,
+            "Submission Create Date": Timestamp(date: Date()), // Use the current date as submission date
+            "Submission ID": UUID().uuidString,
+            "Submission Status": "unread",
+            "Why do you want to volunteer at Street Care?": reason
         ]
         
         // Add the data to the collection
