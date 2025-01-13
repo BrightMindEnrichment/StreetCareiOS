@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import FirebaseFirestore
 
 struct ChapterMembershipForm: View {
     @Binding var isPresented: Bool // Pass this from the parent to handle dismissal
@@ -35,7 +36,42 @@ struct ChapterMembershipForm: View {
         !firstName.isEmpty && !lastName.isEmpty && !email.isEmpty && !phoneNumber.isEmpty
             && !addressLine1.isEmpty && !city.isEmpty && !state.isEmpty && !zipCode.isEmpty && !country.isEmpty
     }
-
+    func saveFormDataToFirestore() {
+        // Reference to Firestore
+        let db = Firestore.firestore()
+        
+        // Data to save from the form
+        let formData: [String: Any] = [
+            "firstName": firstName,
+            "lastName": lastName,
+            "email": email,
+            "phoneNumber": phoneNumber,
+            "addressLine1": addressLine1,
+            "addressLine2": addressLine2,
+            "city": city,
+            "state": state,
+            "zipCode": zipCode,
+            "country": selectedCountry,
+            "daysAvailable": Array(selectedDays),
+            "hoursAvailable": hoursAvailable,
+            "heardAbout": heardAbout,
+            "reason": reason,
+            "signature": signature,
+            "fullname": fullname,
+            "signatureDate": Timestamp(date: signatureDate),
+            "comments": comments,
+            "submissionDate": Timestamp(date: Date()) // Additional field for submission timestamp
+        ]
+        
+        // Add the data to the collection
+        db.collection("SCChapterMembershipForm").addDocument(data: formData) { error in
+            if let error = error {
+                print("Error saving data: \(error.localizedDescription)")
+            } else {
+                print("Form data successfully saved!")
+            }
+        }
+    }
     var body: some View {
         NavigationStack {
             VStack {
@@ -101,8 +137,11 @@ struct ChapterMembershipForm: View {
             .background(
                 NavigationLink(
                     destination: SubmissionNotificationView(onDismiss: {
-                        isPresented = false // Dismiss the parent form when "Back to home" is tapped
-                    }),
+                        isPresented = false
+                    })
+                    .onAppear {
+                        saveFormDataToFirestore()
+                    },
                     isActive: $navigateToSubmissionScreen
                 ) {
                     EmptyView()
