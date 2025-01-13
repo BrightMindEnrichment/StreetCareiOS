@@ -26,6 +26,7 @@ struct ChapterMembershipForm: View {
     @State private var reason = ""
     @State private var signature = ""
     @State private var guardianSignature = ""
+    @State private var fullname = ""
     @State private var signatureDate = Date()
     @State private var comments = ""
     @State private var navigateToSubmissionScreen = false
@@ -38,6 +39,29 @@ struct ChapterMembershipForm: View {
     var body: some View {
         NavigationStack {
             VStack {
+                HStack {
+                    Button(action: {
+                        if currentStep > 1 {
+                            currentStep -= 1 // Navigate to the previous step
+                        } else {
+                            isPresented = false // Dismiss the form if on the first step
+                        }
+                    }) {
+                        HStack {
+                            Image(systemName: "chevron.left")
+                            Text("Back")
+                        }
+                        .font(.body)
+                        .foregroundColor(.black)
+                    }
+                    Spacer()
+                }
+                .padding()
+                Text(NSLocalizedString("cmtitle", comment: ""))
+                                    .font(.title)
+                                    .fontWeight(.bold)
+                                    .multilineTextAlignment(.center)
+                                    .padding()
                 if currentStep == 1 {
                     personalDetailsView
                 } else if currentStep == 2 {
@@ -89,35 +113,39 @@ struct ChapterMembershipForm: View {
     }
 
     @State private var selectedCountry: String = "" // Selected value for the dropdown
-    let countries = ["United States", "Canada", "India", "United Kingdom", "Germany"]
+    let countries = [
+        "Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Antigua and Barbuda", "Argentina", "Armenia", "Australia",
+        "Austria", "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin",
+        "Bhutan", "Bolivia", "Bosnia and Herzegovina", "Botswana", "Brazil", "Brunei", "Bulgaria", "Burkina Faso",
+        "Burundi", "Cabo Verde", "Cambodia", "Cameroon", "Canada", "Central African Republic", "Chad", "Chile", "China",
+        "Colombia", "Comoros", "Congo (Congo-Brazzaville)", "Costa Rica", "Croatia", "Cuba", "Cyprus", "Czechia (Czech Republic)",
+        "Denmark", "Djibouti", "Dominica", "Dominican Republic", "Ecuador", "Egypt", "El Salvador", "Equatorial Guinea",
+        "Eritrea", "Estonia", "Eswatini (fmr. Swaziland)", "Ethiopia", "Fiji", "Finland", "France", "Gabon", "Gambia", "Georgia",
+        "Germany", "Ghana", "Greece", "Grenada", "Guatemala", "Guinea", "Guinea-Bissau", "Guyana", "Haiti", "Holy See",
+        "Honduras", "Hungary", "Iceland", "India", "Indonesia", "Iran", "Iraq", "Ireland", "Israel", "Italy", "Jamaica", "Japan",
+        "Jordan", "Kazakhstan", "Kenya", "Kiribati", "Kuwait", "Kyrgyzstan", "Laos", "Latvia", "Lebanon", "Lesotho", "Liberia",
+        "Libya", "Liechtenstein", "Lithuania", "Luxembourg", "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta",
+        "Marshall Islands", "Mauritania", "Mauritius", "Mexico", "Micronesia", "Moldova", "Monaco", "Mongolia", "Montenegro",
+        "Morocco", "Mozambique", "Myanmar (formerly Burma)", "Namibia", "Nauru", "Nepal", "Netherlands", "New Zealand",
+        "Nicaragua", "Niger", "Nigeria", "North Korea", "North Macedonia", "Norway", "Oman", "Pakistan", "Palau", "Palestine",
+        "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Poland", "Portugal", "Qatar", "Romania", "Russia",
+        "Rwanda", "Saint Kitts and Nevis", "Saint Lucia", "Saint Vincent and the Grenadines", "Samoa", "San Marino",
+        "Sao Tome and Principe", "Saudi Arabia", "Senegal", "Serbia", "Seychelles", "Sierra Leone", "Singapore", "Slovakia",
+        "Slovenia", "Solomon Islands", "Somalia", "South Africa", "South Korea", "South Sudan", "Spain", "Sri Lanka",
+        "Sudan", "Suriname", "Sweden", "Switzerland", "Syria", "Tajikistan", "Tanzania", "Thailand", "Timor-Leste", "Togo",
+        "Tonga", "Trinidad and Tobago", "Tunisia", "Turkey", "Turkmenistan", "Tuvalu", "Uganda", "Ukraine", "United Arab Emirates",
+        "United Kingdom", "United States of America", "Uruguay", "Uzbekistan", "Vanuatu", "Venezuela", "Vietnam", "Yemen",
+        "Zambia", "Zimbabwe"
+    ]
 
     var personalDetailsView: some View {
         VStack {
-            // Back Button at the Top
-            HStack {
-                Button(action: {
-                    // Handle back navigation
-                }) {
-                    HStack {
-                        Image(systemName: "chevron.left")
-                        Text("Back")
-                    }
-                    .font(.body)
-                    .foregroundColor(.black)
-                }
-                Spacer()
-            }
-            .padding()
-
             ScrollView {
                 VStack(alignment: .leading, spacing: 20) {
-                    // Title and Intro Section
-                    Text(NSLocalizedString("cmtitle", comment: ""))
-                        .font(.title)
-                        .fontWeight(.bold)
 
                     Text(NSLocalizedString("Chapter Membership", comment: ""))
                         .font(.headline)
+                        .fontWeight(.bold)
 
                     Text(NSLocalizedString("cmintrotext" , comment: ""))
                     
@@ -129,35 +157,35 @@ struct ChapterMembershipForm: View {
 
                     Text(NSLocalizedString("cmintrowithlink2", comment: ""))
                         .font(.body)
-
+                    
                     
                     // Personal Details Section
-                    Text("Personal Details")
-                        .font(.title)
+                    Text("Personal details")
+                        .font(.headline)
                         .fontWeight(.bold)
 
                     // First Name and Last Name (Horizontal Alignment)
                     HStack(spacing: 16) {
                         VStack(alignment: .leading, spacing: 4) {
                             HStack {
-                                Text("First Name")
+                                Text("First name")
                                     .font(.body)
                                     .fontWeight(.bold)
                                 Text("*")
                                     .foregroundColor(.red)
                             }
-                            TextField("First Name", text: $firstName)
+                            TextField("First name", text: $firstName)
                                 .textFieldStyle(RoundedBorderTextFieldStyle())
                         }
                         VStack(alignment: .leading, spacing: 4) {
                             HStack {
-                                Text("Last Name")
+                                Text("Last name")
                                     .font(.body)
                                     .fontWeight(.bold)
                                 Text("*")
                                     .foregroundColor(.red)
                             }
-                            TextField("Last Name", text: $lastName)
+                            TextField("Last name", text: $lastName)
                                 .textFieldStyle(RoundedBorderTextFieldStyle())
                         }
                     }
@@ -172,18 +200,18 @@ struct ChapterMembershipForm: View {
                                 Text("*")
                                     .foregroundColor(.red)
                             }
-                            TextField("Email Address", text: $email)
+                            TextField("Email address", text: $email)
                                 .textFieldStyle(RoundedBorderTextFieldStyle())
                         }
                         VStack(alignment: .leading, spacing: 4) {
                             HStack {
-                                Text("Phone Number")
+                                Text("Phone number")
                                     .font(.body)
                                     .fontWeight(.bold)
                                 Text("*")
                                     .foregroundColor(.red)
                             }
-                            TextField("Mobile Number", text: $phoneNumber)
+                            TextField("Mobile number", text: $phoneNumber)
                                 .textFieldStyle(RoundedBorderTextFieldStyle())
                         }
                     }
@@ -292,16 +320,16 @@ struct ChapterMembershipForm: View {
     var availabilityView: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 20) {
-                Text("Availability to Volunteer")
+                Text("Availability to volunteer")
                     .font(.title)
                     .fontWeight(.bold)
 
-                Text(NSLocalizedString("cmintrotext3", comment: ""))
-                    .font(.body)
+                //Text(NSLocalizedString("cmintrotext3", comment: ""))
+                   // .font(.body)
 
                 // Days Available Multi-Select Dropdown
                 VStack(alignment: .leading, spacing: 4) {
-                    Text("Days Available")
+                    Text("Days available")
                         .font(.body)
                         .fontWeight(.bold)
 
@@ -327,7 +355,7 @@ struct ChapterMembershipForm: View {
                         }
                     } label: {
                         HStack {
-                            Text(selectedDays.isEmpty ? "Select Days" : selectedDays.joined(separator: ", "))
+                            Text(selectedDays.isEmpty ? "Select" : selectedDays.joined(separator: ", "))
                                 .foregroundColor(selectedDays.isEmpty ? .gray : .black)
                                 .lineLimit(1)
                                 .truncationMode(.tail)
@@ -348,10 +376,10 @@ struct ChapterMembershipForm: View {
 
                 // Hours Available Weekly
                 VStack(alignment: .leading, spacing: 4) {
-                    Text("Hours Available Weekly")
+                    Text("Hours available weekly")
                         .font(.body)
                         .fontWeight(.bold)
-                    TextField("Enter Hours", text: $hoursAvailable)
+                    TextField("Number of hours", text: $hoursAvailable)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                         .frame(height: 40)
                 }
@@ -371,7 +399,7 @@ struct ChapterMembershipForm: View {
                         }
                     } label: {
                         HStack {
-                            Text(guardianSignature.isEmpty ? "Select Option" : guardianSignature)
+                            Text(guardianSignature.isEmpty ? "Select" : guardianSignature)
                                 .foregroundColor(guardianSignature.isEmpty ? .gray : .black)
                             Spacer()
                             Image(systemName: "chevron.down")
@@ -394,7 +422,7 @@ struct ChapterMembershipForm: View {
                         .font(.body)
                         .fontWeight(.bold)
                     Menu {
-                        ForEach(["Friend", "Social Media", "Website", "Flyer", "Other"], id: \.self) { source in
+                        ForEach(["Website", "Social Media", "Event", "Friend", "Other"], id: \.self) { source in
                             Button(action: {
                                 heardAbout = source
                             }) {
@@ -403,7 +431,7 @@ struct ChapterMembershipForm: View {
                         }
                     } label: {
                         HStack {
-                            Text(heardAbout.isEmpty ? "Select Source" : heardAbout)
+                            Text(heardAbout.isEmpty ? "Select" : heardAbout)
                                 .foregroundColor(heardAbout.isEmpty ? .gray : .black)
                             Spacer()
                             Image(systemName: "chevron.down")
@@ -425,32 +453,103 @@ struct ChapterMembershipForm: View {
                     Text("Why do you want to volunteer?")
                         .font(.body)
                         .fontWeight(.bold)
-                    TextField("Enter your reason", text: $reason)
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                    TextEditor(text: $reason)
+                        .frame(height: 120) // Increase the height for better usability
+                        .cornerRadius(5)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 5)
+                                .stroke(Color.gray, lineWidth: 0.5)
+                        )
+                        .padding(.top, 4)
                 }
             }
             .padding()
         }
     }
-
+    
     var signatureView: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 20) {
-                Text("Agreement and Signature")
-                    .font(.title)
-                    .fontWeight(.bold)
 
                 Text(NSLocalizedString("cmintrotext4", comment: ""))
                     .font(.body)
+                    .fontWeight(.bold)
 
                 Text(NSLocalizedString("cmintrotext5", comment: ""))
                     .font(.body)
+                    .fontWeight(.bold)
 
-                TextField("Your Signature", text: $signature).textFieldStyle(RoundedBorderTextFieldStyle())
-                TextField("Guardian Signature (if applicable)", text: $guardianSignature).textFieldStyle(RoundedBorderTextFieldStyle())
-                DatePicker("Date of Signature", selection: $signatureDate, displayedComponents: .date)
-                    .datePickerStyle(CompactDatePickerStyle())
-                TextField("Comments (Optional)", text: $comments).textFieldStyle(RoundedBorderTextFieldStyle())
+                // Titles for Input Fields
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("Signature (If minor, Guardian's signature)")
+                        .font(.headline)
+                        .fontWeight(.bold)
+                    TextField("Write your full name.", text: $signature)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                }
+
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("Name")
+                        .font(.headline)
+                        .fontWeight(.bold)
+                    TextField("Please Write your full name.", text: $fullname)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                }
+
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("Date of Signature")
+                        .font(.headline)
+                        .fontWeight(.bold)
+                    DatePicker("Date of Signature", selection: $signatureDate, displayedComponents: .date)
+                        .datePickerStyle(CompactDatePickerStyle())
+                }
+
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("Comments. You can add more information on how you heard about us and share any other relevant information.")
+                        .font(.headline)
+                        .fontWeight(.bold)
+                    TextField("Comments", text: $comments)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                }
+                // cmintrotext6 with bullet points and underlined email
+                VStack(alignment: .leading, spacing: 10) {
+                    Text(NSLocalizedString("cmintrotext6", comment: ""))
+                        .font(.body)
+
+                    Group {
+                        HStack(alignment: .top) {
+                            Text("•").bold()
+                            Text(NSLocalizedString("cmintrotext7", comment: ""))
+                                .font(.body)
+                        }
+                        HStack(alignment: .top) {
+                            Text("•").bold()
+                            Text(NSLocalizedString("cmintrotext8", comment: ""))
+                                .font(.body)
+                        }
+                        HStack(alignment: .top) {
+                            Text("•").bold()
+                            Text(NSLocalizedString("cmintrotext9", comment: ""))
+                                .font(.body)
+                        }
+                        HStack(alignment: .top) {
+                            Text("•").bold()
+                            Text(NSLocalizedString("cmintrotext10", comment: ""))
+                                .font(.body)
+                        }
+                    }
+
+                    Text("Thank you!")
+                        .font(.body)
+
+                    // Underlined email address
+                    Text("For any assistance with filling out the form or any other additional support, please email us at: ")
+                        .font(.body)
+                    + Text("info@streetcare.us")
+                        .underline()
+                        .foregroundColor(.blue)
+                }
+                .padding()
             }
             .padding()
         }
@@ -459,7 +558,7 @@ struct ChapterMembershipForm: View {
 
 struct SubmissionNotificationView: View {
     var onDismiss: () -> Void // Callback for dismissing the view
-
+    
     var body: some View {
         VStack {
             Spacer()
