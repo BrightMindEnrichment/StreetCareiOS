@@ -62,7 +62,11 @@ struct ICanHelpView: View {
                         OutreachFormView(isPresented: $isPresented) // Pass binding
                     }
                 }
-                
+                /*NavigationLink {
+                    OutreachFormView(isPresented: $isPresented)
+                } label: {
+                    NavLinkButton(title:NSLocalizedString("createAnOutreach", comment: ""), width: 250.0,secondaryButton: true,noBorder: false, rightArrowNeeded: false,color: .black).frame(maxWidth: .infinity, alignment: .trailing)
+                }*/
                 Button(action: {
                     isPresented = false // Close this view
                 }) {

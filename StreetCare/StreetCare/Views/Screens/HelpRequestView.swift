@@ -99,7 +99,7 @@ struct HelpRequestCardView: View {
                         .padding(.vertical, 5)
                         .background(Color.yellow)
                         .cornerRadius(5)
-                } 
+                }
                 
                 Spacer()
                 
@@ -115,13 +115,13 @@ struct HelpRequestCardView: View {
                 Text(event.location!)
                     .font(.system(size: 13))
             }
-       
+            
             if let identification = event.identification{
                 Text("How to Find: \(identification == "" ? "-" : identification)").font(.system(size: 13))
             }
             Text("Event Description").font(.system(size: 14)).fontWeight(.semibold)
-                Text(event.description == "" ? "No date available" : event.description!).font(.system(size: 13))
-           
+            Text(event.description == "" ? "No date available" : event.description!).font(.system(size: 13))
+            
             HStack {
                 if let skills = event.skills {
                     ForEach(skills.prefix(4), id: \.self) { skill in
@@ -138,7 +138,7 @@ struct HelpRequestCardView: View {
             .padding(.top, 8)
             .frame(maxWidth: .infinity, alignment: .leading)
             
-//            TODO: pending implementation of button actions
+            //            TODO: pending implementation of button actions
             HStack{
                 Spacer()
                 Button {
@@ -153,6 +153,13 @@ struct HelpRequestCardView: View {
                 .sheet(isPresented: $showICanHelpPopup, content: {
                     ICanHelpView(isPresented: $showICanHelpPopup)
                 })
+                /*            // I can help NavLinkButton
+                 NavigationLink {
+                 ICanHelpView(isPresented: $showICanHelpPopup)
+                 } label: {
+                 NavLinkButton(title:"I can help", width: 100.0,secondaryButton: true,noBorder: false, rightArrowNeeded: false,color: .black).frame(maxWidth: .infinity, alignment: .trailing)
+                 }
+                 .padding()*/
             }
         }
         .padding()

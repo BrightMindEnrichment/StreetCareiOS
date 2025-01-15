@@ -73,81 +73,69 @@ struct ChapterMembershipForm: View {
     var body: some View {
         NavigationStack {
             VStack {
-                HStack {
-                    Button(action: {
-                        if currentStep > 1 {
-                            currentStep -= 1 // Navigate to the previous step
-                        } else {
-                            isPresented = false // Dismiss the form if on the first step
-                        }
-                    }) {
-                        HStack {
-                            Image(systemName: "chevron.left")
-                            Text("Back")
-                        }
-                        .font(.body)
-                        .foregroundColor(.black)
+                if navigateToSubmissionScreen {
+                    SubmissionNotificationView(onDismiss: {
+                        isPresented = false // Close the parent view
+                    })
+                } else {
+                    Text(NSLocalizedString("cmtitle", comment: ""))
+                        .font(.title)
+                        .fontWeight(.bold)
+                        .multilineTextAlignment(.center)
+                        .padding()
+                    if currentStep == 1 {
+                        personalDetailsView
+                    } else if currentStep == 2 {
+                        availabilityView
+                    } else if currentStep == 3 {
+                        signatureView
                     }
+                    
                     Spacer()
-                }
-                .padding()
-                Text(NSLocalizedString("cmtitle", comment: ""))
-                                    .font(.title)
-                                    .fontWeight(.bold)
-                                    .multilineTextAlignment(.center)
-                                    .padding()
-                if currentStep == 1 {
-                    personalDetailsView
-                } else if currentStep == 2 {
-                    availabilityView
-                } else if currentStep == 3 {
-                    signatureView
-                }
-
-                Spacer()
-
-                HStack {
-                    if currentStep > 1 {
-                        Button("Back") {
-                            currentStep -= 1
+                    
+                    HStack {
+                        if currentStep > 1 {
+                            Button("Back") {
+                                currentStep -= 1
+                            }
+                            .padding()
+                            .frame(maxWidth: .infinity)
+                            .background(Color.gray.opacity(0.2))
+                            .cornerRadius(8)
+                        }
+                        
+                        Button(currentStep < 3 ? "Next" : "Submit") {
+                            if currentStep < 3 {
+                                currentStep += 1
+                            } else {
+                                navigateToSubmissionScreen = true
+                            }
                         }
                         .padding()
                         .frame(maxWidth: .infinity)
-                        .background(Color.gray.opacity(0.2))
+                        .background(allPersonalFieldsFilled || currentStep != 1 ? Color.yellow : Color.gray)
                         .cornerRadius(8)
-                    }
-
-                    Button(currentStep < 3 ? "Next" : "Submit") {
-                        if currentStep < 3 {
-                            currentStep += 1
-                        } else {
-                            navigateToSubmissionScreen = true
-                        }
+                        .disabled(!allPersonalFieldsFilled && currentStep == 1)
                     }
                     .padding()
-                    .frame(maxWidth: .infinity)
-                    .background(allPersonalFieldsFilled || currentStep != 1 ? Color.yellow : Color.gray)
-                    .cornerRadius(8)
-                    .disabled(!allPersonalFieldsFilled && currentStep == 1)
                 }
-                .padding()
             }
-            .background(
-                NavigationLink(
-                    destination: SubmissionNotificationView(onDismiss: {
-                        isPresented = false
-                    })
-                    .onAppear {
-                        saveFormDataToFirestore()
-                    },
-                    isActive: $navigateToSubmissionScreen
-                ) {
-                    EmptyView()
-                }
-                .hidden()
-            )
+                    .background(
+                        NavigationLink(
+                            destination: SubmissionNotificationView(onDismiss: {
+                                isPresented = false
+                            })
+                            .onAppear {
+                                saveFormDataToFirestore()
+                            },
+                            isActive: $navigateToSubmissionScreen
+                        ) {
+                            EmptyView()
+                        }
+                            .hidden()
+                    )
+            }
         }
-    }
 
     @State private var selectedCountry: String = "" // Selected value for the dropdown
     let countries = [

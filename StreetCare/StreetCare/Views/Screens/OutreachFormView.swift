@@ -10,6 +10,7 @@ import Firebase
 struct OutreachFormView: View {
     @Binding var isPresented: Bool
     @Environment(\.dismiss) var dismiss
+    @State private var showChapterMembershipForm = false // State to control form presentation
 
     @State private var title = ""
     @State private var street = ""
@@ -64,6 +65,12 @@ struct OutreachFormView: View {
     }
 
     var body: some View {
+        NavigationLink(
+            destination: ChapterMembershipForm(isPresented: $showChapterMembershipForm),
+            isActive: $showChapterMembershipForm
+        ) {
+            EmptyView()
+        }
         ScrollView {
             VStack(alignment: .leading, spacing: 18) {
                 // Title Field
@@ -180,11 +187,18 @@ struct OutreachFormView: View {
             Alert(
                 title: Text(alertTitle),
                 message: Text(alertMessage),
-                dismissButton: .default(Text("OK")) {
+                /*dismissButton: .default(Text("OK")) {
                     if alertMessage == "Event saved successfully!" {
                         isPresented = false
                     }
-                }
+                }*/
+                primaryButton: .default(Text("Sign Up")) {
+                    // Navigate only if the alert message matches
+                    if alertMessage == "Event saved successfully!" {
+                        showChapterMembershipForm = true
+                    }
+                },
+                secondaryButton: .cancel(Text("Remind me Later"))
             )
         }
         .navigationBarTitleDisplayMode(.inline)
