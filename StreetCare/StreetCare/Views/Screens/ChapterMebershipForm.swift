@@ -77,73 +77,7 @@ struct ChapterMembershipForm: View {
             }
         }
     }
-/*    var body: some View {
-        NavigationStack {
-            VStack {
-                if navigateToSubmissionScreen {
-                    SubmissionNotificationView(onDismiss: {
-                        isPresented = false // Close the parent view
-                    })
-                } else {
-                    Text(NSLocalizedString("cmtitle", comment: ""))
-                        .font(.title)
-                        .fontWeight(.bold)
-                        .multilineTextAlignment(.center)
-                        .padding()
-                    if currentStep == 1 {
-                        personalDetailsView
-                    } else if currentStep == 2 {
-                        availabilityView
-                    } else if currentStep == 3 {
-                        signatureView
-                    }
-                    
-                    Spacer()
-                    
-                    HStack {
-                        if currentStep > 1 {
-                            Button("Back") {
-                                currentStep -= 1
-                            }
-                            .padding()
-                            .frame(maxWidth: .infinity)
-                            .background(Color.gray.opacity(0.2))
-                            .cornerRadius(8)
-                        }
-                        
-                        Button(currentStep < 3 ? "Next" : "Submit") {
-                            if currentStep < 3 {
-                                currentStep += 1
-                            } else {
-                                navigateToSubmissionScreen = true
-                            }
-                        }
-                        .padding()
-                        .frame(maxWidth: .infinity)
-                        .background(allPersonalFieldsFilled || currentStep != 1 ? Color.yellow : Color.gray)
-                        .cornerRadius(8)
-                        .disabled(!allPersonalFieldsFilled && currentStep == 1)
-                    }
-                    .padding()
-                }
-            }
-                    .background(
-                        NavigationLink(
-                            destination: SubmissionNotificationView(onDismiss: {
-                                isPresented = false
-                            })
-                            .onAppear {
-                                saveFormDataToFirestore()
-                            },
-                            isActive: $navigateToSubmissionScreen
-                        ) {
-                            EmptyView()
-                        }
-                            .hidden()
-                    )
-            }
-        }
-*/
+    
     var body: some View {
         NavigationStack {
             VStack {
@@ -193,7 +127,7 @@ struct ChapterMembershipForm: View {
                 Alert(
                     title: Text("Form Submitted"),
                     message: Text("Thank you for applying to be a Chapter Member!"),
-                    dismissButton: .default(Text("OK"), action: {
+                    dismissButton: .default(Text("Back to home"), action: {
                         isPresented = false
                         shouldDismissAll = true
                     })
@@ -236,18 +170,14 @@ struct ChapterMembershipForm: View {
                         .font(.headline)
                         .fontWeight(.bold)
 
-                    Text(NSLocalizedString("cmintrotext" , comment: ""))
                     Text("Street Care members work to help homeless people and are passionate about serving the community. Street Care is an initiative of [Bright Mind](https://brightmindenrichment.org/), an award-winning 501(c)(3) nonprofit organization.")
-                    Text("We want you to help us continue to reach even more people in need. You and your friends can significantly impact your community by being a part of the team.")
+
                     Text(NSLocalizedString("cmintrotext2", comment: ""))
                         .font(.body)
-
-                    Text(NSLocalizedString("cmintrowithlink1", comment: ""))
-                        .font(.body)
-
-                    Text(NSLocalizedString("cmintrowithlink2", comment: ""))
-                        .font(.body)
                     
+                    Text("Click here to find out what [chapter membership entails.](https://street_care_website_media_images.storage.googleapis.com/wp-content/uploads/2024/07/30201929/chapter_membership_entails_sc.pdf)")
+                    
+                    Text("If you prefer to sign and send ina copy or save it for later reference, please download the form [here.](https://street_care_website_media_images.storage.googleapis.com/wp-content/uploads/2024/07/30202242/Full-Chapter-Form.pdf)")
                     
                     // Personal Details Section
                     Text("Personal details")
@@ -564,11 +494,10 @@ struct ChapterMembershipForm: View {
                 Text(NSLocalizedString("cmintrotext4", comment: ""))
                     .font(.body)
                     .fontWeight(.bold)
-
-                Text(NSLocalizedString("cmintrotext5", comment: ""))
+                
+                Text("If you are a minor (under 18 years of age), you must ask your guardian to fill out this [form](https://street_care_website_media_images.storage.googleapis.com/wp-content/uploads/2024/08/05190106/VOLUNTEER-RELEASE-FORM-FOR-MINORS.pdf) and send it to us at volunteer@streetcare.us")
                     .font(.body)
                     .fontWeight(.bold)
-
                 // Titles for Input Fields
                 VStack(alignment: .leading, spacing: 8) {
                     Text("Signature (If minor, Guardian's signature)")
@@ -646,59 +575,6 @@ struct ChapterMembershipForm: View {
     }
 }
 
-/*struct SubmissionNotificationView: View {
-    var onDismiss: () -> Void // Callback for dismissing the view
-    
-    var body: some View {
-        VStack {
-            Spacer()
 
-            // Title Section
-            Text("Chapter Membership Form")
-                .font(.title)
-                .fontWeight(.bold)
-                .multilineTextAlignment(.center)
-
-            Spacer().frame(height: 20)
-
-            // Notification Box
-            VStack(alignment: .leading, spacing: 15) {
-                Text("Thank you for applying to be a Chapter Member!")
-                    .font(.headline)
-                    .fontWeight(.bold)
-
-                //Text("Approval may take up to 5 business days.")
-                    //.font(.body)
-
-                // Yellow Divider
-                Rectangle()
-                    .fill(Color.yellow)
-                    .frame(height: 2)
-
-                // Back to Home Text
-                HStack {
-                    Image(systemName: "chevron.left")
-                    Text("Back to home")
-                        .font(.body)
-                }
-                .onTapGesture {
-                    onDismiss()
-                }
-                .padding(.top, 10)
-            }
-            .padding()
-            .background(
-                RoundedRectangle(cornerRadius: 16)
-                    .fill(Color.white)
-                    .shadow(color: Color.black.opacity(0.1), radius: 5, x: 0, y: 2)
-            )
-            .padding(.horizontal, 20)
-
-            Spacer()
-        }
-        .background(Color(UIColor.systemGray6).edgesIgnoringSafeArea(.all))
-        .navigationBarBackButtonHidden(true)
-    }
-}*/
 
 

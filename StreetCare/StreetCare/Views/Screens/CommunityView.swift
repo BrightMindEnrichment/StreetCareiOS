@@ -14,6 +14,7 @@ struct CommunityView: View {
     
     let adapter = EventDataAdapter()
     @State var events = [Event]()
+    @State var isPresented: Bool = false
     
     let formatter = DateFormatter()
  
@@ -32,7 +33,7 @@ struct CommunityView: View {
                         Spacer().frame(height: 35)
                         HStack{
                             NavigationLink {
-                                CommunityEventView(eventType: .future)
+                                CommunityEventView(isPresented: $isPresented, eventType: .future)
                             } label: {
                                 VStack{
                                     ZStack {
@@ -51,7 +52,7 @@ struct CommunityView: View {
                             Spacer().frame(width: (UIScreen.main.bounds.width / 2) / 2)
                             
                             NavigationLink {
-                                CommunityEventView(eventType: .past)
+                                CommunityEventView(isPresented: $isPresented, eventType: .past)
                             } label: {
                                 VStack{
                                     ZStack {
