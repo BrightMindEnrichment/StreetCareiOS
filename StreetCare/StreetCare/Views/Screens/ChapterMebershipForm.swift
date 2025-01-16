@@ -10,6 +10,7 @@ import FirebaseFirestore
 
 struct ChapterMembershipForm: View {
     @Binding var isPresented: Bool // Pass this from the parent to handle dismissal
+    @Binding var shouldDismissAll: Bool // Shared variable
     @State private var currentStep: Int = 1
     @State private var firstName = ""
     @State private var lastName = ""
@@ -31,11 +32,16 @@ struct ChapterMembershipForm: View {
     @State private var signatureDate = Date()
     @State private var comments = ""
     @State private var navigateToSubmissionScreen = false
+    @State private var showAlert = false
 
     var allPersonalFieldsFilled: Bool {
         !firstName.isEmpty && !lastName.isEmpty && !email.isEmpty && !phoneNumber.isEmpty
             && !addressLine1.isEmpty && !city.isEmpty && !state.isEmpty && !zipCode.isEmpty && !country.isEmpty
     }
+    func openURL(_ urlString: String) {
+            guard let url = URL(string: urlString) else { return }
+            UIApplication.shared.open(url)
+        }
     func saveFormDataToFirestore() {
         // Reference to Firestore
         let db = Firestore.firestore()
@@ -67,10 +73,11 @@ struct ChapterMembershipForm: View {
                 print("Error saving data: \(error.localizedDescription)")
             } else {
                 print("Form data successfully saved!")
+                showAlert = true
             }
         }
     }
-    var body: some View {
+/*    var body: some View {
         NavigationStack {
             VStack {
                 if navigateToSubmissionScreen {
@@ -136,7 +143,64 @@ struct ChapterMembershipForm: View {
                     )
             }
         }
+*/
+    var body: some View {
+        NavigationStack {
+            VStack {
+                Text("Chapter Membership Form")
+                    .font(.title)
+                    .fontWeight(.bold)
+                    .multilineTextAlignment(.center)
+                    .padding()
 
+                if currentStep == 1 {
+                    personalDetailsView
+                } else if currentStep == 2 {
+                    availabilityView
+                } else if currentStep == 3 {
+                    signatureView
+                }
+
+                Spacer()
+
+                HStack {
+                    if currentStep > 1 {
+                        Button("Back") {
+                            currentStep -= 1
+                        }
+                        .padding()
+                        .frame(maxWidth: .infinity)
+                        .background(Color.gray.opacity(0.2))
+                        .cornerRadius(8)
+                    }
+
+                    Button(currentStep < 3 ? "Next" : "Submit") {
+                        if currentStep < 3 {
+                            currentStep += 1
+                        } else {
+                            saveFormDataToFirestore()
+                        }
+                    }
+                    .padding()
+                    .frame(maxWidth: .infinity)
+                    .background(allPersonalFieldsFilled || currentStep != 1 ? Color.yellow : Color.gray)
+                    .cornerRadius(8)
+                    .disabled(!allPersonalFieldsFilled && currentStep == 1)
+                }
+                .padding()
+            }
+            .alert(isPresented: $showAlert) {
+                Alert(
+                    title: Text("Form Submitted"),
+                    message: Text("Thank you for applying to be a Chapter Member!"),
+                    dismissButton: .default(Text("OK"), action: {
+                        isPresented = false
+                        shouldDismissAll = true
+                    })
+                )
+            }
+        }
+    }
     @State private var selectedCountry: String = "" // Selected value for the dropdown
     let countries = [
         "Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Antigua and Barbuda", "Argentina", "Armenia", "Australia",
@@ -173,7 +237,8 @@ struct ChapterMembershipForm: View {
                         .fontWeight(.bold)
 
                     Text(NSLocalizedString("cmintrotext" , comment: ""))
-                    
+                    Text("Street Care members work to help homeless people and are passionate about serving the community. Street Care is an initiative of [Bright Mind](https://brightmindenrichment.org/), an award-winning 501(c)(3) nonprofit organization.")
+                    Text("We want you to help us continue to reach even more people in need. You and your friends can significantly impact your community by being a part of the team.")
                     Text(NSLocalizedString("cmintrotext2", comment: ""))
                         .font(.body)
 
@@ -581,7 +646,7 @@ struct ChapterMembershipForm: View {
     }
 }
 
-struct SubmissionNotificationView: View {
+/*struct SubmissionNotificationView: View {
     var onDismiss: () -> Void // Callback for dismissing the view
     
     var body: some View {
@@ -602,8 +667,8 @@ struct SubmissionNotificationView: View {
                     .font(.headline)
                     .fontWeight(.bold)
 
-                Text("Approval may take up to 5 business days.")
-                    .font(.body)
+                //Text("Approval may take up to 5 business days.")
+                    //.font(.body)
 
                 // Yellow Divider
                 Rectangle()
@@ -634,10 +699,6 @@ struct SubmissionNotificationView: View {
         .background(Color(UIColor.systemGray6).edgesIgnoringSafeArea(.all))
         .navigationBarBackButtonHidden(true)
     }
-}
+}*/
 
-struct ChapterMembershipForm_Previews: PreviewProvider {
-    static var previews: some View {
-        ChapterMembershipForm(isPresented: .constant(true))
-    }
-}
+

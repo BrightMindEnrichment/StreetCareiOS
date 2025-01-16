@@ -35,6 +35,7 @@ struct LandingScreenView: View {
     @State private var fadeOut = false
     @State private var currentPage = 0
     @State private var showChapterMembershipForm = false // State to control form presentation
+    @State private var shouldDismissAll = false
 
     let timer = Timer.publish(every: 3, on: .main, in: .common).autoconnect()
 
@@ -55,7 +56,8 @@ struct LandingScreenView: View {
                 }
                 .padding(.bottom, 10)
                 .sheet(isPresented: $showChapterMembershipForm) {
-                    ChapterMembershipForm(isPresented: $showChapterMembershipForm) // Pass the binding
+                    //ChapterMembershipForm(isPresented: $showChapterMembershipForm) // Pass the binding
+                    OutreachFormView(isPresented: $showChapterMembershipForm,shouldDismissAll: $shouldDismissAll)
                 }
 
                 ScrollView {

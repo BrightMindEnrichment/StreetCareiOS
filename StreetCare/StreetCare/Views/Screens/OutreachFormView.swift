@@ -9,9 +9,10 @@ import Firebase
 
 struct OutreachFormView: View {
     @Binding var isPresented: Bool
-    @Environment(\.dismiss) var dismiss
+    //@Environment(\.dismiss) var dismiss
+    @Binding var shouldDismissAll: Bool // Shared variable
     @State private var showChapterMembershipForm = false // State to control form presentation
-
+    @Environment(\.presentationMode) var presentationMode // Local dismissal environment
     @State private var title = ""
     @State private var street = ""
     @State private var state = ""
@@ -66,7 +67,11 @@ struct OutreachFormView: View {
 
     var body: some View {
         NavigationLink(
-            destination: ChapterMembershipForm(isPresented: $showChapterMembershipForm),
+            //destination: ChapterMembershipForm(isPresented: $showChapterMembershipForm),
+            destination: ChapterMembershipForm(
+                            isPresented: $showChapterMembershipForm,
+                            shouldDismissAll: $shouldDismissAll
+                        ),
             isActive: $showChapterMembershipForm
         ) {
             EmptyView()
@@ -201,6 +206,11 @@ struct OutreachFormView: View {
                 secondaryButton: .cancel(Text("Remind me Later"))
             )
         }
+        .onChange(of: shouldDismissAll) { value in
+            if value {
+                            presentationMode.wrappedValue.dismiss()
+                        }
+               }
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
