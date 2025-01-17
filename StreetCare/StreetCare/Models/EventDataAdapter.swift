@@ -31,8 +31,8 @@ class EventDataAdapter {
     var geocoder = CLGeocoder()
     
     // Add new properties for map data
-    var mapOutreachEvents: [(location: CLLocationCoordinate2D, title: String, description: String?)] = []
-    var mapHelpRequests: [(location: CLLocationCoordinate2D, identification: String?, description: String?)] = []
+    @Published var mapOutreachEvents: [(location: CLLocationCoordinate2D, title: String, description: String?)] = []
+    @Published var mapHelpRequests: [(location: CLLocationCoordinate2D, identification: String?, description: String?)] = []
     
    
     
@@ -147,13 +147,16 @@ class EventDataAdapter {
     func fetchMapMarkers() async -> Bool {
         print("In fetchMapMarkers...")
         do{
-            //            try await fetchOutreachEventLocations()
-            //            print("MapOutReach Events markers - \(mapOutreachEvents.count)")
-            //            print("Successfully Fetched Map Markers")
-            //            return true
-            // Fetch both types of locations concurrently
-            try await fetchOutreachEventLocations()
-            try await fetchHelpRequestLocations()
+            
+//            async let outReachEvents = fetchOutreachEventLocations
+//            async let helpRequests = fetchHelpRequestLocations()
+//            
+//            try await outReachEvents
+//            try await helpRequests
+//            try await fetchOutreachEventLocations()
+//            try await fetchHelpRequestLocations()
+            
+            let(outReachEvents, helpRequests) = try await (fetchOutreachEventLocations(), fetchHelpRequestLocations())
             
             print("MapOutReach Events markers - \(mapOutreachEvents.count)")
             print("Help Request markers - \(mapHelpRequests.count)")
@@ -219,29 +222,61 @@ class EventDataAdapter {
         
         print("Collected \(events.count) valid addresses")
         
-        // Process all events with delays
-        for (index, event) in events.enumerated() {
-            do {
-                // Add delay between requests
-                if index <= 40 {
-                    //try await Task.sleep(nanoseconds: 100_000_000)  // 3 second delay
-                
-                //print("Attempting to geocode address: \(event.address)")
-                let coordinate = try await geocodeOutReachAddress(event.address)
-                //print("Successfully geocoded: \(event.address)")
-                
+        for index in 0..<min(10, events.count){
+            do{
+                let coordinate = try await geocodeOutReachAddress(events[index].address)
                 let mapEvent = (
                     location: coordinate,
-                    title: event.title,
-                    description: event.description
+                    title: events[index].title,
+                    description: events[index].description
                 )
                 mapOutreachEvents.append(mapEvent)
-            }
-            } catch {
-                print("Detailed geocoding error for \(event.address): \(error)")
+            }catch{
+                print("Detailed geocoding error for \(events[index].address): \(error)")
                 continue
             }
         }
+        
+        print("First batch of \(min(10, events.count)) addresses processed")
+        
+        for index in 10..<min(30, events.count) {
+            do {
+                let coordinate = try await geocodeOutReachAddress(events[index].address)
+                let mapEvent = (
+                    location: coordinate,
+                    title: events[index].title,
+                    description: events[index].description
+                )
+                mapOutreachEvents.append(mapEvent)
+            } catch {
+                print("Detailed geocoding error for \(events[index].address): \(error)")
+                continue
+            }
+        }
+        
+        // Process all events with delays
+//        for (index, event) in events.enumerated() {
+//            do {
+//                // Add delay between requests
+//                if index <= 40 {
+//                    //try await Task.sleep(nanoseconds: 100_000_000)  // 3 second delay
+//                
+//                //print("Attempting to geocode address: \(event.address)")
+//                let coordinate = try await geocodeOutReachAddress(event.address)
+//                //print("Successfully geocoded: \(event.address)")
+//                
+//                let mapEvent = (
+//                    location: coordinate,
+//                    title: event.title,
+//                    description: event.description
+//                )
+//                mapOutreachEvents.append(mapEvent)
+//            }
+//            } catch {
+//                print("Detailed geocoding error for \(event.address): \(error)")
+//                continue
+//            }
+//        }
         
         print("Successfully processed \(mapOutreachEvents.count) addresses")
     }
@@ -297,18 +332,18 @@ class EventDataAdapter {
         for (index, request) in requests.enumerated() {
             do {
                 // Add delay between requests if needed
-                if index <= 40 {
+                if index <= 30 {
                     //try await Task.sleep(nanoseconds: 100_000_000)  // Optional delay
+                    
+                    let coordinate = try await geocodeHelpAddress(request.address)
+                    
+                    let mapRequest = (
+                        location: coordinate,
+                        identification: request.identification,
+                        description: request.description
+                    )
+                    mapHelpRequests.append(mapRequest)
                 }
-                
-                let coordinate = try await geocodeHelpAddress(request.address)
-                
-                let mapRequest = (
-                    location: coordinate,
-                    identification: request.identification,
-                    description: request.description
-                )
-                mapHelpRequests.append(mapRequest)
             } catch {
                 print("Detailed geocoding error for \(request.address): \(error)")
                 continue
@@ -318,80 +353,6 @@ class EventDataAdapter {
         print("Successfully processed help \(mapHelpRequests.count) addresses")
     }
     
-    
-
-//    private func fetchHelpRequestLocations(completion: @escaping (Result<Void, Error>) -> Void) {
-//        let db = Firestore.firestore()
-//        print("Fetching help requests from Firebase...")
-//        
-//        db.collection("helpRequests").getDocuments { [weak self] snapshot, error in
-//            guard let self = self else { return }
-//            
-//            if let error = error {
-//                print("Firebase error fetching help requests: \(error.localizedDescription)")
-//                completion(.failure(error))
-//                return
-//            }
-//            
-//            guard let documents = snapshot?.documents else {
-//                print("No documents found in helpRequests")
-//                completion(.success(()))
-//                return
-//            }
-//            
-//            print("Found \(documents.count) help request documents")
-//            
-//            let geocodingGroup = DispatchGroup()
-//            var temporaryRequests: [(location: CLLocationCoordinate2D, helpType: String, description: String?)] = []
-//            var geocodingError: Error?
-//            let syncQueue = DispatchQueue(label: "com.app.geocoding.sync")
-//            
-//            for (index, document) in documents.enumerated() {
-//                let data = document.data()
-//                
-//                // Extract location data
-//                guard let location = data["location"] as? [String: Any] else {
-//                    print("Failed to cast location to dictionary for document \(index + 1)")
-//                    continue
-//                }
-//                
-//                let street = location["street"] as? String
-//                let city = location["city"] as? String
-//                let state = location["state"] as? String
-//                let zipcode = location["zipcode"] as? String
-//                let helpType = data["helpType"] as? String
-//                
-//                // Verify all required fields
-//                guard let street = street,
-//                      let city = city,
-//                      let state = state,
-//                      let zipcode = zipcode,
-//                      let helpType = helpType else {
-//                    continue
-//                }
-//                
-//                let address = "\(street), \(city), \(state) \(zipcode)"
-//                
-//                geocodingGroup.enter()
-//                Task{
-//                    let coordinate = try await self.geocodeAddress(address)
-//                }
-//                geocodingGroup.leave()
-//            }
-//            
-//            geocodingGroup.notify(queue: .main) { [weak self] in
-//                print("\n--- Help Requests Geocoding group completed ---")
-//                if let error = geocodingError {
-//                    print("Geocoding completed with errors: \(error.localizedDescription)")
-//                    completion(.failure(error))
-//                } else {
-//                    print("Geocoding completed successfully")
-//                    print("Final number of processed help requests: \(self?.mapHelpRequests.count ?? 0)")
-//                    completion(.success(()))
-//                }
-//            }
-//        }
-//    }
     
     func setLikeEvent(_ event: Event, setTo doesLike: Bool) {
         print(event.interest)
@@ -404,22 +365,6 @@ class EventDataAdapter {
             var likedData = [String: Any]()
             likedData["uid"] = user.uid
             likedData["eventId"] = event.eventId
-            //            likedData["title"] = event.title
-            //            likedData["description"] = event.description
-            //            likedData["interests"] = event.interest
-            //            likedData["createdAt"] = event.createdAt
-            //            likedData["helpType"] = event.helpType
-            //            likedData["approved"] = event.approved
-            //            likedData["totalSlots"] = event.totalSlots
-            //            likedData["helpRequest"] = event.helpRequest
-            //            likedData["participants"] = event.participants
-            //            likedData["skills"] = event.skills
-            //            likedData["location"] = event.skills
-            //            let dict = ["city" : event.city, "state" : event.state, "street": event.street, "zipcode" : event.zipcode]
-            //            likedData["location"] = dict
-            //            likedData["eventDate"] = event.eventDateStamp
-            //            likedData["eventStartTime"] = event.eventStartTimeStamp
-            //            likedData["eventEndTime"] = event.eventEndTimeStamp
             
             
             if doesLike {

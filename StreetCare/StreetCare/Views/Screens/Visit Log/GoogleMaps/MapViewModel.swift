@@ -26,9 +26,9 @@ class MapViewModel: ObservableObject {
         isLoading = true
         
         do{
+            
             let success = await eventDataAdapter.fetchMapMarkers()
             
-            //            await MainActor.run {
             if success {
                 outreachEvents = eventDataAdapter.mapOutreachEvents
                 helpRequests = eventDataAdapter.mapHelpRequests
@@ -37,7 +37,6 @@ class MapViewModel: ObservableObject {
             }else{
                 print("Failure to fetchMapMarkers in ViewModel")
             }
-            //            }
         }
         //        }catch{
         //            await MainActor.run {
