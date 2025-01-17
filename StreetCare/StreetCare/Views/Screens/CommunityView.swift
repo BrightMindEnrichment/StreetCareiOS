@@ -30,7 +30,6 @@ struct CommunityView: View {
                     ScrollView{
                         VStack{
                             Spacer().frame(height: 10)
-                            //                        Text("City: Unavailable").bold()
                             Spacer().frame(height: 35)
                             HStack{
                                 NavigationLink {
@@ -132,9 +131,6 @@ struct CommunityView: View {
                                         .shadow(radius: 3)
                                         
                                 )
-                                
-                                
-                                //                            Image("Map").resizable().aspectRatio(contentMode: .fit).frame(width: (UIScreen.main.bounds.width - 20),height: (UIScreen.main.bounds.width - 0)).padding(EdgeInsets(top: -50, leading: 0.0, bottom: 0.0, trailing: 0.0))
                             }
                         }
                         

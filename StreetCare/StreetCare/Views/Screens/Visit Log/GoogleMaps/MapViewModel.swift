@@ -38,59 +38,5 @@ class MapViewModel: ObservableObject {
                 print("Failure to fetchMapMarkers in ViewModel")
             }
         }
-        //        }catch{
-        //            await MainActor.run {
-        //                print("Unable to fetchMapMarkers -> \(error.localizedDescription)")
-        //            }
-        //        }
-        
     }
-    
-    //            eventDataAdapter.fetchMapMarkers { [weak self] success in
-    //                Task { @MainActor in
-    //                    self?.isLoading = false
-    //
-    //                    if success {
-    //                        print("In fetchMarkers")
-    //                        var mapOutreachEvents = self?.eventDataAdapter.mapOutreachEvents ?? []
-    //                        print("mapOutreachEvents in MapViewModel --> \(mapOutreachEvents)")
-    //                        self?.outreachEvents = mapOutreachEvents
-    //
-    //                        print("FetchMarkers --> \(self?.outreachEvents)")
-    //                        self?.helpRequests = self?.eventDataAdapter.mapHelpRequests ?? []
-    //                        //self?.hasLoadedInitialData = true
-    //                    } else {
-    //                        self?.error = NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Failed to fetch markers"])
-    //                    }
-    //                }
-    //            }
 }
-
-
-
-//    func fetchMarkers() {
-//        isLoading = true
-//
-//        eventDataAdapter.fetchMapMarkers { [weak self] success in
-//
-//                self?.isLoading = false
-//
-//                if success {
-//                    //save OutReachEvents and HelpRequest
-//                    print("In fetchMarkers")
-//                    var mapOutreachEvents = self?.eventDataAdapter.mapOutreachEvents ?? []
-//                    print("mapOutreachEvents in MapViewModel --> \(mapOutreachEvents)")
-//                    DispatchQueue.main.async {
-//                        self?.outreachEvents = mapOutreachEvents
-//                    }
-//
-//                    print("FetchMarkers --> \(self?.outreachEvents)")
-//                    self?.helpRequests = self?.eventDataAdapter.mapHelpRequests ?? []
-//                } else {
-//                    self?.error = NSError(domain: "", code: -1, userInfo: [NSLocalizedDescriptionKey: "Failed to fetch markers"])
-//                }
-//
-//        }
-//    }
-//}
-//Access this data in GoogleMapView in updateView
