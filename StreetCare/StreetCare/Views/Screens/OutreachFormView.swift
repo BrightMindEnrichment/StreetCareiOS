@@ -48,7 +48,7 @@ struct OutreachFormView: View {
         !maxCapacity.isEmpty
     }
 
-    func saveToFirestore() {
+    /*func saveToFirestore() {
         guard allFieldsFilled else {
             alertMessage = "Please fill in all required fields."
             alertTitle = "New Outreach Event"
@@ -67,8 +67,8 @@ struct OutreachFormView: View {
             chaptermemberMessage1 = "Streamline your experience with Chapter membership."
             showAlert = true
         }
-    }
-    /*func saveToFirestore() {
+    }*/
+    func saveToFirestore() {
         guard allFieldsFilled else {
             alertMessage = "Please fill in all required fields."
             alertTitle = "New Outreach Event"
@@ -112,7 +112,7 @@ struct OutreachFormView: View {
             }
             showAlert = true
         }
-    }*/
+    }
     var body: some View {
         NavigationLink(
             //destination: ChapterMembershipForm(isPresented: $showChapterMembershipForm),
