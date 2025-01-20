@@ -16,11 +16,11 @@ struct GoogleMapView: UIViewRepresentable {
     func makeUIView(context: Context) -> GMSMapView {
         print("Making UIView for Google Maps...")
         
-        
+        //37.38605, -122.08385
         let camera = GMSCameraPosition(
-            latitude: 42.333774,
-            longitude: -71.064937,
-            zoom: 12.0
+            latitude: 42.333774, //37.38605,
+            longitude: -71.064937,  //-122.08385,
+            zoom: 12.5
         )
         
         // Configure map view
@@ -104,22 +104,33 @@ struct GoogleMapView: UIViewRepresentable {
         //clear map view
         mapView.clear()
         
-        // Add outreach event markers (orange)
-        for event in viewModel.outreachEvents {
-            let marker = GMSMarker(position: event.location)
-            print("Marker from GMSMarker --> \(marker)")
-            marker.title = event.title
-            marker.snippet = event.description
-            marker.icon = GMSMarker.markerImage(with: .systemYellow)
-            marker.map = mapView
-        }
         
         // Add help request markers (red)
         for request in viewModel.helpRequests {
             let marker = GMSMarker(position: request.location)
             marker.title = request.identification
             marker.snippet = request.description
-            marker.icon = GMSMarker.markerImage(with: UIColor(Color.red))
+            if let originalImage = UIImage(named: "RedMarker") {
+                let resizedImage = resizeImage(image: originalImage, targetSize: CGSize(width: 25, height: 35))
+                marker.icon = resizedImage
+            }
+            //marker.icon = GMSMarker.markerImage(with: UIColor(Color.red))
+            marker.map = mapView
+        }
+        
+        // Add outreach event markers (orange)
+        for event in viewModel.outreachEvents {
+            let marker = GMSMarker(position: event.location)
+            print("Marker from GMSMarker --> \(marker)")
+            marker.title = event.title
+            marker.snippet = event.description
+            // Then use it like this:
+            if let originalImage = UIImage(named: "YellowMarker") {
+                let resizedImage = resizeImage(image: originalImage, targetSize: CGSize(width: 25, height: 35))
+                marker.icon = resizedImage
+            }
+            
+            //marker.icon = UIImage(named: "yellowMarker")
             marker.map = mapView
         }
         
@@ -143,6 +154,18 @@ struct GoogleMapView: UIViewRepresentable {
     // Add Coordinator for handling map interactions
     func makeCoordinator() -> Coordinator {
         Coordinator(self)
+    }
+    
+    // Helper function to resize the image
+    func resizeImage(image: UIImage?, targetSize: CGSize) -> UIImage? {
+        guard let image = image else { return nil }
+        
+        UIGraphicsBeginImageContextWithOptions(targetSize, false, 0.0)
+        image.draw(in: CGRect(origin: .zero, size: targetSize))
+        let resizedImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        return resizedImage
     }
     
     
@@ -170,3 +193,26 @@ struct GoogleMapView: UIViewRepresentable {
     }
     
 }
+
+// Method 2: Using hex color to match Android's yellow marker
+extension UIColor {
+    convenience init(hex: String) {
+        let hex = hex.trimmingCharacters(in: CharacterSet.alphanumerics.inverted)
+        var int = UInt64()
+        Scanner(string: hex).scanHexInt64(&int)
+        let a, r, g, b: UInt64
+        switch hex.count {
+        case 3:
+            (a, r, g, b) = (255, (int >> 8) * 17, (int >> 4 & 0xF) * 17, (int & 0xF) * 17)
+        case 6:
+            (a, r, g, b) = (255, int >> 16, int >> 8 & 0xFF, int & 0xFF)
+        case 8:
+            (a, r, g, b) = (int >> 24, int >> 16 & 0xFF, int >> 8 & 0xFF, int & 0xFF)
+        default:
+            (a, r, g, b) = (255, 0, 0, 0)
+        }
+        self.init(red: CGFloat(r) / 255, green: CGFloat(g) / 255, blue: CGFloat(b) / 255, alpha: CGFloat(a) / 255)
+    }
+}
+
+ // Android's yellow color

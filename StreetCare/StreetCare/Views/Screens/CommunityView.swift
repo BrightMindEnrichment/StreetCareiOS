@@ -91,7 +91,7 @@ struct CommunityView: View {
                             }
                             
                             VStack{
-                                Spacer().frame(height: 30)
+                                //Spacer().frame(height: 30)
                                 
                                 Text(" Map")
                                     .font(.title)

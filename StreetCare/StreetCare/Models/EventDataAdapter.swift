@@ -146,16 +146,7 @@ class EventDataAdapter {
     
     func fetchMapMarkers() async -> Bool {
         print("In fetchMapMarkers...")
-        do{
-            
-//            async let outReachEvents = fetchOutreachEventLocations
-//            async let helpRequests = fetchHelpRequestLocations()
-//            
-//            try await outReachEvents
-//            try await helpRequests
-//            try await fetchOutreachEventLocations()
-//            try await fetchHelpRequestLocations()
-            
+        do{            
             let(outReachEvents, helpRequests) = try await (fetchOutreachEventLocations(), fetchHelpRequestLocations())
             
             print("MapOutReach Events markers - \(mapOutreachEvents.count)")
@@ -239,7 +230,7 @@ class EventDataAdapter {
         
         print("First batch of \(min(10, events.count)) addresses processed")
         
-        for index in 10..<min(30, events.count) {
+        for index in 10..<min(40, events.count) {
             do {
                 let coordinate = try await geocodeOutReachAddress(events[index].address)
                 let mapEvent = (
@@ -254,29 +245,6 @@ class EventDataAdapter {
             }
         }
         
-        // Process all events with delays
-//        for (index, event) in events.enumerated() {
-//            do {
-//                // Add delay between requests
-//                if index <= 40 {
-//                    //try await Task.sleep(nanoseconds: 100_000_000)  // 3 second delay
-//                
-//                //print("Attempting to geocode address: \(event.address)")
-//                let coordinate = try await geocodeOutReachAddress(event.address)
-//                //print("Successfully geocoded: \(event.address)")
-//                
-//                let mapEvent = (
-//                    location: coordinate,
-//                    title: event.title,
-//                    description: event.description
-//                )
-//                mapOutreachEvents.append(mapEvent)
-//            }
-//            } catch {
-//                print("Detailed geocoding error for \(event.address): \(error)")
-//                continue
-//            }
-//        }
         
         print("Successfully processed \(mapOutreachEvents.count) addresses")
     }
@@ -332,7 +300,7 @@ class EventDataAdapter {
         for (index, request) in requests.enumerated() {
             do {
                 // Add delay between requests if needed
-                if index <= 30 {
+                if index <= 40 {
                     //try await Task.sleep(nanoseconds: 100_000_000)  // Optional delay
                     
                     let coordinate = try await geocodeHelpAddress(request.address)
