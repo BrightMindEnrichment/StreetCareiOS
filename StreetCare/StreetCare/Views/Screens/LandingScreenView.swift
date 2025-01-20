@@ -31,6 +31,7 @@ struct LandingScreenView: View {
     @State private var img = ImageEnum.img1
     @State private var fadeOut = false
     @State private var currentPage = 0
+    @State private var isBannerVisible = true // State to control banner visibility
 
     let timer = Timer.publish(every: 3, on: .main, in: .common).autoconnect()
 
@@ -38,34 +39,8 @@ struct LandingScreenView: View {
         NavigationStack {
             ZStack {
                 VStack {
-                    // Updated Banner Section
-                    ZStack(alignment: .leading) {
-                        VStack(alignment: .leading, spacing: 8) {
-                            Text(NSLocalizedString("bannertitle1", comment: ""))
-                                .font(.caption)
-                                .fontWeight(.bold)
-                                .foregroundColor(.blue)
-                            
-                            Text(NSLocalizedString("bannertitle2", comment: ""))
-                                .font(.title3)
-                                .fontWeight(.bold)
-                                .foregroundColor(.black)
-                            
-                            Text(NSLocalizedString("bannertext", comment: ""))
-                                .font(.subheadline)
-                                .foregroundColor(.black)
-                                .lineSpacing(4)
-                        }
-                        .padding()
-                        .background(
-                            RoundedRectangle(cornerRadius: 16)
-                                .fill(Color(red: 1.0, green: 0.9, blue: 0.2))
-                        )
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 16)
-                                .stroke(Color.black.opacity(0.1), lineWidth: 1)
-                        )
-                        .shadow(color: Color.gray.opacity(0.3), radius: 4, x: 0, y: 2)
+                    if isBannerVisible {
+                        BannerView(isBannerVisible: $isBannerVisible)
                     }
                     
                     ScrollView {
@@ -135,6 +110,51 @@ struct PageControl: View {
                     .onTapGesture {
                         self.currentPage = index
                     }
+            }
+        }
+    }
+}
+struct BannerView: View {
+    @Binding var isBannerVisible: Bool
+    
+    var body: some View {
+        ZStack(alignment: .topTrailing) {
+            VStack(alignment: .leading, spacing: 8) {
+                Text(NSLocalizedString("bannertitle1", comment: ""))
+                    .font(.caption)
+                    .fontWeight(.bold)
+                    .foregroundColor(.blue)
+                
+                Text(NSLocalizedString("bannertitle2", comment: ""))
+                    .font(.title3)
+                    .fontWeight(.bold)
+                    .foregroundColor(.black)
+                
+                Text(NSLocalizedString("bannertext", comment: ""))
+                    .font(.subheadline)
+                    .foregroundColor(.black)
+                    .lineSpacing(4)
+            }
+            .padding()
+            .background(
+                RoundedRectangle(cornerRadius: 16)
+                    .fill(Color(red: 1.0, green: 0.9, blue: 0.2))
+            )
+            .overlay(
+                RoundedRectangle(cornerRadius: 16)
+                    .stroke(Color.black.opacity(0.1), lineWidth: 1)
+            )
+            .shadow(color: Color.gray.opacity(0.3), radius: 4, x: 0, y: 2)
+            
+            // Close button
+            Button(action: {
+                withAnimation {
+                    isBannerVisible = false
+                }
+            }) {
+                Image(systemName: "xmark.circle.fill")
+                    .foregroundColor(.gray)
+                    .padding(8)
             }
         }
     }
