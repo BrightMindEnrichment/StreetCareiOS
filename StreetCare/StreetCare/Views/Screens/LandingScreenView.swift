@@ -34,31 +34,12 @@ struct LandingScreenView: View {
     @State private var img = ImageEnum.img1
     @State private var fadeOut = false
     @State private var currentPage = 0
-    @State private var showChapterMembershipForm = false // State to control form presentation
-    @State private var shouldDismissAll = false
 
     let timer = Timer.publish(every: 3, on: .main, in: .common).autoconnect()
 
     var body: some View {
         NavigationStack {
             VStack {
-                // Button for Chapter Membership Form
-                Button(action: {
-                    showChapterMembershipForm = true // Show the form
-                }) {
-                    Text("Chapter Membership Form")
-                        .font(.headline)
-                        .foregroundColor(.white)
-                        .padding()
-                        .frame(maxWidth: .infinity)
-                        .background(Color.yellow)
-                        .cornerRadius(8)
-                }
-                .padding(.bottom, 10)
-                .sheet(isPresented: $showChapterMembershipForm) {
-                    //ChapterMembershipForm(isPresented: $showChapterMembershipForm) // Pass the binding
-                    OutreachFormView(isPresented: $showChapterMembershipForm,shouldDismissAll: $shouldDismissAll)
-                }
 
                 ScrollView {
                     Image(img.rawValue)
