@@ -137,7 +137,7 @@ struct ChapterMembershipForm: View {
     }
     @State private var selectedCountry: String = "" // Selected value for the dropdown
     let countries = [
-        "Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Antigua and Barbuda", "Argentina", "Armenia", "Australia",
+        "United States of America", "Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Antigua and Barbuda", "Argentina", "Armenia", "Australia",
         "Austria", "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin",
         "Bhutan", "Bolivia", "Bosnia and Herzegovina", "Botswana", "Brazil", "Brunei", "Bulgaria", "Burkina Faso",
         "Burundi", "Cabo Verde", "Cambodia", "Cameroon", "Canada", "Central African Republic", "Chad", "Chile", "China",
@@ -177,7 +177,7 @@ struct ChapterMembershipForm: View {
                     
                     Text("Click here to find out what [chapter membership entails.](https://street_care_website_media_images.storage.googleapis.com/wp-content/uploads/2024/07/30201929/chapter_membership_entails_sc.pdf)")
                     
-                    Text("If you prefer to sign and send ina copy or save it for later reference, please download the form [here.](https://street_care_website_media_images.storage.googleapis.com/wp-content/uploads/2024/07/30202242/Full-Chapter-Form.pdf)")
+                    Text("If you prefer to sign and send in a copy or save it for later reference, please download the form [here.](https://street_care_website_media_images.storage.googleapis.com/wp-content/uploads/2024/07/30202242/Full-Chapter-Form.pdf)")
                     
                     // Personal Details Section
                     Text("Personal details")
@@ -491,7 +491,7 @@ struct ChapterMembershipForm: View {
         ScrollView {
             VStack(alignment: .leading, spacing: 20) {
 
-                Text(NSLocalizedString("cmintrotext4", comment: ""))
+                Text("By signing below I agree to be a volunteer member of Street Care and to uphold the chapter’s regulations and values [(https://streetcare.us/)](https://streetcare.us/), as may be amended or updated from time to time at Street Care and Bright Mind's sole discretion.")
                     .font(.body)
                     .fontWeight(.bold)
                 

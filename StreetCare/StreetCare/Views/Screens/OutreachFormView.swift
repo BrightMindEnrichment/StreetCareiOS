@@ -107,7 +107,7 @@ struct OutreachFormView: View {
             } else {
                 // Success
                 alertTitle = "Thank you for submitting your request!"
-                alertMessage = "Approval may take up to 5 business days."
+                alertMessage = "Approval may take up to 5 business days. "
                 chaptermemberMessage1 = "Streamline your experience with Chapter membership."
             }
             showAlert = true
@@ -242,11 +242,13 @@ struct OutreachFormView: View {
                 message: Text(alertMessage + chaptermemberMessage1),
                 primaryButton: .default(Text("Sign Up")) {
                     // Navigate only if the alert message matches
-                    if alertMessage == "Approval may take up to 5 business days." {
+                    if alertMessage == "Approval may take up to 5 business days. " {
                         showChapterMembershipForm = true
                     }
                 },
-                secondaryButton: .cancel(Text("Remind me Later"))
+                secondaryButton: .cancel(Text("Remind me Later")){
+                    presentationMode.wrappedValue.dismiss()
+                }
             )
         }
         .onChange(of: shouldDismissAll) { value in
