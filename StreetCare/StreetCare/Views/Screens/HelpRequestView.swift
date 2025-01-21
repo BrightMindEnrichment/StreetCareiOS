@@ -125,7 +125,7 @@ struct HelpRequestCardView: View {
                 Text(event.location!)
                     .font(.system(size: 13))
             }
-            if let userType = event.userType {
+            /*if let userType = event.userType {
                 Text("User Type: \(userType)") // Display the user type
                     .font(.system(size: 13))
                     .foregroundColor(.gray)
@@ -133,7 +133,7 @@ struct HelpRequestCardView: View {
                 Text("User Type: Unknown") // Fallback if user type is not fetched yet
                     .font(.system(size: 13))
                     .foregroundColor(.gray)
-            }
+            }*/
                         
             if let identification = event.identification{
                 Text("How to Find: \(identification == "" ? "-" : identification)").font(.system(size: 13))
@@ -212,6 +212,6 @@ func getVerificationColor(for userType: String?) -> Color {
     case "Chapter Leader":
         return Color.green
     default:
-        return Color.gray // Default color for unknown user types
+        return Color.yellow
     }
 }
