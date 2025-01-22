@@ -9,7 +9,7 @@ import SwiftUI
 import FirebaseFirestore
 
 struct ChapterMembershipForm: View {
-    @Binding var isPresented: Bool // Pass this from the parent to handle dismissal
+    /*@Binding var isPresented: Bool // Pass this from the parent to handle dismissal
     @Binding var shouldDismissAll: Bool // Shared variable
     @State private var currentStep: Int = 1
     @State private var firstName = ""
@@ -32,8 +32,58 @@ struct ChapterMembershipForm: View {
     @State private var signatureDate = Date()
     @State private var comments = ""
     @State private var navigateToSubmissionScreen = false
-    @State private var showAlert = false
+    @State private var showAlert = false*/
+    @Binding var isPresented: Bool
+    @Binding var shouldDismissAll: Bool
+    @SceneStorage("currentStep") private var currentStep: Int = 1
+    @SceneStorage("firstName") private var firstName = ""
+    @SceneStorage("lastName") private var lastName = ""
+    @SceneStorage("email") private var email = ""
+    @SceneStorage("phoneNumber") private var phoneNumber = ""
+    @SceneStorage("addressLine1") private var addressLine1 = ""
+    @SceneStorage("addressLine2") private var addressLine2 = ""
+    @SceneStorage("city") private var city = ""
+    @SceneStorage("state") private var state = ""
+    @SceneStorage("zipCode") private var zipCode = ""
+    @SceneStorage("country") private var country = ""
+    @SceneStorage("daysAvailable") private var daysAvailable = ""
+    @SceneStorage("hoursAvailable") private var hoursAvailable = ""
+    @SceneStorage("heardAbout") private var heardAbout = ""
+    @SceneStorage("reason") private var reason = ""
+    @SceneStorage("signature") private var signature = ""
+    @SceneStorage("guardianSignature") private var guardianSignature = ""
+    @SceneStorage("fullname") private var fullname = ""
+    //@SceneStorage("signatureDate") private var signatureDate = Date()
+    //@AppStorage("signatureDateString") private var signatureDateString: String = DateFormatter.localizedString(from: Date(), dateStyle: .medium, timeStyle: .none)
+    @SceneStorage("comments") private var comments = ""
+    @SceneStorage("selectedCountry") private var selectedCountry: String = ""
+    //@SceneStorage("selectedDays") private var selectedDays: Set<String> = Set<String>()
 
+    @State private var showAlert = false
+    @AppStorage("signatureDateString") private var signatureDateString: String = DateFormatter.localizedString(from: Date(), dateStyle: .medium, timeStyle: .none)
+
+    @State private var signatureDate: Date = {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .medium
+        formatter.timeStyle = .none
+        return formatter.date(from: UserDefaults.standard.string(forKey: "signatureDateString") ?? "") ?? Date()
+    }()
+    @AppStorage("selectedDaysString") private var selectedDaysString: String = ""
+
+    private var selectedDays: Set<String> {
+        get {
+            Set(selectedDaysString.split(separator: ",").map { String($0) })
+        }
+        set {
+            selectedDaysString = newValue.joined(separator: ",")
+        }
+    }
+    private var dateFormatter: DateFormatter {
+        let formatter = DateFormatter()
+        formatter.dateStyle = .medium
+        formatter.timeStyle = .none
+        return formatter
+    }
     var allPersonalFieldsFilled: Bool {
         !firstName.isEmpty && !lastName.isEmpty && !email.isEmpty && !phoneNumber.isEmpty
             && !addressLine1.isEmpty && !city.isEmpty && !state.isEmpty && !zipCode.isEmpty && !country.isEmpty
@@ -76,6 +126,18 @@ struct ChapterMembershipForm: View {
                 showAlert = true
             }
         }
+    }
+    
+    func addDay(_ day: String) {
+        var days = Set(selectedDaysString.split(separator: ",").map { String($0) })
+        days.insert(day)
+        selectedDaysString = days.joined(separator: ",")
+    }
+
+    func removeDay(_ day: String) {
+        var days = Set(selectedDaysString.split(separator: ",").map { String($0) })
+        days.remove(day)
+        selectedDaysString = days.joined(separator: ",")
     }
     
     var body: some View {
@@ -135,7 +197,7 @@ struct ChapterMembershipForm: View {
             }
         }
     }
-    @State private var selectedCountry: String = "" // Selected value for the dropdown
+    //@State private var selectedCountry: String = "" // Selected value for the dropdown
     let countries = [
         "United States of America", "Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Antigua and Barbuda", "Argentina", "Armenia", "Australia",
         "Austria", "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin",
@@ -334,7 +396,7 @@ struct ChapterMembershipForm: View {
         }
     }
 
-    @State private var selectedDays: Set<String> = [] // Track selected days
+    //@State private var selectedDays: Set<String> = [] // Track selected days
     let daysOfWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
 
     var availabilityView: some View {
@@ -356,11 +418,26 @@ struct ChapterMembershipForm: View {
                     Menu {
                         VStack {
                             ForEach(daysOfWeek, id: \.self) { day in
-                                Button(action: {
+                                /*Button(action: {
                                     if selectedDays.contains(day) {
                                         selectedDays.remove(day)
                                     } else {
                                         selectedDays.insert(day)
+                                    }
+                                }) {
+                                    HStack {
+                                        Text(day)
+                                        Spacer()
+                                        if selectedDays.contains(day) {
+                                            Image(systemName: "checkmark")
+                                        }
+                                    }
+                                }*/
+                                Button(action: {
+                                    if selectedDays.contains(day) {
+                                        removeDay(day)
+                                    } else {
+                                        addDay(day)
                                     }
                                 }) {
                                     HStack {
@@ -519,8 +596,13 @@ struct ChapterMembershipForm: View {
                     Text("Date of Signature")
                         .font(.headline)
                         .fontWeight(.bold)
+                    //DatePicker("Date of Signature", selection: $signatureDate, displayedComponents: .date)
+                        //.datePickerStyle(CompactDatePickerStyle())
                     DatePicker("Date of Signature", selection: $signatureDate, displayedComponents: .date)
                         .datePickerStyle(CompactDatePickerStyle())
+                        .onChange(of: signatureDate) { newDate in
+                            signatureDateString = dateFormatter.string(from: newDate)
+                        }
                 }
 
                 VStack(alignment: .leading, spacing: 8) {

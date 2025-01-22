@@ -11,7 +11,8 @@ struct OutreachFormView: View {
     @Binding var isPresented: Bool
     //@Environment(\.dismiss) var dismiss
     @Binding var shouldDismissAll: Bool // Shared variable
-    @State private var showChapterMembershipForm = false // State to control form presentation
+    //@State private var showChapterMembershipForm = false // State to control form presentation
+    @SceneStorage("showChapterMembershipForm") private var showChapterMembershipForm: Bool = false
     @Environment(\.presentationMode) var presentationMode // Local dismissal environment
     @State private var title = ""
     @State private var street = ""
