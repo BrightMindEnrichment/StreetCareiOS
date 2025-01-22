@@ -4,9 +4,7 @@
 //
 //  Created by Amey Kanunje on 9/27/24.
 //
-
 import SwiftUI
-
 struct ICanHelpView: View {
     
     @Binding var isPresented: Bool // Binding to control dismissal of this view
@@ -55,7 +53,7 @@ struct ICanHelpView: View {
                 }*/
                 Button(action: {
                 }) {
-                    NavigationLink(destination: EventListView()) {
+                    NavigationLink(destination: CommunityEventView(eventType: .future)) {
                         Text(NSLocalizedString("rsvpExistingOutreach", comment: ""))
                             .padding(EdgeInsets(top: 8.0, leading: 20.0, bottom: 8.0, trailing: 20.0))
                             .foregroundColor(Color("PrimaryColor"))
@@ -97,8 +95,6 @@ struct ICanHelpView: View {
         }
     }
 }
-
-
 //#Preview {
 //    ICanHelpView(isPresented: )
 //}

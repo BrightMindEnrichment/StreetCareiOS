@@ -26,7 +26,10 @@ struct EventPopupView: View {
                 Text(event.event.title.capitalized)
                     .font(.headline)
                 Spacer()
-                Image("blueCheckMark")
+                Image(systemName: "checkmark.circle.fill")
+                    .foregroundColor(getVerificationColor(for: event.event.userType))
+                    .font(.system(size: 20))
+                    .padding(8)
             }
             
             HStack {

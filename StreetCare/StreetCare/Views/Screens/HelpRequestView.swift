@@ -103,7 +103,17 @@ struct HelpRequestCardView: View {
                 
                 Spacer()
                 
-                Image("blueCheckMark")
+                //Image("blueCheckMark")
+                /*Circle()
+                    .fill(getVerificationColor(for: event.userType)) // Dynamic color
+                    .frame(width: 15, height: 15)
+                    .overlay(Circle().stroke(Color.white, lineWidth: 1)) // Add a border*/
+                HStack(spacing: 5) {
+                    // Checkmark icon with dynamic color
+                    Image(systemName: "checkmark.circle.fill")
+                        .foregroundColor(getVerificationColor(for: event.userType))
+                        .font(.system(size: 20))
+                }
             }
             
             
@@ -115,7 +125,16 @@ struct HelpRequestCardView: View {
                 Text(event.location!)
                     .font(.system(size: 13))
             }
-       
+            /*if let userType = event.userType {
+                Text("User Type: \(userType)") // Display the user type
+                    .font(.system(size: 13))
+                    .foregroundColor(.gray)
+            } else {
+                Text("User Type: Unknown") // Fallback if user type is not fetched yet
+                    .font(.system(size: 13))
+                    .foregroundColor(.gray)
+            }*/
+                        
             if let identification = event.identification{
                 Text("How to Find: \(identification == "" ? "-" : identification)").font(.system(size: 13))
             }
@@ -178,4 +197,21 @@ class SearchHelpRequestViewModel: ObservableObject {
                return events.filter { $0.title!.localizedCaseInsensitiveContains(searchText) }
            }
        }
+}
+
+func getVerificationColor(for userType: String?) -> Color {
+    switch userType {
+    case nil:
+        return Color.yellow // Random person without account or missing type
+    case "":
+        return Color.yellow
+    case "Chapter Member":
+        return Color.purple
+    case "Internal Member":
+        return Color.blue
+    case "Chapter Leader":
+        return Color.green
+    default:
+        return Color.yellow
+    }
 }
