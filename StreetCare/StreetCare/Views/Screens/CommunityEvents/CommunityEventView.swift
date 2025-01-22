@@ -19,6 +19,7 @@ struct CommunityEventView: View {
     @State private var selectedFilter: FilterType = .none
     @Binding var isPresented: Bool // Binding to control dismissal of this view
     @State private var shouldDismissAll = false // Shared variable for dismissing all views
+    @State private var isNavigationActive = false
 
     let formatter = DateFormatter()
     var eventType: EventType
@@ -140,17 +141,42 @@ struct CommunityEventView: View {
                 adapter.refresh()
             }
         }
+        /*.toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                NavigationLink(destination: OutreachFormView(isPresented: $isPresented, shouldDismissAll: $shouldDismissAll)
+                    .navigationBarBackButtonHidden(true)) {
+                        Image(systemName: "plus")
+                            .foregroundColor(Color("SecondaryColor"))
+                    }
+            }
+        }*/
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
-                NavigationLink(destination: OutreachFormView(isPresented: $isPresented,shouldDismissAll: $shouldDismissAll)) {
+                Button(action: {
+                    isNavigationActive = true
+                }) {
                     Image(systemName: "plus")
                         .foregroundColor(Color("SecondaryColor"))
                 }
             }
         }
+        .sheet(isPresented: $isNavigationActive, onDismiss: {
+            isNavigationActive = false
+        }) {
+            NavigationStack {
+                OutreachFormView(isPresented: $isPresented, shouldDismissAll: $shouldDismissAll)
+            }
+        }
         .onDisappear {
             isBottomSheetPresented = false
             selectedFilter = .none
+        }
+        .onChange(of: shouldDismissAll) { newValue in
+            if newValue {
+                // Close all forms and reset state
+                isPresented = false
+                shouldDismissAll = false // Reset for future interactions
+            }
         }
     }
     
