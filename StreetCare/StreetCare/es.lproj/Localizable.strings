@@ -99,9 +99,9 @@
 "egmaximumCapacity" = "Capacidad máxima de participantes permitida";
 "eventDescription" = "Descripción del evento";
 "enterEventDescription" = "Ingrese la descripción del evento";
-
-
-
+"bannertitle1" = "PRÓXIMAMENTE";
+"bannertitle2" = "Obtener verificado!";
+"bannertext" = "La verificación de perfil permitirá a cualquier persona verificada publicar próximos eventos y documentar sus interacciones con personas sin hogar.";
 //"helloWorld" = "¡Hola Mundo!";
 //"welcome" = "Bienvenido a\nStreet Care";
 //"loginButtonTitle" = "Acceso";
