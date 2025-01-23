@@ -11,8 +11,7 @@ struct OutreachFormView: View {
     @Binding var isPresented: Bool
     //@Environment(\.dismiss) var dismiss
     @Binding var shouldDismissAll: Bool // Shared variable
-    //@State private var showChapterMembershipForm = false // State to control form presentation
-    @SceneStorage("showChapterMembershipForm") private var showChapterMembershipForm: Bool = false
+    @State private var showChapterMembershipForm = false // State to control form presentation
     @Environment(\.presentationMode) var presentationMode // Local dismissal environment
     @State private var title = ""
     @State private var street = ""
@@ -108,10 +107,10 @@ struct OutreachFormView: View {
             } else {
                 // Success
                 alertTitle = "Thank you for submitting your request!"
-                alertMessage = "Approval may take up to 5 business days. "
-                chaptermemberMessage1 = "Streamline your experience with Chapter membership."
+                alertMessage = "Approval may take up to 5 business days."
+                chaptermemberMessage1 = " Streamline your experience with Chapter membership."
+                showAlert = true
             }
-            showAlert = true
         }
     }
     var body: some View {
@@ -243,7 +242,7 @@ struct OutreachFormView: View {
                 message: Text(alertMessage + chaptermemberMessage1),
                 primaryButton: .default(Text("Sign Up")) {
                     // Navigate only if the alert message matches
-                    if alertMessage == "Approval may take up to 5 business days. " {
+                    if alertMessage == "Approval may take up to 5 business days." {
                         showChapterMembershipForm = true
                     }
                 },
