@@ -7,6 +7,7 @@
 
 import SwiftUI
 import FirebaseFirestore
+import SafariServices
 
 struct ChapterMembershipForm: View {
     @Binding var isPresented: Bool // Pass this from the parent to handle dismissal
@@ -39,9 +40,21 @@ struct ChapterMembershipForm: View {
             && !addressLine1.isEmpty && !city.isEmpty && !state.isEmpty && !zipCode.isEmpty && !country.isEmpty
     }
     func openURL(_ urlString: String) {
-            guard let url = URL(string: urlString) else { return }
-            UIApplication.shared.open(url)
+        guard let url = URL(string: urlString) else { return }
+        if let topController = getTopViewController() {
+            let safariVC = SFSafariViewController(url: url)
+            safariVC.preferredControlTintColor = .systemBlue // Optional: Customize the tint color
+            topController.present(safariVC, animated: true, completion: nil)
         }
+    }
+    func getTopViewController() -> UIViewController? {
+        guard let window = UIApplication.shared.windows.first else { return nil }
+        var topController = window.rootViewController
+        while let presentedController = topController?.presentedViewController {
+            topController = presentedController
+        }
+        return topController
+    }
     func saveFormDataToFirestore() {
         // Reference to Firestore
         let db = Firestore.firestore()
@@ -169,11 +182,18 @@ struct ChapterMembershipForm: View {
                     Text(NSLocalizedString("Chapter Membership", comment: ""))
                         .font(.headline)
                         .fontWeight(.bold)
+                    Button("Learn More") {
+                        openURL("https://brightmindenrichment.org/")
+                    }
+                    .foregroundColor(.blue)
 
                     Text("Street Care members work to help homeless people and are passionate about serving the community. Street Care is an initiative of [Bright Mind](https://brightmindenrichment.org/), an award-winning 501(c)(3) nonprofit organization.")
+                        .foregroundColor(.accentColor)
 
                     Text(NSLocalizedString("cmintrotext2", comment: ""))
                         .font(.body)
+                    
+                    LinkedParagraphView()
                     
                     Text("Click here to find out what [chapter membership entails.](https://street_care_website_media_images.storage.googleapis.com/wp-content/uploads/2024/07/30201929/chapter_membership_entails_sc.pdf)")
                     
@@ -330,6 +350,15 @@ struct ChapterMembershipForm: View {
                     .padding(.top, 20)
                 }
                 .padding()
+                .onChange(of: isPresented) { newValue in
+                    print("isPresented changed to: \(newValue)")
+                }
+                .onChange(of: shouldDismissAll) { newValue in
+                    print("shouldDismissAll changed to: \(newValue)")
+                }
+                .onAppear {
+                    print("View appeared. isPresented: \(isPresented), shouldDismissAll: \(shouldDismissAll)")
+                }
             }
         }
     }
@@ -494,6 +523,7 @@ struct ChapterMembershipForm: View {
                 Text("By signing below I agree to be a volunteer member of Street Care and to uphold the chapter’s regulations and values [(https://streetcare.us/)](https://streetcare.us/), as may be amended or updated from time to time at Street Care and Bright Mind's sole discretion.")
                     .font(.body)
                     .fontWeight(.bold)
+
                 
                 Text("If you are a minor (under 18 years of age), you must ask your guardian to fill out this [form](https://street_care_website_media_images.storage.googleapis.com/wp-content/uploads/2024/08/05190106/VOLUNTEER-RELEASE-FORM-FOR-MINORS.pdf) and send it to us at volunteer@streetcare.us")
                     .font(.body)
@@ -572,5 +602,47 @@ struct ChapterMembershipForm: View {
             }
             .padding()
         }
+    }
+}
+struct LinkedParagraphView: View {
+    var body: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            Text("Street Care members work to help homeless people and are passionate about serving the community. Street Care is an initiative of ")
+            Text("Bright Mind")
+                .underline()
+                .foregroundColor(.blue)
+                .onTapGesture {
+                    openURL("https://brightmindenrichment.org/")
+                }
+            Text(", an award-winning 501(c)(3) nonprofit organization. Click here to find out what ")
+            Text("chapter membership entails")
+                .underline()
+                .foregroundColor(.blue)
+                .onTapGesture {
+                    openURL("https://street_care_website_media_images.storage.googleapis.com/wp-content/uploads/2024/07/30201929/chapter_membership_entails_sc.pdf")
+                }
+            Text(".")
+        }
+        .padding()
+    }
+
+    // Helper to open the URL
+    func openURL(_ urlString: String) {
+        guard let url = URL(string: urlString) else { return }
+        if let topController = getTopViewController() {
+            let safariVC = SFSafariViewController(url: url)
+            safariVC.preferredControlTintColor = .systemBlue // Optional: Customize the tint color
+            topController.present(safariVC, animated: true, completion: nil)
+        }
+    }
+
+    // Function to get the top-most view controller
+    func getTopViewController() -> UIViewController? {
+        guard let window = UIApplication.shared.windows.first else { return nil }
+        var topController = window.rootViewController
+        while let presentedController = topController?.presentedViewController {
+            topController = presentedController
+        }
+        return topController
     }
 }
