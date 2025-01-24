@@ -98,7 +98,7 @@ struct ChapterMembershipForm: View {
                     .font(.title)
                     .fontWeight(.bold)
                     .multilineTextAlignment(.center)
-                    .padding()
+                    //.padding()
 
                 if currentStep == 1 {
                     personalDetailsView
@@ -182,22 +182,8 @@ struct ChapterMembershipForm: View {
                     Text(NSLocalizedString("Chapter Membership", comment: ""))
                         .font(.headline)
                         .fontWeight(.bold)
-                    Button("Learn More") {
-                        openURL("https://brightmindenrichment.org/")
-                    }
-                    .foregroundColor(.blue)
-
-                    Text("Street Care members work to help homeless people and are passionate about serving the community. Street Care is an initiative of [Bright Mind](https://brightmindenrichment.org/), an award-winning 501(c)(3) nonprofit organization.")
-                        .foregroundColor(.accentColor)
-
-                    Text(NSLocalizedString("cmintrotext2", comment: ""))
-                        .font(.body)
                     
                     LinkedParagraphView()
-                    
-                    Text("Click here to find out what [chapter membership entails.](https://street_care_website_media_images.storage.googleapis.com/wp-content/uploads/2024/07/30201929/chapter_membership_entails_sc.pdf)")
-                    
-                    Text("If you prefer to sign and send in a copy or save it for later reference, please download the form [here.](https://street_care_website_media_images.storage.googleapis.com/wp-content/uploads/2024/07/30202242/Full-Chapter-Form.pdf)")
                     
                     // Personal Details Section
                     Text("Personal details")
@@ -519,15 +505,8 @@ struct ChapterMembershipForm: View {
     var signatureView: some View {
         ScrollView {
             VStack(alignment: .leading, spacing: 20) {
-
-                Text("By signing below I agree to be a volunteer member of Street Care and to uphold the chapter’s regulations and values [(https://streetcare.us/)](https://streetcare.us/), as may be amended or updated from time to time at Street Care and Bright Mind's sole discretion.")
-                    .font(.body)
-                    .fontWeight(.bold)
-
                 
-                Text("If you are a minor (under 18 years of age), you must ask your guardian to fill out this [form](https://street_care_website_media_images.storage.googleapis.com/wp-content/uploads/2024/08/05190106/VOLUNTEER-RELEASE-FORM-FOR-MINORS.pdf) and send it to us at volunteer@streetcare.us")
-                    .font(.body)
-                    .fontWeight(.bold)
+                LinkedParagraphView2()
                 // Titles for Input Fields
                 VStack(alignment: .leading, spacing: 8) {
                     Text("Signature (If minor, Guardian's signature)")
@@ -607,23 +586,75 @@ struct ChapterMembershipForm: View {
 struct LinkedParagraphView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
-            Text("Street Care members work to help homeless people and are passionate about serving the community. Street Care is an initiative of ")
-            Text("Bright Mind")
+            Text("Street Care members work to help homeless people and are passionate about serving the community. Street Care is an initiative of Bright Mind, an award-winning 501(c)(3) nonprofit organization.")
+            Text("Click here to learn more about Bright Mind")
                 .underline()
                 .foregroundColor(.blue)
                 .onTapGesture {
                     openURL("https://brightmindenrichment.org/")
                 }
-            Text(", an award-winning 501(c)(3) nonprofit organization. Click here to find out what ")
-            Text("chapter membership entails")
+            Text(NSLocalizedString("cmintrotext2", comment: ""))
+                .font(.body)
+
+            Text("Click to learn more about Chapter Membership")
                 .underline()
                 .foregroundColor(.blue)
                 .onTapGesture {
                     openURL("https://street_care_website_media_images.storage.googleapis.com/wp-content/uploads/2024/07/30201929/chapter_membership_entails_sc.pdf")
                 }
-            Text(".")
+            Text("If you prefer to sign and send in a copy or save it for later reference, please download the form")
+            Text("here.")
+                .underline()
+                .foregroundColor(.blue)
+                .onTapGesture {
+                    openURL("https://street_care_website_media_images.storage.googleapis.com/wp-content/uploads/2024/07/30202242/Full-Chapter-Form.pdf")
+                }
         }
-        .padding()
+    }
+
+    // Helper to open the URL
+    func openURL(_ urlString: String) {
+        guard let url = URL(string: urlString) else { return }
+        if let topController = getTopViewController() {
+            let safariVC = SFSafariViewController(url: url)
+            safariVC.preferredControlTintColor = .systemBlue // Optional: Customize the tint color
+            topController.present(safariVC, animated: true, completion: nil)
+        }
+    }
+
+    // Function to get the top-most view controller
+    func getTopViewController() -> UIViewController? {
+        guard let window = UIApplication.shared.windows.first else { return nil }
+        var topController = window.rootViewController
+        while let presentedController = topController?.presentedViewController {
+            topController = presentedController
+        }
+        return topController
+    }
+}
+
+struct LinkedParagraphView2: View {
+    var body: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            Text("By signing below I agree to be a volunteer member of Street Care and to uphold the chapter’s regulations and values, as may be amended or updated from time to time at Street Care and Bright Mind's sole discretion.")
+            
+            Text("Learn more about Street Care's values")
+                .underline()
+                .foregroundColor(.blue)
+                .onTapGesture {
+                    openURL("https://streetcare.us/")
+                }
+            
+            Text("If you are a minor (under 18 years of age), you must ask your guardian to fill out the form below and email it to us at: volunteer@streetcare.us")
+
+
+            Text("Form")
+                .underline()
+                .foregroundColor(.blue)
+                .onTapGesture {
+                    openURL("https://street_care_website_media_images.storage.googleapis.com/wp-content/uploads/2024/08/05190106/VOLUNTEER-RELEASE-FORM-FOR-MINORS.pdf")
+                }
+        }
     }
 
     // Helper to open the URL
