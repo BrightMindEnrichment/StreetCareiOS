@@ -261,6 +261,7 @@ struct OutreachFormView: View {
             ToolbarItem(placement: .navigationBarLeading) {
                 Button(action: {
                     isPresented = false
+                    presentationMode.wrappedValue.dismiss()
                 }) {
                     Image(systemName: "chevron.left")
                         .font(.system(size: 16, weight: .medium))

@@ -51,6 +51,16 @@ struct ICanHelpView: View {
 //                .clipShape(Capsule())
                 
                 Button(action: {
+                }) {
+                    NavigationLink(destination: CommunityEventView(isPresented: $isPresented, eventType: .future)) {
+                        Text(NSLocalizedString("rsvpExistingOutreach", comment: ""))
+                            .padding(EdgeInsets(top: 8.0, leading: 20.0, bottom: 8.0, trailing: 20.0))
+                            .foregroundColor(Color("PrimaryColor"))
+                    }
+                    .background(Color("SecondaryColor"))
+                    .clipShape(Capsule())
+                }
+                Button(action: {
                     isOutreachCreated = true // Open OutreachFormView
                 }) {
                     Text(NSLocalizedString("createAnOutreach", comment: ""))

@@ -141,15 +141,6 @@ struct CommunityEventView: View {
                 adapter.refresh()
             }
         }
-        /*.toolbar {
-            ToolbarItem(placement: .navigationBarTrailing) {
-                NavigationLink(destination: OutreachFormView(isPresented: $isPresented, shouldDismissAll: $shouldDismissAll)
-                    .navigationBarBackButtonHidden(true)) {
-                        Image(systemName: "plus")
-                            .foregroundColor(Color("SecondaryColor"))
-                    }
-            }
-        }*/
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button(action: {
