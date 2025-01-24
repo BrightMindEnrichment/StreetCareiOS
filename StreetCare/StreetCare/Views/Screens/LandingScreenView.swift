@@ -90,9 +90,15 @@ struct LandingScreenView: View {
                         }
                     }
                 }
-                .padding()
             }
+            .padding()
         }
+    }
+}
+
+struct ContentView_Previews: PreviewProvider {
+    static var previews: some View {
+        LandingScreenView()
     }
 }
 
@@ -136,6 +142,7 @@ struct BannerView: View {
                     .lineSpacing(4)
             }
             .padding()
+            .frame(maxWidth: .infinity)
             .background(
                 RoundedRectangle(cornerRadius: 16)
                     .fill(Color(red: 1.0, green: 0.9, blue: 0.2))

@@ -4,12 +4,15 @@
 //
 //  Created by Amey Kanunje on 9/27/24.
 //
+
 import SwiftUI
+
 struct ICanHelpView: View {
     
     @Binding var isPresented: Bool // Binding to control dismissal of this view
     @State private var isOutreachCreated = false
-    @State private var isEventListPresented = false
+    @State private var shouldDismissAll = false // Shared variable for dismissing all views
+
     
     var body: some View {
         NavigationStack {
@@ -37,23 +40,19 @@ struct ICanHelpView: View {
                     .font(.subheadline)
                     .foregroundColor(.secondary)
                 
-                /*Button(action: {
-                    isEventListPresented = true
-                }) {
-                    Text(NSLocalizedString("rsvpExistingOutreach", comment: ""))
-                        .padding(EdgeInsets(top: 8.0, leading: 20.0, bottom: 8.0, trailing: 20.0))
-                        .foregroundColor(Color("PrimaryColor"))
-                }
-                .background(Color("SecondaryColor"))
-                .clipShape(Capsule())
-                .sheet(isPresented: $isEventListPresented) {
-                    NavigationStack {
-                        EventListView() // Present EventListView
-                    }
-                }*/
+//                Button(action: {
+//                    // Action for RSVP EXISTING OUTREACH
+//                }) {
+//                    Text(NSLocalizedString("rsvpExistingOutreach", comment: ""))
+//                        .padding(EdgeInsets(top: 8.0, leading: 20.0, bottom: 8.0, trailing: 20.0))
+//                        .foregroundColor(Color("PrimaryColor"))
+//                }
+//                .background(Color("SecondaryColor"))
+//                .clipShape(Capsule())
+                
                 Button(action: {
                 }) {
-                    NavigationLink(destination: CommunityEventView(eventType: .future)) {
+                    NavigationLink(destination: CommunityEventView(isPresented: $isPresented, eventType: .future)) {
                         Text(NSLocalizedString("rsvpExistingOutreach", comment: ""))
                             .padding(EdgeInsets(top: 8.0, leading: 20.0, bottom: 8.0, trailing: 20.0))
                             .foregroundColor(Color("PrimaryColor"))
@@ -72,10 +71,15 @@ struct ICanHelpView: View {
                 .clipShape(Capsule())
                 .sheet(isPresented: $isOutreachCreated) {
                     NavigationStack {
-                        OutreachFormView(isPresented: $isPresented) // Pass binding
+                        //OutreachFormView(isPresented: $isPresented) // Pass binding
+                        OutreachFormView(isPresented: $isPresented,shouldDismissAll: $shouldDismissAll)
                     }
                 }
-                
+                /*NavigationLink {
+                    OutreachFormView(isPresented: $isPresented,shouldDismissAll: $shouldDismissAll)
+                } label: {
+                    NavLinkButton(title:NSLocalizedString("createAnOutreach", comment: ""), width: 250.0,secondaryButton: true,noBorder: false, rightArrowNeeded: false,color: .black).frame(maxWidth: .infinity, alignment: .trailing)
+                }*/
                 Button(action: {
                     isPresented = false // Close this view
                 }) {
@@ -92,9 +96,20 @@ struct ICanHelpView: View {
             .background(Color.white)
             .cornerRadius(12)
             .shadow(radius: 10)
+            .onChange(of: shouldDismissAll) { newValue in
+                if newValue {
+                    // Close all forms and reset state
+                    isPresented = false
+                    shouldDismissAll = false // Reset for future interactions
+                }
+            }
         }
     }
 }
+
+
+
+
 //#Preview {
 //    ICanHelpView(isPresented: )
 //}

@@ -17,6 +17,9 @@ struct CommunityEventView: View {
     @StateObject private var viewModel = SearchCommunityModel()
     @State private var isBottomSheetPresented = false
     @State private var selectedFilter: FilterType = .none
+    @Binding var isPresented: Bool // Binding to control dismissal of this view
+    @State private var shouldDismissAll = false // Shared variable for dismissing all views
+    @State private var isNavigationActive = false
 
     let formatter = DateFormatter()
     var eventType: EventType
@@ -138,9 +141,33 @@ struct CommunityEventView: View {
                 adapter.refresh()
             }
         }
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button(action: {
+                    isNavigationActive = true
+                }) {
+                    Image(systemName: "plus")
+                        .foregroundColor(Color("SecondaryColor"))
+                }
+            }
+        }
+        .sheet(isPresented: $isNavigationActive, onDismiss: {
+            isNavigationActive = false
+        }) {
+            NavigationStack {
+                OutreachFormView(isPresented: $isPresented, shouldDismissAll: $shouldDismissAll)
+            }
+        }
         .onDisappear {
             isBottomSheetPresented = false
             selectedFilter = .none
+        }
+        .onChange(of: shouldDismissAll) { newValue in
+            if newValue {
+                // Close all forms and reset state
+                isPresented = false
+                shouldDismissAll = false // Reset for future interactions
+            }
         }
     }
     
@@ -181,11 +208,11 @@ extension CommunityEventView: EventDataAdapterProtocol {
     }
 }
 
-struct CommunityEventView_Previews: PreviewProvider {
+/*struct CommunityEventView_Previews: PreviewProvider {
     static var previews: some View {
         CommunityEventView(eventType: .future)
     }
-}
+}*/
 
 struct SectionHeaderView: View {
     var date: String

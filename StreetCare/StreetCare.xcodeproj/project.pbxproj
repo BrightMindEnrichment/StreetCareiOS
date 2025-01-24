@@ -103,7 +103,7 @@
 		BEA872762A290F360053D4F4 /* ProfileDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA872752A290F360053D4F4 /* ProfileDetail.swift */; };
 		BEA872782A2910B90053D4F4 /* ProfileDetailsAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = BEA872772A2910B90053D4F4 /* ProfileDetailsAdapter.swift */; };
 		C26F78C72CE4637500AAE187 /* OutreachFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26F78C62CE4635F00AAE187 /* OutreachFormView.swift */; };
-		C2A0C93E2D078958001BFC5F /* EventListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2A0C93D2D078958001BFC5F /* EventListView.swift */; };
+		C2C7DDB72D31E76E006A8CD1 /* ChapterMebershipForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C7DDB62D31E762006A8CD1 /* ChapterMebershipForm.swift */; };
 		C2CCCA6A2CF00CEB001C9BE0 /* AddHelpRequestForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2CCCA692CF00CEB001C9BE0 /* AddHelpRequestForm.swift */; };
 		E2646D162CA74A5000D8AA42 /* ICanHelpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2646D152CA74A5000D8AA42 /* ICanHelpView.swift */; };
 /* End PBXBuildFile section */
@@ -202,7 +202,8 @@
 		BEA872752A290F360053D4F4 /* ProfileDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileDetail.swift; sourceTree = "<group>"; };
 		BEA872772A2910B90053D4F4 /* ProfileDetailsAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileDetailsAdapter.swift; sourceTree = "<group>"; };
 		C26F78C62CE4635F00AAE187 /* OutreachFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutreachFormView.swift; sourceTree = "<group>"; };
-		C2A0C93D2D078958001BFC5F /* EventListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventListView.swift; sourceTree = "<group>"; };
+		C2C7DDB62D31E762006A8CD1 /* ChapterMebershipForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChapterMebershipForm.swift; sourceTree = "<group>"; };
+		C2CCCA682CF00CC2001C9BE0 /* Untitled.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Untitled.swift; sourceTree = "<group>"; };
 		C2CCCA692CF00CEB001C9BE0 /* AddHelpRequestForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddHelpRequestForm.swift; sourceTree = "<group>"; };
 		E2646D152CA74A5000D8AA42 /* ICanHelpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ICanHelpView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -356,13 +357,13 @@
 				4C7136B92A01F2A60060EB7D /* Profile */,
 				4C17ED4F2A00A3390013EF52 /* Visit Log */,
 				4CB65DA429D0DEEE00684BD1 /* MainTabBarView.swift */,
+				C2C7DDB62D31E762006A8CD1 /* ChapterMebershipForm.swift */,
 				C26F78C62CE4635F00AAE187 /* OutreachFormView.swift */,
 				4CB65D9129D016AE00684BD1 /* LandingScreenView.swift */,
 				71FA51022BCEC4B300D0DA6C /* AfterOutreachView.swift */,
 				4CB65E4929DA6A1200684BD1 /* WhatToBringView.swift */,
 				71B0D5C42B9214B70061033B /* BadgesView.swift */,
 				4CB65DA029D0DEC700684BD1 /* CommunityView.swift */,
-				C2A0C93D2D078958001BFC5F /* EventListView.swift */,
 				1F4A6E7D2C2E136700F4D07F /* EventPopupView.swift */,
 				1F96F05A2C236AD3009E3A49 /* HelpRequestView.swift */,
 				E2646D152CA74A5000D8AA42 /* ICanHelpView.swift */,
@@ -436,6 +437,7 @@
 			children = (
 				2CBA18332B467FF476F7CBCC /* Pods-StreetCare.debug.xcconfig */,
 				1784B66B50CD8167A950C87D /* Pods-StreetCare.release.xcconfig */,
+				C2CCCA682CF00CC2001C9BE0 /* Untitled.swift */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -604,9 +606,9 @@
 				E2646D162CA74A5000D8AA42 /* ICanHelpView.swift in Sources */,
 				4C82449229EF9EE5003D1575 /* InputTileNumber.swift in Sources */,
 				4C82449029EF9EAB003D1575 /* InputTileDate.swift in Sources */,
-				C2A0C93E2D078958001BFC5F /* EventListView.swift in Sources */,
 				4C85F0ED2A08A6F000FFEDC8 /* BeforeOutreachView.swift in Sources */,
 				74FE994F2CC9FF5F00D0C5D0 /* SearchCommunityModel.swift in Sources */,
+				C2C7DDB72D31E76E006A8CD1 /* ChapterMebershipForm.swift in Sources */,
 				71B0D5C52B9214B70061033B /* BadgesView.swift in Sources */,
 				4C0E4F9829DA9450009D33C1 /* Log.swift in Sources */,
 				4CB65DA529D0DEEE00684BD1 /* MainTabBarView.swift in Sources */,

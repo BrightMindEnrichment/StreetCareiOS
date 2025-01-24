@@ -9,8 +9,10 @@ import Firebase
 
 struct OutreachFormView: View {
     @Binding var isPresented: Bool
-    @Environment(\.dismiss) var dismiss
-
+    //@Environment(\.dismiss) var dismiss
+    @Binding var shouldDismissAll: Bool // Shared variable
+    @State private var showChapterMembershipForm = false // State to control form presentation
+    @Environment(\.presentationMode) var presentationMode // Local dismissal environment
     @State private var title = ""
     @State private var street = ""
     @State private var state = ""
@@ -29,6 +31,7 @@ struct OutreachFormView: View {
     @State private var alertTitle = ""
     @State private var showAlert = false
     @State private var isLoading = false
+    @State private var chaptermemberMessage1 = ""
 
     let skills = ["Childcare", "Counselling and Support", "Clothing", "Education", "Personal Care", "Employment and Training", "Food and Water", "Healthcare", "Chinese", "Spanish", "Language (please specify)", "Legal", "Shelter", "Transportation", "LGBTQ Support", "Technology Access", "Social Integration", "Pet Care"]
 
@@ -45,7 +48,7 @@ struct OutreachFormView: View {
         !maxCapacity.isEmpty
     }
 
-    func saveToFirestore() {
+    /*func saveToFirestore() {
         guard allFieldsFilled else {
             alertMessage = "Please fill in all required fields."
             alertTitle = "New Outreach Event"
@@ -57,13 +60,70 @@ struct OutreachFormView: View {
         // Simulate save action
         DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
             isLoading = false
-            alertTitle = "New Outreach Event Created"
-            alertMessage = "Event saved successfully!"
+            //alertTitle = "New Outreach Event Created"
+            alertTitle = "Thank you for submitting your request!"
+            //alertMessage = "Event saved successfully!"
+            alertMessage = "Approval may take up to 5 business days."
+            chaptermemberMessage1 = "Streamline your experience with Chapter membership."
             showAlert = true
         }
-    }
+    }*/
+    func saveToFirestore() {
+        guard allFieldsFilled else {
+            alertMessage = "Please fill in all required fields."
+            alertTitle = "New Outreach Event"
+            showAlert = true
+            return
+        }
+        isLoading = true
 
+        let db = Firestore.firestore()
+
+        // Prepare data for Firestore
+        let outreachEvent: [String: Any] = [
+            "title": title,
+            "street": street,
+            "state": state,
+            "city": city,
+            "zipcode": zipcode,
+            "startDate": Timestamp(date: startDate),
+            "startTime": Timestamp(date: startTime),
+            "endDate": Timestamp(date: endDate),
+            "endTime": Timestamp(date: endTime),
+            "helpType": helpType,
+            "maxCapacity": maxCapacity,
+            "eventDescription": eventDescription,
+            "selectedSkills": selectedSkills,
+            "createdAt": Timestamp(date: Date())
+        ]
+
+        // Save to Firestore
+        db.collection("outreachEventsDev").addDocument(data: outreachEvent) { error in
+            isLoading = false
+            if let error = error {
+                // Handle error
+                alertTitle = "Error"
+                alertMessage = "Failed to save event: \(error.localizedDescription)"
+            } else {
+                // Success
+                alertTitle = "Thank you for submitting your request!"
+                alertMessage = "Approval may take up to 5 business days."
+                chaptermemberMessage1 = " Streamline your experience with Chapter membership."
+                showAlert = true
+            }
+        }
+    }
     var body: some View {
+        NavigationLink(
+            //destination: ChapterMembershipForm(isPresented: $showChapterMembershipForm),
+            destination: ChapterMembershipForm(
+                            isPresented: $showChapterMembershipForm,
+                            shouldDismissAll: $shouldDismissAll
+                        ),
+            isActive: $showChapterMembershipForm
+        ) {
+            EmptyView()
+        }
         ScrollView {
             VStack(alignment: .leading, spacing: 18) {
                 // Title Field
@@ -179,19 +239,29 @@ struct OutreachFormView: View {
         .alert(isPresented: $showAlert) {
             Alert(
                 title: Text(alertTitle),
-                message: Text(alertMessage),
-                dismissButton: .default(Text("OK")) {
-                    if alertMessage == "Event saved successfully!" {
-                        isPresented = false
+                message: Text(alertMessage + chaptermemberMessage1),
+                primaryButton: .default(Text("Sign Up")) {
+                    // Navigate only if the alert message matches
+                    if alertMessage == "Approval may take up to 5 business days." {
+                        showChapterMembershipForm = true
                     }
+                },
+                secondaryButton: .cancel(Text("Remind me Later")){
+                    presentationMode.wrappedValue.dismiss()
                 }
             )
         }
+        .onChange(of: shouldDismissAll) { value in
+            if value {
+                            presentationMode.wrappedValue.dismiss()
+                        }
+               }
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
                 Button(action: {
                     isPresented = false
+                    presentationMode.wrappedValue.dismiss()
                 }) {
                     Image(systemName: "chevron.left")
                         .font(.system(size: 16, weight: .medium))
