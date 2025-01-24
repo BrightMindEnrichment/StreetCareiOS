@@ -11,6 +11,9 @@ import FirebaseAuth
 import FirebaseCore
 import FirebaseFirestore
 import FirebaseFirestoreSwift
+import Foundation
+import Combine
+
 
 
 
@@ -226,6 +229,16 @@ class EventDataAdapter {
                     if let uid = document["uid"] as? String {
                         event.uid = uid
                     }
+                    // Fetch the username from the `users` collection
+                    if let uid = event.uid {
+                        db.collection("users").document(uid).getDocument { userDoc, error in
+                            if let error = error {
+                                print("Error fetching user data: \(error.localizedDescription)")
+                            } else if let userDoc = userDoc, let userData = userDoc.data() {
+                                event.userType = userData["Type"] as? String
+                            }
+                        }
+                    }
                     if let createdAt = document["createdAt"] as? String {
                         event.createdAt = createdAt
                     }
@@ -316,10 +329,21 @@ class EventDataAdapter {
                     if let status = document["status"] as? String {
                         helpRequest.status = status
                     }
-                 
+                    
                     if let uid = document["uid"] as? String {
                         helpRequest.uid = uid
+                                        
+                        // Fetch the user type for this uid
+                        db.collection("users").document(uid).getDocument { userDoc, error in
+                            if let error = error {
+                                print("Error fetching user type: \(error)")
+                            } else if let userDoc = userDoc, let userType = userDoc["Type"] as? String {
+                                helpRequest.userType = userType // Assign the user type
+                                self.delegate?.helpRequestDataRefreshed(self.helpRequests) // Refresh the UI
+                            }
+                        }
                     }
+                    
                     if let createdAt = document["createdAt"] as? String {
                         helpRequest.createdAt = createdAt
                     }
@@ -334,4 +358,75 @@ class EventDataAdapter {
     }
     
     
-} // end class
+}
+
+class EventViewModel: ObservableObject {
+    @Published var events: [EventData] = [] // All events fetched from Firestore
+    @Published var searchText: String = "" // For filtering based on search text
+    @Published var filteredEvents: [EventData] = [] // Filtered events based on search text
+    @Published var groupedEvents: [String: [EventData]] = [:] // Grouped events by date
+    
+    private var db = Firestore.firestore()
+    private var cancellables = Set<AnyCancellable>()
+    
+    init() {
+        // Observe changes to `searchText` and `events` to dynamically update `filteredEvents` and `groupedEvents`
+        Publishers.CombineLatest($searchText, $events)
+            .map { searchText, events in
+                // Filter events based on the search text
+                let filtered = events.filter { event in
+                    let title = event.event.title ?? ""
+                    let location = event.event.location ?? ""
+                    return searchText.isEmpty ||
+                        title.localizedCaseInsensitiveContains(searchText) ||
+                        location.localizedCaseInsensitiveContains(searchText)
+                }
+                return filtered
+            }
+            .sink { [weak self] filtered in
+                self?.filteredEvents = filtered
+                self?.groupedEvents = Dictionary(grouping: filtered) { eventData -> String in
+                    guard let eventDate = eventData.event.eventDate else { return "Unknown Date" }
+                    let formatter = DateFormatter()
+                    formatter.dateFormat = "MMMM yyyy"
+                    return formatter.string(from: eventDate)
+                }
+            }
+            .store(in: &cancellables)
+    }
+    
+    func fetchEvents(order: Bool = false) {
+        let targetDate = Timestamp(date: Date()) // Current date and time
+        
+        db.collection("outreachEvents")
+            .whereField("status", isEqualTo: "approved")
+            .whereField("eventDate", isGreaterThanOrEqualTo: targetDate)
+            .order(by: "eventDate", descending: order) // Use the order parameter to toggle sorting
+            .getDocuments { snapshot, error in
+                if let error = error {
+                    print("Error fetching events: \(error)")
+                    return
+                }
+                
+                // Map Firestore documents to EventData
+                self.events = snapshot?.documents.compactMap { document in
+                    let data = document.data()
+                    let event = Event()
+                    event.eventId = document.documentID
+                    event.title = data["title"] as? String ?? "Untitled Event"
+                    event.description = data["description"] as? String
+                    event.eventDate = (data["eventDate"] as? Timestamp)?.dateValue()
+                    event.location = data["location"] as? String
+                    event.helpRequest = data["helpRequest"] as? [String]
+                    event.skills = data["skills"] as? [String]
+                    event.interest = data["interest"] as? Int
+                    event.helpType = data["helpType"] as? String
+                    
+                    // Wrap Event in EventData
+                    let eventData = EventData()
+                    eventData.event = event
+                    return eventData
+                } ?? []
+            }
+    }
+}

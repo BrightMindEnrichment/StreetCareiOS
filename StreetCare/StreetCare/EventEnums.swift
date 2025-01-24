@@ -11,6 +11,7 @@ enum EventType: Int {
     case future
     case past
     case helpinghands
+    case helpRequest
 }
 
 enum FilterType: String, CaseIterable {
