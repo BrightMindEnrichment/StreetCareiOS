@@ -11,7 +11,8 @@ import FirebaseAuth
 struct CommunityView: View {
     
     @State var user: User?
-    @StateObject var viewModel = MapViewModel()
+    @StateObject var mapViewModel = MapViewModel()
+    //@StateObject var googleViewModel = GoogleMapView()
     
     let adapter = EventDataAdapter()
     @State var events = [Event]()
@@ -29,7 +30,6 @@ struct CommunityView: View {
                     ScrollView{
                         VStack{
                             Spacer().frame(height: 10)
-                            //                        Text("City: Unavailable").bold()
                             Spacer().frame(height: 35)
                             HStack{
                                 NavigationLink {
@@ -91,26 +91,46 @@ struct CommunityView: View {
                             }
                             
                             VStack{
-                                Spacer().frame(height: 30)
+                                //Spacer().frame(height: 30)
                                 
-                                Text("Map (Coming Soon)").bold()
-                                    .frame(maxWidth: .infinity, alignment: .leading).padding()
+                                Text(" Map")
+                                    .font(.title)
+                                    .frame(maxWidth: .infinity, alignment: .leading)
                                 ZStack {
-                                    GoogleMapView(viewModel: viewModel)
+                                    GoogleMapView(viewModel: mapViewModel)
                                         .edgesIgnoringSafeArea(.all)
+                                        .blur(radius: mapViewModel.isLoading ? 10 : 0)
+                                        .task {
+                                            print("GoogleMapView appeared, calling fetchMarkers()")
+                                            await mapViewModel.fetchMarkers()
+                                        }
                                     
-                                    if viewModel.isLoading {
-                                        ProgressView()
+                                    if mapViewModel.isLoading {
+                                        ProgressView("Getting the Events")
                                             .scaleEffect(1.5)
                                             .progressViewStyle(CircularProgressViewStyle(tint: .blue))
                                     }
                                 }
-                                .onAppear {
-                                    viewModel.fetchMarkers()
+                                .frame(width: 370, height: 300)
+                                .shadow(radius: 2)
+                                HStack {
+                                    Circle()
+                                        .fill(Color.yellow)
+                                        .frame(width: 10, height: 10)
+                                    Text("Events")
+                                    Circle()
+                                        .fill(Color.red)
+                                        .frame(width: 10, height: 10)
+                                    Text("Help needed")
                                 }
-                                .frame(height: 300)
-                                
-                                //                            Image("Map").resizable().aspectRatio(contentMode: .fit).frame(width: (UIScreen.main.bounds.width - 20),height: (UIScreen.main.bounds.width - 0)).padding(EdgeInsets(top: -50, leading: 0.0, bottom: 0.0, trailing: 0.0))
+                                .padding(.horizontal, 5)
+                                .padding(.vertical, 5)
+                                .background(
+                                    RoundedRectangle(cornerRadius: 12)
+                                        .fill(Color.white)
+                                        .shadow(radius: 3)
+                                        
+                                )
                             }
                         }
                         
