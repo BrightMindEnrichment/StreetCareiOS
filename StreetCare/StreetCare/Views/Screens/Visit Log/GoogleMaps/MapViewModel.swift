@@ -12,7 +12,7 @@ import GoogleMaps
 //To manage the map and retrieve data from EventAdapter
 class MapViewModel: ObservableObject {
     @Published var outreachEvents: [(location: CLLocationCoordinate2D, title: String, description: String?)] = []
-    @Published var helpRequests: [(location: CLLocationCoordinate2D, identification: String?, description: String?)] = []
+    @Published var helpRequests: [(location: CLLocationCoordinate2D, helpType: String, description: String?)] = []
     @Published var isLoading = false
     @Published var error: Error?
     weak var mapView: GMSMapView?
@@ -27,7 +27,7 @@ class MapViewModel: ObservableObject {
         
         do{
             
-            let success = await eventDataAdapter.fetchMapMarkers()
+        let success = await eventDataAdapter.fetchMapMarkers()
             
             if success {
                 outreachEvents = eventDataAdapter.mapOutreachEvents

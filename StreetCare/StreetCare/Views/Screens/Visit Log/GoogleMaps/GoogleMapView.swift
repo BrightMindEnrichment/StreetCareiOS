@@ -108,7 +108,7 @@ struct GoogleMapView: UIViewRepresentable {
         // Add help request markers (red)
         for request in viewModel.helpRequests {
             let marker = GMSMarker(position: request.location)
-            marker.title = request.identification
+            marker.title = request.helpType
             marker.snippet = request.description
             if let originalImage = UIImage(named: "RedMarker") {
                 let resizedImage = resizeImage(image: originalImage, targetSize: CGSize(width: 25, height: 35))

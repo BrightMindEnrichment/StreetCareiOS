@@ -102,7 +102,7 @@ class EventDataAdapter {
     }
     
     
-    func fetchMapMarkers(completion: @escaping (Bool) -> Void) {
+    func fetchMapMarkers() async -> Bool {
         print("Starting fetchMapMarkers...")
         let group = DispatchGroup()
         var success = true
@@ -134,11 +134,8 @@ class EventDataAdapter {
             }
             group.leave()
         }
-        
-        group.notify(queue: .main) {
-            print("All fetches completed. Success: \(success)")
-            completion(success)
-        }
+        print("All fetches completed. Success: \(success)")
+        return success
     }
     
     
