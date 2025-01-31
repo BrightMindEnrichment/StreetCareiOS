@@ -34,7 +34,8 @@ struct ChapterMembershipForm: View {
     @State private var comments = ""
     @State private var navigateToSubmissionScreen = false
     @State private var showAlert = false
-
+    @State private var errorMessage = ""
+    
     var allPersonalFieldsFilled: Bool {
         !firstName.isEmpty && !lastName.isEmpty && !email.isEmpty && !phoneNumber.isEmpty
             && !addressLine1.isEmpty && !city.isEmpty && !state.isEmpty && !zipCode.isEmpty && !country.isEmpty
@@ -178,7 +179,7 @@ struct ChapterMembershipForm: View {
         VStack {
             ScrollView {
                 VStack(alignment: .leading, spacing: 20) {
-
+                    
                     Text(NSLocalizedString("Chapter Membership", comment: ""))
                         .font(.headline)
                         .fontWeight(.bold)
@@ -189,7 +190,7 @@ struct ChapterMembershipForm: View {
                     Text("Personal details")
                         .font(.headline)
                         .fontWeight(.bold)
-
+                    
                     // First Name and Last Name (Horizontal Alignment)
                     HStack(spacing: 16) {
                         VStack(alignment: .leading, spacing: 4) {
@@ -202,17 +203,48 @@ struct ChapterMembershipForm: View {
                             }
                             TextField("First name", text: $firstName)
                                 .textFieldStyle(RoundedBorderTextFieldStyle())
-                        }
-                        VStack(alignment: .leading, spacing: 4) {
-                            HStack {
-                                Text("Last name")
-                                    .font(.body)
-                                    .fontWeight(.bold)
-                                Text("*")
+                                .onChange(of: firstName) { newValue in
+                                    let filtered = newValue.filter { $0.isLetter || $0.isWhitespace }
+                                    if filtered != newValue {
+                                        errorMessage = "Only letters are allowed"
+                                    } else {
+                                        errorMessage = ""
+                                    }
+                                    firstName = filtered
+                                }
+                            
+                            if !errorMessage.isEmpty {
+                                Text(errorMessage)
+                                    .font(.caption)
                                     .foregroundColor(.red)
                             }
-                            TextField("Last name", text: $lastName)
-                                .textFieldStyle(RoundedBorderTextFieldStyle())
+                        
+                    }
+                    VStack(alignment: .leading, spacing: 4) {
+                        HStack {
+                            Text("Last name")
+                                .font(.body)
+                                .fontWeight(.bold)
+                            Text("*")
+                                .foregroundColor(.red)
+                        }
+                        TextField("Last name", text: $lastName)
+                            .textFieldStyle(RoundedBorderTextFieldStyle())
+                            .onChange(of: firstName) { newValue in
+                                let filtered = newValue.filter { $0.isLetter || $0.isWhitespace }
+                                if filtered != newValue {
+                                    errorMessage = "Only letters are allowed"
+                                } else {
+                                    errorMessage = ""
+                                }
+                                lastName = filtered
+                            }
+                        
+                        if !errorMessage.isEmpty {
+                            Text(errorMessage)
+                                .font(.caption)
+                                .foregroundColor(.red)
+                        }
                         }
                     }
 
@@ -239,6 +271,21 @@ struct ChapterMembershipForm: View {
                             }
                             TextField("Mobile number", text: $phoneNumber)
                                 .textFieldStyle(RoundedBorderTextFieldStyle())
+                                .onChange(of: phoneNumber) { newValue in
+                                                    let filtered = newValue.filter { $0.isNumber }
+                                                    if filtered != newValue {
+                                                        errorMessage = "Please enter valid phone number."
+                                                    } else {
+                                                        errorMessage = ""
+                                                    }
+                                    phoneNumber = filtered
+                                                }
+
+                                            if !errorMessage.isEmpty {
+                                                Text(errorMessage)
+                                                    .font(.caption)
+                                                    .foregroundColor(.red)
+                                            }
                         }
                     }
 
@@ -275,6 +322,21 @@ struct ChapterMembershipForm: View {
                             }
                             TextField("City", text: $city)
                                 .textFieldStyle(RoundedBorderTextFieldStyle())
+                                .onChange(of: city) { newValue in
+                                                    let filtered = newValue.filter { $0.isLetter || $0.isWhitespace }
+                                                    if filtered != newValue {
+                                                        errorMessage = "Please enter valid city name."
+                                                    } else {
+                                                        errorMessage = ""
+                                                    }
+                                    city = filtered
+                                                }
+
+                                            if !errorMessage.isEmpty {
+                                                Text(errorMessage)
+                                                    .font(.caption)
+                                                    .foregroundColor(.red)
+                                            }
                         }
                         VStack(alignment: .leading, spacing: 4) {
                             HStack {
@@ -286,6 +348,22 @@ struct ChapterMembershipForm: View {
                             }
                             TextField("State", text: $state)
                                 .textFieldStyle(RoundedBorderTextFieldStyle())
+                                .onChange(of: state) { newValue in
+                                                    let filtered = newValue.filter { $0.isLetter || $0.isWhitespace }
+                                                    if filtered != newValue {
+                                                        errorMessage = "Please enter valid state name."
+                                                    } else {
+                                                        errorMessage = ""
+                                                    }
+                                    state = filtered
+                                                }
+
+                                            if !errorMessage.isEmpty {
+                                                Text(errorMessage)
+                                                    .font(.caption)
+                                                    .foregroundColor(.red)
+                                            }
+                        }
                         }
                     }
 
@@ -301,6 +379,21 @@ struct ChapterMembershipForm: View {
                             }
                             TextField("Zip Code", text: $zipCode)
                                 .textFieldStyle(RoundedBorderTextFieldStyle())
+                                .onChange(of: zipCode) { newValue in
+                                                    let filtered = newValue.filter { $0.isNumber }
+                                                    if filtered != newValue {
+                                                        errorMessage = "Please enter valid zip code."
+                                                    } else {
+                                                        errorMessage = ""
+                                                    }
+                                    zipCode = filtered
+                                                }
+
+                                            if !errorMessage.isEmpty {
+                                                Text(errorMessage)
+                                                    .font(.caption)
+                                                    .foregroundColor(.red)
+                                            }
                         }
                         VStack(alignment: .leading, spacing: 4) {
                             Text("Country")
@@ -347,7 +440,6 @@ struct ChapterMembershipForm: View {
                 }
             }
         }
-    }
 
     @State private var selectedDays: Set<String> = [] // Track selected days
     let daysOfWeek = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
@@ -417,6 +509,21 @@ struct ChapterMembershipForm: View {
                     TextField("Number of hours", text: $hoursAvailable)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                         .frame(height: 40)
+                        .onChange(of: hoursAvailable) { newValue in
+                                            let filtered = newValue.filter { $0.isNumber }
+                                            if filtered != newValue {
+                                                errorMessage = "Please enter valid zip code."
+                                            } else {
+                                                errorMessage = ""
+                                            }
+                            hoursAvailable = filtered
+                                        }
+
+                                    if !errorMessage.isEmpty {
+                                        Text(errorMessage)
+                                            .font(.caption)
+                                            .foregroundColor(.red)
+                                    }
                 }
 
                 // Under 18 Dropdown
@@ -522,6 +629,21 @@ struct ChapterMembershipForm: View {
                         .fontWeight(.bold)
                     TextField("Please Write your full name.", text: $fullname)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
+                        .onChange(of: fullname) { newValue in
+                                            let filtered = newValue.filter { $0.isLetter || $0.isWhitespace }
+                                            if filtered != newValue {
+                                                errorMessage = "Please enter valid full name."
+                                            } else {
+                                                errorMessage = ""
+                                            }
+                            fullname = filtered
+                                        }
+
+                                    if !errorMessage.isEmpty {
+                                        Text(errorMessage)
+                                            .font(.caption)
+                                            .foregroundColor(.red)
+                                    }
                 }
 
                 VStack(alignment: .leading, spacing: 8) {

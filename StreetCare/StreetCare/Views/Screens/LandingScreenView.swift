@@ -126,10 +126,10 @@ struct BannerView: View {
     var body: some View {
         ZStack(alignment: .topTrailing) {
             VStack(alignment: .leading, spacing: 8) {
-                Text(NSLocalizedString("bannertitle1", comment: ""))
-                    .font(.caption)
-                    .fontWeight(.bold)
-                    .foregroundColor(.blue)
+                //Text(NSLocalizedString("bannertitle1", comment: ""))
+                    //.font(.caption)
+                    //.fontWeight(.bold)
+                    //.foregroundColor(.blue)
                 
                 Text(NSLocalizedString("bannertitle2", comment: ""))
                     .font(.title3)

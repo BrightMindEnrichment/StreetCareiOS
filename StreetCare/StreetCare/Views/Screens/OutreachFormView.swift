@@ -32,6 +32,7 @@ struct OutreachFormView: View {
     @State private var showAlert = false
     @State private var isLoading = false
     @State private var chaptermemberMessage1 = ""
+    @State private var errorMessage = ""
 
     let skills = ["Childcare", "Counselling and Support", "Clothing", "Education", "Personal Care", "Employment and Training", "Food and Water", "Healthcare", "Chinese", "Spanish", "Language (please specify)", "Legal", "Shelter", "Transportation", "LGBTQ Support", "Technology Access", "Social Integration", "Pet Care"]
 
@@ -133,8 +134,9 @@ struct OutreachFormView: View {
                 TextField(NSLocalizedString("enterEventTitle", comment: ""), text: $title)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .onChange(of: title) { newValue in
-                        if newValue.count > titleLimit {
-                            title = String(newValue.prefix(titleLimit))
+                        title = newValue.filter { $0.isLetter || $0.isWhitespace } // Allow only letters and spaces
+                        if title.count > titleLimit {
+                            title = String(title.prefix(titleLimit))
                         }
                     }
 
@@ -154,12 +156,57 @@ struct OutreachFormView: View {
 
                 TextField(NSLocalizedString("state", comment: ""), text: $state)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .onChange(of: state) { newValue in
+                                        let filtered = newValue.filter { $0.isLetter || $0.isWhitespace }
+                                        if filtered != newValue {
+                                            errorMessage = "Please enter valid state name."
+                                        } else {
+                                            errorMessage = ""
+                                        }
+                        state = filtered
+                                    }
+
+                                if !errorMessage.isEmpty {
+                                    Text(errorMessage)
+                                        .font(.caption)
+                                        .foregroundColor(.red)
+                                }
 
                 TextField(NSLocalizedString("city", comment: ""), text: $city)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .onChange(of: city) { newValue in
+                                        let filtered = newValue.filter { $0.isLetter || $0.isWhitespace }
+                                        if filtered != newValue {
+                                            errorMessage = "Please enter valid city name."
+                                        } else {
+                                            errorMessage = ""
+                                        }
+                        city = filtered
+                                    }
 
+                                if !errorMessage.isEmpty {
+                                    Text(errorMessage)
+                                        .font(.caption)
+                                        .foregroundColor(.red)
+                                }
                 TextField(NSLocalizedString("zipcode", comment: ""), text: $zipcode)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .keyboardType(.numberPad) // Ensures numeric keyboard
+                    .onChange(of: zipcode) { newValue in
+                                        let filtered = newValue.filter { $0.isNumber }
+                                        if filtered != newValue {
+                                            errorMessage = "Please enter valid zip code."
+                                        } else {
+                                            errorMessage = ""
+                                        }
+                        zipcode = filtered
+                                    }
+
+                                if !errorMessage.isEmpty {
+                                    Text(errorMessage)
+                                        .font(.caption)
+                                        .foregroundColor(.red)
+                                }
 
                 // Date and Time Pickers
                 DatePicker(NSLocalizedString("startDate", comment: ""), selection: $startDate, displayedComponents: .date)
@@ -184,10 +231,14 @@ struct OutreachFormView: View {
                 // Maximum Capacity
                 Text(NSLocalizedString("maximumCapacity", comment: ""))
                     .font(.headline)
+                
 
                 TextField(NSLocalizedString("egmaximumCapacity", comment: ""), text: $maxCapacity)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .keyboardType(.numberPad)
+                    .keyboardType(.numberPad) // Ensures numeric keyboard
+                    .onChange(of: maxCapacity) { newValue in
+                        maxCapacity = newValue.filter { $0.isNumber } // Allow only numbers
+                    }
 
                 TextFieldWithLimit(
                     title: NSLocalizedString("eventDescription", comment: ""),

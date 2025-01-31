@@ -332,28 +332,81 @@ struct LocationFields: View {
     @Binding var state: String
     @Binding var city: String
     @Binding var zipcode: String
+    @State private var errorMessage = ""
 
     var body: some View {
         VStack(alignment: .leading) {
             Text(NSLocalizedString("location", comment: ""))
                 .font(.headline)
                 .padding(.vertical, 4)
-
+            
             TextField(NSLocalizedString("street", comment: ""), text: $street)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .padding(.vertical, 4)
-
+            
             TextField(NSLocalizedString("state", comment: ""), text: $state)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .padding(.vertical, 4)
+                .onChange(of: state) { newValue in
+                    let filtered = newValue.filter { $0.isLetter || $0.isWhitespace }
+                    if filtered != newValue {
+                        errorMessage = "Please enter valid state name."
+                    } else {
+                        errorMessage = ""
+                    }
+                    state = filtered
+                }
+            
+            if !errorMessage.isEmpty {
+                Text(errorMessage)
+                    .font(.caption)
+                    .foregroundColor(.red)
+            }
 
             TextField(NSLocalizedString("city", comment: ""), text: $city)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .padding(.vertical, 4)
+                .onChange(of: city) { newValue in
+                                    let filtered = newValue.filter { $0.isLetter || $0.isWhitespace }
+                                    if filtered != newValue {
+                                        errorMessage = "Please enter valid city name."
+                                    } else {
+                                        errorMessage = ""
+                                    }
+                    city = filtered
+                                }
+
+                            if !errorMessage.isEmpty {
+                                Text(errorMessage)
+                                    .font(.caption)
+                                    .foregroundColor(.red)
+                            }
 
             TextField(NSLocalizedString("zipcode", comment: ""), text: $zipcode)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .padding(.vertical, 4)
+                .onChange(of: zipcode) { newValue in
+                    // Assign error message first
+                    if newValue.allSatisfy({ $0.isNumber }) {
+                        errorMessage = "" // No error if valid
+                    } else {
+                        errorMessage = "Please enter a valid zip code." // Display error
+                    }
+
+                    // Now filter the input to allow only numbers
+                    let filtered = newValue.filter { $0.isNumber }
+
+                    if zipcode != filtered {
+                        zipcode = filtered
+                    }
+                }
+
+            // ✅ Ensure UI updates correctly with the error message
+            Text(errorMessage)
+                .font(.caption)
+                .foregroundColor(.red)
+                .padding(.top, 2)
+                .opacity(errorMessage.isEmpty ? 0 : 1)
         }
     }
 }
