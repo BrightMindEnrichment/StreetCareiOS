@@ -40,7 +40,7 @@ struct LandingScreenView: View {
         NavigationStack {
             ZStack {
                 VStack {
-                    if let banner = viewModel.bannerData {
+                    if isBannerVisible, let banner = viewModel.bannerData {
                         BannerView(isBannerVisible: $isBannerVisible, banner: banner)
                     }
                     
