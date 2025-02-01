@@ -21,6 +21,7 @@ enum ImageEnum: String {
 }
 
 struct LandingScreenView: View {
+    @StateObject private var viewModel = LandingScreenViewModel()
     
     var links: [LinkData] = [
         LinkData(icon: "startNow", title: "startNow", view: AnyView(StartNowView()), iden: 1),
@@ -39,8 +40,8 @@ struct LandingScreenView: View {
         NavigationStack {
             ZStack {
                 VStack {
-                    if isBannerVisible {
-                        BannerView(isBannerVisible: $isBannerVisible)
+                    if let banner = viewModel.bannerData {
+                        BannerView(isBannerVisible: $isBannerVisible, banner: banner)
                     }
                     
                     ScrollView {
@@ -89,6 +90,8 @@ struct LandingScreenView: View {
                             }
                         }
                     }
+                }.onAppear{
+                    viewModel.fetchBannerData()
                 }
             }
             .padding()
@@ -122,21 +125,22 @@ struct PageControl: View {
 }
 struct BannerView: View {
     @Binding var isBannerVisible: Bool
+    let banner: BannerData
     
     var body: some View {
         ZStack(alignment: .topTrailing) {
             VStack(alignment: .leading, spacing: 8) {
-                Text(NSLocalizedString("bannertitle1", comment: ""))
+                Text(banner.header)
                     .font(.caption)
                     .fontWeight(.bold)
                     .foregroundColor(.blue)
                 
-                Text(NSLocalizedString("bannertitle2", comment: ""))
+                Text(banner.subHeader)
                     .font(.title3)
                     .fontWeight(.bold)
                     .foregroundColor(.black)
                 
-                Text(NSLocalizedString("bannertext", comment: ""))
+                Text(banner.body)
                     .font(.subheadline)
                     .foregroundColor(.black)
                     .lineSpacing(4)
