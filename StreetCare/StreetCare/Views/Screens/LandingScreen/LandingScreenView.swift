@@ -40,8 +40,8 @@ struct LandingScreenView: View {
         NavigationStack {
             ZStack {
                 VStack {
-                    if isBannerVisible, let banner = viewModel.bannerData {
-                        BannerView(isBannerVisible: $isBannerVisible, banner: banner)
+                    if viewModel.shouldShowBanner, let banner = viewModel.bannerData {
+                        BannerView(viewModel: viewModel, banner: banner)
                     }
                     
                     ScrollView {
@@ -124,7 +124,7 @@ struct PageControl: View {
     }
 }
 struct BannerView: View {
-    @Binding var isBannerVisible: Bool
+    @ObservedObject var viewModel: LandingScreenViewModel
     let banner: BannerData
     
     var body: some View {
@@ -160,7 +160,7 @@ struct BannerView: View {
             // Close button
             Button(action: {
                 withAnimation {
-                    isBannerVisible = false
+                    viewModel.dismissBanner()
                 }
             }) {
                 Image(systemName: "xmark.circle.fill")
