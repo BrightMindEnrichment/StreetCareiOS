@@ -380,21 +380,14 @@ struct ChapterMembershipForm: View {
                             TextField("Zip Code", text: $zipCode)
                                 .textFieldStyle(RoundedBorderTextFieldStyle())
                                 .onChange(of: zipCode) { newValue in
-                                                    let filtered = newValue.filter { $0.isNumber }
-                                                    if filtered != newValue {
-                                                        errorMessage = "Please enter valid zip code."
-                                                    } else {
-                                                        errorMessage = ""
-                                                    }
-                                    zipCode = filtered
-                                                }
-
-                                            if !errorMessage.isEmpty {
-                                                Text(errorMessage)
-                                                    .font(.caption)
-                                                    .foregroundColor(.red)
-                                            }
+                                    if newValue.allSatisfy(\.isNumber) && newValue.count == 5 {
+                                        errorMessage = ""
+                                    } else {
+                                        errorMessage = "Please enter a valid 5-digit zip code."
+                                    }
+                                }
                         }
+                        
                         VStack(alignment: .leading, spacing: 4) {
                             Text("Country")
                                 .font(.body)
