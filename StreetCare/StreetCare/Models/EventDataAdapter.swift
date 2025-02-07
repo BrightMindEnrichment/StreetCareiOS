@@ -161,7 +161,9 @@ class EventDataAdapter {
         let settings = FirestoreSettings()
         Firestore.firestore().settings = settings
         let db = Firestore.firestore()
-            let _ = db.collection("outreachEventsDev")
+        
+        db.collection("outreachEventsDev")
+            .whereField("status", isEqualTo: "approved") // Add a filter for "approved" status
             .order(by: "eventDate", descending: true)
             .getDocuments { querySnapshot, error in
 
