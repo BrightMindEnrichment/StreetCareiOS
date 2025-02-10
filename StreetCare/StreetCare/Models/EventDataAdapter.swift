@@ -157,7 +157,7 @@ class EventDataAdapter {
     
     
     
-    func refresh() {
+    /*func refresh() {
         let settings = FirestoreSettings()
         Firestore.firestore().settings = settings
         let db = Firestore.firestore()
@@ -266,6 +266,65 @@ class EventDataAdapter {
                         
             self.refreshLiked()
         }
+    }*/
+    func refresh() {
+        db.collection("outreacheventsdev")
+            .order(by: "eventDate", descending: true) // Order by eventDate descending
+            .getDocuments { snapshot, error in
+                if let error = error {
+                    print("Error fetching events: \(error.localizedDescription)")
+                    return
+                }
+                
+                guard let documents = snapshot?.documents else {
+                    print("No events found.")
+                    return
+                }
+                
+                var events: [Event] = []
+                
+                for document in documents {
+                    let data = document.data()
+                    
+                    guard let title = data["title"] as? String,
+                          let description = data["description"] as? String,
+                          let eventDateTimestamp = data["eventDate"] as? Timestamp,
+                          let uid = data["uid"] as? String else {
+                        continue // Skip document if essential fields are missing
+                    }
+                    
+                    let eventDate = eventDateTimestamp.dateValue()
+                    let createdAt = (data["createdAt"] as? Timestamp)?.dateValue()
+                    let approved = data["approved"] as? Bool ?? false
+                    let location = data["location"] as? [String: Any] ?? [:]
+                    let participants = data["participants"] as? [String] ?? []
+                    let status = data["status"] as? String ?? "pending"
+                    let helpRequest = data["helpRequest"] as? [String: Any] ?? [:]
+                    let skills = data["skills"] as? [String] ?? []
+                    let totalSlots = data["totalSlots"] as? Int ?? 0
+                    
+                    let event = Event(
+                        id: document.documentID,
+                        title: title,
+                        description: description,
+                        date: eventDate,
+                        createdAt: createdAt,
+                        approved: approved,
+                        location: location,
+                        participants: participants,
+                        status: status,
+                        uid: uid,
+                        helpRequest: helpRequest,
+                        skills: skills,
+                        totalSlots: totalSlots
+                    )
+                    events.append(event)
+                }
+                
+                DispatchQueue.main.async {
+                    self.delegate?.eventDataRefreshed(events)
+                }
+            }
     }
 //    GEDryQS4B9iq95ha11gF
 //    Printing description of user._userID:

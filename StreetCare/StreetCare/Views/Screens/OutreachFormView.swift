@@ -68,6 +68,27 @@ struct OutreachFormView: View {
             showAlert = true
         }
     }*/
+    func getStateAbbreviation(for stateName: String) -> String? {
+        // Dictionary of US state names and their abbreviations
+        let stateAbbreviations: [String: String] = [
+            "Alabama": "AL", "Alaska": "AK", "Arizona": "AZ", "Arkansas": "AR",
+            "California": "CA", "Colorado": "CO", "Connecticut": "CT", "Delaware": "DE",
+            "Florida": "FL", "Georgia": "GA", "Hawaii": "HI", "Idaho": "ID",
+            "Illinois": "IL", "Indiana": "IN", "Iowa": "IA", "Kansas": "KS",
+            "Kentucky": "KY", "Louisiana": "LA", "Maine": "ME", "Maryland": "MD",
+            "Massachusetts": "MA", "Michigan": "MI", "Minnesota": "MN", "Mississippi": "MS",
+            "Missouri": "MO", "Montana": "MT", "Nebraska": "NE", "Nevada": "NV",
+            "New Hampshire": "NH", "New Jersey": "NJ", "New Mexico": "NM", "New York": "NY",
+            "North Carolina": "NC", "North Dakota": "ND", "Ohio": "OH", "Oklahoma": "OK",
+            "Oregon": "OR", "Pennsylvania": "PA", "Rhode Island": "RI", "South Carolina": "SC",
+            "South Dakota": "SD", "Tennessee": "TN", "Texas": "TX", "Utah": "UT",
+            "Vermont": "VT", "Virginia": "VA", "Washington": "WA", "West Virginia": "WV",
+            "Wisconsin": "WI", "Wyoming": "WY"
+        ]
+
+        // Return the abbreviation if it exists, otherwise return nil
+        return stateAbbreviations[stateName]
+    }
     func saveToFirestore() {
         guard allFieldsFilled else {
             alertMessage = "Please fill in all required fields."
@@ -75,26 +96,43 @@ struct OutreachFormView: View {
             showAlert = true
             return
         }
+        guard let user = Auth.auth().currentUser else {
+            print("No authenticated user")
+            return
+        }
         isLoading = true
 
         let db = Firestore.firestore()
 
+
+        let stateAbbreviation = getStateAbbreviation(for: state)
         // Prepare data for Firestore
         let outreachEvent: [String: Any] = [
+            "approved": false,
+            "createdAt": Timestamp(date: Date()),
+            "description": eventDescription,
+            "eventDate": Timestamp(date: startDate),
+            "eventStartTime": Timestamp(date: startTime),
+            "eventEndTime": Timestamp(date: endTime),
+            "helpRequest": [
+                "helpType": helpType,
+                "interests": 1,
+                "isFlagged": false,
+                "flaggedByUser": ""
+            ],
+            "location": [
+                "city": city,
+                "state": state,
+                "stateAbbv": stateAbbreviation,
+                "street": street,
+                "zipcode": zipcode
+            ],
+            "participants": [user.uid],
+            "skills": selectedSkills,
+            "status": "pending",
             "title": title,
-            "street": street,
-            "state": state,
-            "city": city,
-            "zipcode": zipcode,
-            "startDate": Timestamp(date: startDate),
-            "startTime": Timestamp(date: startTime),
-            "endDate": Timestamp(date: endDate),
-            "endTime": Timestamp(date: endTime),
-            "helpType": helpType,
-            "maxCapacity": maxCapacity,
-            "eventDescription": eventDescription,
-            "selectedSkills": selectedSkills,
-            "createdAt": Timestamp(date: Date())
+            "totalSlots": maxCapacity,
+            "uid": user.uid
         ]
 
         // Save to Firestore
