@@ -42,7 +42,6 @@ class Event: Identifiable {
     //var isRegistered : Bool
 }
 
-
 class EventData : Identifiable{
     var monthYear : String = ""
     var date : (String?, String?, String?) = ("","","")
