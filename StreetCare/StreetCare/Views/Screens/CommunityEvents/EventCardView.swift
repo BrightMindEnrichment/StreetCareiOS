@@ -32,17 +32,19 @@ struct EventCardView: View {
                             .font(.system(size: 13))
                     }
                 }
-                HStack {
-                    Image("HelpType")
-                        .resizable()
-                        .frame(width: 20.0, height: 20.0)
-                    
-                    Text(event.event.helpType?.capitalized ?? "Unknown")
-                        .font(.system(size: 13))
-                        .padding(.horizontal, 10)
-                        .padding(.vertical, 5)
-                        .background(Color("Color87CEEB").opacity(0.4))
-                        .cornerRadius(5)
+                if let helpType = event.event.helpType {
+                    HStack {
+                        Image("HelpType")
+                            .resizable()
+                            .frame(width: 20.0, height: 20.0)
+                        
+                        Text(helpType.capitalized)
+                            .font(.system(size: 13))
+                            .padding(.horizontal, 10)
+                            .padding(.vertical, 5)
+                            .background(Color("Color87CEEB").opacity(0.4))
+                            .cornerRadius(5)
+                    }
                 }
                 HStack {
                     // TODO: hide participant count until feature is completed

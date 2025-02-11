@@ -10,9 +10,9 @@ import Firebase
 struct OutreachFormView: View {
     @Binding var isPresented: Bool
     //@Environment(\.dismiss) var dismiss
-    @Binding var shouldDismissAll: Bool // Shared variable
-    @State private var showChapterMembershipForm = false // State to control form presentation
-    @Environment(\.presentationMode) var presentationMode // Local dismissal environment
+    @Binding var shouldDismissAll: Bool 
+    @State private var showChapterMembershipForm = false
+    @Environment(\.presentationMode) var presentationMode
     @State private var title = ""
     @State private var street = ""
     @State private var state = ""
@@ -48,47 +48,6 @@ struct OutreachFormView: View {
         !maxCapacity.isEmpty
     }
 
-    /*func saveToFirestore() {
-        guard allFieldsFilled else {
-            alertMessage = "Please fill in all required fields."
-            alertTitle = "New Outreach Event"
-            showAlert = true
-            return
-        }
-        isLoading = true
-
-        // Simulate save action
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-            isLoading = false
-            //alertTitle = "New Outreach Event Created"
-            alertTitle = "Thank you for submitting your request!"
-            //alertMessage = "Event saved successfully!"
-            alertMessage = "Approval may take up to 5 business days."
-            chaptermemberMessage1 = "Streamline your experience with Chapter membership."
-            showAlert = true
-        }
-    }*/
-    func getStateAbbreviation(for stateName: String) -> String? {
-        // Dictionary of US state names and their abbreviations
-        let stateAbbreviations: [String: String] = [
-            "Alabama": "AL", "Alaska": "AK", "Arizona": "AZ", "Arkansas": "AR",
-            "California": "CA", "Colorado": "CO", "Connecticut": "CT", "Delaware": "DE",
-            "Florida": "FL", "Georgia": "GA", "Hawaii": "HI", "Idaho": "ID",
-            "Illinois": "IL", "Indiana": "IN", "Iowa": "IA", "Kansas": "KS",
-            "Kentucky": "KY", "Louisiana": "LA", "Maine": "ME", "Maryland": "MD",
-            "Massachusetts": "MA", "Michigan": "MI", "Minnesota": "MN", "Mississippi": "MS",
-            "Missouri": "MO", "Montana": "MT", "Nebraska": "NE", "Nevada": "NV",
-            "New Hampshire": "NH", "New Jersey": "NJ", "New Mexico": "NM", "New York": "NY",
-            "North Carolina": "NC", "North Dakota": "ND", "Ohio": "OH", "Oklahoma": "OK",
-            "Oregon": "OR", "Pennsylvania": "PA", "Rhode Island": "RI", "South Carolina": "SC",
-            "South Dakota": "SD", "Tennessee": "TN", "Texas": "TX", "Utah": "UT",
-            "Vermont": "VT", "Virginia": "VA", "Washington": "WA", "West Virginia": "WV",
-            "Wisconsin": "WI", "Wyoming": "WY"
-        ]
-
-        // Return the abbreviation if it exists, otherwise return nil
-        return stateAbbreviations[stateName]
-    }
     func saveToFirestore() {
         guard allFieldsFilled else {
             alertMessage = "Please fill in all required fields."
@@ -104,9 +63,8 @@ struct OutreachFormView: View {
 
         let db = Firestore.firestore()
 
-
-        let stateAbbreviation = getStateAbbreviation(for: state)
-        // Prepare data for Firestore
+        let stateAbbreviation = StateHelper.getStateAbbreviation(for: state)
+        
         let outreachEvent: [String: Any] = [
             "approved": false,
             "createdAt": Timestamp(date: Date()),
@@ -139,11 +97,9 @@ struct OutreachFormView: View {
         db.collection("outreachEventsDev").addDocument(data: outreachEvent) { error in
             isLoading = false
             if let error = error {
-                // Handle error
                 alertTitle = "Error"
                 alertMessage = "Failed to save event: \(error.localizedDescription)"
             } else {
-                // Success
                 alertTitle = "Thank you for submitting your request!"
                 alertMessage = "Approval may take up to 5 business days."
                 chaptermemberMessage1 = " Streamline your experience with Chapter membership."
@@ -367,6 +323,28 @@ struct SkillSelectionView: View {
             }
             .padding()
         }
+    }
+}
+struct StateHelper {
+    static let stateAbbreviations: [String: String] = [
+        "Alabama": "AL", "Alaska": "AK", "Arizona": "AZ", "Arkansas": "AR",
+        "California": "CA", "Colorado": "CO", "Connecticut": "CT", "Delaware": "DE",
+        "Florida": "FL", "Georgia": "GA", "Hawaii": "HI", "Idaho": "ID",
+        "Illinois": "IL", "Indiana": "IN", "Iowa": "IA", "Kansas": "KS",
+        "Kentucky": "KY", "Louisiana": "LA", "Maine": "ME", "Maryland": "MD",
+        "Massachusetts": "MA", "Michigan": "MI", "Minnesota": "MN", "Mississippi": "MS",
+        "Missouri": "MO", "Montana": "MT", "Nebraska": "NE", "Nevada": "NV",
+        "New Hampshire": "NH", "New Jersey": "NJ", "New Mexico": "NM", "New York": "NY",
+        "North Carolina": "NC", "North Dakota": "ND", "Ohio": "OH", "Oklahoma": "OK",
+        "Oregon": "OR", "Pennsylvania": "PA", "Rhode Island": "RI", "South Carolina": "SC",
+        "South Dakota": "SD", "Tennessee": "TN", "Texas": "TX", "Utah": "UT",
+        "Vermont": "VT", "Virginia": "VA", "Washington": "WA", "West Virginia": "WV",
+        "Wisconsin": "WI", "Wyoming": "WY"
+    ]
+
+    static func getStateAbbreviation(for stateName: String) -> String? {
+        let normalizedState = stateName.trimmingCharacters(in: .whitespacesAndNewlines).capitalized
+        return stateAbbreviations[normalizedState]
     }
 }
 
