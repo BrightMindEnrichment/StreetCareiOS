@@ -36,7 +36,8 @@ struct EventCardView: View {
                     Image("HelpType")
                         .resizable()
                         .frame(width: 20.0, height: 20.0)
-                    Text(event.event.helpType!.capitalized)
+                    
+                    Text(event.event.helpType?.capitalized ?? "Unknown")
                         .font(.system(size: 13))
                         .padding(.horizontal, 10)
                         .padding(.vertical, 5)
