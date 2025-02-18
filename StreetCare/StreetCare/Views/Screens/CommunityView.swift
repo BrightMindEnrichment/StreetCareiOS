@@ -15,6 +15,7 @@ struct CommunityView: View {
     let adapter = EventDataAdapter()
     @State var events = [Event]()
     @State var isPresented: Bool = false
+    @StateObject var mapViewModel = MapViewModel()
     
     let formatter = DateFormatter()
  
@@ -91,13 +92,47 @@ struct CommunityView: View {
                         }
                         
                         VStack{
-                            Spacer().frame(height: 30)
-                            Text("Map (Coming Soon)").bold()
-                                .frame(maxWidth: .infinity, alignment: .leading).padding()
-                            Image("Map").resizable().aspectRatio(contentMode: .fit).frame(width: (UIScreen.main.bounds.width - 20),height: (UIScreen.main.bounds.width - 0)).padding(EdgeInsets(top: -50, leading: 0.0, bottom: 0.0, trailing: 0.0))
+                            //Spacer().frame(height: 30)
+
+                            Text(" Map")
+                                .font(.title)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                            ZStack {
+                                GoogleMapView(viewModel: mapViewModel)
+                                    .edgesIgnoringSafeArea(.all)
+                                    .blur(radius: mapViewModel.isLoading ? 10 : 0)
+                                    .task {
+                                        print("GoogleMapView appeared, calling fetchMarkers()")
+                                        await mapViewModel.fetchMarkers()
+                                    }
+
+                                if mapViewModel.isLoading {
+                                    ProgressView("Getting the Events")
+                                        .scaleEffect(1.5)
+                                        .progressViewStyle(CircularProgressViewStyle(tint: .blue))
+                                }
+                            }
+                            .frame(width: 370, height: 300)
+                            .shadow(radius: 2)
+                            HStack {
+                                Circle()
+                                    .fill(Color.yellow)
+                                    .frame(width: 10, height: 10)
+                                Text("Events")
+                                Circle()
+                                    .fill(Color.red)
+                                    .frame(width: 10, height: 10)
+                                Text("Help needed")
+                            }
+                            .padding(.horizontal, 5)
+                            .padding(.vertical, 5)
+                            .background(
+                                RoundedRectangle(cornerRadius: 12)
+                                    .fill(Color.white)
+                                    .shadow(radius: 3)
+                            )
                         }
                     }
-                    
                 }
             }
             else {
