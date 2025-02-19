@@ -225,7 +225,7 @@ struct FormHeaderView: View {
                 .fontWeight(.semibold)
                 
 
-            Text("If this homeless person requires further assistance, please provide additional details so we can share with the community and rally support to help them.")
+            Text("If this homeless people requires further assistance, please provide additional details so we can share with the community and rally support to help them.")
                 .font(.subheadline)
                 .foregroundColor(.gray)
         }

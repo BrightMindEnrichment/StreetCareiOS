@@ -23,7 +23,7 @@ struct SplashView: View {
                         .scaledToFit()
                         .frame(width: 150, height: 150)
                     Spacer().frame(height: 15)
-                    Text("Your toolkit to help homeless individuals")
+                    Text("Your toolkit to help homeless people")
                         .font(.headline).padding(EdgeInsets(top: 15.0, leading: 0.0, bottom: 10.0, trailing:0.0)) .fontWeight(.bold).foregroundColor(Color("TextColor"))
                 })
             }

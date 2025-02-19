@@ -24,7 +24,7 @@ struct StartNowView: View {
                 
                 Spacer(minLength: 70.0)
                 
-                Text("The essential steps of helping the homeless at every stage of outreach.").padding(EdgeInsets(top: 5.0, leading: 20.0, bottom: 5.0, trailing: 20.0)).multilineTextAlignment(.center) .fontWeight(.bold).foregroundColor(.black)
+                Text("The essential steps for helping the people experiencing homelessness at every stage of outreach.").padding(EdgeInsets(top: 5.0, leading: 20.0, bottom: 5.0, trailing: 20.0)).multilineTextAlignment(.center) .fontWeight(.bold).foregroundColor(.black)
                 
                 
                 //ScrollView {

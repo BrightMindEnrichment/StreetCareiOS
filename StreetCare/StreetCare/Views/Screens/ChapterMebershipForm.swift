@@ -7,6 +7,7 @@
 
 import SwiftUI
 import FirebaseFirestore
+import FirebaseAuth
 import SafariServices
 
 struct ChapterMembershipForm: View {
@@ -34,6 +35,8 @@ struct ChapterMembershipForm: View {
     @State private var comments = ""
     @State private var navigateToSubmissionScreen = false
     @State private var showAlert = false
+    @State private var userIsAlreadyMember = false
+    @State private var showAlreadyMemberAlert = false
 
     var allPersonalFieldsFilled: Bool {
         !firstName.isEmpty && !lastName.isEmpty && !email.isEmpty && !phoneNumber.isEmpty
@@ -55,8 +58,26 @@ struct ChapterMembershipForm: View {
         }
         return topController
     }
+    
+    // Function to update user type using User ID
+    func updateUserTypeInFirestore(userID: String) {
+        let db = Firestore.firestore()
+        let userRef = db.collection("users").document(userID)
+        
+        userRef.updateData(["Type": "Chapter Member"]) { error in
+            if let error = error {
+                print("Error updating user type: \(error.localizedDescription)")
+            } else {
+                print("User type updated to 'Chapter Member'")
+            }
+        }
+    }
     func saveFormDataToFirestore() {
         // Reference to Firestore
+        guard let userID = Auth.auth().currentUser?.uid else {
+            print("Error: No authenticated user found.")
+            return
+        }
         let db = Firestore.firestore()
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MM/dd/yyyy"
@@ -87,6 +108,31 @@ struct ChapterMembershipForm: View {
             } else {
                 print("Form data successfully saved!")
                 showAlert = true
+                updateUserTypeInFirestore(userID: userID)
+            }
+        }
+    }
+    
+    func checkUserMembershipStatus() {
+        guard let userID = Auth.auth().currentUser?.uid else {
+            print("Error: No authenticated user found.")
+            return
+        }
+        
+        let db = Firestore.firestore()
+        let userRef = db.collection("users").document(userID)
+        
+        userRef.getDocument { document, error in
+            if let error = error {
+                print("Error fetching user data: \(error.localizedDescription)")
+                return
+            }
+            
+            if let document = document, document.exists {
+                let userType = document.data()?["Type"] as? String ?? ""
+                if userType == "Chapter Member" {
+                    userIsAlreadyMember = true
+                }
             }
         }
     }
@@ -125,7 +171,11 @@ struct ChapterMembershipForm: View {
                         if currentStep < 3 {
                             currentStep += 1
                         } else {
-                            saveFormDataToFirestore()
+                            if userIsAlreadyMember {
+                                showAlreadyMemberAlert = true
+                            } else {
+                                saveFormDataToFirestore()
+                            }
                         }
                     }
                     .padding()
@@ -145,6 +195,19 @@ struct ChapterMembershipForm: View {
                         shouldDismissAll = true
                     })
                 )
+            }
+            .alert(isPresented: $showAlreadyMemberAlert) {
+                Alert(
+                    title: Text("Already a Member"),
+                    message: Text("You are already a Chapter Member. No need to submit the form again."),
+                    dismissButton: .default(Text("OK"), action: {
+                        isPresented = false
+                        shouldDismissAll = true
+                    })
+                )
+            }
+            .onAppear {
+                checkUserMembershipStatus()
             }
         }
     }
