@@ -99,7 +99,7 @@ struct HelpRequestCardView: View {
                         .padding(.vertical, 5)
                         .background(Color.yellow)
                         .cornerRadius(5)
-                }
+                } 
                 
                 Spacer()
                 

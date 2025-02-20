@@ -21,9 +21,17 @@ class AppDelegate: NSObject, UIApplicationDelegate {
            let dict = NSDictionary(contentsOfFile: path),
            let googleMapsAPIKey = dict["GoogleMapsAPIKey"] as? String,
            !googleMapsAPIKey.isEmpty {
+            print("Google Maps initialiing with :: googleMapsAPIKey :: " + googleMapsAPIKey)
             GMSServices.provideAPIKey(googleMapsAPIKey)
-            print("Google Maps initialized :: googleMapsAPIKey :: " + googleMapsAPIKey)
-            AppSettings.shared.mapsAvailable = true
+            testGoogleMapsAPIKey { isValid in
+                if isValid {
+                    AppSettings.shared.mapsAvailable = true
+                    print("Google Maps initialized successfully")
+                } else {
+                    AppSettings.shared.mapsAvailable = false
+                    print("Google Maps invalid api key.")
+                }
+            }
         } else {
             print("Error: Google Maps API key not found in Secrets.plist. Disabling map features.")
             AppSettings.shared.mapsAvailable = false
@@ -34,6 +42,23 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         }
         
         return true
+    }
+}
+
+func testGoogleMapsAPIKey(completion: @escaping (Bool) -> Void) {
+    // Using New York City as a test location
+    let testCoordinate = CLLocationCoordinate2D(latitude: 40.7128, longitude: -74.0060)
+    let geocoder = GMSGeocoder()
+    
+    geocoder.reverseGeocodeCoordinate(testCoordinate) { response, error in
+        if let error = error {
+            print("Google Maps test call error: \(error.localizedDescription)")
+            completion(false)
+        } else if let placemark = response?.firstResult(), placemark.lines != nil {
+            completion(true)
+        } else {
+            completion(false)
+        }
     }
 }
 

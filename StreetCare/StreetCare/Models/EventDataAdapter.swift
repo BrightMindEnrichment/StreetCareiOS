@@ -23,11 +23,6 @@ protocol EventDataAdapterProtocol {
     func helpRequestDataRefreshed(_ events: [HelpRequest])
 }
 
-enum GeocodingError: Error {
-        case noCoordinatesFound
-        case geocodingFailed(Error)
-    }
-
 
 class EventDataAdapter {
     
