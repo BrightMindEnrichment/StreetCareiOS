@@ -17,11 +17,17 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 
         FirebaseApp.configure()
         
-        print("Initializing Google Maps...")
-        //GMSServices.provideAPIKey("AIzaSyDjWi5sE_do337K32ie9iZ7xdBjqGgTA54")
-        GMSServices.provideAPIKey("AIzaSyBpaLVj2EjhjCeHbTUXfcBhBoaQLVathvE")
-        print("Is Google Maps initialized")
-        
+        if let path = Bundle.main.path(forResource: "Secrets", ofType: "plist"),
+           let dict = NSDictionary(contentsOfFile: path),
+           let googleMapsAPIKey = dict["GoogleMapsAPIKey"] as? String,
+           !googleMapsAPIKey.isEmpty {
+            GMSServices.provideAPIKey(googleMapsAPIKey)
+            print("Google Maps initialized :: googleMapsAPIKey :: " + googleMapsAPIKey)
+            AppSettings.shared.mapsAvailable = true
+        } else {
+            print("Error: Google Maps API key not found in Secrets.plist. Disabling map features.")
+            AppSettings.shared.mapsAvailable = false
+        }
 
         if let uid = Auth.auth().currentUser?.uid {
             print("User : \(uid)")
@@ -48,4 +54,11 @@ struct StreetCareApp: App {
         }
     }
 
+}
+
+final class AppSettings {
+    static let shared = AppSettings()
+    var mapsAvailable: Bool = false
+    
+    private init() { }
 }

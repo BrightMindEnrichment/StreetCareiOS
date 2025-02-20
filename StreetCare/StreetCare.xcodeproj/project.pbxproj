@@ -88,6 +88,7 @@
 		71FA51032BCEC4B300D0DA6C /* AfterOutreachView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71FA51022BCEC4B300D0DA6C /* AfterOutreachView.swift */; };
 		71FA51052BD1909500D0DA6C /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71FA51042BD1909500D0DA6C /* SplashView.swift */; };
 		74CD87FD2D4DE955000E5DBD /* LandingScreenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74CD87FC2D4DE955000E5DBD /* LandingScreenViewModel.swift */; };
+		74DC15772D66BB6500EF58AE /* Secrets.plist in Resources */ = {isa = PBXBuildFile; fileRef = 74DC15762D66BB6500EF58AE /* Secrets.plist */; };
 		74FDD8282D64917100E23293 /* GoogleMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74FDD8212D64907C00E23293 /* GoogleMapView.swift */; };
 		74FDD8292D64917100E23293 /* MapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74FDD8222D64907C00E23293 /* MapViewModel.swift */; };
 		74FE994C2CC9F23F00D0C5D0 /* EventEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74FE994B2CC9F23F00D0C5D0 /* EventEnums.swift */; };
@@ -192,6 +193,7 @@
 		71FA51022BCEC4B300D0DA6C /* AfterOutreachView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AfterOutreachView.swift; sourceTree = "<group>"; };
 		71FA51042BD1909500D0DA6C /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
 		74CD87FC2D4DE955000E5DBD /* LandingScreenViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandingScreenViewModel.swift; sourceTree = "<group>"; };
+		74DC15762D66BB6500EF58AE /* Secrets.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Secrets.plist; path = StreetCare/Secrets.plist; sourceTree = "<group>"; };
 		74FDD8212D64907C00E23293 /* GoogleMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleMapView.swift; sourceTree = "<group>"; };
 		74FDD8222D64907C00E23293 /* MapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewModel.swift; sourceTree = "<group>"; };
 		74FE994B2CC9F23F00D0C5D0 /* EventEnums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventEnums.swift; sourceTree = "<group>"; };
@@ -278,6 +280,7 @@
 		4CB65D8329D016AE00684BD1 = {
 			isa = PBXGroup;
 			children = (
+				74DC15762D66BB6500EF58AE /* Secrets.plist */,
 				4CB65D8E29D016AE00684BD1 /* StreetCare */,
 				4CB65D8D29D016AE00684BD1 /* Products */,
 				BE9D1DCF2A376B3800072835 /* Frameworks */,
@@ -543,6 +546,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				74DC15772D66BB6500EF58AE /* Secrets.plist in Resources */,
 				4C82441429EC99A8003D1575 /* Localizable.strings in Resources */,
 				4CB65D9729D016B000684BD1 /* Preview Assets.xcassets in Resources */,
 				4CB65D9429D016B000684BD1 /* Assets.xcassets in Resources */,

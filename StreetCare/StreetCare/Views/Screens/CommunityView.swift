@@ -90,47 +90,49 @@ struct CommunityView: View {
                                 Text(NSLocalizedString("helpRequests", comment: "")).fontWeight(.regular).foregroundColor(Color("TextColor"))
                             }
                         }
-                        
-                        VStack{
-                            //Spacer().frame(height: 30)
-
-                            Text(" Map")
-                                .font(.title)
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                            ZStack {
-                                GoogleMapView(viewModel: mapViewModel)
-                                    .edgesIgnoringSafeArea(.all)
-                                    .blur(radius: mapViewModel.isLoading ? 10 : 0)
-                                    .task {
-                                        print("GoogleMapView appeared, calling fetchMarkers()")
-                                        await mapViewModel.fetchMarkers()
+                        if AppSettings.shared.mapsAvailable {
+                            VStack{
+                                Text(" Map")
+                                    .font(.title)
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                ZStack {
+                                    GoogleMapView(viewModel: mapViewModel)
+                                        .edgesIgnoringSafeArea(.all)
+                                        .blur(radius: mapViewModel.isLoading ? 10 : 0)
+                                        .task {
+                                            print("GoogleMapView appeared, calling fetchMarkers()")
+                                            await mapViewModel.fetchMarkers()
+                                        }
+                                    
+                                    if mapViewModel.isLoading {
+                                        ProgressView("Getting the Events")
+                                            .scaleEffect(1.5)
+                                            .progressViewStyle(CircularProgressViewStyle(tint: .blue))
                                     }
-
-                                if mapViewModel.isLoading {
-                                    ProgressView("Getting the Events")
-                                        .scaleEffect(1.5)
-                                        .progressViewStyle(CircularProgressViewStyle(tint: .blue))
                                 }
+                                .frame(width: 370, height: 300)
+                                .shadow(radius: 2)
+                                HStack {
+                                    Circle()
+                                        .fill(Color.yellow)
+                                        .frame(width: 10, height: 10)
+                                    Text("Events")
+                                    Circle()
+                                        .fill(Color.red)
+                                        .frame(width: 10, height: 10)
+                                    Text("Help needed")
+                                }
+                                .padding(.horizontal, 5)
+                                .padding(.vertical, 5)
+                                .background(
+                                    RoundedRectangle(cornerRadius: 12)
+                                        .fill(Color.white)
+                                        .shadow(radius: 3)
+                                )
                             }
-                            .frame(width: 370, height: 300)
-                            .shadow(radius: 2)
-                            HStack {
-                                Circle()
-                                    .fill(Color.yellow)
-                                    .frame(width: 10, height: 10)
-                                Text("Events")
-                                Circle()
-                                    .fill(Color.red)
-                                    .frame(width: 10, height: 10)
-                                Text("Help needed")
-                            }
-                            .padding(.horizontal, 5)
-                            .padding(.vertical, 5)
-                            .background(
-                                RoundedRectangle(cornerRadius: 12)
-                                    .fill(Color.white)
-                                    .shadow(radius: 3)
-                            )
+                        } else {
+                            Text("Map is currently unavailable")
+                                .foregroundColor(.gray)
                         }
                     }
                 }
