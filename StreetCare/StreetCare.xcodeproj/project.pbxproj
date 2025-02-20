@@ -87,8 +87,10 @@
 		71B0D5CB2B9225670061033B /* Badge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71B0D5CA2B9225670061033B /* Badge.swift */; };
 		71FA51032BCEC4B300D0DA6C /* AfterOutreachView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71FA51022BCEC4B300D0DA6C /* AfterOutreachView.swift */; };
 		71FA51052BD1909500D0DA6C /* SplashView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71FA51042BD1909500D0DA6C /* SplashView.swift */; };
+		7453ABBB2D66D3BC00469896 /* AppDescriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7453ABBA2D66D3BC00469896 /* AppDescriptionView.swift */; };
 		74CD87FD2D4DE955000E5DBD /* LandingScreenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74CD87FC2D4DE955000E5DBD /* LandingScreenViewModel.swift */; };
 		74DC15772D66BB6500EF58AE /* Secrets.plist in Resources */ = {isa = PBXBuildFile; fileRef = 74DC15762D66BB6500EF58AE /* Secrets.plist */; };
+		74DC15792D66D05000EF58AE /* ImageSliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74DC15782D66D05000EF58AE /* ImageSliderView.swift */; };
 		74FDD8282D64917100E23293 /* GoogleMapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74FDD8212D64907C00E23293 /* GoogleMapView.swift */; };
 		74FDD8292D64917100E23293 /* MapViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74FDD8222D64907C00E23293 /* MapViewModel.swift */; };
 		74FE994C2CC9F23F00D0C5D0 /* EventEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74FE994B2CC9F23F00D0C5D0 /* EventEnums.swift */; };
@@ -192,8 +194,10 @@
 		71B0D5CA2B9225670061033B /* Badge.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Badge.swift; sourceTree = "<group>"; };
 		71FA51022BCEC4B300D0DA6C /* AfterOutreachView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AfterOutreachView.swift; sourceTree = "<group>"; };
 		71FA51042BD1909500D0DA6C /* SplashView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashView.swift; sourceTree = "<group>"; };
+		7453ABBA2D66D3BC00469896 /* AppDescriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDescriptionView.swift; sourceTree = "<group>"; };
 		74CD87FC2D4DE955000E5DBD /* LandingScreenViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LandingScreenViewModel.swift; sourceTree = "<group>"; };
 		74DC15762D66BB6500EF58AE /* Secrets.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Secrets.plist; path = StreetCare/Secrets.plist; sourceTree = "<group>"; };
+		74DC15782D66D05000EF58AE /* ImageSliderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageSliderView.swift; sourceTree = "<group>"; };
 		74FDD8212D64907C00E23293 /* GoogleMapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleMapView.swift; sourceTree = "<group>"; };
 		74FDD8222D64907C00E23293 /* MapViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewModel.swift; sourceTree = "<group>"; };
 		74FE994B2CC9F23F00D0C5D0 /* EventEnums.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventEnums.swift; sourceTree = "<group>"; };
@@ -280,11 +284,11 @@
 		4CB65D8329D016AE00684BD1 = {
 			isa = PBXGroup;
 			children = (
-				74DC15762D66BB6500EF58AE /* Secrets.plist */,
-				4CB65D8E29D016AE00684BD1 /* StreetCare */,
-				4CB65D8D29D016AE00684BD1 /* Products */,
 				BE9D1DCF2A376B3800072835 /* Frameworks */,
 				D864E90A530FD26B201E4F4F /* Pods */,
+				4CB65D8D29D016AE00684BD1 /* Products */,
+				74DC15762D66BB6500EF58AE /* Secrets.plist */,
+				4CB65D8E29D016AE00684BD1 /* StreetCare */,
 			);
 			sourceTree = "<group>";
 		};
@@ -363,27 +367,27 @@
 		4CB65E4C29DA6D8500684BD1 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
-				74CD87FB2D4DE943000E5DBD /* LandingScreen */,
-				74FE994D2CC9FEDB00D0C5D0 /* CommunityEvents */,
-				4C7136B92A01F2A60060EB7D /* Profile */,
-				4C17ED4F2A00A3390013EF52 /* Visit Log */,
-				4CB65DA429D0DEEE00684BD1 /* MainTabBarView.swift */,
-				C2C7DDB62D31E762006A8CD1 /* ChapterMebershipForm.swift */,
-				C26F78C62CE4635F00AAE187 /* OutreachFormView.swift */,
+				C2CCCA692CF00CEB001C9BE0 /* AddHelpRequestForm.swift */,
 				71FA51022BCEC4B300D0DA6C /* AfterOutreachView.swift */,
-				4CB65E4929DA6A1200684BD1 /* WhatToBringView.swift */,
 				71B0D5C42B9214B70061033B /* BadgesView.swift */,
+				4C85F0EC2A08A6F000FFEDC8 /* BeforeOutreachView.swift */,
+				C2C7DDB62D31E762006A8CD1 /* ChapterMebershipForm.swift */,
+				74FE994D2CC9FEDB00D0C5D0 /* CommunityEvents */,
 				4CB65DA029D0DEC700684BD1 /* CommunityView.swift */,
+				4C0E4FF029DDF726009D33C1 /* DonateView.swift */,
 				1F4A6E7D2C2E136700F4D07F /* EventPopupView.swift */,
 				1F96F05A2C236AD3009E3A49 /* HelpRequestView.swift */,
 				E2646D152CA74A5000D8AA42 /* ICanHelpView.swift */,
-				4CB65E5329DA916600684BD1 /* VideoListView.swift */,
-				C2CCCA692CF00CEB001C9BE0 /* AddHelpRequestForm.swift */,
-				4C0E4FF029DDF726009D33C1 /* DonateView.swift */,
+				74CD87FB2D4DE943000E5DBD /* LandingScreen */,
+				4CB65DA429D0DEEE00684BD1 /* MainTabBarView.swift */,
+				C26F78C62CE4635F00AAE187 /* OutreachFormView.swift */,
 				4C85F0E82A089F9600FFEDC8 /* PlaylistsView.swift */,
-				4C85F0EA2A08A4E800FFEDC8 /* StartNowView.swift */,
+				4C7136B92A01F2A60060EB7D /* Profile */,
 				71FA51042BD1909500D0DA6C /* SplashView.swift */,
-				4C85F0EC2A08A6F000FFEDC8 /* BeforeOutreachView.swift */,
+				4C85F0EA2A08A4E800FFEDC8 /* StartNowView.swift */,
+				4CB65E5329DA916600684BD1 /* VideoListView.swift */,
+				4C17ED4F2A00A3390013EF52 /* Visit Log */,
+				4CB65E4929DA6A1200684BD1 /* WhatToBringView.swift */,
 			);
 			path = Screens;
 			sourceTree = "<group>";
@@ -429,6 +433,8 @@
 			children = (
 				4CB65D9129D016AE00684BD1 /* LandingScreenView.swift */,
 				74CD87FC2D4DE955000E5DBD /* LandingScreenViewModel.swift */,
+				74DC15782D66D05000EF58AE /* ImageSliderView.swift */,
+				7453ABBA2D66D3BC00469896 /* AppDescriptionView.swift */,
 			);
 			path = LandingScreen;
 			sourceTree = "<group>";
@@ -629,6 +635,8 @@
 				1F4A6E7E2C2E136700F4D07F /* EventPopupView.swift in Sources */,
 				4C82448929EE40C5003D1575 /* LoginView.swift in Sources */,
 				1F96F05B2C236AD3009E3A49 /* HelpRequestView.swift in Sources */,
+				74DC15792D66D05000EF58AE /* ImageSliderView.swift in Sources */,
+				7453ABBB2D66D3BC00469896 /* AppDescriptionView.swift in Sources */,
 				4CB65E6229DA91C000684BD1 /* VideoInformation.swift in Sources */,
 				4C85F0E92A089F9600FFEDC8 /* PlaylistsView.swift in Sources */,
 				4C17ED512A00A3610013EF52 /* VisitLogUnauthorized.swift in Sources */,

@@ -131,8 +131,14 @@ struct CommunityView: View {
                                 )
                             }
                         } else {
-                            Text("Map is currently unavailable")
-                                .foregroundColor(.gray)
+                            VStack(spacing: 30) {
+                                AppDescriptionView()
+                                ImageSliderView()
+                            }
+                            .padding(.horizontal)
+                            .onAppear {
+                                print("Map is currently unavailable")
+                            }
                         }
                     }
                 }
