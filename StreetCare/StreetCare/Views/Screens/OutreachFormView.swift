@@ -40,10 +40,10 @@ struct OutreachFormView: View {
 
     var allFieldsFilled: Bool {
         !title.isEmpty &&
-        !street.isEmpty &&
+        //!street.isEmpty &&
         !state.isEmpty &&
         !city.isEmpty &&
-        !zipcode.isEmpty &&
+        //!zipcode.isEmpty &&
         !helpType.isEmpty &&
         !maxCapacity.isEmpty
     }
@@ -155,18 +155,12 @@ struct OutreachFormView: View {
                 TextField(NSLocalizedString("zipcode", comment: ""), text: $zipcode)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
 
-                // Date and Time Pickers
-                DatePicker(NSLocalizedString("startDate", comment: ""), selection: $startDate, displayedComponents: .date)
-                    .datePickerStyle(CompactDatePickerStyle())
-
-                DatePicker(NSLocalizedString("startTime", comment: ""), selection: $startTime, displayedComponents: .hourAndMinute)
-                    .datePickerStyle(CompactDatePickerStyle())
-
-                DatePicker(NSLocalizedString("endDate", comment: ""), selection: $endDate, displayedComponents: .date)
-                    .datePickerStyle(CompactDatePickerStyle())
-
-                DatePicker(NSLocalizedString("endTime", comment: ""), selection: $endTime, displayedComponents: .hourAndMinute)
-                    .datePickerStyle(CompactDatePickerStyle())
+                TimePickerWithTimeZone(
+                    startDate: $startDate,
+                    startTime: $startTime,
+                    endDate: $endDate,
+                    endTime: $endTime
+                )
 
                 // Help Type
                 Text(NSLocalizedString("helpType", comment: ""))
@@ -381,5 +375,78 @@ private struct TextFieldWithLimit: View {
                     .foregroundColor(.gray)
             }
         }
+    }
+}
+struct TimePickerWithTimeZone: View {
+    @Binding var startDate: Date
+    @Binding var startTime: Date
+    @Binding var endDate: Date
+    @Binding var endTime: Date
+
+    var body: some View {
+        VStack(alignment: .leading, spacing: 15) {
+            // Start Date
+            HStack {
+                Text(NSLocalizedString("startDate", comment: "Start Date Label"))
+                    .font(.headline)
+
+                Spacer()
+
+                DatePicker("", selection: $startDate, displayedComponents: .date)
+                    .labelsHidden()
+                    .datePickerStyle(CompactDatePickerStyle())
+            }
+
+            // Start Time
+            HStack {
+                Text(NSLocalizedString("startTime", comment: "Start Time Label"))
+                    .font(.headline)
+
+                Spacer()
+
+                DatePicker("", selection: $startTime, displayedComponents: .hourAndMinute)
+                    .labelsHidden()
+                    .datePickerStyle(CompactDatePickerStyle())
+
+                Text(getLocalizedTimeZoneAbbreviation())
+                    .font(.subheadline)
+                    .foregroundColor(.gray)
+            }
+
+            // End Date
+            HStack {
+                Text(NSLocalizedString("endDate", comment: "End Date Label"))
+                    .font(.headline)
+
+                Spacer()
+
+                DatePicker("", selection: $endDate, displayedComponents: .date)
+                    .labelsHidden()
+                    .datePickerStyle(CompactDatePickerStyle())
+            }
+
+            // End Time
+            HStack {
+                Text(NSLocalizedString("endTime", comment: "End Time Label"))
+                    .font(.headline)
+
+                Spacer()
+
+                DatePicker("", selection: $endTime, displayedComponents: .hourAndMinute)
+                    .labelsHidden()
+                    .datePickerStyle(CompactDatePickerStyle())
+
+                Text(getLocalizedTimeZoneAbbreviation())
+                    .font(.subheadline)
+                    .foregroundColor(.gray)
+            }
+        }
+        .padding()
+    }
+
+    // Function to get the localized time zone abbreviation
+    func getLocalizedTimeZoneAbbreviation() -> String {
+        let abbreviation = TimeZone.current.abbreviation() ?? "UTC"
+        return NSLocalizedString(abbreviation, comment: "Localized Time Zone Abbreviation")
     }
 }

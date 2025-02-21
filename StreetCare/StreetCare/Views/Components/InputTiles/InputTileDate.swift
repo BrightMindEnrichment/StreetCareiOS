@@ -23,12 +23,12 @@ struct InputTileDate: View {
     var previousAction: () -> ()
     
     var body: some View {
-
+        
         ZStack {
             BasicTile(size: CGSize(width: size.width, height: size.height))
             
             VStack {
-
+                
                 HStack {
                     Spacer()
                     Button("Skip") {
@@ -37,19 +37,33 @@ struct InputTileDate: View {
                     .foregroundColor(.gray)
                     .padding()
                 }
-
+                
                 Spacer()
                 
                 Text("Question \(questionNumber)/\(totalQuestions)")
                     .foregroundColor(.gray)
                     .font(.footnote)
-    
+                
                 Text(question)
                     .font(.headline)
                     .padding()
                 
-                DatePicker("", selection: $datetimeValue)
+                // Date Picker with Time Zone Abbreviation Inline
+                HStack {
+                    DatePicker(
+                        "",
+                        selection: $datetimeValue,
+                        displayedComponents: [.date, .hourAndMinute]
+                    )
+                    .labelsHidden()
+                    .datePickerStyle(CompactDatePickerStyle())
                     .padding()
+                    
+                    // Show Time Zone Abbreviation Inline
+                    Text(getTimeZoneAbbreviation())
+                        .font(.subheadline)
+                        .foregroundColor(.gray)
+                }
                 
                 Spacer()
                 
@@ -57,10 +71,9 @@ struct InputTileDate: View {
                     .tint(.yellow)
                     .background(.black)
                     .padding()
-
-
+                
                 Spacer()
-
+                
                 HStack {
                     Button("Previous") {
                         previousAction()
@@ -76,9 +89,14 @@ struct InputTileDate: View {
             }
         }
         .frame(width: size.width, height: size.height)
-
-    } // end body
-} // end struct
+    }
+        
+        
+        // Function to get the current time zone abbreviation (e.g., CST, EST, PST)
+        func getTimeZoneAbbreviation() -> String {
+            return TimeZone.current.abbreviation() ?? "UTC"
+        }
+}
 
 
 struct InputTileDate_Previews: PreviewProvider {
