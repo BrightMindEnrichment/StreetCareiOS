@@ -40,10 +40,10 @@ struct OutreachFormView: View {
 
     var allFieldsFilled: Bool {
         !title.isEmpty &&
-        !street.isEmpty &&
+        //!street.isEmpty &&
         !state.isEmpty &&
         !city.isEmpty &&
-        !zipcode.isEmpty &&
+        //!zipcode.isEmpty &&
         !helpType.isEmpty &&
         !maxCapacity.isEmpty
     }
