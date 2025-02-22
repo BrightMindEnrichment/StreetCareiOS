@@ -6,6 +6,7 @@
 //
 import SwiftUI
 import Firebase
+import GooglePlaces
 
 struct OutreachFormView: View {
     @Binding var isPresented: Bool
@@ -32,6 +33,7 @@ struct OutreachFormView: View {
     @State private var showAlert = false
     @State private var isLoading = false
     @State private var chaptermemberMessage1 = ""
+    @State private var showAddressSearch = false
 
     let skills = ["Childcare", "Counselling and Support", "Clothing", "Education", "Personal Care", "Employment and Training", "Food and Water", "Healthcare", "Chinese", "Spanish", "Language (please specify)", "Legal", "Shelter", "Transportation", "LGBTQ Support", "Technology Access", "Social Integration", "Pet Care"]
 
@@ -138,7 +140,20 @@ struct OutreachFormView: View {
                         .font(.caption)
                         .foregroundColor(.gray)
                 }
-
+                
+                Button(action: {
+                    showAddressSearch = true
+                }) {
+                    HStack {
+                        Image(systemName: "magnifyingglass")
+                        Text(street.isEmpty ? "Search Address" : street)
+                            .foregroundColor(street.isEmpty ? .gray : .primary)
+                    }
+                    .padding()
+                    .frame(maxWidth: .infinity)
+                    .background(Color(.systemGray6))
+                    .cornerRadius(8)
+                }
                 // Location Fields
                 Text(NSLocalizedString("location", comment: ""))
                     .font(.headline)
@@ -270,6 +285,9 @@ struct OutreachFormView: View {
         .sheet(isPresented: $isSkillSheetPresented) {
             SkillSelectionView(selectedSkills: $selectedSkills, skills: skills)
         }
+        .sheet(isPresented: $showAddressSearch) {
+            GooglePlacesAutocomplete(street: $street, city: $city, state: $state, zipcode: $zipcode)
+        }
     }
 }
 
@@ -380,6 +398,72 @@ private struct TextFieldWithLimit: View {
                     .font(.caption)
                     .foregroundColor(.gray)
             }
+        }
+    }
+}
+// Create a UIViewControllerRepresentable to wrap GMSAutocompleteViewController
+struct GooglePlacesAutocomplete: UIViewControllerRepresentable {
+    @Binding var street: String
+    @Binding var city: String
+    @Binding var state: String
+    @Binding var zipcode: String
+    @Environment(\.presentationMode) var presentationMode
+
+    func makeUIViewController(context: Context) -> GMSAutocompleteViewController {
+        let autocompleteController = GMSAutocompleteViewController()
+        autocompleteController.delegate = context.coordinator
+
+        let fields: GMSPlaceField = [.name, .formattedAddress, .addressComponents]
+        autocompleteController.placeFields = fields
+
+        let filter = GMSAutocompleteFilter()
+        filter.type = .address
+        autocompleteController.autocompleteFilter = filter
+
+        return autocompleteController
+    }
+
+    func updateUIViewController(_ uiViewController: GMSAutocompleteViewController, context: Context) {}
+
+    func makeCoordinator() -> Coordinator {
+        return Coordinator(self)
+    }
+
+    class Coordinator: NSObject, GMSAutocompleteViewControllerDelegate {
+        var parent: GooglePlacesAutocomplete
+
+        init(_ parent: GooglePlacesAutocomplete) {
+            self.parent = parent
+        }
+
+        func viewController(_ viewController: GMSAutocompleteViewController, didAutocompleteWith place: GMSPlace) {
+            viewController.dismiss(animated: true)
+            parent.street = place.name ?? ""
+
+            if let addressComponents = place.addressComponents {
+                for component in addressComponents {
+                    if component.types.contains("administrative_area_level_1") {
+                        parent.state = component.name
+                    }
+                    if component.types.contains("locality") {
+                        parent.city = component.name
+                    }
+                    if component.types.contains("postal_code") {
+                        parent.zipcode = component.name
+                    }
+                }
+            }
+
+            parent.presentationMode.wrappedValue.dismiss()
+        }
+
+        func viewController(_ viewController: GMSAutocompleteViewController, didFailAutocompleteWithError error: Error) {
+            print("Error: ", error.localizedDescription)
+            viewController.dismiss(animated: true)
+        }
+
+        func wasCancelled(_ viewController: GMSAutocompleteViewController) {
+            viewController.dismiss(animated: true)
         }
     }
 }
