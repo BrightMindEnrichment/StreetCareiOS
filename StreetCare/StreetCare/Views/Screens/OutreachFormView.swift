@@ -401,13 +401,13 @@ private struct TextFieldWithLimit: View {
         }
     }
 }
-// Create a UIViewControllerRepresentable to wrap GMSAutocompleteViewController
+
 struct GooglePlacesAutocomplete: UIViewControllerRepresentable {
     @Binding var street: String
     @Binding var city: String
     @Binding var state: String
     @Binding var zipcode: String
-    @Environment(\.presentationMode) var presentationMode
+    //@Environment(\.presentationMode) var presentationMode
 
     func makeUIViewController(context: Context) -> GMSAutocompleteViewController {
         let autocompleteController = GMSAutocompleteViewController()
@@ -453,8 +453,7 @@ struct GooglePlacesAutocomplete: UIViewControllerRepresentable {
                     }
                 }
             }
-
-            parent.presentationMode.wrappedValue.dismiss()
+            viewController.dismiss(animated: true)
         }
 
         func viewController(_ viewController: GMSAutocompleteViewController, didFailAutocompleteWithError error: Error) {
