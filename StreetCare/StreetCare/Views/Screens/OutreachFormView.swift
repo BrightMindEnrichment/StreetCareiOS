@@ -19,6 +19,7 @@ struct OutreachFormView: View {
     @State private var state = ""
     @State private var city = ""
     @State private var zipcode = ""
+    @State private var stateAbbreviation = ""
     @State private var startDate = Date()
     @State private var startTime = Date()
     @State private var endDate = Date()
@@ -286,7 +287,7 @@ struct OutreachFormView: View {
             SkillSelectionView(selectedSkills: $selectedSkills, skills: skills)
         }
         .sheet(isPresented: $showAddressSearch) {
-            GooglePlacesAutocomplete(street: $street, city: $city, state: $state, zipcode: $zipcode)
+            GooglePlacesAutocomplete(street: $street, city: $city, state: $state, stateAbbreviation: $stateAbbreviation, zipcode: $zipcode)
         }
     }
 }
@@ -406,6 +407,7 @@ struct GooglePlacesAutocomplete: UIViewControllerRepresentable {
     @Binding var street: String
     @Binding var city: String
     @Binding var state: String
+    @Binding var stateAbbreviation: String
     @Binding var zipcode: String
     //@Environment(\.presentationMode) var presentationMode
 
@@ -444,6 +446,7 @@ struct GooglePlacesAutocomplete: UIViewControllerRepresentable {
                 for component in addressComponents {
                     if component.types.contains("administrative_area_level_1") {
                         parent.state = component.name
+                        parent.stateAbbreviation = component.shortName ?? "" 
                     }
                     if component.types.contains("locality") {
                         parent.city = component.name
