@@ -142,18 +142,27 @@ struct OutreachFormView: View {
                         .foregroundColor(.gray)
                 }
                 
-                Button(action: {
+                Text(NSLocalizedString("enteraddress", comment: ""))
+                    .font(.headline)
+
+                HStack {
+                    Image(systemName: "magnifyingglass")
+                        .foregroundColor(.gray)
+
+                    Text(street.isEmpty ? "Search Address" : street)
+                        .foregroundColor(street.isEmpty ? .gray : .primary)
+                        .frame(maxWidth: .infinity, alignment: .leading) //
+                }
+                .padding()
+                .frame(height: 45)
+                .background()
+                .cornerRadius(8)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 8)
+                        .stroke(Color.gray.opacity(0.5), lineWidth: 1)
+                )
+                .onTapGesture {
                     showAddressSearch = true
-                }) {
-                    HStack {
-                        Image(systemName: "magnifyingglass")
-                        Text(street.isEmpty ? "Search Address" : street)
-                            .foregroundColor(street.isEmpty ? .gray : .primary)
-                    }
-                    .padding()
-                    .frame(maxWidth: .infinity)
-                    .background(Color(.systemGray6))
-                    .cornerRadius(8)
                 }
                 // Location Fields
                 Text(NSLocalizedString("location", comment: ""))
