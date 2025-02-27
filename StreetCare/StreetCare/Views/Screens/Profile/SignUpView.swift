@@ -128,7 +128,7 @@ struct SignUpView: View {
                     "company": company,
                     "deviceType": "iOS",  
                     "dateCreated": Timestamp(date: Date()),
-                    "isValid": false,
+                    "isValid": true,
                     "organization": company,
                     "state": "",
                     "city": "",
