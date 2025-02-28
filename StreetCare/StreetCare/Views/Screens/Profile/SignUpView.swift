@@ -142,13 +142,11 @@ struct SignUpView: View {
                         print("User data successfully saved.")
                     }
                 }
-                
                 presentation.wrappedValue.dismiss()
             }
         }
     }
-    
-} // end struct
+}
 
 struct SignUpView_Previews: PreviewProvider {
     static var previews: some View {
