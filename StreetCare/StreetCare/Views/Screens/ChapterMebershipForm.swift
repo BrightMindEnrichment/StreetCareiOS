@@ -13,6 +13,7 @@ import SafariServices
 struct ChapterMembershipForm: View {
     @Binding var isPresented: Bool // Pass this from the parent to handle dismissal
     @Binding var shouldDismissAll: Bool // Shared variable
+    @Environment(\.presentationMode) var presentationMode
     @State private var currentStep: Int = 1
     @State private var firstName = ""
     @State private var lastName = ""
@@ -34,7 +35,7 @@ struct ChapterMembershipForm: View {
     @State private var signatureDate = Date()
     @State private var comments = ""
     @State private var navigateToSubmissionScreen = false
-    @State private var showAlert = false
+    @State private var showExitAlert = false
     @State private var userIsAlreadyMember = false
     @State private var showAlreadyMemberAlert = false
 
@@ -60,7 +61,7 @@ struct ChapterMembershipForm: View {
     }
     
     // Function to update user type using User ID
-    func updateUserTypeInFirestore(userID: String) {
+    /*func updateUserTypeInFirestore(userID: String) {
         let db = Firestore.firestore()
         let userRef = db.collection("users").document(userID)
         
@@ -71,7 +72,62 @@ struct ChapterMembershipForm: View {
                 print("User type updated to 'Chapter Member'")
             }
         }
+    }*/
+    func updateUserTypeInFirestore(userID: String) {
+        let db = Firestore.firestore()
+        let usersRef = db.collection("users")
+        
+        usersRef.whereField("uid", isEqualTo: userID).getDocuments { (snapshot, error) in
+            if let error = error {
+                print("Error fetching user document: \(error.localizedDescription)")
+                return
+            }
+            
+            guard let document = snapshot?.documents.first else {
+                print("No document found for this UID")
+                return
+            }
+            
+            let documentID = document.documentID
+            
+            usersRef.document(documentID).updateData(["Type": "Chapter Member"]) { error in
+                if let error = error {
+                    print("Error updating user type: \(error.localizedDescription)")
+                } else {
+                    print("User type updated to 'Chapter Member' successfully")
+                    //showAlert = true
+                }
+            }
+        }
     }
+    /*func updateUserTypeInFirestore(email: String) {
+        let db = Firestore.firestore()
+        let usersRef = db.collection("users")
+        
+        // Query for the document where "email" matches the given email ID
+        usersRef.whereField("email", isEqualTo: email).getDocuments { (snapshot, error) in
+            if let error = error {
+                print("Error fetching user document: \(error.localizedDescription)")
+                return
+            }
+            
+            guard let document = snapshot?.documents.first else {
+                print("No document found for this email")
+                return
+            }
+            
+            let documentID = document.documentID
+            
+            // Update the user type in the found document
+            usersRef.document(documentID).updateData(["Type": "Chapter Member"]) { error in
+                if let error = error {
+                    print("Error updating user type: \(error.localizedDescription)")
+                } else {
+                    print("User type updated to 'Chapter Member' successfully")
+                }
+            }
+        }
+    }*/
     func saveFormDataToFirestore() {
         // Reference to Firestore
         guard let userID = Auth.auth().currentUser?.uid else {
@@ -107,8 +163,8 @@ struct ChapterMembershipForm: View {
                 print("Error saving data: \(error.localizedDescription)")
             } else {
                 print("Form data successfully saved!")
-                showAlert = true
-                updateUserTypeInFirestore(userID: userID)
+                showExitAlert = true
+                //updateUserTypeInFirestore(userID: userID)
             }
         }
     }
@@ -136,6 +192,7 @@ struct ChapterMembershipForm: View {
             }
         }
     }
+    private let maxSteps = 3
     
     var body: some View {
         NavigationStack {
@@ -150,12 +207,12 @@ struct ChapterMembershipForm: View {
                     personalDetailsView
                 } else if currentStep == 2 {
                     availabilityView
-                } else if currentStep == 3 {
+                } else if currentStep == maxSteps {
                     signatureView
                 }
 
                 Spacer()
-
+                
                 HStack {
                     if currentStep > 1 {
                         Button("Back") {
@@ -167,14 +224,19 @@ struct ChapterMembershipForm: View {
                         .cornerRadius(8)
                     }
 
-                    Button(currentStep < 3 ? "Next" : "Submit") {
-                        if currentStep < 3 {
+                    Button(currentStep < maxSteps ? "Next" : "Submit") {
+                        if currentStep < maxSteps {
                             currentStep += 1
                         } else {
                             if userIsAlreadyMember {
                                 showAlreadyMemberAlert = true
                             } else {
-                                saveFormDataToFirestore()
+                                //saveFormDataToFirestore()
+                                // Call both functions separately
+                                DispatchQueue.main.async {
+                                    saveFormDataToFirestore()
+                                    updateUserTypeInFirestore(userID: Auth.auth().currentUser?.uid ?? "")
+                                }
                             }
                         }
                     }
@@ -186,7 +248,7 @@ struct ChapterMembershipForm: View {
                 }
                 .padding()
             }
-            .alert(isPresented: $showAlert) {
+            .alert(isPresented: $showExitAlert) {
                 Alert(
                     title: Text("Form Submitted"),
                     message: Text("Thank you for applying to be a Chapter Member!"),
