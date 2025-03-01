@@ -115,7 +115,7 @@ struct InputTileLocation: View {
     } // end body
     
     
-    func newLocation() {
+    /*func newLocation() {
         if let loc = locationManager.location {
             self.location = loc
             failedToFindLocation = false
@@ -124,6 +124,16 @@ struct InputTileLocation: View {
         else {
             failedToFindLocation = true
             print("missing location!")
+        }
+    }*/
+    func newLocation() {
+        if let loc = locationManager.location {
+            self.location = loc
+            failedToFindLocation = false
+            print("Successfully got location: \(loc.latitude), \(loc.longitude)")
+        } else {
+            failedToFindLocation = true
+            print("Location not found! Check permissions.")
         }
     }
 } // end struct
