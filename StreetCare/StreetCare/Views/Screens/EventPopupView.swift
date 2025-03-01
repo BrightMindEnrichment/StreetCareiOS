@@ -32,10 +32,11 @@ struct EventPopupView: View {
                     .padding(8)
             }
             
-            HStack {
-                Image(systemName: "mappin.and.ellipse")
-                Text(event.event.location!)
-                    .font(.system(size: 13))
+            if let description = event.event.description, !description.isEmpty {
+                HStack {
+                    Image(systemName: "mappin.and.ellipse")
+                    Text(description).font(.system(size: 13))
+                }
             }
             
             HStack {
@@ -45,19 +46,23 @@ struct EventPopupView: View {
                         .font(.system(size: 13))
                 }
             }
-            Text("Event Description").font(.system(size: 14)).fontWeight(.semibold)
-            Text(event.event.description == "" ? "No date available" : event.event.description!).font(.system(size: 13))
-           
-            
-            HStack {
-                Image("HelpType").resizable().frame(width: 20.0,height: 20.0)
-                Text(event.event.helpType!.capitalized).font(.system(size: 13))
-                    .padding(.horizontal, 10)
-                    .padding(.vertical, 5)
-                    .background(Color("Color87CEEB").opacity(0.4))
-                    .cornerRadius(5)
+            if let description = event.event.description, !description.isEmpty {
+                Text("Event Description").font(.system(size: 14)).fontWeight(.semibold)
+                Text(description).font(.system(size: 13))
             }
-           
+            
+            if let helpType = event.event.helpType, !helpType.isEmpty {
+                HStack {
+                    Image("HelpType").resizable().frame(width: 20.0,height: 20.0)
+                    Text(helpType.capitalized)
+                        .font(.system(size: 13))
+                        .padding(.horizontal, 10)
+                        .padding(.vertical, 5)
+                        .background(Color("Color87CEEB").opacity(0.4))
+                        .cornerRadius(5)
+                }
+            }
+            
             HStack {
                 if let skills = event.event.skills{
                     ForEach(0..<skills.count, id: \.self) { index in
