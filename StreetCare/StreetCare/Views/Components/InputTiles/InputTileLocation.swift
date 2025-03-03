@@ -115,17 +115,6 @@ struct InputTileLocation: View {
     } // end body
     
     
-    /*func newLocation() {
-        if let loc = locationManager.location {
-            self.location = loc
-            failedToFindLocation = false
-            print("got a location")
-        }
-        else {
-            failedToFindLocation = true
-            print("missing location!")
-        }
-    }*/
     func newLocation() {
         if let loc = locationManager.location {
             self.location = loc
