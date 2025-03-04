@@ -70,20 +70,6 @@ struct ChapterMembershipForm: View {
                 return
             }
             
-            /*guard let document = snapshot?.documents.first else {
-                print("No document found for this UID")
-                return
-            }
-            
-            let documentID = document.documentID
-            
-            usersRef.document(documentID).updateData(["Type": "Chapter Member"]) { error in
-                if let error = error {
-                    print("Error updating user type: \(error.localizedDescription)")
-                } else {
-                    print("User type updated to 'Chapter Member' successfully")
-                }
-            }*/
             if let document = snapshot?.documents.first {
                 let documentID = document.documentID
                 
