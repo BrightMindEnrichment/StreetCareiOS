@@ -40,8 +40,15 @@ struct ChapterMembershipForm: View {
     @State private var showAlreadyMemberAlert = false
 
     var allPersonalFieldsFilled: Bool {
-        !firstName.isEmpty && !lastName.isEmpty && !email.isEmpty && !phoneNumber.isEmpty
-            && !addressLine1.isEmpty && !city.isEmpty && !state.isEmpty && !zipCode.isEmpty && !country.isEmpty
+        !firstName.isEmpty &&
+        !lastName.isEmpty &&
+        !email.isEmpty &&
+        //!phoneNumber.isEmpty &&
+        //!addressLine1.isEmpty &&
+        !city.isEmpty &&
+        !state.isEmpty &&
+        //!zipCode.isEmpty &&
+        !country.isEmpty
     }
     func openURL(_ urlString: String) {
         guard let url = URL(string: urlString) else { return }
