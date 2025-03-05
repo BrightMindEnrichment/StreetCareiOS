@@ -8,6 +8,9 @@
 import SwiftUI
 import FirebaseAuth
 import GoogleSignIn
+import Firebase
+import FirebaseAuth
+import FirebaseFirestore
 
 struct SignUpView: View {
     
@@ -115,17 +118,35 @@ struct SignUpView: View {
             }
             
             if let result = result {
-                print("created user \(result.user.uid)")
-                profileDetails.displayName = name
-                profileDetails.organization = company
-                profileDetails.email = email
-                adapter.addProfile(profileDetails)
+                let uid = result.user.uid
+                let db = Firestore.firestore()
+                
+                let userData: [String: Any] = [
+                    "uid": uid,
+                    "email": email,
+                    "name": name,
+                    "company": company,
+                    "deviceType": "iOS",  
+                    "dateCreated": Timestamp(date: Date()),
+                    "isValid": true,
+                    "organization": company,
+                    "state": "",
+                    "city": "",
+                    "country": ""
+                ]
+                
+                db.collection("users").document(uid).setData(userData) { error in
+                    if let error = error {
+                        print("Error saving user data: \(error.localizedDescription)")
+                    } else {
+                        print("User data successfully saved.")
+                    }
+                }
                 presentation.wrappedValue.dismiss()
             }
         }
     }
-    
-} // end struct
+}
 
 struct SignUpView_Previews: PreviewProvider {
     static var previews: some View {

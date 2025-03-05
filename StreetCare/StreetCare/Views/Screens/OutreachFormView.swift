@@ -10,7 +10,7 @@ import Firebase
 struct OutreachFormView: View {
     @Binding var isPresented: Bool
     //@Environment(\.dismiss) var dismiss
-    @Binding var shouldDismissAll: Bool 
+    @Binding var shouldDismissAll: Bool
     @State private var showChapterMembershipForm = false
     @Environment(\.presentationMode) var presentationMode
     @State private var title = ""
@@ -101,7 +101,7 @@ struct OutreachFormView: View {
                 alertMessage = "Failed to save event: \(error.localizedDescription)"
             } else {
                 alertTitle = "Thank you for submitting your request!"
-                alertMessage = "Approval may take up to 5 business days."
+                alertMessage = "Approval can take typically within four business days."
                 chaptermemberMessage1 = " Streamline your experience with Chapter membership."
                 showAlert = true
             }
@@ -236,7 +236,7 @@ struct OutreachFormView: View {
                 message: Text(alertMessage + chaptermemberMessage1),
                 primaryButton: .default(Text("Sign Up")) {
                     // Navigate only if the alert message matches
-                    if alertMessage == "Approval may take up to 5 business days." {
+                    if alertMessage == "Approval can take typically within four business days." {
                         showChapterMembershipForm = true
                     }
                 },
