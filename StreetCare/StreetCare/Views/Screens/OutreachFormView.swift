@@ -10,7 +10,7 @@ import Firebase
 struct OutreachFormView: View {
     @Binding var isPresented: Bool
     //@Environment(\.dismiss) var dismiss
-    @Binding var shouldDismissAll: Bool 
+    @Binding var shouldDismissAll: Bool
     @State private var showChapterMembershipForm = false
     @Environment(\.presentationMode) var presentationMode
     @State private var title = ""

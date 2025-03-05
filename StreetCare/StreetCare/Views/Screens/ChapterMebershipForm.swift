@@ -35,7 +35,7 @@ struct ChapterMembershipForm: View {
     @State private var signatureDate = Date()
     @State private var comments = ""
     @State private var navigateToSubmissionScreen = false
-    @State private var showExitAlert = false
+    @State private var showAlert = false
     @State private var userIsAlreadyMember = false
     @State private var showAlreadyMemberAlert = false
 
@@ -175,8 +175,8 @@ struct ChapterMembershipForm: View {
                     .font(.title)
                     .fontWeight(.bold)
                     .multilineTextAlignment(.center)
-                    //.padding()
-
+                //.padding()
+                
                 if currentStep == 1 {
                     personalDetailsView
                 } else if currentStep == 2 {
@@ -208,11 +208,9 @@ struct ChapterMembershipForm: View {
                                 //saveFormDataToFirestore()
                                 saveFormDataToFirestore()
                                 updateUserTypeInFirestore(userID: Auth.auth().currentUser?.uid ?? "")
-                                DispatchQueue.main.async {
-                                    showAlreadyMemberAlert = false
-                                    showExitAlert = true
-                                }
-                                print("After setting showExitAlert: \(showExitAlert)")
+                                showAlreadyMemberAlert = false
+                                showAlert = true
+                                print("After setting showExitAlert: \(showAlert)")
                             }
                         }
                     }
@@ -225,10 +223,10 @@ struct ChapterMembershipForm: View {
                 .padding()
             }
             .alert(isPresented: Binding<Bool>(
-                get: { showExitAlert || showAlreadyMemberAlert },
+                get: { showAlert || showAlreadyMemberAlert },
                 set: { newValue in
                     if !newValue {
-                        showExitAlert = false
+                        showAlert = false
                         showAlreadyMemberAlert = false
                     }
                 }
@@ -240,6 +238,8 @@ struct ChapterMembershipForm: View {
                         dismissButton: .default(Text("OK"), action: {
                             isPresented = false
                             shouldDismissAll = true
+                            self.presentationMode.wrappedValue.dismiss()
+                            self.presentationMode.wrappedValue.dismiss()
                         })
                     )
                 } else {
@@ -249,6 +249,8 @@ struct ChapterMembershipForm: View {
                         dismissButton: .default(Text("Back to home"), action: {
                             isPresented = false
                             shouldDismissAll = true
+                            self.presentationMode.wrappedValue.dismiss()
+                            self.presentationMode.wrappedValue.dismiss()
                         })
                     )
                 }
