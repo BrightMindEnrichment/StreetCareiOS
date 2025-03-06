@@ -10,7 +10,7 @@ import Firebase
 struct OutreachFormView: View {
     @Binding var isPresented: Bool
     //@Environment(\.dismiss) var dismiss
-    @Binding var shouldDismissAll: Bool
+    @Binding var shouldDismissAll: Bool 
     @State private var showChapterMembershipForm = false
     @Environment(\.presentationMode) var presentationMode
     @State private var title = ""
@@ -18,6 +18,7 @@ struct OutreachFormView: View {
     @State private var state = ""
     @State private var city = ""
     @State private var zipcode = ""
+    @State private var stateAbbreviation = ""
     @State private var startDate = Date()
     @State private var startTime = Date()
     @State private var endDate = Date()
@@ -32,6 +33,7 @@ struct OutreachFormView: View {
     @State private var showAlert = false
     @State private var isLoading = false
     @State private var chaptermemberMessage1 = ""
+    @State private var showAddressSearch = false
 
     let skills = ["Childcare", "Counselling and Support", "Clothing", "Education", "Personal Care", "Employment and Training", "Food and Water", "Healthcare", "Chinese", "Spanish", "Language (please specify)", "Legal", "Shelter", "Transportation", "LGBTQ Support", "Technology Access", "Social Integration", "Pet Care"]
 
@@ -138,7 +140,29 @@ struct OutreachFormView: View {
                         .font(.caption)
                         .foregroundColor(.gray)
                 }
+                
+                Text(NSLocalizedString("enteraddress", comment: ""))
+                    .font(.headline)
 
+                HStack {
+                    Image(systemName: "magnifyingglass")
+                        .foregroundColor(.gray)
+
+                    Text(street.isEmpty ? "Search Address" : street)
+                        .foregroundColor(street.isEmpty ? .gray : .primary)
+                        .frame(maxWidth: .infinity, alignment: .leading) //
+                }
+                .padding()
+                .frame(height: 45)
+                .background()
+                .cornerRadius(8)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 8)
+                        .stroke(Color.gray.opacity(0.5), lineWidth: 1)
+                )
+                .onTapGesture {
+                    showAddressSearch = true
+                }
                 // Location Fields
                 Text(NSLocalizedString("location", comment: ""))
                     .font(.headline)
@@ -230,7 +254,7 @@ struct OutreachFormView: View {
                 message: Text(alertMessage + chaptermemberMessage1),
                 primaryButton: .default(Text("Sign Up")) {
                     // Navigate only if the alert message matches
-                    if alertMessage == "Approval can take typically within four business days." {
+                    if alertMessage == "Approval may take up to 5 business days." {
                         showChapterMembershipForm = true
                     }
                 },
@@ -264,9 +288,11 @@ struct OutreachFormView: View {
         .sheet(isPresented: $isSkillSheetPresented) {
             SkillSelectionView(selectedSkills: $selectedSkills, skills: skills)
         }
+        .sheet(isPresented: $showAddressSearch) {
+            GooglePlacesAutocomplete(street: $street, city: $city, state: $state, stateAbbreviation: $stateAbbreviation, zipcode: $zipcode)
+        }
     }
 }
-
 struct SkillSelectionView: View {
     @Binding var selectedSkills: [String]
     let skills: [String]
@@ -448,5 +474,71 @@ struct TimePickerWithTimeZone: View {
     func getLocalizedTimeZoneAbbreviation() -> String {
         let abbreviation = TimeZone.current.abbreviation() ?? "UTC"
         return NSLocalizedString(abbreviation, comment: "Localized Time Zone Abbreviation")
+    }
+}
+struct GooglePlacesAutocomplete: UIViewControllerRepresentable {
+    @Binding var street: String
+    @Binding var city: String
+    @Binding var state: String
+    @Binding var stateAbbreviation: String
+    @Binding var zipcode: String
+    //@Environment(\.presentationMode) var presentationMode
+
+    func makeUIViewController(context: Context) -> GMSAutocompleteViewController {
+        let autocompleteController = GMSAutocompleteViewController()
+        autocompleteController.delegate = context.coordinator
+
+        let fields: GMSPlaceField = [.name, .formattedAddress, .addressComponents]
+        autocompleteController.placeFields = fields
+
+        let filter = GMSAutocompleteFilter()
+        filter.type = .address
+        autocompleteController.autocompleteFilter = filter
+
+        return autocompleteController
+    }
+
+    func updateUIViewController(_ uiViewController: GMSAutocompleteViewController, context: Context) {}
+
+    func makeCoordinator() -> Coordinator {
+        return Coordinator(self)
+    }
+
+    class Coordinator: NSObject, GMSAutocompleteViewControllerDelegate {
+        var parent: GooglePlacesAutocomplete
+
+        init(_ parent: GooglePlacesAutocomplete) {
+            self.parent = parent
+        }
+
+        func viewController(_ viewController: GMSAutocompleteViewController, didAutocompleteWith place: GMSPlace) {
+            viewController.dismiss(animated: true)
+            parent.street = place.name ?? ""
+
+            if let addressComponents = place.addressComponents {
+                for component in addressComponents {
+                    if component.types.contains("administrative_area_level_1") {
+                        parent.state = component.name
+                        parent.stateAbbreviation = component.shortName ?? "" 
+                    }
+                    if component.types.contains("locality") {
+                        parent.city = component.name
+                    }
+                    if component.types.contains("postal_code") {
+                        parent.zipcode = component.name
+                    }
+                }
+            }
+            viewController.dismiss(animated: true)
+        }
+
+        func viewController(_ viewController: GMSAutocompleteViewController, didFailAutocompleteWithError error: Error) {
+            print("Error: ", error.localizedDescription)
+            viewController.dismiss(animated: true)
+        }
+
+        func wasCancelled(_ viewController: GMSAutocompleteViewController) {
+            viewController.dismiss(animated: true)
+        }
     }
 }

@@ -197,6 +197,10 @@ class EventDataAdapter {
                                     event.state = state
                                     field +=  ", " + state
                                 }
+                                if let stateAbbv = location["stateAbbv"] as? String {
+                                    event.stateAbbv  = stateAbbv
+                                    field +=  ", " + stateAbbv
+                                }
                                 if let zipcode = location["zipcode"] as? String {
                                     event.zipcode = zipcode
                                     field +=  " " + zipcode

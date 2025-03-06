@@ -7,4 +7,6 @@ target 'StreetCare' do
 
   # Pods for StreetCare
   pod 'ExytePopupView'
+  # Google Places API
+  pod 'GooglePlaces'
 end

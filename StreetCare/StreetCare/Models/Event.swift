@@ -35,6 +35,7 @@ class Event: Identifiable {
     var street : String?
     var city : String?
     var state : String?
+    var stateAbbv : String?
     var zipcode : String?
     var eventDateStamp : Timestamp?
     var eventStartTimeStamp : Timestamp?

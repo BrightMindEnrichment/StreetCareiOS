@@ -20,6 +20,7 @@ struct CommunityEventView: View {
     @Binding var isPresented: Bool // Binding to control dismissal of this view
     @State private var shouldDismissAll = false // Shared variable for dismissing all views
     @State private var isNavigationActive = false
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
 
     let formatter = DateFormatter()
     var eventType: EventType

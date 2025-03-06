@@ -1,20 +1,24 @@
 PODS:
   - ExytePopupView (2.9.1):
     - SwiftUIIntrospect
+  - GooglePlaces (9.3.0)
   - SwiftUIIntrospect (1.1.3)
 
 DEPENDENCIES:
   - ExytePopupView
+  - GooglePlaces
 
 SPEC REPOS:
   trunk:
     - ExytePopupView
+    - GooglePlaces
     - SwiftUIIntrospect
 
 SPEC CHECKSUMS:
   ExytePopupView: 9287a6d5705371d0ae10cc47d7af86f8421baf1e
+  GooglePlaces: 310d8c240eb4bf7aaeecec0de71fe75d086dbf4a
   SwiftUIIntrospect: 622899b318ecf437d0bef44b79bec10c69efb86f
 
-PODFILE CHECKSUM: 16cfbe1e666e9fe31e3cc39d239d71a3a55f57a7
+PODFILE CHECKSUM: 6aa6bb502126160c3d627ca86de3533a86f2e0c2
 
 COCOAPODS: 1.16.2
