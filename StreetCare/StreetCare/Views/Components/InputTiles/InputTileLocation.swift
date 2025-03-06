@@ -119,11 +119,10 @@ struct InputTileLocation: View {
         if let loc = locationManager.location {
             self.location = loc
             failedToFindLocation = false
-            print("got a location")
-        }
-        else {
+            print("Successfully got location: \(loc.latitude), \(loc.longitude)")
+        } else {
             failedToFindLocation = true
-            print("missing location!")
+            print("Location not found! Check permissions.")
         }
     }
 } // end struct
