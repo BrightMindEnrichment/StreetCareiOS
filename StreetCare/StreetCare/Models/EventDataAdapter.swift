@@ -482,7 +482,9 @@ class EventDataAdapter {
     
     private func fetchHelpRequestLocations(completion: @escaping (Result<Void, Error>) -> Void) {
         let db = Firestore.firestore()
-        db.collection("helpRequests").getDocuments { [weak self] snapshot, error in
+        db.collection("helpRequests")
+            .order(by: "createdAt", descending: false)
+            .limit(to: 50).getDocuments { [weak self] snapshot, error in
             guard let self = self else { return }
             if let error = error {
                 print("Firestore error for helpRequests: \(error.localizedDescription)")
