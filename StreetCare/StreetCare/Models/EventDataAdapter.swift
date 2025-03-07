@@ -420,8 +420,8 @@ class EventDataAdapter {
             let db = Firestore.firestore()
             print("Fetching outreach events from Firebase...")
             db.collection("outreachEvents")
-                .order(by: "eventDate", descending: true)
-                .limit(to: 10)
+                .order(by: "eventDate", descending: false)
+                .limit(to: 50)
                 .getDocuments { [weak self] (snapshot, error) in
                     guard let self = self else { return }
                     if let error = error {
