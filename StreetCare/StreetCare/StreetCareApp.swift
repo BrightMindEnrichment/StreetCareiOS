@@ -22,13 +22,13 @@ class AppDelegate: NSObject, UIApplicationDelegate {
             print("User : \(uid)")
         }
         // Load API Key from Secrets.plist
-        if let path = Bundle.main.path(forResource: "Secrets", ofType: "plist"),
+        if let path = Bundle.main.path(forResource: "GoogleService-Info", ofType: "plist"),
            let keys = NSDictionary(contentsOfFile: path),
-           let apiKey = keys["GooglePlacesAPIKey"] as? String {
+           let apiKey = keys["API_KEY"] as? String {
             GMSPlacesClient.provideAPIKey(apiKey)
             print("✅ Google Places API Key Loaded Successfully")
         } else {
-            print("❌ Failed to load Google Places API Key")
+            print("❌ Failed to load Google Places API Key") 
         }
         
         return true
