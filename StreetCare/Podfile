@@ -9,4 +9,5 @@ target 'StreetCare' do
   pod 'ExytePopupView'
   # Google Places API
   pod 'GooglePlaces'
+  pod 'GoogleMaps', '9.1.1'
 end
