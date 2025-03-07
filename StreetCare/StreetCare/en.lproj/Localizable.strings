@@ -15,9 +15,9 @@
 "ok" = "OK";
 "healthySnacksDescription" = "Nonperishable and nutritious snacks such as nuts, pretzels, breakfast bars, applesauce, and dried fruits are best. Try to include items that are easy to chew for individuals without access to dental care. Remember to pack food items separately from any scented sanitary products.";
 
-"waterDescription" = "Finding potable water can be difficult for homeless individuals. Bottled water is a great donation item, as is carrying a jug and cups.";
+"waterDescription" = "Finding potable water can be difficult for homeless people. Bottled water is a great donation item, as is carrying a jug and cups.";
 
-"firstAidDescription" = "Infection prevention and first aid care are essential, especially for homeless individuals. Provide sealed, clean items such as bandages, wipes, ointments, and nail care kits to protect those in need. Avoid alcohol-based products.";
+"firstAidDescription" = "Infection prevention and first aid care are essential, especially for homeless people. Provide sealed, clean items such as bandages, wipes, ointments, and nail care kits to protect those in need. Avoid alcohol-based products.";
 
 "personalHygieneDescription" = "Soaps should be fragrance-free, since sensitivities and allergies are common. Make sure hand sanitizers do not contain alcohol. Toothpaste and toothbrushes make practical and useful donation items.";
 
@@ -58,7 +58,7 @@
 "pastEvents" = "Past Events";
 "helpRequests" = "Help Requests";
 
-"before_para1" = "The first thing to remember is that homeless individuals are a diverse group of people just like everyone else, no matter how they look, no matter their gender, age, or race. Some have fallen on hard times. Some may be struggling with mental illness. But everyone wants to be treated with respect and dignity. Here are some steps to follow before you go:";
+"before_para1" = "The first thing to remember is that homeless people are a diverse group of people just like everyone else, no matter how they look, no matter their gender, age, or race. Some have fallen on hard times. Some may be struggling with mental illness. But everyone wants to be treated with respect and dignity. Here are some steps to follow before you go:";
 
 "before_title2" = "1. Let someone know";
 "before_para2" = "Doing an outreach, you may be run into new neighborhoods. It would help to keep someone informed about this outreach.";
@@ -99,7 +99,7 @@
 "createAnOutreach" = "CREATE AN OUTREACH";
 
 "iCanHelpText1" = "Make sure you are not going alone.";
-"iCanHelpText2" = "Group presence offers security and effectiveness in engaging with unfamiliar situations and individuals, benefiting both volunteers and the homeless.";
+"iCanHelpText2" = "Group presence offers security and effectiveness in engaging with unfamiliar situations and individuals, benefiting both volunteers and the people experiencing homelessness.";
 "iCanHelpText3" = "How outreach on Street Care works?";
 "iCanHelpText4" = "We post the outreach for you and other volunteers can sign up to go with you.";
 
@@ -138,6 +138,7 @@
 "cmintrotext10" = "Please click here to donate. If you join our Giving Program, we will send you free gifts!";
 "cmintrowithlink1" = "Click here to find out what chapter membership entails.";
 "cmintrowithlink2" = "If you prefer to sign and send ina copy or save it for later reference, please download the form here.";
+"enteraddress" = "Enter Address*";
 //"welcome" = "Welcome to\nStreet Care";
 //"loginButtonTitle" = "Login";
 //"signUpButtonTitle" = "Sign Up";

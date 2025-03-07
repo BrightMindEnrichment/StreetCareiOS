@@ -1,0 +1,1599 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXAggregateTarget section */
+		0C1885900810601510E0C632060FAF26 /* GooglePlaces */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = C77040D703478EDADEB4E839F298401F /* Build configuration list for PBXAggregateTarget "GooglePlaces" */;
+			buildPhases = (
+				5C53F63B615C49C159CEC84184FD1687 /* [CP] Copy XCFrameworks */,
+			);
+			dependencies = (
+				7CCFA95272CDFF781FC6D754D0B1FB90 /* PBXTargetDependency */,
+			);
+			name = GooglePlaces;
+		};
+		E5B4BBC6DD552AC8943C7E22772FC1D3 /* GoogleMaps */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 47C5605859EECC4DAA8398F8266E85C4 /* Build configuration list for PBXAggregateTarget "GoogleMaps" */;
+			buildPhases = (
+				9801DC96C44A55EEBAB39A01F1BB925C /* [CP] Copy XCFrameworks */,
+			);
+			dependencies = (
+				84587BCED907E0AC77F569A1243D5C01 /* PBXTargetDependency */,
+			);
+			name = GoogleMaps;
+		};
+/* End PBXAggregateTarget section */
+
+/* Begin PBXBuildFile section */
+		096B664EE7D733B979E5B5D24B443018 /* ListWithBorderedStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE671669384145651AE22443C9FFE0B0 /* ListWithBorderedStyle.swift */; };
+		0A82661EACE52636F87D54B26C58B299 /* ProgressViewWithCircularStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BA2348C82B59668C6A5A59B9E81D620 /* ProgressViewWithCircularStyle.swift */; };
+		1027BE37C03C1FB422833FFCF7C61B75 /* Window.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FE429CA66D7CD472241CA9435A7A235 /* Window.swift */; };
+		10DAB01CB1C86DE4BA1E3198FA666D2E /* PopupView.h in Headers */ = {isa = PBXBuildFile; fileRef = F61EEC6E0FAAADFAFFF55DB3A8100675 /* PopupView.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		1DCFCF427BF422626F47520881360FBD /* ToggleWithCheckboxStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4655D171AE1E8C05526E171825627D09 /* ToggleWithCheckboxStyle.swift */; };
+		233961FE4121E34A902E354520A4AB7C /* NavigationViewWithColumnsStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = F017233804C55F5DE2CB4E3CE69B3BC9 /* NavigationViewWithColumnsStyle.swift */; };
+		31A6BA1C3AA159DDA82FCDD470ADE001 /* PopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4DD6EC6C3E87348FC581A6C3B683A7 /* PopupView.swift */; };
+		32CDAF66511C1EF70F0317044F67921C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93A792F949C165BFEE357CCAE9E5B956 /* ViewController.swift */; };
+		332B30C61A959A2062319ECA0DD37243 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFBA3F84ED454F62A2DBB54EBD7B174 /* Utils.swift */; };
+		356D9ED6704ED3B1A33AE47A369770C6 /* DatePickerWithCompactStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC77052587C4543C73142BD4D1D05844 /* DatePickerWithCompactStyle.swift */; };
+		36C0C17C07D475BEB933CF61E5B9A0C5 /* SecureField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CE4040B23DAC6C54A497F3F9BDE9FE2 /* SecureField.swift */; };
+		3757923869FC5823752C3411DF3977C0 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 384DDA2CB25005BD6479B5987C619DD4 /* Foundation.framework */; };
+		3A10584DFE0ECFAFA8430E1C0DF15F86 /* Modifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56856CF4785D3AFE33B54CC650733A01 /* Modifiers.swift */; };
+		3DE468FCF5865D05240084EDB87B67C3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 384DDA2CB25005BD6479B5987C619DD4 /* Foundation.framework */; };
+		402A35B9DEBB9AF5EAA7B27A460E8B7E /* FormWithGroupedStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31688FF1CF70F612716C881E204B3095 /* FormWithGroupedStyle.swift */; };
+		4121434E07E8655DF0E3C0100BC7190B /* TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F694786AD92E4D30C579F79BC8A7502 /* TextField.swift */; };
+		41C5984CCA501E85AD46AAF1231D19A9 /* ListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 825F87246B93B977A25A271035F4E233 /* ListCell.swift */; };
+		44C06ECA5AB0991174CE45317A7F958E /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A12633292FCA454390EE4E3BA78067 /* View.swift */; };
+		45D5E3A46EC7D22217551CB804990150 /* NavigationViewWithStackStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3B2176FDD3FBDFB41EAD4AD7720A20A /* NavigationViewWithStackStyle.swift */; };
+		47B72761D03D64207EF0199295494F24 /* ToggleWithButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3F23347AE13D4CB9995831047593A6A /* ToggleWithButtonStyle.swift */; };
+		4AF54BE3A6535A6D673E26CE70E07A34 /* ScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D06FDB52841C5F1A7019B859BC4F180 /* ScrollView.swift */; };
+		4CEA945055C3BCEEDBDE24C79334D018 /* TextFieldWithVerticalAxis.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFAD114F0B06987AE6100A22D088EA57 /* TextFieldWithVerticalAxis.swift */; };
+		597C13051042C5CF2073037D7D0A33D5 /* Stepper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FED1EC5D74CD2107690D333D713F11C /* Stepper.swift */; };
+		5985CFD66C48FD0DCAED39EFF25CA274 /* ListWithInsetStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73EFD62553674732ECD59DFBC1D4ABC5 /* ListWithInsetStyle.swift */; };
+		5A5CC3964BE706ADA754D3100DC49169 /* SwiftUIIntrospect-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E7D7D2BE84F383D46148971C2BE47E0 /* SwiftUIIntrospect-dummy.m */; };
+		61BA8C8099D3374CDEB19F2A1B8286C3 /* GoogleMaps.bundle in Resources */ = {isa = PBXBuildFile; fileRef = EE0D9F71AA69DED7F7AD949F4FF2CBB3 /* GoogleMaps.bundle */; };
+		648129103D5613AE3B5A0D318CCB3DB0 /* PickerWithSegmentedStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 827C61C1913A4DE619E2D4B747BA34F2 /* PickerWithSegmentedStyle.swift */; };
+		652B5612CC3E5CAB4C21EDBAFF01EB5B /* TextEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1CBE743BAAAE2D852C2EDA9FC159165 /* TextEditor.swift */; };
+		66A43A5E6946649D63CAD68D92AF7ACF /* PageControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED485ADDEBCD3973465324A1657ADFCE /* PageControl.swift */; };
+		6AE8B86D87ADE6748E112DD0D5574B00 /* Weak.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEBAAEDE30ACDEA092DE725E415D1CDE /* Weak.swift */; };
+		6C26AD6A5BAAA3D2FCE012D89E754634 /* Introspect.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2658C4CCCDBA8050624B54B6D17DA6 /* Introspect.swift */; };
+		70530E916B17928C203111907B723FCD /* IntrospectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 244E5446152EFD8F3F6CD58A7F0024F4 /* IntrospectionView.swift */; };
+		78E43508395B6E702D793A5741FF3165 /* FullScreenCover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FE9020327E10317B98E805488C6AE45 /* FullScreenCover.swift */; };
+		82B868BF27C4BC0A905FA9C36EA604B0 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C81256C5C203E3CA0E574729F01B38F /* Utils.swift */; };
+		8793E36C837E5AB99D5E793856E2EA13 /* SignInWithAppleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27D6BE4B3EA999B0E22F4C5231B751CC /* SignInWithAppleButton.swift */; };
+		8B20834C2180008D9F3BD43E34C57245 /* PlatformVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B70717F67060FB7C82147B5F69DDC3A /* PlatformVersion.swift */; };
+		8C1796694F4558D7638A856057E6D99B /* List.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A726FEDB8C39C5F481FA1E7D9AE658 /* List.swift */; };
+		8CC4DC9A996225B69B635F0B7B2F32EB /* ListWithGroupedStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B48AB2246F012AEB637A27DB698EC25 /* ListWithGroupedStyle.swift */; };
+		8D16144795C0098C7EB60B196DFC760B /* Slider.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF14106A36D47E6A817E75A12BEBA9AB /* Slider.swift */; };
+		8D491363B45116E3C7E30B0AB135D3BA /* ExytePopupView-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = E14554D0136E86C7644FF1F1880725A5 /* ExytePopupView-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		8FB6B3057C54E4853580CB8678B7E504 /* GooglePlaces.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 30B5CC484E1906B58BDE58C034F77D80 /* GooglePlaces.bundle */; };
+		9425413ED704FA8D96B7F5EB08FA5ADA /* TabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 920B7BC61323E1DE9A8D7D6133DD0D90 /* TabView.swift */; };
+		99025FBE7FCDB67C8EC3F653B4CF5593 /* DatePickerWithStepperFieldStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B96048204AD5723BB1AAA596514911FD /* DatePickerWithStepperFieldStyle.swift */; };
+		9D215B232CC787226FC01060B85AEB01 /* Pods-StreetCare-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = FD09EC04E1BC4D4E513DCA8A5525CF39 /* Pods-StreetCare-dummy.m */; };
+		A0261BF6F0A928BF52499E728F791B7A /* SwiftUIIntrospect-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F1BBFFE3D8CEADB6DCEDB102FF94CC4 /* SwiftUIIntrospect-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		A628D069221E1225061BCB6D6CEBAE28 /* ToggleWithSwitchStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A924DE011E01156568335F2F7C96453 /* ToggleWithSwitchStyle.swift */; };
+		A709B599F4AF314BB4D291EB9C00E4BB /* FullscreenPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D8BE9CCF74EF2728CFDD3582CFF5E66 /* FullscreenPopup.swift */; };
+		A88456B31FC00C2D33B6B54B41BF340F /* DatePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10858941E1A374C00DDFEDF21289098F /* DatePicker.swift */; };
+		ABE69E5FD9432A16EF7288D958DC64B2 /* TabViewWithPageStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A7EDE4C937694FA80D1700DF130FE57 /* TabViewWithPageStyle.swift */; };
+		AE6CA7B5F083F7E9472384DEDA3FDED4 /* DatePickerWithGraphicalStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = A422DFCF84F00E95761C2EF9AEA5AC13 /* DatePickerWithGraphicalStyle.swift */; };
+		AF10E81FB56DE12B7029EBBF1FFC40CA /* PickerWithMenuStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF44FC8CBD32D36D3ECC4F0DA35E8640 /* PickerWithMenuStyle.swift */; };
+		AFE8AA8C923A2973B56ED50402F2D8D2 /* Table.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C094C8C18350059B29C982620897A8 /* Table.swift */; };
+		B12F7DABBE58A7771C2E1DEAE3FBE0D4 /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA97DA466BBAEF49A4510AE14505B7B9 /* Button.swift */; };
+		B57DB858B4AB2D69B645DE4A7D1CB64E /* IntrospectableViewType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5724F7D7274D240BB23B01FC27DAF8A /* IntrospectableViewType.swift */; };
+		BE02C376ADB6FF033A801489F8923FEE /* PickerWithWheelStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = A665943F9A8EEF18673E1D9BADBE49E1 /* PickerWithWheelStyle.swift */; };
+		C478724E2D8E18028A13E8F7E390B0B1 /* Toggle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B0C50301E0C570475C68D691E408609 /* Toggle.swift */; };
+		C4E8866D51EB334661D5E0B5BE8C1B81 /* RuntimeWarnings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F95B1D34D8450D6DB9DE0F80DDEECE3 /* RuntimeWarnings.swift */; };
+		C8D96B9E6FE825FC0426C8EB2D2B6B4E /* VideoPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C885796459F57912B9B52EA20372926 /* VideoPlayer.swift */; };
+		C9D94E2374E907ACBA059AD3055C147B /* Popover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EBDA388532F57EA8AAF05DDEFD1DCEE /* Popover.swift */; };
+		CA367557FAB6F5CC8D6A1293BA691F14 /* Pods-StreetCare-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 1F94FBC8E8FA08105CA176A3D27A7E31 /* Pods-StreetCare-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		CDD53CE25B0CD5DCEE4F0F82D24F6E8B /* ExytePopupView-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = FD964562CADB5970DDFB6B2AC1D2CA7F /* ExytePopupView-dummy.m */; };
+		DB106A2C51AE9300525CD3538BB349DE /* ColorPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199497DA1174AFD28C7AEE5982B677C6 /* ColorPicker.swift */; };
+		DF347922A4EE0EEEFA31693F42E1DEB9 /* Map.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2DAF3BA695DCF376FF908F9CBB9A7D1 /* Map.swift */; };
+		E3DA284FF3402CE6CDDF368AA6AEA4A8 /* Sheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A8731585C0F9A05E9F6A07FEC60C845 /* Sheet.swift */; };
+		E450CE216EAE942AF8C67A569F5DBB3C /* ProgressViewWithLinearStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDD826238356D9DF61B31A0CE92B0A5 /* ProgressViewWithLinearStyle.swift */; };
+		E77FC40B6C1EBDF9611280DB332FC2E1 /* DatePickerWithFieldStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51D3F963EAD21D3751B86498AAB3C440 /* DatePickerWithFieldStyle.swift */; };
+		E99D83C7D5AC3FE8414976134E1F6186 /* PlatformViewVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 916848EF235A29EADE68A085FD43B1D3 /* PlatformViewVersion.swift */; };
+		EA8705F95B086DCFF89505C3296FC78F /* SearchField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F443B2C2AD5A7CEE21182C8C474E93D /* SearchField.swift */; };
+		EB1DE7CB6B937B38DA5562002D82E1B9 /* DatePickerWithWheelStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB44D4DD222839A5737040C155ABE1D4 /* DatePickerWithWheelStyle.swift */; };
+		EEF864066D5ADD064D19D3FC5731DE97 /* PopupScrollViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC6702F0B22952503F327989459A95E9 /* PopupScrollViewDelegate.swift */; };
+		EFD3B7109F2E7DCB0A3BB48B63566072 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 384DDA2CB25005BD6479B5987C619DD4 /* Foundation.framework */; };
+		F19A7CB0C7C80E18EB4960E96D2333A3 /* NavigationSplitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4B97C9DE01E846F9774B0F442536EB1 /* NavigationSplitView.swift */; };
+		F67A70F132619C34AC5458BED3378324 /* IntrospectionSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE7DF8659372E269359BC7F607E2BFA0 /* IntrospectionSelector.swift */; };
+		F6CB0D5236E6B483B3259318EB3614E5 /* Form.swift in Sources */ = {isa = PBXBuildFile; fileRef = C892D36802F2FB08E74A9B6716E563D5 /* Form.swift */; };
+		FABC8B3A3E7D3D08980470D7AE3F4FE7 /* ListWithSidebarStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4B66BA6EEF2DEC5BE1AE8CE70330BAC /* ListWithSidebarStyle.swift */; };
+		FC9F1D07D400CCB448659AB27F58318B /* PlatformView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA0A137D81529870C439DAA671CB7F9F /* PlatformView.swift */; };
+		FD3AEB8835EE070D2E379C9770F80E62 /* ListWithInsetGroupedStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB4EE6630E518ABE333DDA374D08F98 /* ListWithInsetGroupedStyle.swift */; };
+		FFC37C531EF13D05425A88707ADDDF7A /* NavigationStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D2AC01CEA7E6320A1764DF19656691 /* NavigationStack.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		20BE8F8E93D13C4EA2A7D92206866EC8 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E5B4BBC6DD552AC8943C7E22772FC1D3;
+			remoteInfo = GoogleMaps;
+		};
+		20CF38DD68EEC7523D3BC1E68A112B05 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0C1885900810601510E0C632060FAF26;
+			remoteInfo = GooglePlaces;
+		};
+		2DD4AB669EDB9DAFBC60A4543C1268B5 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FF94F6BC609DB21F0194205C23064AFC;
+			remoteInfo = SwiftUIIntrospect;
+		};
+		34013D1E91FC0E16ACE37D9B4EBCEA97 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 7B026DDDF280F148DD87281679B51154;
+			remoteInfo = "GoogleMaps-GoogleMapsResources";
+		};
+		3FAD9F5746BC2078E0043D6B81E5E853 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FF94F6BC609DB21F0194205C23064AFC;
+			remoteInfo = SwiftUIIntrospect;
+		};
+		77C9F38349B0BE23715763F0F11602A2 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E3BF7971BE024EA2CBC58C6A22E7F7CD;
+			remoteInfo = ExytePopupView;
+		};
+		9FE18DE5A0D854E526F9AC3E24110721 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 285AAD0A8192022DACE2DAFE30D6CD52;
+			remoteInfo = "GooglePlaces-GooglePlacesResources";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		00BD116861BEE5080A3EEE2EF14D1451 /* GooglePlaces.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; name = GooglePlaces.xcframework; path = Frameworks/GooglePlaces.xcframework; sourceTree = "<group>"; };
+		08A726FEDB8C39C5F481FA1E7D9AE658 /* List.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = List.swift; path = Sources/ViewTypes/List.swift; sourceTree = "<group>"; };
+		0BA2348C82B59668C6A5A59B9E81D620 /* ProgressViewWithCircularStyle.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ProgressViewWithCircularStyle.swift; path = Sources/ViewTypes/ProgressViewWithCircularStyle.swift; sourceTree = "<group>"; };
+		0CE4040B23DAC6C54A497F3F9BDE9FE2 /* SecureField.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SecureField.swift; path = Sources/ViewTypes/SecureField.swift; sourceTree = "<group>"; };
+		0D880620DE36E3BEA3AB06F0B548A77A /* Pods-StreetCare-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-StreetCare-resources.sh"; sourceTree = "<group>"; };
+		0F443B2C2AD5A7CEE21182C8C474E93D /* SearchField.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SearchField.swift; path = Sources/ViewTypes/SearchField.swift; sourceTree = "<group>"; };
+		10858941E1A374C00DDFEDF21289098F /* DatePicker.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DatePicker.swift; path = Sources/ViewTypes/DatePicker.swift; sourceTree = "<group>"; };
+		10AA17EF5C8D7C00E4A68FFE827724FA /* GoogleMaps.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = GoogleMaps.debug.xcconfig; sourceTree = "<group>"; };
+		199497DA1174AFD28C7AEE5982B677C6 /* ColorPicker.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ColorPicker.swift; path = Sources/ViewTypes/ColorPicker.swift; sourceTree = "<group>"; };
+		1A8731585C0F9A05E9F6A07FEC60C845 /* Sheet.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Sheet.swift; path = Sources/ViewTypes/Sheet.swift; sourceTree = "<group>"; };
+		1A924DE011E01156568335F2F7C96453 /* ToggleWithSwitchStyle.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ToggleWithSwitchStyle.swift; path = Sources/ViewTypes/ToggleWithSwitchStyle.swift; sourceTree = "<group>"; };
+		1B70717F67060FB7C82147B5F69DDC3A /* PlatformVersion.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PlatformVersion.swift; path = Sources/PlatformVersion.swift; sourceTree = "<group>"; };
+		1C8031220F7ECC04F0D76F050E0655F4 /* SwiftUIIntrospect */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = SwiftUIIntrospect; path = SwiftUIIntrospect.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		1F94FBC8E8FA08105CA176A3D27A7E31 /* Pods-StreetCare-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-StreetCare-umbrella.h"; sourceTree = "<group>"; };
+		21BC9DE5EE18F27517C52ABD3FBF38ED /* GoogleMaps-GoogleMapsResources */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = "GoogleMaps-GoogleMapsResources"; path = GoogleMapsResources.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		23A12633292FCA454390EE4E3BA78067 /* View.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = View.swift; path = Sources/ViewTypes/View.swift; sourceTree = "<group>"; };
+		244E5446152EFD8F3F6CD58A7F0024F4 /* IntrospectionView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = IntrospectionView.swift; path = Sources/IntrospectionView.swift; sourceTree = "<group>"; };
+		25825E95E126B7F2220F4B4B54223BF0 /* SwiftUIIntrospect-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SwiftUIIntrospect-prefix.pch"; sourceTree = "<group>"; };
+		27D6BE4B3EA999B0E22F4C5231B751CC /* SignInWithAppleButton.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SignInWithAppleButton.swift; path = Sources/ViewTypes/SignInWithAppleButton.swift; sourceTree = "<group>"; };
+		2A7EDE4C937694FA80D1700DF130FE57 /* TabViewWithPageStyle.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TabViewWithPageStyle.swift; path = Sources/ViewTypes/TabViewWithPageStyle.swift; sourceTree = "<group>"; };
+		2B48AB2246F012AEB637A27DB698EC25 /* ListWithGroupedStyle.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ListWithGroupedStyle.swift; path = Sources/ViewTypes/ListWithGroupedStyle.swift; sourceTree = "<group>"; };
+		2C81256C5C203E3CA0E574729F01B38F /* Utils.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Utils.swift; path = Source/Utils.swift; sourceTree = "<group>"; };
+		2CB4EE6630E518ABE333DDA374D08F98 /* ListWithInsetGroupedStyle.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ListWithInsetGroupedStyle.swift; path = Sources/ViewTypes/ListWithInsetGroupedStyle.swift; sourceTree = "<group>"; };
+		2EBDA388532F57EA8AAF05DDEFD1DCEE /* Popover.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Popover.swift; path = Sources/ViewTypes/Popover.swift; sourceTree = "<group>"; };
+		30B5CC484E1906B58BDE58C034F77D80 /* GooglePlaces.bundle */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "wrapper.plug-in"; name = GooglePlaces.bundle; path = Resources/GooglePlacesResources/GooglePlaces.bundle; sourceTree = "<group>"; };
+		31688FF1CF70F612716C881E204B3095 /* FormWithGroupedStyle.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = FormWithGroupedStyle.swift; path = Sources/ViewTypes/FormWithGroupedStyle.swift; sourceTree = "<group>"; };
+		37B1C39A81A07B70B3EB5CB2C6E47BAD /* ResourceBundle-GooglePlacesResources-GooglePlaces-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "ResourceBundle-GooglePlacesResources-GooglePlaces-Info.plist"; sourceTree = "<group>"; };
+		384DDA2CB25005BD6479B5987C619DD4 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS18.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
+		3E7E0334EDEF72D38684FFD1605B032A /* GoogleMaps-xcframeworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "GoogleMaps-xcframeworks.sh"; sourceTree = "<group>"; };
+		3FE9020327E10317B98E805488C6AE45 /* FullScreenCover.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = FullScreenCover.swift; path = Sources/ViewTypes/FullScreenCover.swift; sourceTree = "<group>"; };
+		4655D171AE1E8C05526E171825627D09 /* ToggleWithCheckboxStyle.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ToggleWithCheckboxStyle.swift; path = Sources/ViewTypes/ToggleWithCheckboxStyle.swift; sourceTree = "<group>"; };
+		46DD59DE759324C7920A8447CD4B0D72 /* ExytePopupView */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = ExytePopupView; path = ExytePopupView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		4B0C50301E0C570475C68D691E408609 /* Toggle.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Toggle.swift; path = Sources/ViewTypes/Toggle.swift; sourceTree = "<group>"; };
+		4C885796459F57912B9B52EA20372926 /* VideoPlayer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = VideoPlayer.swift; path = Sources/ViewTypes/VideoPlayer.swift; sourceTree = "<group>"; };
+		4FE429CA66D7CD472241CA9435A7A235 /* Window.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Window.swift; path = Sources/ViewTypes/Window.swift; sourceTree = "<group>"; };
+		4FED1EC5D74CD2107690D333D713F11C /* Stepper.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Stepper.swift; path = Sources/ViewTypes/Stepper.swift; sourceTree = "<group>"; };
+		51D3F963EAD21D3751B86498AAB3C440 /* DatePickerWithFieldStyle.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DatePickerWithFieldStyle.swift; path = Sources/ViewTypes/DatePickerWithFieldStyle.swift; sourceTree = "<group>"; };
+		54C036E197A2695FBEEDA82DC5215420 /* Pods-StreetCare-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-StreetCare-frameworks.sh"; sourceTree = "<group>"; };
+		55ECAA3EF605156DD817F4622EDEAA56 /* SwiftUIIntrospect-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "SwiftUIIntrospect-Info.plist"; sourceTree = "<group>"; };
+		56856CF4785D3AFE33B54CC650733A01 /* Modifiers.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Modifiers.swift; path = Source/Modifiers.swift; sourceTree = "<group>"; };
+		58D55567BE5BB377C4B0D89C1322D23E /* GooglePlaces-GooglePlacesResources */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = "GooglePlaces-GooglePlacesResources"; path = GooglePlacesResources.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		5A54A0EF6B1F8067BDA86CC117DB003F /* GMSEmpty.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GMSEmpty.h; path = Sources/GMSEmpty.h; sourceTree = "<group>"; };
+		5A6CC7DC54D365DDD2107469EAFDB44E /* ResourceBundle-GoogleMapsResources-GoogleMaps-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "ResourceBundle-GoogleMapsResources-GoogleMaps-Info.plist"; sourceTree = "<group>"; };
+		5D8BE9CCF74EF2728CFDD3582CFF5E66 /* FullscreenPopup.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = FullscreenPopup.swift; path = Source/FullscreenPopup.swift; sourceTree = "<group>"; };
+		5F694786AD92E4D30C579F79BC8A7502 /* TextField.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TextField.swift; path = Sources/ViewTypes/TextField.swift; sourceTree = "<group>"; };
+		5F95B1D34D8450D6DB9DE0F80DDEECE3 /* RuntimeWarnings.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = RuntimeWarnings.swift; path = Sources/RuntimeWarnings.swift; sourceTree = "<group>"; };
+		633B7644B4B6E8A989C79F50BC0A2ADF /* GMSEmpty.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GMSEmpty.h; path = Maps/Sources/GMSEmpty.h; sourceTree = "<group>"; };
+		65190689345476684480B011F4E03089 /* SwiftUIIntrospect.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SwiftUIIntrospect.debug.xcconfig; sourceTree = "<group>"; };
+		6CE14B7B922FDB8D5AE8FEA69F72753D /* GooglePlaces-xcframeworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "GooglePlaces-xcframeworks.sh"; sourceTree = "<group>"; };
+		73EFD62553674732ECD59DFBC1D4ABC5 /* ListWithInsetStyle.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ListWithInsetStyle.swift; path = Sources/ViewTypes/ListWithInsetStyle.swift; sourceTree = "<group>"; };
+		76BD901CE9C92AC1B886E065B838F284 /* Pods-StreetCare.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-StreetCare.debug.xcconfig"; sourceTree = "<group>"; };
+		7F1BBFFE3D8CEADB6DCEDB102FF94CC4 /* SwiftUIIntrospect-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SwiftUIIntrospect-umbrella.h"; sourceTree = "<group>"; };
+		825F87246B93B977A25A271035F4E233 /* ListCell.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ListCell.swift; path = Sources/ViewTypes/ListCell.swift; sourceTree = "<group>"; };
+		827C61C1913A4DE619E2D4B747BA34F2 /* PickerWithSegmentedStyle.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PickerWithSegmentedStyle.swift; path = Sources/ViewTypes/PickerWithSegmentedStyle.swift; sourceTree = "<group>"; };
+		87169C5EC0CF6B40519E17AD43862A7A /* Pods-StreetCare */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = "Pods-StreetCare"; path = Pods_StreetCare.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8A15F624CA6D6A938DB0302F8FDD67FF /* SwiftUIIntrospect.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SwiftUIIntrospect.release.xcconfig; sourceTree = "<group>"; };
+		8BCF25F5BB403C43822B1004B1714E45 /* GooglePlaces.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = GooglePlaces.release.xcconfig; sourceTree = "<group>"; };
+		9070A1DC4FE9B67B768780D379880129 /* GooglePlaces.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = GooglePlaces.debug.xcconfig; sourceTree = "<group>"; };
+		916848EF235A29EADE68A085FD43B1D3 /* PlatformViewVersion.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PlatformViewVersion.swift; path = Sources/PlatformViewVersion.swift; sourceTree = "<group>"; };
+		917C0C9B712ECD3B12B6B23AA9521BCF /* Pods-StreetCare-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-StreetCare-acknowledgements.markdown"; sourceTree = "<group>"; };
+		920B7BC61323E1DE9A8D7D6133DD0D90 /* TabView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TabView.swift; path = Sources/ViewTypes/TabView.swift; sourceTree = "<group>"; };
+		93A792F949C165BFEE357CCAE9E5B956 /* ViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ViewController.swift; path = Sources/ViewTypes/ViewController.swift; sourceTree = "<group>"; };
+		9437E9A0B3B448873143CE0B951E7820 /* SwiftUIIntrospect.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = SwiftUIIntrospect.modulemap; sourceTree = "<group>"; };
+		94D2AC01CEA7E6320A1764DF19656691 /* NavigationStack.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NavigationStack.swift; path = Sources/ViewTypes/NavigationStack.swift; sourceTree = "<group>"; };
+		98F936A48BFB50F8E7703564AF281332 /* ExytePopupView-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "ExytePopupView-Info.plist"; sourceTree = "<group>"; };
+		9D06FDB52841C5F1A7019B859BC4F180 /* ScrollView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ScrollView.swift; path = Sources/ViewTypes/ScrollView.swift; sourceTree = "<group>"; };
+		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		9E7D7D2BE84F383D46148971C2BE47E0 /* SwiftUIIntrospect-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "SwiftUIIntrospect-dummy.m"; sourceTree = "<group>"; };
+		9EF95E8EA7AD1DF7B378894EB4DCAAAE /* Pods-StreetCare-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-StreetCare-acknowledgements.plist"; sourceTree = "<group>"; };
+		A422DFCF84F00E95761C2EF9AEA5AC13 /* DatePickerWithGraphicalStyle.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DatePickerWithGraphicalStyle.swift; path = Sources/ViewTypes/DatePickerWithGraphicalStyle.swift; sourceTree = "<group>"; };
+		A665943F9A8EEF18673E1D9BADBE49E1 /* PickerWithWheelStyle.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PickerWithWheelStyle.swift; path = Sources/ViewTypes/PickerWithWheelStyle.swift; sourceTree = "<group>"; };
+		AB4DD6EC6C3E87348FC581A6C3B683A7 /* PopupView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PopupView.swift; path = Source/PopupView.swift; sourceTree = "<group>"; };
+		AE671669384145651AE22443C9FFE0B0 /* ListWithBorderedStyle.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ListWithBorderedStyle.swift; path = Sources/ViewTypes/ListWithBorderedStyle.swift; sourceTree = "<group>"; };
+		AE7DF8659372E269359BC7F607E2BFA0 /* IntrospectionSelector.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = IntrospectionSelector.swift; path = Sources/IntrospectionSelector.swift; sourceTree = "<group>"; };
+		AEBAAEDE30ACDEA092DE725E415D1CDE /* Weak.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Weak.swift; path = Sources/Weak.swift; sourceTree = "<group>"; };
+		AEFF481705EEB3C3DEA545CAD7292962 /* ExytePopupView.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = ExytePopupView.modulemap; sourceTree = "<group>"; };
+		B2C094C8C18350059B29C982620897A8 /* Table.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Table.swift; path = Sources/ViewTypes/Table.swift; sourceTree = "<group>"; };
+		B2DAF3BA695DCF376FF908F9CBB9A7D1 /* Map.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Map.swift; path = Sources/ViewTypes/Map.swift; sourceTree = "<group>"; };
+		B3F23347AE13D4CB9995831047593A6A /* ToggleWithButtonStyle.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ToggleWithButtonStyle.swift; path = Sources/ViewTypes/ToggleWithButtonStyle.swift; sourceTree = "<group>"; };
+		B5724F7D7274D240BB23B01FC27DAF8A /* IntrospectableViewType.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = IntrospectableViewType.swift; path = Sources/IntrospectableViewType.swift; sourceTree = "<group>"; };
+		B96048204AD5723BB1AAA596514911FD /* DatePickerWithStepperFieldStyle.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DatePickerWithStepperFieldStyle.swift; path = Sources/ViewTypes/DatePickerWithStepperFieldStyle.swift; sourceTree = "<group>"; };
+		BA97DA466BBAEF49A4510AE14505B7B9 /* Button.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Button.swift; path = Sources/ViewTypes/Button.swift; sourceTree = "<group>"; };
+		BD2658C4CCCDBA8050624B54B6D17DA6 /* Introspect.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Introspect.swift; path = Sources/Introspect.swift; sourceTree = "<group>"; };
+		BF14106A36D47E6A817E75A12BEBA9AB /* Slider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Slider.swift; path = Sources/ViewTypes/Slider.swift; sourceTree = "<group>"; };
+		C1CBE743BAAAE2D852C2EDA9FC159165 /* TextEditor.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TextEditor.swift; path = Sources/ViewTypes/TextEditor.swift; sourceTree = "<group>"; };
+		C3B2176FDD3FBDFB41EAD4AD7720A20A /* NavigationViewWithStackStyle.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NavigationViewWithStackStyle.swift; path = Sources/ViewTypes/NavigationViewWithStackStyle.swift; sourceTree = "<group>"; };
+		C6DBBB21105DF5CD19F00E92BE967996 /* Pods-StreetCare.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-StreetCare.release.xcconfig"; sourceTree = "<group>"; };
+		C79142029020A5BE5333E4DF82886139 /* GoogleMaps.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; name = GoogleMaps.xcframework; path = Maps/Frameworks/GoogleMaps.xcframework; sourceTree = "<group>"; };
+		C892D36802F2FB08E74A9B6716E563D5 /* Form.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Form.swift; path = Sources/ViewTypes/Form.swift; sourceTree = "<group>"; };
+		CBDD826238356D9DF61B31A0CE92B0A5 /* ProgressViewWithLinearStyle.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ProgressViewWithLinearStyle.swift; path = Sources/ViewTypes/ProgressViewWithLinearStyle.swift; sourceTree = "<group>"; };
+		D1B560ECB1B89732406A28AE867EF9A5 /* Pods-StreetCare.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-StreetCare.modulemap"; sourceTree = "<group>"; };
+		D6230659B18A367DD7DDC0368802450B /* ExytePopupView.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = ExytePopupView.release.xcconfig; sourceTree = "<group>"; };
+		D9FCE822BE921618DD1BA7E0A93FC6DC /* GMSEmpty.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GMSEmpty.h; path = Base/Sources/GMSEmpty.h; sourceTree = "<group>"; };
+		DAD65B692032609DD02A6014A5D91699 /* GoogleMapsCore.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; name = GoogleMapsCore.xcframework; path = Maps/Frameworks/GoogleMapsCore.xcframework; sourceTree = "<group>"; };
+		DAFBA3F84ED454F62A2DBB54EBD7B174 /* Utils.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Utils.swift; path = Sources/Utils.swift; sourceTree = "<group>"; };
+		DC77052587C4543C73142BD4D1D05844 /* DatePickerWithCompactStyle.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DatePickerWithCompactStyle.swift; path = Sources/ViewTypes/DatePickerWithCompactStyle.swift; sourceTree = "<group>"; };
+		E14554D0136E86C7644FF1F1880725A5 /* ExytePopupView-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "ExytePopupView-umbrella.h"; sourceTree = "<group>"; };
+		EA0A137D81529870C439DAA671CB7F9F /* PlatformView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PlatformView.swift; path = Sources/PlatformView.swift; sourceTree = "<group>"; };
+		ED485ADDEBCD3973465324A1657ADFCE /* PageControl.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PageControl.swift; path = Sources/ViewTypes/PageControl.swift; sourceTree = "<group>"; };
+		ED52D211E6736B00706D12DF9EFB3587 /* GoogleMaps.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = GoogleMaps.release.xcconfig; sourceTree = "<group>"; };
+		EE0D9F71AA69DED7F7AD949F4FF2CBB3 /* GoogleMaps.bundle */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "wrapper.plug-in"; name = GoogleMaps.bundle; path = Maps/Resources/GoogleMapsResources/GoogleMaps.bundle; sourceTree = "<group>"; };
+		EF44FC8CBD32D36D3ECC4F0DA35E8640 /* PickerWithMenuStyle.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PickerWithMenuStyle.swift; path = Sources/ViewTypes/PickerWithMenuStyle.swift; sourceTree = "<group>"; };
+		EF7EFCC0A5CB246AC4F016E8245CA4F1 /* GoogleMapsBase.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; name = GoogleMapsBase.xcframework; path = Base/Frameworks/GoogleMapsBase.xcframework; sourceTree = "<group>"; };
+		F017233804C55F5DE2CB4E3CE69B3BC9 /* NavigationViewWithColumnsStyle.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NavigationViewWithColumnsStyle.swift; path = Sources/ViewTypes/NavigationViewWithColumnsStyle.swift; sourceTree = "<group>"; };
+		F4B66BA6EEF2DEC5BE1AE8CE70330BAC /* ListWithSidebarStyle.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ListWithSidebarStyle.swift; path = Sources/ViewTypes/ListWithSidebarStyle.swift; sourceTree = "<group>"; };
+		F4B97C9DE01E846F9774B0F442536EB1 /* NavigationSplitView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NavigationSplitView.swift; path = Sources/ViewTypes/NavigationSplitView.swift; sourceTree = "<group>"; };
+		F61EEC6E0FAAADFAFFF55DB3A8100675 /* PopupView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = PopupView.h; path = Source/PopupView.h; sourceTree = "<group>"; };
+		F71E1F6B2AEE270C495CD574B184E14A /* ExytePopupView-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "ExytePopupView-prefix.pch"; sourceTree = "<group>"; };
+		F7507F313CACDD407C5D936ED49191AF /* Pods-StreetCare-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-StreetCare-Info.plist"; sourceTree = "<group>"; };
+		F88DDF362D245237DE02C96532CFFBB7 /* ExytePopupView.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = ExytePopupView.debug.xcconfig; sourceTree = "<group>"; };
+		FB44D4DD222839A5737040C155ABE1D4 /* DatePickerWithWheelStyle.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DatePickerWithWheelStyle.swift; path = Sources/ViewTypes/DatePickerWithWheelStyle.swift; sourceTree = "<group>"; };
+		FC6702F0B22952503F327989459A95E9 /* PopupScrollViewDelegate.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PopupScrollViewDelegate.swift; path = Source/PopupScrollViewDelegate.swift; sourceTree = "<group>"; };
+		FD09EC04E1BC4D4E513DCA8A5525CF39 /* Pods-StreetCare-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-StreetCare-dummy.m"; sourceTree = "<group>"; };
+		FD964562CADB5970DDFB6B2AC1D2CA7F /* ExytePopupView-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "ExytePopupView-dummy.m"; sourceTree = "<group>"; };
+		FFAD114F0B06987AE6100A22D088EA57 /* TextFieldWithVerticalAxis.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TextFieldWithVerticalAxis.swift; path = Sources/ViewTypes/TextFieldWithVerticalAxis.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		1294834A1C3968C6FD70C62EFC49E4B5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3DE468FCF5865D05240084EDB87B67C3 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		6225610E26D9EA17706F2EC73A29A2DD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		71770A7B06A6BE3FD41D37270A2930AC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EFD3B7109F2E7DCB0A3BB48B63566072 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		9A937B70AB3A33E641A12C4DF4B30FCC /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3757923869FC5823752C3411DF3977C0 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F651C9BA4D5FE0DB6901162552E7ECE7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		08AADA8DAC2F3B6A189E5066E4C9D1E5 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				46DD59DE759324C7920A8447CD4B0D72 /* ExytePopupView */,
+				21BC9DE5EE18F27517C52ABD3FBF38ED /* GoogleMaps-GoogleMapsResources */,
+				58D55567BE5BB377C4B0D89C1322D23E /* GooglePlaces-GooglePlacesResources */,
+				87169C5EC0CF6B40519E17AD43862A7A /* Pods-StreetCare */,
+				1C8031220F7ECC04F0D76F050E0655F4 /* SwiftUIIntrospect */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		1E105017E2932696FED00349C5535E9A /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				9437E9A0B3B448873143CE0B951E7820 /* SwiftUIIntrospect.modulemap */,
+				9E7D7D2BE84F383D46148971C2BE47E0 /* SwiftUIIntrospect-dummy.m */,
+				55ECAA3EF605156DD817F4622EDEAA56 /* SwiftUIIntrospect-Info.plist */,
+				25825E95E126B7F2220F4B4B54223BF0 /* SwiftUIIntrospect-prefix.pch */,
+				7F1BBFFE3D8CEADB6DCEDB102FF94CC4 /* SwiftUIIntrospect-umbrella.h */,
+				65190689345476684480B011F4E03089 /* SwiftUIIntrospect.debug.xcconfig */,
+				8A15F624CA6D6A938DB0302F8FDD67FF /* SwiftUIIntrospect.release.xcconfig */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/SwiftUIIntrospect";
+			sourceTree = "<group>";
+		};
+		1F2F498E7EC58FC6AB05E52662DA9388 /* GooglePlaces */ = {
+			isa = PBXGroup;
+			children = (
+				5A54A0EF6B1F8067BDA86CC117DB003F /* GMSEmpty.h */,
+				E26A12F4F1E4843C9B8BC2C1FD80FFAD /* Frameworks */,
+				A8CAECD6474AB55ED060A356C5767C33 /* Resources */,
+				6141B3EB2F18C5F13926A4ADA0F3EA29 /* Support Files */,
+			);
+			name = GooglePlaces;
+			path = GooglePlaces;
+			sourceTree = "<group>";
+		};
+		27EE0231B8880F13A1E41644A6710F7A /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				5E023E8851A483690298660C96E3B17A /* ExytePopupView */,
+				8E0C0D9A495D7964E10342D32F91FE84 /* GoogleMaps */,
+				1F2F498E7EC58FC6AB05E52662DA9388 /* GooglePlaces */,
+				48E0B5AA799219816D2CFDD92437FFFD /* SwiftUIIntrospect */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		48E0B5AA799219816D2CFDD92437FFFD /* SwiftUIIntrospect */ = {
+			isa = PBXGroup;
+			children = (
+				BA97DA466BBAEF49A4510AE14505B7B9 /* Button.swift */,
+				199497DA1174AFD28C7AEE5982B677C6 /* ColorPicker.swift */,
+				10858941E1A374C00DDFEDF21289098F /* DatePicker.swift */,
+				DC77052587C4543C73142BD4D1D05844 /* DatePickerWithCompactStyle.swift */,
+				51D3F963EAD21D3751B86498AAB3C440 /* DatePickerWithFieldStyle.swift */,
+				A422DFCF84F00E95761C2EF9AEA5AC13 /* DatePickerWithGraphicalStyle.swift */,
+				B96048204AD5723BB1AAA596514911FD /* DatePickerWithStepperFieldStyle.swift */,
+				FB44D4DD222839A5737040C155ABE1D4 /* DatePickerWithWheelStyle.swift */,
+				C892D36802F2FB08E74A9B6716E563D5 /* Form.swift */,
+				31688FF1CF70F612716C881E204B3095 /* FormWithGroupedStyle.swift */,
+				3FE9020327E10317B98E805488C6AE45 /* FullScreenCover.swift */,
+				BD2658C4CCCDBA8050624B54B6D17DA6 /* Introspect.swift */,
+				B5724F7D7274D240BB23B01FC27DAF8A /* IntrospectableViewType.swift */,
+				AE7DF8659372E269359BC7F607E2BFA0 /* IntrospectionSelector.swift */,
+				244E5446152EFD8F3F6CD58A7F0024F4 /* IntrospectionView.swift */,
+				08A726FEDB8C39C5F481FA1E7D9AE658 /* List.swift */,
+				825F87246B93B977A25A271035F4E233 /* ListCell.swift */,
+				AE671669384145651AE22443C9FFE0B0 /* ListWithBorderedStyle.swift */,
+				2B48AB2246F012AEB637A27DB698EC25 /* ListWithGroupedStyle.swift */,
+				2CB4EE6630E518ABE333DDA374D08F98 /* ListWithInsetGroupedStyle.swift */,
+				73EFD62553674732ECD59DFBC1D4ABC5 /* ListWithInsetStyle.swift */,
+				F4B66BA6EEF2DEC5BE1AE8CE70330BAC /* ListWithSidebarStyle.swift */,
+				B2DAF3BA695DCF376FF908F9CBB9A7D1 /* Map.swift */,
+				F4B97C9DE01E846F9774B0F442536EB1 /* NavigationSplitView.swift */,
+				94D2AC01CEA7E6320A1764DF19656691 /* NavigationStack.swift */,
+				F017233804C55F5DE2CB4E3CE69B3BC9 /* NavigationViewWithColumnsStyle.swift */,
+				C3B2176FDD3FBDFB41EAD4AD7720A20A /* NavigationViewWithStackStyle.swift */,
+				ED485ADDEBCD3973465324A1657ADFCE /* PageControl.swift */,
+				EF44FC8CBD32D36D3ECC4F0DA35E8640 /* PickerWithMenuStyle.swift */,
+				827C61C1913A4DE619E2D4B747BA34F2 /* PickerWithSegmentedStyle.swift */,
+				A665943F9A8EEF18673E1D9BADBE49E1 /* PickerWithWheelStyle.swift */,
+				1B70717F67060FB7C82147B5F69DDC3A /* PlatformVersion.swift */,
+				EA0A137D81529870C439DAA671CB7F9F /* PlatformView.swift */,
+				916848EF235A29EADE68A085FD43B1D3 /* PlatformViewVersion.swift */,
+				2EBDA388532F57EA8AAF05DDEFD1DCEE /* Popover.swift */,
+				0BA2348C82B59668C6A5A59B9E81D620 /* ProgressViewWithCircularStyle.swift */,
+				CBDD826238356D9DF61B31A0CE92B0A5 /* ProgressViewWithLinearStyle.swift */,
+				5F95B1D34D8450D6DB9DE0F80DDEECE3 /* RuntimeWarnings.swift */,
+				9D06FDB52841C5F1A7019B859BC4F180 /* ScrollView.swift */,
+				0F443B2C2AD5A7CEE21182C8C474E93D /* SearchField.swift */,
+				0CE4040B23DAC6C54A497F3F9BDE9FE2 /* SecureField.swift */,
+				1A8731585C0F9A05E9F6A07FEC60C845 /* Sheet.swift */,
+				27D6BE4B3EA999B0E22F4C5231B751CC /* SignInWithAppleButton.swift */,
+				BF14106A36D47E6A817E75A12BEBA9AB /* Slider.swift */,
+				4FED1EC5D74CD2107690D333D713F11C /* Stepper.swift */,
+				B2C094C8C18350059B29C982620897A8 /* Table.swift */,
+				920B7BC61323E1DE9A8D7D6133DD0D90 /* TabView.swift */,
+				2A7EDE4C937694FA80D1700DF130FE57 /* TabViewWithPageStyle.swift */,
+				C1CBE743BAAAE2D852C2EDA9FC159165 /* TextEditor.swift */,
+				5F694786AD92E4D30C579F79BC8A7502 /* TextField.swift */,
+				FFAD114F0B06987AE6100A22D088EA57 /* TextFieldWithVerticalAxis.swift */,
+				4B0C50301E0C570475C68D691E408609 /* Toggle.swift */,
+				B3F23347AE13D4CB9995831047593A6A /* ToggleWithButtonStyle.swift */,
+				4655D171AE1E8C05526E171825627D09 /* ToggleWithCheckboxStyle.swift */,
+				1A924DE011E01156568335F2F7C96453 /* ToggleWithSwitchStyle.swift */,
+				DAFBA3F84ED454F62A2DBB54EBD7B174 /* Utils.swift */,
+				4C885796459F57912B9B52EA20372926 /* VideoPlayer.swift */,
+				23A12633292FCA454390EE4E3BA78067 /* View.swift */,
+				93A792F949C165BFEE357CCAE9E5B956 /* ViewController.swift */,
+				AEBAAEDE30ACDEA092DE725E415D1CDE /* Weak.swift */,
+				4FE429CA66D7CD472241CA9435A7A235 /* Window.swift */,
+				1E105017E2932696FED00349C5535E9A /* Support Files */,
+			);
+			name = SwiftUIIntrospect;
+			path = SwiftUIIntrospect;
+			sourceTree = "<group>";
+		};
+		5180306C067BA0DF48BFD842FCB66239 /* Pods-StreetCare */ = {
+			isa = PBXGroup;
+			children = (
+				D1B560ECB1B89732406A28AE867EF9A5 /* Pods-StreetCare.modulemap */,
+				917C0C9B712ECD3B12B6B23AA9521BCF /* Pods-StreetCare-acknowledgements.markdown */,
+				9EF95E8EA7AD1DF7B378894EB4DCAAAE /* Pods-StreetCare-acknowledgements.plist */,
+				FD09EC04E1BC4D4E513DCA8A5525CF39 /* Pods-StreetCare-dummy.m */,
+				54C036E197A2695FBEEDA82DC5215420 /* Pods-StreetCare-frameworks.sh */,
+				F7507F313CACDD407C5D936ED49191AF /* Pods-StreetCare-Info.plist */,
+				0D880620DE36E3BEA3AB06F0B548A77A /* Pods-StreetCare-resources.sh */,
+				1F94FBC8E8FA08105CA176A3D27A7E31 /* Pods-StreetCare-umbrella.h */,
+				76BD901CE9C92AC1B886E065B838F284 /* Pods-StreetCare.debug.xcconfig */,
+				C6DBBB21105DF5CD19F00E92BE967996 /* Pods-StreetCare.release.xcconfig */,
+			);
+			name = "Pods-StreetCare";
+			path = "Target Support Files/Pods-StreetCare";
+			sourceTree = "<group>";
+		};
+		5E023E8851A483690298660C96E3B17A /* ExytePopupView */ = {
+			isa = PBXGroup;
+			children = (
+				5D8BE9CCF74EF2728CFDD3582CFF5E66 /* FullscreenPopup.swift */,
+				56856CF4785D3AFE33B54CC650733A01 /* Modifiers.swift */,
+				FC6702F0B22952503F327989459A95E9 /* PopupScrollViewDelegate.swift */,
+				F61EEC6E0FAAADFAFFF55DB3A8100675 /* PopupView.h */,
+				AB4DD6EC6C3E87348FC581A6C3B683A7 /* PopupView.swift */,
+				2C81256C5C203E3CA0E574729F01B38F /* Utils.swift */,
+				C44BDCA3D185AC3BD8D71F1F7F4E43A6 /* Support Files */,
+			);
+			name = ExytePopupView;
+			path = ExytePopupView;
+			sourceTree = "<group>";
+		};
+		6141B3EB2F18C5F13926A4ADA0F3EA29 /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				6CE14B7B922FDB8D5AE8FEA69F72753D /* GooglePlaces-xcframeworks.sh */,
+				9070A1DC4FE9B67B768780D379880129 /* GooglePlaces.debug.xcconfig */,
+				8BCF25F5BB403C43822B1004B1714E45 /* GooglePlaces.release.xcconfig */,
+				37B1C39A81A07B70B3EB5CB2C6E47BAD /* ResourceBundle-GooglePlacesResources-GooglePlaces-Info.plist */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/GooglePlaces";
+			sourceTree = "<group>";
+		};
+		66CBCAEF7EE339810F3AF595D2DEB3FF /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				3E7E0334EDEF72D38684FFD1605B032A /* GoogleMaps-xcframeworks.sh */,
+				10AA17EF5C8D7C00E4A68FFE827724FA /* GoogleMaps.debug.xcconfig */,
+				ED52D211E6736B00706D12DF9EFB3587 /* GoogleMaps.release.xcconfig */,
+				5A6CC7DC54D365DDD2107469EAFDB44E /* ResourceBundle-GoogleMapsResources-GoogleMaps-Info.plist */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/GoogleMaps";
+			sourceTree = "<group>";
+		};
+		7A70F8A80431EDA12FCFC5FBAE4392DA /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				D9FCE822BE921618DD1BA7E0A93FC6DC /* GMSEmpty.h */,
+				990C87A0973B038A244DF9EAB559E585 /* Frameworks */,
+			);
+			name = Base;
+			sourceTree = "<group>";
+		};
+		8E0C0D9A495D7964E10342D32F91FE84 /* GoogleMaps */ = {
+			isa = PBXGroup;
+			children = (
+				7A70F8A80431EDA12FCFC5FBAE4392DA /* Base */,
+				C0F480E64516F57AF2F8BC840846F4ED /* Maps */,
+				66CBCAEF7EE339810F3AF595D2DEB3FF /* Support Files */,
+			);
+			name = GoogleMaps;
+			path = GoogleMaps;
+			sourceTree = "<group>";
+		};
+		990C87A0973B038A244DF9EAB559E585 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				EF7EFCC0A5CB246AC4F016E8245CA4F1 /* GoogleMapsBase.xcframework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		9C184DF114B47F23A09D36A767843F46 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				C79142029020A5BE5333E4DF82886139 /* GoogleMaps.xcframework */,
+				DAD65B692032609DD02A6014A5D91699 /* GoogleMapsCore.xcframework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A8CAECD6474AB55ED060A356C5767C33 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				30B5CC484E1906B58BDE58C034F77D80 /* GooglePlaces.bundle */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		C0F480E64516F57AF2F8BC840846F4ED /* Maps */ = {
+			isa = PBXGroup;
+			children = (
+				633B7644B4B6E8A989C79F50BC0A2ADF /* GMSEmpty.h */,
+				9C184DF114B47F23A09D36A767843F46 /* Frameworks */,
+				F0D3234A1D4C33B60398FE5151C3B8AA /* Resources */,
+			);
+			name = Maps;
+			sourceTree = "<group>";
+		};
+		C44BDCA3D185AC3BD8D71F1F7F4E43A6 /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				AEFF481705EEB3C3DEA545CAD7292962 /* ExytePopupView.modulemap */,
+				FD964562CADB5970DDFB6B2AC1D2CA7F /* ExytePopupView-dummy.m */,
+				98F936A48BFB50F8E7703564AF281332 /* ExytePopupView-Info.plist */,
+				F71E1F6B2AEE270C495CD574B184E14A /* ExytePopupView-prefix.pch */,
+				E14554D0136E86C7644FF1F1880725A5 /* ExytePopupView-umbrella.h */,
+				F88DDF362D245237DE02C96532CFFBB7 /* ExytePopupView.debug.xcconfig */,
+				D6230659B18A367DD7DDC0368802450B /* ExytePopupView.release.xcconfig */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/ExytePopupView";
+			sourceTree = "<group>";
+		};
+		CF1408CF629C7361332E53B88F7BD30C = {
+			isa = PBXGroup;
+			children = (
+				9D940727FF8FB9C785EB98E56350EF41 /* Podfile */,
+				D210D550F4EA176C3123ED886F8F87F5 /* Frameworks */,
+				27EE0231B8880F13A1E41644A6710F7A /* Pods */,
+				08AADA8DAC2F3B6A189E5066E4C9D1E5 /* Products */,
+				F2B992A5A7A2DCDCFA422A68C29541DC /* Targets Support Files */,
+			);
+			sourceTree = "<group>";
+		};
+		D210D550F4EA176C3123ED886F8F87F5 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				E4801F62A6B08CD9B5410329F1A18FDE /* iOS */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		E26A12F4F1E4843C9B8BC2C1FD80FFAD /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				00BD116861BEE5080A3EEE2EF14D1451 /* GooglePlaces.xcframework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		E4801F62A6B08CD9B5410329F1A18FDE /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				384DDA2CB25005BD6479B5987C619DD4 /* Foundation.framework */,
+			);
+			name = iOS;
+			sourceTree = "<group>";
+		};
+		F0D3234A1D4C33B60398FE5151C3B8AA /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				EE0D9F71AA69DED7F7AD949F4FF2CBB3 /* GoogleMaps.bundle */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		F2B992A5A7A2DCDCFA422A68C29541DC /* Targets Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				5180306C067BA0DF48BFD842FCB66239 /* Pods-StreetCare */,
+			);
+			name = "Targets Support Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		623DB7F9B0BA1EC3E3542E2BF75460B0 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CA367557FAB6F5CC8D6A1293BA691F14 /* Pods-StreetCare-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		662612E25BE2C69591E83178885D288E /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8D491363B45116E3C7E30B0AB135D3BA /* ExytePopupView-umbrella.h in Headers */,
+				10DAB01CB1C86DE4BA1E3198FA666D2E /* PopupView.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FF2D6D0443F941788D9B0915A1E031ED /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A0261BF6F0A928BF52499E728F791B7A /* SwiftUIIntrospect-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		285AAD0A8192022DACE2DAFE30D6CD52 /* GooglePlaces-GooglePlacesResources */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7CA9AF15B46BFFB54B8B187FD4435EFB /* Build configuration list for PBXNativeTarget "GooglePlaces-GooglePlacesResources" */;
+			buildPhases = (
+				E72BED8D4F5ECC42F1CD1913D8BC2D0E /* Sources */,
+				F651C9BA4D5FE0DB6901162552E7ECE7 /* Frameworks */,
+				F20BC7689EE2EB177E3141CDD26C57AE /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "GooglePlaces-GooglePlacesResources";
+			productName = GooglePlacesResources;
+			productReference = 58D55567BE5BB377C4B0D89C1322D23E /* GooglePlaces-GooglePlacesResources */;
+			productType = "com.apple.product-type.bundle";
+		};
+		7B026DDDF280F148DD87281679B51154 /* GoogleMaps-GoogleMapsResources */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8CE12BC03DBA1FA6408826A9C5B88187 /* Build configuration list for PBXNativeTarget "GoogleMaps-GoogleMapsResources" */;
+			buildPhases = (
+				C97F90A8C5AF93C2FA9882D129176901 /* Sources */,
+				6225610E26D9EA17706F2EC73A29A2DD /* Frameworks */,
+				819911265943F29FC1361BB1422BA21D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "GoogleMaps-GoogleMapsResources";
+			productName = GoogleMapsResources;
+			productReference = 21BC9DE5EE18F27517C52ABD3FBF38ED /* GoogleMaps-GoogleMapsResources */;
+			productType = "com.apple.product-type.bundle";
+		};
+		E3BF7971BE024EA2CBC58C6A22E7F7CD /* ExytePopupView */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1FCD49E0E10F578A125F2DC628BE3B71 /* Build configuration list for PBXNativeTarget "ExytePopupView" */;
+			buildPhases = (
+				662612E25BE2C69591E83178885D288E /* Headers */,
+				2BEC99A195B5451B03059F43D001FAAE /* Sources */,
+				71770A7B06A6BE3FD41D37270A2930AC /* Frameworks */,
+				ED39C764BED897384B555AD3D51BA015 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				3D473478A29A075A10DD361E0759DDBC /* PBXTargetDependency */,
+			);
+			name = ExytePopupView;
+			productName = ExytePopupView;
+			productReference = 46DD59DE759324C7920A8447CD4B0D72 /* ExytePopupView */;
+			productType = "com.apple.product-type.framework";
+		};
+		F198CA05A691D631E99E0D5AD57F3790 /* Pods-StreetCare */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A7D443F9469A5D12089D3645FE0D3B81 /* Build configuration list for PBXNativeTarget "Pods-StreetCare" */;
+			buildPhases = (
+				623DB7F9B0BA1EC3E3542E2BF75460B0 /* Headers */,
+				47EE7D89D6EE13D239608C309934A6EF /* Sources */,
+				9A937B70AB3A33E641A12C4DF4B30FCC /* Frameworks */,
+				D5B45211CD3907790C186B765E71BBFB /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				F23158024ABEFAED6A9501CB8ED98ED1 /* PBXTargetDependency */,
+				521F0BF0775AD3D61BD1C9350FB658AC /* PBXTargetDependency */,
+				765B5F44864BE327E6D31CE14F7F0624 /* PBXTargetDependency */,
+				C48CE27277C124130EA8B5CEF2D02318 /* PBXTargetDependency */,
+			);
+			name = "Pods-StreetCare";
+			productName = Pods_StreetCare;
+			productReference = 87169C5EC0CF6B40519E17AD43862A7A /* Pods-StreetCare */;
+			productType = "com.apple.product-type.framework";
+		};
+		FF94F6BC609DB21F0194205C23064AFC /* SwiftUIIntrospect */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 38DB6D37482344886E1D7A443E2309BC /* Build configuration list for PBXNativeTarget "SwiftUIIntrospect" */;
+			buildPhases = (
+				FF2D6D0443F941788D9B0915A1E031ED /* Headers */,
+				E31C3A20ED04CB7EB6804BC5A49C1B0F /* Sources */,
+				1294834A1C3968C6FD70C62EFC49E4B5 /* Frameworks */,
+				545CF8499E362F26FD19767F286FA08C /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SwiftUIIntrospect;
+			productName = SwiftUIIntrospect;
+			productReference = 1C8031220F7ECC04F0D76F050E0655F4 /* SwiftUIIntrospect */;
+			productType = "com.apple.product-type.framework";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		BFDFE7DC352907FC980B868725387E98 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1600;
+				LastUpgradeCheck = 1600;
+			};
+			buildConfigurationList = 4821239608C13582E20E6DA73FD5F1F9 /* Build configuration list for PBXProject "Pods" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				en,
+			);
+			mainGroup = CF1408CF629C7361332E53B88F7BD30C;
+			minimizedProjectReferenceProxies = 0;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 08AADA8DAC2F3B6A189E5066E4C9D1E5 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				E3BF7971BE024EA2CBC58C6A22E7F7CD /* ExytePopupView */,
+				E5B4BBC6DD552AC8943C7E22772FC1D3 /* GoogleMaps */,
+				7B026DDDF280F148DD87281679B51154 /* GoogleMaps-GoogleMapsResources */,
+				0C1885900810601510E0C632060FAF26 /* GooglePlaces */,
+				285AAD0A8192022DACE2DAFE30D6CD52 /* GooglePlaces-GooglePlacesResources */,
+				F198CA05A691D631E99E0D5AD57F3790 /* Pods-StreetCare */,
+				FF94F6BC609DB21F0194205C23064AFC /* SwiftUIIntrospect */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		545CF8499E362F26FD19767F286FA08C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		819911265943F29FC1361BB1422BA21D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				61BA8C8099D3374CDEB19F2A1B8286C3 /* GoogleMaps.bundle in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D5B45211CD3907790C186B765E71BBFB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		ED39C764BED897384B555AD3D51BA015 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		F20BC7689EE2EB177E3141CDD26C57AE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8FB6B3057C54E4853580CB8678B7E504 /* GooglePlaces.bundle in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		5C53F63B615C49C159CEC84184FD1687 /* [CP] Copy XCFrameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/GooglePlaces/GooglePlaces-xcframeworks-input-files.xcfilelist",
+			);
+			name = "[CP] Copy XCFrameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/GooglePlaces/GooglePlaces-xcframeworks-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/GooglePlaces/GooglePlaces-xcframeworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		9801DC96C44A55EEBAB39A01F1BB925C /* [CP] Copy XCFrameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/GoogleMaps/GoogleMaps-xcframeworks-input-files.xcfilelist",
+			);
+			name = "[CP] Copy XCFrameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/GoogleMaps/GoogleMaps-xcframeworks-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/GoogleMaps/GoogleMaps-xcframeworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		2BEC99A195B5451B03059F43D001FAAE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CDD53CE25B0CD5DCEE4F0F82D24F6E8B /* ExytePopupView-dummy.m in Sources */,
+				A709B599F4AF314BB4D291EB9C00E4BB /* FullscreenPopup.swift in Sources */,
+				3A10584DFE0ECFAFA8430E1C0DF15F86 /* Modifiers.swift in Sources */,
+				EEF864066D5ADD064D19D3FC5731DE97 /* PopupScrollViewDelegate.swift in Sources */,
+				31A6BA1C3AA159DDA82FCDD470ADE001 /* PopupView.swift in Sources */,
+				82B868BF27C4BC0A905FA9C36EA604B0 /* Utils.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		47EE7D89D6EE13D239608C309934A6EF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9D215B232CC787226FC01060B85AEB01 /* Pods-StreetCare-dummy.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		C97F90A8C5AF93C2FA9882D129176901 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E31C3A20ED04CB7EB6804BC5A49C1B0F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B12F7DABBE58A7771C2E1DEAE3FBE0D4 /* Button.swift in Sources */,
+				DB106A2C51AE9300525CD3538BB349DE /* ColorPicker.swift in Sources */,
+				A88456B31FC00C2D33B6B54B41BF340F /* DatePicker.swift in Sources */,
+				356D9ED6704ED3B1A33AE47A369770C6 /* DatePickerWithCompactStyle.swift in Sources */,
+				E77FC40B6C1EBDF9611280DB332FC2E1 /* DatePickerWithFieldStyle.swift in Sources */,
+				AE6CA7B5F083F7E9472384DEDA3FDED4 /* DatePickerWithGraphicalStyle.swift in Sources */,
+				99025FBE7FCDB67C8EC3F653B4CF5593 /* DatePickerWithStepperFieldStyle.swift in Sources */,
+				EB1DE7CB6B937B38DA5562002D82E1B9 /* DatePickerWithWheelStyle.swift in Sources */,
+				F6CB0D5236E6B483B3259318EB3614E5 /* Form.swift in Sources */,
+				402A35B9DEBB9AF5EAA7B27A460E8B7E /* FormWithGroupedStyle.swift in Sources */,
+				78E43508395B6E702D793A5741FF3165 /* FullScreenCover.swift in Sources */,
+				6C26AD6A5BAAA3D2FCE012D89E754634 /* Introspect.swift in Sources */,
+				B57DB858B4AB2D69B645DE4A7D1CB64E /* IntrospectableViewType.swift in Sources */,
+				F67A70F132619C34AC5458BED3378324 /* IntrospectionSelector.swift in Sources */,
+				70530E916B17928C203111907B723FCD /* IntrospectionView.swift in Sources */,
+				8C1796694F4558D7638A856057E6D99B /* List.swift in Sources */,
+				41C5984CCA501E85AD46AAF1231D19A9 /* ListCell.swift in Sources */,
+				096B664EE7D733B979E5B5D24B443018 /* ListWithBorderedStyle.swift in Sources */,
+				8CC4DC9A996225B69B635F0B7B2F32EB /* ListWithGroupedStyle.swift in Sources */,
+				FD3AEB8835EE070D2E379C9770F80E62 /* ListWithInsetGroupedStyle.swift in Sources */,
+				5985CFD66C48FD0DCAED39EFF25CA274 /* ListWithInsetStyle.swift in Sources */,
+				FABC8B3A3E7D3D08980470D7AE3F4FE7 /* ListWithSidebarStyle.swift in Sources */,
+				DF347922A4EE0EEEFA31693F42E1DEB9 /* Map.swift in Sources */,
+				F19A7CB0C7C80E18EB4960E96D2333A3 /* NavigationSplitView.swift in Sources */,
+				FFC37C531EF13D05425A88707ADDDF7A /* NavigationStack.swift in Sources */,
+				233961FE4121E34A902E354520A4AB7C /* NavigationViewWithColumnsStyle.swift in Sources */,
+				45D5E3A46EC7D22217551CB804990150 /* NavigationViewWithStackStyle.swift in Sources */,
+				66A43A5E6946649D63CAD68D92AF7ACF /* PageControl.swift in Sources */,
+				AF10E81FB56DE12B7029EBBF1FFC40CA /* PickerWithMenuStyle.swift in Sources */,
+				648129103D5613AE3B5A0D318CCB3DB0 /* PickerWithSegmentedStyle.swift in Sources */,
+				BE02C376ADB6FF033A801489F8923FEE /* PickerWithWheelStyle.swift in Sources */,
+				8B20834C2180008D9F3BD43E34C57245 /* PlatformVersion.swift in Sources */,
+				FC9F1D07D400CCB448659AB27F58318B /* PlatformView.swift in Sources */,
+				E99D83C7D5AC3FE8414976134E1F6186 /* PlatformViewVersion.swift in Sources */,
+				C9D94E2374E907ACBA059AD3055C147B /* Popover.swift in Sources */,
+				0A82661EACE52636F87D54B26C58B299 /* ProgressViewWithCircularStyle.swift in Sources */,
+				E450CE216EAE942AF8C67A569F5DBB3C /* ProgressViewWithLinearStyle.swift in Sources */,
+				C4E8866D51EB334661D5E0B5BE8C1B81 /* RuntimeWarnings.swift in Sources */,
+				4AF54BE3A6535A6D673E26CE70E07A34 /* ScrollView.swift in Sources */,
+				EA8705F95B086DCFF89505C3296FC78F /* SearchField.swift in Sources */,
+				36C0C17C07D475BEB933CF61E5B9A0C5 /* SecureField.swift in Sources */,
+				E3DA284FF3402CE6CDDF368AA6AEA4A8 /* Sheet.swift in Sources */,
+				8793E36C837E5AB99D5E793856E2EA13 /* SignInWithAppleButton.swift in Sources */,
+				8D16144795C0098C7EB60B196DFC760B /* Slider.swift in Sources */,
+				597C13051042C5CF2073037D7D0A33D5 /* Stepper.swift in Sources */,
+				5A5CC3964BE706ADA754D3100DC49169 /* SwiftUIIntrospect-dummy.m in Sources */,
+				AFE8AA8C923A2973B56ED50402F2D8D2 /* Table.swift in Sources */,
+				9425413ED704FA8D96B7F5EB08FA5ADA /* TabView.swift in Sources */,
+				ABE69E5FD9432A16EF7288D958DC64B2 /* TabViewWithPageStyle.swift in Sources */,
+				652B5612CC3E5CAB4C21EDBAFF01EB5B /* TextEditor.swift in Sources */,
+				4121434E07E8655DF0E3C0100BC7190B /* TextField.swift in Sources */,
+				4CEA945055C3BCEEDBDE24C79334D018 /* TextFieldWithVerticalAxis.swift in Sources */,
+				C478724E2D8E18028A13E8F7E390B0B1 /* Toggle.swift in Sources */,
+				47B72761D03D64207EF0199295494F24 /* ToggleWithButtonStyle.swift in Sources */,
+				1DCFCF427BF422626F47520881360FBD /* ToggleWithCheckboxStyle.swift in Sources */,
+				A628D069221E1225061BCB6D6CEBAE28 /* ToggleWithSwitchStyle.swift in Sources */,
+				332B30C61A959A2062319ECA0DD37243 /* Utils.swift in Sources */,
+				C8D96B9E6FE825FC0426C8EB2D2B6B4E /* VideoPlayer.swift in Sources */,
+				44C06ECA5AB0991174CE45317A7F958E /* View.swift in Sources */,
+				32CDAF66511C1EF70F0317044F67921C /* ViewController.swift in Sources */,
+				6AE8B86D87ADE6748E112DD0D5574B00 /* Weak.swift in Sources */,
+				1027BE37C03C1FB422833FFCF7C61B75 /* Window.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		E72BED8D4F5ECC42F1CD1913D8BC2D0E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		3D473478A29A075A10DD361E0759DDBC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = SwiftUIIntrospect;
+			target = FF94F6BC609DB21F0194205C23064AFC /* SwiftUIIntrospect */;
+			targetProxy = 3FAD9F5746BC2078E0043D6B81E5E853 /* PBXContainerItemProxy */;
+		};
+		521F0BF0775AD3D61BD1C9350FB658AC /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = GoogleMaps;
+			target = E5B4BBC6DD552AC8943C7E22772FC1D3 /* GoogleMaps */;
+			targetProxy = 20BE8F8E93D13C4EA2A7D92206866EC8 /* PBXContainerItemProxy */;
+		};
+		765B5F44864BE327E6D31CE14F7F0624 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = GooglePlaces;
+			target = 0C1885900810601510E0C632060FAF26 /* GooglePlaces */;
+			targetProxy = 20CF38DD68EEC7523D3BC1E68A112B05 /* PBXContainerItemProxy */;
+		};
+		7CCFA95272CDFF781FC6D754D0B1FB90 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "GooglePlaces-GooglePlacesResources";
+			target = 285AAD0A8192022DACE2DAFE30D6CD52 /* GooglePlaces-GooglePlacesResources */;
+			targetProxy = 9FE18DE5A0D854E526F9AC3E24110721 /* PBXContainerItemProxy */;
+		};
+		84587BCED907E0AC77F569A1243D5C01 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "GoogleMaps-GoogleMapsResources";
+			target = 7B026DDDF280F148DD87281679B51154 /* GoogleMaps-GoogleMapsResources */;
+			targetProxy = 34013D1E91FC0E16ACE37D9B4EBCEA97 /* PBXContainerItemProxy */;
+		};
+		C48CE27277C124130EA8B5CEF2D02318 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = SwiftUIIntrospect;
+			target = FF94F6BC609DB21F0194205C23064AFC /* SwiftUIIntrospect */;
+			targetProxy = 2DD4AB669EDB9DAFBC60A4543C1268B5 /* PBXContainerItemProxy */;
+		};
+		F23158024ABEFAED6A9501CB8ED98ED1 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = ExytePopupView;
+			target = E3BF7971BE024EA2CBC58C6A22E7F7CD /* ExytePopupView */;
+			targetProxy = 77C9F38349B0BE23715763F0F11602A2 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		0294E14E225E1D28BFB9CB27413C3E81 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8BCF25F5BB403C43822B1004B1714E45 /* GooglePlaces.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		03AF7043535FFDA7AE31F2CE8246A436 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9070A1DC4FE9B67B768780D379880129 /* GooglePlaces.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		0CECE09968112E9ED514F826214B2378 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = F88DDF362D245237DE02C96532CFFBB7 /* ExytePopupView.debug.xcconfig */;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = NO;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				GCC_PREFIX_HEADER = "Target Support Files/ExytePopupView/ExytePopupView-prefix.pch";
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = "Target Support Files/ExytePopupView/ExytePopupView-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MODULEMAP_FILE = "Target Support Files/ExytePopupView/ExytePopupView.modulemap";
+				PRODUCT_MODULE_NAME = ExytePopupView;
+				PRODUCT_NAME = ExytePopupView;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_INSTALL_OBJC_HEADER = YES;
+				SWIFT_VERSION = 5.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		1927A685A649994BD5E2D158CAAD7F5D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 76BD901CE9C92AC1B886E065B838F284 /* Pods-StreetCare.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = NO;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				INFOPLIST_FILE = "Target Support Files/Pods-StreetCare/Pods-StreetCare-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-StreetCare/Pods-StreetCare.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		30E0B9EFD9A5C45D0D351231E81B30B3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"POD_CONFIGURATION_RELEASE=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRIP_INSTALLED_PRODUCT = NO;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+				SYMROOT = "${SRCROOT}/../build";
+			};
+			name = Release;
+		};
+		420E148215EC1473E460FB1F347E336C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 10AA17EF5C8D7C00E4A68FFE827724FA /* GoogleMaps.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		46C9D0A3FCAB2DE034568A8D487D4043 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = C6DBBB21105DF5CD19F00E92BE967996 /* Pods-StreetCare.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = NO;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				INFOPLIST_FILE = "Target Support Files/Pods-StreetCare/Pods-StreetCare-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-StreetCare/Pods-StreetCare.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		58BECF8D87B41DF2300C123A0FD2441A /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D6230659B18A367DD7DDC0368802450B /* ExytePopupView.release.xcconfig */;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = NO;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				GCC_PREFIX_HEADER = "Target Support Files/ExytePopupView/ExytePopupView-prefix.pch";
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = "Target Support Files/ExytePopupView/ExytePopupView-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MODULEMAP_FILE = "Target Support Files/ExytePopupView/ExytePopupView.modulemap";
+				PRODUCT_MODULE_NAME = ExytePopupView;
+				PRODUCT_NAME = ExytePopupView;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_INSTALL_OBJC_HEADER = YES;
+				SWIFT_VERSION = 5.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		71425309D048161D46CA9F84E632C4E7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8A15F624CA6D6A938DB0302F8FDD67FF /* SwiftUIIntrospect.release.xcconfig */;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = NO;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				GCC_PREFIX_HEADER = "Target Support Files/SwiftUIIntrospect/SwiftUIIntrospect-prefix.pch";
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = "Target Support Files/SwiftUIIntrospect/SwiftUIIntrospect-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MODULEMAP_FILE = "Target Support Files/SwiftUIIntrospect/SwiftUIIntrospect.modulemap";
+				PRODUCT_MODULE_NAME = SwiftUIIntrospect;
+				PRODUCT_NAME = SwiftUIIntrospect;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_INSTALL_OBJC_HEADER = YES;
+				SWIFT_VERSION = 5.7;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		83657721E415D61FAC94F93214A91C8C /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = ED52D211E6736B00706D12DF9EFB3587 /* GoogleMaps.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		8832FE89A298CDD385A7565F5B94C440 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 65190689345476684480B011F4E03089 /* SwiftUIIntrospect.debug.xcconfig */;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = NO;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				GCC_PREFIX_HEADER = "Target Support Files/SwiftUIIntrospect/SwiftUIIntrospect-prefix.pch";
+				GENERATE_INFOPLIST_FILE = NO;
+				INFOPLIST_FILE = "Target Support Files/SwiftUIIntrospect/SwiftUIIntrospect-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MODULEMAP_FILE = "Target Support Files/SwiftUIIntrospect/SwiftUIIntrospect.modulemap";
+				PRODUCT_MODULE_NAME = SwiftUIIntrospect;
+				PRODUCT_NAME = SwiftUIIntrospect;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_INSTALL_OBJC_HEADER = YES;
+				SWIFT_VERSION = 5.7;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		9618623FA8B641598AC890B71B817FFE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 9070A1DC4FE9B67B768780D379880129 /* GooglePlaces.debug.xcconfig */;
+			buildSettings = {
+				CODE_SIGNING_ALLOWED = NO;
+				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/GooglePlaces";
+				IBSC_MODULE = GooglePlaces;
+				INFOPLIST_FILE = "Target Support Files/GooglePlaces/ResourceBundle-GooglePlacesResources-GooglePlaces-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				PRODUCT_NAME = GooglePlacesResources;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				WRAPPER_EXTENSION = bundle;
+			};
+			name = Debug;
+		};
+		A40B39EB2458EF4E11BD3F9999FC806A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 10AA17EF5C8D7C00E4A68FFE827724FA /* GoogleMaps.debug.xcconfig */;
+			buildSettings = {
+				CODE_SIGNING_ALLOWED = NO;
+				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/GoogleMaps";
+				IBSC_MODULE = GoogleMaps;
+				INFOPLIST_FILE = "Target Support Files/GoogleMaps/ResourceBundle-GoogleMapsResources-GoogleMaps-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				PRODUCT_NAME = GoogleMapsResources;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				WRAPPER_EXTENSION = bundle;
+			};
+			name = Debug;
+		};
+		E8A441FB667170B56EB32D36D68C849E /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 8BCF25F5BB403C43822B1004B1714E45 /* GooglePlaces.release.xcconfig */;
+			buildSettings = {
+				CODE_SIGNING_ALLOWED = NO;
+				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/GooglePlaces";
+				IBSC_MODULE = GooglePlaces;
+				INFOPLIST_FILE = "Target Support Files/GooglePlaces/ResourceBundle-GooglePlacesResources-GooglePlaces-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				PRODUCT_NAME = GooglePlacesResources;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				WRAPPER_EXTENSION = bundle;
+			};
+			name = Release;
+		};
+		F4FF6A0D1970CA9705974E3CB2134802 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"POD_CONFIGURATION_DEBUG=1",
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				STRIP_INSTALLED_PRODUCT = NO;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				SYMROOT = "${SRCROOT}/../build";
+			};
+			name = Debug;
+		};
+		FD5C4C93A4E257469B2FD78A0C8B2612 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = ED52D211E6736B00706D12DF9EFB3587 /* GoogleMaps.release.xcconfig */;
+			buildSettings = {
+				CODE_SIGNING_ALLOWED = NO;
+				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/GoogleMaps";
+				IBSC_MODULE = GoogleMaps;
+				INFOPLIST_FILE = "Target Support Files/GoogleMaps/ResourceBundle-GoogleMapsResources-GoogleMaps-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				PRODUCT_NAME = GoogleMapsResources;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				WRAPPER_EXTENSION = bundle;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1FCD49E0E10F578A125F2DC628BE3B71 /* Build configuration list for PBXNativeTarget "ExytePopupView" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				0CECE09968112E9ED514F826214B2378 /* Debug */,
+				58BECF8D87B41DF2300C123A0FD2441A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		38DB6D37482344886E1D7A443E2309BC /* Build configuration list for PBXNativeTarget "SwiftUIIntrospect" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8832FE89A298CDD385A7565F5B94C440 /* Debug */,
+				71425309D048161D46CA9F84E632C4E7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		47C5605859EECC4DAA8398F8266E85C4 /* Build configuration list for PBXAggregateTarget "GoogleMaps" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				420E148215EC1473E460FB1F347E336C /* Debug */,
+				83657721E415D61FAC94F93214A91C8C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4821239608C13582E20E6DA73FD5F1F9 /* Build configuration list for PBXProject "Pods" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				F4FF6A0D1970CA9705974E3CB2134802 /* Debug */,
+				30E0B9EFD9A5C45D0D351231E81B30B3 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7CA9AF15B46BFFB54B8B187FD4435EFB /* Build configuration list for PBXNativeTarget "GooglePlaces-GooglePlacesResources" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9618623FA8B641598AC890B71B817FFE /* Debug */,
+				E8A441FB667170B56EB32D36D68C849E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		8CE12BC03DBA1FA6408826A9C5B88187 /* Build configuration list for PBXNativeTarget "GoogleMaps-GoogleMapsResources" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A40B39EB2458EF4E11BD3F9999FC806A /* Debug */,
+				FD5C4C93A4E257469B2FD78A0C8B2612 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A7D443F9469A5D12089D3645FE0D3B81 /* Build configuration list for PBXNativeTarget "Pods-StreetCare" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1927A685A649994BD5E2D158CAAD7F5D /* Debug */,
+				46C9D0A3FCAB2DE034568A8D487D4043 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C77040D703478EDADEB4E839F298401F /* Build configuration list for PBXAggregateTarget "GooglePlaces" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				03AF7043535FFDA7AE31F2CE8246A436 /* Debug */,
+				0294E14E225E1D28BFB9CB27413C3E81 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+}

@@ -20,6 +20,7 @@ struct CommunityEventView: View {
     @Binding var isPresented: Bool // Binding to control dismissal of this view
     @State private var shouldDismissAll = false // Shared variable for dismissing all views
     @State private var isNavigationActive = false
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
 
     let formatter = DateFormatter()
     var eventType: EventType
@@ -73,7 +74,7 @@ struct CommunityEventView: View {
                     .stroke(Color.black, lineWidth: 1)
             )
             .padding()
-            
+            LegendView()
             if viewModel.filteredData.isEmpty {
                 Text(NSLocalizedString(eventType == .future ? "noFutureEventsAvailable" : eventType == .past ? "noPastEventsAvailable" : "noHelpingRequestsAvailable", comment: ""))
                     .fontWeight(.bold)
@@ -229,5 +230,39 @@ struct SectionHeaderView: View {
                 .foregroundColor(Color("TextColor"))
         }
         .padding(EdgeInsets(top: 0.0, leading: 0.0, bottom: 5.0, trailing: 0.0))
+    }
+}
+
+
+struct LegendView: View {
+    var body: some View {
+        HStack(spacing: 12) {
+            LegendItem(icon: "checkmark.circle.fill", color: .green, text: "Chapter Leader")
+            LegendItem(icon: "checkmark.circle.fill", color: Color.blue.opacity(0.7), text: "Street Care Hub Leader")
+            LegendItem(icon: "checkmark.circle.fill", color: .purple, text: "Chapter Member")
+            LegendItem(icon: "checkmark.circle.fill", color: .yellow, text: "Account Holder")
+        }
+        .padding(8)
+        .cornerRadius(8)
+        .padding(.horizontal)
+        .lineLimit(3)
+    }
+}
+
+struct LegendItem: View {
+    var icon: String
+    var color: Color
+    var text: String
+
+    var body: some View {
+        HStack(spacing: 4) {
+            Image(systemName: icon)
+                .foregroundColor(color)
+                .background(Circle().fill(Color.white).frame(width: 18, height: 18))
+                .frame(width: 20, height: 20)
+            Text(text)
+                .font(.system(size: 12))
+                .foregroundColor(.black)
+        }
     }
 }

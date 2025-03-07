@@ -7,11 +7,13 @@
 
 import SwiftUI
 import FirebaseFirestore
+import FirebaseAuth
 import SafariServices
 
 struct ChapterMembershipForm: View {
     @Binding var isPresented: Bool // Pass this from the parent to handle dismissal
     @Binding var shouldDismissAll: Bool // Shared variable
+    @Environment(\.presentationMode) var presentationMode
     @State private var currentStep: Int = 1
     @State private var firstName = ""
     @State private var lastName = ""
@@ -34,10 +36,19 @@ struct ChapterMembershipForm: View {
     @State private var comments = ""
     @State private var navigateToSubmissionScreen = false
     @State private var showAlert = false
+    @State private var userIsAlreadyMember = false
+    @State private var showAlreadyMemberAlert = false
 
     var allPersonalFieldsFilled: Bool {
-        !firstName.isEmpty && !lastName.isEmpty && !email.isEmpty && !phoneNumber.isEmpty
-            && !addressLine1.isEmpty && !city.isEmpty && !state.isEmpty && !zipCode.isEmpty && !country.isEmpty
+        !firstName.isEmpty &&
+        !lastName.isEmpty &&
+        !email.isEmpty &&
+        //!phoneNumber.isEmpty &&
+        //!addressLine1.isEmpty &&
+        !city.isEmpty &&
+        !state.isEmpty &&
+        //!zipCode.isEmpty &&
+        !country.isEmpty
     }
     func openURL(_ urlString: String) {
         guard let url = URL(string: urlString) else { return }
@@ -55,8 +66,55 @@ struct ChapterMembershipForm: View {
         }
         return topController
     }
+    
+    func updateUserTypeInFirestore(userID: String) {
+        let db = Firestore.firestore()
+        let usersRef = db.collection("users")
+        
+        usersRef.whereField("uid", isEqualTo: userID).getDocuments { (snapshot, error) in
+            if let error = error {
+                print("Error fetching user document: \(error.localizedDescription)")
+                return
+            }
+            
+            if let document = snapshot?.documents.first {
+                let documentID = document.documentID
+                
+                usersRef.document(documentID).updateData(["Type": "Chapter Member"]) { error in
+                    if let error = error {
+                        print("Error updating user type: \(error.localizedDescription)")
+                    } else {
+                        print("User type updated to 'Chapter Member' successfully")
+                    }
+                }
+            } else {
+                let newUserData: [String: Any] = [
+                    "uid": userID,
+                    "Type": "Chapter Member",
+                    "email": Auth.auth().currentUser?.email ?? "",
+                    "username": Auth.auth().currentUser?.displayName ?? "",
+                    "deviceType": "iOS",
+                    "photoUrl": Auth.auth().currentUser?.photoURL?.absoluteString ?? "",
+                    "isValid": true,
+                    "dateCreated": Timestamp(date: Date())
+                ]
+                
+                usersRef.addDocument(data: newUserData) { error in
+                    if let error = error {
+                        print("Error creating new user document: \(error.localizedDescription)")
+                    } else {
+                        print("New user document created successfully!")
+                    }
+                }
+            }
+        }
+    }
     func saveFormDataToFirestore() {
         // Reference to Firestore
+        guard let userID = Auth.auth().currentUser?.uid else {
+            print("Error: No authenticated user found.")
+            return
+        }
         let db = Firestore.firestore()
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "MM/dd/yyyy"
@@ -86,10 +144,36 @@ struct ChapterMembershipForm: View {
                 print("Error saving data: \(error.localizedDescription)")
             } else {
                 print("Form data successfully saved!")
-                showAlert = true
+                //showExitAlert = true
+                //updateUserTypeInFirestore(userID: userID)
             }
         }
     }
+    
+    func checkUserMembershipStatus() {
+        guard let userID = Auth.auth().currentUser?.uid else {
+            print("Error: No authenticated user found.")
+            return
+        }
+        
+        let db = Firestore.firestore()
+        let userRef = db.collection("users").document(userID)
+        
+        userRef.getDocument { document, error in
+            if let error = error {
+                print("Error fetching user data: \(error.localizedDescription)")
+                return
+            }
+            
+            if let document = document, document.exists {
+                let userType = document.data()?["Type"] as? String ?? ""
+                if userType == "Chapter Member" {
+                    userIsAlreadyMember = true
+                }
+            }
+        }
+    }
+    private let maxSteps = 3
     
     var body: some View {
         NavigationStack {
@@ -98,18 +182,18 @@ struct ChapterMembershipForm: View {
                     .font(.title)
                     .fontWeight(.bold)
                     .multilineTextAlignment(.center)
-                    //.padding()
-
+                //.padding()
+                
                 if currentStep == 1 {
                     personalDetailsView
                 } else if currentStep == 2 {
                     availabilityView
-                } else if currentStep == 3 {
+                } else if currentStep == maxSteps {
                     signatureView
                 }
 
                 Spacer()
-
+                
                 HStack {
                     if currentStep > 1 {
                         Button("Back") {
@@ -121,11 +205,20 @@ struct ChapterMembershipForm: View {
                         .cornerRadius(8)
                     }
 
-                    Button(currentStep < 3 ? "Next" : "Submit") {
-                        if currentStep < 3 {
+                    Button(currentStep < maxSteps ? "Next" : "Submit") {
+                        if currentStep < maxSteps {
                             currentStep += 1
                         } else {
-                            saveFormDataToFirestore()
+                            if userIsAlreadyMember {
+                                showAlreadyMemberAlert = true
+                            } else {
+                                //saveFormDataToFirestore()
+                                saveFormDataToFirestore()
+                                updateUserTypeInFirestore(userID: Auth.auth().currentUser?.uid ?? "")
+                                showAlreadyMemberAlert = false
+                                showAlert = true
+                                print("After setting showExitAlert: \(showAlert)")
+                            }
                         }
                     }
                     .padding()
@@ -136,15 +229,41 @@ struct ChapterMembershipForm: View {
                 }
                 .padding()
             }
-            .alert(isPresented: $showAlert) {
-                Alert(
-                    title: Text("Form Submitted"),
-                    message: Text("Thank you for applying to be a Chapter Member!"),
-                    dismissButton: .default(Text("Back to home"), action: {
-                        isPresented = false
-                        shouldDismissAll = true
-                    })
-                )
+            .alert(isPresented: Binding<Bool>(
+                get: { showAlert || showAlreadyMemberAlert },
+                set: { newValue in
+                    if !newValue {
+                        showAlert = false
+                        showAlreadyMemberAlert = false
+                    }
+                }
+            )) {
+                if showAlreadyMemberAlert {
+                    return Alert(
+                        title: Text("Already a Member"),
+                        message: Text("You are already a Chapter Member. No need to submit the form again."),
+                        dismissButton: .default(Text("OK"), action: {
+                            isPresented = false
+                            shouldDismissAll = true
+                            self.presentationMode.wrappedValue.dismiss()
+                            self.presentationMode.wrappedValue.dismiss()
+                        })
+                    )
+                } else {
+                    return Alert(
+                        title: Text("Form Submitted"),
+                        message: Text("Thank you for applying to be a Chapter Member!"),
+                        dismissButton: .default(Text("Back to home"), action: {
+                            isPresented = false
+                            shouldDismissAll = true
+                            self.presentationMode.wrappedValue.dismiss()
+                            self.presentationMode.wrappedValue.dismiss()
+                        })
+                    )
+                }
+            }
+            .onAppear {
+                checkUserMembershipStatus()
             }
         }
     }

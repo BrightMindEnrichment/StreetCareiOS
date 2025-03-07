@@ -8,6 +8,8 @@
 import SwiftUI
 import Firebase
 import GoogleSignIn
+import UIKit
+import GooglePlaces
 import GoogleMaps
 
 
@@ -39,6 +41,15 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 
         if let uid = Auth.auth().currentUser?.uid {
             print("User : \(uid)")
+        }
+        // Load API Key from Secrets.plist
+        if let path = Bundle.main.path(forResource: "GoogleService-Info", ofType: "plist"),
+           let keys = NSDictionary(contentsOfFile: path),
+           let apiKey = keys["API_KEY"] as? String {
+            GMSPlacesClient.provideAPIKey(apiKey)
+            print("✅ Google Places API Key Loaded Successfully")
+        } else {
+            print("❌ Failed to load Google Places API Key") 
         }
         
         return true

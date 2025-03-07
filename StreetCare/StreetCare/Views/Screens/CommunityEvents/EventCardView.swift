@@ -22,7 +22,7 @@ struct EventCardView: View {
                 }
                 HStack {
                     Image(systemName: "mappin.and.ellipse")
-                    Text(event.event.location!)
+                    Text("\(event.event.city ?? ""), \(event.event.stateAbbv ?? "")")
                         .font(.system(size: 13))
                 }
                 HStack {
