@@ -483,14 +483,16 @@ struct GooglePlacesAutocomplete: UIViewControllerRepresentable {
     @Binding var state: String
     @Binding var stateAbbreviation: String
     @Binding var zipcode: String
+    var location: Binding<CLLocationCoordinate2D?>? = nil  // Optional location binding
     //@Environment(\.presentationMode) var presentationMode
 
     func makeUIViewController(context: Context) -> GMSAutocompleteViewController {
         let autocompleteController = GMSAutocompleteViewController()
         autocompleteController.delegate = context.coordinator
 
-        let fields: GMSPlaceField = [.name, .formattedAddress, .addressComponents]
+        let fields: GMSPlaceField = [.name, .formattedAddress, .addressComponents, .coordinate]
         autocompleteController.placeFields = fields
+
 
         let filter = GMSAutocompleteFilter()
         filter.type = .address

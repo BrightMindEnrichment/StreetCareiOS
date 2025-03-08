@@ -23,6 +23,12 @@ struct InputTileLocation: View {
     
     @State var isLoading = false
     @State var failedToFindLocation = false
+    @State private var street = ""
+    @State private var state = ""
+    @State private var city = ""
+    @State private var zipcode = ""
+    @State private var stateAbbreviation = ""
+    @State private var showAddressSearch = false
         
     var nextAction: () -> ()
     var previousAction: () -> ()
@@ -54,7 +60,7 @@ struct InputTileLocation: View {
                         .font(.headline)
                         .padding()
                     
-                    TextField("optional", text: $textValue)
+                    /*TextField("optional", text: $textValue)
                         .textFieldStyle(.roundedBorder)
                         .frame(width: 200.0)
                     
@@ -64,16 +70,45 @@ struct InputTileLocation: View {
                         Text("and/or").foregroundColor(.gray)
                         Rectangle()
                             .frame(height: 2.0).foregroundColor(.gray).padding()
+                    }*/
+                    
+                    /*LocationButton {
+                     isLoading = true
+                     locationManager.requestLocation()
+                     }
+                     
+                     Spacer()*/
+                    
+                    HStack {
+                        Image(systemName: "magnifyingglass")
+                            .foregroundColor(.gray)
+                        
+                        Text(street.isEmpty ? "Search Address" : street)
+                            .foregroundColor(street.isEmpty ? .gray : .primary)
+                            .frame(maxWidth: .infinity, alignment: .leading) //
                     }
-    
-                    LocationButton {
-                        isLoading = true
-                        locationManager.requestLocation()
+                    .padding()
+                    .frame(height: 45)
+                    .background()
+                    .cornerRadius(8)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 8)
+                            .stroke(Color.gray.opacity(0.5), lineWidth: 1)
+                    )
+                    .onTapGesture {
+                        showAddressSearch = true
                     }
-    
-                    Spacer()
                 }
                 
+                TextField(NSLocalizedString("state", comment: ""), text: $state)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+
+                TextField(NSLocalizedString("city", comment: ""), text: $city)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+
+                TextField(NSLocalizedString("zipcode", comment: ""), text: $zipcode)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+
                 ProgressView(value: Double(questionNumber) / Double(totalQuestions))
                     .tint(.yellow)
                     .background(Color("TextColor"))
@@ -83,6 +118,10 @@ struct InputTileLocation: View {
                 Spacer()
                 
                 HStack {
+                    Button("Previous") {
+                        previousAction()
+                    }
+                    .foregroundColor(Color("TextColor"))
                     Spacer()
                     Button("Next") {
                         nextAction()
@@ -94,14 +133,22 @@ struct InputTileLocation: View {
         }
         .frame(width: size.width, height: size.height)
         .loadingAnimation(isLoading: isLoading)
-        .onAppear {
-            locationManager = LocationManager {
-                isLoading = false
-                newLocation()
-                if !failedToFindLocation {
-                    nextAction()
-                }
-            }
+        .sheet(isPresented: $showAddressSearch) {
+            GooglePlacesAutocomplete(
+                street: $street,
+                city: $city,
+                state: $state,
+                stateAbbreviation: $stateAbbreviation,
+                zipcode: $zipcode,
+                location: Binding<CLLocationCoordinate2D?>(
+                    get: { location },
+                    set: { newValue in
+                        if let newLocation = newValue {
+                            location = newLocation
+                        }
+                    }
+                )
+            )
         }
         .alert("Error...", isPresented: $failedToFindLocation, actions: {
             Button("OK") {
@@ -112,21 +159,9 @@ struct InputTileLocation: View {
         })
         
 
-    } // end body
-    
-    
-    func newLocation() {
-        if let loc = locationManager.location {
-            self.location = loc
-            failedToFindLocation = false
-            print("got a location")
-        }
-        else {
-            failedToFindLocation = true
-            print("missing location!")
-        }
     }
-} // end struct
+    
+}
 
 
 struct InputTileString_Previews: PreviewProvider {

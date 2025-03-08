@@ -7,7 +7,8 @@
 
 import SwiftUI
 import FirebaseAuth
-
+import CoreLocation
+import CoreLocationUI
 
 struct VisitLogEntry: View {
     
@@ -15,6 +16,7 @@ struct VisitLogEntry: View {
     
     @State var questionNumber = 1
     @State var totalQuestions = 5
+    @State private var selectedLocation = CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0)
     
     @StateObject var visitLog = VisitLog(id: "")
     
@@ -40,10 +42,10 @@ struct VisitLogEntry: View {
                     }
                     
                 case 2:
-                    InputTileLocation(questionNumber: 2, totalQuestions: 5, question: "Where was your visit?", textValue: $visitLog.whereVisit, location: $visitLog.location) {
+                    InputTileLocation(questionNumber: 2, totalQuestions: 5, question: "Where was your visit?", textValue: $visitLog.whereVisit, location: $selectedLocation) {
                         questionNumber += 1
                     } previousAction: {
-                        //
+                        questionNumber -= 1
                     } skipAction: {
                         questionNumber += 1
                     }

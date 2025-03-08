@@ -77,7 +77,7 @@ struct VisitLogView: View {
                         Text("Type of help provided")
                             .screenLeft()
                             .font(.system(size: 16.0)).bold()
-                            .padding(EdgeInsets(top: 10.0, leading: 20.0, bottom: 0.0, trailing: 20.0))
+                            .padding(EdgeInsets(top: 10.0, leading: 20.0, bottom: 0.0, trailing: 20.0)) 
                         
                         VStack {
                             if log.foodAndDrinks {
