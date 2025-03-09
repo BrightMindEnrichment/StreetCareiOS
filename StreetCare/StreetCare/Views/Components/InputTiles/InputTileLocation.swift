@@ -141,10 +141,11 @@ struct InputTileLocation: View {
                 stateAbbreviation: $stateAbbreviation,
                 zipcode: $zipcode,
                 location: Binding<CLLocationCoordinate2D?>(
-                    get: { location },
+                    get: { Optional(location) },
                     set: { newValue in
                         if let newLocation = newValue {
                             location = newLocation
+                            print("📍 Updated Location in InputTileLocation: \(location.latitude), \(location.longitude)")
                         }
                     }
                 )

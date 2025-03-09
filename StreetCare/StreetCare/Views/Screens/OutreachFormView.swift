@@ -532,6 +532,11 @@ struct GooglePlacesAutocomplete: UIViewControllerRepresentable {
                     }
                 }
             }
+            let lat = place.coordinate.latitude
+            let lon = place.coordinate.longitude
+            
+            parent.location?.wrappedValue = CLLocationCoordinate2D(latitude: lat, longitude: lon)
+            print("📍 Selected Address Coordinates: \(lat), \(lon)") // Debugging print
             viewController.dismiss(animated: true)
         }
 
@@ -545,3 +550,4 @@ struct GooglePlacesAutocomplete: UIViewControllerRepresentable {
         }
     }
 }
+ 
