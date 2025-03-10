@@ -142,6 +142,7 @@ struct VisitLogView: View {
         }
         .onAppear {
             if log.location.latitude != 0 {
+                print("📍 Updated Location in view is: \(log.location.latitude), \(log.location.longitude)")
                 region = MKCoordinateRegion(center: log.location, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
                 mapLocations = [MapLocation(name: "Help", latitude: log.location.latitude, longitude: log.location.longitude)]
             }

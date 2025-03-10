@@ -42,7 +42,25 @@ struct VisitLogEntry: View {
                     }
                     
                 case 2:
-                    InputTileLocation(questionNumber: 2, totalQuestions: 5, question: "Where was your visit?", textValue: $visitLog.whereVisit, location: $selectedLocation) {
+                    InputTileLocation(
+                        questionNumber: 2,
+                        totalQuestions: 5,
+                        question: "Where was your visit?",
+                        textValue: Binding(
+                            get: { visitLog.whereVisit },
+                            set: { newValue in
+                                visitLog.whereVisit = newValue // ✅ Updates whereVisit
+                                print("📍 Updated visitLog.whereVisit: \(visitLog.whereVisit)")
+                            }
+                        ),
+                        location: Binding(
+                            get: { visitLog.location }, // ✅ Ensure visitLog.location updates
+                            set: { newValue in
+                                visitLog.location = newValue
+                                print("📍 Updated visitLog.location: \(visitLog.location.latitude), \(visitLog.location.longitude)")
+                            }
+                        )
+                    ) {
                         questionNumber += 1
                     } previousAction: {
                         questionNumber -= 1
