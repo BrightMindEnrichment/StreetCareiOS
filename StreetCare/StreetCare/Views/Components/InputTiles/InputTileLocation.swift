@@ -23,6 +23,12 @@ struct InputTileLocation: View {
     
     @State var isLoading = false
     @State var failedToFindLocation = false
+    @State private var street = ""
+    @State private var state = ""
+    @State private var city = ""
+    @State private var zipcode = ""
+    @State private var stateAbbreviation = ""
+    @State private var showAddressSearch = false
         
     var nextAction: () -> ()
     var previousAction: () -> ()
@@ -53,43 +59,66 @@ struct InputTileLocation: View {
                     Text(question)
                         .font(.headline)
                         .padding()
-                    
-                    TextField("optional", text: $textValue)
-                        .textFieldStyle(.roundedBorder)
-                        .frame(width: 200.0)
-                    
-                    HStack {
-                        Rectangle()
-                            .frame(height: 2.0).foregroundColor(.gray).padding()
-                        Text("and/or").foregroundColor(.gray)
-                        Rectangle()
-                            .frame(height: 2.0).foregroundColor(.gray).padding()
-                    }
     
-                    LocationButton {
+                    /*LocationButton {
                         isLoading = true
                         locationManager.requestLocation()
                     }
-    
-                    Spacer()
-                }
-                
-                ProgressView(value: Double(questionNumber) / Double(totalQuestions))
-                    .tint(.yellow)
-                    .background(Color("TextColor"))
-                    .padding()
 
-
-                Spacer()
-                
-                HStack {
-                    Spacer()
-                    Button("Next") {
-                        nextAction()
+                    Spacer()*/
+                    HStack {
+                        Image(systemName: "magnifyingglass")
+                            .foregroundColor(.gray)
+                        
+                        Text(street.isEmpty ? "Search Address" : street)
+                            .foregroundColor(street.isEmpty ? .gray : .primary)
+                            .frame(maxWidth: .infinity, alignment: .leading) //
                     }
-                    .foregroundColor(Color("TextColor"))
+                    .padding()
+                    .frame(height: 45)
+                    .background()
+                    .cornerRadius(8)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 8)
+                            .stroke(Color.gray.opacity(0.5), lineWidth: 1)
+                    )
+                    .padding(.horizontal, 20)
+                    .onTapGesture {
+                        showAddressSearch = true
+                    }
                 }
-                .padding()
+                Spacer()
+                VStack {
+                    TextField(NSLocalizedString("state", comment: ""), text: $state)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                        .padding(.horizontal, 20)
+
+                    TextField(NSLocalizedString("city", comment: ""), text: $city)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                        .padding(.horizontal, 20)
+
+                    TextField(NSLocalizedString("zipcode", comment: ""), text: $zipcode)
+                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                        .padding(.horizontal, 20)
+
+                    ProgressView(value: Double(questionNumber) / Double(totalQuestions))
+                        .tint(.yellow)
+                        .background(Color("TextColor"))
+                        .padding()
+
+                    HStack {
+                        Button("Previous") {
+                            previousAction()
+                        }
+                        .foregroundColor(Color("TextColor"))
+                        Spacer()
+                        Button("Next") {
+                            nextAction()
+                        }
+                        .foregroundColor(Color("TextColor"))
+                    }
+                    .padding()
+                }
             }
         }
         .frame(width: size.width, height: size.height)
@@ -103,6 +132,28 @@ struct InputTileLocation: View {
                 }
             }
         }
+        .sheet(isPresented: $showAddressSearch) {
+            GooglePlacesAutocomplete(
+                street: $street,
+                city: $city,
+                state: $state,
+                stateAbbreviation: $stateAbbreviation,
+                zipcode: $zipcode,
+                location: Binding<CLLocationCoordinate2D?>(
+                    get: { Optional(self.location) },
+                    set: { newValue in
+                        DispatchQueue.main.async {
+                            if let newLocation = newValue {
+                                self.location = newLocation // ✅ Updates location
+                                self.textValue = "\(self.street), \(self.city), \(self.state) \(self.zipcode)" // ✅ Updates whereVisit
+                                print("📍 Updated whereVisit: \(self.textValue)")
+                                print("📍 Updated location: \(self.location.latitude), \(self.location.longitude)")
+                            }
+                        }
+                    }
+                )
+            )
+        }
         .alert("Error...", isPresented: $failedToFindLocation, actions: {
             Button("OK") {
                 // nothing to do
@@ -112,8 +163,7 @@ struct InputTileLocation: View {
         })
         
 
-    } // end body
-    
+    }
     
     func newLocation() {
         if let loc = locationManager.location {
@@ -126,23 +176,4 @@ struct InputTileLocation: View {
             print("missing location!")
         }
     }
-} // end struct
-
-
-struct InputTileString_Previews: PreviewProvider {
-
-    @State static var inputText = ""
-    @State static var location = CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0)
-
-    static var previews: some View {
-
-        InputTileLocation(questionNumber: 2, totalQuestions: 5, question: "Shall we play a game?", textValue: $inputText, location: $location) {
-            //
-        } previousAction: {
-            //
-        } skipAction: {
-            //
-        }
-    }
 }
-
