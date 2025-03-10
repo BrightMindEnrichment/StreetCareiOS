@@ -60,12 +60,12 @@ struct InputTileLocation: View {
                         .font(.headline)
                         .padding()
     
-                    LocationButton {
+                    /*LocationButton {
                         isLoading = true
                         locationManager.requestLocation()
                     }
 
-                    Spacer()
+                    Spacer()*/
                     HStack {
                         Image(systemName: "magnifyingglass")
                             .foregroundColor(.gray)
@@ -87,7 +87,7 @@ struct InputTileLocation: View {
                         showAddressSearch = true
                     }
                 }
-                
+                Spacer()
                 VStack {
                     TextField(NSLocalizedString("state", comment: ""), text: $state)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
@@ -145,7 +145,7 @@ struct InputTileLocation: View {
                         DispatchQueue.main.async {
                             if let newLocation = newValue {
                                 self.location = newLocation // ✅ Updates location
-                                self.textValue = "\(self.street), \(self.city), \(self.state) \(self.zipcode) (\(self.location.latitude), \(self.location.longitude))" // ✅ Updates whereVisit
+                                self.textValue = "\(self.street), \(self.city), \(self.state) \(self.zipcode)" // ✅ Updates whereVisit
                                 print("📍 Updated whereVisit: \(self.textValue)")
                                 print("📍 Updated location: \(self.location.latitude), \(self.location.longitude)")
                             }
