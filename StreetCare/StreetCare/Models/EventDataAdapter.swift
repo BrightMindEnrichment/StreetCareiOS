@@ -392,6 +392,7 @@ class EventDataAdapter {
                 if case .failure(let error) = result {
                     print("Error in outreach events: \(error.localizedDescription)")
                 }
+                print("Fetched \(self.mapOutreachEvents.count) outreach event markers.")
                 group.leave()
             }
             group.enter()
@@ -399,11 +400,13 @@ class EventDataAdapter {
                 if case .failure(let error) = result {
                     print("Error in help requests: \(error.localizedDescription)")
                 }
+                print("Fetched \(self.mapHelpRequests.count) help request markers.")
                 group.leave()
             }
             group.notify(queue: .main) {
                 let overallSuccess = (!self.mapOutreachEvents.isEmpty) || (!self.mapHelpRequests.isEmpty)
                 print("All fetches completed. Overall success: \(overallSuccess)")
+                print("Total outreach events: \(self.mapOutreachEvents.count), Total help requests: \(self.mapHelpRequests.count)")
                 continuation.resume(returning: overallSuccess)
             }
         }
@@ -456,6 +459,7 @@ class EventDataAdapter {
                             }
                             let address = "\(street), \(city), \(state) \(zipcode)"
                             let description = data["description"] as? String
+                            print("Title: " + title + " :: Address " + address)
                             self.geocodeAddress(address) { result in
                                 switch result {
                                 case .success(let coordinates):
@@ -470,6 +474,8 @@ class EventDataAdapter {
                     }
                     group.notify(queue: .main) { [weak self] in
                         guard let self = self else { return }
+                        let count = temporaryEvents.count
+                        print("Geocoded \(count) outreach events successfully.")
                         self.mapOutreachEvents = temporaryEvents.map { ($0.coordinates, $0.title, $0.description) }
                         if temporaryEvents.isEmpty {
                             completion(.failure(NSError(domain: "Geocoding", code: -1, userInfo: [NSLocalizedDescriptionKey: "No outreach events could be geocoded."])))
@@ -505,15 +511,18 @@ class EventDataAdapter {
                 let delay = DispatchTime.now() + .milliseconds(index * 250)
                 serialQueue.asyncAfter(deadline: delay) {
                     let data = document.data()
-                    guard let street = data["street"] as? String,
-                          let city = data["city"] as? String,
-                          let state = data["state"] as? String,
-                          let zipcode = data["zipcode"] as? String,
-                          let helpType = data["helpType"] as? String else {
+                    guard let locationDict = data["location"] as? [String: Any],
+                          let street = locationDict["street"] as? String,
+                          let city = locationDict["city"] as? String,
+                          let state = locationDict["state"] as? String,
+                          let zipcode = locationDict["zipcode"] as? String else {
                         group.leave()
                         return
                     }
+                    let helpType = data["helpType"] as? String ?? ""
+                    let title = document.get("title") as? String ?? ""
                     let address = "\(street), \(city), \(state) \(zipcode)"
+                    print("Title: " + title + " :: Address " + address)
                     self.geocodeAddress(address) { result in
                         switch result {
                         case .success(let coordinates):
@@ -528,6 +537,7 @@ class EventDataAdapter {
             }
             group.notify(queue: .main) { [weak self] in
                 guard let self = self else { return }
+                print("Geocoded \(temporaryRequests.count) help requests successfully.")
                 self.mapHelpRequests = temporaryRequests
                 completion(.success(()))
             }
@@ -550,7 +560,7 @@ class EventViewModel: ObservableObject {
             .map { searchText, events in
                 // Filter events based on the search text
                 let filtered = events.filter { event in
-                    let title = event.event.title ?? ""
+                    let title = event.event.title
                     let location = event.event.location ?? ""
                     return searchText.isEmpty ||
                         title.localizedCaseInsensitiveContains(searchText) ||
