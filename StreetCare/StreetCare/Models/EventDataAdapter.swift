@@ -519,7 +519,7 @@ class EventDataAdapter {
                         group.leave()
                         return
                     }
-                    let helpType = data["helpType"] as? String ?? ""
+                    let helpType = data["title"] as? String ?? ""
                     let title = document.get("title") as? String ?? ""
                     let address = "\(street), \(city), \(state) \(zipcode)"
                     print("Title: " + title + " :: Address " + address)

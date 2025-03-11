@@ -12,9 +12,7 @@ struct GoogleMapView: UIViewRepresentable {
     @ObservedObject var viewModel: MapViewModel
 
     func makeUIView(context: Context) -> GMSMapView {
-        let camera = GMSCameraPosition.camera(withLatitude: 42.333774,
-                                              longitude: -71.064937,
-                                              zoom: 12.5)
+        let camera = GMSCameraPosition.camera(withLatitude: 42.333774, longitude: -71.064937, zoom: 11)
         let mapView = GMSMapView(frame: .zero)
         mapView.camera = camera
         mapView.mapType = .normal
@@ -79,33 +77,20 @@ struct GoogleMapView: UIViewRepresentable {
             let marker = GMSMarker(position: request.location)
             marker.title = request.helpType
             marker.snippet = request.description
-            if let originalImage = UIImage(named: "RedMarker") {
-                let resizedImage = resizeImage(image: originalImage, targetSize: CGSize(width: 25, height: 35))
-                marker.icon = resizedImage
-            }
+            // defaults red marker
             marker.map = mapView
         }
         for event in viewModel.outreachEvents {
             let marker = GMSMarker(position: event.location)
             marker.title = event.title
             marker.snippet = event.description
-            if let originalImage = UIImage(named: "YellowMarker") {
-                let resizedImage = resizeImage(image: originalImage, targetSize: CGSize(width: 25, height: 35))
-                marker.icon = resizedImage
-            }
+            marker.icon = GMSMarker.markerImage(
+                with: UIColor(hex: "#FFEB3B")
+            )
             marker.map = mapView
         }
-        if !viewModel.outreachEvents.isEmpty || !viewModel.helpRequests.isEmpty {
-            var bounds = GMSCoordinateBounds()
-            for event in viewModel.outreachEvents {
-                bounds = bounds.includingCoordinate(event.location)
-            }
-            for request in viewModel.helpRequests {
-                bounds = bounds.includingCoordinate(request.location)
-            }
-            let update = GMSCameraUpdate.fit(bounds, withPadding: 100.0)
-            mapView.animate(with: update)
-        }
+        let defaultCamera = GMSCameraPosition.camera(withLatitude: 42.333774, longitude: -71.064937, zoom: 11)
+        mapView.animate(to: defaultCamera)
     }
 
     func makeCoordinator() -> Coordinator {

@@ -24,7 +24,8 @@ class MapViewModel: ObservableObject {
         if success {
             outreachEvents = eventDataAdapter.mapOutreachEvents
             helpRequests = eventDataAdapter.mapHelpRequests
-            print("OutReachEvent Count in ViewModel -> \(outreachEvents.count)")
+            print("outreachEvents Count in ViewModel -> \(outreachEvents.count)")
+            print("helpRequests Count in ViewModel -> \(helpRequests.count)")
         } else {
             print("Failure to fetch map markers in ViewModel")
         }
