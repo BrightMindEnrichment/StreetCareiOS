@@ -84,13 +84,49 @@ struct GoogleMapView: UIViewRepresentable {
             let marker = GMSMarker(position: event.location)
             marker.title = event.title
             marker.snippet = event.description
-            marker.icon = GMSMarker.markerImage(
-                with: UIColor(hex: "#FFEB3B")
-            )
+            if let customYellowMarker = createCustomYellowMarker() {
+                marker.icon = customYellowMarker
+            }
             marker.map = mapView
         }
         let defaultCamera = GMSCameraPosition.camera(withLatitude: 42.333774, longitude: -71.064937, zoom: 11)
         mapView.animate(to: defaultCamera)
+    }
+    
+    func createCustomYellowMarker() -> UIImage? {
+        let size = CGSize(width: 35, height: 45)
+        let renderer = UIGraphicsImageRenderer(size: size)
+        let image = renderer.image { context in
+            let circleRect = CGRect(x: (size.width - 20) / 2, y: 5, width: 20, height: 20)
+            let circlePath = UIBezierPath(ovalIn: circleRect)
+            UIColor(red: 1.0, green: 0.92, blue: 0.23, alpha: 1.0).setFill()
+            circlePath.fill()
+            
+            circlePath.lineWidth = 1
+            UIColor.black.setStroke()
+            circlePath.stroke()
+            
+            let dotDiameter: CGFloat = 4
+            let dotRect = CGRect(x: circleRect.midX - dotDiameter / 2,
+                                 y: circleRect.midY - dotDiameter / 2,
+                                 width: dotDiameter,
+                                 height: dotDiameter)
+            let dotPath = UIBezierPath(ovalIn: dotRect)
+            UIColor.black.setFill()
+            dotPath.fill()
+            
+            let trianglePath = UIBezierPath()
+            trianglePath.move(to: CGPoint(x: size.width/2 - 7, y: circleRect.maxY + 2))
+            trianglePath.addLine(to: CGPoint(x: size.width/2 + 7, y: circleRect.maxY + 2))
+            trianglePath.addLine(to: CGPoint(x: size.width/2, y: size.height))
+            trianglePath.lineWidth = 2
+            UIColor.black.setStroke()
+            trianglePath.stroke()
+            trianglePath.close()
+            UIColor(red: 1.0, green: 0.92, blue: 0.23, alpha: 1.0).setFill()
+            trianglePath.fill()
+        }
+        return image
     }
 
     func makeCoordinator() -> Coordinator {
