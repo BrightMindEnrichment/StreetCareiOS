@@ -30,8 +30,7 @@ struct HelpRequestView: View {
             if viewModel.filteredItems.isEmpty{
                 Text(NSLocalizedString("noHelpingRequestsAvailable", comment: "")).fontWeight(.bold).foregroundColor(Color("TextColor"))
             }
-            if let _ = self.user {
-                if viewModel.filteredItems.isEmpty{
+            if viewModel.filteredItems.isEmpty{
                     Spacer(minLength: 50.0)
                 }else{
                     List {
@@ -49,17 +48,10 @@ struct HelpRequestView: View {
                         .background(Color.clear)
                     
                 }
-            }  else {
-                Image("CommunityOfThree").padding()
-                Text("Log in to connect with your local community.")
-            }
         }
         .onAppear {
-            if let user = Auth.auth().currentUser {
-                self.user = user
                 adapter.delegate = self
                 adapter.getHelpRequest()
-            }
         }
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {

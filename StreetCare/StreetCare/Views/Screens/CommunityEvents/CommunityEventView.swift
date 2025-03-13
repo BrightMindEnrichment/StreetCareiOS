@@ -81,9 +81,8 @@ struct CommunityEventView: View {
                     .foregroundColor(Color("TextColor"))
             }
             
-            if let _ = self.user {
-                if viewModel.filteredData.isEmpty {
-                    Spacer(minLength: 50.0)
+            if viewModel.filteredData.isEmpty {
+                Spacer(minLength: 50.0)
                 } else {
                     List {
                         ForEach(0..<viewModel.filteredData.count, id: \.self) { index in
@@ -123,10 +122,6 @@ struct CommunityEventView: View {
                     .scrollContentBackground(.hidden)
                     .background(Color.clear)
                 }
-            } else {
-                Image("CommunityOfThree").padding()
-                Text("Log in to connect with your local community.")
-            }
         }
         .bottomSheet(isPresented: $isBottomSheetPresented) {
             VStack {
@@ -136,11 +131,8 @@ struct CommunityEventView: View {
             .padding()
         }
         .onAppear {
-            if let user = Auth.auth().currentUser {
-                self.user = user
-                adapter.delegate = self
-                adapter.refresh()
-            }
+            adapter.delegate = self
+            adapter.refresh()
         }
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
