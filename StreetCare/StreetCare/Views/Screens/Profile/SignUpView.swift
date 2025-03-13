@@ -126,13 +126,18 @@ struct SignUpView: View {
                     "email": email,
                     "name": name,
                     "company": company,
-                    "deviceType": "iOS",  
+                    "deviceType": "iOS",
                     "dateCreated": Timestamp(date: Date()),
                     "isValid": true,
                     "organization": company,
                     "state": "",
                     "city": "",
-                    "country": ""
+                    "country": "",
+                    "photoUrl": "",
+                    "createdOutreaches": [],
+                    "outreachEvents": [],
+                    "personalVisitLogs": [],
+                    "Type": "Account Holder"
                 ]
                 
                 db.collection("users").document(uid).setData(userData) { error in

@@ -97,12 +97,15 @@ struct OutreachFormView: View {
         ]
 
         // Save to Firestore
-        db.collection("outreachEventsDev").addDocument(data: outreachEvent) { error in
+        var eventDocumentRef: DocumentReference? = nil
+        eventDocumentRef = db.collection("outreachEventsDev").addDocument(data: outreachEvent) { error in
             isLoading = false
             if let error = error {
                 alertTitle = "Error"
                 alertMessage = "Failed to save event: \(error.localizedDescription)"
-            } else {
+            } else if let eventDocId = eventDocumentRef?.documentID {
+                addCreatedEventToUser(userId: user.uid, eventId: eventDocId)
+                
                 alertTitle = "Thank you for submitting your request!"
                 alertMessage = "Approval can take typically within four business days."
                 chaptermemberMessage1 = " Streamline your experience with Chapter membership."
@@ -110,6 +113,21 @@ struct OutreachFormView: View {
             }
         }
     }
+    func addCreatedEventToUser(userId: String, eventId: String) {
+        let db = Firestore.firestore()
+        let userRef = db.collection("users").document(userId)
+
+        userRef.updateData([
+            "createdOutreaches": FieldValue.arrayUnion([eventId])
+        ]) { error in
+            if let error = error {
+                print("Error updating user document: \(error.localizedDescription)")
+            } else {
+                print("Successfully added event ID to createdOutreaches array in user document")
+            }
+        }
+    }
+    
     var body: some View {
         NavigationLink(
             //destination: ChapterMembershipForm(isPresented: $showChapterMembershipForm),
