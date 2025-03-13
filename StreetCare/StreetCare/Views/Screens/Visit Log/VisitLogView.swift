@@ -77,7 +77,7 @@ struct VisitLogView: View {
                         Text("Type of help provided")
                             .screenLeft()
                             .font(.system(size: 16.0)).bold()
-                            .padding(EdgeInsets(top: 10.0, leading: 20.0, bottom: 0.0, trailing: 20.0))
+                            .padding(EdgeInsets(top: 10.0, leading: 20.0, bottom: 0.0, trailing: 20.0)) 
                         
                         VStack {
                             if log.foodAndDrinks {
@@ -142,6 +142,7 @@ struct VisitLogView: View {
         }
         .onAppear {
             if log.location.latitude != 0 {
+                print("📍 Updated Location in view is: \(log.location.latitude), \(log.location.longitude)")
                 region = MKCoordinateRegion(center: log.location, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
                 mapLocations = [MapLocation(name: "Help", latitude: log.location.latitude, longitude: log.location.longitude)]
             }
