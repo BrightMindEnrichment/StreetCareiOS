@@ -6,10 +6,12 @@
 //
 
 import SwiftUI
+import Firebase
 import FirebaseFirestore
 
 struct AddHelpRequestForm: View {
     @Environment(\.presentationMode) var presentationMode
+    @State var user: User?
     @State private var title: String = ""
     @State private var additionalNotes: String = ""
     @State private var street: String = ""
@@ -70,6 +72,7 @@ struct AddHelpRequestForm: View {
     }
 
     var body: some View {
+        if let _ = self.user {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
                 FormHeaderView()
@@ -152,6 +155,11 @@ struct AddHelpRequestForm: View {
                 .cornerRadius(10)
                 : nil
         )
+        }
+        else {
+            Image("CommunityOfThree").padding()
+            Text("Log in to connect with your local community.")
+        }
     }
 }
 

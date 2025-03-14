@@ -25,7 +25,6 @@ struct CommunityView: View {
             Text("Community")
                 .font(.title)
             
-            if let _ = self.user {
                 ScrollView{
                     VStack{
                         Spacer().frame(height: 10)
@@ -99,11 +98,6 @@ struct CommunityView: View {
                     }
                     
                 }
-            }
-            else {
-                Image("CommunityOfThree").padding()
-                Text("Log in to connect with your local community.")
-            }
         }
         .onAppear {
             if let user = Auth.auth().currentUser {
