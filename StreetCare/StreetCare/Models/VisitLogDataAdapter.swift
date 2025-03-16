@@ -12,7 +12,6 @@ import FirebaseFirestore
 import FirebaseFirestoreSwift
 import CoreLocation
 
-
 protocol VisitLogDataAdapterProtocol {
     func visitLogDataRefreshed(_ logs: [VisitLog])
 }
@@ -21,7 +20,7 @@ protocol VisitLogDataAdapterProtocol {
 
 class VisitLogDataAdapter {
 
-    private let collectionName = "VisitLogBook"
+    private let collectionName = ""
     
     var visitLogs = [VisitLog]()
     var delegate: VisitLogDataAdapterProtocol?
@@ -36,7 +35,7 @@ class VisitLogDataAdapter {
             print("no user?")
             return
         }
-        
+        let collectionName = "VisitLogBook"
         let settings = FirestoreSettings()
 
         Firestore.firestore().settings = settings
@@ -66,6 +65,56 @@ class VisitLogDataAdapter {
         userData["furtherOther"] = visitLog.furtherOther
         userData["furtherOtherNotes"] = visitLog.furtherOtherNotes
         userData["followUpWhenVisit"] = visitLog.followUpWhenVisit
+
+
+        if visitLog.location.latitude != 0 {
+            userData["latitude"] = visitLog.location.latitude
+            userData["longitude"] = visitLog.location.longitude
+        }
+        
+        userData["timestamp"] = Date()
+        userData["uid"] = user.uid
+        
+        db.collection(collectionName).document().setData(userData) { err in
+            if let err = err {
+                // don't bother user with this error
+                print(err.localizedDescription)
+            } else {
+                print("Document successfully written!")
+            }
+        }
+    }
+    func addVisitLog_Community(_ visitLog: VisitLog) {
+    
+        guard let user = Auth.auth().currentUser else {
+            print("no user?")
+            return
+        }
+        let uid = user.uid
+        print("Current user UID: \(uid)")
+        
+        let collectionName = "visitLogWebProd"
+        let settings = FirestoreSettings()
+
+        Firestore.firestore().settings = settings
+        let db = Firestore.firestore()
+        
+        var userData = [String: Any]()
+        userData["city"] = visitLog.city
+        userData["dateTime"] = visitLog.whenVisit
+        userData["description"] = ""
+        userData["isFlagged"] = false
+        userData["itemQty"] = visitLog.itemQty
+        userData["numberPeopleHelped"] = visitLog.peopleHelped
+        userData["public"] = true
+        userData["rating"] = visitLog.rating
+        userData["state"] = visitLog.state
+        userData["stateAbbv"] = visitLog.stateAbbv
+        userData["status"] = "pending"
+        userData["street"] = visitLog.street
+        userData["uid"] = uid
+        userData["whatGiven"] = visitLog.whatGiven
+        userData["zipcode"] = visitLog.zipcode
 
 
         if visitLog.location.latitude != 0 {

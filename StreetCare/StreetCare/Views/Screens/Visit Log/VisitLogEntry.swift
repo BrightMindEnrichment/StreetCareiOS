@@ -18,7 +18,7 @@ struct VisitLogEntry: View {
     @State var totalQuestions = 5
     @State private var selectedLocation = CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0)
     
-    @StateObject var visitLog = VisitLog(id: "")
+    @StateObject var visitLog = VisitLog(id: UUID().uuidString)  
     
     var currentUser = Auth.auth().currentUser
     @State var isLoading = false
@@ -59,7 +59,8 @@ struct VisitLogEntry: View {
                                 visitLog.location = newValue
                                 print("📍 Updated visitLog.location: \(visitLog.location.latitude), \(visitLog.location.longitude)")
                             }
-                        )
+                        ),
+                        visitLog: visitLog
                     ) {
                         questionNumber += 1
                     } previousAction: {
@@ -78,8 +79,20 @@ struct VisitLogEntry: View {
                     }
                     
                 case 4:
-                    
-                    InputTileList(questionNumber: 4, totalQuestions: 5, question: "What kind of help did you provide?", foodAndDrinks: $visitLog.foodAndDrinks, clothes: $visitLog.clothes, hygine: $visitLog.hygine, wellness: $visitLog.wellness, other: $visitLog.other, otherNotes: $visitLog.otherNotes) {
+                    InputTileList(
+                        questionNumber: 4,
+                        totalQuestions: 5,
+                        question: "What kind of help did you provide?",
+                        foodAndDrinks: $visitLog.foodAndDrinks,
+                        clothes: $visitLog.clothes,
+                        hygine: $visitLog.hygine,
+                        wellness: $visitLog.wellness,
+                        medical: $visitLog.medical,
+                        socialworker: $visitLog.socialworker,
+                        legal: $visitLog.legal,
+                        other: $visitLog.other,
+                        otherNotes: $visitLog.otherNotes
+                    ) {
                         questionNumber += 1
                     } previousAction: {
                         questionNumber -= 1
@@ -112,7 +125,20 @@ struct VisitLogEntry: View {
                     }
 
                 case 7:
-                    InputTileList(questionNumber: 1, totalQuestions: 4, question: "What further help is needed?", foodAndDrinks: $visitLog.furtherfoodAndDrinks, clothes: $visitLog.furtherClothes, hygine: $visitLog.furtherHygine, wellness: $visitLog.furtherWellness, other: $visitLog.furtherOther, otherNotes: $visitLog.furtherOtherNotes) {
+                    InputTileList(
+                        questionNumber: 7,
+                        totalQuestions: 4,
+                        question: "What further help is needed?",
+                        foodAndDrinks: $visitLog.furtherfoodAndDrinks,
+                        clothes: $visitLog.furtherClothes,
+                        hygine: $visitLog.furtherHygine,
+                        wellness: $visitLog.furtherWellness,
+                        medical: $visitLog.medical,
+                        socialworker: $visitLog.socialworker,
+                        legal: $visitLog.legal,
+                        other: $visitLog.furtherOther,
+                        otherNotes: $visitLog.furtherOtherNotes
+                    ) {
                         questionNumber += 1
                     } previousAction: {
                         questionNumber -= 1
@@ -173,7 +199,7 @@ struct VisitLogEntry: View {
                     }
                     
                 case 100:
-                    InputTileComplete(question: "Complete!") {
+                    InputTileComplete(question: "Completed!") {
                         presentation.wrappedValue.dismiss()
                     }
                     

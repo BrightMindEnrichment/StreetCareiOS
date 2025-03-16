@@ -14,6 +14,12 @@ class VisitLog: ObservableObject, Identifiable {
     @Published var id: String
     
     @Published var whereVisit = ""
+    @Published var street = ""
+    @Published var city = ""
+    @Published var state = ""
+    @Published var stateAbbv = ""
+    @Published var zipcode = ""
+    
     @Published var whenVisit = Date()
     @Published var peopleHelped = 1
     
@@ -21,6 +27,9 @@ class VisitLog: ObservableObject, Identifiable {
     @Published var clothes = false
     @Published var hygine = false
     @Published var wellness = false
+    @Published var medical = false
+    @Published var socialworker = false
+    @Published var legal = false
     @Published var other = false
     @Published var otherNotes = ""
 
@@ -45,8 +54,22 @@ class VisitLog: ObservableObject, Identifiable {
     
     @Published var peopleNeedFurtherHelp = 0
     @Published var followUpWhenVisit = Date()
+    @Published var itemQty = 0
 
-    
+    var whatGiven: [String] {
+        var given = [String]()
+        
+        if foodAndDrinks { given.append("Food and Drink") }
+        if clothes { given.append("Clothes") }
+        if hygine { given.append("Hygiene Products") }
+        if wellness { given.append("Wellness/ Emotional Support") }
+        if medical { given.append("Medical Help") }
+        if socialworker { given.append("Social Worker /Psychiatrist") }
+        if legal { given.append("Legal/Lawyer") }
+        if other, !otherNotes.isEmpty { given.append(otherNotes) }
+        
+        return given
+    }
     var didProvideSpecificHelp: Bool {
         return foodAndDrinks || clothes || hygine || wellness || other
     }

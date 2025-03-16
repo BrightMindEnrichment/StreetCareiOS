@@ -11,6 +11,8 @@ struct InputTileComplete: View {
 
     var size = CGSize(width: 300.0, height: 450.0)
     var question: String
+    @State private var showAlert = false
+    @State private var alertMessage = ""
                 
     var finishAction: () -> ()
     
@@ -34,8 +36,18 @@ struct InputTileComplete: View {
                 Spacer()
                 
                 HStack {
-                    Button("Back to Visit Log") {
+                    Button("Share with Community") {
                         finishAction()
+                    }
+                    .buttonStyle(.borderedProminent)
+                    .foregroundColor(Color("TextButtonColor"))
+                }
+                .padding()
+                
+                HStack {
+                    Button("Back to Visit Log") {
+                        alertMessage = "Visit Log Shared Successfully!"
+                        showAlert = true
                     }
                     .buttonStyle(.borderedProminent)
                     .foregroundColor(Color("TextButtonColor"))
@@ -46,7 +58,17 @@ struct InputTileComplete: View {
             }
         }
         .frame(width: size.width, height: size.height)
-
+        .alert(isPresented: $showAlert) {
+            Alert(
+                title: Text("Form Submission"),
+                message: Text(alertMessage),
+                dismissButton: .default(Text("OK")) {
+                    if alertMessage == "Visit Log Shared Successfully!" {
+                        
+                    }
+                }
+            )
+        }
     } // end body
 } // end struct
 
