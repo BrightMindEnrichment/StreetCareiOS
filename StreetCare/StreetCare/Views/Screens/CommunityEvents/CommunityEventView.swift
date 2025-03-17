@@ -17,6 +17,7 @@ struct CommunityEventView: View {
     @StateObject private var viewModel = SearchCommunityModel()
     @State private var isBottomSheetPresented = false
     @State private var selectedFilter: FilterType = .none
+    @State private var showLoginMessage = false
     @Binding var isPresented: Bool // Binding to control dismissal of this view
     @State private var shouldDismissAll = false // Shared variable for dismissing all views
     @State private var isNavigationActive = false
@@ -133,8 +134,12 @@ struct CommunityEventView: View {
         .onAppear {
             adapter.delegate = self
             adapter.refresh()
+            Auth.auth().addStateDidChangeListener { auth, currentUser in
+                self.user = currentUser
+                print("User updated: \(String(describing: self.user?.uid))")  // Debugging print
+            }
         }
-        .toolbar {
+        /*.toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button(action: {
                     isNavigationActive = true
@@ -143,8 +148,28 @@ struct CommunityEventView: View {
                         .foregroundColor(Color("SecondaryColor"))
                 }
             }
+        }*/
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button(action: {
+                    if user != nil {
+                        isNavigationActive = true  // ✅ Logged-in users can add events
+                    } else {
+                        showLoginMessage = true  // ❌ Not logged-in → Show login prompt
+                    }
+                }) {
+                    Image(systemName: "plus")
+                        .foregroundColor(Color("SecondaryColor"))
+                }
+            }
         }
-        .sheet(isPresented: $isNavigationActive, onDismiss: {
+        .alert(isPresented: $showLoginMessage) {  // 🔹 Login alert
+            Alert(
+                title: Text("Login Required"),
+                message: Text("Log in to connect with your local community."),
+                dismissButton: .default(Text("OK"))
+            )
+        }        .sheet(isPresented: $isNavigationActive, onDismiss: {
             isNavigationActive = false
         }) {
             NavigationStack {

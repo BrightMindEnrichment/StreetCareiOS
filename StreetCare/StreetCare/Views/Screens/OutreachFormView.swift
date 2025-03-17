@@ -130,7 +130,6 @@ struct OutreachFormView: View {
     }
     
     var body: some View {
-        if let _ = self.user {
         NavigationLink(
             //destination: ChapterMembershipForm(isPresented: $showChapterMembershipForm),
             destination: ChapterMembershipForm(
@@ -311,11 +310,6 @@ struct OutreachFormView: View {
         }
         .sheet(isPresented: $showAddressSearch) {
             GooglePlacesAutocomplete(street: $street, city: $city, state: $state, stateAbbreviation: $stateAbbreviation, zipcode: $zipcode)
-        }
-        }
-        else {
-            Image("CommunityOfThree").padding()
-            Text("Log in to connect with your local community.")
         }
     }
 }
