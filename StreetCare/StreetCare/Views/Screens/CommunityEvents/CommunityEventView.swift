@@ -139,23 +139,13 @@ struct CommunityEventView: View {
                 print("User updated: \(String(describing: self.user?.uid))")  // Debugging print
             }
         }
-        /*.toolbar {
-            ToolbarItem(placement: .navigationBarTrailing) {
-                Button(action: {
-                    isNavigationActive = true
-                }) {
-                    Image(systemName: "plus")
-                        .foregroundColor(Color("SecondaryColor"))
-                }
-            }
-        }*/
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button(action: {
                     if user != nil {
-                        isNavigationActive = true  // ✅ Logged-in users can add events
+                        isNavigationActive = true
                     } else {
-                        showLoginMessage = true  // ❌ Not logged-in → Show login prompt
+                        showLoginMessage = true  
                     }
                 }) {
                     Image(systemName: "plus")
