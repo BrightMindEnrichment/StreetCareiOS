@@ -11,7 +11,6 @@ import FirebaseFirestore
 
 struct AddHelpRequestForm: View {
     @Environment(\.presentationMode) var presentationMode
-    @State var user: User?
     @State private var title: String = ""
     @State private var additionalNotes: String = ""
     @State private var street: String = ""
@@ -72,7 +71,6 @@ struct AddHelpRequestForm: View {
     }
 
     var body: some View {
-        if let _ = self.user {
         ScrollView {
             VStack(alignment: .leading, spacing: 16) {
                 FormHeaderView()
@@ -88,7 +86,7 @@ struct AddHelpRequestForm: View {
                     title: NSLocalizedString("additionalNotes", comment: ""),
                     text: $additionalNotes,
                     limit: additionalnotesLimit
-                )
+                ) 
                 
                 LocationView()
                 
@@ -156,12 +154,7 @@ struct AddHelpRequestForm: View {
                 : nil
         )
         }
-        else {
-            Image("CommunityOfThree").padding()
-            Text("Log in to connect with your local community.")
-        }
     }
-}
 
 struct FormButtons: View {
     @Environment(\.presentationMode) var presentationMode

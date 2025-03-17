@@ -15,6 +15,8 @@ struct HelpRequestView: View {
     
     let adapter = EventDataAdapter()
     @StateObject private var viewModel = SearchHelpRequestViewModel()
+    @State private var showLoginMessage = false
+    @State private var isNavigationActive = false
 
     var body: some View {
         
@@ -50,14 +52,37 @@ struct HelpRequestView: View {
                 }
         }
         .onAppear {
-                adapter.delegate = self
-                adapter.getHelpRequest()
+            Auth.auth().addStateDidChangeListener { auth, currentUser in
+                self.user = currentUser
+            }
+            adapter.delegate = self
+            adapter.getHelpRequest()
         }
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
-                NavigationLink(destination: AddHelpRequestForm()) {
+                Button(action: {
+                    if user != nil {
+                        isNavigationActive = true  // ✅ Logged-in users can add help requests
+                    } else {
+                        showLoginMessage = true   // ❌ Not logged-in → Show alert
+                    }
+                }) {
                     Image(systemName: "plus")
                         .foregroundColor(Color("SecondaryColor"))
+                }
+            }
+        }
+        .alert(isPresented: $showLoginMessage) { // 🔹 Alert for non-logged-in users
+            Alert(
+                title: Text("Login Required"),
+                message: Text("Log in to create a help request."),
+                dismissButton: .default(Text("OK"))
+            )
+        }
+        .sheet(isPresented: $isNavigationActive) {
+            if user != nil {
+                NavigationStack {
+                    AddHelpRequestForm()
                 }
             }
         }
