@@ -200,7 +200,10 @@ struct VisitLogEntry: View {
                     
                 case 100:
                     InputTileComplete(question: "Completed!") {
+                        saveVisitLog() // Regular save
                         presentation.wrappedValue.dismiss()
+                    } shareAction: {
+                        saveVisitLog_Community() // Save for community
                     }
                     
                 default:
@@ -221,11 +224,16 @@ struct VisitLogEntry: View {
             }
         }.navigationTitle("Visit Log")
     } // end body
-    
+     
     
     func saveVisitLog() {
         let adapter = VisitLogDataAdapter()
         adapter.addVisitLog(self.visitLog)
+    }
+    
+    func saveVisitLog_Community() {
+        let adapter = VisitLogDataAdapter()
+        adapter.addVisitLog_Community(self.visitLog)
     }
     
 } // end struct

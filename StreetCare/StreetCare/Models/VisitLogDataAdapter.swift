@@ -34,10 +34,10 @@ class VisitLogDataAdapter {
         guard let user = Auth.auth().currentUser else {
             print("no user?")
             return
-        }
+        }  
         let collectionName = "VisitLogBook"
         let settings = FirestoreSettings()
-
+ 
         Firestore.firestore().settings = settings
         let db = Firestore.firestore()
         
@@ -117,13 +117,13 @@ class VisitLogDataAdapter {
         userData["zipcode"] = visitLog.zipcode
 
 
-        if visitLog.location.latitude != 0 {
-            userData["latitude"] = visitLog.location.latitude
-            userData["longitude"] = visitLog.location.longitude
-        }
+        //if visitLog.location.latitude != 0 {
+            //userData["latitude"] = visitLog.location.latitude
+            //userData["longitude"] = visitLog.location.longitude
+        //}
         
-        userData["timestamp"] = Date()
-        userData["uid"] = user.uid
+        //userData["timestamp"] = Date()
+        //userData["uid"] = user.uid
         
         db.collection(collectionName).document().setData(userData) { err in
             if let err = err {
@@ -141,7 +141,7 @@ class VisitLogDataAdapter {
         Firestore.firestore().settings = FirestoreSettings()
         let db = Firestore.firestore()
         
-        db.collection(collectionName).document(logId).delete { _ in
+        db.collection("VisitLogBook").document(logId).delete { _ in
             completion()
         }
     }
@@ -160,7 +160,7 @@ class VisitLogDataAdapter {
         Firestore.firestore().settings = settings
         let db = Firestore.firestore()
         
-        let _ = db.collection(collectionName).whereField("uid", isEqualTo: user.uid).getDocuments { querySnapshot, error in
+        let _ = db.collection("VisitLogBook").whereField("uid", isEqualTo: user.uid).getDocuments { querySnapshot, error in
             
             if let error = error {
                 print(error.localizedDescription)

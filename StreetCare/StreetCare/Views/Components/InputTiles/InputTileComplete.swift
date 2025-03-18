@@ -15,7 +15,9 @@ struct InputTileComplete: View {
     @State private var alertMessage = ""
                 
     var finishAction: () -> ()
+    var shareAction: () -> () // Add this new action
     
+
     var body: some View {
 
         ZStack {
@@ -36,7 +38,7 @@ struct InputTileComplete: View {
                 Spacer()
                 
                 HStack {
-                    Button("Share with Community") {
+                    Button("Back to Visit Log") {
                         finishAction()
                     }
                     .buttonStyle(.borderedProminent)
@@ -45,7 +47,8 @@ struct InputTileComplete: View {
                 .padding()
                 
                 HStack {
-                    Button("Back to Visit Log") {
+                    Button("Share with Community") {
+                        shareAction() // Call the share action
                         alertMessage = "Visit Log Shared Successfully!"
                         showAlert = true
                     }
@@ -73,16 +76,6 @@ struct InputTileComplete: View {
 } // end struct
 
 
-struct InputTileComplete_Previews: PreviewProvider {
 
-    @State static var inputText = ""
-
-    static var previews: some View {
-
-        InputTileComplete(question: "Complete!") {
-            //
-        }
-    }
-}
 
 
