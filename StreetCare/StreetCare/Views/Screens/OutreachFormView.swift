@@ -25,6 +25,7 @@ struct OutreachFormView: View {
     @State private var startTime = Date()
     @State private var endDate = Date()
     @State private var endTime = Date()
+    @State private var contactNumber = ""
     @State private var helpType = ""
     @State private var maxCapacity = ""
     @State private var eventDescription = ""
@@ -36,6 +37,7 @@ struct OutreachFormView: View {
     @State private var isLoading = false
     @State private var chaptermemberMessage1 = ""
     @State private var showAddressSearch = false
+    @State private var displayContactInfo: Bool = false
 
     let skills = ["Childcare", "Counselling and Support", "Clothing", "Education", "Personal Care", "Employment and Training", "Food and Water", "Healthcare", "Chinese", "Spanish", "Language (please specify)", "Legal", "Shelter", "Transportation", "LGBTQ Support", "Technology Access", "Social Integration", "Pet Care"]
 
@@ -49,13 +51,29 @@ struct OutreachFormView: View {
         !city.isEmpty &&
         //!zipcode.isEmpty &&
         !helpType.isEmpty &&
-        !maxCapacity.isEmpty
+        !maxCapacity.isEmpty &&
+        !contactNumber.isEmpty &&
+        isValidPhoneNumber(contactNumber) // <-- Added Contact Number
     }
+    
+    //function to check if phone number is valid
+    func isValidPhoneNumber(_ number: String) -> Bool {
+        let phoneRegex = "^[0-9]{10}$" // Ensures exactly 10 digits
+        let phoneTest = NSPredicate(format: "SELF MATCHES %@", phoneRegex)
+        return phoneTest.evaluate(with: number)
+    }
+
 
     func saveToFirestore() {
         guard allFieldsFilled else {
             alertMessage = "Please fill in all required fields."
             alertTitle = "New Outreach Event"
+            showAlert = true
+            return
+        }
+        guard isValidPhoneNumber(contactNumber) else {
+            alertMessage = "Please enter a valid 10-digit contact number."
+            alertTitle = "Invalid Contact Number"
             showAlert = true
             return
         }
@@ -94,7 +112,9 @@ struct OutreachFormView: View {
             "status": "pending",
             "title": title,
             "totalSlots": maxCapacity,
-            "uid": user.uid
+            "uid": user.uid,
+            "contactNumber": contactNumber,
+            "displayContactInfo": displayContactInfo
         ]
 
         // Save to Firestore
@@ -183,7 +203,7 @@ struct OutreachFormView: View {
                 .onTapGesture {
                     showAddressSearch = true
                 }
-                // Location Fields
+              // Location Fields
                 Text(NSLocalizedString("location", comment: ""))
                     .font(.headline)
 
@@ -205,7 +225,25 @@ struct OutreachFormView: View {
                     endDate: $endDate,
                     endTime: $endTime
                 )
+                // Contact Number
+                Text(NSLocalizedString("Contact Number", comment: ""))
+                    .font(.headline)
 
+                TextField("Enter Contact Number", text: $contactNumber)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .keyboardType(.phonePad)
+                    .onChange(of: contactNumber) { newValue in
+                        if newValue.count > 10 {
+                            contactNumber = String(newValue.prefix(10))
+                        }
+                    }
+                
+                HStack {
+                    Spacer()
+                    Text("\(contactNumber.count)/10")
+                        .font(.caption)
+                        .foregroundColor(.gray)
+                }
                 // Help Type
                 Text(NSLocalizedString("helpType", comment: ""))
                     .font(.headline)
@@ -227,6 +265,30 @@ struct OutreachFormView: View {
                     text: $eventDescription,
                     limit: descriptionLimit
                 )
+//                //toggle Disclaimer
+//                Toggle(isOn: $displayContactInfo) {
+//                    Text("Display my contact information and full address on outreach cards")
+//                        .font(.body)
+//                }
+//                .toggleStyle(SwitchToggleStyle())
+//                .padding(.top, 10)
+                
+                //checkbox disclaimer
+                HStack {
+                    Button(action: {
+                        displayContactInfo.toggle()
+                    }) {
+                        HStack {
+                            Image(systemName: displayContactInfo ? "checkmark.square" : "square")
+                                .foregroundColor(displayContactInfo ? .blue : .gray)
+                            Text("Display my contact information and full address on outreach cards")
+                                .font(.body)
+                        }
+                    }
+                    .buttonStyle(PlainButtonStyle())
+                    .padding(.top, 10)
+                }
+
 
                 // Buttons Section
                 VStack(spacing: 20) {
