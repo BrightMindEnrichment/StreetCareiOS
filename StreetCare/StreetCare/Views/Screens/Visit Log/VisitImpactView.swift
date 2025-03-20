@@ -24,6 +24,9 @@ struct VisitImpactView: View {
     @State var showActionSheet = false
     
     @State var isLoading = false
+    @State var isNavigationActive = false
+    @State var showLoginMessage = false
+    @State var user: User?
 
     
     var body: some View {
@@ -33,12 +36,26 @@ struct VisitImpactView: View {
                 Text("VISIT LOG").font(.system(size: 18)).padding()
                 ImpactView(peopleHelped: peopleHelped, outreaches: outreaches, itemsDonated: itemsDonated)
                 
-                NavigationLink {
-                    VisitLogEntry()
-                } label: {
+                Button(action: {
+                    if user != nil {
+                        isNavigationActive = true
+                    } else {
+                        showLoginMessage = true
+                    }
+                }) {
                     ZStack {
                         NavLinkButton(title: "Add new +", width: 120.0, height: 30.0)
                     }
+                }
+                .alert(isPresented: $showLoginMessage) {
+                    Alert(
+                        title: Text("Login Required"),
+                        message: Text("Log in to enter a Log Visit."),
+                        dismissButton: .default(Text("OK"))
+                    )
+                }
+                .navigationDestination(isPresented: $isNavigationActive) {
+                    VisitLogEntry()
                 }
                 Spacer(minLength: 10.0)
                 Divider().frame(maxWidth: UIScreen.main.bounds.width - 50 ,minHeight: 0.5)
@@ -73,8 +90,16 @@ struct VisitImpactView: View {
             }
             .loadingAnimation(isLoading: isLoading)
             .onAppear {
-                print("Imact view onAppear")
+                print("Impact view onAppear")
                 adapter.delegate = self
+                Auth.auth().addStateDidChangeListener { auth, currentUser in
+                    /*
+                           This listener detects changes in authentication state.
+                           - If the user logs in, `currentUser` is updated.
+                           - If the user logs out, `currentUser` becomes nil.
+                        */
+                    self.user = currentUser  // Update the user state
+                }
                 
                 // not sure why I need to do this, the refresh method
                 // checks for no user and if so calls
@@ -155,3 +180,4 @@ struct VisitImpactView_Previews: PreviewProvider {
         VisitImpactView()
     }
 }
+
