@@ -22,6 +22,9 @@ class VisitLog: ObservableObject, Identifiable {
     
     @Published var whenVisit = Date()
     @Published var peopleHelped = 1
+    @Published var status = ""
+    @Published var flaggedByUser = ""
+    //@Published var public = false
     
     @Published var foodAndDrinks = false
     @Published var clothes = false

@@ -56,21 +56,26 @@ struct InputTileList: View {
     
                 Text(question)
                     .font(.headline)
-                    .padding()
+                    //.padding()
                 
                 ScrollView {
-                    Toggle("Food & Drinks", isOn: $foodAndDrinks)
-                    Toggle("Clothes", isOn: $clothes)
-                    Toggle("Hygiene Products", isOn: $hygine)
-                    Toggle("Wellness/Emotional Support", isOn: $wellness)
-                    Toggle("Medical Help", isOn: $medical)
-                    Toggle("Social Worker/Psychiatrist", isOn: $socialworker)
-                    Toggle("Legal/Lawyer", isOn: $legal)
-                    Toggle("Other", isOn: $other)
-                                        
-                    if other {
-                        TextField("Other", text: $otherNotes)
+                    VStack(alignment: .leading, spacing: 10) { // Add spacing between toggles
+                        Toggle("Food & Drinks", isOn: $foodAndDrinks)
+                        Toggle("Clothes", isOn: $clothes)
+                        Toggle("Hygiene Products", isOn: $hygine)
+                        Toggle("Wellness/Emotional Support", isOn: $wellness)
+                        Toggle("Medical Help", isOn: $medical)
+                        Toggle("Social Worker/Psychiatrist", isOn: $socialworker)
+                        Toggle("Legal/Lawyer", isOn: $legal)
+                        Toggle("Other", isOn: $other)
+                        
+                        if other {
+                            TextField("Other", text: $otherNotes)
+                                .textFieldStyle(RoundedBorderTextFieldStyle()) // Optional: Improve appearance
+                                .padding(.top, 5)
+                        }
                     }
+                    .padding() // Apply padding to the entire VStack
                 }
                 .padding()
                 
