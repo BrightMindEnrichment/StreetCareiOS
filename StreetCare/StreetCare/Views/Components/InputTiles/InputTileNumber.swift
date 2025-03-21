@@ -15,6 +15,7 @@ struct InputTileNumber: View {
     
     var size = CGSize(width: 300.0, height: 450.0)
     var question: String
+    var cosentence: String
         
     @Binding var number: Int
         
@@ -48,7 +49,7 @@ struct InputTileNumber: View {
                     .font(.headline)
                     .padding()
                 
-                Stepper("\(number) people helped", value: $number)
+                Stepper("\(number) \(cosentence)", value: $number)
                     .padding()
                 
                 Spacer()
@@ -81,18 +82,3 @@ struct InputTileNumber: View {
 } // end struct
 
 
-struct InputTileNumber_Previews: PreviewProvider {
-
-    @State static var input = 5
-
-    static var previews: some View {
-        InputTileNumber(questionNumber: 1, totalQuestions: 2, question: "Luck number?", number: $input) {
-            //
-        } previousAction: {
-            //
-        } skipAction: {
-            //
-        }
-
-    }
-}

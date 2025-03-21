@@ -8,7 +8,7 @@ import SwiftUI
 import CoreLocation
 import CoreLocationUI
 
-struct InputTileLocation: View {
+struct InputTileLocation: View { 
 
     var questionNumber: Int
     var totalQuestions: Int
@@ -18,6 +18,7 @@ struct InputTileLocation: View {
     
     @Binding var textValue: String
     @Binding var location: CLLocationCoordinate2D
+    @ObservedObject var visitLog: VisitLog
     
     @State var locationManager: LocationManager!
     
@@ -146,6 +147,13 @@ struct InputTileLocation: View {
                             if let newLocation = newValue {
                                 self.location = newLocation // ✅ Updates location
                                 self.textValue = "\(self.street), \(self.city), \(self.state) \(self.zipcode)" // ✅ Updates whereVisit
+                                // ✅ Update VisitLog properties
+                                visitLog.street = self.street
+                                visitLog.city = self.city
+                                visitLog.state = self.state
+                                visitLog.stateAbbv = self.stateAbbreviation
+                                visitLog.zipcode = self.zipcode
+
                                 print("📍 Updated whereVisit: \(self.textValue)")
                                 print("📍 Updated location: \(self.location.latitude), \(self.location.longitude)")
                             }

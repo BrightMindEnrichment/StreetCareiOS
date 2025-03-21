@@ -83,6 +83,7 @@ struct VisitImpactView: View {
                 // despite the state flagging changing to false
                 if Auth.auth().currentUser != nil {
                     adapter.refresh()
+                    //adapter.refreshWebProd()
                     self.isLoading = true
                 }
                 else {
