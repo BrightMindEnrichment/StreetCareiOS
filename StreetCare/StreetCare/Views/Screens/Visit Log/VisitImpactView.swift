@@ -47,32 +47,42 @@ struct VisitImpactView: View {
                 Text("HISTORY").font(.system(size: 16)).bold()
                 List(Array(history.enumerated()), id: \.element.id) { index, item in
                     HStack(alignment: .top, spacing: 0) {
-//                        ZStack {
-//                            // Timeline vertical line (only show if not first or last item)
-//                            if index != history.count - 1 && index != 0 {
-//                                Rectangle()
-//                                    .fill(Color.gray.opacity(0.5))
-//                                    .frame(width: 2)
-//                                    .offset(y: 10)
-//                                    .padding(.top, -14)
-//                            }
-//                            
-//                            // Timeline dot
-//                            Circle()
-//                                .fill(Color.yellow)
-//                                .frame(width: 10, height: 10)
-//                        }
-//                        .frame(width: 20)
+                        ZStack {
+                            // Top vertical line (connects to the top of the circle)
+                            if index != 0 {
+                                Rectangle()
+                                    .fill(Color.gray.opacity(0.5)) // Use lighter gray for better visibility
+                                    .frame(width: 2, height: 70) // Adjusted height
+                                    .offset(x: -15, y: -20) // Adjusted y-offset for correct alignment
+                            }
+                            
+                            // Bottom vertical line (connects from the bottom of the circle)
+                            if index != history.count - 1 {
+                                Rectangle()
+                                    .fill(Color.gray.opacity(0.5))
+                                    .frame(width: 2, height: 70) // Adjusted height
+                                    .offset(x: -15, y: 50) // Adjusted y-offset
+                            }
+                            
+                            // Circle indicator
+                            Circle()
+                                .fill(Color.yellow.opacity(0.9))
+                                .frame(width: 12, height: 12) // Slightly increased size for better visibility
+                                .overlay(
+                                    Circle()
+                                        .stroke(Color.gray, lineWidth: 1) // Adds a border for better clarity
+                                )
+                                .offset(x: -15, y: 15) // Centering the circle with respect to lines
+                        }
+                        .frame(width: 0) // Ensuring proper spacing
 
-                        Circle()
-                            .fill(Color.yellow)
-                            .frame(width: 10, height: 10)
-                            .offset(x: -15, y: 35)
-                        
-//                        TimelineIndicatorView(
-//                            isFirst: index == 0,
-//                            isLast: index == history.count - 1
-//                        )
+
+
+//                        Circle()
+//                            .fill(Color.yellow)
+//                            .frame(width: 10, height: 10)
+//                            .offset(x: -15, y: 35)
+
                         ZStack {
                             // Background Circle
                             Circle()
@@ -135,7 +145,7 @@ struct VisitImpactView: View {
 
                     }
                     .padding(.horizontal) // Add padding to space out cards
-                    .padding(.trailing, -30) //card padding
+                    .padding(.trailing, -30) //card right side padding
                     .listRowSeparator(.hidden)
                 }
                 .listStyle(PlainListStyle())
