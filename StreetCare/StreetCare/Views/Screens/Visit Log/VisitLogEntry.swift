@@ -209,3 +209,23 @@ struct VisitLogEntry_Previews: PreviewProvider {
         VisitLogEntry()
     }
 }
+
+struct SegmentedProgressBar: View {
+    var totalSegments: Int
+    var filledSegments: Int
+    
+    var body: some View {
+        HStack(spacing: 8) {
+            ForEach(0..<totalSegments, id: \.self) { index in
+                Capsule()
+                    .fill(index < filledSegments ? Color.yellow : Color.black.opacity(0.6))
+                    .frame(width: 30, height: 12)
+                    .overlay(
+                        Capsule()
+                            .stroke(Color.yellow, lineWidth: 1)
+                    )
+            }
+        }
+        .padding()
+    }
+}

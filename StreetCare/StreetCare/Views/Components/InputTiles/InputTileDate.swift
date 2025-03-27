@@ -86,6 +86,15 @@ struct InputTileDate: View {
                     .foregroundColor(Color("TextColor"))
                 }
                 .padding()
+                
+                SegmentedProgressBar(
+                    totalSegments: totalQuestions,
+                    filledSegments: questionNumber
+                )
+                
+                Text("Progress")
+                    .font(.caption)
+                    .padding(.top, 4)
             }
         }
         .frame(width: size.width, height: size.height)
