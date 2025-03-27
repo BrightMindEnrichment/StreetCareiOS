@@ -45,17 +45,51 @@ struct VisitImpactView: View {
                     .background(Color.black)
                 Spacer(minLength: 10.0)
                 Text("HISTORY").font(.system(size: 16)).bold()
-                List(history) { item in
-                    HStack(spacing: 0) {
-                        ZStack {
+                List(Array(history.enumerated()), id: \.element.id) { index, item in
+                    HStack(alignment: .top, spacing: 0) {
+//                        ZStack {
+//                            // Timeline vertical line (only show if not first or last item)
+//                            if index != history.count - 1 && index != 0 {
+//                                Rectangle()
+//                                    .fill(Color.gray.opacity(0.5))
+//                                    .frame(width: 2)
+//                                    .offset(y: 10)
+//                                    .padding(.top, -14)
+//                            }
+//                            
+//                            // Timeline dot
+//                            Circle()
+//                                .fill(Color.yellow)
+//                                .frame(width: 10, height: 10)
+//                        }
+//                        .frame(width: 20)
 
+                        Circle()
+                            .fill(Color.yellow)
+                            .frame(width: 10, height: 10)
+                            .offset(x: -15, y: 35)
+                        
+//                        TimelineIndicatorView(
+//                            isFirst: index == 0,
+//                            isLast: index == history.count - 1
+//                        )
+                        ZStack {
+                            // Background Circle
                             Circle()
-                                .fill(Color.gray.opacity(0.3))
-                                .frame(width: 50, height: 50)
+                                .fill(Color.gray.opacity(0.1))
+                                .frame(width: 60, height: 60)
+                            
+                            // Image inside the circle
+                            Image("HelpingHands")
+                                .resizable()
+                                .scaledToFit()
+                                .clipShape(Circle())
+                                .frame(width: 55, height: 55)
                         }
+                        .offset(x: 6, y: 12) //circle position
                         
                         .zIndex(1) // Ensures it overlays on top of the card
-                        .padding(.trailing, -50)
+                        .padding(.trailing, -60)
                         
                         VStack(spacing: 0) {
                             HStack {
@@ -91,7 +125,7 @@ struct VisitImpactView: View {
                             .padding(.top, -5)
                         }
                         .padding()
-                        .padding(.leading, 45)
+                        .padding(.leading, 55)
                         .background(Color.white) // Card-like background
                         .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
                         .clipShape(Capsule()) // Rounded on all sides
@@ -101,7 +135,7 @@ struct VisitImpactView: View {
 
                     }
                     .padding(.horizontal) // Add padding to space out cards
-                    .padding(.trailing, -20) //card padding
+                    .padding(.trailing, -30) //card padding
                     .listRowSeparator(.hidden)
                 }
                 .listStyle(PlainListStyle())
