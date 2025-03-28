@@ -65,9 +65,6 @@ struct InputTileDate: View {
                         .foregroundColor(.gray)
                 }
                 
-                Spacer()
-                
-                
                 HStack {
                     Button("Previous") {
                         previousAction()

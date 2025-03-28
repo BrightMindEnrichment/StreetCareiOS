@@ -135,7 +135,7 @@ struct VisitLogEntry: View {
 
                 case 8:
                     InputTileList(
-                        questionNumber: 8,
+                        questionNumber: 1,
                         totalQuestions: 4,
                         question: "What further help is needed?",
                         foodAndDrinks: $visitLog.furtherfoodAndDrinks,

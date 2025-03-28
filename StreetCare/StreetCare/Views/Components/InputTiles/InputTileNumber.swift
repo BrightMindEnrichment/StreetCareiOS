@@ -52,7 +52,6 @@ struct InputTileNumber: View {
                 Stepper("\(number) \(cosentence)", value: $number)
                     .padding()
                 
-                Spacer()
                 
                 HStack {
                     Button("Previous") {
