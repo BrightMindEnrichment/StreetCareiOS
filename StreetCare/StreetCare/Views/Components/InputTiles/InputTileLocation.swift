@@ -102,11 +102,6 @@ struct InputTileLocation: View {
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                         .padding(.horizontal, 20)
 
-                    ProgressView(value: Double(questionNumber) / Double(totalQuestions))
-                        .tint(.yellow)
-                        .background(Color("TextColor"))
-                        .padding()
-
                     HStack {
                         Button("Previous") {
                             previousAction()
@@ -119,6 +114,15 @@ struct InputTileLocation: View {
                         .foregroundColor(Color("TextColor"))
                     }
                     .padding()
+                    
+                    SegmentedProgressBar(
+                        totalSegments: totalQuestions,
+                        filledSegments: questionNumber
+                    )
+                    
+                    Text("Progress")
+                        .font(.caption)
+                        .padding(.top, 4)
                 }
             }
         }

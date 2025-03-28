@@ -81,14 +81,6 @@ struct InputTileList: View {
                 
                 Spacer()
                 
-                ProgressView(value: Double(questionNumber) / Double(totalQuestions))
-                    .tint(.yellow)
-                    .background(.black)
-                    .padding()
-
-
-                Spacer()
-                
                 HStack {
                     Button("Previous") {
                         previousAction()
@@ -101,6 +93,15 @@ struct InputTileList: View {
                     .foregroundColor(Color("TextColor"))
                 }
                 .padding()
+                
+                SegmentedProgressBar(
+                    totalSegments: totalQuestions,
+                    filledSegments: questionNumber
+                )
+                
+                Text("Progress")
+                    .font(.caption)
+                    .padding(.top, 4)
             }
         }
         .frame(width: size.width, height: size.height)
