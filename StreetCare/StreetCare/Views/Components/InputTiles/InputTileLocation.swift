@@ -8,7 +8,7 @@ import SwiftUI
 import CoreLocation
 import CoreLocationUI
 
-struct InputTileLocation: View {
+struct InputTileLocation: View { 
 
     var questionNumber: Int
     var totalQuestions: Int
@@ -18,6 +18,7 @@ struct InputTileLocation: View {
     
     @Binding var textValue: String
     @Binding var location: CLLocationCoordinate2D
+    @ObservedObject var visitLog: VisitLog
     
     @State var locationManager: LocationManager!
     
@@ -101,11 +102,6 @@ struct InputTileLocation: View {
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                         .padding(.horizontal, 20)
 
-                    ProgressView(value: Double(questionNumber) / Double(totalQuestions))
-                        .tint(.yellow)
-                        .background(Color("TextColor"))
-                        .padding()
-
                     HStack {
                         Button("Previous") {
                             previousAction()
@@ -118,6 +114,15 @@ struct InputTileLocation: View {
                         .foregroundColor(Color("TextColor"))
                     }
                     .padding()
+                    
+                    SegmentedProgressBar(
+                        totalSegments: totalQuestions,
+                        filledSegments: questionNumber
+                    )
+                    
+                    Text("Progress")
+                        .font(.caption)
+                        .padding(.top, 4)
                 }
             }
         }
@@ -146,6 +151,13 @@ struct InputTileLocation: View {
                             if let newLocation = newValue {
                                 self.location = newLocation // ✅ Updates location
                                 self.textValue = "\(self.street), \(self.city), \(self.state) \(self.zipcode)" // ✅ Updates whereVisit
+                                // ✅ Update VisitLog properties
+                                visitLog.street = self.street
+                                visitLog.city = self.city
+                                visitLog.state = self.state
+                                visitLog.stateAbbv = self.stateAbbreviation
+                                visitLog.zipcode = self.zipcode
+
                                 print("📍 Updated whereVisit: \(self.textValue)")
                                 print("📍 Updated location: \(self.location.latitude), \(self.location.longitude)")
                             }

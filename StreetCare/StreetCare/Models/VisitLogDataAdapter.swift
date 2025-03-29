@@ -12,7 +12,6 @@ import FirebaseFirestore
 import FirebaseFirestoreSwift
 import CoreLocation
 
-
 protocol VisitLogDataAdapterProtocol {
     func visitLogDataRefreshed(_ logs: [VisitLog])
 }
@@ -21,7 +20,7 @@ protocol VisitLogDataAdapterProtocol {
 
 class VisitLogDataAdapter {
 
-    private let collectionName = "VisitLogBook"
+    private let collectionName = ""
     
     var visitLogs = [VisitLog]()
     var delegate: VisitLogDataAdapterProtocol?
@@ -35,10 +34,10 @@ class VisitLogDataAdapter {
         guard let user = Auth.auth().currentUser else {
             print("no user?")
             return
-        }
-        
+        }  
+        let collectionName = "VisitLogBook"
         let settings = FirestoreSettings()
-
+ 
         Firestore.firestore().settings = settings
         let db = Firestore.firestore()
         
@@ -81,7 +80,57 @@ class VisitLogDataAdapter {
                 // don't bother user with this error
                 print(err.localizedDescription)
             } else {
-                print("Document successfully written!")
+                print("Document successfully written in VisitLogBook!")
+            }
+        }
+    }
+    func addVisitLog_Community(_ visitLog: VisitLog) {
+    
+        guard let user = Auth.auth().currentUser else {
+            print("no user?")
+            return
+        }
+        let uid = user.uid
+        print("Current user UID: \(uid)")
+        
+        let collectionName = "visitLogWebProd"
+        let settings = FirestoreSettings()
+
+        Firestore.firestore().settings = settings
+        let db = Firestore.firestore()
+        
+        var userData = [String: Any]()
+        userData["city"] = visitLog.city
+        userData["dateTime"] = visitLog.whenVisit
+        userData["description"] = ""
+        userData["isFlagged"] = false
+        userData["itemQty"] = visitLog.itemQty
+        userData["numberPeopleHelped"] = visitLog.peopleHelped
+        userData["public"] = true
+        userData["rating"] = visitLog.rating
+        userData["state"] = visitLog.state
+        userData["stateAbbv"] = visitLog.stateAbbv
+        userData["status"] = "pending"
+        userData["street"] = visitLog.street
+        userData["uid"] = uid
+        userData["whatGiven"] = visitLog.whatGiven
+        userData["zipcode"] = visitLog.zipcode
+
+
+        //if visitLog.location.latitude != 0 {
+            //userData["latitude"] = visitLog.location.latitude
+            //userData["longitude"] = visitLog.location.longitude
+        //}
+        
+        //userData["timestamp"] = Date()
+        //userData["uid"] = user.uid
+        
+        db.collection(collectionName).document().setData(userData) { err in
+            if let err = err {
+                // don't bother user with this error
+                print(err.localizedDescription)
+            } else {
+                print("Document successfully written in visitLogWebProd!")
             }
         }
     }
@@ -92,11 +141,114 @@ class VisitLogDataAdapter {
         Firestore.firestore().settings = FirestoreSettings()
         let db = Firestore.firestore()
         
-        db.collection(collectionName).document(logId).delete { _ in
+        db.collection("VisitLogBook").document(logId).delete { _ in
+            completion()
+        }
+        db.collection("visitLogWebProd").document(logId).delete { _ in
             completion()
         }
     }
-    
+    /*func refreshWebProd() {
+        
+        guard let user = Auth.auth().currentUser else {
+            self.visitLogs = [VisitLog]()
+            self.delegate?.visitLogDataRefreshed(self.visitLogs)
+            return
+        }
+        
+        let settings = FirestoreSettings()
+        Firestore.firestore().settings = settings
+        let db = Firestore.firestore()
+        
+        let _ = db.collection("visitLogWebProd").whereField("uid", isEqualTo: user.uid).getDocuments { querySnapshot, error in
+            
+            if let error = error {
+                print(error.localizedDescription)
+            } else {
+                
+                // Clear out the existing logs
+                self.visitLogs.removeAll()
+                
+                for document in querySnapshot!.documents {
+                    
+                    let log = VisitLog(id: document.documentID)
+                    
+                    if let city = document["city"] as? String {
+                        log.city = city
+                    }
+                    
+                    if let dateTime = document["dateTime"] as? Timestamp {
+                        log.whenVisit = dateTime.dateValue()
+                    }
+                    
+                    if let description = document["description"] as? String {
+                        log.otherNotes = description
+                    }
+                    
+                    if let isFlagged = document["isFlagged"] as? Bool {
+                        log.other = isFlagged
+                    }
+                    
+                    if let itemQty = document["itemQty"] as? Int {
+                        log.itemQty = itemQty
+                    }
+                    
+                    if let numberPeopleHelped = document["numberPeopleHelped"] as? Int {
+                        log.peopleHelped = numberPeopleHelped
+                    }
+                    
+                    if let publicStatus = document["public"] as? Bool {
+                        log.other = publicStatus
+                    }
+                    
+                    if let rating = document["rating"] as? Int {
+                        log.rating = rating
+                    }
+                    
+                    if let state = document["state"] as? String {
+                        log.state = state
+                    }
+                    
+                    if let stateAbbv = document["stateAbbv"] as? String {
+                        log.stateAbbv = stateAbbv
+                    }
+                    
+                    if let status = document["status"] as? String {
+                        log.otherNotes = status
+                    }
+                    
+                    if let street = document["street"] as? String {
+                        log.street = street
+                    }
+                    
+                    if let zipcode = document["zipcode"] as? String {
+                        log.zipcode = zipcode
+                    }
+
+                    // ** Full Mapping of `whatGiven` **
+                    if let whatGiven = document["whatGiven"] as? [String] {
+                        log.foodAndDrinks = whatGiven.contains("Food and Drink")
+                        log.clothes = whatGiven.contains("Clothes")
+                        log.hygine = whatGiven.contains("Hygiene Products")
+                        log.wellness = whatGiven.contains("Wellness/ Emotional Support")
+                        log.medical = whatGiven.contains("Medical Help")
+                        log.socialworker = whatGiven.contains("Social Worker /Psychiatrist")
+                        log.legal = whatGiven.contains("Legal/Lawyer")
+                        
+                        // If "Other" category exists, assign `other` to true
+                        if let otherItem = whatGiven.first(where: { !["Food and Drink", "Clothes", "Hygiene Products", "Wellness/ Emotional Support", "Medical Help", "Social Worker /Psychiatrist", "Legal/Lawyer"].contains($0) }) {
+                            log.other = true
+                            log.otherNotes = otherItem  // Store custom other item description
+                        }
+                    }
+                    
+                    self.visitLogs.append(log)
+                }
+            }
+            
+            self.delegate?.visitLogDataRefreshed(self.visitLogs)
+        }
+    }*/
     
     func refresh() {
         
@@ -111,7 +263,7 @@ class VisitLogDataAdapter {
         Firestore.firestore().settings = settings
         let db = Firestore.firestore()
         
-        let _ = db.collection(collectionName).whereField("uid", isEqualTo: user.uid).getDocuments { querySnapshot, error in
+        let _ = db.collection("VisitLogBook").whereField("uid", isEqualTo: user.uid).getDocuments { querySnapshot, error in
             
             if let error = error {
                 print(error.localizedDescription)
