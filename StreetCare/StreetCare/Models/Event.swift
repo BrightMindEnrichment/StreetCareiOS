@@ -41,6 +41,8 @@ class Event: Identifiable {
     var eventStartTimeStamp : Timestamp?
     var eventEndTimeStamp : Timestamp?
     //var isRegistered : Bool
+    var isFlagged : Bool = false
+    var flaggedByUser:String? = ""
 }
 
 class EventData : Identifiable{

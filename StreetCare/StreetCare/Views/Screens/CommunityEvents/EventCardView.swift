@@ -66,10 +66,21 @@ struct EventCardView: View {
             .background(Color.white)
             .cornerRadius(15)
             .shadow(radius: 5)
-            Image(systemName: "checkmark.circle.fill")
-                .foregroundColor(getVerificationColor(for: event.event.userType))
-                .font(.system(size: 20))
-                .padding(8)
+            HStack {
+                if (event.event.isFlagged) {
+                    Image(systemName: "flag.fill")
+                        .foregroundColor(.red)
+                } else {
+                    Image(systemName: "flag.fill")
+                        .foregroundColor(.gray)
+                }
+
+            
+                Image(systemName: "checkmark.circle.fill")
+                    .foregroundColor(getVerificationColor(for: event.event.userType))
+                    .font(.system(size: 20))
+                    .padding(8)
+            }
         }
         .onTapGesture {
             onCardTap()

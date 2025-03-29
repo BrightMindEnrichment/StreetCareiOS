@@ -160,6 +160,7 @@ class EventDataAdapter {
     }
     
     func refresh() {
+        // MARK: - fetch events
         let settings = FirestoreSettings()
         Firestore.firestore().settings = settings
         let db = Firestore.firestore()
@@ -186,6 +187,8 @@ class EventDataAdapter {
                             
                             event.title = data["title"] as? String ?? ""
                             event.description = data["description"] as? String
+                            event.isFlagged = data["isFlagged"] as? Bool ?? false
+                            event.flaggedByUser = data["flaggedByUser"] as? String
                             
                             if let location = data["location"] as? [String: Any] {
                                 var field = ""
