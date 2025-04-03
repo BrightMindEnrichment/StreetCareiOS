@@ -13,7 +13,7 @@ struct InputTileLocation: View {
     var questionNumber: Int
     var totalQuestions: Int
         
-    var size = CGSize(width: 300.0, height: 450.0)
+    var size = CGSize(width: 300.0, height: 360.0)
     var question: String
     
     @Binding var textValue: String
@@ -41,19 +41,25 @@ struct InputTileLocation: View {
 
             VStack {
                 HStack {
+                    Text("Question \(questionNumber)/\(totalQuestions)")
+                        .foregroundColor(.black)
+                        //.font(.footnote)
+                    
                     Spacer()
-                    Button("Skip") {
+                    
+                    /*Button("Skip") {
                         skipAction()
                     }
                     .foregroundColor(.gray)
-                    .padding()
+                    .padding()*/
+                    
                 }
-
-                Spacer()
-
-                Text("Question \(questionNumber)/\(totalQuestions)")
-                    .foregroundColor(.gray)
-                    .font(.footnote)
+                .padding(.horizontal)
+                .padding(.top, 12)
+                
+                Divider()
+                    .background(Color.gray.opacity(0.3))
+                    .padding(.horizontal)
     
                 VStack {
                     Text(question)
@@ -87,7 +93,7 @@ struct InputTileLocation: View {
                         showAddressSearch = true
                     }
                 }
-                Spacer()
+                
                 VStack {
                     TextField(NSLocalizedString("state", comment: ""), text: $state)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
@@ -101,21 +107,34 @@ struct InputTileLocation: View {
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                         .padding(.horizontal, 20)
 
-                    ProgressView(value: Double(questionNumber) / Double(totalQuestions))
-                        .tint(.yellow)
-                        .background(Color("TextColor"))
-                        .padding()
-
                     HStack {
                         Button("Previous") {
                             previousAction()
                         }
-                        .foregroundColor(Color("TextColor"))
+                        .foregroundColor(Color("SecondaryColor"))
+                        .padding(.horizontal, 16)
+                        .padding(.vertical, 8)
+                        .background(
+                            Capsule()
+                                .fill(Color.white) // Fill with white
+                        )
+                        .overlay(
+                            Capsule()
+                                .stroke(Color("SecondaryColor"), lineWidth: 2) // Stroke with dark green
+                        )
+
                         Spacer()
+
                         Button("Next") {
                             nextAction()
                         }
-                        .foregroundColor(Color("TextColor"))
+                        .foregroundColor(Color("PrimaryColor"))
+                        .padding(.horizontal, 16)
+                        .padding(.vertical, 8)
+                        .background(
+                            Capsule()
+                                .fill(Color("SecondaryColor"))
+                        )
                     }
                     .padding()
                 }
@@ -161,6 +180,14 @@ struct InputTileLocation: View {
         }, message: {
             Text("Sorry, having a problem finding your current location.")
         })
+        SegmentedProgressBar(
+            totalSegments: totalQuestions,
+            filledSegments: questionNumber
+        )
+
+        Text("Progress")
+            .font(.caption)
+            .padding(.top, 4)
         
 
     }
