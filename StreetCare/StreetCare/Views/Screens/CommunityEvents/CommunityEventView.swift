@@ -26,6 +26,16 @@ struct CommunityEventView: View {
     let formatter = DateFormatter()
     var eventType: EventType
     
+    var noEventsText: String {
+        if eventType == .future {
+            return NSLocalizedString("noFutureEventsAvailable", comment: "")
+        } else if eventType == .past {
+            return NSLocalizedString("noPastEventsAvailable", comment: "")
+        } else {
+            return NSLocalizedString("noHelpingRequestsAvailable", comment: "")
+        }
+    }
+    
     var body: some View {
         VStack {
             // Search and Filter UI
@@ -77,7 +87,7 @@ struct CommunityEventView: View {
             .padding()
             LegendView()
             if viewModel.filteredData.isEmpty {
-                Text(NSLocalizedString(eventType == .future ? "noFutureEventsAvailable" : eventType == .past ? "noPastEventsAvailable" : "noHelpingRequestsAvailable", comment: ""))
+                Text(noEventsText)
                     .fontWeight(.bold)
                     .foregroundColor(Color("TextColor"))
             }
@@ -104,6 +114,7 @@ struct CommunityEventView: View {
                                                         .foregroundColor(Color("TextColor"))
                                                 }
                                             }
+                                            // MARK: - EventCardView entry
                                             EventCardView(event: event, eventType: eventType) {
                                                 currentData.date = event.date
                                                 currentData.monthYear = event.monthYear

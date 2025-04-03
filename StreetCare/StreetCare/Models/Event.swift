@@ -43,6 +43,11 @@ class Event: Identifiable {
     //var isRegistered : Bool
     var isFlagged : Bool = false
     var flaggedByUser:String? = ""
+    
+    func updateFlagStatus(newFlagState: Bool, userId: String?) {
+        isFlagged = newFlagState
+        flaggedByUser = newFlagState ? userId : nil
+    }
 }
 
 class EventData : Identifiable{
