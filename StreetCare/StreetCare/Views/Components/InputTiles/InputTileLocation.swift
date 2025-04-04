@@ -95,11 +95,11 @@ struct InputTileLocation: View {
                 }
                 
                 VStack {
-                    TextField(NSLocalizedString("state", comment: ""), text: $state)
+                    TextField(NSLocalizedString("city", comment: ""), text: $city)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                         .padding(.horizontal, 20)
-
-                    TextField(NSLocalizedString("city", comment: ""), text: $city)
+                    
+                    TextField(NSLocalizedString("state", comment: ""), text: $state)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                         .padding(.horizontal, 20)
 

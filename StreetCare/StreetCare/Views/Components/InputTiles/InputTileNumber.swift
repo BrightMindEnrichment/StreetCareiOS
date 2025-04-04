@@ -13,7 +13,7 @@ struct InputTileNumber: View {
     var questionNumber: Int
     var totalQuestions: Int
     
-    var size = CGSize(width: 300.0, height: 450.0)
+    var size = CGSize(width: 300.0, height: 300.0)
     var question: String
         
     @Binding var number: Int
@@ -30,52 +30,110 @@ struct InputTileNumber: View {
             VStack {
                 
                 HStack {
+                    Text("Question \(questionNumber)/\(totalQuestions)")
+                        .foregroundColor(.black)
+                        //.font(.footnote)
+                    
                     Spacer()
+                    
                     Button("Skip") {
                         skipAction()
                     }
-                    .foregroundColor(.gray)
-                    .padding()
+                    .foregroundColor(Color("SecondaryColor"))
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 8)
+                    .background(
+                        Capsule()
+                            .fill(Color.white)
+                    )
+                    .overlay(
+                        Capsule()
+                            .stroke(Color("SecondaryColor"), lineWidth: 2)
+                    )
+                    
                 }
+                .padding(.horizontal)
+                .padding(.top, 12)
                 
-                Spacer()
-                
-                Text("Question \(questionNumber)/\(totalQuestions)")
-                    .foregroundColor(.gray)
-                    .font(.footnote)
+                Divider()
+                    .background(Color.gray.opacity(0.3))
+                    .padding(.horizontal)
     
                 Text(question)
                     .font(.headline)
                     .padding()
-                
-                Stepper("\(number) people helped", value: $number)
-                    .padding()
-                
-                Spacer()
-                
-                ProgressView(value: Double(questionNumber) / Double(totalQuestions))
-                    .tint(.yellow)
-                    .background(.black)
-                    .padding()
 
+                HStack(spacing: 20) {
+                    Button(action: {
+                        if number > 0 {
+                            number -= 1
+                        }
+                    }) {
+                        Image(systemName: "minus")
+                            .foregroundColor(.white)
+                            .frame(width: 40, height: 40)
+                            .background(Color("SecondaryColor"))
+                            .clipShape(Circle())
+                    }
 
-                Spacer()
+                    Text("\(number)")
+                        .font(.title2)
+                        .fontWeight(.bold)
+
+                    Button(action: {
+                        number += 1
+                    }) {
+                        Image(systemName: "plus")
+                            .foregroundColor(.white)
+                            .frame(width: 40, height: 40)
+                            .background(Color("SecondaryColor"))
+                            .clipShape(Circle())
+                    }
+                }
+                .padding(.bottom)
+                
                 
                 HStack {
                     Button("Previous") {
                         previousAction()
                     }
-                    .foregroundColor(Color("TextColor"))
+                    .foregroundColor(Color("SecondaryColor"))
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 8)
+                    .background(
+                        Capsule()
+                            .fill(Color.white) // Fill with white
+                    )
+                    .overlay(
+                        Capsule()
+                            .stroke(Color("SecondaryColor"), lineWidth: 2) // Stroke with dark green
+                    )
+
                     Spacer()
+
                     Button("Next") {
                         nextAction()
                     }
-                    .foregroundColor(Color("TextColor"))
+                    .foregroundColor(Color("PrimaryColor"))
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 8)
+                    .background(
+                        Capsule()
+                            .fill(Color("SecondaryColor"))
+                    )
                 }
                 .padding()
             }
         }
         .frame(width: size.width, height: size.height)
+        SegmentedProgressBar(
+            totalSegments: totalQuestions,
+            filledSegments: questionNumber
+        )
+
+        Text("Progress")
+            .font(.caption)
+            .padding(.top, 4)
 
     } // end body
 } // end struct

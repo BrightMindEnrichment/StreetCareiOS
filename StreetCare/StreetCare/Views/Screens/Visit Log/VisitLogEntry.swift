@@ -221,7 +221,7 @@ struct SegmentedProgressBar: View {
                     .frame(width: 35, height: 12)
                     .overlay(
                         Capsule()
-                            .stroke(Color.black, lineWidth: 1)
+                            .stroke(Color("SecondaryColor"), lineWidth: 1)
                     )
             }
         }
