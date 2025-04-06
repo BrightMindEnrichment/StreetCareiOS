@@ -63,7 +63,8 @@ struct InputTileLocation: View {
     
                 VStack {
                     Text(question)
-                        .font(.headline)
+                        .font(.title3)
+                        .fontWeight(.bold)
                         .padding()
     
                     /*LocationButton {
@@ -76,7 +77,7 @@ struct InputTileLocation: View {
                         Image(systemName: "magnifyingglass")
                             .foregroundColor(.gray)
                         
-                        Text(street.isEmpty ? "Search Address" : street)
+                        Text(street.isEmpty ? "Search for address" : street)
                             .foregroundColor(street.isEmpty ? .gray : .primary)
                             .frame(maxWidth: .infinity, alignment: .leading) //
                     }
@@ -93,19 +94,25 @@ struct InputTileLocation: View {
                         showAddressSearch = true
                     }
                 }
-                
+
                 VStack {
-                    TextField(NSLocalizedString("city", comment: ""), text: $city)
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
-                        .padding(.horizontal, 20)
-                    
-                    TextField(NSLocalizedString("state", comment: ""), text: $state)
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
-                        .padding(.horizontal, 20)
+                    HStack {
+                        TextField(NSLocalizedString("city", comment: ""), text: $city)
+                            .textFieldStyle(RoundedBorderTextFieldStyle())
+                            .layoutPriority(1) // Higher priority
+                            .frame(maxWidth: 300)
+
+                        TextField(NSLocalizedString("state", comment: ""), text: $stateAbbreviation)
+                            .textFieldStyle(RoundedBorderTextFieldStyle())
+                            .layoutPriority(0)
+                            .frame(maxWidth: 100) // Optional: limit the width
+                    }
+                    .padding(.horizontal)
+                    .padding(.top, 12)
 
                     TextField(NSLocalizedString("zipcode", comment: ""), text: $zipcode)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
-                        .padding(.horizontal, 20)
+                        .padding(.horizontal)
 
                     HStack {
                         Button("Previous") {
@@ -125,7 +132,7 @@ struct InputTileLocation: View {
 
                         Spacer()
 
-                        Button("Next") {
+                        Button(" Next  ") {
                             nextAction()
                         }
                         .foregroundColor(Color("PrimaryColor"))

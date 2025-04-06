@@ -27,8 +27,9 @@ struct VisitLogEntry: View {
     var body: some View {
         NavigationStack {
             VStack {
-                Text("Visit Log")
-                    .font(.largeTitle)
+                Text("Log Your Visit")
+                    .font(.title)
+                    .fontWeight(.bold)
                     .padding()
                                 
                 switch questionNumber {
@@ -69,7 +70,7 @@ struct VisitLogEntry: View {
                     }
                     
                 case 3:
-                    InputTileNumber(questionNumber: 3, totalQuestions: 5, question: "How many people did you help?", number: $visitLog.peopleHelped) {
+                    InputTileNumber(questionNumber: 3, totalQuestions: 5, question1: "How many people" , question2: "did you help?", number: $visitLog.peopleHelped) {
                         questionNumber += 1
                     } previousAction: {
                         questionNumber -= 1
@@ -121,7 +122,7 @@ struct VisitLogEntry: View {
                     }
                     
                 case 8:
-                    InputTileNumber(questionNumber: 2, totalQuestions: 4, question: "How many people need further help?", number: $visitLog.peopleNeedFurtherHelp) {
+                    InputTileNumber(questionNumber: 2, totalQuestions: 4, question1: "How many people", question2: "need further help?", number: $visitLog.peopleNeedFurtherHelp) {
                         questionNumber += 1
                     } previousAction: {
                         questionNumber -= 1
@@ -217,7 +218,7 @@ struct SegmentedProgressBar: View {
         HStack(spacing: 8) {
             ForEach(0..<totalSegments, id: \.self) { index in
                 Capsule()
-                    .fill(index < filledSegments ? Color.yellow : Color.black)
+                    .fill(index < filledSegments ? Color.yellow : Color("SecondaryColor"))
                     .frame(width: 35, height: 12)
                     .overlay(
                         Capsule()

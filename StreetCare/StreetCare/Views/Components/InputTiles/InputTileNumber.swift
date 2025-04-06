@@ -13,8 +13,9 @@ struct InputTileNumber: View {
     var questionNumber: Int
     var totalQuestions: Int
     
-    var size = CGSize(width: 300.0, height: 300.0)
-    var question: String
+    var size = CGSize(width: 300.0, height: 280.0)
+    var question1: String
+    var question2: String
         
     @Binding var number: Int
         
@@ -59,9 +60,16 @@ struct InputTileNumber: View {
                     .background(Color.gray.opacity(0.3))
                     .padding(.horizontal)
     
-                Text(question)
-                    .font(.headline)
-                    .padding()
+                VStack{
+                    Text(question1)
+                        .font(.title3)
+                        .padding(.top, 12)
+                        .fontWeight(.bold)
+                    Text(question2)
+                        .font(.title3)
+                        .padding(.bottom, 12)
+                        .fontWeight(.bold)
+                }
 
                 HStack(spacing: 20) {
                     Button(action: {
@@ -70,8 +78,8 @@ struct InputTileNumber: View {
                         }
                     }) {
                         Image(systemName: "minus")
-                            .foregroundColor(.white)
-                            .frame(width: 40, height: 40)
+                            .foregroundColor(Color("PrimaryColor"))
+                            .frame(width: 30, height: 30)
                             .background(Color("SecondaryColor"))
                             .clipShape(Circle())
                     }
@@ -84,8 +92,8 @@ struct InputTileNumber: View {
                         number += 1
                     }) {
                         Image(systemName: "plus")
-                            .foregroundColor(.white)
-                            .frame(width: 40, height: 40)
+                            .foregroundColor(Color("PrimaryColor"))
+                            .frame(width: 30, height: 30)
                             .background(Color("SecondaryColor"))
                             .clipShape(Circle())
                     }
@@ -111,7 +119,7 @@ struct InputTileNumber: View {
 
                     Spacer()
 
-                    Button("Next") {
+                    Button(" Next  ") {
                         nextAction()
                     }
                     .foregroundColor(Color("PrimaryColor"))
@@ -139,18 +147,4 @@ struct InputTileNumber: View {
 } // end struct
 
 
-struct InputTileNumber_Previews: PreviewProvider {
 
-    @State static var input = 5
-
-    static var previews: some View {
-        InputTileNumber(questionNumber: 1, totalQuestions: 2, question: "Luck number?", number: $input) {
-            //
-        } previousAction: {
-            //
-        } skipAction: {
-            //
-        }
-
-    }
-}

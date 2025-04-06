@@ -57,8 +57,9 @@ struct InputTileDate: View {
                 
                 HStack{
                     Text(question)
-                        .font(.headline)
-                        .padding()
+                        .font(.title3)
+                        .padding(.top, 12)
+                        .fontWeight(.bold)
                 }
                 
                 Spacer()
@@ -139,7 +140,7 @@ struct InputTileDate: View {
 
                     Spacer()
 
-                    Button("Next") {
+                    Button(" Next  ") {
                         nextAction()
                     }
                     .foregroundColor(Color("PrimaryColor"))
