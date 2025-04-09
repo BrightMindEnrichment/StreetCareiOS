@@ -104,7 +104,7 @@ struct CommunityEventView: View {
                                                         .foregroundColor(Color("TextColor"))
                                                 }
                                             }
-                                            EventCardView(event: event, eventType: eventType) {
+                                            EventCardView(event: event, eventType: eventType, flagStatus: event.flagStatus){
                                                 currentData.date = event.date
                                                 currentData.monthYear = event.monthYear
                                                 currentData.event = event.event
@@ -126,7 +126,7 @@ struct CommunityEventView: View {
         }
         .bottomSheet(isPresented: $isBottomSheetPresented) {
             VStack {
-                EventPopupView(event: currentData, eventType: eventType, delegate: self)
+                EventPopupView(event: currentData, eventType: eventType, delegate: self, flagStatus: currentData.flagStatus)
             }
             .frame(maxWidth: .infinity)
             .padding()

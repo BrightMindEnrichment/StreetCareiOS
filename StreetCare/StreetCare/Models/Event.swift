@@ -40,14 +40,19 @@ class Event: Identifiable {
     var eventDateStamp : Timestamp?
     var eventStartTimeStamp : Timestamp?
     var eventEndTimeStamp : Timestamp?
-    var isFlagged : Bool?
+    var isFlagged: Bool?
     //var isRegistered : Bool
 }
 
-class EventData : Identifiable{
+class EventData : ObservableObject, Identifiable{
     var monthYear : String = ""
     var date : (String?, String?, String?) = ("","","")
-    var event =  Event()
+    var event = Event()
+    
+    let flagStatus = FlagStatus() // ✅ Minimal, lightweight reactivity
+}
+class FlagStatus: ObservableObject {
+    @Published var isFlagged: Bool = false
 }
 
 class HelpRequest {

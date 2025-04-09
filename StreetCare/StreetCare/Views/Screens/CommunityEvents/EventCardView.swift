@@ -10,6 +10,7 @@ import FirebaseFirestore
 import SwiftUI
 
 struct EventCardView: View {
+    @ObservedObject var flagStatus: FlagStatus
     var event: EventData
     var eventType: EventType
     var onCardTap: () -> Void
@@ -70,7 +71,7 @@ struct EventCardView: View {
             
             HStack(spacing: 6) {
                 Image(systemName: "flag.fill")
-                    .foregroundColor((event.event.isFlagged ?? false) ? .red : .black.opacity(0.7))
+                    .foregroundColor(flagStatus.isFlagged ? .red : .black.opacity(0.7))
                     .font(.system(size: 18))
 
                 // ✅ Verification checkmark
