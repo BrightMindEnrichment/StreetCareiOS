@@ -17,7 +17,10 @@ struct ImpactView: View {
     
     var body: some View {
         VStack {
-            Text("YOUR IMPACT").font(.system(size: 18)).bold()
+            Text("YOUR IMPACT")
+                .font(.system(size: 18, weight: .bold))
+                .frame(width: 379, height: 30, alignment: .center)
+
             HStack {
                 AchievementBadge(count: peopleHelped, title: "People helped", imageName: "Tab-Profile")
                 AchievementBadge(count: outreaches, title: "Outreaches", imageName: "HelpingHands")

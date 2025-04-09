@@ -112,8 +112,13 @@ struct InputTileLocation: View {
                         }
                         .foregroundColor(Color("TextColor"))
                         Spacer()
-                        Button("Next") {
-                            nextAction()
+                            Button("Next") {
+                                if street.isEmpty && !city.isEmpty && !state.isEmpty {
+                                    // User did not pick from search, but manually filled city/state
+                                    textValue = "\(city), \(state)\(zipcode)"
+                                    print("📍 Updated textValue manually: \(textValue)")
+                                }
+                                nextAction()
                         }
                         .foregroundColor(Color("TextColor"))
                     }
@@ -177,3 +182,4 @@ struct InputTileLocation: View {
         }
     }
 }
+

@@ -17,6 +17,8 @@ struct NavLinkButton: View {
     var width: CGFloat
     var height: CGFloat = 35.0
     var cornerRadius: CGFloat = 16.0
+    var fontSize: CGFloat = 16
+    var fontWeight: Font.Weight = .medium
     var secondaryButton = false
     var noBorder = false
     var rightArrowNeeded = false
@@ -52,6 +54,8 @@ struct NavLinkButton: View {
             }else{
                 HStack{
                     Text(title)
+                        .font(.custom("Poppins", size: fontSize))
+                        .fontWeight(.bold)
                         .padding(EdgeInsets(top: 8.0, leading: 20.0, bottom: 8.0, trailing: 20.0))
                         .foregroundColor(secondaryButton ? color : buttonColor)
                     if rightArrowNeeded{
