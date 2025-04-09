@@ -7,6 +7,7 @@
 
 import SwiftUI
 import FirebaseAuth
+import FirebaseFirestore
 
 protocol EventPopupViewDelegate{
     func close()
@@ -17,6 +18,27 @@ struct EventPopupView: View {
     var eventType : EventType
     var delegate : EventPopupViewDelegate?
     let adapter = EventDataAdapter()
+    
+    @State private var isFlagged: Bool = false
+    @State private var showFlagAlert: Bool = false
+    
+    private func flagEventInFirestore(eventID: String?) {
+        guard let eventID = eventID else {
+            print("Missing event ID. Cannot flag event.")
+            return
+        }
+
+        let db = Firestore.firestore()
+        db.collection("outreachEventsDev").document(eventID).updateData([
+            "isFlagged": true
+        ]) { error in
+            if let error = error {
+                print("❌ Error flagging event: \(error.localizedDescription)")
+            } else {
+                print("✅ Event flagged successfully in Firestore.")
+            }
+        }
+    }
 
     var body: some View {
         
@@ -26,6 +48,20 @@ struct EventPopupView: View {
                 Text(event.event.title.capitalized)
                     .font(.headline)
                 Spacer()
+                Button {
+                    print("🚨 Flag button tapped")
+                    showFlagAlert = true
+                } label: {
+                    Image(systemName: "flag.fill")
+                        .resizable()
+                        .frame(width: 18, height: 18)
+                        .foregroundColor(isFlagged ? .red : .black.opacity(0.7))
+                        .padding(6)
+                        .background(Color.white.opacity(0.01)) // makes whole area tappable
+                        .clipShape(Circle())
+                }
+                .contentShape(Rectangle())
+                
                 Image(systemName: "checkmark.circle.fill")
                     .foregroundColor(getVerificationColor(for: event.event.userType))
                     .font(.system(size: 20))
@@ -111,6 +147,23 @@ struct EventPopupView: View {
             }
         } .toolbar(.hidden, for: .tabBar)
         .background(Color.white)
+        .alert(isPresented: $showFlagAlert) {
+            Alert(
+                title: Text("Flag this event?"),
+                message: Text("Do you want to report this event as inappropriate or incorrect?"),
+                primaryButton: .destructive(Text("Flag")) {
+                    isFlagged = true
+                    flagEventInFirestore(eventID: event.event.eventId)
+                },
+                secondaryButton: .cancel()
+            )
+        }
+        .onChange(of: showFlagAlert) { value in
+            print("👀 showFlagAlert changed to: \(value)")
+        }
+        .onAppear {
+            isFlagged = event.event.isFlagged ?? false
+        }
     }
 }
 

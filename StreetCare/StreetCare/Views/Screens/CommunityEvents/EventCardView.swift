@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import FirebaseFirestore
 import SwiftUI
 
 struct EventCardView: View {
@@ -15,7 +16,7 @@ struct EventCardView: View {
 
     var body: some View {
         ZStack(alignment: .topTrailing) {
-            VStack(alignment: .leading, spacing: 10) {
+            VStack(alignment: .leading) {
                 HStack {
                     Text(event.event.title.capitalized)
                         .font(.headline)
@@ -66,10 +67,18 @@ struct EventCardView: View {
             .background(Color.white)
             .cornerRadius(15)
             .shadow(radius: 5)
-            Image(systemName: "checkmark.circle.fill")
-                .foregroundColor(getVerificationColor(for: event.event.userType))
-                .font(.system(size: 20))
-                .padding(8)
+            
+            HStack(spacing: 6) {
+                Image(systemName: "flag.fill")
+                    .foregroundColor((event.event.isFlagged ?? false) ? .red : .black.opacity(0.7))
+                    .font(.system(size: 18))
+
+                // ✅ Verification checkmark
+                Image(systemName: "checkmark.circle.fill")
+                    .foregroundColor(getVerificationColor(for: event.event.userType))
+                    .font(.system(size: 20))
+            }
+            .padding(8)
         }
         .onTapGesture {
             onCardTap()
