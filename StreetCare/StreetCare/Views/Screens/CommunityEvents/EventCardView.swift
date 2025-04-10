@@ -7,6 +7,8 @@
 
 import Foundation
 import SwiftUI
+import Firebase
+import FirebaseFirestore
 
 struct EventCardView: View {
     var event: EventData
@@ -66,10 +68,60 @@ struct EventCardView: View {
             .background(Color.white)
             .cornerRadius(15)
             .shadow(radius: 5)
-            Image(systemName: "checkmark.circle.fill")
-                .foregroundColor(getVerificationColor(for: event.event.userType))
-                .font(.system(size: 20))
-                .padding(8)
+            HStack(spacing: 8) {
+                
+                Image(systemName: "flag.fill")
+                    .foregroundColor(event.event.isFlagged ? .red : .gray)
+                    .onTapGesture {
+                        Task {
+                            guard let currentUser = Auth.auth().currentUser else { return }
+                            let db = Firestore.firestore()
+                            
+                            let eventRef = db.collection("outreachEventsDev").document(event.event.eventId ?? "")
+                            let currentUserId = currentUser.uid
+                            
+                            if event.event.isFlagged {
+                                if event.event.flaggedByUser == currentUserId {
+                                    event.event.updateFlagStatus(newFlagState: false, userId: nil)
+                                    
+                                    let updates: [String: Any] = [
+                                        "isFlagged": false,
+                                        "flaggedByUser": NSNull()
+                                    ]
+                                    
+                                    do {
+                                        try await eventRef.updateData(updates)
+                                        print("Successfully unflagged event by user \(currentUser.email ?? "")")
+                                    } catch {
+                                        print("Error updating flag status: \(error)")
+                                    }
+                                } else {
+                                    print("Only the user who flagged this event or a Street Care Hub Leader can unflag it.")
+                                }
+                            } else {
+                                event.event.updateFlagStatus(newFlagState: true, userId: currentUserId)
+                                
+                                let updates: [String: Any] = [
+                                    "isFlagged": true,
+                                    "flaggedByUser": currentUserId
+                                ]
+                                
+                                do {
+                                    try await eventRef.updateData(updates)
+                                    print("Successfully flagged event by user \(currentUser.email ?? "")")
+                                } catch {
+                                    print("Error updating flag status: \(error)")
+                                }
+                            }
+                        }
+                    }
+                
+                Image(systemName: "checkmark.circle.fill")
+                    .foregroundColor(getVerificationColor(for: event.event.userType))
+                    .font(.system(size: 20))
+                    .padding(8)
+            }
+            .padding([.top, .trailing], 8)
         }
         .onTapGesture {
             onCardTap()

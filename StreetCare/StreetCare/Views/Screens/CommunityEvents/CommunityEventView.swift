@@ -25,6 +25,15 @@ struct CommunityEventView: View {
 
     let formatter = DateFormatter()
     var eventType: EventType
+    var noEventsText: String {
+        if eventType == .future {
+            return NSLocalizedString("noFutureEventsAvailable", comment: "")
+        } else if eventType == .past {
+            return NSLocalizedString("noPastEventsAvailable", comment: "")
+        } else {
+            return NSLocalizedString("noHelpingRequestsAvailable", comment: "")
+        }
+    }
     
     var body: some View {
         VStack {
