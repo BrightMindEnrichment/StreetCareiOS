@@ -7,6 +7,7 @@
 
 import SwiftUI
 import FirebaseAuth
+import Firebase
 
 protocol EventPopupViewDelegate{
     func close()
@@ -17,19 +18,55 @@ struct EventPopupView: View {
     var eventType : EventType
     var delegate : EventPopupViewDelegate?
     let adapter = EventDataAdapter()
+    
+    func toggleFlag() {
+        guard let eventId = event.event.eventId else { return }
+        let db = Firestore.firestore()
+        let newFlagValue = !event.event.isFlagged
+        
+        db.collection("outreachEventsDev").document(eventId).updateData([
+            "isFlagged": newFlagValue
+        ]) { error in
+            if let error = error {
+                print("Failed to update isFlagged: \(error.localizedDescription)")
+            } else {
+                print("Flag updated to: \(newFlagValue)")
+                event.event.isFlagged = newFlagValue
+            }
+        }
+    }
 
     var body: some View {
         
-        VStack(alignment: .leading, spacing: 10) {
+        print("isFlagged value for '\(event.event.title)': \(event.event.isFlagged)")
+        return VStack(alignment: .leading, spacing: 10) {
            // Spacer()
-            HStack{
+            HStack {
                 Text(event.event.title.capitalized)
                     .font(.headline)
                 Spacer()
-                Image(systemName: "checkmark.circle.fill")
-                    .foregroundColor(getVerificationColor(for: event.event.userType))
-                    .font(.system(size: 20))
-                    .padding(8)
+                
+                HStack(spacing: 10) {
+                    if let user = Auth.auth().currentUser, user.uid == event.event.uid {
+                        // Only show interactive flag if current user is the event creator
+                        Image(systemName: "flag.fill")
+                            .foregroundColor(event.event.isFlagged ? .red : .gray)
+                            .font(.system(size: 20))
+                            .onTapGesture {
+                                toggleFlag()
+                            }
+                    } else {
+                        // Non-creators just see the flag visually
+                        Image(systemName: "flag.fill")
+                            .foregroundColor(event.event.isFlagged ? .red : .gray)
+                            .font(.system(size: 20))
+                    }
+                    
+                    Image(systemName: "checkmark.circle.fill")
+                        .foregroundColor(getVerificationColor(for: event.event.userType))
+                        .font(.system(size: 20))
+                }
+                .padding(8)
             }
             
             if let description = event.event.description, !description.isEmpty {

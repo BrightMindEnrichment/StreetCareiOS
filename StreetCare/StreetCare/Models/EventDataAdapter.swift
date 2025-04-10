@@ -242,6 +242,7 @@ class EventDataAdapter {
                             event.helpRequest = data["helpRequest"] as? [String]
                             event.participants = data["participants"] as? [String]
                             event.skills = data["skills"] as? [String]
+                            event.isFlagged = data["isFlagged"] as? Bool ?? false
                             
                             self.events.append(event)
                         }

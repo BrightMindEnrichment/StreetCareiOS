@@ -40,6 +40,7 @@ class Event: Identifiable {
     var eventDateStamp : Timestamp?
     var eventStartTimeStamp : Timestamp?
     var eventEndTimeStamp : Timestamp?
+    var isFlagged: Bool = false
     //var isRegistered : Bool
 }
 
