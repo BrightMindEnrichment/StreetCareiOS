@@ -11,9 +11,12 @@ import Firebase
 import FirebaseFirestore
 
 struct EventCardView: View {
-    var event: EventData
+    @ObservedObject var event: EventData
     var eventType: EventType
     var onCardTap: () -> Void
+    @State private var showAlert = false
+    @State private var alertMessage = ""
+
 
     var body: some View {
         ZStack(alignment: .topTrailing) {
@@ -96,7 +99,8 @@ struct EventCardView: View {
                                         print("Error updating flag status: \(error)")
                                     }
                                 } else {
-                                    print("Only the user who flagged this event or a Street Care Hub Leader can unflag it.")
+                                    alertMessage = "Only the user who flagged this event or a Street Care Hub Leader can unflag it."
+                                    showAlert = true
                                 }
                             } else {
                                 event.event.updateFlagStatus(newFlagState: true, userId: currentUserId)
@@ -125,7 +129,16 @@ struct EventCardView: View {
         }
         .onTapGesture {
             onCardTap()
+            
         }
+        .alert(isPresented: $showAlert) {
+            Alert(
+                title: Text("Notice"),
+                message: Text(alertMessage),
+                dismissButton: .default(Text("OK"))
+            )
+        }
+
     }
 }
 

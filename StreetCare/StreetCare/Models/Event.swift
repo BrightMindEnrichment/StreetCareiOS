@@ -50,10 +50,10 @@ class Event: Identifiable {
     }
 }
 
-class EventData : Identifiable{
-    var monthYear : String = ""
-    var date : (String?, String?, String?) = ("","","")
-    var event =  Event()
+class EventData : ObservableObject, Identifiable{
+    @Published var monthYear : String = ""
+    @Published var date : (String?, String?, String?) = ("","","")
+    @Published var event =  Event()
 }
 
 class HelpRequest {
