@@ -73,7 +73,7 @@ struct VisitImpactView: View {
             }
             .loadingAnimation(isLoading: isLoading)
             .onAppear {
-                print("Imact view onAppear")
+                print("Impact view onAppear")
                 adapter.delegate = self
                 
                 // not sure why I need to do this, the refresh method

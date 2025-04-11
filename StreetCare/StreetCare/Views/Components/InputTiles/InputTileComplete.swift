@@ -14,6 +14,7 @@ struct InputTileComplete: View {
     @State private var showAlert = false
     @State private var alertMessage = ""
     @State private var showConfirmationDialog = false // New state variable for confirmation
+    @State private var navigateToVisitImpactView = false
     
     var finishAction: () -> ()
     var shareAction: () -> () // Action to be triggered when sharing
@@ -25,7 +26,7 @@ struct InputTileComplete: View {
             VStack {
                 Spacer()
 
-                Text("Thank You")
+                Text("Thank You! Your Visit has been logged.")
                     .font(.subheadline)
                     .foregroundColor(.gray)
                 

@@ -122,7 +122,6 @@ struct VisitLogEntry: View {
                 case 7:
                     
                     InputTileMoreQuestions(question: "Do they need further help?") {
-                        saveVisitLog()
                         questionNumber = 100
                     } skipAction: {
                         questionNumber -= 1
@@ -209,9 +208,10 @@ struct VisitLogEntry: View {
                     
                 case 100:
                     InputTileComplete(question: "Completed!") {
-                        saveVisitLog() // Regular save
+                        //saveVisitLog() // Regular save
                         presentation.wrappedValue.dismiss()
                     } shareAction: {
+                        //saveVisitLog()
                         saveVisitLog_Community() // Save for community
                     }
                     
@@ -242,7 +242,7 @@ struct VisitLogEntry: View {
     
     func saveVisitLog_Community() {
         let adapter = VisitLogDataAdapter()
-        adapter.addVisitLog(self.visitLog)
+        //adapter.addVisitLog(self.visitLog)
         adapter.addVisitLog_Community(self.visitLog)
     }
     
