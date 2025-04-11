@@ -16,9 +16,12 @@ struct EventCardView: View {
     var onCardTap: () -> Void
     @State private var showAlert = false
     @State private var alertMessage = ""
+    @Binding var popupRefresh: Bool
+
 
 
     var body: some View {
+        //let _ = refresh
         ZStack(alignment: .topTrailing) {
             VStack(alignment: .leading, spacing: 10) {
                 HStack {
@@ -75,6 +78,7 @@ struct EventCardView: View {
                 
                 Image(systemName: "flag.fill")
                     .foregroundColor(event.event.isFlagged ? .red : .gray)
+                    .id(popupRefresh)
                     .onTapGesture {
                         Task {
                             guard let currentUser = Auth.auth().currentUser else { return }
@@ -95,6 +99,7 @@ struct EventCardView: View {
                                     do {
                                         try await eventRef.updateData(updates)
                                         print("Successfully unflagged event by user \(currentUser.email ?? "")")
+                                        popupRefresh.toggle()
                                     } catch {
                                         print("Error updating flag status: \(error)")
                                     }
@@ -113,6 +118,7 @@ struct EventCardView: View {
                                 do {
                                     try await eventRef.updateData(updates)
                                     print("Successfully flagged event by user \(currentUser.email ?? "")")
+                                    popupRefresh.toggle()
                                 } catch {
                                     print("Error updating flag status: \(error)")
                                 }
@@ -133,7 +139,7 @@ struct EventCardView: View {
         }
         .alert(isPresented: $showAlert) {
             Alert(
-                title: Text("Notice"),
+                title: Text("Unflag Error"),
                 message: Text(alertMessage),
                 dismissButton: .default(Text("OK"))
             )
