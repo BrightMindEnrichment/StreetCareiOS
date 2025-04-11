@@ -23,6 +23,9 @@ struct InputTileList: View {
     @Binding var clothes: Bool
     @Binding var hygine: Bool
     @Binding var wellness: Bool
+    @Binding var medical: Bool
+    @Binding var socialworker: Bool
+    @Binding var legal: Bool
     @Binding var other: Bool
     @Binding var otherNotes: String
 
@@ -53,29 +56,29 @@ struct InputTileList: View {
     
                 Text(question)
                     .font(.headline)
-                    .padding()
+                    //.padding()
                 
                 ScrollView {
-                    Toggle("Food & Drinks", isOn: $foodAndDrinks)
-                    Toggle("Clothes", isOn: $clothes)
-                    Toggle("Hygiene Products", isOn: $hygine)
-                    Toggle("Wellness/Emotional Support", isOn: $wellness)
-                    Toggle("Other", isOn: $other)
-                                        
-                    if other {
-                        TextField("Other", text: $otherNotes)
+                    VStack(alignment: .leading, spacing: 10) { // Add spacing between toggles
+                        Toggle("Food & Drinks", isOn: $foodAndDrinks)
+                        Toggle("Clothes", isOn: $clothes)
+                        Toggle("Hygiene Products", isOn: $hygine)
+                        Toggle("Wellness/Emotional Support", isOn: $wellness)
+                        Toggle("Medical Help", isOn: $medical)
+                        Toggle("Social Worker/Psychiatrist", isOn: $socialworker)
+                        Toggle("Legal/Lawyer", isOn: $legal)
+                        Toggle("Other", isOn: $other)
+                        
+                        if other {
+                            TextField("Other", text: $otherNotes)
+                                .textFieldStyle(RoundedBorderTextFieldStyle()) // Optional: Improve appearance
+                                .padding(.top, 5)
+                        }
                     }
+                    .padding() // Apply padding to the entire VStack
                 }
                 .padding()
                 
-                Spacer()
-                
-                ProgressView(value: Double(questionNumber) / Double(totalQuestions))
-                    .tint(.yellow)
-                    .background(.black)
-                    .padding()
-
-
                 Spacer()
                 
                 HStack {
@@ -90,6 +93,15 @@ struct InputTileList: View {
                     .foregroundColor(Color("TextColor"))
                 }
                 .padding()
+                
+                SegmentedProgressBar(
+                    totalSegments: totalQuestions,
+                    filledSegments: questionNumber
+                )
+                
+                Text("Progress")
+                    .font(.caption)
+                    .padding(.top, 4)
             }
         }
         .frame(width: size.width, height: size.height)
@@ -98,15 +110,35 @@ struct InputTileList: View {
 } // end struct
 
 
-//struct InputTileList_Previews: PreviewProvider {
-//
-//    @State static var inputText = ""
-//
-//    static var previews: some View {
-//        InputTileList(options: Options(options: [Option]())) {
-//            // nothing
-//        } skipAction: {
-//            // nothing
-//        }
-//    }
-//}
+struct InputTileList_Previews: PreviewProvider {
+    
+    @State static var foodAndDrinks = false
+    @State static var clothes = false
+    @State static var hygine = false
+    @State static var wellness = false
+    @State static var medical = false
+    @State static var socialworker = false
+    @State static var legal = false
+    @State static var other = false
+    @State static var otherNotes = ""
+
+    static var previews: some View {
+        InputTileList(
+            questionNumber: 1,
+            totalQuestions: 5,
+            question: "What kind of help did you provide?",
+            foodAndDrinks: $foodAndDrinks,
+            clothes: $clothes,
+            hygine: $hygine,
+            wellness: $wellness,
+            medical: $medical,
+            socialworker: $socialworker,
+            legal: $legal,
+            other: $other,
+            otherNotes: $otherNotes,
+            nextAction: {},
+            previousAction: {},
+            skipAction: {}
+        )
+    }
+}
