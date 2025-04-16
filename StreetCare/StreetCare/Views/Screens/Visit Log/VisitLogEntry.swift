@@ -27,14 +27,14 @@ struct VisitLogEntry: View {
     var body: some View {
         NavigationStack {
             VStack {
-                Text("Log Your Visit")
+                Text("Log Your Interaction")
                     .font(.title)
                     .fontWeight(.bold)
                     .padding()
                                 
                 switch questionNumber {
                 case 1:
-                    InputTileDate(questionNumber: 1, totalQuestions: 5, question: "When was your visit?", datetimeValue: $visitLog.whenVisit) {
+                    InputTileDate(questionNumber: 1, totalQuestions: 5, question1: "When was your",question2: "Interaction?", datetimeValue: $visitLog.whenVisit) {
                         questionNumber += 1
                     } skipAction: {
                         questionNumber += 1
@@ -154,7 +154,7 @@ struct VisitLogEntry: View {
                     
                     
                 case 9:
-                    InputTileDate(questionNumber: 3, totalQuestions: 4, question: "Is there a day for the follow-up visit?", datetimeValue: $visitLog.followUpWhenVisit) {
+                    InputTileDate(questionNumber: 3, totalQuestions: 4, question1: "Is there a planned date to",question2: "interact with them again?", datetimeValue: $visitLog.followUpWhenVisit) {
                         questionNumber += 1
                     } skipAction: {
                         questionNumber += 1
@@ -194,7 +194,7 @@ struct VisitLogEntry: View {
                     }
                 }
             }
-        }.navigationTitle("Visit Log")
+        }.navigationTitle("Interaction Log")
     } // end body
     
     
@@ -226,5 +226,6 @@ struct SegmentedProgressBar: View {
                     )
             }
         }
+        .padding(.top, 4)
     }
 }

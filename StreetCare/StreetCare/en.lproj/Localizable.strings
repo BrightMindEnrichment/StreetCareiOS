@@ -110,7 +110,7 @@
 "street" = "Street*";
 "state" = "State*";
 "city" = "City*";
-"zipcode" = "Zip Code*";
+"zipcode" = "Zip Code";
 "startDate" = "Start Date";
 "startTime" = "Start Time";
 "endDate" = "End Date";
@@ -139,6 +139,9 @@
 "cmintrowithlink1" = "Click here to find out what chapter membership entails.";
 "cmintrowithlink2" = "If you prefer to sign and send ina copy or save it for later reference, please download the form here.";
 "enteraddress" = "Enter Address*";
+"landmark" = "Describe the location/landmark.";
+"peopledescription" = "Example: Tom, a senior citizen in a wheelchair, wearing a navy blue shirt and brown shoes.";
+"disclaimer" = "Disclaimer: Completing one interaction     log per person helps us serve you better. Optional, any information helps.";
 //"welcome" = "Welcome to\nStreet Care";
 //"loginButtonTitle" = "Login";
 //"signUpButtonTitle" = "Sign Up";

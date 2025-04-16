@@ -13,9 +13,10 @@ struct InputTileNumber: View {
     var questionNumber: Int
     var totalQuestions: Int
     
-    var size = CGSize(width: 300.0, height: 280.0)
+    var size = CGSize(width: 300.0, height: 490.0)
     var question1: String
     var question2: String
+    @State private var peopledescription = ""
         
     @Binding var number: Int
         
@@ -100,6 +101,21 @@ struct InputTileNumber: View {
                 }
                 .padding(.bottom)
                 
+                Text("Description")
+                    .font(.headline)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.horizontal)
+                    .foregroundColor(Color("SecondaryColor"))
+                
+                AutoGrowingTextEditor(text: $peopledescription, placeholder: NSLocalizedString("peopledescription", comment: ""))
+                
+                Text(NSLocalizedString("disclaimer", comment: ""))
+                    .font(.footnote)
+                    .multilineTextAlignment(.center)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .frame(maxWidth: .infinity)
+                    .padding(.horizontal)
+                    .padding(.top, 8)
                 
                 HStack {
                     Button("Previous") {
@@ -145,6 +161,7 @@ struct InputTileNumber: View {
 
     } // end body
 } // end struct
+
 
 
 

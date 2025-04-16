@@ -14,7 +14,9 @@ struct InputTileDate: View {
     var totalQuestions: Int
     
     var size = CGSize(width: 350.0, height: 320.0)
-    var question: String
+    var question1: String
+    var question2: String
+    
         
     @Binding var datetimeValue: Date
     @State private var selectedTimeZone: String = TimeZone.current.identifier
@@ -50,19 +52,24 @@ struct InputTileDate: View {
                 }
                 .padding(.horizontal)
                 .padding(.top, 12)
+                //.padding()
                 
                 Divider()
                     .background(Color.gray.opacity(0.3))
                     .padding(.horizontal)
                 
-                HStack{
-                    Text(question)
-                        .font(.title3)
-                        .padding(.top, 12)
+                VStack{
+                    Text(question1)
+                        .font(.title2)
+                        .padding(.top, 6)
+                        .fontWeight(.bold)
+                    Text(question2)
+                        .font(.title2)
+                        .padding(.bottom, 12)
                         .fontWeight(.bold)
                 }
                 
-                Spacer()
+                //Spacer()
                 
                 VStack(alignment: .leading, spacing: 12) {
                     // Date Picker Row
@@ -86,72 +93,89 @@ struct InputTileDate: View {
                     .cornerRadius(10)
                     .frame(maxWidth: .infinity)
                     .multilineTextAlignment(.center)
-
-                    // Time Picker Row
-                    HStack {
-                        Image(systemName: "clock")
-                        DatePicker(
-                            "",
-                            selection: $datetimeValue,
-                            displayedComponents: [.hourAndMinute]
-                        )
-                        .labelsHidden()
-                        .datePickerStyle(CompactDatePickerStyle())
-                        .font(.footnote)
-                        .colorMultiply(.black) // Keeps time text dark on white
-
-                        Picker("Time Zone", selection: $selectedTimeZone) {
-                            ForEach(usTimeZones, id: \.self) { zone in
-                                Text("\(zone.replacingOccurrences(of: "America/", with: "").replacingOccurrences(of: "_", with: " ")) (\(TimeZone(identifier: zone)?.abbreviation() ?? ""))")
-                                    .tag(zone)
-                            }
+                    
+                    HStack(spacing: 12) {
+                        // Time Picker Box
+                        HStack {
+                            Image(systemName: "clock")
+                            DatePicker(
+                                "",
+                                selection: $datetimeValue,
+                                displayedComponents: [.hourAndMinute]
+                            )
+                            .labelsHidden()
+                            .datePickerStyle(CompactDatePickerStyle())
+                            .font(.footnote)
                         }
-                        .pickerStyle(MenuPickerStyle())
+                        .padding(.horizontal, 10)
+                        .padding(.vertical, 6)
+                        .background(Color.white)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 10)
+                                .stroke(Color.black, lineWidth: 1)
+                        )
+                        .cornerRadius(10)
+                        .layoutPriority(1) // Higher priority
+                        .frame(maxWidth: 300)
+                        
+                        // Time Zone Picker Box
+                        HStack {
+                            Image(systemName: "globe")
+                            Picker("Time Zone", selection: $selectedTimeZone) {
+                                ForEach(usTimeZones, id: \.self) { zone in
+                                    Text("\(zone.replacingOccurrences(of: "America/", with: "").replacingOccurrences(of: "_", with: " ")) (\(TimeZone(identifier: zone)?.abbreviation() ?? ""))")
+                                        .tag(zone)
+                                }
+                            }
+                            .pickerStyle(MenuPickerStyle())
+                        }
+                        .padding(.horizontal, 10)
+                        .padding(.vertical, 6)
+                        .background(Color.white)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 10)
+                                .stroke(Color.black, lineWidth: 1)
+                        )
+                        .cornerRadius(10)
+                        .layoutPriority(0)
+                        .frame(maxWidth: .infinity)
                     }
-                    .padding(.horizontal, 10)
-                    .padding(.vertical, 6)
-                    .background(Color.white) // Background white
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 10)
-                            .stroke(Color.black, lineWidth: 1) // Border black
-                    )
-                    .cornerRadius(10)
-                    .frame(maxWidth: .infinity)
-                    .multilineTextAlignment(.center)
+                    .padding(.horizontal)
+                    //.padding(.vertical)
+                    
+                    //Spacer()
+                    
+                    HStack {
+                        Button("Previous") {
+                            previousAction()
+                        }
+                        .foregroundColor(Color("SecondaryColor"))
+                        .padding(.horizontal, 16)
+                        .padding(.vertical, 8)
+                        .background(
+                            Capsule()
+                                .fill(Color.white) // Fill with white
+                        )
+                        .overlay(
+                            Capsule()
+                                .stroke(Color("SecondaryColor"), lineWidth: 2) // Stroke with dark green
+                        )
+                        
+                        Spacer()
+                        
+                        Button(" Next  ") {
+                            nextAction()
+                        }
+                        .foregroundColor(Color("PrimaryColor"))
+                        .padding(.horizontal, 16)
+                        .padding(.vertical, 8)
+                        .background(
+                            Capsule()
+                                .fill(Color("SecondaryColor"))
+                        )
+                    }
+                    .padding()
                 }
-                
-                Spacer()
-                
-                HStack {
-                    Button("Previous") {
-                        previousAction()
-                    }
-                    .foregroundColor(Color("SecondaryColor"))
-                    .padding(.horizontal, 16)
-                    .padding(.vertical, 8)
-                    .background(
-                        Capsule()
-                            .fill(Color.white) // Fill with white
-                    )
-                    .overlay(
-                        Capsule()
-                            .stroke(Color("SecondaryColor"), lineWidth: 2) // Stroke with dark green
-                    )
-
-                    Spacer()
-
-                    Button(" Next  ") {
-                        nextAction()
-                    }
-                    .foregroundColor(Color("PrimaryColor"))
-                    .padding(.horizontal, 16)
-                    .padding(.vertical, 8)
-                    .background(
-                        Capsule()
-                            .fill(Color("SecondaryColor"))
-                    )
-                }
-                .padding()
             
             }
         }
@@ -180,7 +204,7 @@ struct InputTileDate_Previews: PreviewProvider {
 
     static var previews: some View {
 
-        InputTileDate(questionNumber: 1, totalQuestions: 4, question: "Enter a date to remember.", datetimeValue: $input) {
+        InputTileDate(questionNumber: 3, totalQuestions: 4, question1: "Is there a planned date to",question2: "interact with them again?", datetimeValue: $input) {
             //
         } skipAction: {
             //

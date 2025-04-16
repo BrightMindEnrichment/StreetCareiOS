@@ -13,7 +13,7 @@ struct InputTileLocation: View {
     var questionNumber: Int
     var totalQuestions: Int
         
-    var size = CGSize(width: 300.0, height: 360.0)
+    var size = CGSize(width: 300.0, height: 460.0)
     var question: String
     
     @Binding var textValue: String
@@ -27,6 +27,7 @@ struct InputTileLocation: View {
     @State private var state = ""
     @State private var city = ""
     @State private var zipcode = ""
+    @State private var landmark = ""
     @State private var stateAbbreviation = ""
     @State private var showAddressSearch = false
         
@@ -101,11 +102,19 @@ struct InputTileLocation: View {
                             .textFieldStyle(RoundedBorderTextFieldStyle())
                             .layoutPriority(1) // Higher priority
                             .frame(maxWidth: 300)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 8)
+                                    .stroke(Color.gray.opacity(0.5), lineWidth: 1)
+                            )
 
                         TextField(NSLocalizedString("state", comment: ""), text: $stateAbbreviation)
                             .textFieldStyle(RoundedBorderTextFieldStyle())
                             .layoutPriority(0)
                             .frame(maxWidth: 100) // Optional: limit the width
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 8)
+                                    .stroke(Color.gray.opacity(0.5), lineWidth: 1)
+                            )
                     }
                     .padding(.horizontal)
                     .padding(.top, 12)
@@ -113,7 +122,14 @@ struct InputTileLocation: View {
                     TextField(NSLocalizedString("zipcode", comment: ""), text: $zipcode)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                         .padding(.horizontal)
-
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 8)
+                                .stroke(Color.gray.opacity(0.5), lineWidth: 1)
+                                .padding(.horizontal)
+                        )
+                    
+                    AutoGrowingTextEditor(text: $landmark, placeholder: NSLocalizedString("landmark", comment: ""))
+                    
                     HStack {
                         Button("Previous") {
                             previousAction()
@@ -209,5 +225,56 @@ struct InputTileLocation: View {
             failedToFindLocation = true
             print("missing location!")
         }
+    }
+}
+
+struct AutoGrowingTextEditor: View {
+    @Binding var text: String
+    var placeholder: String // ✅ New parameter
+    @State private var dynamicHeight: CGFloat = 100
+
+    var body: some View {
+        ZStack(alignment: .topLeading) {
+            // Background height-measuring text
+            Text(text.isEmpty ? " " : text)
+                .font(.body)
+                .padding(EdgeInsets(top: 8, leading: 4, bottom: 8, trailing: 4))
+                .background(
+                    GeometryReader { geo in
+                        Color.clear
+                            .onAppear {
+                                dynamicHeight = geo.size.height
+                            }
+                            .onChange(of: text) { _ in
+                                dynamicHeight = geo.size.height
+                            }
+                    }
+                )
+                .hidden()
+
+            // Placeholder
+            if text.isEmpty {
+                Text(placeholder) // ✅ Use parameter here
+                    .foregroundColor(Color.gray.opacity(0.3))
+                    .padding(.top, 12)
+                    .padding(.leading, 10)
+                    .zIndex(1)
+            }
+
+            // TextEditor
+            TextEditor(text: $text)
+                .font(.body)
+                .frame(height: max(100, dynamicHeight))
+                .padding(4)
+                .background(Color.white)
+                .cornerRadius(5)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 5)
+                        .stroke(Color.gray, lineWidth: 1)
+                )
+        }
+        .padding(.horizontal)
+        .padding(.top, 4)
+        .shadow(radius: 1)
     }
 }
