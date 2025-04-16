@@ -142,6 +142,7 @@
 "landmark" = "Describe the location/landmark.";
 "peopledescription" = "Example: Tom, a senior citizen in a wheelchair, wearing a navy blue shirt and brown shoes.";
 "disclaimer" = "Disclaimer: Completing one interaction     log per person helps us serve you better. Optional, any information helps.";
+"comments" = "Questions/Comments/Notes";
 //"welcome" = "Welcome to\nStreet Care";
 //"loginButtonTitle" = "Login";
 //"signUpButtonTitle" = "Sign Up";

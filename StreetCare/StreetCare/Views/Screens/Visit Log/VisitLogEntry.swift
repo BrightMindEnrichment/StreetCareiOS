@@ -90,7 +90,7 @@ struct VisitLogEntry: View {
                     
                     
                 case 5:
-                    InputTileRate(questionNumber: 5, totalQuestions: 5, question: "Rate your outreach experience.", textValue: $visitLog.ratingNotes, rating: $visitLog.rating) {
+                    InputTileRate(questionNumber: 5, totalQuestions: 5, question1: "How would you rate your", question2: "outreach experience?", textValue: $visitLog.ratingNotes, rating: $visitLog.rating) {
                         questionNumber += 1
                     } previousAction: {
                         questionNumber -= 1

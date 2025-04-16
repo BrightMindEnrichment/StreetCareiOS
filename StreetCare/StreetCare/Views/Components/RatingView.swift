@@ -31,6 +31,7 @@ struct RatingView: View {
                     }
             }
         }
+        .padding()
     } // end body
     
         
