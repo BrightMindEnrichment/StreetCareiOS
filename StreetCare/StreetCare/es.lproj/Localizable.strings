@@ -116,6 +116,7 @@
 "peopledescription" = "Ejemplo: Tom, una persona mayor en silla de ruedas, que viste una camisa azul marino y zapatos marrones.";
 "disclaimer" = "Descargo de responsabilidad: Completar un registro de interacción por persona nos ayuda a brindarle un mejor servicio. Opcional, cualquier información ayuda.";
 "comments" = "Preguntas/Comentarios/Notas";
+"otherNotes" = "Si es otro, especifíquelo aquí.";
 //"helloWorld" = "¡Hola Mundo!";
 //"welcome" = "Bienvenido a\nStreet Care";
 //"loginButtonTitle" = "Acceso";

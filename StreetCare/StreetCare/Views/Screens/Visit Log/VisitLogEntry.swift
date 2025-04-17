@@ -34,7 +34,7 @@ struct VisitLogEntry: View {
                                 
                 switch questionNumber {
                 case 1:
-                    InputTileDate(questionNumber: 1, totalQuestions: 5, question1: "When was your",question2: "Interaction?", datetimeValue: $visitLog.whenVisit) {
+                    InputTileDate(questionNumber: 1, totalQuestions: 6, question1: "When was your",question2: "Interaction?", datetimeValue: $visitLog.whenVisit) {
                         questionNumber += 1
                     } skipAction: {
                         questionNumber += 1
@@ -45,7 +45,7 @@ struct VisitLogEntry: View {
                 case 2:
                     InputTileLocation(
                         questionNumber: 2,
-                        totalQuestions: 5,
+                        totalQuestions: 6,
                         question: "Where was your visit?",
                         textValue: Binding(
                             get: { visitLog.whereVisit },
@@ -70,7 +70,7 @@ struct VisitLogEntry: View {
                     }
                     
                 case 3:
-                    InputTileNumber(questionNumber: 3, totalQuestions: 5, question1: "How many people" , question2: "did you help?", number: $visitLog.peopleHelped) {
+                    InputTileNumber(questionNumber: 3, totalQuestions: 6, question1: "How many people" , question2: "did you help?", number: $visitLog.peopleHelped) {
                         questionNumber += 1
                     } previousAction: {
                         questionNumber -= 1
@@ -79,8 +79,21 @@ struct VisitLogEntry: View {
                     }
                     
                 case 4:
-                    
-                    InputTileList(questionNumber: 4, totalQuestions: 5, question: "What kind of help did you provide?", foodAndDrinks: $visitLog.foodAndDrinks, clothes: $visitLog.clothes, hygine: $visitLog.hygine, wellness: $visitLog.wellness, other: $visitLog.other, otherNotes: $visitLog.otherNotes) {
+                    InputTileList(
+                        questionNumber: 4,
+                        totalQuestions: 6,
+                        question1: "What kind of help",
+                        question2: "did you provide?",
+                        foodAndDrinks: $visitLog.foodAndDrinks,
+                        clothes: $visitLog.clothes,
+                        hygine: $visitLog.hygine,
+                        wellness: $visitLog.wellness,
+                        medical: $visitLog.medical,
+                        socialworker: $visitLog.socialworker,
+                        legal: $visitLog.legal,
+                        other: $visitLog.other,
+                        otherNotes: $visitLog.otherNotes
+                    ) {
                         questionNumber += 1
                     } previousAction: {
                         questionNumber -= 1
@@ -90,7 +103,15 @@ struct VisitLogEntry: View {
                     
                     
                 case 5:
-                    InputTileRate(questionNumber: 5, totalQuestions: 5, question1: "How would you rate your", question2: "outreach experience?", textValue: $visitLog.ratingNotes, rating: $visitLog.rating) {
+                    InputTileNumber(questionNumber: 5, totalQuestions: 6, question1: "How many items" , question2: "did you donate?", number: $visitLog.peopleHelped) {
+                        questionNumber += 1
+                    } previousAction: {
+                        questionNumber -= 1
+                    } skipAction: {
+                        questionNumber += 1
+                    }
+                case 6:
+                    InputTileRate(questionNumber: 6, totalQuestions: 6, question1: "How would you rate your", question2: "outreach experience?", textValue: $visitLog.ratingNotes, rating: $visitLog.rating) {
                         questionNumber += 1
                     } previousAction: {
                         questionNumber -= 1
@@ -98,7 +119,7 @@ struct VisitLogEntry: View {
                         questionNumber += 1
                     }
 
-                case 6:
+                case 7:
                     
                     InputTileMoreQuestions(question: "Do they need further help?") {
                         saveVisitLog()
@@ -112,17 +133,23 @@ struct VisitLogEntry: View {
                         questionNumber = 100
                     }
 
-                case 7:
-                    InputTileList(questionNumber: 1, totalQuestions: 4, question: "What further help is needed?", foodAndDrinks: $visitLog.furtherfoodAndDrinks, clothes: $visitLog.furtherClothes, hygine: $visitLog.furtherHygine, wellness: $visitLog.furtherWellness, other: $visitLog.furtherOther, otherNotes: $visitLog.furtherOtherNotes) {
-                        questionNumber += 1
-                    } previousAction: {
-                        questionNumber -= 1
-                    } skipAction: {
-                        questionNumber += 1
-                    }
                     
                 case 8:
-                    InputTileNumber(questionNumber: 2, totalQuestions: 4, question1: "How many people", question2: "need further help?", number: $visitLog.peopleNeedFurtherHelp) {
+                    InputTileList(
+                        questionNumber: 1,
+                        totalQuestions: 4,
+                        question1: "What kind of help do",
+                        question2: "they still need?",
+                        foodAndDrinks: $visitLog.furtherfoodAndDrinks,
+                        clothes: $visitLog.furtherClothes,
+                        hygine: $visitLog.furtherHygine,
+                        wellness: $visitLog.furtherWellness,
+                        medical: $visitLog.medical,
+                        socialworker: $visitLog.socialworker,
+                        legal: $visitLog.legal,
+                        other: $visitLog.furtherOther,
+                        otherNotes: $visitLog.furtherOtherNotes
+                    ) {
                         questionNumber += 1
                     } previousAction: {
                         questionNumber -= 1
@@ -130,6 +157,14 @@ struct VisitLogEntry: View {
                         questionNumber += 1
                     }
                     
+                case 9:
+                    InputTileNumber(questionNumber: 3, totalQuestions: 5, question1: "How many people" , question2: "still need help?", number: $visitLog.peopleHelped) {
+                        questionNumber += 1
+                    } previousAction: {
+                        questionNumber -= 1
+                    } skipAction: {
+                        questionNumber += 1
+                    }
 //                case 8:
 //                    InputTileDuration(questionNumber: 2, totalQuestions: 5, question: "Approximate time spent on outreach?", hours: $visitLog.durationHours, minutes: $visitLog.durationMinutes) {
 //                        questionNumber += 1
@@ -151,9 +186,7 @@ struct VisitLogEntry: View {
 //                        questionNumber += 1
 //                        saveVisitLog()
 //                    }
-                    
-                    
-                case 9:
+                case 10:
                     InputTileDate(questionNumber: 3, totalQuestions: 4, question1: "Is there a planned date to",question2: "interact with them again?", datetimeValue: $visitLog.followUpWhenVisit) {
                         questionNumber += 1
                     } skipAction: {
@@ -162,7 +195,7 @@ struct VisitLogEntry: View {
                         questionNumber -= 1
                     }
                     
-                case 10:
+                case 11:
                     InputTileVolunteerAgain(questionNumber: 4, totalQuestions: 4, question: "Would you like to volunteer again?", volunteerAgain: $visitLog.volunteerAgain) {
                         saveVisitLog()
                         questionNumber = 100
