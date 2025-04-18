@@ -98,13 +98,13 @@ struct VisitImpactView: View {
                     } message: {
                         Text(NSLocalizedString("loginRequiredMessage", comment: ""))
                     }
-//                    .alert("I provided help!", isPresented: $showProvidedHelpAlert) {
-//                        Button("OK") {
-//                            isNavigationActive = true
-//                        }
-//                    } message: {
-//                        Text("Please fill out this form each time you perform an outreach.This helps you track your contributions and allows StreetCare to bring more support and services to help the community!")
-//                    }
+                    .alert("I provided help!", isPresented: $showProvidedHelpAlert) {
+                        Button("OK") {
+                            isNavigationActive = true
+                        }
+                    } message: {
+                        Text("Please fill out this form each time you perform an outreach.This helps you track your contributions and allows StreetCare to bring more support and services to help the community!")
+                    }
                     
                     .navigationDestination(isPresented: $isNavigationActive) {
                         VisitLogEntry()
@@ -171,14 +171,14 @@ struct VisitImpactView: View {
                     }
                 }
             }
-            if showProvidedHelpAlert {
-                Color.black.opacity(0.4)
-                    .ignoresSafeArea()
-                CustomHelpAlert {
-                    showProvidedHelpAlert   = false
-                    isNavigationActive = true
-                }
-            }
+//            if showProvidedHelpAlert {
+//                Color.black.opacity(0.4)
+//                    .ignoresSafeArea()
+//                CustomHelpAlert {
+//                    showProvidedHelpAlert   = false
+//                    isNavigationActive = true
+//                }
+//            }
         }
     }
     
