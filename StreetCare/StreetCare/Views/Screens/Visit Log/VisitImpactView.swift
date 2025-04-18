@@ -172,13 +172,9 @@ struct VisitImpactView: View {
                 }
             }
             if showProvidedHelpAlert {
-                // 1) dim the rest of the screen
                 Color.black.opacity(0.4)
                     .ignoresSafeArea()
-                
-                // 2) show our custom card
                 CustomHelpAlert {
-                    // onOK: hide card, then navigate into VisitLogEntry
                     showProvidedHelpAlert   = false
                     isNavigationActive = true
                 }
