@@ -12,14 +12,20 @@ struct InputTileNumber: View {
 
     var questionNumber: Int
     var totalQuestions: Int
-    
-    var size = CGSize(width: 300.0, height: 490.0)
+
+    var tileWidth: CGFloat
+    var tileHeight: CGFloat
+
     var question1: String
     var question2: String
-    @State private var peopledescription = ""
-        
+
+    var descriptionLabel: String
+    var disclaimerText: String
+    var placeholderText: String
+
     @Binding var number: Int
-        
+    @State private var peopledescription = ""
+
     var nextAction: () -> ()
     var previousAction: () -> ()
     var skipAction: () -> ()
@@ -27,7 +33,7 @@ struct InputTileNumber: View {
     var body: some View {
 
         ZStack {
-            BasicTile(size: CGSize(width: size.width, height: size.height))
+            BasicTile(size: CGSize(width: tileWidth, height: tileHeight))
             
             VStack {
                 
@@ -100,16 +106,16 @@ struct InputTileNumber: View {
                     }
                 }
                 .padding(.bottom)
-                
-                Text("Description")
+    
+                Text(descriptionLabel)
                     .font(.headline)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(.horizontal)
                     .foregroundColor(Color("SecondaryColor"))
-                
-                AutoGrowingTextEditor(text: $peopledescription, placeholder: NSLocalizedString("peopledescription", comment: ""))
-                
-                Text(NSLocalizedString("disclaimer", comment: ""))
+
+                AutoGrowingTextEditor(text: $peopledescription, placeholder: placeholderText)
+
+                Text(disclaimerText)
                     .font(.footnote)
                     .multilineTextAlignment(.center)
                     .fixedSize(horizontal: false, vertical: true)
@@ -149,7 +155,7 @@ struct InputTileNumber: View {
                 .padding()
             }
         }
-        .frame(width: size.width, height: size.height)
+        .frame(width: tileWidth, height: tileHeight)
         SegmentedProgressBar(
             totalSegments: totalQuestions,
             filledSegments: questionNumber

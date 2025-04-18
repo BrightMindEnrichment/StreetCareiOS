@@ -144,6 +144,7 @@
 "disclaimer" = "Disclaimer: Completing one interaction     log per person helps us serve you better. Optional, any information helps.";
 "comments" = "Questions/Comments/Notes";
 "otherNotes" = "If Other, please specify here.";
+"emptytext" = "                                                                                                                         ";
 //"welcome" = "Welcome to\nStreet Care";
 //"loginButtonTitle" = "Login";
 //"signUpButtonTitle" = "Sign Up";

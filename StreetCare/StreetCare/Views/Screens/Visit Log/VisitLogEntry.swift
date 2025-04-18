@@ -70,7 +70,7 @@ struct VisitLogEntry: View {
                     }
                     
                 case 3:
-                    InputTileNumber(questionNumber: 3, totalQuestions: 6, question1: "How many people" , question2: "did you help?", number: $visitLog.peopleHelped) {
+                    InputTileNumber(questionNumber: 3, totalQuestions: 6, tileWidth: 300, tileHeight: 490, question1: "How many people" , question2: "did you help?",descriptionLabel: "Description", disclaimerText: NSLocalizedString("disclaimer", comment: ""), placeholderText: NSLocalizedString("peopledescription", comment: ""), number: $visitLog.peopleHelped) {
                         questionNumber += 1
                     } previousAction: {
                         questionNumber -= 1
@@ -103,7 +103,7 @@ struct VisitLogEntry: View {
                     
                     
                 case 5:
-                    InputTileNumber(questionNumber: 5, totalQuestions: 6, question1: "How many items" , question2: "did you donate?", number: $visitLog.peopleHelped) {
+                    InputTileNumber(questionNumber: 5, totalQuestions: 6, tileWidth: 300, tileHeight: 430, question1: "How many items" , question2: "did you donate?", descriptionLabel: "", disclaimerText: "", placeholderText: "Enter notes here", number: $visitLog.itemQty) {
                         questionNumber += 1
                     } previousAction: {
                         questionNumber -= 1
@@ -158,7 +158,7 @@ struct VisitLogEntry: View {
                     }
                     
                 case 9:
-                    InputTileNumber(questionNumber: 3, totalQuestions: 5, question1: "How many people" , question2: "still need help?", number: $visitLog.peopleHelped) {
+                    InputTileNumber(questionNumber: 3, totalQuestions: 6, tileWidth: 300, tileHeight: 490, question1: "How many people" , question2: "still need help?", descriptionLabel: "", disclaimerText: "", placeholderText: "", number: $visitLog.peopleHelped) {
                         questionNumber += 1
                     } previousAction: {
                         questionNumber -= 1
