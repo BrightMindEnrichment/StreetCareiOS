@@ -8,6 +8,43 @@
 import SwiftUI
 import FirebaseAuth
 
+struct CustomHelpAlert: View {
+    let onOK: () -> Void
+
+    var body: some View {
+        VStack(spacing: 20) {
+            
+            Text(LocalizedStringKey("providedHelpTitle"), comment: "")
+                .font(.custom("Poppins-SemiBold", size: 19))
+                .multilineTextAlignment(.center)
+            Text(LocalizedStringKey("providedHelpMessage"), comment: "")
+                .font(.custom("Poppins-Light", size: 13))
+                .multilineTextAlignment(.center)
+                .fixedSize(horizontal: false, vertical: true)
+//            Divider()
+//                   .frame(height: 1)
+//                   .frame(maxWidth: .infinity)
+//                   .background(Color.gray.opacity(0.3))
+//                   .padding(.top, -10)
+            
+            Button(action: onOK) {
+                Text("OK")
+                    .font(.custom("Poppins-Regular", size: 17))
+                    .foregroundColor(Color(red:   0/255,
+                                           green: 122/255,
+                                           blue: 255/255))
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 12)
+                    .cornerRadius(8)
+            }
+        }
+        .padding(24)
+        .background(Color(.systemBackground))
+        .cornerRadius(16)
+        .shadow(radius: 10)
+        .frame(maxWidth: 300, maxHeight: 310)  // fixed maximum width
+    }
+}
 
 
 struct VisitImpactView: View {
@@ -27,44 +64,59 @@ struct VisitImpactView: View {
     @State var isNavigationActive = false
     @State var showLoginMessage = false
     @State var user: User?
+    @Binding var selection: Int
+    @State private var showProvidedHelpAlert = false
 
     
     var body: some View {
-        NavigationStack {
-            VStack {
-                
-                Text("VISIT LOG").font(.system(size: 18)).padding()
-                ImpactView(peopleHelped: peopleHelped, outreaches: outreaches, itemsDonated: itemsDonated)
-                
-                Button(action: {
-                    if user != nil {
-                        isNavigationActive = true
-                    } else {
-                        showLoginMessage = true
+        ZStack {
+            NavigationStack {
+                VStack {
+                    
+                    Text("VISIT LOG").font(.system(size: 18)).padding()
+                    ImpactView(peopleHelped: peopleHelped, outreaches: outreaches, itemsDonated: itemsDonated)
+                    
+                    Button(action: {
+                        if user != nil {
+                            showProvidedHelpAlert = true
+                            //isNavigationActive = true
+                        } else {
+                            showLoginMessage = true
+                        }
+                    }) {
+                        ZStack {
+                            NavLinkButton(title: "Add new +", width: 120.0, height: 30.0)
+                        }
                     }
-                }) {
-                    ZStack {
-                        NavLinkButton(title: "Add new +", width: 120.0, height: 30.0)
+                    .alert(NSLocalizedString("loginRequiredTitle", comment: "")
+                           , isPresented: $showLoginMessage) {
+                        Button("OK", role: .cancel) {
+                            selection = 3
+                        }
+                        Button("Cancel") { }
+                        
+                    } message: {
+                        Text(NSLocalizedString("loginRequiredMessage", comment: ""))
                     }
-                }
-                .alert(isPresented: $showLoginMessage) {
-                    Alert(
-                        title: Text("Login Required"),
-                        message: Text("Log in to enter a Log Visit."),
-                        dismissButton: .default(Text("OK"))
-                    )
-                }
-                .navigationDestination(isPresented: $isNavigationActive) {
-                    VisitLogEntry()
-                }
-                Spacer(minLength: 10.0)
-                Divider().frame(maxWidth: UIScreen.main.bounds.width - 50 ,minHeight: 0.5)
-                    .background(Color.black)
-                Spacer(minLength: 10.0)
-                Text("HISTORY").font(.system(size: 16)).bold()
-                List(history) { item in
-                    HStack(spacing: 0) {
-                           // ListConnectorDecorationView()
+//                    .alert("I provided help!", isPresented: $showProvidedHelpAlert) {
+//                        Button("OK") {
+//                            isNavigationActive = true
+//                        }
+//                    } message: {
+//                        Text("Please fill out this form each time you perform an outreach.This helps you track your contributions and allows StreetCare to bring more support and services to help the community!")
+//                    }
+                    
+                    .navigationDestination(isPresented: $isNavigationActive) {
+                        VisitLogEntry()
+                    }
+                    Spacer(minLength: 10.0)
+                    Divider().frame(maxWidth: UIScreen.main.bounds.width - 50 ,minHeight: 0.5)
+                        .background(Color.black)
+                    Spacer(minLength: 10.0)
+                    Text("HISTORY").font(.system(size: 16)).bold()
+                    List(history) { item in
+                        HStack(spacing: 0) {
+                            // ListConnectorDecorationView()
                             VStack {
                                 HStack {
                                     Text("\(item.whereVisit)").font(.system(size: 15.0)).bold()
@@ -83,43 +135,56 @@ struct VisitImpactView: View {
                                     .background(Color.gray.opacity(0.4))
                             }
                         }.listRowSeparatorTint(.clear, edges: .all)
-                        .listSectionSeparatorTint(.clear, edges: .all)
-                }.listStyle(PlainListStyle())
-                .scrollContentBackground(.hidden)
-                .background(Color.clear)
+                            .listSectionSeparatorTint(.clear, edges: .all)
+                    }.listStyle(PlainListStyle())
+                        .scrollContentBackground(.hidden)
+                        .background(Color.clear)
+                }
+                .loadingAnimation(isLoading: isLoading)
+                .onAppear {
+                    print("Impact view onAppear")
+                    adapter.delegate = self
+                    Auth.auth().addStateDidChangeListener { auth, currentUser in
+                        /*
+                         This listener detects changes in authentication state.
+                         - If the user logs in, `currentUser` is updated.
+                         - If the user logs out, `currentUser` becomes nil.
+                         */
+                        self.user = currentUser  // Update the user state
+                    }
+                    
+                    // not sure why I need to do this, the refresh method
+                    // checks for no user and if so calls
+                    // delegate function
+                    // but the loading animation never goes away
+                    // despite the state flagging changing to false
+                    if Auth.auth().currentUser != nil {
+                        adapter.refresh()
+                        self.isLoading = true
+                    }
+                    else {
+                        adapter.resetLogs()
+                        history = [VisitLog]()
+                        peopleHelped = 0
+                        outreaches = 0
+                        itemsDonated = 0
+                    }
+                }
             }
-            .loadingAnimation(isLoading: isLoading)
-            .onAppear {
-                print("Impact view onAppear")
-                adapter.delegate = self
-                Auth.auth().addStateDidChangeListener { auth, currentUser in
-                    /*
-                           This listener detects changes in authentication state.
-                           - If the user logs in, `currentUser` is updated.
-                           - If the user logs out, `currentUser` becomes nil.
-                        */
-                    self.user = currentUser  // Update the user state
-                }
+            if showProvidedHelpAlert {
+                // 1) dim the rest of the screen
+                Color.black.opacity(0.4)
+                    .ignoresSafeArea()
                 
-                // not sure why I need to do this, the refresh method
-                // checks for no user and if so calls
-                // delegate function
-                // but the loading animation never goes away
-                // despite the state flagging changing to false
-                if Auth.auth().currentUser != nil {
-                    adapter.refresh()
-                    self.isLoading = true
-                }
-                else {
-                    adapter.resetLogs()
-                    history = [VisitLog]()
-                    peopleHelped = 0
-                    outreaches = 0
-                    itemsDonated = 0
+                // 2) show our custom card
+                CustomHelpAlert {
+                    // onOK: hide card, then navigate into VisitLogEntry
+                    showProvidedHelpAlert   = false
+                    isNavigationActive = true
                 }
             }
         }
-    } // end body
+    }
     
     
     private func updateCounts() {
@@ -174,10 +239,9 @@ extension VisitImpactView: VisitLogDataAdapterProtocol {
 }
 
 
-
 struct VisitImpactView_Previews: PreviewProvider {
     static var previews: some View {
-        VisitImpactView()
+        VisitImpactView(selection: .constant(1))
     }
 }
 

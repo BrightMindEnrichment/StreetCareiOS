@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -112,6 +112,7 @@
 		C2C7DDB72D31E76E006A8CD1 /* ChapterMebershipForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C7DDB62D31E762006A8CD1 /* ChapterMebershipForm.swift */; };
 		C2CCCA6A2CF00CEB001C9BE0 /* AddHelpRequestForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2CCCA692CF00CEB001C9BE0 /* AddHelpRequestForm.swift */; };
 		E2646D162CA74A5000D8AA42 /* ICanHelpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2646D152CA74A5000D8AA42 /* ICanHelpView.swift */; };
+		ED1A73162DADD3BC004E3D17 /* NotLoggedInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED1A73152DADD3BC004E3D17 /* NotLoggedInView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -215,10 +216,14 @@
 		BEA872772A2910B90053D4F4 /* ProfileDetailsAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileDetailsAdapter.swift; sourceTree = "<group>"; };
 		C26F78C62CE4635F00AAE187 /* OutreachFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutreachFormView.swift; sourceTree = "<group>"; };
 		C2C7DDB62D31E762006A8CD1 /* ChapterMebershipForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChapterMebershipForm.swift; sourceTree = "<group>"; };
-		C2CCCA682CF00CC2001C9BE0 /* Untitled.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Untitled.swift; sourceTree = "<group>"; };
 		C2CCCA692CF00CEB001C9BE0 /* AddHelpRequestForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddHelpRequestForm.swift; sourceTree = "<group>"; };
 		E2646D152CA74A5000D8AA42 /* ICanHelpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ICanHelpView.swift; sourceTree = "<group>"; };
+		ED1A73152DADD3BC004E3D17 /* NotLoggedInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotLoggedInView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		EDB93D152DB1D18300C7174F /* Fonts */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Fonts; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		4CB65D8929D016AE00684BD1 /* Frameworks */ = {
@@ -245,6 +250,7 @@
 			children = (
 				74FDD8232D64907C00E23293 /* GoogleMaps */,
 				4C2F5A7529FF456A00CFD288 /* VisitImpactView.swift */,
+				ED1A73152DADD3BC004E3D17 /* NotLoggedInView.swift */,
 				4CA8693429E3FA8600BB6972 /* VisitLogEntry.swift */,
 				4CB65D9E29D0DEAE00684BD1 /* VisitLogView.swift */,
 				4C17ED502A00A3610013EF52 /* VisitLogUnauthorized.swift */,
@@ -284,6 +290,7 @@
 		4CB65D8329D016AE00684BD1 = {
 			isa = PBXGroup;
 			children = (
+				EDB93D152DB1D18300C7174F /* Fonts */,
 				BE9D1DCF2A376B3800072835 /* Frameworks */,
 				D864E90A530FD26B201E4F4F /* Pods */,
 				4CB65D8D29D016AE00684BD1 /* Products */,
@@ -471,7 +478,6 @@
 			children = (
 				2CBA18332B467FF476F7CBCC /* Pods-StreetCare.debug.xcconfig */,
 				1784B66B50CD8167A950C87D /* Pods-StreetCare.release.xcconfig */,
-				C2CCCA682CF00CC2001C9BE0 /* Untitled.swift */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -493,6 +499,9 @@
 			buildRules = (
 			);
 			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				EDB93D152DB1D18300C7174F /* Fonts */,
 			);
 			name = StreetCare;
 			packageProductDependencies = (
@@ -643,6 +652,7 @@
 				4C85F0EF2A08A7A100FFEDC8 /* GrowingTextView.swift in Sources */,
 				4C85F0E72A089F0A00FFEDC8 /* PlaylistDefinitionDataAdapter.swift in Sources */,
 				4C7136C32A0495630060EB7D /* EventDataAdapter.swift in Sources */,
+				ED1A73162DADD3BC004E3D17 /* NotLoggedInView.swift in Sources */,
 				4CB65E6029DA91C000684BD1 /* Playlist.swift in Sources */,
 				BE9D1DDD2A43641400072835 /* RatingView.swift in Sources */,
 				4CB7D8CC29F8D5B00002495E /* VisitLog.swift in Sources */,

@@ -13,7 +13,8 @@ import UIKit
 struct ProfilView: View {
     
     @State var user: User?
-    
+    @Binding var selection: Int
+    @Binding var loginRequested: Bool
     let adapter = VisitLogDataAdapter()
     @State var history = [VisitLog]()
     @EnvironmentObject var googleSignIn: UserAuthModel
@@ -29,7 +30,7 @@ struct ProfilView: View {
         
     @StateObject var storage = StorageManager(uid: "")
     @State private var avatarImage: UIImage?
-
+    @State private var showLoginLink = false
     
     var body: some View {
         NavigationStack {
@@ -91,25 +92,36 @@ struct ProfilView: View {
                     Spacer()
                 }
                 else {
-                    NotLoggedInProfileView()
+                    NotLoggedInProfileView(selection: $selection)
                 }
             }
             .onAppear {
-                if let user = Auth.auth().currentUser {
-                    self.user = user
-                    
+                attemptLoginPresentationIfNeeded()        // ← NEW
+                if let u = Auth.auth().currentUser {
+                    self.user = u
                     adapter.delegate = self
                     adapter.refresh()
-                    
-                    storage.uid = user.uid
+                    storage.uid = u.uid
                     storage.getImage()
                 }
+            }
+            .onChange(of: selection) { _ in
+                           attemptLoginPresentationIfNeeded()        // ← NEW
+                       }
+            
+            // push LoginView programmatically
+            NavigationLink(
+                destination: LoginView(selection: $selection),
+                isActive: $showLoginLink
+            ) {
+                EmptyView()
             }
             .onChange(of: storage.image, perform: { newValue in
                 if let img = newValue {
                     self.avatarImage = img
                 }
             })
+            
             .alert("Error...", isPresented: $showErrorMessage, actions: {
                 Button("OK") {
                     // nothing to do
@@ -141,6 +153,16 @@ struct ProfilView: View {
         }
     } // end body
     
+    private func attemptLoginPresentationIfNeeded() {
+           guard
+               user == nil,
+               loginRequested,
+               selection == 3
+           else { return }
+           
+           showLoginLink   = true
+           loginRequested = false
+       }
     
     private func updateCounts() {
 
@@ -193,6 +215,6 @@ extension ProfilView: VisitLogDataAdapterProtocol {
 
 struct ProfilView_Previews: PreviewProvider {
     static var previews: some View {
-        ProfilView()
+        ProfilView(selection: .constant(1),loginRequested: .constant(false))
     }
 }

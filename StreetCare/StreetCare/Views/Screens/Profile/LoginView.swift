@@ -14,10 +14,9 @@ import GoogleSignInSwift
 
 
 struct LoginView: View {
-    
     @State private var email = ""
     @State private var password = ""
-    
+    @Binding var selection: Int
     @State private var errorMessage: String?
     
     @Environment(\.presentationMode) var presentation
@@ -72,6 +71,7 @@ struct LoginView: View {
             }
         }
         .navigationTitle("loginButtonTitle")
+        .navigationBarTitleDisplayMode(.inline)
     } // end body
     
     
@@ -123,7 +123,7 @@ struct LoginView: View {
                 errorMessage = error.localizedDescription
                 return
             }
-            
+            selection = 3
             presentation.wrappedValue.dismiss()
         }
     }
@@ -134,7 +134,7 @@ struct LoginView: View {
 
 struct LoginView_Previews: PreviewProvider {
     static var previews: some View {
-        LoginView()
+        LoginView(selection: .constant(1))
     }
 }
 

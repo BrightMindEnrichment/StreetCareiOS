@@ -112,6 +112,15 @@
 "cmintrotext10" = "Haz clic aquí para donar. Si te unes a nuestro Programa de donaciones, ¡te enviaremos obsequios gratis!";
 "cmintrowithlink1" = "Haga clic aquí para saber qué implica ser miembro de un capítulo.";
 "cmintrowithlink2" = "Si prefiere firmar y enviar una copia o guardarla para consultarla más adelante, descargue el formulario aquí.";
+"providedHelpTitle" = "¡He prestado ayuda!";
+"providedHelpMessage" = "Por favor, rellene este formulario cada vez que realice una labor de alcance. Esto le ayuda a llevar un registro de sus contribuciones y permite a StreetCare brindar más apoyo y servicios para ayudar a la comunidad.";
+"loginRequiredTitle" = "Inicio de sesión requerido";
+"loginRequiredMessage" = "Inicie sesión para registrar una visita.";
+"notLoggedInPrompt" = "Por favor, complete este formulario cada vez que realice una labor de alcance. Esto le ayuda a llevar un registro de sus contribuciones y permite a Street Care brindar más apoyo y servicios para ayudar a la comunidad.";
+"guestWarningTitle"   = "¡Advertencia!";
+"guestWarningMessage" = "No podrá ver ni editar sus registros de visitas sin iniciar sesión";
+
+
 
 //"helloWorld" = "¡Hola Mundo!";
 //"welcome" = "Bienvenido a\nStreet Care";
