@@ -9,8 +9,13 @@ import SwiftUI
 
 struct InputTileMoreQuestions: View {
 
-    var size = CGSize(width: 300.0, height: 450.0)
-    var question: String
+    var size = CGSize(width: 300.0, height: 250.0)
+    var question1: String
+    var question2: String
+    var question3: String
+    
+    var questionNumber: Int
+    var totalQuestions: Int
         
     var nextAction: () -> ()
     var skipAction: () -> ()
@@ -23,46 +28,64 @@ struct InputTileMoreQuestions: View {
             BasicTile(size: CGSize(width: size.width, height: size.height))
             
             VStack {
-                Spacer()
-    
-                Text(question)
-                    .font(.headline)
-                    .padding()
-                
-                Spacer()
+                VStack{
+                    Text(question1)
+                        .font(.title3)
+                        .padding(.bottom, 1)
+                        .fontWeight(.bold)
+                    Text(question2)
+                        .font(.title3)
+                        .padding(.bottom, 1)
+                        .fontWeight(.bold)
+                    Text(question3)
+                        .font(.title3)
+                        .fontWeight(.bold)
+                }
+                .padding(.vertical)
                 
                 HStack {
-                    Button("Yes") {
+
+                    Button(" Yes ") {
                         yesAction()
                     }
-                    .buttonStyle(.borderedProminent)
-                    .foregroundColor(Color("TextButtonColor"))
-                    .padding()
+                    .foregroundColor(Color("PrimaryColor"))
+                    .fontWeight(.bold)
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 8)
+                    .background(
+                        Capsule()
+                            .fill(Color("SecondaryColor"))
+                    )
                     
-                    Button("No") {
+                    Button(" No ") {
                         noAction()
                     }
-                    .buttonStyle(.bordered)
-                    .padding()
-                }
-                
-                Spacer()
-                
-                HStack {
-                    Button("Previous") {
-                        skipAction()
-                    }
-                    .foregroundColor(Color("TextColor"))
-                    Spacer()
-                    Button("Submit") {
-                        nextAction()
-                    }
-                    .foregroundColor(Color("TextColor"))
+                    .foregroundColor(Color("SecondaryColor"))
+                    .fontWeight(.bold)
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 8)
+                    .background(
+                        Capsule()
+                            .fill(Color.white) // Fill with white
+                    )
+                    .overlay(
+                        Capsule()
+                            .stroke(Color("SecondaryColor"), lineWidth: 2) // Stroke with dark green
+                    )
                 }
                 .padding()
             }
         }
         .frame(width: size.width, height: size.height)
+        SegmentedProgressBar(
+            totalSegments: totalQuestions,
+            filledSegments: questionNumber
+        )
+
+        Text("Progress")
+            .font(.caption)
+            .padding(.top, 4)
+            .fontWeight(.bold)
 
     } // end body
 } // end struct

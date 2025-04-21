@@ -14,7 +14,8 @@ struct InputTileLocation: View {
     var totalQuestions: Int
         
     var size = CGSize(width: 300.0, height: 460.0)
-    var question: String
+    var question1: String
+    var question2: String
     
     @Binding var textValue: String
     @Binding var location: CLLocationCoordinate2D
@@ -62,18 +63,17 @@ struct InputTileLocation: View {
                     .background(Color.gray.opacity(0.3))
                     .padding(.horizontal)
     
-                VStack {
-                    Text(question)
-                        .font(.title3)
+                VStack{
+                    Text(question1)
+                        .font(.title2)
+                        .padding(.top, 6)
                         .fontWeight(.bold)
-                        .padding()
-    
-                    /*LocationButton {
-                        isLoading = true
-                        locationManager.requestLocation()
-                    }
+                    Text(question2)
+                        .font(.title2)
+                        .padding(.bottom, 12)
+                        .fontWeight(.bold)
+                }
 
-                    Spacer()*/
                     HStack {
                         Image(systemName: "magnifyingglass")
                             .foregroundColor(.gray)
@@ -94,7 +94,6 @@ struct InputTileLocation: View {
                     .onTapGesture {
                         showAddressSearch = true
                     }
-                }
 
                 VStack {
                     HStack {
@@ -211,6 +210,7 @@ struct InputTileLocation: View {
         Text("Progress")
             .font(.caption)
             .padding(.top, 4)
+            .fontWeight(.bold)
         
 
     }

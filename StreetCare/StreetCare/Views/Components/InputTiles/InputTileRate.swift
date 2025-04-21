@@ -115,6 +115,7 @@ struct InputTileRate: View {
         Text("Progress")
             .font(.caption)
             .padding(.top, 4)
+            .fontWeight(.bold)
 
     } // end body
     

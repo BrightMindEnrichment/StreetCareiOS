@@ -18,6 +18,9 @@ struct InputTileNumber: View {
 
     var question1: String
     var question2: String
+    var question3: String
+    var question4: String
+
 
     var descriptionLabel: String
     var disclaimerText: String
@@ -70,13 +73,21 @@ struct InputTileNumber: View {
                 VStack{
                     Text(question1)
                         .font(.title3)
-                        .padding(.top, 12)
+                        .padding(.bottom, 1)
                         .fontWeight(.bold)
                     Text(question2)
                         .font(.title3)
-                        .padding(.bottom, 12)
+                        .padding(.bottom, 1)
+                        .fontWeight(.bold)
+                    Text(question3)
+                        .font(.title3)
+                        .padding(.bottom, 1)
+                        .fontWeight(.bold)
+                    Text(question4)
+                        .font(.title3)
                         .fontWeight(.bold)
                 }
+                .padding(.vertical)
 
                 HStack(spacing: 20) {
                     Button(action: {
@@ -164,6 +175,7 @@ struct InputTileNumber: View {
         Text("Progress")
             .font(.caption)
             .padding(.top, 4)
+            .fontWeight(.bold)
 
     } // end body
 } // end struct
