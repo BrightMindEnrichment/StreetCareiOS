@@ -33,6 +33,7 @@ struct AchievementBadge: View {
             VStack {
                 Text(count > 0 ? "\(count)" : "--")
                     .font(.title)
+                    .fontWeight(.bold)
                 Text(title)
                     .font(.footnote)
             }
