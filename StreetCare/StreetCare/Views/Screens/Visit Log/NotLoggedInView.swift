@@ -50,7 +50,7 @@ struct NotLoggedInView: View {
 
                   
                     .alert(NSLocalizedString("guestWarningTitle", comment: ""), isPresented: $showGuestWarning) {
-                        Button("Cancel") {
+                        Button("Cancel", role: .destructive) {
                           }
                           Button("OK", role: .cancel) {
                             navigateToImpact = true

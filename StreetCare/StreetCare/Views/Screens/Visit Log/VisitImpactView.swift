@@ -1,3 +1,10 @@
+//
+//  VisitImpactView.swift
+//  StreetCare
+//
+//  Created by Michael on 5/1/23.
+//
+
 import SwiftUI
 import FirebaseAuth
 
@@ -126,19 +133,45 @@ struct VisitImpactView: View {
     }
     
     private func updateCounts() {
+        
         self.outreaches = history.count
-        self.peopleHelped = history.reduce(0) { $0 + $1.peopleHelped }
-        self.itemsDonated = history.reduce(0) { result, visitLog in
-            var count = 0
-            if visitLog.foodAndDrinks { count += 1 }
-            if visitLog.clothes { count += 1 }
-            if visitLog.hygine { count += 1 }
-            if visitLog.wellness { count += 1 }
-            if visitLog.other { count += 1 }
-            return result + count
-        }
+        
+        self.peopleHelped = history.reduce(0, { partialResult, visitLog in
+            partialResult + visitLog.peopleHelped
+        })
+        
+        self.itemsDonated = history.reduce(0, { partialResult, visitLog in
+            
+            var newDonations = 0
+            
+            if visitLog.foodAndDrinks {
+                newDonations += 1
+            }
+            
+            if visitLog.clothes {
+                newDonations += 1
+            }
+            
+            if visitLog.hygine {
+                newDonations += 1
+            }
+            
+            if visitLog.wellness {
+                newDonations += 1
+            }
+            
+            if visitLog.other {
+                newDonations += 1
+            }
+            
+            return partialResult + newDonations
+        })
+        
+        
     }
-}
+    
+} // end struct
+
 
 extension VisitImpactView: VisitLogDataAdapterProtocol {
     func visitLogDataRefreshed(_ logs: [VisitLog]) {
