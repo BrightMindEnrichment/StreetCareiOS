@@ -1,4 +1,4 @@
-/* 
+/*
   Localizable.strings
   StreetCare
 
@@ -60,7 +60,6 @@
 "welcome" = "Bienvenidas";
 
 "loginButtonTitle" = "Acceso";
-"login" = "INICIAR SESIÓN";
 "signUpButtonTitle" = "Inscribirse";
 "logoutButtonTitle" = "Desconectar";
 "removeAccountButtonTitle" = "Eliminar cuenta";
@@ -113,6 +112,11 @@
 "cmintrotext10" = "Haz clic aquí para donar. Si te unes a nuestro Programa de donaciones, ¡te enviaremos obsequios gratis!";
 "cmintrowithlink1" = "Haga clic aquí para saber qué implica ser miembro de un capítulo.";
 "cmintrowithlink2" = "Si prefiere firmar y enviar una copia o guardarla para consultarla más adelante, descargue el formulario aquí.";
+"landmark" = "Describe la ubicación/punto de referencia.";
+"peopledescription" = "Ejemplo: Tom, una persona mayor en silla de ruedas, que viste una camisa azul marino y zapatos marrones.";
+"disclaimer" = "Descargo de responsabilidad: Completar un registro de interacción por persona nos ayuda a brindarle un mejor servicio. Opcional, cualquier información ayuda.";
+"comments" = "Preguntas/Comentarios/Notas";
+"otherNotes" = "Si es otro, especifíquelo aquí.";
 "providedHelpTitle" = "¡He prestado ayuda!";
 "providedHelpMessage" = "Por favor, rellene este formulario cada vez que realice una labor de alcance. Esto le ayuda a llevar un registro de sus contribuciones y permite a StreetCare brindar más apoyo y servicios para ayudar a la comunidad.";
 "loginRequiredTitle" = "Inicio de sesión requerido";
@@ -120,7 +124,6 @@
 "notLoggedInPrompt" = "Por favor, complete este formulario cada vez que realice una labor de alcance. Esto le ayuda a llevar un registro de sus contribuciones y permite a Street Care brindar más apoyo y servicios para ayudar a la comunidad.";
 "guestWarningTitle"   = "¡Advertencia!";
 "guestWarningMessage" = "No podrá ver ni editar sus registros de visitas sin iniciar sesión";
-
 
 
 //"helloWorld" = "¡Hola Mundo!";
