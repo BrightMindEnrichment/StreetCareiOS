@@ -9,16 +9,16 @@ import SwiftUI
 import FirebaseAuth
 
 struct VisitImpactView: View {
-    
+
     let adapter = VisitLogDataAdapter()
     @State var history = [VisitLog]()
-    
+
     var currentUser = Auth.auth().currentUser
-    
+
     @State var peopleHelped = 0
     @State var outreaches = 0
     @State var itemsDonated = 0
-    
+
     @State var showActionSheet = false
     @State var isLoading = false
     @State var isNavigationActive = false
@@ -32,7 +32,7 @@ struct VisitImpactView: View {
             VStack {
                 Text("INTERACTION LOG").font(.system(size: 18)).padding()
                 ImpactView(peopleHelped: peopleHelped, outreaches: outreaches, itemsDonated: itemsDonated)
-                
+
                 Button(action: {
                     if user != nil {
                         showAlert = true
@@ -71,7 +71,7 @@ struct VisitImpactView: View {
                 //Spacer(minLength: 10.0)
 
                 Text("HISTORY").font(.system(size: 16)).bold()
-                
+
                 if history.isEmpty {
                     Text("You have no logged history.")
                         .font(.custom("Poppins-Light", size: 14))
@@ -131,47 +131,21 @@ struct VisitImpactView: View {
             }
         }
     }
-    
-    private func updateCounts() {
-        
-        self.outreaches = history.count
-        
-        self.peopleHelped = history.reduce(0, { partialResult, visitLog in
-            partialResult + visitLog.peopleHelped
-        })
-        
-        self.itemsDonated = history.reduce(0, { partialResult, visitLog in
-            
-            var newDonations = 0
-            
-            if visitLog.foodAndDrinks {
-                newDonations += 1
-            }
-            
-            if visitLog.clothes {
-                newDonations += 1
-            }
-            
-            if visitLog.hygine {
-                newDonations += 1
-            }
-            
-            if visitLog.wellness {
-                newDonations += 1
-            }
-            
-            if visitLog.other {
-                newDonations += 1
-            }
-            
-            return partialResult + newDonations
-        })
-        
-        
-    }
-    
-} // end struct
 
+    private func updateCounts() {
+        self.outreaches = history.count
+        self.peopleHelped = history.reduce(0) { $0 + $1.peopleHelped }
+        self.itemsDonated = history.reduce(0) { result, visitLog in
+            var newDonations = 0
+            if visitLog.foodAndDrinks { newDonations += 1 }
+            if visitLog.clothes { newDonations += 1 }
+            if visitLog.hygine { newDonations += 1 }
+            if visitLog.wellness { newDonations += 1 }
+            if visitLog.other { newDonations += 1 }
+            return result + newDonations
+        }
+    }
+}
 
 extension VisitImpactView: VisitLogDataAdapterProtocol {
     func visitLogDataRefreshed(_ logs: [VisitLog]) {

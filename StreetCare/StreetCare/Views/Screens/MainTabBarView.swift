@@ -12,14 +12,17 @@ struct MainTabBarView: View {
     
     @State private var selection = 0
     @State private var user: User? = nil
-    @State private var loginRequested = false //if they request login from NotLoggedInView
+    @State private var loginRequested = false
+    
     var body: some View {
         TabView(selection: $selection) {
+            
             LandingScreenView()
-                .tabItem{
+                .tabItem {
                     TabButtonView(imageName: "Tab-HowToHelp", title: "How to Help", isActive: (selection == 0))
                 }
                 .tag(0)
+            
             Group {
                 if user != nil {
                     VisitImpactView(selection: $selection)
@@ -27,31 +30,31 @@ struct MainTabBarView: View {
                     NotLoggedInView(loginRequested: $loginRequested, selection: $selection)
                 }
             }
-            .tabItem{
-                TabButtonView(imageName: "Tab-VisitLog", title: "Visit Log", isActive: (selection == 1))
+            .tabItem {
+                TabButtonView(imageName: "Tab-VisitLog", title: "Interaction Log", isActive: (selection == 1))
             }
             .tag(1)
             
             CommunityView()
-                .tabItem{
+                .tabItem {
                     TabButtonView(imageName: "Tab-Community", title: "Community", isActive: (selection == 2))
                 }
                 .tag(2)
             
-            ProfilView(selection: $selection,loginRequested: $loginRequested)
-                .tabItem{
+            ProfilView(selection: $selection, loginRequested: $loginRequested)
+                .tabItem {
                     TabButtonView(imageName: "Tab-Profile", title: "Profile", isActive: (selection == 3))
                 }
                 .tag(3)
-            
         }
         .onAppear {
-            Auth.auth().addStateDidChangeListener { auth, currentUser in
+            Auth.auth().addStateDidChangeListener { _, currentUser in
                 self.user = currentUser
             }
         }
     }
 }
+
 struct MainTabBarView_Previews: PreviewProvider {
     static var previews: some View {
         MainTabBarView()
