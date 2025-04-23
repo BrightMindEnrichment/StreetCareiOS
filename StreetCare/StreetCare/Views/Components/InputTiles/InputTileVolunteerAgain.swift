@@ -71,7 +71,8 @@ struct InputTileVolunteerAgain: View {
                 
                 SegmentedProgressBar(
                     totalSegments: totalQuestions,
-                    filledSegments: questionNumber
+                    filledSegments: questionNumber,
+                    tileWidth: 300
                 )
                 
                 Text("Progress")
