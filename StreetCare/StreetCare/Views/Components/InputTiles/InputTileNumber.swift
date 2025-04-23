@@ -199,7 +199,3 @@ struct InputTileNumber: View {
 
     } // end body
 } // end struct
-
-
-
-

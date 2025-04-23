@@ -15,10 +15,10 @@ struct VisitLogEntry: View {
     @Environment(\.presentationMode) var presentation
     
     @State var questionNumber = 1
-    @State var totalQuestions = 5
+    @State var totalQuestions = 6
     @State private var selectedLocation = CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0)
     
-    @StateObject var visitLog = VisitLog(id: "")
+    @StateObject var visitLog = VisitLog(id: UUID().uuidString)  
     
     var currentUser = Auth.auth().currentUser
     @State var isLoading = false
@@ -100,8 +100,7 @@ struct VisitLogEntry: View {
                     } skipAction: {
                         questionNumber += 1
                     }
-                    
-                    
+                
                 case 5:
                     InputTileNumber(questionNumber: 5, totalQuestions: 6, tileWidth: 300, tileHeight: 460, question1: "How many items" , question2: "did you donate?", question3:"", question4:"", descriptionLabel: "", disclaimerText: "", placeholderText: "Enter notes here", number: $visitLog.itemQty) {
                         questionNumber += 1
@@ -133,7 +132,6 @@ struct VisitLogEntry: View {
                         questionNumber = 100
                     }
 
-                    
                 case 8:
                     InputTileList(
                         questionNumber: 1,
@@ -207,8 +205,12 @@ struct VisitLogEntry: View {
                     }
                     
                 case 100:
-                    InputTileComplete(question: "Complete!") {
+                    InputTileComplete(question: "Completed!") {
+                        //saveVisitLog() // Regular save
                         presentation.wrappedValue.dismiss()
+                    } shareAction: {
+                        //saveVisitLog()
+                        saveVisitLog_Community() // Save for community
                     }
                     
                 default:
@@ -229,11 +231,17 @@ struct VisitLogEntry: View {
             }
         }.navigationTitle("Interaction Log")
     } // end body
-    
+     
     
     func saveVisitLog() {
         let adapter = VisitLogDataAdapter()
         adapter.addVisitLog(self.visitLog)
+    }
+    
+    func saveVisitLog_Community() {
+        let adapter = VisitLogDataAdapter()
+        //adapter.addVisitLog(self.visitLog)
+        adapter.addVisitLog_Community(self.visitLog)
     }
     
 } // end struct
@@ -243,37 +251,7 @@ struct VisitLogEntry_Previews: PreviewProvider {
         VisitLogEntry()
     }
 }
-/*struct SegmentedProgressBar: View {
-    var totalSegments: Int
-    var filledSegments: Int
 
-    var body: some View {
-        HStack(spacing: 8) {
-            ForEach(0..<totalSegments, id: \.self) { index in
-                Capsule()
-                    .fill(index < filledSegments ? Color("PrimaryColor") : Color("SecondaryColor"))
-                    .frame(width: 35, height: 12)
-                    .overlay(
-                        Group {
-                            if index == filledSegments - 1 {
-                                // Current segment
-                                Capsule()
-                                    .stroke(Color("SecondaryColor"), lineWidth: 1)
-                            } else if index >= filledSegments {
-                                // Future segments
-                                Capsule()
-                                    .stroke(Color("SecondaryColor"), lineWidth: 1)
-                            } else {
-                                // Past segments — no stroke
-                                EmptyView()
-                            }
-                        }
-                    )
-            }
-        }
-        .padding(.top, 4)
-    }
-}*/
 struct SegmentedProgressBar: View {
     var totalSegments: Int
     var filledSegments: Int

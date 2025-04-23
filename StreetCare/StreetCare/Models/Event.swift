@@ -41,12 +41,19 @@ class Event: Identifiable {
     var eventStartTimeStamp : Timestamp?
     var eventEndTimeStamp : Timestamp?
     //var isRegistered : Bool
+    var isFlagged : Bool = false
+    var flaggedByUser:String? = ""
+    
+    func updateFlagStatus(newFlagState: Bool, userId: String?) {
+        isFlagged = newFlagState
+        flaggedByUser = newFlagState ? userId : nil
+    }
 }
 
-class EventData : Identifiable{
-    var monthYear : String = ""
-    var date : (String?, String?, String?) = ("","","")
-    var event =  Event()
+class EventData : ObservableObject, Identifiable{
+    @Published var monthYear : String = ""
+    @Published var date : (String?, String?, String?) = ("","","")
+    @Published var event =  Event()
 }
 
 class HelpRequest {

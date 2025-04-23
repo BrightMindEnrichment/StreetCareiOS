@@ -21,10 +21,20 @@ struct CommunityEventView: View {
     @Binding var isPresented: Bool // Binding to control dismissal of this view
     @State private var shouldDismissAll = false // Shared variable for dismissing all views
     @State private var isNavigationActive = false
+    @State private var popupRefresh = false
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
 
     let formatter = DateFormatter()
     var eventType: EventType
+    var noEventsText: String {
+        if eventType == .future {
+            return NSLocalizedString("noFutureEventsAvailable", comment: "")
+        } else if eventType == .past {
+            return NSLocalizedString("noPastEventsAvailable", comment: "")
+        } else {
+            return NSLocalizedString("noHelpingRequestsAvailable", comment: "")
+        }
+    }
     
     var body: some View {
         VStack {
@@ -104,12 +114,23 @@ struct CommunityEventView: View {
                                                         .foregroundColor(Color("TextColor"))
                                                 }
                                             }
-                                            EventCardView(event: event, eventType: eventType) {
+                                            /*EventCardView(event: event, eventType: eventType) {
                                                 currentData.date = event.date
                                                 currentData.monthYear = event.monthYear
                                                 currentData.event = event.event
                                                 isBottomSheetPresented.toggle()
-                                            }
+                                            }*/
+                                            EventCardView(
+                                                event: event,
+                                                eventType: eventType,
+                                                onCardTap: {
+                                                    currentData.date = event.date
+                                                    currentData.monthYear = event.monthYear
+                                                    currentData.event = event.event
+                                                    isBottomSheetPresented.toggle()
+                                                },
+                                                popupRefresh: $popupRefresh // ✅ pass down the binding
+                                            )
                                         }
                                     }
                                 }
@@ -126,7 +147,7 @@ struct CommunityEventView: View {
         }
         .bottomSheet(isPresented: $isBottomSheetPresented) {
             VStack {
-                EventPopupView(event: currentData, eventType: eventType, delegate: self)
+                EventPopupView(event: currentData, eventType: eventType, delegate: self, refresh: $popupRefresh)
             }
             .frame(maxWidth: .infinity)
             .padding()

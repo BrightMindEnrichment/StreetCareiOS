@@ -142,5 +142,3 @@ struct InputTileRate: View {
     }
 } // end struct
 
-
-
