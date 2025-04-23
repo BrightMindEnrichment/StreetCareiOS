@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct NotLoggedInProfileView: View {
+    @Binding var selection: Int
     var body: some View {
             VStack {
                 Spacer().frame(height: 70)
@@ -25,7 +26,7 @@ struct NotLoggedInProfileView: View {
                 Spacer().frame(height: 70)
 
                 NavigationLink {
-                    LoginView()
+                    LoginView(selection: $selection)
                 } label: {
                     NavLinkButton(title: NSLocalizedString("loginButtonTitle", comment: ""), width: 160.0,height: 40.0)
                 }
@@ -45,6 +46,6 @@ struct NotLoggedInProfileView: View {
 
 struct NotLoggedInProfileView_Previews: PreviewProvider {
     static var previews: some View {
-        NotLoggedInProfileView()
+        NotLoggedInProfileView(selection: .constant(1))
     }
 }

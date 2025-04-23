@@ -31,8 +31,9 @@ struct AchievementBadge: View {
             }
             .offset(CGSize(width: 0.0, height: -53.0))
             VStack {
-                Text(count > 0 ? "\(count)" : "--")
+                Text(count > 0 ? "\(count)" : "0")
                     .font(.title)
+                    .bold()
                 Text(title)
                     .font(.footnote)
             }
