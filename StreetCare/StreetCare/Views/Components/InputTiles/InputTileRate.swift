@@ -11,8 +11,9 @@ struct InputTileRate: View {
     var questionNumber: Int
     var totalQuestions: Int
     
-    var size = CGSize(width: 300.0, height: 450.0)
-    var question: String
+    var size = CGSize(width: 300.0, height: 380.0)
+    var question1: String
+    var question2: String
         
     @Binding var textValue: String
     @Binding var rating: Int
@@ -29,60 +30,95 @@ struct InputTileRate: View {
             VStack {
                 
                 HStack {
+                    Text("Question \(questionNumber)/\(totalQuestions)")
+                        .foregroundColor(.black)
+                    //.font(.footnote)
                     
                     Spacer()
                     
-                    Button("Skip") {
+                    /*Button("Skip") {
                         skipAction()
                     }
-                    .foregroundColor(.gray)
-                    .padding()
+                    .foregroundColor(Color("SecondaryColor"))
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 8)
+                    .background(
+                        Capsule()
+                            .fill(Color.white)
+                    )
+                    .overlay(
+                        Capsule()
+                            .stroke(Color("SecondaryColor"), lineWidth: 2)
+                    )*/
+                    
                 }
-
-                Spacer()
-
-                Text("Question \(questionNumber)/\(totalQuestions)")
-                    .foregroundColor(.gray)
-                    .font(.footnote)
-    
-                Text(question)
-                    .font(.headline)
-                    .padding()
+                .padding(.horizontal)
+                .padding(.top, 12)
                 
-                RatingView(rating: $rating)
-
-                VStack {
-                    Text("Questions/comments").font(.caption)
-                    
-                    TextField("optional", text: $textValue)
-                        .textFieldStyle(.roundedBorder)
-                        .frame(width: 200.0)
-                    
-                    Spacer()
-                    
-                    ProgressView(value: Double(questionNumber) / Double(totalQuestions))
-                        .tint(.yellow)
-                        .background(.black)
-                        .padding()
-                    
-                    
-                    Spacer()
+                Divider()
+                    .background(Color.gray.opacity(0.3))
+                    .padding(.horizontal)
+    
+                VStack{
+                    Text(question1)
+                        .font(.title3)
+                        .padding(.top, 12)
+                        .fontWeight(.bold)
+                    Text(question2)
+                        .font(.title3)
+                        //.padding(.bottom, 12)
+                        .fontWeight(.bold)
                 }
+                RatingView(rating: $rating)
+                
+                
+                AutoGrowingTextEditor(text: $textValue, placeholder: NSLocalizedString("comments", comment: ""))
                 HStack {
                     Button("Previous") {
                         previousAction()
                     }
-                    .foregroundColor(Color("TextColor"))
+                    .foregroundColor(Color("SecondaryColor"))
+                    .font(.footnote)
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 8)
+                    .background(
+                        Capsule()
+                            .fill(Color.white) // Fill with white
+                    )
+                    .overlay(
+                        Capsule()
+                            .stroke(Color("SecondaryColor"), lineWidth: 2) // Stroke with dark green
+                    )
+                    
                     Spacer()
-                    Button("Next") {
+                    
+                    Button(" Next  ") {
                         nextAction()
                     }
-                    .foregroundColor(Color("TextColor"))
+                    .foregroundColor(Color("PrimaryColor"))
+                    .fontWeight(.bold)
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 8)
+                    .background(
+                        Capsule()
+                            .fill(Color("SecondaryColor"))
+                    )
                 }
                 .padding()
             }
+        
         }
         .frame(width: size.width, height: size.height)
+        SegmentedProgressBar(
+            totalSegments: totalQuestions,
+            filledSegments: questionNumber,
+            tileWidth: 300
+        )
+
+        Text("Progress")
+            .font(.footnote)
+            .padding(.top, 4)
+            .fontWeight(.bold)
 
     } // end body
     
@@ -105,24 +141,4 @@ struct InputTileRate: View {
         }
     }
 } // end struct
-
-
-struct InputTileRate_Previews: PreviewProvider {
-
-    @State static var inputText = ""
-    @State static var rating = 3
-    
-    static var previews: some View {
-
-        InputTileRate(questionNumber: 1, totalQuestions: 1, question: "How am I driving?", textValue: $inputText, rating: $rating) {
-            //
-        } previousAction: {
-            //
-        } skipAction: {
-            //
-        }
-
-    }
-}
-
 

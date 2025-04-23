@@ -124,7 +124,8 @@
 "notLoggedInPrompt" = "Por favor, complete este formulario cada vez que realice una labor de alcance. Esto le ayuda a llevar un registro de sus contribuciones y permite a Street Care brindar más apoyo y servicios para ayudar a la comunidad.";
 "guestWarningTitle"   = "¡Advertencia!";
 "guestWarningMessage" = "No podrá ver ni editar sus registros de visitas sin iniciar sesión";
-
+"login" = "INICIAR SESIÓN";
+"emptytext" = " ";
 
 //"helloWorld" = "¡Hola Mundo!";
 //"welcome" = "Bienvenido a\nStreet Care";

@@ -12,12 +12,23 @@ struct InputTileNumber: View {
 
     var questionNumber: Int
     var totalQuestions: Int
-    
-    var size = CGSize(width: 300.0, height: 450.0)
-    var question: String
-        
+
+    var tileWidth: CGFloat
+    var tileHeight: CGFloat
+
+    var question1: String
+    var question2: String
+    var question3: String
+    var question4: String
+
+
+    var descriptionLabel: String
+    var disclaimerText: String
+    var placeholderText: String
+
     @Binding var number: Int
-        
+    @State private var peopledescription = ""
+
     var nextAction: () -> ()
     var previousAction: () -> ()
     var skipAction: () -> ()
@@ -25,74 +36,166 @@ struct InputTileNumber: View {
     var body: some View {
 
         ZStack {
-            BasicTile(size: CGSize(width: size.width, height: size.height))
+            BasicTile(size: CGSize(width: tileWidth, height: tileHeight))
             
             VStack {
                 
                 HStack {
+                    Text("Question \(questionNumber)/\(totalQuestions)")
+                        .foregroundColor(.black)
+                        //.font(.footnote)
+                    
                     Spacer()
+                    
                     Button("Skip") {
                         skipAction()
                     }
-                    .foregroundColor(.gray)
-                    .padding()
-                }
-                
-                Spacer()
-                
-                Text("Question \(questionNumber)/\(totalQuestions)")
-                    .foregroundColor(.gray)
+                    .foregroundColor(Color("SecondaryColor"))
                     .font(.footnote)
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 8)
+                    .background(
+                        Capsule()
+                            .fill(Color.white)
+                    )
+                    .overlay(
+                        Capsule()
+                            .stroke(Color("SecondaryColor"), lineWidth: 2)
+                    )
+                    
+                }
+                .padding(.horizontal)
+                .padding(.top, 12)
+                
+                Divider()
+                    .background(Color.gray.opacity(0.3))
+                    .padding(.horizontal)
     
-                Text(question)
+                VStack{
+                    Text(question1)
+                        .font(.title3)
+                        .padding(.bottom, 1)
+                        .fontWeight(.bold)
+                    Text(question2)
+                        .font(.title3)
+                        .padding(.bottom, 1)
+                        .fontWeight(.bold)
+                    Text(question3)
+                        .font(.title3)
+                        .padding(.bottom, 1)
+                        .fontWeight(.bold)
+                    Text(question4)
+                        .font(.title3)
+                        .fontWeight(.bold)
+                }
+                .padding(.vertical)
+
+                HStack(spacing: 20) {
+                    Button(action: {
+                        if number > 0 {
+                            number -= 1
+                        }
+                    }) {
+                        Image(systemName: "minus")
+                            .foregroundColor(Color("PrimaryColor"))
+                            .frame(width: 30, height: 30)
+                            .background(Color("SecondaryColor"))
+                            .clipShape(Circle())
+                    }
+
+                    /*TextField("", value: $number, formatter: NumberFormatter())
+                        .keyboardType(.numberPad)
+                        .multilineTextAlignment(.center)
+                        .font(.title2)
+                        .fontWeight(.bold)
+                        .frame(width: 60)
+                        .padding(6)
+                        .background(Color.white)
+                        .cornerRadius(8)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 8)
+                                .stroke(Color("SecondaryColor"), lineWidth: 1)
+                        )*/
+                    TextField("", value: $number, formatter: NumberFormatter())
+                        .keyboardType(.numberPad)
+                        .multilineTextAlignment(.center)
+                        .font(.title2)
+                        .fontWeight(.bold)
+                        .frame(width: 60)
+                        .textFieldStyle(PlainTextFieldStyle()) // removes any border or background
+                    Button(action: {
+                        number += 1
+                    }) {
+                        Image(systemName: "plus")
+                            .foregroundColor(Color("PrimaryColor"))
+                            .frame(width: 30, height: 30)
+                            .background(Color("SecondaryColor"))
+                            .clipShape(Circle())
+                    }
+                }
+                .padding(.bottom)
+    
+                Text(descriptionLabel)
                     .font(.headline)
-                    .padding()
-                
-                Stepper("\(number) people helped", value: $number)
-                    .padding()
-                
-                Spacer()
-                
-                ProgressView(value: Double(questionNumber) / Double(totalQuestions))
-                    .tint(.yellow)
-                    .background(.black)
-                    .padding()
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.horizontal)
+                    .foregroundColor(Color("SecondaryColor"))
 
+                AutoGrowingTextEditor(text: $peopledescription, placeholder: placeholderText)
 
-                Spacer()
+                Text(disclaimerText)
+                    .font(.footnote)
+                    .multilineTextAlignment(.center)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .frame(maxWidth: .infinity)
+                    .padding(.horizontal)
+                    .padding(.top, 8)
                 
                 HStack {
                     Button("Previous") {
                         previousAction()
                     }
-                    .foregroundColor(Color("TextColor"))
+                    .foregroundColor(Color("SecondaryColor"))
+                    .font(.footnote)
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 8)
+                    .background(
+                        Capsule()
+                            .fill(Color.white) // Fill with white
+                    )
+                    .overlay(
+                        Capsule()
+                            .stroke(Color("SecondaryColor"), lineWidth: 2) // Stroke with dark green
+                    )
+                    
                     Spacer()
-                    Button("Next") {
+                    
+                    Button(" Next  ") {
                         nextAction()
                     }
-                    .foregroundColor(Color("TextColor"))
+                    .foregroundColor(Color("PrimaryColor"))
+                    .fontWeight(.bold)
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 8)
+                    .background(
+                        Capsule()
+                            .fill(Color("SecondaryColor"))
+                    )
                 }
                 .padding()
             }
         }
-        .frame(width: size.width, height: size.height)
+        .frame(width: tileWidth, height: tileHeight)
+        SegmentedProgressBar(
+            totalSegments: totalQuestions,
+            filledSegments: questionNumber,
+            tileWidth: tileWidth
+        )
+
+        Text("Progress")
+            .font(.footnote)
+            .padding(.top, 4)
+            .fontWeight(.bold)
 
     } // end body
 } // end struct
-
-
-struct InputTileNumber_Previews: PreviewProvider {
-
-    @State static var input = 5
-
-    static var previews: some View {
-        InputTileNumber(questionNumber: 1, totalQuestions: 2, question: "Luck number?", number: $input) {
-            //
-        } previousAction: {
-            //
-        } skipAction: {
-            //
-        }
-
-    }
-}
