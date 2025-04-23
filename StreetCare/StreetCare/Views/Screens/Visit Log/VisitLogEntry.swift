@@ -283,7 +283,7 @@ struct SegmentedProgressBar: View {
 
     var body: some View {
         let totalSpacing = spacing * CGFloat(totalSegments - 1)
-        let segmentWidth = (tileWidth - totalSpacing) / CGFloat(totalSegments)
+        let segmentWidth = (tileWidth - totalSpacing - 20) / CGFloat(totalSegments)
 
         HStack(spacing: spacing) {
             ForEach(0..<totalSegments, id: \.self) { index in
@@ -305,7 +305,7 @@ struct SegmentedProgressBar: View {
                     )
             }
         }
-        .frame(width: tileWidth)
+        .frame(width: tileWidth - 20)
         .padding(.top, 4)
     }
 }
