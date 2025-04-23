@@ -27,13 +27,14 @@ struct VisitLogEntry: View {
     var body: some View {
         NavigationStack {
             VStack {
-                Text("Visit Log")
-                    .font(.largeTitle)
+                Text("Log Your Interaction")
+                    .font(.title)
+                    .fontWeight(.bold)
                     .padding()
                                 
                 switch questionNumber {
                 case 1:
-                    InputTileDate(questionNumber: 1, totalQuestions: 6, question: "When was your visit?", datetimeValue: $visitLog.whenVisit) {
+                    InputTileDate(questionNumber: 1, totalQuestions: 6, question1: "When was your",question2: "Interaction?", datetimeValue: $visitLog.whenVisit) {
                         questionNumber += 1
                     } skipAction: {
                         questionNumber += 1
@@ -45,7 +46,7 @@ struct VisitLogEntry: View {
                     InputTileLocation(
                         questionNumber: 2,
                         totalQuestions: 6,
-                        question: "Where was your visit?",
+                        question1: "Where was your" , question2: "Interaction?",
                         textValue: Binding(
                             get: { visitLog.whereVisit },
                             set: { newValue in
@@ -59,8 +60,7 @@ struct VisitLogEntry: View {
                                 visitLog.location = newValue
                                 print("📍 Updated visitLog.location: \(visitLog.location.latitude), \(visitLog.location.longitude)")
                             }
-                        ),
-                        visitLog: visitLog
+                        )
                     ) {
                         questionNumber += 1
                     } previousAction: {
@@ -70,7 +70,7 @@ struct VisitLogEntry: View {
                     }
                     
                 case 3:
-                    InputTileNumber(questionNumber: 3, totalQuestions: 6, question: "How many people did you help?", cosentence: "people helped", number: $visitLog.peopleHelped) {
+                    InputTileNumber(questionNumber: 3, totalQuestions: 6, tileWidth: 300, tileHeight: 560, question1: "Describe who you" , question2: "supported and how",question3: "many individuals",question4: "were involved.",descriptionLabel: "Description", disclaimerText: NSLocalizedString("disclaimer", comment: ""), placeholderText: NSLocalizedString("peopledescription", comment: ""), number: $visitLog.peopleHelped) {
                         questionNumber += 1
                     } previousAction: {
                         questionNumber -= 1
@@ -82,7 +82,8 @@ struct VisitLogEntry: View {
                     InputTileList(
                         questionNumber: 4,
                         totalQuestions: 6,
-                        question: "What kind of help did you provide?",
+                        question1: "What kind of support",
+                        question2: "did you provide?",
                         foodAndDrinks: $visitLog.foodAndDrinks,
                         clothes: $visitLog.clothes,
                         hygine: $visitLog.hygine,
@@ -99,29 +100,28 @@ struct VisitLogEntry: View {
                     } skipAction: {
                         questionNumber += 1
                     }
-                    
-                    
-                case 6:
-                    InputTileRate(questionNumber: 6, totalQuestions: 6, question: "Rate your outreach experience.", textValue: $visitLog.ratingNotes, rating: $visitLog.rating) {
-                        questionNumber += 1
-                    } previousAction: {
-                        questionNumber -= 1
-                    } skipAction: {
-                        questionNumber += 1
-                    }
                 
                 case 5:
-                    InputTileNumber(questionNumber: 5, totalQuestions: 6, question: "Total number of items donated by you?", cosentence: "items donated", number: $visitLog.itemQty) {
+                    InputTileNumber(questionNumber: 5, totalQuestions: 6, tileWidth: 300, tileHeight: 460, question1: "How many items" , question2: "did you donate?", question3:"", question4:"", descriptionLabel: "", disclaimerText: "", placeholderText: "Enter notes here", number: $visitLog.itemQty) {
                         questionNumber += 1
                     } previousAction: {
                         questionNumber -= 1
                     } skipAction: {
                         questionNumber += 1
                     }
-                    
+                case 6:
+                    InputTileRate(questionNumber: 6, totalQuestions: 6, question1: "How would you rate your", question2: "outreach experience?", textValue: $visitLog.ratingNotes, rating: $visitLog.rating) {
+                        questionNumber += 1
+                    } previousAction: {
+                        questionNumber -= 1
+                    } skipAction: {
+                        questionNumber += 1
+                    }
+
                 case 7:
                     
-                    InputTileMoreQuestions(question: "Do they need further help?") {
+                    InputTileMoreQuestions(question1: "Would you like to" , question2: "answer a few more", question3:"questions?", questionNumber: 6, totalQuestions: 6) {
+                        saveVisitLog()
                         questionNumber = 100
                     } skipAction: {
                         questionNumber -= 1
@@ -135,8 +135,9 @@ struct VisitLogEntry: View {
                 case 8:
                     InputTileList(
                         questionNumber: 1,
-                        totalQuestions: 4,
-                        question: "What further help is needed?",
+                        totalQuestions: 7,
+                        question1: "What kind of help do",
+                        question2: "they still need?",
                         foodAndDrinks: $visitLog.furtherfoodAndDrinks,
                         clothes: $visitLog.furtherClothes,
                         hygine: $visitLog.furtherHygine,
@@ -155,14 +156,13 @@ struct VisitLogEntry: View {
                     }
                     
                 case 9:
-                    InputTileNumber(questionNumber: 2, totalQuestions: 4, question: "How many people need further help?", cosentence: "people helped", number: $visitLog.peopleNeedFurtherHelp) {
+                    InputTileNumber(questionNumber: 3, totalQuestions: 6, tileWidth: 300, tileHeight: 490, question1: "How many people" , question2: "still need help?", question3: "", question4: "", descriptionLabel: "", disclaimerText: "", placeholderText: "", number: $visitLog.peopleHelped) {
                         questionNumber += 1
                     } previousAction: {
                         questionNumber -= 1
                     } skipAction: {
                         questionNumber += 1
                     }
-                    
 //                case 8:
 //                    InputTileDuration(questionNumber: 2, totalQuestions: 5, question: "Approximate time spent on outreach?", hours: $visitLog.durationHours, minutes: $visitLog.durationMinutes) {
 //                        questionNumber += 1
@@ -184,10 +184,8 @@ struct VisitLogEntry: View {
 //                        questionNumber += 1
 //                        saveVisitLog()
 //                    }
-                    
-                    
                 case 10:
-                    InputTileDate(questionNumber: 3, totalQuestions: 4, question: "Is there a day for the follow-up visit?", datetimeValue: $visitLog.followUpWhenVisit) {
+                    InputTileDate(questionNumber: 3, totalQuestions: 4, question1: "Is there a planned date to",question2: "interact with them again?", datetimeValue: $visitLog.followUpWhenVisit) {
                         questionNumber += 1
                     } skipAction: {
                         questionNumber += 1
@@ -231,7 +229,7 @@ struct VisitLogEntry: View {
                     }
                 }
             }
-        }.navigationTitle("Visit Log")
+        }.navigationTitle("Interaction Log")
     } // end body
      
     
@@ -253,21 +251,39 @@ struct VisitLogEntry_Previews: PreviewProvider {
         VisitLogEntry()
     }
 }
+
 struct SegmentedProgressBar: View {
     var totalSegments: Int
     var filledSegments: Int
-    
+    var tileWidth: CGFloat
+    let segmentHeight: CGFloat = 12
+    let spacing: CGFloat = 8
+
     var body: some View {
-        HStack(spacing: 8) {
+        let totalSpacing = spacing * CGFloat(totalSegments - 1)
+        let segmentWidth = (tileWidth - totalSpacing - 20) / CGFloat(totalSegments)
+
+        HStack(spacing: spacing) {
             ForEach(0..<totalSegments, id: \.self) { index in
                 Capsule()
-                    .fill(index < filledSegments ? Color.yellow : Color.black)
-                    .frame(width: 35, height: 12)
+                    .fill(index < filledSegments ? Color("PrimaryColor") : Color("SecondaryColor"))
+                    .frame(width: segmentWidth, height: segmentHeight)
                     .overlay(
-                        Capsule()
-                            .stroke(Color.black, lineWidth: 1)
+                        Group {
+                            if index == filledSegments - 1 {
+                                Capsule()
+                                    .stroke(Color("SecondaryColor"), lineWidth: 1)
+                            } else if index >= filledSegments {
+                                Capsule()
+                                    .stroke(Color("SecondaryColor"), lineWidth: 1)
+                            } else {
+                                EmptyView()
+                            }
+                        }
                     )
             }
         }
+        .frame(width: tileWidth - 20)
+        .padding(.top, 4)
     }
 }

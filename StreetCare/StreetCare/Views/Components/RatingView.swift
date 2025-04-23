@@ -7,22 +7,25 @@
 
 import SwiftUI
 
+import SwiftUI
+
 struct RatingView: View {
     
     @Binding var rating: Int
     var readOnly = false
     
-    private let starFilled = "star.fill"
-    private let starEmpty = "star"
+    private let starIcon = "star.fill"
     
-    private let colorFill = Color.yellow
-    private let colorEmpty = Color.gray
-    
+    private let colorFill = Color(red: 1.0, green: 0.671, blue: 0.0)
+    private let colorEmpty = Color.gray.opacity(0.3)
+
     var body: some View {
-        
-        HStack {
+        HStack(spacing: 20) {
             ForEach(1...5, id: \.self) { i in
-                Image(systemName: i <= rating ? starFilled : starEmpty)
+                Image(systemName: starIcon)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 24, height: 24)
                     .foregroundColor(i <= rating ? colorFill : colorEmpty)
                     .onTapGesture {
                         if !readOnly {
@@ -31,11 +34,9 @@ struct RatingView: View {
                     }
             }
         }
-    } // end body
-    
-        
-    
-} // end struct
+        .padding()
+    }
+}
 
 struct RatingView_Previews: PreviewProvider {
     

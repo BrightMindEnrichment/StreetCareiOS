@@ -8,17 +8,17 @@ import SwiftUI
 import CoreLocation
 import CoreLocationUI
 
-struct InputTileLocation: View { 
+struct InputTileLocation: View {
 
     var questionNumber: Int
     var totalQuestions: Int
         
-    var size = CGSize(width: 300.0, height: 450.0)
-    var question: String
+    var size = CGSize(width: 320.0, height: 460.0)
+    var question1: String
+    var question2: String
     
     @Binding var textValue: String
     @Binding var location: CLLocationCoordinate2D
-    @ObservedObject var visitLog: VisitLog
     
     @State var locationManager: LocationManager!
     
@@ -28,6 +28,7 @@ struct InputTileLocation: View {
     @State private var state = ""
     @State private var city = ""
     @State private var zipcode = ""
+    @State private var landmark = ""
     @State private var stateAbbreviation = ""
     @State private var showAddressSearch = false
         
@@ -42,36 +43,42 @@ struct InputTileLocation: View {
 
             VStack {
                 HStack {
+                    Text("Question \(questionNumber)/\(totalQuestions)")
+                        .foregroundColor(.black)
+                        //.font(.footnote)
+                    
                     Spacer()
-                    Button("Skip") {
+                    
+                    /*Button("Skip") {
                         skipAction()
                     }
                     .foregroundColor(.gray)
-                    .padding()
+                    .padding()*/
+                    
+                }
+                .padding(.horizontal)
+                .padding(.top, 12)
+                
+                Divider()
+                    .background(Color.gray.opacity(0.3))
+                    .padding(.horizontal)
+    
+                VStack{
+                    Text(question1)
+                        .font(.title2)
+                        .padding(.top, 6)
+                        .fontWeight(.bold)
+                    Text(question2)
+                        .font(.title2)
+                        .padding(.bottom, 12)
+                        .fontWeight(.bold)
                 }
 
-                Spacer()
-
-                Text("Question \(questionNumber)/\(totalQuestions)")
-                    .foregroundColor(.gray)
-                    .font(.footnote)
-    
-                VStack {
-                    Text(question)
-                        .font(.headline)
-                        .padding()
-    
-                    /*LocationButton {
-                        isLoading = true
-                        locationManager.requestLocation()
-                    }
-
-                    Spacer()*/
                     HStack {
                         Image(systemName: "magnifyingglass")
                             .foregroundColor(.gray)
                         
-                        Text(street.isEmpty ? "Search Address" : street)
+                        Text(street.isEmpty ? "Search for address" : street)
                             .foregroundColor(street.isEmpty ? .gray : .primary)
                             .frame(maxWidth: .infinity, alignment: .leading) //
                     }
@@ -87,42 +94,73 @@ struct InputTileLocation: View {
                     .onTapGesture {
                         showAddressSearch = true
                     }
-                }
-                Spacer()
-                VStack {
-                    TextField(NSLocalizedString("state", comment: ""), text: $state)
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
-                        .padding(.horizontal, 20)
 
-                    TextField(NSLocalizedString("city", comment: ""), text: $city)
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
-                        .padding(.horizontal, 20)
+                VStack {
+                    HStack {
+                        TextField(NSLocalizedString("city", comment: ""), text: $city)
+                            .textFieldStyle(RoundedBorderTextFieldStyle())
+                            .layoutPriority(1) // Higher priority
+                            .frame(maxWidth: 300)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 8)
+                                    .stroke(Color.gray.opacity(0.5), lineWidth: 1)
+                            )
+
+                        TextField(NSLocalizedString("state", comment: ""), text: $stateAbbreviation)
+                            .textFieldStyle(RoundedBorderTextFieldStyle())
+                            .layoutPriority(0)
+                            .frame(maxWidth: 100) // Optional: limit the width
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 8)
+                                    .stroke(Color.gray.opacity(0.5), lineWidth: 1)
+                            )
+                    }
+                    .padding(.horizontal)
+                    .padding(.top, 12)
 
                     TextField(NSLocalizedString("zipcode", comment: ""), text: $zipcode)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
-                        .padding(.horizontal, 20)
-
+                        .padding(.horizontal)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 8)
+                                .stroke(Color.gray.opacity(0.5), lineWidth: 1)
+                                .padding(.horizontal)
+                        )
+                    
+                    AutoGrowingTextEditor(text: $landmark, placeholder: NSLocalizedString("landmark", comment: ""))
+                    
                     HStack {
                         Button("Previous") {
                             previousAction()
                         }
-                        .foregroundColor(Color("TextColor"))
+                        .foregroundColor(Color("SecondaryColor"))
+                        .font(.footnote)
+                        .padding(.horizontal, 16)
+                        .padding(.vertical, 8)
+                        .background(
+                            Capsule()
+                                .fill(Color.white) // Fill with white
+                        )
+                        .overlay(
+                            Capsule()
+                                .stroke(Color("SecondaryColor"), lineWidth: 2) // Stroke with dark green
+                        )
+                        
                         Spacer()
-                        Button("Next") {
+                        
+                        Button(" Next  ") {
                             nextAction()
                         }
-                        .foregroundColor(Color("TextColor"))
+                        .foregroundColor(Color("PrimaryColor"))
+                        .fontWeight(.bold)
+                        .padding(.horizontal, 16)
+                        .padding(.vertical, 8)
+                        .background(
+                            Capsule()
+                                .fill(Color("SecondaryColor"))
+                        )
                     }
                     .padding()
-                    
-                    SegmentedProgressBar(
-                        totalSegments: totalQuestions,
-                        filledSegments: questionNumber
-                    )
-                    
-                    Text("Progress")
-                        .font(.caption)
-                        .padding(.top, 4)
                 }
             }
         }
@@ -151,13 +189,6 @@ struct InputTileLocation: View {
                             if let newLocation = newValue {
                                 self.location = newLocation // ✅ Updates location
                                 self.textValue = "\(self.street), \(self.city), \(self.state) \(self.zipcode)" // ✅ Updates whereVisit
-                                // ✅ Update VisitLog properties
-                                visitLog.street = self.street
-                                visitLog.city = self.city
-                                visitLog.state = self.state
-                                visitLog.stateAbbv = self.stateAbbreviation
-                                visitLog.zipcode = self.zipcode
-
                                 print("📍 Updated whereVisit: \(self.textValue)")
                                 print("📍 Updated location: \(self.location.latitude), \(self.location.longitude)")
                             }
@@ -173,6 +204,16 @@ struct InputTileLocation: View {
         }, message: {
             Text("Sorry, having a problem finding your current location.")
         })
+        SegmentedProgressBar(
+            totalSegments: totalQuestions,
+            filledSegments: questionNumber,
+            tileWidth: 320
+        )
+
+        Text("Progress")
+            .font(.footnote)
+            .padding(.top, 4)
+            .fontWeight(.bold)
         
 
     }
@@ -187,5 +228,56 @@ struct InputTileLocation: View {
             failedToFindLocation = true
             print("missing location!")
         }
+    }
+}
+
+struct AutoGrowingTextEditor: View {
+    @Binding var text: String
+    var placeholder: String // ✅ New parameter
+    @State private var dynamicHeight: CGFloat = 100
+
+    var body: some View {
+        ZStack(alignment: .topLeading) {
+            // Background height-measuring text
+            Text(text.isEmpty ? " " : text)
+                .font(.body)
+                .padding(EdgeInsets(top: 8, leading: 4, bottom: 8, trailing: 4))
+                .background(
+                    GeometryReader { geo in
+                        Color.clear
+                            .onAppear {
+                                dynamicHeight = geo.size.height
+                            }
+                            .onChange(of: text) { _ in
+                                dynamicHeight = geo.size.height
+                            }
+                    }
+                )
+                .hidden()
+
+            // Placeholder
+            if text.isEmpty {
+                Text(placeholder) // ✅ Use parameter here
+                    .foregroundColor(Color.gray.opacity(0.3))
+                    .padding(.top, 12)
+                    .padding(.leading, 10)
+                    .zIndex(1)
+            }
+
+            // TextEditor
+            TextEditor(text: $text)
+                .font(.body)
+                .frame(height: max(100, dynamicHeight))
+                .padding(4)
+                .background(Color.white)
+                .cornerRadius(5)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 5)
+                        .stroke(Color.gray, lineWidth: 1)
+                )
+        }
+        .padding(.horizontal)
+        .padding(.top, 4)
+        .shadow(radius: 1)
     }
 }

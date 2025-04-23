@@ -30,7 +30,7 @@ struct VisitImpactView: View {
         NavigationStack {
             VStack {
                 
-                Text("VISIT LOG").font(.system(size: 18)).padding()
+                Text("INTERACTION LOG").font(.system(size: 18)).padding()
                 ImpactView(peopleHelped: peopleHelped, outreaches: outreaches, itemsDonated: itemsDonated)
                 
                 NavigationLink {

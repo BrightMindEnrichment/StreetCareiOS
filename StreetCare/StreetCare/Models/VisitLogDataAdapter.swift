@@ -34,7 +34,7 @@ class VisitLogDataAdapter {
         guard let user = Auth.auth().currentUser else {
             print("no user?")
             return
-        }  
+        }
         let collectionName = "VisitLogBook"
         let settings = FirestoreSettings()
  

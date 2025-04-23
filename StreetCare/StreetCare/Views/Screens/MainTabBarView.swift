@@ -19,7 +19,7 @@ struct MainTabBarView: View {
                 .tag(0)
             VisitImpactView()
                 .tabItem{
-                    TabButtonView(imageName: "Tab-VisitLog", title: "Visit Log", isActive: (selection == 1))
+                    TabButtonView(imageName: "Tab-VisitLog", title: "Interaction Log", isActive: (selection == 1))
                 }
                 .tag(1)
 

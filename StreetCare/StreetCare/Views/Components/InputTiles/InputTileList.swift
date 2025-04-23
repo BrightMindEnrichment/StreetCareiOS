@@ -17,7 +17,8 @@ struct InputTileList: View {
     var optionCount = 5
     
     var size = CGSize(width: 300.0, height: 450.0)
-    var question: String
+    var question1: String
+    var question2: String
     
     @Binding var foodAndDrinks: Bool
     @Binding var clothes: Bool
@@ -40,44 +41,65 @@ struct InputTileList: View {
             
             VStack {
                 HStack {
+                    Text("Question \(questionNumber)/\(totalQuestions)")
+                        .foregroundColor(.black)
+                        //.font(.footnote)
+                    
                     Spacer()
+                    
                     Button("Skip") {
                         skipAction()
                     }
-                    .foregroundColor(.gray)
-                    .padding(EdgeInsets(top: 10.0, leading: 0.0, bottom: 0.0, trailing: 16.0))
-                }
-
-                Spacer()
-
-                Text("Question \(questionNumber)/\(totalQuestions)")
-                    .foregroundColor(.gray)
+                    .foregroundColor(Color("SecondaryColor"))
                     .font(.footnote)
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 8)
+                    .background(
+                        Capsule()
+                            .fill(Color.white)
+                    )
+                    .overlay(
+                        Capsule()
+                            .stroke(Color("SecondaryColor"), lineWidth: 2)
+                    )
+                    
+                }
+                .padding(.horizontal)
+                .padding(.top, 12)
+                
+                Divider()
+                    .background(Color.gray.opacity(0.3))
+                    .padding(.horizontal)
     
-                Text(question)
-                    .font(.headline)
-                    //.padding()
+                VStack{
+                    Text(question1)
+                        .font(.title3)
+                        .padding(.top, 12)
+                        .fontWeight(.bold)
+                    Text(question2)
+                        .font(.title3)
+                        .padding(.bottom, 12)
+                        .fontWeight(.bold)
+                }
                 
                 ScrollView {
-                    VStack(alignment: .leading, spacing: 10) { // Add spacing between toggles
-                        Toggle("Food & Drinks", isOn: $foodAndDrinks)
-                        Toggle("Clothes", isOn: $clothes)
-                        Toggle("Hygiene Products", isOn: $hygine)
-                        Toggle("Wellness/Emotional Support", isOn: $wellness)
-                        Toggle("Medical Help", isOn: $medical)
-                        Toggle("Social Worker/Psychiatrist", isOn: $socialworker)
-                        Toggle("Legal/Lawyer", isOn: $legal)
-                        Toggle("Other", isOn: $other)
-                        
+                    VStack(alignment: .leading, spacing: 10) {
+                        checkbox("Food & Drinks", isChecked: $foodAndDrinks)
+                        checkbox("Clothes", isChecked: $clothes)
+                        checkbox("Hygiene Products", isChecked: $hygine)
+                        checkbox("Wellness/Emotional Support", isChecked: $wellness)
+                        checkbox("Medical Help", isChecked: $medical)
+                        checkbox("Social Worker/Psychiatrist", isChecked: $socialworker)
+                        checkbox("Legal/Lawyer", isChecked: $legal)
+                        checkbox("Other", isChecked: $other)
+
                         if other {
-                            TextField("Other", text: $otherNotes)
-                                .textFieldStyle(RoundedBorderTextFieldStyle()) // Optional: Improve appearance
-                                .padding(.top, 5)
+                            AutoGrowingTextEditor(text: $otherNotes, placeholder: NSLocalizedString("otherNotes", comment: ""))
                         }
                     }
-                    .padding() // Apply padding to the entire VStack
+                    .padding()
                 }
-                .padding()
+                //.padding()
                 
                 Spacer()
                 
@@ -85,26 +107,49 @@ struct InputTileList: View {
                     Button("Previous") {
                         previousAction()
                     }
-                    .foregroundColor(Color("TextColor"))
+                    .foregroundColor(Color("SecondaryColor"))
+                    .font(.footnote)
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 8)
+                    .background(
+                        Capsule()
+                            .fill(Color.white) // Fill with white
+                    )
+                    .overlay(
+                        Capsule()
+                            .stroke(Color("SecondaryColor"), lineWidth: 2) // Stroke with dark green
+                    )
+                    
                     Spacer()
-                    Button("Next") {
+                    
+                    Button(" Next  ") {
                         nextAction()
                     }
-                    .foregroundColor(Color("TextColor"))
+                    .foregroundColor(Color("PrimaryColor"))
+                    .fontWeight(.bold)
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 8)
+                    .background(
+                        Capsule()
+                            .fill(Color("SecondaryColor"))
+                    )
                 }
                 .padding()
                 
-                SegmentedProgressBar(
-                    totalSegments: totalQuestions,
-                    filledSegments: questionNumber
-                )
-                
-                Text("Progress")
-                    .font(.caption)
-                    .padding(.top, 4)
             }
         }
         .frame(width: size.width, height: size.height)
+        
+        SegmentedProgressBar(
+            totalSegments: totalQuestions,
+            filledSegments: questionNumber,
+            tileWidth: 300
+        )
+        
+        Text("Progress")
+            .font(.footnote)
+            .padding(.top, 4)
+            .fontWeight(.bold)
 
     } // end body
 } // end struct
@@ -126,7 +171,8 @@ struct InputTileList_Previews: PreviewProvider {
         InputTileList(
             questionNumber: 1,
             totalQuestions: 5,
-            question: "What kind of help did you provide?",
+            question1: "What kind of help did you provide?",
+            question2: "",
             foodAndDrinks: $foodAndDrinks,
             clothes: $clothes,
             hygine: $hygine,
@@ -141,4 +187,38 @@ struct InputTileList_Previews: PreviewProvider {
             skipAction: {}
         )
     }
+}
+
+@ViewBuilder
+func checkbox(_ label: String, isChecked: Binding<Bool>) -> some View {
+    Button(action: {
+        isChecked.wrappedValue.toggle()
+    }) {
+        HStack {
+            ZStack {
+                // Background box
+                RoundedRectangle(cornerRadius: 4)
+                    .stroke(Color("SecondaryColor"), lineWidth: 2)
+                    .background(
+                        RoundedRectangle(cornerRadius: 4)
+                            .fill(isChecked.wrappedValue ? Color("SecondaryColor") : Color.clear)
+                    )
+                    .frame(width: 20, height: 20)
+                
+                // Checkmark
+                if isChecked.wrappedValue {
+                    Image(systemName: "checkmark")
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: 12, height: 12)
+                        .foregroundColor(Color("PrimaryColor"))
+                }
+            }
+
+            Text(label)
+                .foregroundColor(.primary)
+        }
+        .padding(.vertical, 4)
+    }
+    .buttonStyle(PlainButtonStyle())
 }
