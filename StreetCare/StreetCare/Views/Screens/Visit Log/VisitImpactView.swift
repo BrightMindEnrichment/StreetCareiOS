@@ -133,19 +133,44 @@ struct VisitImpactView: View {
     }
 
     private func updateCounts() {
+
         self.outreaches = history.count
-        self.peopleHelped = history.reduce(0) { $0 + $1.peopleHelped }
-        self.itemsDonated = history.reduce(0) { result, visitLog in
+        
+        self.peopleHelped = history.reduce(0, { partialResult, visitLog in
+            partialResult + visitLog.peopleHelped
+        })
+        
+        self.itemsDonated = history.reduce(0, { partialResult, visitLog in
+            
             var newDonations = 0
-            if visitLog.foodAndDrinks { newDonations += 1 }
-            if visitLog.clothes { newDonations += 1 }
-            if visitLog.hygine { newDonations += 1 }
-            if visitLog.wellness { newDonations += 1 }
-            if visitLog.other { newDonations += 1 }
-            return result + newDonations
-        }
+            
+            if visitLog.foodAndDrinks {
+                newDonations += 1
+            }
+
+            if visitLog.clothes {
+                newDonations += 1
+            }
+
+            if visitLog.hygine {
+                newDonations += 1
+            }
+            
+            if visitLog.wellness {
+                newDonations += 1
+            }
+
+            if visitLog.other {
+                newDonations += 1
+            }
+
+            return partialResult + newDonations
+        })
+
+        
     }
-}
+    
+} // end struct
 
 extension VisitImpactView: VisitLogDataAdapterProtocol {
     func visitLogDataRefreshed(_ logs: [VisitLog]) {
