@@ -16,7 +16,7 @@ struct RatingView: View {
     
     private let starIcon = "star.fill"
     
-    private let colorFill = Color.yellow
+    private let colorFill = Color(red: 1.0, green: 0.671, blue: 0.0)
     private let colorEmpty = Color.gray.opacity(0.3)
 
     var body: some View {

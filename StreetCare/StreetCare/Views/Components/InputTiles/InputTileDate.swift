@@ -150,6 +150,7 @@ struct InputTileDate: View {
                             previousAction()
                         }
                         .foregroundColor(Color("SecondaryColor"))
+                        .font(.footnote)
                         .padding(.horizontal, 16)
                         .padding(.vertical, 8)
                         .background(
@@ -167,6 +168,7 @@ struct InputTileDate: View {
                             nextAction()
                         }
                         .foregroundColor(Color("PrimaryColor"))
+                        .fontWeight(.bold)
                         .padding(.horizontal, 16)
                         .padding(.vertical, 8)
                         .background(
@@ -182,11 +184,12 @@ struct InputTileDate: View {
         .frame(width: size.width, height: size.height)
         SegmentedProgressBar(
             totalSegments: totalQuestions,
-            filledSegments: questionNumber
+            filledSegments: questionNumber,
+            tileWidth: 350
         )
 
         Text("Progress")
-            .font(.caption)
+            .font(.footnote)
             .padding(.top, 4)
             .fontWeight(.bold)
     }

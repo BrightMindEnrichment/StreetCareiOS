@@ -243,7 +243,7 @@ struct VisitLogEntry_Previews: PreviewProvider {
         VisitLogEntry()
     }
 }
-struct SegmentedProgressBar: View {
+/*struct SegmentedProgressBar: View {
     var totalSegments: Int
     var filledSegments: Int
 
@@ -271,6 +271,41 @@ struct SegmentedProgressBar: View {
                     )
             }
         }
+        .padding(.top, 4)
+    }
+}*/
+struct SegmentedProgressBar: View {
+    var totalSegments: Int
+    var filledSegments: Int
+    var tileWidth: CGFloat
+    let segmentHeight: CGFloat = 12
+    let spacing: CGFloat = 8
+
+    var body: some View {
+        let totalSpacing = spacing * CGFloat(totalSegments - 1)
+        let segmentWidth = (tileWidth - totalSpacing) / CGFloat(totalSegments)
+
+        HStack(spacing: spacing) {
+            ForEach(0..<totalSegments, id: \.self) { index in
+                Capsule()
+                    .fill(index < filledSegments ? Color("PrimaryColor") : Color("SecondaryColor"))
+                    .frame(width: segmentWidth, height: segmentHeight)
+                    .overlay(
+                        Group {
+                            if index == filledSegments - 1 {
+                                Capsule()
+                                    .stroke(Color("SecondaryColor"), lineWidth: 1)
+                            } else if index >= filledSegments {
+                                Capsule()
+                                    .stroke(Color("SecondaryColor"), lineWidth: 1)
+                            } else {
+                                EmptyView()
+                            }
+                        }
+                    )
+            }
+        }
+        .frame(width: tileWidth)
         .padding(.top, 4)
     }
 }

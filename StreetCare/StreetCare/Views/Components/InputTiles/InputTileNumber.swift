@@ -51,6 +51,7 @@ struct InputTileNumber: View {
                         skipAction()
                     }
                     .foregroundColor(Color("SecondaryColor"))
+                    .font(.footnote)
                     .padding(.horizontal, 16)
                     .padding(.vertical, 8)
                     .background(
@@ -102,10 +103,26 @@ struct InputTileNumber: View {
                             .clipShape(Circle())
                     }
 
-                    Text("\(number)")
+                    /*TextField("", value: $number, formatter: NumberFormatter())
+                        .keyboardType(.numberPad)
+                        .multilineTextAlignment(.center)
                         .font(.title2)
                         .fontWeight(.bold)
-
+                        .frame(width: 60)
+                        .padding(6)
+                        .background(Color.white)
+                        .cornerRadius(8)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 8)
+                                .stroke(Color("SecondaryColor"), lineWidth: 1)
+                        )*/
+                    TextField("", value: $number, formatter: NumberFormatter())
+                        .keyboardType(.numberPad)
+                        .multilineTextAlignment(.center)
+                        .font(.title2)
+                        .fontWeight(.bold)
+                        .frame(width: 60)
+                        .textFieldStyle(PlainTextFieldStyle()) // removes any border or background
                     Button(action: {
                         number += 1
                     }) {
@@ -139,6 +156,7 @@ struct InputTileNumber: View {
                         previousAction()
                     }
                     .foregroundColor(Color("SecondaryColor"))
+                    .font(.footnote)
                     .padding(.horizontal, 16)
                     .padding(.vertical, 8)
                     .background(
@@ -149,13 +167,14 @@ struct InputTileNumber: View {
                         Capsule()
                             .stroke(Color("SecondaryColor"), lineWidth: 2) // Stroke with dark green
                     )
-
+                    
                     Spacer()
-
+                    
                     Button(" Next  ") {
                         nextAction()
                     }
                     .foregroundColor(Color("PrimaryColor"))
+                    .fontWeight(.bold)
                     .padding(.horizontal, 16)
                     .padding(.vertical, 8)
                     .background(
@@ -169,11 +188,12 @@ struct InputTileNumber: View {
         .frame(width: tileWidth, height: tileHeight)
         SegmentedProgressBar(
             totalSegments: totalQuestions,
-            filledSegments: questionNumber
+            filledSegments: questionNumber,
+            tileWidth: tileWidth
         )
 
         Text("Progress")
-            .font(.caption)
+            .font(.footnote)
             .padding(.top, 4)
             .fontWeight(.bold)
 

@@ -13,7 +13,7 @@ struct InputTileLocation: View {
     var questionNumber: Int
     var totalQuestions: Int
         
-    var size = CGSize(width: 300.0, height: 460.0)
+    var size = CGSize(width: 320.0, height: 460.0)
     var question1: String
     var question2: String
     
@@ -134,6 +134,7 @@ struct InputTileLocation: View {
                             previousAction()
                         }
                         .foregroundColor(Color("SecondaryColor"))
+                        .font(.footnote)
                         .padding(.horizontal, 16)
                         .padding(.vertical, 8)
                         .background(
@@ -144,13 +145,14 @@ struct InputTileLocation: View {
                             Capsule()
                                 .stroke(Color("SecondaryColor"), lineWidth: 2) // Stroke with dark green
                         )
-
+                        
                         Spacer()
-
+                        
                         Button(" Next  ") {
                             nextAction()
                         }
                         .foregroundColor(Color("PrimaryColor"))
+                        .fontWeight(.bold)
                         .padding(.horizontal, 16)
                         .padding(.vertical, 8)
                         .background(
@@ -204,11 +206,12 @@ struct InputTileLocation: View {
         })
         SegmentedProgressBar(
             totalSegments: totalQuestions,
-            filledSegments: questionNumber
+            filledSegments: questionNumber,
+            tileWidth: 320
         )
 
         Text("Progress")
-            .font(.caption)
+            .font(.footnote)
             .padding(.top, 4)
             .fontWeight(.bold)
         

@@ -51,6 +51,7 @@ struct InputTileList: View {
                         skipAction()
                     }
                     .foregroundColor(Color("SecondaryColor"))
+                    .font(.footnote)
                     .padding(.horizontal, 16)
                     .padding(.vertical, 8)
                     .background(
@@ -107,6 +108,7 @@ struct InputTileList: View {
                         previousAction()
                     }
                     .foregroundColor(Color("SecondaryColor"))
+                    .font(.footnote)
                     .padding(.horizontal, 16)
                     .padding(.vertical, 8)
                     .background(
@@ -117,13 +119,14 @@ struct InputTileList: View {
                         Capsule()
                             .stroke(Color("SecondaryColor"), lineWidth: 2) // Stroke with dark green
                     )
-
+                    
                     Spacer()
-
+                    
                     Button(" Next  ") {
                         nextAction()
                     }
                     .foregroundColor(Color("PrimaryColor"))
+                    .fontWeight(.bold)
                     .padding(.horizontal, 16)
                     .padding(.vertical, 8)
                     .background(
@@ -139,11 +142,12 @@ struct InputTileList: View {
         
         SegmentedProgressBar(
             totalSegments: totalQuestions,
-            filledSegments: questionNumber
+            filledSegments: questionNumber,
+            tileWidth: 300
         )
         
         Text("Progress")
-            .font(.caption)
+            .font(.footnote)
             .padding(.top, 4)
             .fontWeight(.bold)
 

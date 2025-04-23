@@ -79,11 +79,12 @@ struct InputTileMoreQuestions: View {
         .frame(width: size.width, height: size.height)
         SegmentedProgressBar(
             totalSegments: totalQuestions,
-            filledSegments: questionNumber
+            filledSegments: questionNumber,
+            tileWidth: 300
         )
 
         Text("Progress")
-            .font(.caption)
+            .font(.footnote)
             .padding(.top, 4)
             .fontWeight(.bold)
 
