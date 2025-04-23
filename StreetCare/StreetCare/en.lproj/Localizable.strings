@@ -30,7 +30,8 @@
 "password" = "Password";
 "company" = "Company/Organization (Optional)";
 "signUpButtonTitle" = "Sign Up";
-"loginButtonTitle" = "Log in";
+"loginButtonTitle" = "Log In";
+"login" = "LOG IN";
 "welcome" = "Welcome";
 "howToVideos" = "How-to Videos";
 "logoutButtonTitle" = "Sign Out";

@@ -27,31 +27,38 @@ struct LoginView: View {
             if let errorMessage = self.errorMessage {
                 Text(errorMessage)
             }
-            VStack(spacing: 12.0) {
+            VStack(spacing: 29.0) {
 
-                TextField("email", text: $email)
+                TextField("Username/Email", text: $email)
                     .keyboardType(.emailAddress)
                     .textFieldStyle(.roundedBorder)
                 
-                SecureField("password", text: $password)
-                    .textFieldStyle(.roundedBorder)                
+                SecureField("Password", text: $password)
+                    .textFieldStyle(.roundedBorder)
             }
+            .frame(width: 340, height: 43)
             .padding()
             VStack {
 
                 NavigationLink {
                     ForgotPasswordView()
                 } label: {
-                    NavLinkButton(title: "Forgot password?", width: 150.0, secondaryButton: true, noBorder: true)
+                    NavLinkButton(title: "Forgot your password?", width: 150.0, secondaryButton: true, noBorder: true,color: Color(
+                        red:   0/255,
+                        green: 122/255,
+                        blue: 255/255
+                    ))
                 }
+                .padding()
 
                 Button {
                     login()
                 } label: {
-                    Text("loginButtonTitle")
+                    Text("login")
                         .padding(EdgeInsets(top: 8.0, leading: 20.0, bottom: 8.0, trailing: 20.0))
                         .foregroundColor(Color("PrimaryColor"))
-                        .frame(width: 300.0)
+                        .frame(width: 248.0)
+                        
                 }
                 .background(Color("SecondaryColor"))
                 .clipShape(Capsule())
@@ -70,7 +77,9 @@ struct LoginView: View {
 //                .clipShape(Capsule())
             }
         }
-        .navigationTitle("loginButtonTitle")
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+        .padding(.top, 50)
+        .navigationTitle("loginButtonTitle").bold()
         .navigationBarTitleDisplayMode(.inline)
     } // end body
     

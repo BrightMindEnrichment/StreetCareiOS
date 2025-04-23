@@ -60,6 +60,7 @@
 "welcome" = "Bienvenidas";
 
 "loginButtonTitle" = "Acceso";
+"login" = "INICIAR SESIÓN";
 "signUpButtonTitle" = "Inscribirse";
 "logoutButtonTitle" = "Desconectar";
 "removeAccountButtonTitle" = "Eliminar cuenta";
