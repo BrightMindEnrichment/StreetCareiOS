@@ -34,7 +34,7 @@ struct VisitLogEntry: View {
                                 
                 switch questionNumber {
                 case 1:
-                    InputTileDate(questionNumber: 1, totalQuestions: 6, question1: "When was your",question2: "Interaction?", datetimeValue: $visitLog.whenVisit) {
+                    InputTileDate(questionNumber: 1, totalQuestions: 6, question1: "When was your",question2: "Interaction?",question3: "", showSkip: false,  datetimeValue: $visitLog.whenVisit) {
                         questionNumber += 1
                     } skipAction: {
                         questionNumber += 1
@@ -126,13 +126,13 @@ struct VisitLogEntry: View {
                     } skipAction: {
                         questionNumber -= 1
                     } yesAction: {
-                        questionNumber += 1
+                        questionNumber += 5
                     } noAction: {
                         saveVisitLog()
                         questionNumber = 100
                     }
 
-                case 8:
+                /*case 8:
                     InputTileList(
                         questionNumber: 1,
                         totalQuestions: 7,
@@ -162,7 +162,7 @@ struct VisitLogEntry: View {
                         questionNumber -= 1
                     } skipAction: {
                         questionNumber += 1
-                    }
+                    }*/
 //                case 8:
 //                    InputTileDuration(questionNumber: 2, totalQuestions: 5, question: "Approximate time spent on outreach?", hours: $visitLog.durationHours, minutes: $visitLog.durationMinutes) {
 //                        questionNumber += 1
@@ -184,7 +184,7 @@ struct VisitLogEntry: View {
 //                        questionNumber += 1
 //                        saveVisitLog()
 //                    }
-                case 10:
+                /*case 10:
                     InputTileDate(questionNumber: 3, totalQuestions: 4, question1: "Is there a planned date to",question2: "interact with them again?", datetimeValue: $visitLog.followUpWhenVisit) {
                         questionNumber += 1
                     } skipAction: {
@@ -202,6 +202,14 @@ struct VisitLogEntry: View {
                     } skipAction: {
                         saveVisitLog()
                         questionNumber = 100
+                    }*/
+                case 12:
+                    InputTileDate(questionNumber: 5, totalQuestions: 7, question1: "Is there a planned dare",question2: "to interact with them", question3: "again?", showSkip: true, datetimeValue: $visitLog.whenVisit) {
+                        questionNumber += 1
+                    } skipAction: {
+                        questionNumber += 1
+                    } previousAction: {
+                        questionNumber -= 1
                     }
                     
                 case 100:

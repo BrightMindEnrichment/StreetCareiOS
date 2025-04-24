@@ -13,9 +13,11 @@ struct InputTileDate: View {
     var questionNumber: Int
     var totalQuestions: Int
     
-    var size = CGSize(width: 350.0, height: 320.0)
+    var size = CGSize(width: 350.0, height: 360.0)
     var question1: String
     var question2: String
+    var question3: String
+    var showSkip: Bool
     
         
     @Binding var datetimeValue: Date
@@ -43,11 +45,23 @@ struct InputTileDate: View {
                     
                     Spacer()
                     
-                    /*Button("Skip") {
-                        skipAction()
+                    if showSkip{
+                        Button("Skip") {
+                            skipAction()
+                        }
+                        .foregroundColor(Color("SecondaryColor"))
+                        .font(.footnote)
+                        .padding(.horizontal, 16)
+                        .padding(.vertical, 8)
+                        .background(
+                            Capsule()
+                                .fill(Color.white)
+                        )
+                        .overlay(
+                            Capsule()
+                                .stroke(Color("SecondaryColor"), lineWidth: 2)
+                        )
                     }
-                    .foregroundColor(.gray)
-                    .padding()*/
                     
                 }
                 .padding(.horizontal)
@@ -64,6 +78,10 @@ struct InputTileDate: View {
                         .padding(.top, 6)
                         .fontWeight(.bold)
                     Text(question2)
+                        .font(.title2)
+                        .fontWeight(.bold)
+                        .fontWeight(.bold)
+                    Text(question3)
                         .font(.title2)
                         .padding(.bottom, 12)
                         .fontWeight(.bold)
@@ -208,7 +226,7 @@ struct InputTileDate_Previews: PreviewProvider {
 
     static var previews: some View {
 
-        InputTileDate(questionNumber: 3, totalQuestions: 4, question1: "Is there a planned date to",question2: "interact with them again?", datetimeValue: $input) {
+        InputTileDate(questionNumber: 3, totalQuestions: 4, question1: "Is there a planned date to",question2: "interact with them again?",question3: "", showSkip: true, datetimeValue: $input) {
             //
         } skipAction: {
             //
