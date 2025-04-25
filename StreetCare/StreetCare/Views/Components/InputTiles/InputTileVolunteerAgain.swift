@@ -13,7 +13,8 @@ struct InputTileVolunteerAgain: View {
     var totalQuestions: Int
         
     var size = CGSize(width: 300.0, height: 450.0)
-    var question: String
+    var question1: String
+    var question2: String
     
     @Binding var volunteerAgain: Int
         
@@ -28,31 +29,104 @@ struct InputTileVolunteerAgain: View {
             
             VStack {
                 HStack {
+                    Text("Question \(questionNumber)/\(totalQuestions)")
+                        .foregroundColor(.black)
+                        //.font(.footnote)
+                    
                     Spacer()
+                    
                     Button("Skip") {
                         skipAction()
                     }
-                    .foregroundColor(.gray)
-                    .padding()
-                }
-
-                Spacer()
-
-                Text("Question \(questionNumber)/\(totalQuestions)")
-                    .foregroundColor(.gray)
+                    .foregroundColor(Color("SecondaryColor"))
                     .font(.footnote)
-    
-                Text(question)
-                    .font(.headline)
-                    .padding()
-                
-                Picker("\(question)", selection: $volunteerAgain) {
-                    Text("Yes").tag(1)
-                    Text("No").tag(0)
-                    Text("Maybe").tag(2)
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 8)
+                    .background(
+                        Capsule()
+                            .fill(Color.white)
+                    )
+                    .overlay(
+                        Capsule()
+                            .stroke(Color("SecondaryColor"), lineWidth: 2)
+                    )
+                    
                 }
-                .pickerStyle(.segmented)
-                .padding()
+                .padding(.horizontal)
+                .padding(.top, 12)
+                
+                Divider()
+                    .background(Color.gray.opacity(0.3))
+                    .padding(.horizontal)
+    
+                VStack{
+                    Text(question1)
+                        .font(.title2)
+                        .padding(.bottom, 1)
+                        .fontWeight(.bold)
+                    Text(question2)
+                        .font(.title2)
+                        .padding(.bottom, 1)
+                        .fontWeight(.bold)
+                }
+                
+                VStack(spacing: 12) {
+                    Button(action: {
+                        volunteerAgain = 1
+                    }) {
+                        Text("Yes")
+                            .font(.footnote)
+                            .foregroundColor(volunteerAgain == 1 ? .white : Color("SecondaryColor"))
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 8)
+                            .background(
+                                Capsule()
+                                    .fill(volunteerAgain == 1 ? Color("SecondaryColor") : Color.white)
+                            )
+                            .overlay(
+                                Capsule()
+                                    .stroke(Color("SecondaryColor"), lineWidth: 2)
+                            )
+                    }
+
+                    Button(action: {
+                        volunteerAgain = 0
+                    }) {
+                        Text("No")
+                            .font(.footnote)
+                            .foregroundColor(volunteerAgain == 0 ? .white : Color("SecondaryColor"))
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 8)
+                            .background(
+                                Capsule()
+                                    .fill(volunteerAgain == 0 ? Color("SecondaryColor") : Color.white)
+                            )
+                            .overlay(
+                                Capsule()
+                                    .stroke(Color("SecondaryColor"), lineWidth: 2)
+                            )
+                    }
+
+                    Button(action: {
+                        volunteerAgain = 2
+                    }) {
+                        Text("Maybe")
+                            .font(.footnote)
+                            .foregroundColor(volunteerAgain == 2 ? .white : Color("SecondaryColor"))
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 8)
+                            .background(
+                                Capsule()
+                                    .fill(volunteerAgain == 2 ? Color("SecondaryColor") : Color.white)
+                            )
+                            .overlay(
+                                Capsule()
+                                    .stroke(Color("SecondaryColor"), lineWidth: 2)
+                            )
+                    }
+                }
+                .padding(.horizontal)
+                
                 
                 Spacer()
                 

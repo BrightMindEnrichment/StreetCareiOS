@@ -73,11 +73,11 @@ struct InputTileList: View {
     
                 VStack{
                     Text(question1)
-                        .font(.title3)
+                        .font(.title2)
                         .padding(.top, 12)
                         .fontWeight(.bold)
                     Text(question2)
-                        .font(.title3)
+                        .font(.title2)
                         .padding(.bottom, 12)
                         .fontWeight(.bold)
                 }

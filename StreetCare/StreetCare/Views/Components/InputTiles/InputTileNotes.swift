@@ -1,14 +1,13 @@
 //
-//  InputTileNumber.swift
+//  InputTileNotes.swift
 //  StreetCare
 //
-//  Created by Michael on 4/19/23.
+//  Created by Marian John on 4/24/25.
 //
-
 
 import SwiftUI
 
-struct InputTileNumber: View {
+struct InputTileNotes: View {
 
     var questionNumber: Int
     var totalQuestions: Int
@@ -19,15 +18,9 @@ struct InputTileNumber: View {
     var question1: String
     var question2: String
     var question3: String
-    var question4: String
 
-
-    var descriptionLabel: String
-    var disclaimerText: String
     var placeholderText: String
-
-    @Binding var number: Int
-    @State private var peopledescription = ""
+    @Binding var otherNotes: String
 
     var nextAction: () -> ()
     var previousAction: () -> ()
@@ -84,72 +77,10 @@ struct InputTileNumber: View {
                         .font(.title2)
                         .padding(.bottom, 1)
                         .fontWeight(.bold)
-                    Text(question4)
-                        .font(.title2)
-                        .fontWeight(.bold)
                 }
                 .padding(.vertical)
 
-                HStack(spacing: 20) {
-                    Button(action: {
-                        if number > 0 {
-                            number -= 1
-                        }
-                    }) {
-                        Image(systemName: "minus")
-                            .foregroundColor(Color("PrimaryColor"))
-                            .frame(width: 30, height: 30)
-                            .background(Color("SecondaryColor"))
-                            .clipShape(Circle())
-                    }
-
-                    /*TextField("", value: $number, formatter: NumberFormatter())
-                        .keyboardType(.numberPad)
-                        .multilineTextAlignment(.center)
-                        .font(.title2)
-                        .fontWeight(.bold)
-                        .frame(width: 60)
-                        .padding(6)
-                        .background(Color.white)
-                        .cornerRadius(8)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 8)
-                                .stroke(Color("SecondaryColor"), lineWidth: 1)
-                        )*/
-                    TextField("", value: $number, formatter: NumberFormatter())
-                        .keyboardType(.numberPad)
-                        .multilineTextAlignment(.center)
-                        .font(.title2)
-                        .fontWeight(.bold)
-                        .frame(width: 60)
-                        .textFieldStyle(PlainTextFieldStyle()) // removes any border or background
-                    Button(action: {
-                        number += 1
-                    }) {
-                        Image(systemName: "plus")
-                            .foregroundColor(Color("PrimaryColor"))
-                            .frame(width: 30, height: 30)
-                            .background(Color("SecondaryColor"))
-                            .clipShape(Circle())
-                    }
-                }
-                .padding(.bottom)
-    
-                Text(descriptionLabel)
-                    .font(.headline)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(.horizontal)
-                    .foregroundColor(Color("SecondaryColor"))
-
-                AutoGrowingTextEditor(text: $peopledescription, placeholder: placeholderText)
-
-                Text(disclaimerText)
-                    .font(.footnote)
-                    .multilineTextAlignment(.center)
-                    .fixedSize(horizontal: false, vertical: true)
-                    .frame(maxWidth: .infinity)
-                    .padding(.horizontal)
-                    .padding(.top, 8)
+                AutoGrowingTextEditor(text: $otherNotes, placeholder: placeholderText)
                 
                 HStack {
                     Button("Previous") {
