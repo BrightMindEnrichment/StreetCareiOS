@@ -22,6 +22,7 @@ struct VisitLogEntry: View {
     
     var currentUser = Auth.auth().currentUser
     @State var isLoading = false
+    @State private var volunteerAgain: Int = -1
     
     
     var body: some View {
@@ -194,7 +195,7 @@ struct VisitLogEntry: View {
                     }*/
                     
                 case 14:
-                    InputTileVolunteerAgain(questionNumber: 4, totalQuestions: 4, question: "Would you like to volunteer again?", volunteerAgain: $visitLog.volunteerAgain) {
+                    InputTileVolunteerAgain(questionNumber: 7, totalQuestions: 7, question1: "Would you like to", question2: "volunteer again?", volunteerAgain: $visitLog.volunteerAgain) {
                         saveVisitLog()
                         questionNumber = 100
                     } previousAction: {
@@ -214,12 +215,12 @@ struct VisitLogEntry: View {
                     
                 case 13:
                     InputTileNotes(questionNumber: 6, totalQuestions: 7,tileWidth: 300, tileHeight: 380, question1: "Is there anything future",question2: "volunteers should", question3: "know?", placeholderText: "Enter notes here", otherNotes: $visitLog.furtherOtherNotes) {
-                        questionNumber = 100
+                        questionNumber += 1
                     } previousAction: {
                         questionNumber -= 1
                     } skipAction: {
                         saveVisitLog()
-                        questionNumber = 100
+                        questionNumber += 1
                     }
                     
                 case 100:
