@@ -14,7 +14,9 @@ struct InputTileComplete: View {
     @State private var alertMessage = ""
     @State private var showConfirmationDialog = false // New state variable for confirmation
     @State private var navigateToVisitImpactView = false
-    
+    @State private var successMessage1 = ""
+    @State private var successMessage2 = "four business days."
+    @State private var hasShared = false
     var finishAction: () -> ()
     var shareAction: () -> () // Action to be triggered when sharing
 
@@ -33,10 +35,19 @@ struct InputTileComplete: View {
                     .fontWeight(.bold)
                 Text("been logged.")
                     .font(.title2)
-                    .padding(.bottom, 12)
+                    .padding(.bottom, 8)
                     .foregroundColor(.black)
                     .fontWeight(.bold)
-
+                if !successMessage1.isEmpty {
+                    Text(successMessage1)
+                        .font(.caption)
+                        .foregroundColor(.black)
+                        .padding(.top, 8)
+                    Text(successMessage2)
+                        .font(.caption)
+                        .foregroundColor(.black)
+                        .padding(.bottom, 8)
+                }
                 HStack {
                     Button("Add Another Interaction") {
                         VisitLogEntry()
@@ -71,24 +82,26 @@ struct InputTileComplete: View {
                 }
                 .padding(.bottom, 12)
                 
-                HStack {
-                    Button("Share with Community") {
-                        showConfirmationDialog = true
+                if !hasShared {
+                    HStack {
+                        Button("Share with Community") {
+                            showConfirmationDialog = true
+                        }
+                        .foregroundColor(Color.black)
+                        .frame(maxWidth: 180)
+                        .padding(.vertical, 12)
+                        .padding(.horizontal, 12)
+                        .font(.caption)
+                        .fontWeight(.bold)
+                        .background(
+                            Capsule()
+                                .fill(Color.white)
+                        )
+                        .overlay(
+                            Capsule()
+                                .stroke(Color("SecondaryColor"), lineWidth: 2)
+                        )
                     }
-                    .foregroundColor(Color.black)
-                    .frame(maxWidth: 180)
-                    .padding(.vertical, 12)
-                    .padding(.horizontal, 12)
-                    .font(.caption)
-                    .fontWeight(.bold)
-                    .background(
-                        Capsule()
-                            .fill(Color.white)
-                    )
-                    .overlay(
-                        Capsule()
-                            .stroke(Color("SecondaryColor"), lineWidth: 2)
-                    )
                 }
                 
             }
@@ -113,6 +126,8 @@ struct InputTileComplete: View {
                     primaryButton: .default(Text("Confirm")) {
                         shareAction() // Call the actual share action
                         alertMessage = "Visit Log Shared Successfully!"
+                        successMessage1 = "Approval can take typically within"
+                        hasShared = true
                         showAlert = true
                         showConfirmationDialog = false
                     },
