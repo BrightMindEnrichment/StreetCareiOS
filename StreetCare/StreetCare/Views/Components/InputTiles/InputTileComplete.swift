@@ -9,8 +9,7 @@ import SwiftUI
 
 struct InputTileComplete: View {
 
-    var size = CGSize(width: 300.0, height: 450.0)
-    var question: String
+    var size = CGSize(width: 300.0, height: 300.0)
     @State private var showAlert = false
     @State private var alertMessage = ""
     @State private var showConfirmationDialog = false // New state variable for confirmation
@@ -24,40 +23,78 @@ struct InputTileComplete: View {
             BasicTile(size: CGSize(width: size.width, height: size.height))
             
             VStack {
-                Spacer()
+                Text("Thank You! Your")
+                    .font(.title2)
+                    .foregroundColor(.black)
+                    .fontWeight(.bold)
+                Text("Interaction has")
+                    .font(.title2)
+                    .foregroundColor(.black)
+                    .fontWeight(.bold)
+                Text("been logged.")
+                    .font(.title2)
+                    .padding(.bottom, 12)
+                    .foregroundColor(.black)
+                    .fontWeight(.bold)
 
-                Text("Thank You! Your Visit has been logged.")
-                    .font(.subheadline)
-                    .foregroundColor(.gray)
-                
-                Text(question)
-                    .font(.headline)
-                    .padding()
-                
-                Spacer()
+                HStack {
+                    Button("Add Another Interaction") {
+                        VisitLogEntry()
+                    }
+                    .foregroundColor(Color("PrimaryColor"))
+                    .frame(maxWidth: 180)
+                    .padding(.vertical, 12)
+                    .padding(.horizontal, 12)
+                    .font(.caption)
+                    .fontWeight(.bold)
+                    .background(
+                        Capsule()
+                            .fill(Color("SecondaryColor"))
+                    )
+                }
+                .padding(.bottom, 12)
                 
                 HStack {
-                    Button("Back to Visit Log") {
+                    Button("Back to Interaction Log") {
                         finishAction()
                     }
-                    .buttonStyle(.borderedProminent)
-                    .foregroundColor(Color("TextButtonColor"))
+                    .foregroundColor(Color("PrimaryColor"))
+                    .frame(maxWidth: 180)
+                    .padding(.vertical, 12)
+                    .padding(.horizontal, 12)
+                    .font(.caption)
+                    .fontWeight(.bold)
+                    .background(
+                        Capsule()
+                            .fill(Color("SecondaryColor"))
+                    )
                 }
-                .padding()
+                .padding(.bottom, 12)
                 
                 HStack {
                     Button("Share with Community") {
-                        showConfirmationDialog = true // Show confirmation before sharing
+                        showConfirmationDialog = true
                     }
-                    .buttonStyle(.borderedProminent)
-                    .foregroundColor(Color("TextButtonColor"))
+                    .foregroundColor(Color.black)
+                    .frame(maxWidth: 180)
+                    .padding(.vertical, 12)
+                    .padding(.horizontal, 12)
+                    .font(.caption)
+                    .fontWeight(.bold)
+                    .background(
+                        Capsule()
+                            .fill(Color.white)
+                    )
+                    .overlay(
+                        Capsule()
+                            .stroke(Color("SecondaryColor"), lineWidth: 2)
+                    )
                 }
-                .padding()
                 
-                Spacer()
             }
         }
         .frame(width: size.width, height: size.height)
+        .padding(.bottom, 12)
         // Unified Alert to Handle Both Confirmation and Success
         .alert(isPresented: Binding(
             get: { showConfirmationDialog || showAlert },
@@ -93,9 +130,34 @@ struct InputTileComplete: View {
                 )
             }
         }
+        CapsuleProgressBar(progress: 1.0)
+            .padding(.bottom, 20)
     } // end body
 } // end struct
 
+struct CapsuleProgressBar: View {
+    var progress: CGFloat // between 0 and 1
 
+    var body: some View {
+        VStack {
+            ZStack(alignment: .leading) {
+                Capsule()
+                    .stroke(Color.black, lineWidth: 2)
+                    .frame(height: 12)
+
+                Capsule()
+                    .fill(Color("PrimaryColor"))
+                    .frame(width: progress * 280, height: 12) // Adjust width based on need
+            }
+            .frame(width: 280, height: 12)
+
+            Text("Completed")
+                .font(.caption)
+                .fontWeight(.bold)
+                .foregroundColor(.black)
+                .padding(.top, 4)
+        }
+    }
+}
 
 

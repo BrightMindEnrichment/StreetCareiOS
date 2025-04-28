@@ -224,7 +224,7 @@ struct VisitLogEntry: View {
                     }
                     
                 case 100:
-                    InputTileComplete(question: "Completed!") {
+                    InputTileComplete() {
                         //saveVisitLog() // Regular save
                         presentation.wrappedValue.dismiss()
                     } shareAction: {
