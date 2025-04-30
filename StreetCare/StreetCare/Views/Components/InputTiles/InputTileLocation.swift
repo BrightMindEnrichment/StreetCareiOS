@@ -149,7 +149,13 @@ struct InputTileLocation: View {
                         Spacer()
                         
                         Button(" Next  ") {
-                            nextAction()
+                            if city.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ||
+                               stateAbbreviation.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+                                // Show an alert or feedback to user
+                                failedToFindLocation = true
+                            } else {
+                                nextAction()
+                            }
                         }
                         .foregroundColor(Color("PrimaryColor"))
                         .fontWeight(.bold)
@@ -165,6 +171,11 @@ struct InputTileLocation: View {
             }
         }
         .frame(width: size.width, height: size.height)
+        .alert("Missing Required Fields", isPresented: $failedToFindLocation, actions: {
+            Button("OK") {}
+        }, message: {
+            Text("Please enter both city and state before continuing.")
+        })
         .loadingAnimation(isLoading: isLoading)
         .onAppear {
             locationManager = LocationManager {
