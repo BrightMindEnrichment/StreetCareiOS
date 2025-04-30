@@ -131,7 +131,7 @@ struct VisitLogEntry: View {
                     } skipAction: {
                         questionNumber -= 1
                     } yesAction: {
-                        questionNumber += 5
+                        questionNumber += 1
                     } noAction: {
                         saveVisitLog()
                         isComplete = true
@@ -165,7 +165,7 @@ struct VisitLogEntry: View {
                     }
                     
                 case 10:
-                    InputTileNumber(questionNumber: 3, totalQuestions: 6, tileWidth: 360, tileHeight: 467, question1: "How many people" , question2: "still need support?", question3: "", question4: "", descriptionLabel: "Description", disclaimerText: "", placeholderText: NSLocalizedString("peopledescription", comment: ""), number: $visitLog.peopleNeedFurtherHelp) {
+                    InputTileNumber(questionNumber: 3, totalQuestions: 7, tileWidth: 360, tileHeight: 467, question1: "How many people" , question2: "still need support?", question3: "", question4: "", descriptionLabel: "Description", disclaimerText: "", placeholderText: NSLocalizedString("peopledescription", comment: ""), number: $visitLog.peopleNeedFurtherHelp) {
                         questionNumber += 1
                     } previousAction: {
                         questionNumber -= 1
@@ -175,7 +175,7 @@ struct VisitLogEntry: View {
                 case 11:
                     InputTileList(
                         questionNumber: 4,
-                        totalQuestions: 6,
+                        totalQuestions: 7,
                         question1: "What kind of support",
                         question2: "do they still need?",
                         foodAndDrinks: $visitLog.furtherfoodAndDrinks,
