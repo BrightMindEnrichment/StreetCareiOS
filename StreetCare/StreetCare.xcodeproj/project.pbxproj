@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 70;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -111,8 +111,9 @@
 		C26F78C72CE4637500AAE187 /* OutreachFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26F78C62CE4635F00AAE187 /* OutreachFormView.swift */; };
 		C2C7DDB72D31E76E006A8CD1 /* ChapterMebershipForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C7DDB62D31E762006A8CD1 /* ChapterMebershipForm.swift */; };
 		C2CCCA6A2CF00CEB001C9BE0 /* AddHelpRequestForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2CCCA692CF00CEB001C9BE0 /* AddHelpRequestForm.swift */; };
+		C2E9F1252DBB411700541E47 /* InputTileNotes.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2E9F1242DBB410600541E47 /* InputTileNotes.swift */; };
 		E2646D162CA74A5000D8AA42 /* ICanHelpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2646D152CA74A5000D8AA42 /* ICanHelpView.swift */; };
-		EDFD9B202D94D090003FBBE3 /* TimelineIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EDFD9B1F2D94D074003FBBE3 /* TimelineIndicatorView.swift */; };
+		ED1A73162DADD3BC004E3D17 /* NotLoggedInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED1A73152DADD3BC004E3D17 /* NotLoggedInView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -216,11 +217,15 @@
 		BEA872772A2910B90053D4F4 /* ProfileDetailsAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileDetailsAdapter.swift; sourceTree = "<group>"; };
 		C26F78C62CE4635F00AAE187 /* OutreachFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutreachFormView.swift; sourceTree = "<group>"; };
 		C2C7DDB62D31E762006A8CD1 /* ChapterMebershipForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChapterMebershipForm.swift; sourceTree = "<group>"; };
-		C2CCCA682CF00CC2001C9BE0 /* Untitled.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Untitled.swift; sourceTree = "<group>"; };
 		C2CCCA692CF00CEB001C9BE0 /* AddHelpRequestForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddHelpRequestForm.swift; sourceTree = "<group>"; };
+		C2E9F1242DBB410600541E47 /* InputTileNotes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputTileNotes.swift; sourceTree = "<group>"; };
 		E2646D152CA74A5000D8AA42 /* ICanHelpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ICanHelpView.swift; sourceTree = "<group>"; };
-		EDFD9B1F2D94D074003FBBE3 /* TimelineIndicatorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineIndicatorView.swift; sourceTree = "<group>"; };
+		ED1A73152DADD3BC004E3D17 /* NotLoggedInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotLoggedInView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		EDB93D152DB1D18300C7174F /* Fonts */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Fonts; sourceTree = "<group>"; };
+/* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		4CB65D8929D016AE00684BD1 /* Frameworks */ = {
@@ -247,7 +252,7 @@
 			children = (
 				74FDD8232D64907C00E23293 /* GoogleMaps */,
 				4C2F5A7529FF456A00CFD288 /* VisitImpactView.swift */,
-				EDFD9B1F2D94D074003FBBE3 /* TimelineIndicatorView.swift */,
+				ED1A73152DADD3BC004E3D17 /* NotLoggedInView.swift */,
 				4CA8693429E3FA8600BB6972 /* VisitLogEntry.swift */,
 				4CB65D9E29D0DEAE00684BD1 /* VisitLogView.swift */,
 				4C17ED502A00A3610013EF52 /* VisitLogUnauthorized.swift */,
@@ -270,6 +275,7 @@
 		4C82448C29EF9E0B003D1575 /* InputTiles */ = {
 			isa = PBXGroup;
 			children = (
+				C2E9F1242DBB410600541E47 /* InputTileNotes.swift */,
 				4CA8693229E3D05300BB6972 /* InputTile.swift */,
 				4C82448D29EF9E58003D1575 /* InputTileLocation.swift */,
 				4C82448F29EF9EAB003D1575 /* InputTileDate.swift */,
@@ -287,6 +293,7 @@
 		4CB65D8329D016AE00684BD1 = {
 			isa = PBXGroup;
 			children = (
+				EDB93D152DB1D18300C7174F /* Fonts */,
 				BE9D1DCF2A376B3800072835 /* Frameworks */,
 				D864E90A530FD26B201E4F4F /* Pods */,
 				4CB65D8D29D016AE00684BD1 /* Products */,
@@ -474,7 +481,6 @@
 			children = (
 				2CBA18332B467FF476F7CBCC /* Pods-StreetCare.debug.xcconfig */,
 				1784B66B50CD8167A950C87D /* Pods-StreetCare.release.xcconfig */,
-				C2CCCA682CF00CC2001C9BE0 /* Untitled.swift */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -496,6 +502,9 @@
 			buildRules = (
 			);
 			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				EDB93D152DB1D18300C7174F /* Fonts */,
 			);
 			name = StreetCare;
 			packageProductDependencies = (
@@ -596,9 +605,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-StreetCare/Pods-StreetCare-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-StreetCare/Pods-StreetCare-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -613,9 +626,13 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-StreetCare/Pods-StreetCare-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
+			inputPaths = (
+			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-StreetCare/Pods-StreetCare-resources-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -646,6 +663,7 @@
 				4C85F0EF2A08A7A100FFEDC8 /* GrowingTextView.swift in Sources */,
 				4C85F0E72A089F0A00FFEDC8 /* PlaylistDefinitionDataAdapter.swift in Sources */,
 				4C7136C32A0495630060EB7D /* EventDataAdapter.swift in Sources */,
+				ED1A73162DADD3BC004E3D17 /* NotLoggedInView.swift in Sources */,
 				4CB65E6029DA91C000684BD1 /* Playlist.swift in Sources */,
 				BE9D1DDD2A43641400072835 /* RatingView.swift in Sources */,
 				4CB7D8CC29F8D5B00002495E /* VisitLog.swift in Sources */,
@@ -664,6 +682,7 @@
 				4CB7D8D029F8DD040002495E /* InputTileDuration.swift in Sources */,
 				4CA8693529E3FA8600BB6972 /* VisitLogEntry.swift in Sources */,
 				E2646D162CA74A5000D8AA42 /* ICanHelpView.swift in Sources */,
+				C2E9F1252DBB411700541E47 /* InputTileNotes.swift in Sources */,
 				4C82449229EF9EE5003D1575 /* InputTileNumber.swift in Sources */,
 				4C82449029EF9EAB003D1575 /* InputTileDate.swift in Sources */,
 				4C85F0ED2A08A6F000FFEDC8 /* BeforeOutreachView.swift in Sources */,
@@ -706,7 +725,6 @@
 				4C2F5A7829FF731A00CFD288 /* ListConnectorDecorationView.swift in Sources */,
 				4C0E4F9C29DAC977009D33C1 /* YoutubeCellView.swift in Sources */,
 				71FA51032BCEC4B300D0DA6C /* AfterOutreachView.swift in Sources */,
-				EDFD9B202D94D090003FBBE3 /* TimelineIndicatorView.swift in Sources */,
 				71392FAD2BAA40F900496CA5 /* GoogleUserAuthModel.swift in Sources */,
 				4CB65E6729DA91C000684BD1 /* PlaylistController.swift in Sources */,
 				4CA8693129E3CD5F00BB6972 /* BasicTile.swift in Sources */,
@@ -874,12 +892,12 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.5.16;
+				MARKETING_VERSION = 1.5.18;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bme.StreetCare;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -907,12 +925,12 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.5.16;
+				MARKETING_VERSION = 1.5.18;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bme.StreetCare;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
