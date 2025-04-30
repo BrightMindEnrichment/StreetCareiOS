@@ -76,8 +76,8 @@ struct InputTileVolunteerAgain: View {
                     }) {
                         Text("Yes")
                             .font(.footnote)
-                            //.foregroundColor(volunteerAgain == 1 ? .white : Color("SecondaryColor"))
-                            .foregroundColor(Color.black)
+                            .foregroundColor(volunteerAgain == 1 ? .white : Color("SecondaryColor"))
+                            //.foregroundColor(Color.black)
                             .frame(maxWidth: 120)
                             .padding(.vertical, 8)
                             .fontWeight(.bold)
@@ -96,8 +96,8 @@ struct InputTileVolunteerAgain: View {
                     }) {
                         Text("No")
                             .font(.footnote)
-                            //.foregroundColor(volunteerAgain == 0 ? .white : Color("SecondaryColor"))
-                            .foregroundColor(Color.black)
+                            .foregroundColor(volunteerAgain == 0 ? .white : Color("SecondaryColor"))
+                            //.foregroundColor(Color.black)
                             .fontWeight(.bold)
                             .frame(maxWidth: 120)
                             .padding(.vertical, 8)
@@ -116,8 +116,8 @@ struct InputTileVolunteerAgain: View {
                     }) {
                         Text("Maybe")
                             .font(.footnote)
-                            //.foregroundColor(volunteerAgain == 2 ? .white : Color("SecondaryColor"))
-                            .foregroundColor(Color.black)
+                            .foregroundColor(volunteerAgain == 2 ? .white : Color("SecondaryColor"))
+                            //.foregroundColor(Color.black)
                             .fontWeight(.bold)
                             .frame(maxWidth: 120)
                             .padding(.vertical, 8)
