@@ -62,6 +62,9 @@ class VisitLogDataAdapter {
         userData["furtherClothes"] = visitLog.furtherClothes
         userData["furtherHygine"] = visitLog.furtherHygine
         userData["furtherWellness"] = visitLog.furtherWellness
+        userData["furthermedical"] = visitLog.furthermedical
+        userData["furthersocialworker"] = visitLog.furthersocialworker
+        userData["furtherlegal"] = visitLog.furtherlegal
         userData["furtherOther"] = visitLog.furtherOther
         userData["furtherOtherNotes"] = visitLog.furtherOtherNotes
         userData["followUpWhenVisit"] = visitLog.followUpWhenVisit
@@ -364,9 +367,22 @@ class VisitLogDataAdapter {
                     if let furtherWellness = document["furtherWellness"] as? Bool {
                         log.furtherWellness = furtherWellness
                     }
+                    
+                    if let furtherWellness = document["furtherWellness"] as? Bool {
+                        log.furtherWellness = furtherWellness
+                    }
+                    
+                    if let furthermedical = document["furthermedical"] as? Bool {
+                        log.furthermedical = furthermedical
+                    }
+                    
+                    if let furthersocialworker = document["furthersocialworker"] as? Bool {
+                        log.furthersocialworker = furthersocialworker
+                    }
+                    
 
-                    if let furtherOther = document["furtherOther"] as? Bool {
-                        log.furtherOther = furtherOther
+                    if let furtherOther = document["furtherlegal"] as? Bool {
+                        log.furtherlegal = furtherOther
                     }
 
                     if let furtherOtherNotes = document["furtherOtherNotes"] as? String {
