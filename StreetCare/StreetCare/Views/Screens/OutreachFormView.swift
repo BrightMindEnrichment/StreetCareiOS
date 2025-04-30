@@ -320,7 +320,7 @@ struct SkillSelectionView: View {
 
     var body: some View {
         VStack {
-            Text("Select the skills needed to provide help")
+            Text("Select the skills required to provide support")
                 .font(.headline)
                 .padding()
 

@@ -18,7 +18,7 @@ struct InputTileNumber: View {
     var placeholderText: String?
     
     @Binding var number: Int
-    @State private var numberString = "" 
+    @State private var numberString = "0" 
     @State private var peopledescription = ""
     @State private var showAlert = false
     

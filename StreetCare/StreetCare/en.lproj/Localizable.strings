@@ -117,9 +117,9 @@
 "startTime" = "Start Time";
 "endDate" = "End Date";
 "endTime" = "End Time";
-"helpType" = "Help Type";
+"helpType" = "Required Support Type";
 "eghelpType" = "E.g, Children Specialist Needed";
-"maximumCapacity" = "Maximum Capacity";
+"maximumCapacity" = "Total allowable participants";
 "egmaximumCapacity" = "Maximum capacity of participants allowed";
 "eventDescription" = "Event Description";
 "enterEventDescription" = "Enter Event Description";
