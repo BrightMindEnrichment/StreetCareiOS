@@ -22,16 +22,20 @@ struct VisitLogEntry: View {
     
     var currentUser = Auth.auth().currentUser
     @State var isLoading = false
+    @State var isComplete = false
     @State private var volunteerAgain: Int = -1
     
     
     var body: some View {
         NavigationStack {
             VStack {
-                Text("Log Your Interaction")
-                    .font(.title)
-                    .fontWeight(.bold)
-                    .padding()
+                
+                if !isComplete{
+                    Text("Log Your Interaction")
+                        .font(.title)
+                        .fontWeight(.bold)
+                        .padding()
+                }
                                 
                 switch questionNumber {
                 case 1:
@@ -130,6 +134,7 @@ struct VisitLogEntry: View {
                         questionNumber += 5
                     } noAction: {
                         saveVisitLog()
+                        isComplete = true
                         questionNumber = 100
                     }
 
@@ -197,11 +202,13 @@ struct VisitLogEntry: View {
                 case 14:
                     InputTileVolunteerAgain(questionNumber: 7, totalQuestions: 7, question1: "Would you like to", question2: "volunteer again?", volunteerAgain: $visitLog.volunteerAgain) {
                         saveVisitLog()
+                        isComplete = true
                         questionNumber = 100
                     } previousAction: {
                         questionNumber -= 1
                     } skipAction: {
                         saveVisitLog()
+                        isComplete = true
                         questionNumber = 100
                     }
                 case 12:
