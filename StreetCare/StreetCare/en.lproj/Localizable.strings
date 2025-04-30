@@ -120,7 +120,7 @@
 "helpType" = "Required Support Type";
 "eghelpType" = "E.g, Children Specialist Needed";
 "maximumCapacity" = "Total allowable participants";
-"egmaximumCapacity" = "Maximum capacity of participants allowed";
+"egmaximumCapacity" = "Total allowable participants";
 "eventDescription" = "Event Description";
 "enterEventDescription" = "Enter Event Description";
 "additionalNotes" = "Additional Notes";
