@@ -22,19 +22,24 @@ struct VisitLogEntry: View {
     
     var currentUser = Auth.auth().currentUser
     @State var isLoading = false
+    @State var isComplete = false
+    @State private var volunteerAgain: Int = -1
     
     
     var body: some View {
         NavigationStack {
             VStack {
-                Text("Log Your Interaction")
-                    .font(.title)
-                    .fontWeight(.bold)
-                    .padding()
+                
+                if !isComplete{
+                    Text("Log Your Interaction")
+                        .font(.title)
+                        .fontWeight(.bold)
+                        .padding()
+                }
                                 
                 switch questionNumber {
                 case 1:
-                    InputTileDate(questionNumber: 1, totalQuestions: 6, question1: "When was your",question2: "Interaction?", datetimeValue: $visitLog.whenVisit) {
+                    InputTileDate(questionNumber: 1, totalQuestions: 6, question1: "When was your",question2: "Interaction?",question3: "", showSkip: false,  datetimeValue: $visitLog.whenVisit) {
                         questionNumber += 1
                     } skipAction: {
                         questionNumber += 1
@@ -126,13 +131,13 @@ struct VisitLogEntry: View {
                     } skipAction: {
                         questionNumber -= 1
                     } yesAction: {
-                        questionNumber += 1
+                        questionNumber += 5
                     } noAction: {
                         saveVisitLog()
+                        isComplete = true
                         questionNumber = 100
                     }
-
-                case 8:
+                  case 8:
                     InputTileDuration(
                         questionNumber: 1,
                         totalQuestions: 7,
@@ -189,10 +194,39 @@ struct VisitLogEntry: View {
                     } skipAction: {
                         questionNumber += 1
                     }
+                case 14:
+                    InputTileVolunteerAgain(questionNumber: 7, totalQuestions: 7, question1: "Would you like to", question2: "volunteer again?", volunteerAgain: $visitLog.volunteerAgain) {
+                        saveVisitLog()
+                        isComplete = true
+                        questionNumber = 100
+                    } previousAction: {
+                        questionNumber -= 1
+                    } skipAction: {
+                        saveVisitLog()
+                        isComplete = true
+                        questionNumber = 100
+                    }
+                case 12:
+                    InputTileDate(questionNumber: 5, totalQuestions: 7, question1: "Is there a planned date",question2: "to interact with them", question3: "again?", showSkip: true, datetimeValue: $visitLog.followUpWhenVisit) {
+                        questionNumber += 1
+                    } skipAction: {
+                        questionNumber += 1
+                    } previousAction: {
+                        questionNumber -= 1
+                    }
                     
+                case 13:
+                    InputTileNotes(questionNumber: 6, totalQuestions: 7,tileWidth: 300, tileHeight: 380, question1: "Is there anything future",question2: "volunteers should", question3: "know?", placeholderText: "Enter notes here", otherNotes: $visitLog.furtherOtherNotes) {
+                        questionNumber += 1
+                    } previousAction: {
+                        questionNumber -= 1
+                    } skipAction: {
+                        saveVisitLog()
+                        questionNumber += 1
+                    }
                     
                 case 100:
-                    InputTileComplete(question: "Completed!") {
+                    InputTileComplete() {
                         //saveVisitLog() // Regular save
                         presentation.wrappedValue.dismiss()
                     } shareAction: {

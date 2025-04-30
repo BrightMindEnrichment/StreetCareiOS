@@ -54,7 +54,7 @@ class VisitLog: ObservableObject, Identifiable {
     
     @Published var numberOfHelpers = 0
     
-    @Published var volunteerAgain = 0
+    @Published var volunteerAgain = -1
     
     @Published var location = CLLocationCoordinate2D.init(latitude: 0.0, longitude: 0.0)
     

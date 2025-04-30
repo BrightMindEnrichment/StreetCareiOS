@@ -109,7 +109,7 @@
 "title" = "Title*";
 "enterEventTitle" = "Enter Event Title";
 "location" = "Location*";
-"street" = "Street*";
+"street" = "Street";
 "state" = "State*";
 "city" = "City*";
 "zipcode" = "Zip Code";

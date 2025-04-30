@@ -13,9 +13,11 @@ struct InputTileDate: View {
     var questionNumber: Int
     var totalQuestions: Int
     
-    var size = CGSize(width: 350.0, height: 320.0)
+    var size = CGSize(width: 360.0, height: 360.0)
     var question1: String
     var question2: String
+    var question3: String
+    var showSkip: Bool
     
         
     @Binding var datetimeValue: Date
@@ -28,6 +30,18 @@ struct InputTileDate: View {
     var nextAction: () -> ()
     var skipAction: () -> ()
     var previousAction: () -> ()
+    
+    private var dateFormatter: DateFormatter {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MM/dd/yyyy"
+        return formatter
+    }
+
+    private var timeFormatter: DateFormatter {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "hh:mm a"
+        return formatter
+    }
     
     var body: some View {
         
@@ -43,11 +57,23 @@ struct InputTileDate: View {
                     
                     Spacer()
                     
-                    /*Button("Skip") {
-                        skipAction()
+                    if showSkip{
+                        Button("Skip") {
+                            skipAction()
+                        }
+                        .foregroundColor(Color("SecondaryColor"))
+                        .font(.footnote)
+                        .padding(.horizontal, 16)
+                        .padding(.vertical, 8)
+                        .background(
+                            Capsule()
+                                .fill(Color.white)
+                        )
+                        .overlay(
+                            Capsule()
+                                .stroke(Color("SecondaryColor"), lineWidth: 2)
+                        )
                     }
-                    .foregroundColor(.gray)
-                    .padding()*/
                     
                 }
                 .padding(.horizontal)
@@ -65,119 +91,128 @@ struct InputTileDate: View {
                         .fontWeight(.bold)
                     Text(question2)
                         .font(.title2)
+                        .fontWeight(.bold)
+                        .fontWeight(.bold)
+                    Text(question3)
+                        .font(.title2)
                         .padding(.bottom, 12)
                         .fontWeight(.bold)
                 }
                 
                 //Spacer()
                 
-                VStack(alignment: .leading, spacing: 12) {
-                    // Date Picker Row
+                HStack(spacing: 12) {
                     HStack {
                         Image(systemName: "calendar")
-                        DatePicker(
-                            "",
-                            selection: $datetimeValue,
-                            displayedComponents: [.date]
-                        )
-                        .labelsHidden()
-                        .font(.footnote)
-                    }
-                    .padding(.horizontal, 10)
-                    .padding(.vertical, 6)
-                    .background(Color.white) // Background white
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 10)
-                            .stroke(Color.black, lineWidth: 1) // Border black
-                    )
-                    .cornerRadius(10)
-                    .frame(maxWidth: .infinity)
-                    .multilineTextAlignment(.center)
-                    
-                    HStack(spacing: 12) {
-                        // Time Picker Box
-                        HStack {
-                            Image(systemName: "clock")
-                            DatePicker(
-                                "",
-                                selection: $datetimeValue,
-                                displayedComponents: [.hourAndMinute]
-                            )
-                            .labelsHidden()
-                            .datePickerStyle(CompactDatePickerStyle())
-                            .font(.footnote)
-                        }
-                        .padding(.horizontal, 10)
-                        .padding(.vertical, 6)
-                        .background(Color.white)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 10)
-                                .stroke(Color.black, lineWidth: 1)
-                        )
-                        .cornerRadius(10)
-                        .layoutPriority(1) // Higher priority
-                        .frame(maxWidth: 300)
-                        
-                        // Time Zone Picker Box
-                        HStack {
-                            Image(systemName: "globe")
-                            Picker("Time Zone", selection: $selectedTimeZone) {
-                                ForEach(usTimeZones, id: \.self) { zone in
-                                    Text("\(zone.replacingOccurrences(of: "America/", with: "").replacingOccurrences(of: "_", with: " ")) (\(TimeZone(identifier: zone)?.abbreviation() ?? ""))")
-                                        .tag(zone)
-                                }
-                            }
-                            .pickerStyle(MenuPickerStyle())
-                        }
-                        .padding(.horizontal, 10)
-                        .padding(.vertical, 6)
-                        .background(Color.white)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 10)
-                                .stroke(Color.black, lineWidth: 1)
-                        )
-                        .cornerRadius(10)
-                        .layoutPriority(0)
-                        .frame(maxWidth: .infinity)
-                    }
-                    .padding(.horizontal)
-                    //.padding(.vertical)
-                    
-                    //Spacer()
-                    
-                    HStack {
-                        Button("Previous") {
-                            previousAction()
-                        }
-                        .foregroundColor(Color("SecondaryColor"))
-                        .font(.footnote)
-                        .padding(.horizontal, 16)
-                        .padding(.vertical, 8)
-                        .background(
-                            Capsule()
-                                .fill(Color.white) // Fill with white
-                        )
-                        .overlay(
-                            Capsule()
-                                .stroke(Color("SecondaryColor"), lineWidth: 2) // Stroke with dark green
-                        )
-                        
-                        Spacer()
-                        
-                        Button(" Next  ") {
-                            nextAction()
-                        }
-                        .foregroundColor(Color("PrimaryColor"))
-                        .fontWeight(.bold)
-                        .padding(.horizontal, 16)
-                        .padding(.vertical, 8)
-                        .background(
-                            Capsule()
-                                .fill(Color("SecondaryColor"))
-                        )
+                            .foregroundColor(.black)
+
+                        Text(dateFormatter.string(from: datetimeValue))
+                            .foregroundColor(.black)
+                            .font(.body)
+                            //.bold()
                     }
                     .padding()
+                    .frame(width: 160, alignment: .leading) // Half of 300 width (timezone box) with little spacing
+                    .background(Color.white)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 10)
+                            .stroke(Color.black, lineWidth: 1)
+                    )
+                    .cornerRadius(10)
+
+                    HStack {
+                        Image(systemName: "clock")
+                            .foregroundColor(.black)
+
+                        Text(timeFormatter.string(from: datetimeValue))
+                            .foregroundColor(.black)
+                            .font(.body)
+                            //.bold()
+                    }
+                    .padding()
+                    .frame(width: 140, alignment: .leading) // Same width as date box
+                    .background(Color.white)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 10)
+                            .stroke(Color.black, lineWidth: 1)
+                    )
+                    .cornerRadius(10)
                 }
+                .frame(width: 320)
+                .padding(.horizontal) // Only left and right padding
+                //.padding(.bottom)     // Padding only below
+
+                Menu {
+                    Picker("Time Zone", selection: $selectedTimeZone) {
+                        ForEach(usTimeZones, id: \.self) { zone in
+                            Text("\(zone.replacingOccurrences(of: "America/", with: "").replacingOccurrences(of: "_", with: " ")) (\(TimeZone(identifier: zone)?.abbreviation() ?? ""))")
+                                .tag(zone)
+                        }
+                    }
+                } label: {
+                    HStack(spacing: 8) {
+                        Image(systemName: "globe")
+                            .foregroundColor(.black)
+
+                        Text("\(selectedTimeZone.replacingOccurrences(of: "America/", with: "").replacingOccurrences(of: "_", with: " ")) (\(TimeZone(identifier: selectedTimeZone)?.abbreviation() ?? ""))")
+                            .foregroundColor(.black)
+                            .font(.body)
+                            .lineLimit(1)
+
+                        Spacer()
+
+                        Image(systemName: "triangle.fill")
+                            .resizable()
+                            .frame(width: 8, height: 6)
+                            .rotationEffect(.degrees(180))
+                            .foregroundColor(.black)
+                    }
+                    //.padding(.horizontal)
+                    //.padding(.vertical, 6)
+                    .padding()
+                    .background(Color.white)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 10)
+                            .stroke(Color.black, lineWidth: 1)
+                    )
+                    .cornerRadius(10)
+                    .frame(width: 310, alignment: .leading)
+                    .padding(.horizontal)
+                }
+                
+                HStack {
+                    Button("Previous") {
+                        previousAction()
+                    }
+                    .foregroundColor(Color("SecondaryColor"))
+                    .font(.footnote)
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 8)
+                    .background(
+                        Capsule()
+                            .fill(Color.white) // Fill with white
+                    )
+                    .overlay(
+                        Capsule()
+                            .stroke(Color("SecondaryColor"), lineWidth: 2) // Stroke with dark green
+                    )
+                    
+                    Spacer()
+                    
+                    Button(" Next  ") {
+                        nextAction()
+                    }
+                    .foregroundColor(Color("PrimaryColor"))
+                    .fontWeight(.bold)
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 8)
+                    .background(
+                        Capsule()
+                            .fill(Color("SecondaryColor"))
+                    )
+                }
+                .padding()
+                
             
             }
         }
@@ -208,7 +243,7 @@ struct InputTileDate_Previews: PreviewProvider {
 
     static var previews: some View {
 
-        InputTileDate(questionNumber: 3, totalQuestions: 4, question1: "Is there a planned date to",question2: "interact with them again?", datetimeValue: $input) {
+        InputTileDate(questionNumber: 3, totalQuestions: 4, question1: "Is there a planned date to",question2: "interact with them again?",question3: "", showSkip: true, datetimeValue: $input) {
             //
         } skipAction: {
             //

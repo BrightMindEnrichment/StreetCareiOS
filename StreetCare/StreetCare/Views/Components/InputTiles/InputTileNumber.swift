@@ -53,10 +53,10 @@ struct InputTileNumber: View {
                     .padding(.horizontal)
                 
                 VStack {
-                    Text(question1).font(.title3).fontWeight(.bold).padding(.bottom, 1)
-                    Text(question2).font(.title3).fontWeight(.bold).padding(.bottom, 1)
-                    Text(question3).font(.title3).fontWeight(.bold).padding(.bottom, 1)
-                    Text(question4).font(.title3).fontWeight(.bold)
+                    Text(question1).font(.title2).fontWeight(.bold).padding(.bottom, 1)
+                    Text(question2).font(.title2).fontWeight(.bold).padding(.bottom, 1)
+                    Text(question3).font(.title2).fontWeight(.bold).padding(.bottom, 1)
+                    Text(question4).font(.title2).fontWeight(.bold)
                 }
                 .padding(.vertical)
                 

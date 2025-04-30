@@ -13,11 +13,13 @@ struct BasicTile: View {
     
     var body: some View {
         ZStack {
-            RoundedRectangle(cornerRadius: 20)
+            RoundedRectangle(cornerRadius: 10)
                 .foregroundColor(Color("BackgroundColor"))
                 .frame(width: size.width, height: size.height)
                 .overlay(RoundedRectangle(cornerRadius: 2.0).stroke(Color.clear, lineWidth: 0.5))
-                .shadow(radius: 1.0)
+                //.shadow(color: .gray.opacity(0.5), radius: 2, x: 0, y: 2)
+                .shadow(color: Color.black.opacity(0.08), radius: 4, x: 0, y: 0)
+                .shadow(color: Color.black.opacity(0.15), radius: 8, x: 0, y: 6)
         }
         
     } // end body

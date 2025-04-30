@@ -111,6 +111,7 @@
 		C26F78C72CE4637500AAE187 /* OutreachFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C26F78C62CE4635F00AAE187 /* OutreachFormView.swift */; };
 		C2C7DDB72D31E76E006A8CD1 /* ChapterMebershipForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2C7DDB62D31E762006A8CD1 /* ChapterMebershipForm.swift */; };
 		C2CCCA6A2CF00CEB001C9BE0 /* AddHelpRequestForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2CCCA692CF00CEB001C9BE0 /* AddHelpRequestForm.swift */; };
+		C2E9F1252DBB411700541E47 /* InputTileNotes.swift in Sources */ = {isa = PBXBuildFile; fileRef = C2E9F1242DBB410600541E47 /* InputTileNotes.swift */; };
 		E2646D162CA74A5000D8AA42 /* ICanHelpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2646D152CA74A5000D8AA42 /* ICanHelpView.swift */; };
 		ED1A73162DADD3BC004E3D17 /* NotLoggedInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED1A73152DADD3BC004E3D17 /* NotLoggedInView.swift */; };
 /* End PBXBuildFile section */
@@ -217,6 +218,7 @@
 		C26F78C62CE4635F00AAE187 /* OutreachFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutreachFormView.swift; sourceTree = "<group>"; };
 		C2C7DDB62D31E762006A8CD1 /* ChapterMebershipForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChapterMebershipForm.swift; sourceTree = "<group>"; };
 		C2CCCA692CF00CEB001C9BE0 /* AddHelpRequestForm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddHelpRequestForm.swift; sourceTree = "<group>"; };
+		C2E9F1242DBB410600541E47 /* InputTileNotes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputTileNotes.swift; sourceTree = "<group>"; };
 		E2646D152CA74A5000D8AA42 /* ICanHelpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ICanHelpView.swift; sourceTree = "<group>"; };
 		ED1A73152DADD3BC004E3D17 /* NotLoggedInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotLoggedInView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -273,6 +275,7 @@
 		4C82448C29EF9E0B003D1575 /* InputTiles */ = {
 			isa = PBXGroup;
 			children = (
+				C2E9F1242DBB410600541E47 /* InputTileNotes.swift */,
 				4CA8693229E3D05300BB6972 /* InputTile.swift */,
 				4C82448D29EF9E58003D1575 /* InputTileLocation.swift */,
 				4C82448F29EF9EAB003D1575 /* InputTileDate.swift */,
@@ -679,6 +682,7 @@
 				4CB7D8D029F8DD040002495E /* InputTileDuration.swift in Sources */,
 				4CA8693529E3FA8600BB6972 /* VisitLogEntry.swift in Sources */,
 				E2646D162CA74A5000D8AA42 /* ICanHelpView.swift in Sources */,
+				C2E9F1252DBB411700541E47 /* InputTileNotes.swift in Sources */,
 				4C82449229EF9EE5003D1575 /* InputTileNumber.swift in Sources */,
 				4C82449029EF9EAB003D1575 /* InputTileDate.swift in Sources */,
 				4C85F0ED2A08A6F000FFEDC8 /* BeforeOutreachView.swift in Sources */,

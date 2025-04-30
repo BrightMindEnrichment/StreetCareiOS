@@ -12,8 +12,9 @@ struct InputTileVolunteerAgain: View {
     var questionNumber: Int
     var totalQuestions: Int
         
-    var size = CGSize(width: 300.0, height: 450.0)
-    var question: String
+    var size = CGSize(width: 300.0, height: 350.0)
+    var question1: String
+    var question2: String
     
     @Binding var volunteerAgain: Int
         
@@ -28,65 +29,162 @@ struct InputTileVolunteerAgain: View {
             
             VStack {
                 HStack {
+                    Text("Question \(questionNumber)/\(totalQuestions)")
+                        .foregroundColor(.black)
+                        //.font(.footnote)
+                    
                     Spacer()
-                    Button("Skip") {
+                    
+                    /*Button("Skip") {
                         skipAction()
                     }
-                    .foregroundColor(.gray)
-                    .padding()
-                }
-
-                Spacer()
-
-                Text("Question \(questionNumber)/\(totalQuestions)")
-                    .foregroundColor(.gray)
+                    .foregroundColor(Color("SecondaryColor"))
                     .font(.footnote)
-    
-                Text(question)
-                    .font(.headline)
-                    .padding()
-                
-                Picker("\(question)", selection: $volunteerAgain) {
-                    Text("Yes").tag(1)
-                    Text("No").tag(0)
-                    Text("Maybe").tag(2)
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 8)
+                    .background(
+                        Capsule()
+                            .fill(Color.white)
+                    )
+                    .overlay(
+                        Capsule()
+                            .stroke(Color("SecondaryColor"), lineWidth: 2)
+                    )*/
+                    
                 }
-                .pickerStyle(.segmented)
-                .padding()
+                .padding(.horizontal)
+                .padding(.top, 12)
                 
-                Spacer()
+                Divider()
+                    .background(Color.gray.opacity(0.3))
+                    .padding(.horizontal)
+    
+                VStack{
+                    Text(question1)
+                        .font(.title2)
+                        .padding(.top, 12)
+                        .fontWeight(.bold)
+                    Text(question2)
+                        .font(.title2)
+                        .padding(.bottom, 6)
+                        .fontWeight(.bold)
+                }
+                
+                VStack(spacing: 12) {
+                    Button(action: {
+                        volunteerAgain = 1
+                    }) {
+                        Text("Yes")
+                            .font(.footnote)
+                            //.foregroundColor(volunteerAgain == 1 ? .white : Color("SecondaryColor"))
+                            .foregroundColor(Color.black)
+                            .frame(maxWidth: 120)
+                            .padding(.vertical, 8)
+                            .fontWeight(.bold)
+                            .background(
+                                Capsule()
+                                    .fill(volunteerAgain == 1 ? Color("SecondaryColor") : Color.white)
+                            )
+                            .overlay(
+                                Capsule()
+                                    .stroke(Color("SecondaryColor"), lineWidth: 2)
+                            )
+                    }
+
+                    Button(action: {
+                        volunteerAgain = 0
+                    }) {
+                        Text("No")
+                            .font(.footnote)
+                            //.foregroundColor(volunteerAgain == 0 ? .white : Color("SecondaryColor"))
+                            .foregroundColor(Color.black)
+                            .fontWeight(.bold)
+                            .frame(maxWidth: 120)
+                            .padding(.vertical, 8)
+                            .background(
+                                Capsule()
+                                    .fill(volunteerAgain == 0 ? Color("SecondaryColor") : Color.white)
+                            )
+                            .overlay(
+                                Capsule()
+                                    .stroke(Color("SecondaryColor"), lineWidth: 2)
+                            )
+                    }
+
+                    Button(action: {
+                        volunteerAgain = 2
+                    }) {
+                        Text("Maybe")
+                            .font(.footnote)
+                            //.foregroundColor(volunteerAgain == 2 ? .white : Color("SecondaryColor"))
+                            .foregroundColor(Color.black)
+                            .fontWeight(.bold)
+                            .frame(maxWidth: 120)
+                            .padding(.vertical, 8)
+                            .background(
+                                Capsule()
+                                    .fill(volunteerAgain == 2 ? Color("SecondaryColor") : Color.white)
+                            )
+                            .overlay(
+                                Capsule()
+                                    .stroke(Color("SecondaryColor"), lineWidth: 2)
+                            )
+                    }
+                }
+                //.padding(.horizontal)
+                .padding()
                 
                 HStack {
                     Button("Previous") {
                         previousAction()
                     }
-                    .foregroundColor(Color("TextColor"))
+                    .foregroundColor(Color("SecondaryColor"))
+                    .font(.footnote)
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 8)
+                    .background(
+                        Capsule()
+                            .fill(Color.white) // Fill with white
+                    )
+                    .overlay(
+                        Capsule()
+                            .stroke(Color("SecondaryColor"), lineWidth: 2) // Stroke with dark green
+                    )
+                    
                     Spacer()
-                    Button("Next") {
+                    
+                    Button(" Finish ") {
                         nextAction()
                     }
-                    .foregroundColor(Color("TextColor"))
+                    .foregroundColor(Color("PrimaryColor"))
+                    .fontWeight(.bold)
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 8)
+                    .background(
+                        Capsule()
+                            .fill(Color("SecondaryColor"))
+                    )
                 }
-                .padding()
-                
-                SegmentedProgressBar(
-                    totalSegments: totalQuestions,
-                    filledSegments: questionNumber,
-                    tileWidth: 300
-                )
-                
-                Text("Progress")
-                    .font(.caption)
-                    .padding(.top, 4)
+                //.padding()
+                .padding(.horizontal)
             }
         }
         .frame(width: size.width, height: size.height)
+        SegmentedProgressBar(
+            totalSegments: totalQuestions,
+            filledSegments: questionNumber,
+            tileWidth: 300
+        )
+        
+        Text("Progress")
+            .font(.caption)
+            .padding(.top, 4)
 
     } // end body
 } // end struct
 
 
-struct InputTileVolunteerAgain_Previews: PreviewProvider {
+/*struct InputTileVolunteerAgain_Previews: PreviewProvider {
 
     @State static var input = 0
 
@@ -102,4 +200,4 @@ struct InputTileVolunteerAgain_Previews: PreviewProvider {
 
     }
 }
-
+*/

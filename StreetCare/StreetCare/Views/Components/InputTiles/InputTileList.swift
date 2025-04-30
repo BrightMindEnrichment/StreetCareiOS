@@ -16,7 +16,7 @@ struct InputTileList: View {
     
     var optionCount = 5
     
-    var size = CGSize(width: 300.0, height: 450.0)
+    var size = CGSize(width: 350.0, height: 450.0)
     var question1: String
     var question2: String
     
@@ -73,11 +73,11 @@ struct InputTileList: View {
     
                 VStack{
                     Text(question1)
-                        .font(.title3)
+                        .font(.title2)
                         .padding(.top, 12)
                         .fontWeight(.bold)
                     Text(question2)
-                        .font(.title3)
+                        .font(.title2)
                         .padding(.bottom, 12)
                         .fontWeight(.bold)
                 }
