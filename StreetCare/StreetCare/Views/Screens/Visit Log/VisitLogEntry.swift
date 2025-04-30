@@ -151,7 +151,7 @@ struct VisitLogEntry: View {
                     }
                     
                 case 9:
-                    InputTileNumber(questionNumber: 2, totalQuestions: 7, tileWidth: 360, tileHeight: 326, question1: "Who you helped you" , question2: "prepared or joined",question3: "",question4: "", number: $visitLog.numberOfHelpers) {
+                    InputTileNumber(questionNumber: 2, totalQuestions: 7, tileWidth: 360, tileHeight: 326, question1: "Who helped you" , question2: "prepared or joined",question3: "",question4: "", number: $visitLog.numberOfHelpers) {
                         questionNumber += 1
                     } previousAction: {
                         questionNumber -= 1
@@ -167,36 +167,6 @@ struct VisitLogEntry: View {
                     } skipAction: {
                         questionNumber += 1
                     }
-//                case 8:
-//                    InputTileDuration(questionNumber: 2, totalQuestions: 5, question: "Approximate time spent on outreach?", hours: $visitLog.durationHours, minutes: $visitLog.durationMinutes) {
-//                        questionNumber += 1
-//                    } previousAction: {
-//                        questionNumber -= 1
-//                    } skipAction: {
-//                        questionNumber += 1
-//                    }
-                    
-
-                    
-//                case 8:
-//                    InputTileNumber(questionNumber: 2, totalQuestions: 3, question: "How many people joined or helped you prepare?", number: $visitLog.numberOfHelpers) {
-//                        questionNumber += 1
-//                        saveVisitLog()
-//                    } previousAction: {
-//                        questionNumber -= 1
-//                    } skipAction: {
-//                        questionNumber += 1
-//                        saveVisitLog()
-//                    }
-                case 10:
-                    InputTileDate(questionNumber: 3, totalQuestions: 4, question1: "Is there a planned date to",question2: "interact with them again?", datetimeValue: $visitLog.followUpWhenVisit) {
-                        questionNumber += 1
-                    } skipAction: {
-                        questionNumber += 1
-                    } previousAction: {
-                        questionNumber -= 1
-                    }
-                    
                 case 11:
                     InputTileList(
                         questionNumber: 4,
@@ -220,16 +190,6 @@ struct VisitLogEntry: View {
                         questionNumber += 1
                     }
                     
-                case 12:
-                    InputTileVolunteerAgain(questionNumber: 4, totalQuestions: 4, question: "Would you like to volunteer again?", volunteerAgain: $visitLog.volunteerAgain) {
-                        saveVisitLog()
-                        questionNumber = 100
-                    } previousAction: {
-                        questionNumber -= 1
-                    } skipAction: {
-                        saveVisitLog()
-                        questionNumber = 100
-                    }
                     
                 case 100:
                     InputTileComplete(question: "Completed!") {
