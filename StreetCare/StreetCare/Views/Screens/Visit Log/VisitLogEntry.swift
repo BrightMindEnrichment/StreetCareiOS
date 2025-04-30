@@ -212,7 +212,7 @@ struct VisitLogEntry: View {
                         questionNumber = 100
                     }
                 case 12:
-                    InputTileDate(questionNumber: 5, totalQuestions: 7, question1: "Is there a planned dare",question2: "to interact with them", question3: "again?", showSkip: true, datetimeValue: $visitLog.followUpWhenVisit) {
+                    InputTileDate(questionNumber: 5, totalQuestions: 7, question1: "Is there a planned date",question2: "to interact with them", question3: "again?", showSkip: true, datetimeValue: $visitLog.followUpWhenVisit) {
                         questionNumber += 1
                     } skipAction: {
                         questionNumber += 1
