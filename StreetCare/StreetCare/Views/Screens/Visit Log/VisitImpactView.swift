@@ -32,9 +32,9 @@ struct VisitImpactView: View {
     var body: some View {
         NavigationStack {
             VStack {
-                Text("INTERACTION LOG").font(.system(size: 18)).padding()
+                Text("INTERACTION LOG").font(.system(size: 18, weight: .bold)).padding()
                 ImpactView(peopleHelped: peopleHelped, outreaches: outreaches, itemsDonated: itemsDonated)
-
+                Spacer(minLength: -5)
                 Button(action: {
                     if user != nil {
                         showAlert = true
@@ -42,8 +42,10 @@ struct VisitImpactView: View {
                         showLoginMessage = true
                     }
                 }) {
+                    
                     ZStack {
-                        NavLinkButton(title: "Add new +", width: 120.0, height: 30.0)
+                        NavLinkButton(title: "ADD NEW+", width: 197.0, height: 40.0)
+                            .clipShape(Capsule())
                     }
                 }
                 .alert(NSLocalizedString("loginRequiredTitle", comment: ""), isPresented: $showLoginMessage) {
@@ -67,8 +69,8 @@ struct VisitImpactView: View {
                     VisitLogEntry()
                 }
 
-                //Spacer(minLength: 10.0)
-                Divider().frame(maxWidth: UIScreen.main.bounds.width - 50 ,minHeight: 0.5)
+                Spacer(minLength: 15.0)
+                Divider().frame(maxWidth: UIScreen.main.bounds.width - 150 ,minHeight: 0.5)
                     .background(Color.black)
                 //Spacer(minLength: 10.0)
 
