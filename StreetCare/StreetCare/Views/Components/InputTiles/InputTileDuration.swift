@@ -132,7 +132,7 @@ struct CustomDropdown: View {
         } label: {
             HStack {
                 Text(selection == -1 ? title : "\(selection)")
-                    .foregroundColor(selection == -1 ? .gray : .black)
+                    .foregroundColor(.black)
                 Spacer()
                 Image(systemName: "chevron.down")
                     .foregroundColor(.black)
