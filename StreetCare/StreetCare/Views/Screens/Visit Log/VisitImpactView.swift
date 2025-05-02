@@ -72,9 +72,14 @@ struct VisitImpactView: View {
                 Spacer(minLength: 15.0)
                 Divider().frame(maxWidth: UIScreen.main.bounds.width - 150 ,minHeight: 0.5)
                     .background(Color.black)
+                    .padding(.top, 8)
                 //Spacer(minLength: 10.0)
 
-                Text("HISTORY").font(.system(size: 16)).bold()
+                Text("HISTORY")
+                    .font(.custom("Poppins-Regular", size: 20))
+                    //.font(.system(size: 16))
+                    .fontWeight(.bold)
+                    .padding(.top, 8)
 
                 if history.isEmpty {
                     Text("You have no logged history.")
