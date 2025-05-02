@@ -154,9 +154,26 @@ struct InputTileLocation: View {
                                 // Show an alert or feedback to user
                                 failedToFindLocation = true
                             } else {
+                                // Manually composed address from input fields
+                                let manualAddress = [
+                                    street.isEmpty ? nil : street,
+                                    city.isEmpty ? nil : city,
+                                    (stateAbbreviation.isEmpty ? state : stateAbbreviation).isEmpty ? nil : (stateAbbreviation.isEmpty ? state : stateAbbreviation),
+                                    zipcode.isEmpty ? nil : zipcode
+                                ]
+                                .compactMap { $0 }
+                                .joined(separator: ", ")
+
+                                if !manualAddress.isEmpty {
+                                    textValue = manualAddress
+                                    print("📍 Updated textValue manually or partially: \(textValue)")
+                                }
+
                                 nextAction()
                             }
                         }
+
+
                         .foregroundColor(Color("PrimaryColor"))
                         .fontWeight(.bold)
                         .padding(.horizontal, 16)
