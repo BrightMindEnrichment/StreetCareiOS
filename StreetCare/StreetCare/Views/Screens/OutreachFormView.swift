@@ -180,13 +180,7 @@ struct OutreachFormView: View {
                     }
 
                 
-                HStack {
-                    Spacer()
-                    Text("\(contactNumber.count)/10")
-                        .font(.caption)
-                        .foregroundColor(.gray)
-                }
-                
+        
                 //email
                 Text(NSLocalizedString("Email", comment: ""))
                     .font(.headline)
