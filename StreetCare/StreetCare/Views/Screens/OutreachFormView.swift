@@ -16,6 +16,8 @@ struct OutreachFormView: View {
     @State private var showChapterMembershipForm = false
     @Environment(\.presentationMode) var presentationMode
     @State private var title = ""
+    @State private var contactNumber = ""
+    @State private var emailAddress = ""
     @State private var street = ""
     @State private var state = ""
     @State private var city = ""
@@ -36,6 +38,7 @@ struct OutreachFormView: View {
     @State private var isLoading = false
     @State private var chaptermemberMessage1 = ""
     @State private var showAddressSearch = false
+    @State private var consentStatus: Bool = false
 
     let skills = ["Childcare", "Counselling and Support", "Clothing", "Education", "Personal Care", "Employment and Training", "Food and Water", "Healthcare", "Chinese", "Spanish", "Language (please specify)", "Legal", "Shelter", "Transportation", "LGBTQ Support", "Technology Access", "Social Integration", "Pet Care"]
 
@@ -94,7 +97,10 @@ struct OutreachFormView: View {
             "status": "pending",
             "title": title,
             "totalSlots": maxCapacity,
-            "uid": user.uid
+            "uid": user.uid,
+            "contactNumber": contactNumber,
+            "consentStatus": consentStatus,
+            "emailAddress": emailAddress
         ]
 
         // Save to Firestore
@@ -161,6 +167,34 @@ struct OutreachFormView: View {
                         .foregroundColor(.gray)
                 }
                 
+                //contact field
+                Text(NSLocalizedString("Contact Number", comment: ""))
+                    .font(.headline)
+                
+                TextField("Enter Contact Number", text: $contactNumber)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .keyboardType(.phonePad)
+                    .onChange(of: contactNumber) { newValue in
+                        let filtered = newValue.filter { $0.isNumber }
+                        contactNumber = String(filtered.prefix(10))
+                    }
+
+                
+                HStack {
+                    Spacer()
+                    Text("\(contactNumber.count)/10")
+                        .font(.caption)
+                        .foregroundColor(.gray)
+                }
+                
+                //email
+                Text(NSLocalizedString("Email", comment: ""))
+                    .font(.headline)
+
+                TextField(NSLocalizedString("Enter email", comment: ""), text: $emailAddress)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                
+                //address
                 Text(NSLocalizedString("enteraddress", comment: ""))
                     .font(.headline)
 
@@ -227,7 +261,26 @@ struct OutreachFormView: View {
                     text: $eventDescription,
                     limit: descriptionLimit
                 )
+                
+                //checkbox disclaimer
+                HStack(alignment: .top, spacing: 10) {
+                    Button(action: {
+                        consentStatus.toggle()
+                        print("consentStatus toggled: \(consentStatus)")
+                    }) {
+                        Image(systemName: consentStatus ? "checkmark.square" : "square")
+                            .foregroundColor(consentStatus ? .black : .gray)
+                            .font(.body)
+                    }
+                    .buttonStyle(PlainButtonStyle())
 
+                    Text(NSLocalizedString("consentLine", comment: ""))
+                        .font(.body)
+                        .multilineTextAlignment(.leading)
+                }
+                .padding(.top, 20)
+
+                
                 // Buttons Section
                 VStack(spacing: 20) {
                     NavLinkButton(title: NSLocalizedString("selectSkillsButtonTitle", comment: ""), width: 300, secondaryButton: false)

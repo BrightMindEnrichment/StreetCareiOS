@@ -93,7 +93,7 @@
 "guestCantCommunityError" = "Login to add an event.";
 
 "missingDataError" = "Please fill out all information.";
-"saveEventButtonTitle" = "Save";
+"saveEventButtonTitle" = "Publish";
 "discardButtonTitle" = "Discard";
 "selectSkillsButtonTitle" = "SELECT SKILLS";
 "rsvpExistingOutreach" = "RSVP EXISTING OUTREACH";
@@ -153,7 +153,13 @@
 "loginRequiredMessage" = "Log in to enter an Interaction.";
 "notLoggedInPrompt" = "Please fill out this form each time you perform an outreach. This helps you track your contributions and allows Street Care to bring more support and services to help the community!";
 "guestWarningTitle"   = "Warning!";
-"guestWarningMessage" = "You will be unable to view or edit your visit logs without signing in";                                                                                                                     
+"guestWarningMessage" = "You will be unable to view or edit your visit logs without signing in";
+"Contact Number" = "Contact Number";
+"consentLine" = "By selecting this checkbox, I consent to sharing my contact details and event address publicly on this platform / community space to facilitate participation in the outreach event. I understand that this information will be visible to others and acknowledge the associated privacy considerations.";
+
+
+
+
 //"welcome" = "Welcome to\nStreet Care";
 //"loginButtonTitle" = "Login";
 //"signUpButtonTitle" = "Sign Up";
