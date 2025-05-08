@@ -171,7 +171,7 @@ struct OutreachFormView: View {
                 Text(NSLocalizedString("Contact Number", comment: ""))
                     .font(.headline)
                 
-                TextField("Enter Contact Number", text: $contactNumber)
+                TextField("Enter your Contact Number here", text: $contactNumber)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .keyboardType(.phonePad)
                     .onChange(of: contactNumber) { newValue in
@@ -191,7 +191,7 @@ struct OutreachFormView: View {
                 Text(NSLocalizedString("Email", comment: ""))
                     .font(.headline)
 
-                TextField(NSLocalizedString("Enter email", comment: ""), text: $emailAddress)
+                TextField("Enter your Email Address here", text: $emailAddress)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                 
                 //address

@@ -107,7 +107,7 @@
 
 "addNew" = "Add New";
 "title" = "Title*";
-"enterEventTitle" = "Enter Event Title";
+"enterEventTitle" = "Enter the Event Name here";
 "location" = "Location*";
 "street" = "Street";
 "state" = "State*";
