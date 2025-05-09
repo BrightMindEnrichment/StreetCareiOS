@@ -160,7 +160,7 @@ struct VisitLogView: View {
                 showDeleteDialog = false
             }
         }
-        .navigationTitle("Visit Log")
+        .navigationTitle("Interaction Log")
     } // end body
     
     

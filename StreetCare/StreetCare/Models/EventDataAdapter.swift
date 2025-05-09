@@ -188,6 +188,9 @@ class EventDataAdapter {
                             event.description = data["description"] as? String
                             event.isFlagged = data["isFlagged"] as? Bool ?? false
                             event.flaggedByUser = data["flaggedByUser"] as? String
+                            event.emailAddress = data["emailAddress"] as? String
+                            event.contactNumber = data["contactNumber"] as? String
+                            event.consentStatus = data["consentStatus"] as? Bool ?? false
                             
                             if let location = data["location"] as? [String: Any] {
                                 var field = ""
@@ -609,6 +612,10 @@ class EventViewModel: ObservableObject {
                     event.interest = data["interest"] as? Int
                     event.helpType = data["helpType"] as? String
                     
+                    event.emailAddress = data["emailAddress"] as? String
+                    event.contactNumber = data["contactNumber"] as? String
+                    event.consentStatus = data["consentStatus"] as? Bool ?? false
+
                     // Wrap Event in EventData
                     let eventData = EventData()
                     eventData.event = event
