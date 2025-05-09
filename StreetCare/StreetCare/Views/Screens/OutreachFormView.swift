@@ -39,6 +39,10 @@ struct OutreachFormView: View {
     @State private var chaptermemberMessage1 = ""
     @State private var showAddressSearch = false
     @State private var consentStatus: Bool = false
+    @State private var primaryButtonText = ""
+    @State private var secondaryButtonText = ""
+
+
 
     let skills = ["Childcare", "Counselling and Support", "Clothing", "Education", "Personal Care", "Employment and Training", "Food and Water", "Healthcare", "Chinese", "Spanish", "Language (please specify)", "Legal", "Shelter", "Transportation", "LGBTQ Support", "Technology Access", "Social Integration", "Pet Care"]
 
@@ -59,9 +63,23 @@ struct OutreachFormView: View {
         guard allFieldsFilled else {
             alertMessage = "Please fill in all required fields."
             alertTitle = "New Outreach Event"
+            chaptermemberMessage1 = ""
+            primaryButtonText = "OK"
+            secondaryButtonText = "Exit"
             showAlert = true
             return
         }
+        
+        if !contactNumber.isEmpty && contactNumber.count < 10 {
+            alertTitle = "Invalid Number"
+            alertMessage = "Please enter a 10-digit contact number."
+            chaptermemberMessage1 = ""
+            primaryButtonText = "OK"
+            secondaryButtonText = "Exit"
+            showAlert = true
+            return
+        }
+        
         guard let user = Auth.auth().currentUser else {
             print("No authenticated user")
             return
@@ -116,6 +134,8 @@ struct OutreachFormView: View {
                 alertTitle = "Thank you for submitting your request!"
                 alertMessage = "Approval can take typically within four business days."
                 chaptermemberMessage1 = " Streamline your experience with Chapter membership."
+                primaryButtonText = "Sign Up"
+                secondaryButtonText = "Remind me Later"
                 showAlert = true
             }
         }
@@ -319,13 +339,13 @@ struct OutreachFormView: View {
             Alert(
                 title: Text(alertTitle),
                 message: Text(alertMessage + chaptermemberMessage1),
-                primaryButton: .default(Text("Sign Up")) {
+                primaryButton: .default(Text(primaryButtonText)) {
                     // Navigate only if the alert message matches
                     if alertMessage == "Approval may take up to 5 business days." {
                         showChapterMembershipForm = true
                     }
                 },
-                secondaryButton: .cancel(Text("Remind me Later")){
+                secondaryButton: .cancel(Text(secondaryButtonText)){
                     presentationMode.wrappedValue.dismiss()
                 }
             )

@@ -122,22 +122,29 @@ struct EventPopupView: View {
                             .font(.system(size: 13))
                     }
                 }
+                
+                if event.event.consentStatus {
+                    if let emailAddress = event.event.emailAddress, !emailAddress.isEmpty {
+                        HStack{
+                            Image(systemName: "envelope")
+                            Text(emailAddress).font(.system(size: 13))
+                        }
+                    }
+                    
+                    if let contact = event.event.contactNumber, !contact.isEmpty {
+                        HStack{
+                            Image(systemName: "phone")
+                            Text(contact).font(.system(size: 13))
+                        }
+                    }
+                }
+                
                 if let description = event.event.description, !description.isEmpty {
                     Text("Event Description").font(.system(size: 14)).fontWeight(.semibold)
                     Text(description).font(.system(size: 13))
                 }
                 
-                if event.event.consentStatus {
-                    if let emailAddress = event.event.emailAddress, !emailAddress.isEmpty {
-                            Text("Email").font(.system(size: 14)).fontWeight(.semibold)
-                            Text(emailAddress).font(.system(size: 13))
-                    }
-                    
-                    if let contact = event.event.contactNumber, !contact.isEmpty {
-                            Text("Contact").font(.system(size: 14)).fontWeight(.semibold)
-                            Text(contact).font(.system(size: 13))
-                    }
-                }
+                
 
                 
                 if let helpType = event.event.helpType, !helpType.isEmpty {
