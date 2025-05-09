@@ -51,25 +51,70 @@ struct OutreachFormView: View {
 
     var allFieldsFilled: Bool {
         !title.isEmpty &&
-        //!street.isEmpty &&
         !state.isEmpty &&
         !city.isEmpty &&
-        //!zipcode.isEmpty &&
         !helpType.isEmpty &&
         !maxCapacity.isEmpty
     }
 
     func saveToFirestore() {
-        guard allFieldsFilled else {
-            alertMessage = "Please fill in all required fields."
-            alertTitle = "New Outreach Event"
+//        guard allFieldsFilled else {
+//            alertMessage = "Please fill in all required fields."
+//            alertTitle = "New Outreach Event"
+//            chaptermemberMessage1 = ""
+//            primaryButtonText = "OK"
+//            secondaryButtonText = "Exit"
+//            showAlert = true
+//            return
+//        }
+        if title.isEmpty {
+            alertMessage = "Please enter the event title."
+            alertTitle = "Missing Title"
+            chaptermemberMessage1 = ""
+            primaryButtonText = "OK"
+            secondaryButtonText = "Exit"
+            showAlert = true
+                return
+            }
+        if state.isEmpty {
+            alertMessage = "Please enter the state."
+            alertTitle = "Missing State"
             chaptermemberMessage1 = ""
             primaryButtonText = "OK"
             secondaryButtonText = "Exit"
             showAlert = true
             return
+            
         }
-        
+        if city.isEmpty {
+            alertMessage = "Please enter the city."
+            alertTitle = "Missing City"
+            chaptermemberMessage1 = ""
+            primaryButtonText = "OK"
+            secondaryButtonText = "Exit"
+            showAlert = true
+            return
+            
+        }
+        if helpType.isEmpty {
+            alertMessage = "Please enter the type of help offered."
+            alertTitle = "Missing help type"
+            chaptermemberMessage1 = ""
+            primaryButtonText = "OK"
+            secondaryButtonText = "Exit"
+            showAlert = true
+            return
+           }
+        if maxCapacity.isEmpty {
+            alertMessage = "Please enter the maximum number of participants."
+            alertTitle = "Missing Maximum Capacity"
+            chaptermemberMessage1 = ""
+            primaryButtonText = "OK"
+            secondaryButtonText = "Exit"
+            showAlert = true
+            return
+            
+        }
         if !contactNumber.isEmpty && contactNumber.count < 10 {
             alertTitle = "Invalid Number"
             alertMessage = "Please enter a 10-digit contact number."
@@ -207,6 +252,7 @@ struct OutreachFormView: View {
 
                 TextField("Enter your Email Address here", text: $emailAddress)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .autocapitalization(.none)
                 
                 //address
                 Text(NSLocalizedString("enteraddress", comment: ""))
@@ -341,7 +387,7 @@ struct OutreachFormView: View {
                 message: Text(alertMessage + chaptermemberMessage1),
                 primaryButton: .default(Text(primaryButtonText)) {
                     // Navigate only if the alert message matches
-                    if alertMessage == "Approval may take up to 5 business days." {
+                    if alertMessage.contains("Approval can take typically within four business days.") {
                         showChapterMembershipForm = true
                     }
                 },

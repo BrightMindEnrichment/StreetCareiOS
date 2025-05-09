@@ -91,6 +91,32 @@ struct EventPopupView: View {
                         .padding(8)
                 }
                 
+                HStack {
+                    Image(systemName: "clock")
+                    if let date = event.date.2{
+                        Text("\(date)")
+                            .font(.system(size: 13))
+                    }
+                }
+                
+                if event.event.consentStatus {
+                    if let contact = event.event.contactNumber, !contact.isEmpty {
+                        HStack{
+                            Image(systemName: "phone")
+                            Text(contact).font(.system(size: 13))
+                        }
+                    }
+                    
+                    if let emailAddress = event.event.emailAddress, !emailAddress.isEmpty {
+                        HStack{
+                            Image(systemName: "envelope")
+                            Text(emailAddress).font(.system(size: 13))
+                        }
+                    }
+                    
+                    
+                }
+                
                 if event.event.consentStatus {
                     if let street = event.event.street,
                        let city = event.event.city,
@@ -113,31 +139,7 @@ struct EventPopupView: View {
                         }
                     }
                 }
-
                 
-                HStack {
-                    Image(systemName: "clock")
-                    if let date = event.date.2{
-                        Text("\(date)")
-                            .font(.system(size: 13))
-                    }
-                }
-                
-                if event.event.consentStatus {
-                    if let emailAddress = event.event.emailAddress, !emailAddress.isEmpty {
-                        HStack{
-                            Image(systemName: "envelope")
-                            Text(emailAddress).font(.system(size: 13))
-                        }
-                    }
-                    
-                    if let contact = event.event.contactNumber, !contact.isEmpty {
-                        HStack{
-                            Image(systemName: "phone")
-                            Text(contact).font(.system(size: 13))
-                        }
-                    }
-                }
                 
                 if let description = event.event.description, !description.isEmpty {
                     Text("Event Description").font(.system(size: 14)).fontWeight(.semibold)
