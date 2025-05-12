@@ -18,14 +18,54 @@ struct InputTileNumber: View {
     var placeholderText: String?
     
     @Binding var number: Int
-    @State private var numberString = "0" 
+    //@State private var numberString = "0"
+    @State private var numberString: String
+
     @State private var peopledescription = ""
     @State private var showAlert = false
+    @State private var showSuccessAlert = false
     
     var nextAction: () -> ()
     var previousAction: () -> ()
     var skipAction: () -> ()
-    
+    var showProgressBar: Bool
+    init(
+        questionNumber: Int,
+        totalQuestions: Int,
+        tileWidth: CGFloat,
+        tileHeight: CGFloat,
+        question1: String,
+        question2: String,
+        question3: String,
+        question4: String,
+        descriptionLabel: String? = nil,
+        disclaimerText: String? = nil,
+        placeholderText: String? = nil,
+        number: Binding<Int>,
+        nextAction: @escaping () -> Void,
+        previousAction: @escaping () -> Void,
+        skipAction: @escaping () -> Void,
+        showProgressBar: Bool = true
+    ) {
+        self.questionNumber = questionNumber
+        self.totalQuestions = totalQuestions
+        self.tileWidth = tileWidth
+        self.tileHeight = tileHeight
+        self.question1 = question1
+        self.question2 = question2
+        self.question3 = question3
+        self.question4 = question4
+        self.descriptionLabel = descriptionLabel
+        self.disclaimerText = disclaimerText
+        self.placeholderText = placeholderText
+        self._number = number
+        self._numberString = State(initialValue: String(number.wrappedValue))
+        self.nextAction = nextAction
+        self.previousAction = previousAction
+        self.skipAction = skipAction
+        self.showProgressBar = showProgressBar
+    }
+
     var body: some View {
         ZStack {
             BasicTile(size: CGSize(width: tileWidth, height: tileHeight))
@@ -119,7 +159,7 @@ struct InputTileNumber: View {
                         .padding(.top, 8)
                 }
                 
-                HStack {
+                /*HStack {
                     Button("Previous") {
                         previousAction()
                     }
@@ -149,20 +189,59 @@ struct InputTileNumber: View {
                         Alert(title: Text("Invalid Input"), message: Text("Please enter a valid number."), dismissButton: .default(Text("OK")))
                     }
                 }
+                .padding()*/
+                HStack {
+                    Button("Cancel") {
+                        skipAction()
+                    }
+                    .foregroundColor(Color("SecondaryColor"))
+                    .font(.footnote)
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 8)
+                    .background(Capsule().fill(Color.white))
+                    .overlay(Capsule().stroke(Color("SecondaryColor"), lineWidth: 2))
+
+                    Spacer()
+
+                    Button("Update") {
+                        if let validNumber = Int(numberString), validNumber >= 0 {
+                            number = validNumber
+                            showSuccessAlert = true
+                            skipAction()
+                        } else {
+                            showAlert = true
+                        }
+                    }
+                    .foregroundColor(Color("PrimaryColor"))
+                    .fontWeight(.bold)
+                    .padding(.horizontal, 16)
+                    .padding(.vertical, 8)
+                    .background(Capsule().fill(Color("SecondaryColor")))
+                }
                 .padding()
             }
         }
+        .alert(isPresented: $showSuccessAlert) {
+            Alert(
+                title: Text("Updated"),
+                message: Text("Number of people helped was successfully updated."),
+                dismissButton: .default(Text("OK")) {
+                    skipAction()
+                }
+            )
+        }
         .frame(width: tileWidth, height: tileHeight)
-        SegmentedProgressBar(
-            totalSegments: totalQuestions,
-            filledSegments: questionNumber,
-            tileWidth: tileWidth
-        )
-        
-        Text("Progress")
-            .font(.footnote)
-            .padding(.top, 4)
-            .fontWeight(.bold)
+        if showProgressBar {
+            SegmentedProgressBar(
+                totalSegments: totalQuestions,
+                filledSegments: questionNumber,
+                tileWidth: tileWidth
+            )
+            Text("Progress")
+                .font(.footnote)
+                .padding(.top, 4)
+                .fontWeight(.bold)
+        }
     }
 }
 

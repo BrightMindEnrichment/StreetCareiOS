@@ -54,7 +54,17 @@ struct VisitLogView: View {
     @State private var mapLocations = [MapLocation(name: "dummy", latitude: 0.0, longitude: 0.0)]
     
     @State private var showDeleteDialog = false
+    @State private var isEditingPeopleHelped = false
+    @State private var editedPeopleHelped: Int = 0
+    @State private var navigateToEdit = false
     
+    func updatePeopleHelpedInFirestore(newValue: Int) {
+        let adapter = VisitLogDataAdapter()
+        adapter.updatePeopleHelped(log.id, newValue: newValue) {
+            log.peopleHelped = newValue
+            isEditingPeopleHelped = false
+        }
+    }
     var body: some View {
         ScrollView {
             VStack {
@@ -69,7 +79,44 @@ struct VisitLogView: View {
                 }
                 Spacer(minLength: 20.0)
                 if log.peopleHelped > 0 {
-                    VisitLogDetailRow(title: "People helped", detail: "\(log.peopleHelped)")
+                    HStack {
+                        VisitLogDetailRow(title: "People helped", detail: "\(log.peopleHelped)")
+                        
+                        NavigationLink(
+                            destination: InputTileNumber(
+                                questionNumber: 1,
+                                totalQuestions: 1,
+                                tileWidth: 320,
+                                tileHeight: 520,
+                                question1: "Edit the number of",
+                                question2: "people you helped",
+                                question3: "",
+                                question4: "",
+                                descriptionLabel: nil,
+                                disclaimerText: nil,
+                                placeholderText: nil,
+                                number: $editedPeopleHelped,
+                                nextAction: {
+                                    updatePeopleHelpedInFirestore(newValue: editedPeopleHelped)
+                                },
+                                previousAction: {},
+                                skipAction: {
+                                    navigateToEdit = false
+                                },
+                                showProgressBar: false
+                            ),
+                            isActive: $navigateToEdit
+                        ) {
+                            Button("Edit") {
+                                editedPeopleHelped = log.peopleHelped
+                                navigateToEdit = true
+                            }
+                            .font(.footnote)
+                            .padding(.horizontal, 12)
+                            .padding(.vertical, 6)
+                            .background(Capsule().stroke(Color.blue, lineWidth: 1))
+                        }
+                    }
                 }
                 
                 if log.didProvideSpecificHelp {

@@ -29,6 +29,19 @@ class VisitLogDataAdapter {
         visitLogs = [VisitLog]()
     }
     
+    func updatePeopleHelped(_ logId: String, newValue: Int, completion: @escaping () -> Void) {
+        let db = Firestore.firestore()
+        db.collection("VisitLogBook").document(logId).updateData([
+            "peopleHelped": newValue
+        ]) { error in
+            if let error = error {
+                print("Error updating Firestore: \(error)")
+            } else {
+                completion()
+            }
+        }
+    }
+    
     func addVisitLog(_ visitLog: VisitLog) {
     
         guard let user = Auth.auth().currentUser else {
