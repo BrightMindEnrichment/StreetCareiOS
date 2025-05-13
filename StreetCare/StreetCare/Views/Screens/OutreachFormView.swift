@@ -97,8 +97,8 @@ struct OutreachFormView: View {
             
         }
         if helpType.isEmpty {
-            alertMessage = "Please enter the type of help offered."
-            alertTitle = "Missing help type"
+            alertMessage = "Please enter the type of support offered."
+            alertTitle = "Missing support type"
             chaptermemberMessage1 = ""
             primaryButtonText = "OK"
             secondaryButtonText = "Exit"
@@ -106,8 +106,8 @@ struct OutreachFormView: View {
             return
            }
         if maxCapacity.isEmpty {
-            alertMessage = "Please enter the maximum number of participants."
-            alertTitle = "Missing Maximum Capacity"
+            alertMessage = "Please enter Total allowable participants"
+            alertTitle = "Missing Total allowable participants"
             chaptermemberMessage1 = ""
             primaryButtonText = "OK"
             secondaryButtonText = "Exit"
@@ -368,6 +368,7 @@ struct OutreachFormView: View {
                     NavLinkButton(title: NSLocalizedString("discardButtonTitle", comment: ""), width: 300, secondaryButton: true)
                         .onTapGesture {
                             isPresented = false
+                            presentationMode.wrappedValue.dismiss()
                         }
                 }
                 .frame(maxWidth: .infinity, alignment: .center)
@@ -388,6 +389,8 @@ struct OutreachFormView: View {
                 primaryButton: .default(Text(primaryButtonText)) {
                     // Navigate only if the alert message matches
                     if alertMessage.contains("Approval can take typically within four business days.") {
+                        //isPresented = false
+                       // shouldDismissAll = true
                         showChapterMembershipForm = true
                     }
                 },
