@@ -26,6 +26,7 @@ struct MainTabBarView: View {
             Group {
                 if user != nil {
                     VisitImpactView(selection: $selection)
+                    //VisitLogFormView()
                 } else {
                     NotLoggedInView(loginRequested: $loginRequested, selection: $selection)
                 }

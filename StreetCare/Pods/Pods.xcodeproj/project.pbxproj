@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 56;
+	objectVersion = 60;
 	objects = {
 
 /* Begin PBXAggregateTarget section */
@@ -14,7 +14,7 @@
 				5C53F63B615C49C159CEC84184FD1687 /* [CP] Copy XCFrameworks */,
 			);
 			dependencies = (
-				7CCFA95272CDFF781FC6D754D0B1FB90 /* PBXTargetDependency */,
+				3E529203E57876964D1E4BE76F86ED94 /* PBXTargetDependency */,
 			);
 			name = GooglePlaces;
 		};
@@ -25,284 +25,265 @@
 				9801DC96C44A55EEBAB39A01F1BB925C /* [CP] Copy XCFrameworks */,
 			);
 			dependencies = (
-				84587BCED907E0AC77F569A1243D5C01 /* PBXTargetDependency */,
+				6F048F3095E8062F805D607052B73427 /* PBXTargetDependency */,
 			);
 			name = GoogleMaps;
 		};
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
-		096B664EE7D733B979E5B5D24B443018 /* ListWithBorderedStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE671669384145651AE22443C9FFE0B0 /* ListWithBorderedStyle.swift */; };
-		0A82661EACE52636F87D54B26C58B299 /* ProgressViewWithCircularStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0BA2348C82B59668C6A5A59B9E81D620 /* ProgressViewWithCircularStyle.swift */; };
-		1027BE37C03C1FB422833FFCF7C61B75 /* Window.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FE429CA66D7CD472241CA9435A7A235 /* Window.swift */; };
-		10DAB01CB1C86DE4BA1E3198FA666D2E /* PopupView.h in Headers */ = {isa = PBXBuildFile; fileRef = F61EEC6E0FAAADFAFFF55DB3A8100675 /* PopupView.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		1DCFCF427BF422626F47520881360FBD /* ToggleWithCheckboxStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4655D171AE1E8C05526E171825627D09 /* ToggleWithCheckboxStyle.swift */; };
-		233961FE4121E34A902E354520A4AB7C /* NavigationViewWithColumnsStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = F017233804C55F5DE2CB4E3CE69B3BC9 /* NavigationViewWithColumnsStyle.swift */; };
-		31A6BA1C3AA159DDA82FCDD470ADE001 /* PopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB4DD6EC6C3E87348FC581A6C3B683A7 /* PopupView.swift */; };
-		32CDAF66511C1EF70F0317044F67921C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93A792F949C165BFEE357CCAE9E5B956 /* ViewController.swift */; };
-		332B30C61A959A2062319ECA0DD37243 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAFBA3F84ED454F62A2DBB54EBD7B174 /* Utils.swift */; };
-		356D9ED6704ED3B1A33AE47A369770C6 /* DatePickerWithCompactStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = DC77052587C4543C73142BD4D1D05844 /* DatePickerWithCompactStyle.swift */; };
-		36C0C17C07D475BEB933CF61E5B9A0C5 /* SecureField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CE4040B23DAC6C54A497F3F9BDE9FE2 /* SecureField.swift */; };
+		021BADF18D2B74C3EDC64FCF56E19EE8 /* Form.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81B0FA636D9A59BD054B5861FD2C488B /* Form.swift */; };
+		0616E2472452C9C49C2859EF36E53A24 /* FullScreenCover.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE7C8F4E7E7EC94E46E691D585A44187 /* FullScreenCover.swift */; };
+		07D745C15C3D4E4006F40C39A9ADA587 /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BAE88A98DBB5F41CD5FDEC3D9E5DD78 /* Button.swift */; };
+		0A22DFC7919BE51FC6D38791B6B9365F /* Slider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FE64B79EA4611604E582D6EFBBB1CE2 /* Slider.swift */; };
+		0EB29B7BB005488380C979B74EC6FB62 /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = A8AF4A76881B8DE046374959FC9A4099 /* View.swift */; };
+		0EC42B63232DC205DBC16EAA09A49C42 /* PickerWithWheelStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F9E57335209A7FC5BE42C99E9BEB985 /* PickerWithWheelStyle.swift */; };
+		15AF9D4DFEAA4D599C22B0B95819260B /* FullscreenPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 463AFF9390B1AC514D49A815636E8F26 /* FullscreenPopup.swift */; };
+		16C1D8FF7F1B87D286E4A3AE4B00DE30 /* PlatformViewVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 53EE3C6361C45C37E3604043C89B56BD /* PlatformViewVersion.swift */; };
+		1B42CDCC3A8D94B445152433FADD9EC9 /* ListWithGroupedStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 197C23E6369EC3EF248B9FDF665A6049 /* ListWithGroupedStyle.swift */; };
+		1D5A6B2D225E82CA8D24DBEAE57703C2 /* DatePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B393A3A4224F8E2CE9F58F2D621F43C /* DatePicker.swift */; };
+		200F99E6F9FEF36A513E2354F99DC968 /* ListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E8EF75E93966347854DB5A297C2EAC52 /* ListCell.swift */; };
+		23AF42A148C86DB177AD3A7B25F09FCC /* Sheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A490EF15E05429C1790445E871AAE46 /* Sheet.swift */; };
+		23E7FFE0712295B5867FD6D38D5AF26F /* FormWithGroupedStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 44C546E21D49A3FD1BD6A2FBF470B31B /* FormWithGroupedStyle.swift */; };
+		2440E863592DDBD66825D218052D126A /* ProgressViewWithCircularStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59BB95614B28CDEEA9649C0007C31857 /* ProgressViewWithCircularStyle.swift */; };
+		250C618C9AEDBB64E3916EB869BA93A0 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8E4C9619DD9338F1F6B9EADBFBB9FB81 /* Utils.swift */; };
+		30CF2837FB9C24625A461559CCBB3DC1 /* DatePickerWithWheelStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1F4FCB2E730E4B6A019161C2A389582 /* DatePickerWithWheelStyle.swift */; };
+		32EC6B97E3C3661D6DAFFBEDC23E0CEC /* PopupScrollViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85D663B8DCE3F460CBB85D370ACACE75 /* PopupScrollViewDelegate.swift */; };
+		32F56623C6F949AB83AFA73648096AB8 /* SecureField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3B5DD1EBAA1B631B856D1FE5DC470238 /* SecureField.swift */; };
 		3757923869FC5823752C3411DF3977C0 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 384DDA2CB25005BD6479B5987C619DD4 /* Foundation.framework */; };
-		3A10584DFE0ECFAFA8430E1C0DF15F86 /* Modifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 56856CF4785D3AFE33B54CC650733A01 /* Modifiers.swift */; };
-		3DE468FCF5865D05240084EDB87B67C3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 384DDA2CB25005BD6479B5987C619DD4 /* Foundation.framework */; };
-		402A35B9DEBB9AF5EAA7B27A460E8B7E /* FormWithGroupedStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 31688FF1CF70F612716C881E204B3095 /* FormWithGroupedStyle.swift */; };
-		4121434E07E8655DF0E3C0100BC7190B /* TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F694786AD92E4D30C579F79BC8A7502 /* TextField.swift */; };
-		41C5984CCA501E85AD46AAF1231D19A9 /* ListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 825F87246B93B977A25A271035F4E233 /* ListCell.swift */; };
-		44C06ECA5AB0991174CE45317A7F958E /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23A12633292FCA454390EE4E3BA78067 /* View.swift */; };
-		45D5E3A46EC7D22217551CB804990150 /* NavigationViewWithStackStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3B2176FDD3FBDFB41EAD4AD7720A20A /* NavigationViewWithStackStyle.swift */; };
-		47B72761D03D64207EF0199295494F24 /* ToggleWithButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3F23347AE13D4CB9995831047593A6A /* ToggleWithButtonStyle.swift */; };
-		4AF54BE3A6535A6D673E26CE70E07A34 /* ScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D06FDB52841C5F1A7019B859BC4F180 /* ScrollView.swift */; };
-		4CEA945055C3BCEEDBDE24C79334D018 /* TextFieldWithVerticalAxis.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFAD114F0B06987AE6100A22D088EA57 /* TextFieldWithVerticalAxis.swift */; };
-		597C13051042C5CF2073037D7D0A33D5 /* Stepper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FED1EC5D74CD2107690D333D713F11C /* Stepper.swift */; };
-		5985CFD66C48FD0DCAED39EFF25CA274 /* ListWithInsetStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 73EFD62553674732ECD59DFBC1D4ABC5 /* ListWithInsetStyle.swift */; };
-		5A5CC3964BE706ADA754D3100DC49169 /* SwiftUIIntrospect-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 9E7D7D2BE84F383D46148971C2BE47E0 /* SwiftUIIntrospect-dummy.m */; };
-		61BA8C8099D3374CDEB19F2A1B8286C3 /* GoogleMaps.bundle in Resources */ = {isa = PBXBuildFile; fileRef = EE0D9F71AA69DED7F7AD949F4FF2CBB3 /* GoogleMaps.bundle */; };
-		648129103D5613AE3B5A0D318CCB3DB0 /* PickerWithSegmentedStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 827C61C1913A4DE619E2D4B747BA34F2 /* PickerWithSegmentedStyle.swift */; };
-		652B5612CC3E5CAB4C21EDBAFF01EB5B /* TextEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1CBE743BAAAE2D852C2EDA9FC159165 /* TextEditor.swift */; };
-		66A43A5E6946649D63CAD68D92AF7ACF /* PageControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = ED485ADDEBCD3973465324A1657ADFCE /* PageControl.swift */; };
-		6AE8B86D87ADE6748E112DD0D5574B00 /* Weak.swift in Sources */ = {isa = PBXBuildFile; fileRef = AEBAAEDE30ACDEA092DE725E415D1CDE /* Weak.swift */; };
-		6C26AD6A5BAAA3D2FCE012D89E754634 /* Introspect.swift in Sources */ = {isa = PBXBuildFile; fileRef = BD2658C4CCCDBA8050624B54B6D17DA6 /* Introspect.swift */; };
-		70530E916B17928C203111907B723FCD /* IntrospectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 244E5446152EFD8F3F6CD58A7F0024F4 /* IntrospectionView.swift */; };
-		78E43508395B6E702D793A5741FF3165 /* FullScreenCover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3FE9020327E10317B98E805488C6AE45 /* FullScreenCover.swift */; };
-		82B868BF27C4BC0A905FA9C36EA604B0 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C81256C5C203E3CA0E574729F01B38F /* Utils.swift */; };
-		8793E36C837E5AB99D5E793856E2EA13 /* SignInWithAppleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27D6BE4B3EA999B0E22F4C5231B751CC /* SignInWithAppleButton.swift */; };
-		8B20834C2180008D9F3BD43E34C57245 /* PlatformVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1B70717F67060FB7C82147B5F69DDC3A /* PlatformVersion.swift */; };
-		8C1796694F4558D7638A856057E6D99B /* List.swift in Sources */ = {isa = PBXBuildFile; fileRef = 08A726FEDB8C39C5F481FA1E7D9AE658 /* List.swift */; };
-		8CC4DC9A996225B69B635F0B7B2F32EB /* ListWithGroupedStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2B48AB2246F012AEB637A27DB698EC25 /* ListWithGroupedStyle.swift */; };
-		8D16144795C0098C7EB60B196DFC760B /* Slider.swift in Sources */ = {isa = PBXBuildFile; fileRef = BF14106A36D47E6A817E75A12BEBA9AB /* Slider.swift */; };
-		8D491363B45116E3C7E30B0AB135D3BA /* ExytePopupView-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = E14554D0136E86C7644FF1F1880725A5 /* ExytePopupView-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		8FB6B3057C54E4853580CB8678B7E504 /* GooglePlaces.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 30B5CC484E1906B58BDE58C034F77D80 /* GooglePlaces.bundle */; };
-		9425413ED704FA8D96B7F5EB08FA5ADA /* TabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 920B7BC61323E1DE9A8D7D6133DD0D90 /* TabView.swift */; };
-		99025FBE7FCDB67C8EC3F653B4CF5593 /* DatePickerWithStepperFieldStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B96048204AD5723BB1AAA596514911FD /* DatePickerWithStepperFieldStyle.swift */; };
+		4000384F45C6417B90144722DDBB2FDD /* ToggleWithButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933605FB40C658A7B003E4ED4D13060C /* ToggleWithButtonStyle.swift */; };
+		46E82B8027F5E326212649AEE54A873D /* ListWithSidebarStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = D986ACD3027A1666A9293B15B8F3BE27 /* ListWithSidebarStyle.swift */; };
+		4A7942CDCB17739AEF39B49069BC8B06 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0769D20DEC9C8639AD0BCEFEC9D0364A /* Utils.swift */; };
+		5485B551BB4A1FAA23F81385A7428586 /* ColorPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23F72C71881913B97656312E6B81A133 /* ColorPicker.swift */; };
+		59C62F39A5F52DC7B09ACA14AE15E955 /* IntrospectionSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30C49DA521CFA85F60E3B012A89F5E1D /* IntrospectionSelector.swift */; };
+		5A24F9E1B777E69982D137D3AD33F7FA /* List.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7CD88476F2EC1C4821AE600DD5B5181 /* List.swift */; };
+		5BC0A8B7BEE4180D5D9D942DB31675DE /* SignInWithAppleButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0602603B72CF788AEEAAB133F8274E43 /* SignInWithAppleButton.swift */; };
+		618E5E023B20629AA626DA49028D304D /* ListWithInsetStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = A414F69FEBC59DF4E5341C5101BD5000 /* ListWithInsetStyle.swift */; };
+		6475E8EDA35A680029AF5998A995AA22 /* DatePickerWithFieldStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7E58B704C9AD6D98AB5405FCB03B9708 /* DatePickerWithFieldStyle.swift */; };
+		69B9ED23F28925142343266A8BA94C8C /* ToggleWithSwitchStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8127E45280D8DF1F2A91E7E44A2FAFE0 /* ToggleWithSwitchStyle.swift */; };
+		6EC41E41BA2220905A636B5E77CA3DCF /* GooglePlaces.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 80370326D54AF7828DEB4CE6ED74BA77 /* GooglePlaces.bundle */; };
+		6FB51C7FBE83C487DDF46F06D20C7D6E /* SwiftUIIntrospect-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = AFA773CD8FC78E1B995B7466CBC4B87D /* SwiftUIIntrospect-dummy.m */; };
+		71A331A64716BBC2858DAE1552C956D6 /* NavigationViewWithStackStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6FACC71A2F517673D344A74F7A1E9A26 /* NavigationViewWithStackStyle.swift */; };
+		72B17611BEA29AAFAB322C6109025E71 /* TabViewWithPageStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9F1DC4A30B5322E528EAAFE05E1F2721 /* TabViewWithPageStyle.swift */; };
+		770A9E072398271F92588CA7DF0AFF66 /* PopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 134946343B04C0B68CC13CC60B054F91 /* PopupView.swift */; };
+		77D48955123666F1EA04F78120055ED6 /* NavigationSplitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999BE93EA3C1E721E07DF6943BEC0083 /* NavigationSplitView.swift */; };
+		80D0A4197B6EBBBE53D3E1D9B409FE52 /* VideoPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 096000AFFF5E2612B1A26658974AD96B /* VideoPlayer.swift */; };
+		8258B26E866A04CFCD55EAF792362D0C /* ExytePopupView-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 7415A4FA4D81C4571D405F8A2215D41D /* ExytePopupView-dummy.m */; };
+		8B148B0D62EAC36C0718FB9FED909B58 /* ProgressViewWithLinearStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05D2A82B78F3946E89101FFE9B82C04C /* ProgressViewWithLinearStyle.swift */; };
+		8D0F72084731EB40804FA7B31C18A504 /* TabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 056717F4110FA80CE2FD7FE26E9E0920 /* TabView.swift */; };
+		8D3A7BAE65536D4DF868670581890271 /* TextEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 90FF7A2CE0646197DA79AE91E3DC606C /* TextEditor.swift */; };
+		926B033D364F8D9E72F6F4C66A237A6E /* ExytePopupView-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 5DE55CD3E100AFA999330B6D3853BB39 /* ExytePopupView-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		95DFE97D4A148BA4387EBF1164E54E50 /* DatePickerWithCompactStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD177F71A497B38D7D51F3FA8EB95267 /* DatePickerWithCompactStyle.swift */; };
+		9691FBCACD9D25C3831DCA91DB552593 /* PlatformVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76E220F7768846858BB8C359B2578DCA /* PlatformVersion.swift */; };
+		96C927206FDAF971096818FC7C0DCFA7 /* Weak.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27817D84E3C00281EBFFCD8B11AC40EA /* Weak.swift */; };
+		97E85A7E2BB75BA35A2945AD523DD70C /* Map.swift in Sources */ = {isa = PBXBuildFile; fileRef = A496935BC296AF33C28BC7522555783E /* Map.swift */; };
+		9C76F483583FA889458A874ACC3EFB38 /* DatePickerWithGraphicalStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7B795B16E92EA478014644FAE51F77D /* DatePickerWithGraphicalStyle.swift */; };
 		9D215B232CC787226FC01060B85AEB01 /* Pods-StreetCare-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = FD09EC04E1BC4D4E513DCA8A5525CF39 /* Pods-StreetCare-dummy.m */; };
-		A0261BF6F0A928BF52499E728F791B7A /* SwiftUIIntrospect-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 7F1BBFFE3D8CEADB6DCEDB102FF94CC4 /* SwiftUIIntrospect-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		A628D069221E1225061BCB6D6CEBAE28 /* ToggleWithSwitchStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A924DE011E01156568335F2F7C96453 /* ToggleWithSwitchStyle.swift */; };
-		A709B599F4AF314BB4D291EB9C00E4BB /* FullscreenPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D8BE9CCF74EF2728CFDD3582CFF5E66 /* FullscreenPopup.swift */; };
-		A88456B31FC00C2D33B6B54B41BF340F /* DatePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10858941E1A374C00DDFEDF21289098F /* DatePicker.swift */; };
-		ABE69E5FD9432A16EF7288D958DC64B2 /* TabViewWithPageStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A7EDE4C937694FA80D1700DF130FE57 /* TabViewWithPageStyle.swift */; };
-		AE6CA7B5F083F7E9472384DEDA3FDED4 /* DatePickerWithGraphicalStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = A422DFCF84F00E95761C2EF9AEA5AC13 /* DatePickerWithGraphicalStyle.swift */; };
-		AF10E81FB56DE12B7029EBBF1FFC40CA /* PickerWithMenuStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF44FC8CBD32D36D3ECC4F0DA35E8640 /* PickerWithMenuStyle.swift */; };
-		AFE8AA8C923A2973B56ED50402F2D8D2 /* Table.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C094C8C18350059B29C982620897A8 /* Table.swift */; };
-		B12F7DABBE58A7771C2E1DEAE3FBE0D4 /* Button.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA97DA466BBAEF49A4510AE14505B7B9 /* Button.swift */; };
-		B57DB858B4AB2D69B645DE4A7D1CB64E /* IntrospectableViewType.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5724F7D7274D240BB23B01FC27DAF8A /* IntrospectableViewType.swift */; };
-		BE02C376ADB6FF033A801489F8923FEE /* PickerWithWheelStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = A665943F9A8EEF18673E1D9BADBE49E1 /* PickerWithWheelStyle.swift */; };
-		C478724E2D8E18028A13E8F7E390B0B1 /* Toggle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B0C50301E0C570475C68D691E408609 /* Toggle.swift */; };
-		C4E8866D51EB334661D5E0B5BE8C1B81 /* RuntimeWarnings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5F95B1D34D8450D6DB9DE0F80DDEECE3 /* RuntimeWarnings.swift */; };
-		C8D96B9E6FE825FC0426C8EB2D2B6B4E /* VideoPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C885796459F57912B9B52EA20372926 /* VideoPlayer.swift */; };
-		C9D94E2374E907ACBA059AD3055C147B /* Popover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EBDA388532F57EA8AAF05DDEFD1DCEE /* Popover.swift */; };
+		9D25EE2FE4ADAAFAF731EE42283381CA /* Stepper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AF9905564FF00CD18EDEC61CCC4A3C4 /* Stepper.swift */; };
+		9E7F29807B69A5D05AF8C459700B5FDC /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C5B3415DA2067D09AD2A309CA30E6DD4 /* ViewController.swift */; };
+		9F768F97CF48759E6A3C37B0898E4B3E /* ToggleWithCheckboxStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = B30DB7A3929123BC14A9138411920EF6 /* ToggleWithCheckboxStyle.swift */; };
+		A006ED93CA2414D8D0D19B96588FE43E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 384DDA2CB25005BD6479B5987C619DD4 /* Foundation.framework */; };
+		A0183D5F6940EBDBD149DDBE4DD84E5D /* TextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CE5831CA41C71857E4EDD3BA6B6053A /* TextField.swift */; };
+		A5AAD20F06850E7882FF1F818096C6B7 /* Window.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7478A163C822CC9426369F47E6FAEC28 /* Window.swift */; };
+		A7A6918456545BEA9A754E104F63DAE3 /* ListWithInsetGroupedStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1BF690338444B2F0C41A882F84A14226 /* ListWithInsetGroupedStyle.swift */; };
+		B004648EFC84E889E600C62DDD11C3C1 /* PlatformView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2C9F60FB2F41BA285CC33826EB69C49D /* PlatformView.swift */; };
+		B1A0D059123FD23DA3AC06B290463C39 /* TextFieldWithVerticalAxis.swift in Sources */ = {isa = PBXBuildFile; fileRef = 81F13E0A3CDC57912E277ACF61A21107 /* TextFieldWithVerticalAxis.swift */; };
+		B2E1F7997D844FEC6636848581709FF4 /* NavigationStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA3108E496EBA5EE43A88C49FC3190D3 /* NavigationStack.swift */; };
+		B36F3B3369D2B4B450AD67ABF61B1324 /* PageControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD5908DB5AFC44B7F7302BBBBE5ABEAD /* PageControl.swift */; };
+		B3F461172934F8542A0BEA350F35ED47 /* Toggle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6334D22D5810261A73E5ABB09157C011 /* Toggle.swift */; };
+		B6356A4E6355767E65E1752D75CDF7A9 /* Modifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BC11B6FD9AE0942BED6F2D6D8EAE19A /* Modifiers.swift */; };
+		B74E034E0EC1035CF77F133CEF0C5012 /* Popover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2104EB6A51E93AE77436E25012AFD052 /* Popover.swift */; };
+		B8850F92FE187D934B036B48E74723D1 /* NavigationViewWithColumnsStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1821760059A4C1705775481DB7E41E84 /* NavigationViewWithColumnsStyle.swift */; };
+		B92F696793F8972E182C1ABA0276AE34 /* DatePickerWithStepperFieldStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40FBD0995B34E61BCD469290FDE0D741 /* DatePickerWithStepperFieldStyle.swift */; };
+		BCFDAD54FCF55892F6E7E1698B406943 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 384DDA2CB25005BD6479B5987C619DD4 /* Foundation.framework */; };
+		C2248E3E627CC18335CF32107622310D /* SwiftUIIntrospect-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 91E813793D99727EB06C02913CC5A730 /* SwiftUIIntrospect-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		C900D0E798BDEBC4ADB17F247ABAFA5F /* PickerWithSegmentedStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33322369B25E56B1BF51A2DF9D9A0379 /* PickerWithSegmentedStyle.swift */; };
+		CA1962D1651BDF38614B0FAC07A15847 /* Introspect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 174BE97AAEA4C69896CDC33697C52D65 /* Introspect.swift */; };
+		CA1A3108A7E2610600F4EF57FBECE276 /* IntrospectableViewType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 414182E103B3B4B29FB16AD07FAD6618 /* IntrospectableViewType.swift */; };
 		CA367557FAB6F5CC8D6A1293BA691F14 /* Pods-StreetCare-umbrella.h in Headers */ = {isa = PBXBuildFile; fileRef = 1F94FBC8E8FA08105CA176A3D27A7E31 /* Pods-StreetCare-umbrella.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		CDD53CE25B0CD5DCEE4F0F82D24F6E8B /* ExytePopupView-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = FD964562CADB5970DDFB6B2AC1D2CA7F /* ExytePopupView-dummy.m */; };
-		DB106A2C51AE9300525CD3538BB349DE /* ColorPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 199497DA1174AFD28C7AEE5982B677C6 /* ColorPicker.swift */; };
-		DF347922A4EE0EEEFA31693F42E1DEB9 /* Map.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2DAF3BA695DCF376FF908F9CBB9A7D1 /* Map.swift */; };
-		E3DA284FF3402CE6CDDF368AA6AEA4A8 /* Sheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A8731585C0F9A05E9F6A07FEC60C845 /* Sheet.swift */; };
-		E450CE216EAE942AF8C67A569F5DBB3C /* ProgressViewWithLinearStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDD826238356D9DF61B31A0CE92B0A5 /* ProgressViewWithLinearStyle.swift */; };
-		E77FC40B6C1EBDF9611280DB332FC2E1 /* DatePickerWithFieldStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 51D3F963EAD21D3751B86498AAB3C440 /* DatePickerWithFieldStyle.swift */; };
-		E99D83C7D5AC3FE8414976134E1F6186 /* PlatformViewVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 916848EF235A29EADE68A085FD43B1D3 /* PlatformViewVersion.swift */; };
-		EA8705F95B086DCFF89505C3296FC78F /* SearchField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F443B2C2AD5A7CEE21182C8C474E93D /* SearchField.swift */; };
-		EB1DE7CB6B937B38DA5562002D82E1B9 /* DatePickerWithWheelStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = FB44D4DD222839A5737040C155ABE1D4 /* DatePickerWithWheelStyle.swift */; };
-		EEF864066D5ADD064D19D3FC5731DE97 /* PopupScrollViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC6702F0B22952503F327989459A95E9 /* PopupScrollViewDelegate.swift */; };
-		EFD3B7109F2E7DCB0A3BB48B63566072 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 384DDA2CB25005BD6479B5987C619DD4 /* Foundation.framework */; };
-		F19A7CB0C7C80E18EB4960E96D2333A3 /* NavigationSplitView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4B97C9DE01E846F9774B0F442536EB1 /* NavigationSplitView.swift */; };
-		F67A70F132619C34AC5458BED3378324 /* IntrospectionSelector.swift in Sources */ = {isa = PBXBuildFile; fileRef = AE7DF8659372E269359BC7F607E2BFA0 /* IntrospectionSelector.swift */; };
-		F6CB0D5236E6B483B3259318EB3614E5 /* Form.swift in Sources */ = {isa = PBXBuildFile; fileRef = C892D36802F2FB08E74A9B6716E563D5 /* Form.swift */; };
-		FABC8B3A3E7D3D08980470D7AE3F4FE7 /* ListWithSidebarStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4B66BA6EEF2DEC5BE1AE8CE70330BAC /* ListWithSidebarStyle.swift */; };
-		FC9F1D07D400CCB448659AB27F58318B /* PlatformView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EA0A137D81529870C439DAA671CB7F9F /* PlatformView.swift */; };
-		FD3AEB8835EE070D2E379C9770F80E62 /* ListWithInsetGroupedStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2CB4EE6630E518ABE333DDA374D08F98 /* ListWithInsetGroupedStyle.swift */; };
-		FFC37C531EF13D05425A88707ADDDF7A /* NavigationStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D2AC01CEA7E6320A1764DF19656691 /* NavigationStack.swift */; };
+		CA4959B7DB4BEA84A6CEBB899539ACF6 /* GoogleMaps.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 1F9FF0E523ACEE1E72E156EA6E92266E /* GoogleMaps.bundle */; };
+		D49BFB20E72A747E331B54468BA50491 /* PickerWithMenuStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3DC432A303E2CE28FF319DBF0B2B410 /* PickerWithMenuStyle.swift */; };
+		D67AE01746180EB3186D2063AB64B866 /* IntrospectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E515FCB8DDD5884A6743E1C35306F954 /* IntrospectionView.swift */; };
+		EB51AE8CB527C70DB9D5F5690741D14A /* Table.swift in Sources */ = {isa = PBXBuildFile; fileRef = D495EB227CAE2B76252193AE8B08DCF5 /* Table.swift */; };
+		F32669843BE648D6DD43136559CE47E1 /* SearchField.swift in Sources */ = {isa = PBXBuildFile; fileRef = EBC11C2004A8EC9C4E3BAAA664DDC5D0 /* SearchField.swift */; };
+		F7DE6EC227FA45CCBB4E565364974CC8 /* ScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 67736221AA8B4AEF00838AE19C48A7B5 /* ScrollView.swift */; };
+		FD55818277E693BB552D0E2D8C5C2F87 /* ListWithBorderedStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5126C8D5E0E288059BE2F9D125EAFFCF /* ListWithBorderedStyle.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		20BE8F8E93D13C4EA2A7D92206866EC8 /* PBXContainerItemProxy */ = {
+		243E5DAD2998ADF6F1BF0DA0BD1BFCAF /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FF94F6BC609DB21F0194205C23064AFC;
+			remoteInfo = SwiftUIIntrospect;
+		};
+		39E3E5EA1A46D7B32052A830560D453E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = E5B4BBC6DD552AC8943C7E22772FC1D3;
 			remoteInfo = GoogleMaps;
 		};
-		20CF38DD68EEC7523D3BC1E68A112B05 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 0C1885900810601510E0C632060FAF26;
-			remoteInfo = GooglePlaces;
-		};
-		2DD4AB669EDB9DAFBC60A4543C1268B5 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = FF94F6BC609DB21F0194205C23064AFC;
-			remoteInfo = SwiftUIIntrospect;
-		};
-		34013D1E91FC0E16ACE37D9B4EBCEA97 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 7B026DDDF280F148DD87281679B51154;
-			remoteInfo = "GoogleMaps-GoogleMapsResources";
-		};
-		3FAD9F5746BC2078E0043D6B81E5E853 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = FF94F6BC609DB21F0194205C23064AFC;
-			remoteInfo = SwiftUIIntrospect;
-		};
-		77C9F38349B0BE23715763F0F11602A2 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = E3BF7971BE024EA2CBC58C6A22E7F7CD;
-			remoteInfo = ExytePopupView;
-		};
-		9FE18DE5A0D854E526F9AC3E24110721 /* PBXContainerItemProxy */ = {
+		3A15EF227B1CDBEBC7887EAADAADA871 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = 285AAD0A8192022DACE2DAFE30D6CD52;
 			remoteInfo = "GooglePlaces-GooglePlacesResources";
 		};
+		3EF105A77D395DC743967EFC24E5FF2D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = E3BF7971BE024EA2CBC58C6A22E7F7CD;
+			remoteInfo = ExytePopupView;
+		};
+		4E5F66E79D2C540019B9D573B514AADA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 0C1885900810601510E0C632060FAF26;
+			remoteInfo = GooglePlaces;
+		};
+		537263AE878A9F9B394B29213CCEABEE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = FF94F6BC609DB21F0194205C23064AFC;
+			remoteInfo = SwiftUIIntrospect;
+		};
+		BEACBAD5CAB642D9D0B0A6A0889D5338 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BFDFE7DC352907FC980B868725387E98 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 7B026DDDF280F148DD87281679B51154;
+			remoteInfo = "GoogleMaps-GoogleMapsResources";
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		00BD116861BEE5080A3EEE2EF14D1451 /* GooglePlaces.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; name = GooglePlaces.xcframework; path = Frameworks/GooglePlaces.xcframework; sourceTree = "<group>"; };
-		08A726FEDB8C39C5F481FA1E7D9AE658 /* List.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = List.swift; path = Sources/ViewTypes/List.swift; sourceTree = "<group>"; };
-		0BA2348C82B59668C6A5A59B9E81D620 /* ProgressViewWithCircularStyle.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ProgressViewWithCircularStyle.swift; path = Sources/ViewTypes/ProgressViewWithCircularStyle.swift; sourceTree = "<group>"; };
-		0CE4040B23DAC6C54A497F3F9BDE9FE2 /* SecureField.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SecureField.swift; path = Sources/ViewTypes/SecureField.swift; sourceTree = "<group>"; };
+		056717F4110FA80CE2FD7FE26E9E0920 /* TabView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TabView.swift; path = Sources/ViewTypes/TabView.swift; sourceTree = "<group>"; };
+		05D2A82B78F3946E89101FFE9B82C04C /* ProgressViewWithLinearStyle.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ProgressViewWithLinearStyle.swift; path = Sources/ViewTypes/ProgressViewWithLinearStyle.swift; sourceTree = "<group>"; };
+		0602603B72CF788AEEAAB133F8274E43 /* SignInWithAppleButton.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SignInWithAppleButton.swift; path = Sources/ViewTypes/SignInWithAppleButton.swift; sourceTree = "<group>"; };
+		07322594EE89347F78EA631EDF0030EB /* ExytePopupView-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "ExytePopupView-Info.plist"; sourceTree = "<group>"; };
+		0769D20DEC9C8639AD0BCEFEC9D0364A /* Utils.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Utils.swift; path = Sources/PopupView/Utils.swift; sourceTree = "<group>"; };
+		096000AFFF5E2612B1A26658974AD96B /* VideoPlayer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = VideoPlayer.swift; path = Sources/ViewTypes/VideoPlayer.swift; sourceTree = "<group>"; };
+		0A490EF15E05429C1790445E871AAE46 /* Sheet.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Sheet.swift; path = Sources/ViewTypes/Sheet.swift; sourceTree = "<group>"; };
+		0AF9905564FF00CD18EDEC61CCC4A3C4 /* Stepper.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Stepper.swift; path = Sources/ViewTypes/Stepper.swift; sourceTree = "<group>"; };
 		0D880620DE36E3BEA3AB06F0B548A77A /* Pods-StreetCare-resources.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-StreetCare-resources.sh"; sourceTree = "<group>"; };
-		0F443B2C2AD5A7CEE21182C8C474E93D /* SearchField.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SearchField.swift; path = Sources/ViewTypes/SearchField.swift; sourceTree = "<group>"; };
-		10858941E1A374C00DDFEDF21289098F /* DatePicker.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DatePicker.swift; path = Sources/ViewTypes/DatePicker.swift; sourceTree = "<group>"; };
-		10AA17EF5C8D7C00E4A68FFE827724FA /* GoogleMaps.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = GoogleMaps.debug.xcconfig; sourceTree = "<group>"; };
-		199497DA1174AFD28C7AEE5982B677C6 /* ColorPicker.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ColorPicker.swift; path = Sources/ViewTypes/ColorPicker.swift; sourceTree = "<group>"; };
-		1A8731585C0F9A05E9F6A07FEC60C845 /* Sheet.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Sheet.swift; path = Sources/ViewTypes/Sheet.swift; sourceTree = "<group>"; };
-		1A924DE011E01156568335F2F7C96453 /* ToggleWithSwitchStyle.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ToggleWithSwitchStyle.swift; path = Sources/ViewTypes/ToggleWithSwitchStyle.swift; sourceTree = "<group>"; };
-		1B70717F67060FB7C82147B5F69DDC3A /* PlatformVersion.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PlatformVersion.swift; path = Sources/PlatformVersion.swift; sourceTree = "<group>"; };
+		0E98530B7AF1C31C248361B0D9839392 /* GoogleMaps.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; name = GoogleMaps.xcframework; path = Maps/Frameworks/GoogleMaps.xcframework; sourceTree = "<group>"; };
+		134946343B04C0B68CC13CC60B054F91 /* PopupView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PopupView.swift; path = Sources/PopupView/PopupView.swift; sourceTree = "<group>"; };
+		174BE97AAEA4C69896CDC33697C52D65 /* Introspect.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Introspect.swift; path = Sources/Introspect.swift; sourceTree = "<group>"; };
+		1821760059A4C1705775481DB7E41E84 /* NavigationViewWithColumnsStyle.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NavigationViewWithColumnsStyle.swift; path = Sources/ViewTypes/NavigationViewWithColumnsStyle.swift; sourceTree = "<group>"; };
+		197C23E6369EC3EF248B9FDF665A6049 /* ListWithGroupedStyle.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ListWithGroupedStyle.swift; path = Sources/ViewTypes/ListWithGroupedStyle.swift; sourceTree = "<group>"; };
+		1BF690338444B2F0C41A882F84A14226 /* ListWithInsetGroupedStyle.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ListWithInsetGroupedStyle.swift; path = Sources/ViewTypes/ListWithInsetGroupedStyle.swift; sourceTree = "<group>"; };
 		1C8031220F7ECC04F0D76F050E0655F4 /* SwiftUIIntrospect */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = SwiftUIIntrospect; path = SwiftUIIntrospect.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		1F94FBC8E8FA08105CA176A3D27A7E31 /* Pods-StreetCare-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-StreetCare-umbrella.h"; sourceTree = "<group>"; };
+		1F9E57335209A7FC5BE42C99E9BEB985 /* PickerWithWheelStyle.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PickerWithWheelStyle.swift; path = Sources/ViewTypes/PickerWithWheelStyle.swift; sourceTree = "<group>"; };
+		1F9FF0E523ACEE1E72E156EA6E92266E /* GoogleMaps.bundle */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "wrapper.plug-in"; name = GoogleMaps.bundle; path = Maps/Resources/GoogleMapsResources/GoogleMaps.bundle; sourceTree = "<group>"; };
+		1FE64B79EA4611604E582D6EFBBB1CE2 /* Slider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Slider.swift; path = Sources/ViewTypes/Slider.swift; sourceTree = "<group>"; };
+		2104EB6A51E93AE77436E25012AFD052 /* Popover.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Popover.swift; path = Sources/ViewTypes/Popover.swift; sourceTree = "<group>"; };
 		21BC9DE5EE18F27517C52ABD3FBF38ED /* GoogleMaps-GoogleMapsResources */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = "GoogleMaps-GoogleMapsResources"; path = GoogleMapsResources.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
-		23A12633292FCA454390EE4E3BA78067 /* View.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = View.swift; path = Sources/ViewTypes/View.swift; sourceTree = "<group>"; };
-		244E5446152EFD8F3F6CD58A7F0024F4 /* IntrospectionView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = IntrospectionView.swift; path = Sources/IntrospectionView.swift; sourceTree = "<group>"; };
-		25825E95E126B7F2220F4B4B54223BF0 /* SwiftUIIntrospect-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SwiftUIIntrospect-prefix.pch"; sourceTree = "<group>"; };
-		27D6BE4B3EA999B0E22F4C5231B751CC /* SignInWithAppleButton.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SignInWithAppleButton.swift; path = Sources/ViewTypes/SignInWithAppleButton.swift; sourceTree = "<group>"; };
-		2A7EDE4C937694FA80D1700DF130FE57 /* TabViewWithPageStyle.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TabViewWithPageStyle.swift; path = Sources/ViewTypes/TabViewWithPageStyle.swift; sourceTree = "<group>"; };
-		2B48AB2246F012AEB637A27DB698EC25 /* ListWithGroupedStyle.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ListWithGroupedStyle.swift; path = Sources/ViewTypes/ListWithGroupedStyle.swift; sourceTree = "<group>"; };
-		2C81256C5C203E3CA0E574729F01B38F /* Utils.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Utils.swift; path = Source/Utils.swift; sourceTree = "<group>"; };
-		2CB4EE6630E518ABE333DDA374D08F98 /* ListWithInsetGroupedStyle.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ListWithInsetGroupedStyle.swift; path = Sources/ViewTypes/ListWithInsetGroupedStyle.swift; sourceTree = "<group>"; };
-		2EBDA388532F57EA8AAF05DDEFD1DCEE /* Popover.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Popover.swift; path = Sources/ViewTypes/Popover.swift; sourceTree = "<group>"; };
-		30B5CC484E1906B58BDE58C034F77D80 /* GooglePlaces.bundle */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "wrapper.plug-in"; name = GooglePlaces.bundle; path = Resources/GooglePlacesResources/GooglePlaces.bundle; sourceTree = "<group>"; };
-		31688FF1CF70F612716C881E204B3095 /* FormWithGroupedStyle.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = FormWithGroupedStyle.swift; path = Sources/ViewTypes/FormWithGroupedStyle.swift; sourceTree = "<group>"; };
-		37B1C39A81A07B70B3EB5CB2C6E47BAD /* ResourceBundle-GooglePlacesResources-GooglePlaces-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "ResourceBundle-GooglePlacesResources-GooglePlaces-Info.plist"; sourceTree = "<group>"; };
+		23F72C71881913B97656312E6B81A133 /* ColorPicker.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ColorPicker.swift; path = Sources/ViewTypes/ColorPicker.swift; sourceTree = "<group>"; };
+		2499D75AF34DE3F91AF35FEB5EBA4E03 /* GoogleMapsBase.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; name = GoogleMapsBase.xcframework; path = Base/Frameworks/GoogleMapsBase.xcframework; sourceTree = "<group>"; };
+		27817D84E3C00281EBFFCD8B11AC40EA /* Weak.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Weak.swift; path = Sources/Weak.swift; sourceTree = "<group>"; };
+		2BF34B88E97E47B1E81145C445D24D23 /* ResourceBundle-GooglePlacesResources-GooglePlaces-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "ResourceBundle-GooglePlacesResources-GooglePlaces-Info.plist"; sourceTree = "<group>"; };
+		2C9F60FB2F41BA285CC33826EB69C49D /* PlatformView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PlatformView.swift; path = Sources/PlatformView.swift; sourceTree = "<group>"; };
+		2CE5831CA41C71857E4EDD3BA6B6053A /* TextField.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TextField.swift; path = Sources/ViewTypes/TextField.swift; sourceTree = "<group>"; };
+		30C49DA521CFA85F60E3B012A89F5E1D /* IntrospectionSelector.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = IntrospectionSelector.swift; path = Sources/IntrospectionSelector.swift; sourceTree = "<group>"; };
+		33322369B25E56B1BF51A2DF9D9A0379 /* PickerWithSegmentedStyle.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PickerWithSegmentedStyle.swift; path = Sources/ViewTypes/PickerWithSegmentedStyle.swift; sourceTree = "<group>"; };
+		36360A6463A0F75AF727D1224266529B /* GMSEmpty.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GMSEmpty.h; path = Maps/Sources/GMSEmpty.h; sourceTree = "<group>"; };
+		37B0C9373E966435049D0BFE4A161ECA /* GooglePlaces-xcframeworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "GooglePlaces-xcframeworks.sh"; sourceTree = "<group>"; };
+		37DAD273C6BFC4437D3CB7D92C4724DD /* SwiftUIIntrospect.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SwiftUIIntrospect.debug.xcconfig; sourceTree = "<group>"; };
 		384DDA2CB25005BD6479B5987C619DD4 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS18.0.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
-		3E7E0334EDEF72D38684FFD1605B032A /* GoogleMaps-xcframeworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "GoogleMaps-xcframeworks.sh"; sourceTree = "<group>"; };
-		3FE9020327E10317B98E805488C6AE45 /* FullScreenCover.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = FullScreenCover.swift; path = Sources/ViewTypes/FullScreenCover.swift; sourceTree = "<group>"; };
-		4655D171AE1E8C05526E171825627D09 /* ToggleWithCheckboxStyle.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ToggleWithCheckboxStyle.swift; path = Sources/ViewTypes/ToggleWithCheckboxStyle.swift; sourceTree = "<group>"; };
+		3B5DD1EBAA1B631B856D1FE5DC470238 /* SecureField.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SecureField.swift; path = Sources/ViewTypes/SecureField.swift; sourceTree = "<group>"; };
+		40FBD0995B34E61BCD469290FDE0D741 /* DatePickerWithStepperFieldStyle.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DatePickerWithStepperFieldStyle.swift; path = Sources/ViewTypes/DatePickerWithStepperFieldStyle.swift; sourceTree = "<group>"; };
+		414182E103B3B4B29FB16AD07FAD6618 /* IntrospectableViewType.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = IntrospectableViewType.swift; path = Sources/IntrospectableViewType.swift; sourceTree = "<group>"; };
+		44C546E21D49A3FD1BD6A2FBF470B31B /* FormWithGroupedStyle.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = FormWithGroupedStyle.swift; path = Sources/ViewTypes/FormWithGroupedStyle.swift; sourceTree = "<group>"; };
+		463AFF9390B1AC514D49A815636E8F26 /* FullscreenPopup.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = FullscreenPopup.swift; path = Sources/PopupView/FullscreenPopup.swift; sourceTree = "<group>"; };
 		46DD59DE759324C7920A8447CD4B0D72 /* ExytePopupView */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = ExytePopupView; path = ExytePopupView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		4B0C50301E0C570475C68D691E408609 /* Toggle.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Toggle.swift; path = Sources/ViewTypes/Toggle.swift; sourceTree = "<group>"; };
-		4C885796459F57912B9B52EA20372926 /* VideoPlayer.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = VideoPlayer.swift; path = Sources/ViewTypes/VideoPlayer.swift; sourceTree = "<group>"; };
-		4FE429CA66D7CD472241CA9435A7A235 /* Window.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Window.swift; path = Sources/ViewTypes/Window.swift; sourceTree = "<group>"; };
-		4FED1EC5D74CD2107690D333D713F11C /* Stepper.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Stepper.swift; path = Sources/ViewTypes/Stepper.swift; sourceTree = "<group>"; };
-		51D3F963EAD21D3751B86498AAB3C440 /* DatePickerWithFieldStyle.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DatePickerWithFieldStyle.swift; path = Sources/ViewTypes/DatePickerWithFieldStyle.swift; sourceTree = "<group>"; };
+		4AD6C7616E8782C40F85F4F343541C4C /* ExytePopupView-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "ExytePopupView-prefix.pch"; sourceTree = "<group>"; };
+		4FD06125E45A4D53FA43ECB42E1C01FE /* ExytePopupView.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = ExytePopupView.debug.xcconfig; sourceTree = "<group>"; };
+		5126C8D5E0E288059BE2F9D125EAFFCF /* ListWithBorderedStyle.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ListWithBorderedStyle.swift; path = Sources/ViewTypes/ListWithBorderedStyle.swift; sourceTree = "<group>"; };
+		53EE3C6361C45C37E3604043C89B56BD /* PlatformViewVersion.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PlatformViewVersion.swift; path = Sources/PlatformViewVersion.swift; sourceTree = "<group>"; };
 		54C036E197A2695FBEEDA82DC5215420 /* Pods-StreetCare-frameworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "Pods-StreetCare-frameworks.sh"; sourceTree = "<group>"; };
-		55ECAA3EF605156DD817F4622EDEAA56 /* SwiftUIIntrospect-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "SwiftUIIntrospect-Info.plist"; sourceTree = "<group>"; };
-		56856CF4785D3AFE33B54CC650733A01 /* Modifiers.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Modifiers.swift; path = Source/Modifiers.swift; sourceTree = "<group>"; };
 		58D55567BE5BB377C4B0D89C1322D23E /* GooglePlaces-GooglePlacesResources */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = "GooglePlaces-GooglePlacesResources"; path = GooglePlacesResources.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
-		5A54A0EF6B1F8067BDA86CC117DB003F /* GMSEmpty.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GMSEmpty.h; path = Sources/GMSEmpty.h; sourceTree = "<group>"; };
-		5A6CC7DC54D365DDD2107469EAFDB44E /* ResourceBundle-GoogleMapsResources-GoogleMaps-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "ResourceBundle-GoogleMapsResources-GoogleMaps-Info.plist"; sourceTree = "<group>"; };
-		5D8BE9CCF74EF2728CFDD3582CFF5E66 /* FullscreenPopup.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = FullscreenPopup.swift; path = Source/FullscreenPopup.swift; sourceTree = "<group>"; };
-		5F694786AD92E4D30C579F79BC8A7502 /* TextField.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TextField.swift; path = Sources/ViewTypes/TextField.swift; sourceTree = "<group>"; };
-		5F95B1D34D8450D6DB9DE0F80DDEECE3 /* RuntimeWarnings.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = RuntimeWarnings.swift; path = Sources/RuntimeWarnings.swift; sourceTree = "<group>"; };
-		633B7644B4B6E8A989C79F50BC0A2ADF /* GMSEmpty.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GMSEmpty.h; path = Maps/Sources/GMSEmpty.h; sourceTree = "<group>"; };
-		65190689345476684480B011F4E03089 /* SwiftUIIntrospect.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SwiftUIIntrospect.debug.xcconfig; sourceTree = "<group>"; };
-		6CE14B7B922FDB8D5AE8FEA69F72753D /* GooglePlaces-xcframeworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "GooglePlaces-xcframeworks.sh"; sourceTree = "<group>"; };
-		73EFD62553674732ECD59DFBC1D4ABC5 /* ListWithInsetStyle.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ListWithInsetStyle.swift; path = Sources/ViewTypes/ListWithInsetStyle.swift; sourceTree = "<group>"; };
+		59BB95614B28CDEEA9649C0007C31857 /* ProgressViewWithCircularStyle.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ProgressViewWithCircularStyle.swift; path = Sources/ViewTypes/ProgressViewWithCircularStyle.swift; sourceTree = "<group>"; };
+		5B135C5717BE474C7CAD409CF59DB105 /* GooglePlaces.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = GooglePlaces.debug.xcconfig; sourceTree = "<group>"; };
+		5DE55CD3E100AFA999330B6D3853BB39 /* ExytePopupView-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "ExytePopupView-umbrella.h"; sourceTree = "<group>"; };
+		6334D22D5810261A73E5ABB09157C011 /* Toggle.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Toggle.swift; path = Sources/ViewTypes/Toggle.swift; sourceTree = "<group>"; };
+		637671085AFD856942368E2FD42D56B7 /* SwiftUIIntrospect-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SwiftUIIntrospect-prefix.pch"; sourceTree = "<group>"; };
+		67736221AA8B4AEF00838AE19C48A7B5 /* ScrollView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ScrollView.swift; path = Sources/ViewTypes/ScrollView.swift; sourceTree = "<group>"; };
+		6E5AEB3EE080E49FB03CEA7E26A68842 /* ResourceBundle-GoogleMapsResources-GoogleMaps-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "ResourceBundle-GoogleMapsResources-GoogleMaps-Info.plist"; sourceTree = "<group>"; };
+		6FACC71A2F517673D344A74F7A1E9A26 /* NavigationViewWithStackStyle.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NavigationViewWithStackStyle.swift; path = Sources/ViewTypes/NavigationViewWithStackStyle.swift; sourceTree = "<group>"; };
+		7415A4FA4D81C4571D405F8A2215D41D /* ExytePopupView-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "ExytePopupView-dummy.m"; sourceTree = "<group>"; };
+		7478A163C822CC9426369F47E6FAEC28 /* Window.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Window.swift; path = Sources/ViewTypes/Window.swift; sourceTree = "<group>"; };
 		76BD901CE9C92AC1B886E065B838F284 /* Pods-StreetCare.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-StreetCare.debug.xcconfig"; sourceTree = "<group>"; };
-		7F1BBFFE3D8CEADB6DCEDB102FF94CC4 /* SwiftUIIntrospect-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SwiftUIIntrospect-umbrella.h"; sourceTree = "<group>"; };
-		825F87246B93B977A25A271035F4E233 /* ListCell.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ListCell.swift; path = Sources/ViewTypes/ListCell.swift; sourceTree = "<group>"; };
-		827C61C1913A4DE619E2D4B747BA34F2 /* PickerWithSegmentedStyle.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PickerWithSegmentedStyle.swift; path = Sources/ViewTypes/PickerWithSegmentedStyle.swift; sourceTree = "<group>"; };
+		76E220F7768846858BB8C359B2578DCA /* PlatformVersion.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PlatformVersion.swift; path = Sources/PlatformVersion.swift; sourceTree = "<group>"; };
+		7B393A3A4224F8E2CE9F58F2D621F43C /* DatePicker.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DatePicker.swift; path = Sources/ViewTypes/DatePicker.swift; sourceTree = "<group>"; };
+		7BC11B6FD9AE0942BED6F2D6D8EAE19A /* Modifiers.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Modifiers.swift; path = Sources/PopupView/Modifiers.swift; sourceTree = "<group>"; };
+		7E58B704C9AD6D98AB5405FCB03B9708 /* DatePickerWithFieldStyle.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DatePickerWithFieldStyle.swift; path = Sources/ViewTypes/DatePickerWithFieldStyle.swift; sourceTree = "<group>"; };
+		80370326D54AF7828DEB4CE6ED74BA77 /* GooglePlaces.bundle */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "wrapper.plug-in"; name = GooglePlaces.bundle; path = Resources/GooglePlacesResources/GooglePlaces.bundle; sourceTree = "<group>"; };
+		8127E45280D8DF1F2A91E7E44A2FAFE0 /* ToggleWithSwitchStyle.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ToggleWithSwitchStyle.swift; path = Sources/ViewTypes/ToggleWithSwitchStyle.swift; sourceTree = "<group>"; };
+		81B0FA636D9A59BD054B5861FD2C488B /* Form.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Form.swift; path = Sources/ViewTypes/Form.swift; sourceTree = "<group>"; };
+		81F13E0A3CDC57912E277ACF61A21107 /* TextFieldWithVerticalAxis.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TextFieldWithVerticalAxis.swift; path = Sources/ViewTypes/TextFieldWithVerticalAxis.swift; sourceTree = "<group>"; };
+		849CD61DD065793A43C91520E7DE2624 /* GooglePlaces.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; name = GooglePlaces.xcframework; path = Frameworks/GooglePlaces.xcframework; sourceTree = "<group>"; };
+		85D663B8DCE3F460CBB85D370ACACE75 /* PopupScrollViewDelegate.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PopupScrollViewDelegate.swift; path = Sources/PopupView/PopupScrollViewDelegate.swift; sourceTree = "<group>"; };
 		87169C5EC0CF6B40519E17AD43862A7A /* Pods-StreetCare */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = "Pods-StreetCare"; path = Pods_StreetCare.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		8A15F624CA6D6A938DB0302F8FDD67FF /* SwiftUIIntrospect.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SwiftUIIntrospect.release.xcconfig; sourceTree = "<group>"; };
-		8BCF25F5BB403C43822B1004B1714E45 /* GooglePlaces.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = GooglePlaces.release.xcconfig; sourceTree = "<group>"; };
-		9070A1DC4FE9B67B768780D379880129 /* GooglePlaces.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = GooglePlaces.debug.xcconfig; sourceTree = "<group>"; };
-		916848EF235A29EADE68A085FD43B1D3 /* PlatformViewVersion.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PlatformViewVersion.swift; path = Sources/PlatformViewVersion.swift; sourceTree = "<group>"; };
+		889C4A5FF9425189601C6A3A4A36E84A /* SwiftUIIntrospect.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = SwiftUIIntrospect.modulemap; sourceTree = "<group>"; };
+		8BAE88A98DBB5F41CD5FDEC3D9E5DD78 /* Button.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Button.swift; path = Sources/ViewTypes/Button.swift; sourceTree = "<group>"; };
+		8E4C9619DD9338F1F6B9EADBFBB9FB81 /* Utils.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Utils.swift; path = Sources/Utils.swift; sourceTree = "<group>"; };
+		90EC954B093D67DC886B58183999BE43 /* GoogleMaps-xcframeworks.sh */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.script.sh; path = "GoogleMaps-xcframeworks.sh"; sourceTree = "<group>"; };
+		90FF7A2CE0646197DA79AE91E3DC606C /* TextEditor.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TextEditor.swift; path = Sources/ViewTypes/TextEditor.swift; sourceTree = "<group>"; };
 		917C0C9B712ECD3B12B6B23AA9521BCF /* Pods-StreetCare-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-StreetCare-acknowledgements.markdown"; sourceTree = "<group>"; };
-		920B7BC61323E1DE9A8D7D6133DD0D90 /* TabView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TabView.swift; path = Sources/ViewTypes/TabView.swift; sourceTree = "<group>"; };
-		93A792F949C165BFEE357CCAE9E5B956 /* ViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ViewController.swift; path = Sources/ViewTypes/ViewController.swift; sourceTree = "<group>"; };
-		9437E9A0B3B448873143CE0B951E7820 /* SwiftUIIntrospect.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = SwiftUIIntrospect.modulemap; sourceTree = "<group>"; };
-		94D2AC01CEA7E6320A1764DF19656691 /* NavigationStack.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NavigationStack.swift; path = Sources/ViewTypes/NavigationStack.swift; sourceTree = "<group>"; };
-		98F936A48BFB50F8E7703564AF281332 /* ExytePopupView-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "ExytePopupView-Info.plist"; sourceTree = "<group>"; };
-		9D06FDB52841C5F1A7019B859BC4F180 /* ScrollView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ScrollView.swift; path = Sources/ViewTypes/ScrollView.swift; sourceTree = "<group>"; };
+		91E813793D99727EB06C02913CC5A730 /* SwiftUIIntrospect-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SwiftUIIntrospect-umbrella.h"; sourceTree = "<group>"; };
+		933605FB40C658A7B003E4ED4D13060C /* ToggleWithButtonStyle.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ToggleWithButtonStyle.swift; path = Sources/ViewTypes/ToggleWithButtonStyle.swift; sourceTree = "<group>"; };
+		999BE93EA3C1E721E07DF6943BEC0083 /* NavigationSplitView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NavigationSplitView.swift; path = Sources/ViewTypes/NavigationSplitView.swift; sourceTree = "<group>"; };
 		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		9E7D7D2BE84F383D46148971C2BE47E0 /* SwiftUIIntrospect-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "SwiftUIIntrospect-dummy.m"; sourceTree = "<group>"; };
 		9EF95E8EA7AD1DF7B378894EB4DCAAAE /* Pods-StreetCare-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-StreetCare-acknowledgements.plist"; sourceTree = "<group>"; };
-		A422DFCF84F00E95761C2EF9AEA5AC13 /* DatePickerWithGraphicalStyle.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DatePickerWithGraphicalStyle.swift; path = Sources/ViewTypes/DatePickerWithGraphicalStyle.swift; sourceTree = "<group>"; };
-		A665943F9A8EEF18673E1D9BADBE49E1 /* PickerWithWheelStyle.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PickerWithWheelStyle.swift; path = Sources/ViewTypes/PickerWithWheelStyle.swift; sourceTree = "<group>"; };
-		AB4DD6EC6C3E87348FC581A6C3B683A7 /* PopupView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PopupView.swift; path = Source/PopupView.swift; sourceTree = "<group>"; };
-		AE671669384145651AE22443C9FFE0B0 /* ListWithBorderedStyle.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ListWithBorderedStyle.swift; path = Sources/ViewTypes/ListWithBorderedStyle.swift; sourceTree = "<group>"; };
-		AE7DF8659372E269359BC7F607E2BFA0 /* IntrospectionSelector.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = IntrospectionSelector.swift; path = Sources/IntrospectionSelector.swift; sourceTree = "<group>"; };
-		AEBAAEDE30ACDEA092DE725E415D1CDE /* Weak.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Weak.swift; path = Sources/Weak.swift; sourceTree = "<group>"; };
-		AEFF481705EEB3C3DEA545CAD7292962 /* ExytePopupView.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = ExytePopupView.modulemap; sourceTree = "<group>"; };
-		B2C094C8C18350059B29C982620897A8 /* Table.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Table.swift; path = Sources/ViewTypes/Table.swift; sourceTree = "<group>"; };
-		B2DAF3BA695DCF376FF908F9CBB9A7D1 /* Map.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Map.swift; path = Sources/ViewTypes/Map.swift; sourceTree = "<group>"; };
-		B3F23347AE13D4CB9995831047593A6A /* ToggleWithButtonStyle.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ToggleWithButtonStyle.swift; path = Sources/ViewTypes/ToggleWithButtonStyle.swift; sourceTree = "<group>"; };
-		B5724F7D7274D240BB23B01FC27DAF8A /* IntrospectableViewType.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = IntrospectableViewType.swift; path = Sources/IntrospectableViewType.swift; sourceTree = "<group>"; };
-		B96048204AD5723BB1AAA596514911FD /* DatePickerWithStepperFieldStyle.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DatePickerWithStepperFieldStyle.swift; path = Sources/ViewTypes/DatePickerWithStepperFieldStyle.swift; sourceTree = "<group>"; };
-		BA97DA466BBAEF49A4510AE14505B7B9 /* Button.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Button.swift; path = Sources/ViewTypes/Button.swift; sourceTree = "<group>"; };
-		BD2658C4CCCDBA8050624B54B6D17DA6 /* Introspect.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Introspect.swift; path = Sources/Introspect.swift; sourceTree = "<group>"; };
-		BF14106A36D47E6A817E75A12BEBA9AB /* Slider.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Slider.swift; path = Sources/ViewTypes/Slider.swift; sourceTree = "<group>"; };
-		C1CBE743BAAAE2D852C2EDA9FC159165 /* TextEditor.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TextEditor.swift; path = Sources/ViewTypes/TextEditor.swift; sourceTree = "<group>"; };
-		C3B2176FDD3FBDFB41EAD4AD7720A20A /* NavigationViewWithStackStyle.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NavigationViewWithStackStyle.swift; path = Sources/ViewTypes/NavigationViewWithStackStyle.swift; sourceTree = "<group>"; };
+		9F1DC4A30B5322E528EAAFE05E1F2721 /* TabViewWithPageStyle.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TabViewWithPageStyle.swift; path = Sources/ViewTypes/TabViewWithPageStyle.swift; sourceTree = "<group>"; };
+		A414F69FEBC59DF4E5341C5101BD5000 /* ListWithInsetStyle.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ListWithInsetStyle.swift; path = Sources/ViewTypes/ListWithInsetStyle.swift; sourceTree = "<group>"; };
+		A496935BC296AF33C28BC7522555783E /* Map.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Map.swift; path = Sources/ViewTypes/Map.swift; sourceTree = "<group>"; };
+		A5055D3E5DDA212AC809D3700D123D57 /* GoogleMaps.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = GoogleMaps.debug.xcconfig; sourceTree = "<group>"; };
+		A7B795B16E92EA478014644FAE51F77D /* DatePickerWithGraphicalStyle.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DatePickerWithGraphicalStyle.swift; path = Sources/ViewTypes/DatePickerWithGraphicalStyle.swift; sourceTree = "<group>"; };
+		A8AF4A76881B8DE046374959FC9A4099 /* View.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = View.swift; path = Sources/ViewTypes/View.swift; sourceTree = "<group>"; };
+		AFA773CD8FC78E1B995B7466CBC4B87D /* SwiftUIIntrospect-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "SwiftUIIntrospect-dummy.m"; sourceTree = "<group>"; };
+		B30DB7A3929123BC14A9138411920EF6 /* ToggleWithCheckboxStyle.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ToggleWithCheckboxStyle.swift; path = Sources/ViewTypes/ToggleWithCheckboxStyle.swift; sourceTree = "<group>"; };
+		B75735989A1C48B918D3EE6E8569B1F4 /* SwiftUIIntrospect-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "SwiftUIIntrospect-Info.plist"; sourceTree = "<group>"; };
+		C3CBB1A7796295E194347020A4866119 /* ExytePopupView.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = ExytePopupView.release.xcconfig; sourceTree = "<group>"; };
+		C5B3415DA2067D09AD2A309CA30E6DD4 /* ViewController.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ViewController.swift; path = Sources/ViewTypes/ViewController.swift; sourceTree = "<group>"; };
 		C6DBBB21105DF5CD19F00E92BE967996 /* Pods-StreetCare.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-StreetCare.release.xcconfig"; sourceTree = "<group>"; };
-		C79142029020A5BE5333E4DF82886139 /* GoogleMaps.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; name = GoogleMaps.xcframework; path = Maps/Frameworks/GoogleMaps.xcframework; sourceTree = "<group>"; };
-		C892D36802F2FB08E74A9B6716E563D5 /* Form.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Form.swift; path = Sources/ViewTypes/Form.swift; sourceTree = "<group>"; };
-		CBDD826238356D9DF61B31A0CE92B0A5 /* ProgressViewWithLinearStyle.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ProgressViewWithLinearStyle.swift; path = Sources/ViewTypes/ProgressViewWithLinearStyle.swift; sourceTree = "<group>"; };
+		C77F9D7916DD80F4CD80DF73B26A7A41 /* GoogleMaps.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = GoogleMaps.release.xcconfig; sourceTree = "<group>"; };
+		C92F637A05364F7821509756B8CD4722 /* GMSEmpty.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GMSEmpty.h; path = Sources/GMSEmpty.h; sourceTree = "<group>"; };
 		D1B560ECB1B89732406A28AE867EF9A5 /* Pods-StreetCare.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = "Pods-StreetCare.modulemap"; sourceTree = "<group>"; };
-		D6230659B18A367DD7DDC0368802450B /* ExytePopupView.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = ExytePopupView.release.xcconfig; sourceTree = "<group>"; };
-		D9FCE822BE921618DD1BA7E0A93FC6DC /* GMSEmpty.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GMSEmpty.h; path = Base/Sources/GMSEmpty.h; sourceTree = "<group>"; };
-		DAD65B692032609DD02A6014A5D91699 /* GoogleMapsCore.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; name = GoogleMapsCore.xcframework; path = Maps/Frameworks/GoogleMapsCore.xcframework; sourceTree = "<group>"; };
-		DAFBA3F84ED454F62A2DBB54EBD7B174 /* Utils.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Utils.swift; path = Sources/Utils.swift; sourceTree = "<group>"; };
-		DC77052587C4543C73142BD4D1D05844 /* DatePickerWithCompactStyle.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DatePickerWithCompactStyle.swift; path = Sources/ViewTypes/DatePickerWithCompactStyle.swift; sourceTree = "<group>"; };
-		E14554D0136E86C7644FF1F1880725A5 /* ExytePopupView-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "ExytePopupView-umbrella.h"; sourceTree = "<group>"; };
-		EA0A137D81529870C439DAA671CB7F9F /* PlatformView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PlatformView.swift; path = Sources/PlatformView.swift; sourceTree = "<group>"; };
-		ED485ADDEBCD3973465324A1657ADFCE /* PageControl.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PageControl.swift; path = Sources/ViewTypes/PageControl.swift; sourceTree = "<group>"; };
-		ED52D211E6736B00706D12DF9EFB3587 /* GoogleMaps.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = GoogleMaps.release.xcconfig; sourceTree = "<group>"; };
-		EE0D9F71AA69DED7F7AD949F4FF2CBB3 /* GoogleMaps.bundle */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = "wrapper.plug-in"; name = GoogleMaps.bundle; path = Maps/Resources/GoogleMapsResources/GoogleMaps.bundle; sourceTree = "<group>"; };
-		EF44FC8CBD32D36D3ECC4F0DA35E8640 /* PickerWithMenuStyle.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PickerWithMenuStyle.swift; path = Sources/ViewTypes/PickerWithMenuStyle.swift; sourceTree = "<group>"; };
-		EF7EFCC0A5CB246AC4F016E8245CA4F1 /* GoogleMapsBase.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; name = GoogleMapsBase.xcframework; path = Base/Frameworks/GoogleMapsBase.xcframework; sourceTree = "<group>"; };
-		F017233804C55F5DE2CB4E3CE69B3BC9 /* NavigationViewWithColumnsStyle.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NavigationViewWithColumnsStyle.swift; path = Sources/ViewTypes/NavigationViewWithColumnsStyle.swift; sourceTree = "<group>"; };
-		F4B66BA6EEF2DEC5BE1AE8CE70330BAC /* ListWithSidebarStyle.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ListWithSidebarStyle.swift; path = Sources/ViewTypes/ListWithSidebarStyle.swift; sourceTree = "<group>"; };
-		F4B97C9DE01E846F9774B0F442536EB1 /* NavigationSplitView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NavigationSplitView.swift; path = Sources/ViewTypes/NavigationSplitView.swift; sourceTree = "<group>"; };
-		F61EEC6E0FAAADFAFFF55DB3A8100675 /* PopupView.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = PopupView.h; path = Source/PopupView.h; sourceTree = "<group>"; };
-		F71E1F6B2AEE270C495CD574B184E14A /* ExytePopupView-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "ExytePopupView-prefix.pch"; sourceTree = "<group>"; };
+		D1F4FCB2E730E4B6A019161C2A389582 /* DatePickerWithWheelStyle.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DatePickerWithWheelStyle.swift; path = Sources/ViewTypes/DatePickerWithWheelStyle.swift; sourceTree = "<group>"; };
+		D2F34EA18F3881D514F7AC76D25F66A2 /* GooglePlaces.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = GooglePlaces.release.xcconfig; sourceTree = "<group>"; };
+		D40E6E5B36AE6608175548A06DA197A0 /* GoogleMapsCore.xcframework */ = {isa = PBXFileReference; includeInIndex = 1; name = GoogleMapsCore.xcframework; path = Maps/Frameworks/GoogleMapsCore.xcframework; sourceTree = "<group>"; };
+		D495EB227CAE2B76252193AE8B08DCF5 /* Table.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Table.swift; path = Sources/ViewTypes/Table.swift; sourceTree = "<group>"; };
+		D7CD88476F2EC1C4821AE600DD5B5181 /* List.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = List.swift; path = Sources/ViewTypes/List.swift; sourceTree = "<group>"; };
+		D986ACD3027A1666A9293B15B8F3BE27 /* ListWithSidebarStyle.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ListWithSidebarStyle.swift; path = Sources/ViewTypes/ListWithSidebarStyle.swift; sourceTree = "<group>"; };
+		DA3108E496EBA5EE43A88C49FC3190D3 /* NavigationStack.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NavigationStack.swift; path = Sources/ViewTypes/NavigationStack.swift; sourceTree = "<group>"; };
+		DD177F71A497B38D7D51F3FA8EB95267 /* DatePickerWithCompactStyle.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DatePickerWithCompactStyle.swift; path = Sources/ViewTypes/DatePickerWithCompactStyle.swift; sourceTree = "<group>"; };
+		DD5908DB5AFC44B7F7302BBBBE5ABEAD /* PageControl.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PageControl.swift; path = Sources/ViewTypes/PageControl.swift; sourceTree = "<group>"; };
+		E515FCB8DDD5884A6743E1C35306F954 /* IntrospectionView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = IntrospectionView.swift; path = Sources/IntrospectionView.swift; sourceTree = "<group>"; };
+		E8EF75E93966347854DB5A297C2EAC52 /* ListCell.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ListCell.swift; path = Sources/ViewTypes/ListCell.swift; sourceTree = "<group>"; };
+		EBC11C2004A8EC9C4E3BAAA664DDC5D0 /* SearchField.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = SearchField.swift; path = Sources/ViewTypes/SearchField.swift; sourceTree = "<group>"; };
+		ED937E9D14F79B519A64AFB625AE11AD /* ExytePopupView.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = ExytePopupView.modulemap; sourceTree = "<group>"; };
+		F3DC432A303E2CE28FF319DBF0B2B410 /* PickerWithMenuStyle.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PickerWithMenuStyle.swift; path = Sources/ViewTypes/PickerWithMenuStyle.swift; sourceTree = "<group>"; };
 		F7507F313CACDD407C5D936ED49191AF /* Pods-StreetCare-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-StreetCare-Info.plist"; sourceTree = "<group>"; };
-		F88DDF362D245237DE02C96532CFFBB7 /* ExytePopupView.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = ExytePopupView.debug.xcconfig; sourceTree = "<group>"; };
-		FB44D4DD222839A5737040C155ABE1D4 /* DatePickerWithWheelStyle.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DatePickerWithWheelStyle.swift; path = Sources/ViewTypes/DatePickerWithWheelStyle.swift; sourceTree = "<group>"; };
-		FC6702F0B22952503F327989459A95E9 /* PopupScrollViewDelegate.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = PopupScrollViewDelegate.swift; path = Source/PopupScrollViewDelegate.swift; sourceTree = "<group>"; };
+		F8F1FFF62CFED06B78A6FFA1C24733CE /* SwiftUIIntrospect.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SwiftUIIntrospect.release.xcconfig; sourceTree = "<group>"; };
 		FD09EC04E1BC4D4E513DCA8A5525CF39 /* Pods-StreetCare-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-StreetCare-dummy.m"; sourceTree = "<group>"; };
-		FD964562CADB5970DDFB6B2AC1D2CA7F /* ExytePopupView-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "ExytePopupView-dummy.m"; sourceTree = "<group>"; };
-		FFAD114F0B06987AE6100A22D088EA57 /* TextFieldWithVerticalAxis.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TextFieldWithVerticalAxis.swift; path = Sources/ViewTypes/TextFieldWithVerticalAxis.swift; sourceTree = "<group>"; };
+		FE7C8F4E7E7EC94E46E691D585A44187 /* FullScreenCover.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = FullScreenCover.swift; path = Sources/ViewTypes/FullScreenCover.swift; sourceTree = "<group>"; };
+		FED33ABFD54E33E0A3C450A6BD98711A /* GMSEmpty.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = GMSEmpty.h; path = Base/Sources/GMSEmpty.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
-		1294834A1C3968C6FD70C62EFC49E4B5 /* Frameworks */ = {
+		4A18A108221757B1564EAB0CF5EACB19 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3DE468FCF5865D05240084EDB87B67C3 /* Foundation.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		6225610E26D9EA17706F2EC73A29A2DD /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		71770A7B06A6BE3FD41D37270A2930AC /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				EFD3B7109F2E7DCB0A3BB48B63566072 /* Foundation.framework in Frameworks */,
+				A006ED93CA2414D8D0D19B96588FE43E /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -314,7 +295,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		F651C9BA4D5FE0DB6901162552E7ECE7 /* Frameworks */ = {
+		D55AC5343A3CF79363FD1C61DDA8DB68 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BCFDAD54FCF55892F6E7E1698B406943 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FE21F0F546BFA9196AF933F6215B27D4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FF970E6CA66CFF809644A6B49009347A /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -336,112 +332,112 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		1E105017E2932696FED00349C5535E9A /* Support Files */ = {
+		0B4D9623F970E8B18E7B17723F67CCC5 /* Support Files */ = {
 			isa = PBXGroup;
 			children = (
-				9437E9A0B3B448873143CE0B951E7820 /* SwiftUIIntrospect.modulemap */,
-				9E7D7D2BE84F383D46148971C2BE47E0 /* SwiftUIIntrospect-dummy.m */,
-				55ECAA3EF605156DD817F4622EDEAA56 /* SwiftUIIntrospect-Info.plist */,
-				25825E95E126B7F2220F4B4B54223BF0 /* SwiftUIIntrospect-prefix.pch */,
-				7F1BBFFE3D8CEADB6DCEDB102FF94CC4 /* SwiftUIIntrospect-umbrella.h */,
-				65190689345476684480B011F4E03089 /* SwiftUIIntrospect.debug.xcconfig */,
-				8A15F624CA6D6A938DB0302F8FDD67FF /* SwiftUIIntrospect.release.xcconfig */,
+				37B0C9373E966435049D0BFE4A161ECA /* GooglePlaces-xcframeworks.sh */,
+				5B135C5717BE474C7CAD409CF59DB105 /* GooglePlaces.debug.xcconfig */,
+				D2F34EA18F3881D514F7AC76D25F66A2 /* GooglePlaces.release.xcconfig */,
+				2BF34B88E97E47B1E81145C445D24D23 /* ResourceBundle-GooglePlacesResources-GooglePlaces-Info.plist */,
 			);
 			name = "Support Files";
-			path = "../Target Support Files/SwiftUIIntrospect";
+			path = "../Target Support Files/GooglePlaces";
 			sourceTree = "<group>";
 		};
-		1F2F498E7EC58FC6AB05E52662DA9388 /* GooglePlaces */ = {
+		0C6C3A638FFED6D739D81CD7975DAFD6 /* SwiftUIIntrospect */ = {
 			isa = PBXGroup;
 			children = (
-				5A54A0EF6B1F8067BDA86CC117DB003F /* GMSEmpty.h */,
-				E26A12F4F1E4843C9B8BC2C1FD80FFAD /* Frameworks */,
-				A8CAECD6474AB55ED060A356C5767C33 /* Resources */,
-				6141B3EB2F18C5F13926A4ADA0F3EA29 /* Support Files */,
+				8BAE88A98DBB5F41CD5FDEC3D9E5DD78 /* Button.swift */,
+				23F72C71881913B97656312E6B81A133 /* ColorPicker.swift */,
+				7B393A3A4224F8E2CE9F58F2D621F43C /* DatePicker.swift */,
+				DD177F71A497B38D7D51F3FA8EB95267 /* DatePickerWithCompactStyle.swift */,
+				7E58B704C9AD6D98AB5405FCB03B9708 /* DatePickerWithFieldStyle.swift */,
+				A7B795B16E92EA478014644FAE51F77D /* DatePickerWithGraphicalStyle.swift */,
+				40FBD0995B34E61BCD469290FDE0D741 /* DatePickerWithStepperFieldStyle.swift */,
+				D1F4FCB2E730E4B6A019161C2A389582 /* DatePickerWithWheelStyle.swift */,
+				81B0FA636D9A59BD054B5861FD2C488B /* Form.swift */,
+				44C546E21D49A3FD1BD6A2FBF470B31B /* FormWithGroupedStyle.swift */,
+				FE7C8F4E7E7EC94E46E691D585A44187 /* FullScreenCover.swift */,
+				174BE97AAEA4C69896CDC33697C52D65 /* Introspect.swift */,
+				414182E103B3B4B29FB16AD07FAD6618 /* IntrospectableViewType.swift */,
+				30C49DA521CFA85F60E3B012A89F5E1D /* IntrospectionSelector.swift */,
+				E515FCB8DDD5884A6743E1C35306F954 /* IntrospectionView.swift */,
+				D7CD88476F2EC1C4821AE600DD5B5181 /* List.swift */,
+				E8EF75E93966347854DB5A297C2EAC52 /* ListCell.swift */,
+				5126C8D5E0E288059BE2F9D125EAFFCF /* ListWithBorderedStyle.swift */,
+				197C23E6369EC3EF248B9FDF665A6049 /* ListWithGroupedStyle.swift */,
+				1BF690338444B2F0C41A882F84A14226 /* ListWithInsetGroupedStyle.swift */,
+				A414F69FEBC59DF4E5341C5101BD5000 /* ListWithInsetStyle.swift */,
+				D986ACD3027A1666A9293B15B8F3BE27 /* ListWithSidebarStyle.swift */,
+				A496935BC296AF33C28BC7522555783E /* Map.swift */,
+				999BE93EA3C1E721E07DF6943BEC0083 /* NavigationSplitView.swift */,
+				DA3108E496EBA5EE43A88C49FC3190D3 /* NavigationStack.swift */,
+				1821760059A4C1705775481DB7E41E84 /* NavigationViewWithColumnsStyle.swift */,
+				6FACC71A2F517673D344A74F7A1E9A26 /* NavigationViewWithStackStyle.swift */,
+				DD5908DB5AFC44B7F7302BBBBE5ABEAD /* PageControl.swift */,
+				F3DC432A303E2CE28FF319DBF0B2B410 /* PickerWithMenuStyle.swift */,
+				33322369B25E56B1BF51A2DF9D9A0379 /* PickerWithSegmentedStyle.swift */,
+				1F9E57335209A7FC5BE42C99E9BEB985 /* PickerWithWheelStyle.swift */,
+				76E220F7768846858BB8C359B2578DCA /* PlatformVersion.swift */,
+				2C9F60FB2F41BA285CC33826EB69C49D /* PlatformView.swift */,
+				53EE3C6361C45C37E3604043C89B56BD /* PlatformViewVersion.swift */,
+				2104EB6A51E93AE77436E25012AFD052 /* Popover.swift */,
+				59BB95614B28CDEEA9649C0007C31857 /* ProgressViewWithCircularStyle.swift */,
+				05D2A82B78F3946E89101FFE9B82C04C /* ProgressViewWithLinearStyle.swift */,
+				67736221AA8B4AEF00838AE19C48A7B5 /* ScrollView.swift */,
+				EBC11C2004A8EC9C4E3BAAA664DDC5D0 /* SearchField.swift */,
+				3B5DD1EBAA1B631B856D1FE5DC470238 /* SecureField.swift */,
+				0A490EF15E05429C1790445E871AAE46 /* Sheet.swift */,
+				0602603B72CF788AEEAAB133F8274E43 /* SignInWithAppleButton.swift */,
+				1FE64B79EA4611604E582D6EFBBB1CE2 /* Slider.swift */,
+				0AF9905564FF00CD18EDEC61CCC4A3C4 /* Stepper.swift */,
+				D495EB227CAE2B76252193AE8B08DCF5 /* Table.swift */,
+				056717F4110FA80CE2FD7FE26E9E0920 /* TabView.swift */,
+				9F1DC4A30B5322E528EAAFE05E1F2721 /* TabViewWithPageStyle.swift */,
+				90FF7A2CE0646197DA79AE91E3DC606C /* TextEditor.swift */,
+				2CE5831CA41C71857E4EDD3BA6B6053A /* TextField.swift */,
+				81F13E0A3CDC57912E277ACF61A21107 /* TextFieldWithVerticalAxis.swift */,
+				6334D22D5810261A73E5ABB09157C011 /* Toggle.swift */,
+				933605FB40C658A7B003E4ED4D13060C /* ToggleWithButtonStyle.swift */,
+				B30DB7A3929123BC14A9138411920EF6 /* ToggleWithCheckboxStyle.swift */,
+				8127E45280D8DF1F2A91E7E44A2FAFE0 /* ToggleWithSwitchStyle.swift */,
+				8E4C9619DD9338F1F6B9EADBFBB9FB81 /* Utils.swift */,
+				096000AFFF5E2612B1A26658974AD96B /* VideoPlayer.swift */,
+				A8AF4A76881B8DE046374959FC9A4099 /* View.swift */,
+				C5B3415DA2067D09AD2A309CA30E6DD4 /* ViewController.swift */,
+				27817D84E3C00281EBFFCD8B11AC40EA /* Weak.swift */,
+				7478A163C822CC9426369F47E6FAEC28 /* Window.swift */,
+				EB0B5A30C2118F9F08075C519BB9D81E /* Support Files */,
 			);
-			name = GooglePlaces;
-			path = GooglePlaces;
+			name = SwiftUIIntrospect;
+			path = SwiftUIIntrospect;
 			sourceTree = "<group>";
 		};
-		27EE0231B8880F13A1E41644A6710F7A /* Pods */ = {
+		225B4BD203D66177E82DF6DD15738B65 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				5E023E8851A483690298660C96E3B17A /* ExytePopupView */,
-				8E0C0D9A495D7964E10342D32F91FE84 /* GoogleMaps */,
-				1F2F498E7EC58FC6AB05E52662DA9388 /* GooglePlaces */,
-				48E0B5AA799219816D2CFDD92437FFFD /* SwiftUIIntrospect */,
+				80370326D54AF7828DEB4CE6ED74BA77 /* GooglePlaces.bundle */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		36ABECBBEE04CCAD9FEB1529DD70F18E /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				CAE5B42811B1393C3A77E491189E5868 /* ExytePopupView */,
+				9E203CB025D0186B36B42194059D1B3F /* GoogleMaps */,
+				69BDF324E86C7FD24F5F21CFED736EBB /* GooglePlaces */,
+				0C6C3A638FFED6D739D81CD7975DAFD6 /* SwiftUIIntrospect */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
 		};
-		48E0B5AA799219816D2CFDD92437FFFD /* SwiftUIIntrospect */ = {
+		39FA9E1BF9E4354ED4BEAC5BD0692F5F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				BA97DA466BBAEF49A4510AE14505B7B9 /* Button.swift */,
-				199497DA1174AFD28C7AEE5982B677C6 /* ColorPicker.swift */,
-				10858941E1A374C00DDFEDF21289098F /* DatePicker.swift */,
-				DC77052587C4543C73142BD4D1D05844 /* DatePickerWithCompactStyle.swift */,
-				51D3F963EAD21D3751B86498AAB3C440 /* DatePickerWithFieldStyle.swift */,
-				A422DFCF84F00E95761C2EF9AEA5AC13 /* DatePickerWithGraphicalStyle.swift */,
-				B96048204AD5723BB1AAA596514911FD /* DatePickerWithStepperFieldStyle.swift */,
-				FB44D4DD222839A5737040C155ABE1D4 /* DatePickerWithWheelStyle.swift */,
-				C892D36802F2FB08E74A9B6716E563D5 /* Form.swift */,
-				31688FF1CF70F612716C881E204B3095 /* FormWithGroupedStyle.swift */,
-				3FE9020327E10317B98E805488C6AE45 /* FullScreenCover.swift */,
-				BD2658C4CCCDBA8050624B54B6D17DA6 /* Introspect.swift */,
-				B5724F7D7274D240BB23B01FC27DAF8A /* IntrospectableViewType.swift */,
-				AE7DF8659372E269359BC7F607E2BFA0 /* IntrospectionSelector.swift */,
-				244E5446152EFD8F3F6CD58A7F0024F4 /* IntrospectionView.swift */,
-				08A726FEDB8C39C5F481FA1E7D9AE658 /* List.swift */,
-				825F87246B93B977A25A271035F4E233 /* ListCell.swift */,
-				AE671669384145651AE22443C9FFE0B0 /* ListWithBorderedStyle.swift */,
-				2B48AB2246F012AEB637A27DB698EC25 /* ListWithGroupedStyle.swift */,
-				2CB4EE6630E518ABE333DDA374D08F98 /* ListWithInsetGroupedStyle.swift */,
-				73EFD62553674732ECD59DFBC1D4ABC5 /* ListWithInsetStyle.swift */,
-				F4B66BA6EEF2DEC5BE1AE8CE70330BAC /* ListWithSidebarStyle.swift */,
-				B2DAF3BA695DCF376FF908F9CBB9A7D1 /* Map.swift */,
-				F4B97C9DE01E846F9774B0F442536EB1 /* NavigationSplitView.swift */,
-				94D2AC01CEA7E6320A1764DF19656691 /* NavigationStack.swift */,
-				F017233804C55F5DE2CB4E3CE69B3BC9 /* NavigationViewWithColumnsStyle.swift */,
-				C3B2176FDD3FBDFB41EAD4AD7720A20A /* NavigationViewWithStackStyle.swift */,
-				ED485ADDEBCD3973465324A1657ADFCE /* PageControl.swift */,
-				EF44FC8CBD32D36D3ECC4F0DA35E8640 /* PickerWithMenuStyle.swift */,
-				827C61C1913A4DE619E2D4B747BA34F2 /* PickerWithSegmentedStyle.swift */,
-				A665943F9A8EEF18673E1D9BADBE49E1 /* PickerWithWheelStyle.swift */,
-				1B70717F67060FB7C82147B5F69DDC3A /* PlatformVersion.swift */,
-				EA0A137D81529870C439DAA671CB7F9F /* PlatformView.swift */,
-				916848EF235A29EADE68A085FD43B1D3 /* PlatformViewVersion.swift */,
-				2EBDA388532F57EA8AAF05DDEFD1DCEE /* Popover.swift */,
-				0BA2348C82B59668C6A5A59B9E81D620 /* ProgressViewWithCircularStyle.swift */,
-				CBDD826238356D9DF61B31A0CE92B0A5 /* ProgressViewWithLinearStyle.swift */,
-				5F95B1D34D8450D6DB9DE0F80DDEECE3 /* RuntimeWarnings.swift */,
-				9D06FDB52841C5F1A7019B859BC4F180 /* ScrollView.swift */,
-				0F443B2C2AD5A7CEE21182C8C474E93D /* SearchField.swift */,
-				0CE4040B23DAC6C54A497F3F9BDE9FE2 /* SecureField.swift */,
-				1A8731585C0F9A05E9F6A07FEC60C845 /* Sheet.swift */,
-				27D6BE4B3EA999B0E22F4C5231B751CC /* SignInWithAppleButton.swift */,
-				BF14106A36D47E6A817E75A12BEBA9AB /* Slider.swift */,
-				4FED1EC5D74CD2107690D333D713F11C /* Stepper.swift */,
-				B2C094C8C18350059B29C982620897A8 /* Table.swift */,
-				920B7BC61323E1DE9A8D7D6133DD0D90 /* TabView.swift */,
-				2A7EDE4C937694FA80D1700DF130FE57 /* TabViewWithPageStyle.swift */,
-				C1CBE743BAAAE2D852C2EDA9FC159165 /* TextEditor.swift */,
-				5F694786AD92E4D30C579F79BC8A7502 /* TextField.swift */,
-				FFAD114F0B06987AE6100A22D088EA57 /* TextFieldWithVerticalAxis.swift */,
-				4B0C50301E0C570475C68D691E408609 /* Toggle.swift */,
-				B3F23347AE13D4CB9995831047593A6A /* ToggleWithButtonStyle.swift */,
-				4655D171AE1E8C05526E171825627D09 /* ToggleWithCheckboxStyle.swift */,
-				1A924DE011E01156568335F2F7C96453 /* ToggleWithSwitchStyle.swift */,
-				DAFBA3F84ED454F62A2DBB54EBD7B174 /* Utils.swift */,
-				4C885796459F57912B9B52EA20372926 /* VideoPlayer.swift */,
-				23A12633292FCA454390EE4E3BA78067 /* View.swift */,
-				93A792F949C165BFEE357CCAE9E5B956 /* ViewController.swift */,
-				AEBAAEDE30ACDEA092DE725E415D1CDE /* Weak.swift */,
-				4FE429CA66D7CD472241CA9435A7A235 /* Window.swift */,
-				1E105017E2932696FED00349C5535E9A /* Support Files */,
+				849CD61DD065793A43C91520E7DE2624 /* GooglePlaces.xcframework */,
 			);
-			name = SwiftUIIntrospect;
-			path = SwiftUIIntrospect;
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 		5180306C067BA0DF48BFD842FCB66239 /* Pods-StreetCare */ = {
@@ -462,113 +458,112 @@
 			path = "Target Support Files/Pods-StreetCare";
 			sourceTree = "<group>";
 		};
-		5E023E8851A483690298660C96E3B17A /* ExytePopupView */ = {
+		5F5465BFF69D934EA67B9EFAAB555BD5 /* Base */ = {
 			isa = PBXGroup;
 			children = (
-				5D8BE9CCF74EF2728CFDD3582CFF5E66 /* FullscreenPopup.swift */,
-				56856CF4785D3AFE33B54CC650733A01 /* Modifiers.swift */,
-				FC6702F0B22952503F327989459A95E9 /* PopupScrollViewDelegate.swift */,
-				F61EEC6E0FAAADFAFFF55DB3A8100675 /* PopupView.h */,
-				AB4DD6EC6C3E87348FC581A6C3B683A7 /* PopupView.swift */,
-				2C81256C5C203E3CA0E574729F01B38F /* Utils.swift */,
-				C44BDCA3D185AC3BD8D71F1F7F4E43A6 /* Support Files */,
-			);
-			name = ExytePopupView;
-			path = ExytePopupView;
-			sourceTree = "<group>";
-		};
-		6141B3EB2F18C5F13926A4ADA0F3EA29 /* Support Files */ = {
-			isa = PBXGroup;
-			children = (
-				6CE14B7B922FDB8D5AE8FEA69F72753D /* GooglePlaces-xcframeworks.sh */,
-				9070A1DC4FE9B67B768780D379880129 /* GooglePlaces.debug.xcconfig */,
-				8BCF25F5BB403C43822B1004B1714E45 /* GooglePlaces.release.xcconfig */,
-				37B1C39A81A07B70B3EB5CB2C6E47BAD /* ResourceBundle-GooglePlacesResources-GooglePlaces-Info.plist */,
-			);
-			name = "Support Files";
-			path = "../Target Support Files/GooglePlaces";
-			sourceTree = "<group>";
-		};
-		66CBCAEF7EE339810F3AF595D2DEB3FF /* Support Files */ = {
-			isa = PBXGroup;
-			children = (
-				3E7E0334EDEF72D38684FFD1605B032A /* GoogleMaps-xcframeworks.sh */,
-				10AA17EF5C8D7C00E4A68FFE827724FA /* GoogleMaps.debug.xcconfig */,
-				ED52D211E6736B00706D12DF9EFB3587 /* GoogleMaps.release.xcconfig */,
-				5A6CC7DC54D365DDD2107469EAFDB44E /* ResourceBundle-GoogleMapsResources-GoogleMaps-Info.plist */,
-			);
-			name = "Support Files";
-			path = "../Target Support Files/GoogleMaps";
-			sourceTree = "<group>";
-		};
-		7A70F8A80431EDA12FCFC5FBAE4392DA /* Base */ = {
-			isa = PBXGroup;
-			children = (
-				D9FCE822BE921618DD1BA7E0A93FC6DC /* GMSEmpty.h */,
-				990C87A0973B038A244DF9EAB559E585 /* Frameworks */,
+				FED33ABFD54E33E0A3C450A6BD98711A /* GMSEmpty.h */,
+				6473F0F9FE4943B8AAD2D2B4073E630F /* Frameworks */,
 			);
 			name = Base;
 			sourceTree = "<group>";
 		};
-		8E0C0D9A495D7964E10342D32F91FE84 /* GoogleMaps */ = {
+		6473F0F9FE4943B8AAD2D2B4073E630F /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				7A70F8A80431EDA12FCFC5FBAE4392DA /* Base */,
-				C0F480E64516F57AF2F8BC840846F4ED /* Maps */,
-				66CBCAEF7EE339810F3AF595D2DEB3FF /* Support Files */,
+				2499D75AF34DE3F91AF35FEB5EBA4E03 /* GoogleMapsBase.xcframework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		69BDF324E86C7FD24F5F21CFED736EBB /* GooglePlaces */ = {
+			isa = PBXGroup;
+			children = (
+				C92F637A05364F7821509756B8CD4722 /* GMSEmpty.h */,
+				39FA9E1BF9E4354ED4BEAC5BD0692F5F /* Frameworks */,
+				225B4BD203D66177E82DF6DD15738B65 /* Resources */,
+				0B4D9623F970E8B18E7B17723F67CCC5 /* Support Files */,
+			);
+			name = GooglePlaces;
+			path = GooglePlaces;
+			sourceTree = "<group>";
+		};
+		8FAE41118C3C3A850B4E399700E2E951 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				1F9FF0E523ACEE1E72E156EA6E92266E /* GoogleMaps.bundle */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		9E203CB025D0186B36B42194059D1B3F /* GoogleMaps */ = {
+			isa = PBXGroup;
+			children = (
+				5F5465BFF69D934EA67B9EFAAB555BD5 /* Base */,
+				C0AF5970C1619728418981659B8B14AA /* Maps */,
+				CBA75356C0A86C1E99E6E2A668CD74A0 /* Support Files */,
 			);
 			name = GoogleMaps;
 			path = GoogleMaps;
 			sourceTree = "<group>";
 		};
-		990C87A0973B038A244DF9EAB559E585 /* Frameworks */ = {
+		B1244B692BF9341CCF56304DEEC03906 /* Support Files */ = {
 			isa = PBXGroup;
 			children = (
-				EF7EFCC0A5CB246AC4F016E8245CA4F1 /* GoogleMapsBase.xcframework */,
+				ED937E9D14F79B519A64AFB625AE11AD /* ExytePopupView.modulemap */,
+				7415A4FA4D81C4571D405F8A2215D41D /* ExytePopupView-dummy.m */,
+				07322594EE89347F78EA631EDF0030EB /* ExytePopupView-Info.plist */,
+				4AD6C7616E8782C40F85F4F343541C4C /* ExytePopupView-prefix.pch */,
+				5DE55CD3E100AFA999330B6D3853BB39 /* ExytePopupView-umbrella.h */,
+				4FD06125E45A4D53FA43ECB42E1C01FE /* ExytePopupView.debug.xcconfig */,
+				C3CBB1A7796295E194347020A4866119 /* ExytePopupView.release.xcconfig */,
+			);
+			name = "Support Files";
+			path = "../Target Support Files/ExytePopupView";
+			sourceTree = "<group>";
+		};
+		BCD63337A573E0CB2991B7153F33B381 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				0E98530B7AF1C31C248361B0D9839392 /* GoogleMaps.xcframework */,
+				D40E6E5B36AE6608175548A06DA197A0 /* GoogleMapsCore.xcframework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		9C184DF114B47F23A09D36A767843F46 /* Frameworks */ = {
+		C0AF5970C1619728418981659B8B14AA /* Maps */ = {
 			isa = PBXGroup;
 			children = (
-				C79142029020A5BE5333E4DF82886139 /* GoogleMaps.xcframework */,
-				DAD65B692032609DD02A6014A5D91699 /* GoogleMapsCore.xcframework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		A8CAECD6474AB55ED060A356C5767C33 /* Resources */ = {
-			isa = PBXGroup;
-			children = (
-				30B5CC484E1906B58BDE58C034F77D80 /* GooglePlaces.bundle */,
-			);
-			name = Resources;
-			sourceTree = "<group>";
-		};
-		C0F480E64516F57AF2F8BC840846F4ED /* Maps */ = {
-			isa = PBXGroup;
-			children = (
-				633B7644B4B6E8A989C79F50BC0A2ADF /* GMSEmpty.h */,
-				9C184DF114B47F23A09D36A767843F46 /* Frameworks */,
-				F0D3234A1D4C33B60398FE5151C3B8AA /* Resources */,
+				36360A6463A0F75AF727D1224266529B /* GMSEmpty.h */,
+				BCD63337A573E0CB2991B7153F33B381 /* Frameworks */,
+				8FAE41118C3C3A850B4E399700E2E951 /* Resources */,
 			);
 			name = Maps;
 			sourceTree = "<group>";
 		};
-		C44BDCA3D185AC3BD8D71F1F7F4E43A6 /* Support Files */ = {
+		CAE5B42811B1393C3A77E491189E5868 /* ExytePopupView */ = {
 			isa = PBXGroup;
 			children = (
-				AEFF481705EEB3C3DEA545CAD7292962 /* ExytePopupView.modulemap */,
-				FD964562CADB5970DDFB6B2AC1D2CA7F /* ExytePopupView-dummy.m */,
-				98F936A48BFB50F8E7703564AF281332 /* ExytePopupView-Info.plist */,
-				F71E1F6B2AEE270C495CD574B184E14A /* ExytePopupView-prefix.pch */,
-				E14554D0136E86C7644FF1F1880725A5 /* ExytePopupView-umbrella.h */,
-				F88DDF362D245237DE02C96532CFFBB7 /* ExytePopupView.debug.xcconfig */,
-				D6230659B18A367DD7DDC0368802450B /* ExytePopupView.release.xcconfig */,
+				463AFF9390B1AC514D49A815636E8F26 /* FullscreenPopup.swift */,
+				7BC11B6FD9AE0942BED6F2D6D8EAE19A /* Modifiers.swift */,
+				85D663B8DCE3F460CBB85D370ACACE75 /* PopupScrollViewDelegate.swift */,
+				134946343B04C0B68CC13CC60B054F91 /* PopupView.swift */,
+				0769D20DEC9C8639AD0BCEFEC9D0364A /* Utils.swift */,
+				B1244B692BF9341CCF56304DEEC03906 /* Support Files */,
+			);
+			name = ExytePopupView;
+			path = ExytePopupView;
+			sourceTree = "<group>";
+		};
+		CBA75356C0A86C1E99E6E2A668CD74A0 /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				90EC954B093D67DC886B58183999BE43 /* GoogleMaps-xcframeworks.sh */,
+				A5055D3E5DDA212AC809D3700D123D57 /* GoogleMaps.debug.xcconfig */,
+				C77F9D7916DD80F4CD80DF73B26A7A41 /* GoogleMaps.release.xcconfig */,
+				6E5AEB3EE080E49FB03CEA7E26A68842 /* ResourceBundle-GoogleMapsResources-GoogleMaps-Info.plist */,
 			);
 			name = "Support Files";
-			path = "../Target Support Files/ExytePopupView";
+			path = "../Target Support Files/GoogleMaps";
 			sourceTree = "<group>";
 		};
 		CF1408CF629C7361332E53B88F7BD30C = {
@@ -576,7 +571,7 @@
 			children = (
 				9D940727FF8FB9C785EB98E56350EF41 /* Podfile */,
 				D210D550F4EA176C3123ED886F8F87F5 /* Frameworks */,
-				27EE0231B8880F13A1E41644A6710F7A /* Pods */,
+				36ABECBBEE04CCAD9FEB1529DD70F18E /* Pods */,
 				08AADA8DAC2F3B6A189E5066E4C9D1E5 /* Products */,
 				F2B992A5A7A2DCDCFA422A68C29541DC /* Targets Support Files */,
 			);
@@ -590,14 +585,6 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		E26A12F4F1E4843C9B8BC2C1FD80FFAD /* Frameworks */ = {
-			isa = PBXGroup;
-			children = (
-				00BD116861BEE5080A3EEE2EF14D1451 /* GooglePlaces.xcframework */,
-			);
-			name = Frameworks;
-			sourceTree = "<group>";
-		};
 		E4801F62A6B08CD9B5410329F1A18FDE /* iOS */ = {
 			isa = PBXGroup;
 			children = (
@@ -606,12 +593,19 @@
 			name = iOS;
 			sourceTree = "<group>";
 		};
-		F0D3234A1D4C33B60398FE5151C3B8AA /* Resources */ = {
+		EB0B5A30C2118F9F08075C519BB9D81E /* Support Files */ = {
 			isa = PBXGroup;
 			children = (
-				EE0D9F71AA69DED7F7AD949F4FF2CBB3 /* GoogleMaps.bundle */,
+				889C4A5FF9425189601C6A3A4A36E84A /* SwiftUIIntrospect.modulemap */,
+				AFA773CD8FC78E1B995B7466CBC4B87D /* SwiftUIIntrospect-dummy.m */,
+				B75735989A1C48B918D3EE6E8569B1F4 /* SwiftUIIntrospect-Info.plist */,
+				637671085AFD856942368E2FD42D56B7 /* SwiftUIIntrospect-prefix.pch */,
+				91E813793D99727EB06C02913CC5A730 /* SwiftUIIntrospect-umbrella.h */,
+				37DAD273C6BFC4437D3CB7D92C4724DD /* SwiftUIIntrospect.debug.xcconfig */,
+				F8F1FFF62CFED06B78A6FFA1C24733CE /* SwiftUIIntrospect.release.xcconfig */,
 			);
-			name = Resources;
+			name = "Support Files";
+			path = "../Target Support Files/SwiftUIIntrospect";
 			sourceTree = "<group>";
 		};
 		F2B992A5A7A2DCDCFA422A68C29541DC /* Targets Support Files */ = {
@@ -625,6 +619,22 @@
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
+		006CBD9D50521EA073C8D60F6F3732DE /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				926B033D364F8D9E72F6F4C66A237A6E /* ExytePopupView-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		14C0B3D524C4B45B7AC10EC6616E96CA /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C2248E3E627CC18335CF32107622310D /* SwiftUIIntrospect-umbrella.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		623DB7F9B0BA1EC3E3542E2BF75460B0 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -633,33 +643,16 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		662612E25BE2C69591E83178885D288E /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				8D491363B45116E3C7E30B0AB135D3BA /* ExytePopupView-umbrella.h in Headers */,
-				10DAB01CB1C86DE4BA1E3198FA666D2E /* PopupView.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		FF2D6D0443F941788D9B0915A1E031ED /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				A0261BF6F0A928BF52499E728F791B7A /* SwiftUIIntrospect-umbrella.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
 		285AAD0A8192022DACE2DAFE30D6CD52 /* GooglePlaces-GooglePlacesResources */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 7CA9AF15B46BFFB54B8B187FD4435EFB /* Build configuration list for PBXNativeTarget "GooglePlaces-GooglePlacesResources" */;
+			buildConfigurationList = 9D6ACFCF74A8228FC31DD6C0D5B7E538 /* Build configuration list for PBXNativeTarget "GooglePlaces-GooglePlacesResources" */;
 			buildPhases = (
-				E72BED8D4F5ECC42F1CD1913D8BC2D0E /* Sources */,
-				F651C9BA4D5FE0DB6901162552E7ECE7 /* Frameworks */,
-				F20BC7689EE2EB177E3141CDD26C57AE /* Resources */,
+				06D71A7779B151DCE45FCE350EEC0EF0 /* Sources */,
+				FF970E6CA66CFF809644A6B49009347A /* Frameworks */,
+				14C9A3E945039F779DEA20F6CEB889EA /* Resources */,
 			);
 			buildRules = (
 			);
@@ -672,11 +665,11 @@
 		};
 		7B026DDDF280F148DD87281679B51154 /* GoogleMaps-GoogleMapsResources */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 8CE12BC03DBA1FA6408826A9C5B88187 /* Build configuration list for PBXNativeTarget "GoogleMaps-GoogleMapsResources" */;
+			buildConfigurationList = D2CB7D96214801FE42E7782BD645F8C7 /* Build configuration list for PBXNativeTarget "GoogleMaps-GoogleMapsResources" */;
 			buildPhases = (
-				C97F90A8C5AF93C2FA9882D129176901 /* Sources */,
-				6225610E26D9EA17706F2EC73A29A2DD /* Frameworks */,
-				819911265943F29FC1361BB1422BA21D /* Resources */,
+				5377DE41C924DD9A6875B4B4AC991D3F /* Sources */,
+				FE21F0F546BFA9196AF933F6215B27D4 /* Frameworks */,
+				700A0DC0147BFEE4BCB8CDABADB9891F /* Resources */,
 			);
 			buildRules = (
 			);
@@ -689,17 +682,17 @@
 		};
 		E3BF7971BE024EA2CBC58C6A22E7F7CD /* ExytePopupView */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 1FCD49E0E10F578A125F2DC628BE3B71 /* Build configuration list for PBXNativeTarget "ExytePopupView" */;
+			buildConfigurationList = F5BB94D06A88A812640CF03AC9834A82 /* Build configuration list for PBXNativeTarget "ExytePopupView" */;
 			buildPhases = (
-				662612E25BE2C69591E83178885D288E /* Headers */,
-				2BEC99A195B5451B03059F43D001FAAE /* Sources */,
-				71770A7B06A6BE3FD41D37270A2930AC /* Frameworks */,
-				ED39C764BED897384B555AD3D51BA015 /* Resources */,
+				006CBD9D50521EA073C8D60F6F3732DE /* Headers */,
+				973107349C9CE2E53C2C28FB5F3977C6 /* Sources */,
+				D55AC5343A3CF79363FD1C61DDA8DB68 /* Frameworks */,
+				8A0B72CD89C4F7C904B91462E229D084 /* Resources */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				3D473478A29A075A10DD361E0759DDBC /* PBXTargetDependency */,
+				3E40075BDDD4FE1D0D9C536DEEEC5343 /* PBXTargetDependency */,
 			);
 			name = ExytePopupView;
 			productName = ExytePopupView;
@@ -718,10 +711,10 @@
 			buildRules = (
 			);
 			dependencies = (
-				F23158024ABEFAED6A9501CB8ED98ED1 /* PBXTargetDependency */,
-				521F0BF0775AD3D61BD1C9350FB658AC /* PBXTargetDependency */,
-				765B5F44864BE327E6D31CE14F7F0624 /* PBXTargetDependency */,
-				C48CE27277C124130EA8B5CEF2D02318 /* PBXTargetDependency */,
+				F0C8F909D830456319A10908FFB9229B /* PBXTargetDependency */,
+				3B370EB768233F49BF2822381B85228D /* PBXTargetDependency */,
+				B3E3A81A91FFAA7A5F7BDD5FF36F76C1 /* PBXTargetDependency */,
+				4D32BE8F68874AAF77B6A045C792CF1D /* PBXTargetDependency */,
 			);
 			name = "Pods-StreetCare";
 			productName = Pods_StreetCare;
@@ -730,12 +723,12 @@
 		};
 		FF94F6BC609DB21F0194205C23064AFC /* SwiftUIIntrospect */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 38DB6D37482344886E1D7A443E2309BC /* Build configuration list for PBXNativeTarget "SwiftUIIntrospect" */;
+			buildConfigurationList = 1C48553D29B31ED50957C73CF9654226 /* Build configuration list for PBXNativeTarget "SwiftUIIntrospect" */;
 			buildPhases = (
-				FF2D6D0443F941788D9B0915A1E031ED /* Headers */,
-				E31C3A20ED04CB7EB6804BC5A49C1B0F /* Sources */,
-				1294834A1C3968C6FD70C62EFC49E4B5 /* Frameworks */,
-				545CF8499E362F26FD19767F286FA08C /* Resources */,
+				14C0B3D524C4B45B7AC10EC6616E96CA /* Headers */,
+				2FDA5EBA3B9F912D9EDBBE869A6EBC52 /* Sources */,
+				4A18A108221757B1564EAB0CF5EACB19 /* Frameworks */,
+				11CECB27E4D1C0FD56D99F4A31FD3B46 /* Resources */,
 			);
 			buildRules = (
 			);
@@ -756,7 +749,7 @@
 				LastUpgradeCheck = 1600;
 			};
 			buildConfigurationList = 4821239608C13582E20E6DA73FD5F1F9 /* Build configuration list for PBXProject "Pods" */;
-			compatibilityVersion = "Xcode 14.0";
+			compatibilityVersion = "Xcode 15.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -782,18 +775,33 @@
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
-		545CF8499E362F26FD19767F286FA08C /* Resources */ = {
+		11CECB27E4D1C0FD56D99F4A31FD3B46 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		819911265943F29FC1361BB1422BA21D /* Resources */ = {
+		14C9A3E945039F779DEA20F6CEB889EA /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				61BA8C8099D3374CDEB19F2A1B8286C3 /* GoogleMaps.bundle in Resources */,
+				6EC41E41BA2220905A636B5E77CA3DCF /* GooglePlaces.bundle in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		700A0DC0147BFEE4BCB8CDABADB9891F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CA4959B7DB4BEA84A6CEBB899539ACF6 /* GoogleMaps.bundle in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8A0B72CD89C4F7C904B91462E229D084 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -801,21 +809,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		ED39C764BED897384B555AD3D51BA015 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		F20BC7689EE2EB177E3141CDD26C57AE /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				8FB6B3057C54E4853580CB8678B7E504 /* GooglePlaces.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -859,16 +852,78 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
-		2BEC99A195B5451B03059F43D001FAAE /* Sources */ = {
+		06D71A7779B151DCE45FCE350EEC0EF0 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CDD53CE25B0CD5DCEE4F0F82D24F6E8B /* ExytePopupView-dummy.m in Sources */,
-				A709B599F4AF314BB4D291EB9C00E4BB /* FullscreenPopup.swift in Sources */,
-				3A10584DFE0ECFAFA8430E1C0DF15F86 /* Modifiers.swift in Sources */,
-				EEF864066D5ADD064D19D3FC5731DE97 /* PopupScrollViewDelegate.swift in Sources */,
-				31A6BA1C3AA159DDA82FCDD470ADE001 /* PopupView.swift in Sources */,
-				82B868BF27C4BC0A905FA9C36EA604B0 /* Utils.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2FDA5EBA3B9F912D9EDBBE869A6EBC52 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				07D745C15C3D4E4006F40C39A9ADA587 /* Button.swift in Sources */,
+				5485B551BB4A1FAA23F81385A7428586 /* ColorPicker.swift in Sources */,
+				1D5A6B2D225E82CA8D24DBEAE57703C2 /* DatePicker.swift in Sources */,
+				95DFE97D4A148BA4387EBF1164E54E50 /* DatePickerWithCompactStyle.swift in Sources */,
+				6475E8EDA35A680029AF5998A995AA22 /* DatePickerWithFieldStyle.swift in Sources */,
+				9C76F483583FA889458A874ACC3EFB38 /* DatePickerWithGraphicalStyle.swift in Sources */,
+				B92F696793F8972E182C1ABA0276AE34 /* DatePickerWithStepperFieldStyle.swift in Sources */,
+				30CF2837FB9C24625A461559CCBB3DC1 /* DatePickerWithWheelStyle.swift in Sources */,
+				021BADF18D2B74C3EDC64FCF56E19EE8 /* Form.swift in Sources */,
+				23E7FFE0712295B5867FD6D38D5AF26F /* FormWithGroupedStyle.swift in Sources */,
+				0616E2472452C9C49C2859EF36E53A24 /* FullScreenCover.swift in Sources */,
+				CA1962D1651BDF38614B0FAC07A15847 /* Introspect.swift in Sources */,
+				CA1A3108A7E2610600F4EF57FBECE276 /* IntrospectableViewType.swift in Sources */,
+				59C62F39A5F52DC7B09ACA14AE15E955 /* IntrospectionSelector.swift in Sources */,
+				D67AE01746180EB3186D2063AB64B866 /* IntrospectionView.swift in Sources */,
+				5A24F9E1B777E69982D137D3AD33F7FA /* List.swift in Sources */,
+				200F99E6F9FEF36A513E2354F99DC968 /* ListCell.swift in Sources */,
+				FD55818277E693BB552D0E2D8C5C2F87 /* ListWithBorderedStyle.swift in Sources */,
+				1B42CDCC3A8D94B445152433FADD9EC9 /* ListWithGroupedStyle.swift in Sources */,
+				A7A6918456545BEA9A754E104F63DAE3 /* ListWithInsetGroupedStyle.swift in Sources */,
+				618E5E023B20629AA626DA49028D304D /* ListWithInsetStyle.swift in Sources */,
+				46E82B8027F5E326212649AEE54A873D /* ListWithSidebarStyle.swift in Sources */,
+				97E85A7E2BB75BA35A2945AD523DD70C /* Map.swift in Sources */,
+				77D48955123666F1EA04F78120055ED6 /* NavigationSplitView.swift in Sources */,
+				B2E1F7997D844FEC6636848581709FF4 /* NavigationStack.swift in Sources */,
+				B8850F92FE187D934B036B48E74723D1 /* NavigationViewWithColumnsStyle.swift in Sources */,
+				71A331A64716BBC2858DAE1552C956D6 /* NavigationViewWithStackStyle.swift in Sources */,
+				B36F3B3369D2B4B450AD67ABF61B1324 /* PageControl.swift in Sources */,
+				D49BFB20E72A747E331B54468BA50491 /* PickerWithMenuStyle.swift in Sources */,
+				C900D0E798BDEBC4ADB17F247ABAFA5F /* PickerWithSegmentedStyle.swift in Sources */,
+				0EC42B63232DC205DBC16EAA09A49C42 /* PickerWithWheelStyle.swift in Sources */,
+				9691FBCACD9D25C3831DCA91DB552593 /* PlatformVersion.swift in Sources */,
+				B004648EFC84E889E600C62DDD11C3C1 /* PlatformView.swift in Sources */,
+				16C1D8FF7F1B87D286E4A3AE4B00DE30 /* PlatformViewVersion.swift in Sources */,
+				B74E034E0EC1035CF77F133CEF0C5012 /* Popover.swift in Sources */,
+				2440E863592DDBD66825D218052D126A /* ProgressViewWithCircularStyle.swift in Sources */,
+				8B148B0D62EAC36C0718FB9FED909B58 /* ProgressViewWithLinearStyle.swift in Sources */,
+				F7DE6EC227FA45CCBB4E565364974CC8 /* ScrollView.swift in Sources */,
+				F32669843BE648D6DD43136559CE47E1 /* SearchField.swift in Sources */,
+				32F56623C6F949AB83AFA73648096AB8 /* SecureField.swift in Sources */,
+				23AF42A148C86DB177AD3A7B25F09FCC /* Sheet.swift in Sources */,
+				5BC0A8B7BEE4180D5D9D942DB31675DE /* SignInWithAppleButton.swift in Sources */,
+				0A22DFC7919BE51FC6D38791B6B9365F /* Slider.swift in Sources */,
+				9D25EE2FE4ADAAFAF731EE42283381CA /* Stepper.swift in Sources */,
+				6FB51C7FBE83C487DDF46F06D20C7D6E /* SwiftUIIntrospect-dummy.m in Sources */,
+				EB51AE8CB527C70DB9D5F5690741D14A /* Table.swift in Sources */,
+				8D0F72084731EB40804FA7B31C18A504 /* TabView.swift in Sources */,
+				72B17611BEA29AAFAB322C6109025E71 /* TabViewWithPageStyle.swift in Sources */,
+				8D3A7BAE65536D4DF868670581890271 /* TextEditor.swift in Sources */,
+				A0183D5F6940EBDBD149DDBE4DD84E5D /* TextField.swift in Sources */,
+				B1A0D059123FD23DA3AC06B290463C39 /* TextFieldWithVerticalAxis.swift in Sources */,
+				B3F461172934F8542A0BEA350F35ED47 /* Toggle.swift in Sources */,
+				4000384F45C6417B90144722DDBB2FDD /* ToggleWithButtonStyle.swift in Sources */,
+				9F768F97CF48759E6A3C37B0898E4B3E /* ToggleWithCheckboxStyle.swift in Sources */,
+				69B9ED23F28925142343266A8BA94C8C /* ToggleWithSwitchStyle.swift in Sources */,
+				250C618C9AEDBB64E3916EB869BA93A0 /* Utils.swift in Sources */,
+				80D0A4197B6EBBBE53D3E1D9B409FE52 /* VideoPlayer.swift in Sources */,
+				0EB29B7BB005488380C979B74EC6FB62 /* View.swift in Sources */,
+				9E7F29807B69A5D05AF8C459700B5FDC /* ViewController.swift in Sources */,
+				96C927206FDAF971096818FC7C0DCFA7 /* Weak.swift in Sources */,
+				A5AAD20F06850E7882FF1F818096C6B7 /* Window.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -880,164 +935,81 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		C97F90A8C5AF93C2FA9882D129176901 /* Sources */ = {
+		5377DE41C924DD9A6875B4B4AC991D3F /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		E31C3A20ED04CB7EB6804BC5A49C1B0F /* Sources */ = {
+		973107349C9CE2E53C2C28FB5F3977C6 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B12F7DABBE58A7771C2E1DEAE3FBE0D4 /* Button.swift in Sources */,
-				DB106A2C51AE9300525CD3538BB349DE /* ColorPicker.swift in Sources */,
-				A88456B31FC00C2D33B6B54B41BF340F /* DatePicker.swift in Sources */,
-				356D9ED6704ED3B1A33AE47A369770C6 /* DatePickerWithCompactStyle.swift in Sources */,
-				E77FC40B6C1EBDF9611280DB332FC2E1 /* DatePickerWithFieldStyle.swift in Sources */,
-				AE6CA7B5F083F7E9472384DEDA3FDED4 /* DatePickerWithGraphicalStyle.swift in Sources */,
-				99025FBE7FCDB67C8EC3F653B4CF5593 /* DatePickerWithStepperFieldStyle.swift in Sources */,
-				EB1DE7CB6B937B38DA5562002D82E1B9 /* DatePickerWithWheelStyle.swift in Sources */,
-				F6CB0D5236E6B483B3259318EB3614E5 /* Form.swift in Sources */,
-				402A35B9DEBB9AF5EAA7B27A460E8B7E /* FormWithGroupedStyle.swift in Sources */,
-				78E43508395B6E702D793A5741FF3165 /* FullScreenCover.swift in Sources */,
-				6C26AD6A5BAAA3D2FCE012D89E754634 /* Introspect.swift in Sources */,
-				B57DB858B4AB2D69B645DE4A7D1CB64E /* IntrospectableViewType.swift in Sources */,
-				F67A70F132619C34AC5458BED3378324 /* IntrospectionSelector.swift in Sources */,
-				70530E916B17928C203111907B723FCD /* IntrospectionView.swift in Sources */,
-				8C1796694F4558D7638A856057E6D99B /* List.swift in Sources */,
-				41C5984CCA501E85AD46AAF1231D19A9 /* ListCell.swift in Sources */,
-				096B664EE7D733B979E5B5D24B443018 /* ListWithBorderedStyle.swift in Sources */,
-				8CC4DC9A996225B69B635F0B7B2F32EB /* ListWithGroupedStyle.swift in Sources */,
-				FD3AEB8835EE070D2E379C9770F80E62 /* ListWithInsetGroupedStyle.swift in Sources */,
-				5985CFD66C48FD0DCAED39EFF25CA274 /* ListWithInsetStyle.swift in Sources */,
-				FABC8B3A3E7D3D08980470D7AE3F4FE7 /* ListWithSidebarStyle.swift in Sources */,
-				DF347922A4EE0EEEFA31693F42E1DEB9 /* Map.swift in Sources */,
-				F19A7CB0C7C80E18EB4960E96D2333A3 /* NavigationSplitView.swift in Sources */,
-				FFC37C531EF13D05425A88707ADDDF7A /* NavigationStack.swift in Sources */,
-				233961FE4121E34A902E354520A4AB7C /* NavigationViewWithColumnsStyle.swift in Sources */,
-				45D5E3A46EC7D22217551CB804990150 /* NavigationViewWithStackStyle.swift in Sources */,
-				66A43A5E6946649D63CAD68D92AF7ACF /* PageControl.swift in Sources */,
-				AF10E81FB56DE12B7029EBBF1FFC40CA /* PickerWithMenuStyle.swift in Sources */,
-				648129103D5613AE3B5A0D318CCB3DB0 /* PickerWithSegmentedStyle.swift in Sources */,
-				BE02C376ADB6FF033A801489F8923FEE /* PickerWithWheelStyle.swift in Sources */,
-				8B20834C2180008D9F3BD43E34C57245 /* PlatformVersion.swift in Sources */,
-				FC9F1D07D400CCB448659AB27F58318B /* PlatformView.swift in Sources */,
-				E99D83C7D5AC3FE8414976134E1F6186 /* PlatformViewVersion.swift in Sources */,
-				C9D94E2374E907ACBA059AD3055C147B /* Popover.swift in Sources */,
-				0A82661EACE52636F87D54B26C58B299 /* ProgressViewWithCircularStyle.swift in Sources */,
-				E450CE216EAE942AF8C67A569F5DBB3C /* ProgressViewWithLinearStyle.swift in Sources */,
-				C4E8866D51EB334661D5E0B5BE8C1B81 /* RuntimeWarnings.swift in Sources */,
-				4AF54BE3A6535A6D673E26CE70E07A34 /* ScrollView.swift in Sources */,
-				EA8705F95B086DCFF89505C3296FC78F /* SearchField.swift in Sources */,
-				36C0C17C07D475BEB933CF61E5B9A0C5 /* SecureField.swift in Sources */,
-				E3DA284FF3402CE6CDDF368AA6AEA4A8 /* Sheet.swift in Sources */,
-				8793E36C837E5AB99D5E793856E2EA13 /* SignInWithAppleButton.swift in Sources */,
-				8D16144795C0098C7EB60B196DFC760B /* Slider.swift in Sources */,
-				597C13051042C5CF2073037D7D0A33D5 /* Stepper.swift in Sources */,
-				5A5CC3964BE706ADA754D3100DC49169 /* SwiftUIIntrospect-dummy.m in Sources */,
-				AFE8AA8C923A2973B56ED50402F2D8D2 /* Table.swift in Sources */,
-				9425413ED704FA8D96B7F5EB08FA5ADA /* TabView.swift in Sources */,
-				ABE69E5FD9432A16EF7288D958DC64B2 /* TabViewWithPageStyle.swift in Sources */,
-				652B5612CC3E5CAB4C21EDBAFF01EB5B /* TextEditor.swift in Sources */,
-				4121434E07E8655DF0E3C0100BC7190B /* TextField.swift in Sources */,
-				4CEA945055C3BCEEDBDE24C79334D018 /* TextFieldWithVerticalAxis.swift in Sources */,
-				C478724E2D8E18028A13E8F7E390B0B1 /* Toggle.swift in Sources */,
-				47B72761D03D64207EF0199295494F24 /* ToggleWithButtonStyle.swift in Sources */,
-				1DCFCF427BF422626F47520881360FBD /* ToggleWithCheckboxStyle.swift in Sources */,
-				A628D069221E1225061BCB6D6CEBAE28 /* ToggleWithSwitchStyle.swift in Sources */,
-				332B30C61A959A2062319ECA0DD37243 /* Utils.swift in Sources */,
-				C8D96B9E6FE825FC0426C8EB2D2B6B4E /* VideoPlayer.swift in Sources */,
-				44C06ECA5AB0991174CE45317A7F958E /* View.swift in Sources */,
-				32CDAF66511C1EF70F0317044F67921C /* ViewController.swift in Sources */,
-				6AE8B86D87ADE6748E112DD0D5574B00 /* Weak.swift in Sources */,
-				1027BE37C03C1FB422833FFCF7C61B75 /* Window.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		E72BED8D4F5ECC42F1CD1913D8BC2D0E /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
+				8258B26E866A04CFCD55EAF792362D0C /* ExytePopupView-dummy.m in Sources */,
+				15AF9D4DFEAA4D599C22B0B95819260B /* FullscreenPopup.swift in Sources */,
+				B6356A4E6355767E65E1752D75CDF7A9 /* Modifiers.swift in Sources */,
+				32EC6B97E3C3661D6DAFFBEDC23E0CEC /* PopupScrollViewDelegate.swift in Sources */,
+				770A9E072398271F92588CA7DF0AFF66 /* PopupView.swift in Sources */,
+				4A7942CDCB17739AEF39B49069BC8B06 /* Utils.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		3D473478A29A075A10DD361E0759DDBC /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = SwiftUIIntrospect;
-			target = FF94F6BC609DB21F0194205C23064AFC /* SwiftUIIntrospect */;
-			targetProxy = 3FAD9F5746BC2078E0043D6B81E5E853 /* PBXContainerItemProxy */;
-		};
-		521F0BF0775AD3D61BD1C9350FB658AC /* PBXTargetDependency */ = {
+		3B370EB768233F49BF2822381B85228D /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = GoogleMaps;
 			target = E5B4BBC6DD552AC8943C7E22772FC1D3 /* GoogleMaps */;
-			targetProxy = 20BE8F8E93D13C4EA2A7D92206866EC8 /* PBXContainerItemProxy */;
+			targetProxy = 39E3E5EA1A46D7B32052A830560D453E /* PBXContainerItemProxy */;
 		};
-		765B5F44864BE327E6D31CE14F7F0624 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = GooglePlaces;
-			target = 0C1885900810601510E0C632060FAF26 /* GooglePlaces */;
-			targetProxy = 20CF38DD68EEC7523D3BC1E68A112B05 /* PBXContainerItemProxy */;
-		};
-		7CCFA95272CDFF781FC6D754D0B1FB90 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = "GooglePlaces-GooglePlacesResources";
-			target = 285AAD0A8192022DACE2DAFE30D6CD52 /* GooglePlaces-GooglePlacesResources */;
-			targetProxy = 9FE18DE5A0D854E526F9AC3E24110721 /* PBXContainerItemProxy */;
-		};
-		84587BCED907E0AC77F569A1243D5C01 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = "GoogleMaps-GoogleMapsResources";
-			target = 7B026DDDF280F148DD87281679B51154 /* GoogleMaps-GoogleMapsResources */;
-			targetProxy = 34013D1E91FC0E16ACE37D9B4EBCEA97 /* PBXContainerItemProxy */;
-		};
-		C48CE27277C124130EA8B5CEF2D02318 /* PBXTargetDependency */ = {
+		3E40075BDDD4FE1D0D9C536DEEEC5343 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = SwiftUIIntrospect;
 			target = FF94F6BC609DB21F0194205C23064AFC /* SwiftUIIntrospect */;
-			targetProxy = 2DD4AB669EDB9DAFBC60A4543C1268B5 /* PBXContainerItemProxy */;
+			targetProxy = 537263AE878A9F9B394B29213CCEABEE /* PBXContainerItemProxy */;
 		};
-		F23158024ABEFAED6A9501CB8ED98ED1 /* PBXTargetDependency */ = {
+		3E529203E57876964D1E4BE76F86ED94 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "GooglePlaces-GooglePlacesResources";
+			target = 285AAD0A8192022DACE2DAFE30D6CD52 /* GooglePlaces-GooglePlacesResources */;
+			targetProxy = 3A15EF227B1CDBEBC7887EAADAADA871 /* PBXContainerItemProxy */;
+		};
+		4D32BE8F68874AAF77B6A045C792CF1D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = SwiftUIIntrospect;
+			target = FF94F6BC609DB21F0194205C23064AFC /* SwiftUIIntrospect */;
+			targetProxy = 243E5DAD2998ADF6F1BF0DA0BD1BFCAF /* PBXContainerItemProxy */;
+		};
+		6F048F3095E8062F805D607052B73427 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "GoogleMaps-GoogleMapsResources";
+			target = 7B026DDDF280F148DD87281679B51154 /* GoogleMaps-GoogleMapsResources */;
+			targetProxy = BEACBAD5CAB642D9D0B0A6A0889D5338 /* PBXContainerItemProxy */;
+		};
+		B3E3A81A91FFAA7A5F7BDD5FF36F76C1 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = GooglePlaces;
+			target = 0C1885900810601510E0C632060FAF26 /* GooglePlaces */;
+			targetProxy = 4E5F66E79D2C540019B9D573B514AADA /* PBXContainerItemProxy */;
+		};
+		F0C8F909D830456319A10908FFB9229B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = ExytePopupView;
 			target = E3BF7971BE024EA2CBC58C6A22E7F7CD /* ExytePopupView */;
-			targetProxy = 77C9F38349B0BE23715763F0F11602A2 /* PBXContainerItemProxy */;
+			targetProxy = 3EF105A77D395DC743967EFC24E5FF2D /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
-		0294E14E225E1D28BFB9CB27413C3E81 /* Release */ = {
+		05916A0CE1BC21DA1A6F765EC424392A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8BCF25F5BB403C43822B1004B1714E45 /* GooglePlaces.release.xcconfig */;
+			baseConfigurationReference = A5055D3E5DDA212AC809D3700D123D57 /* GoogleMaps.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CLANG_ENABLE_OBJC_WEAK = NO;
-				ENABLE_USER_SCRIPT_SANDBOXING = NO;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				SDKROOT = iphoneos;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-			};
-			name = Release;
-		};
-		03AF7043535FFDA7AE31F2CE8246A436 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 9070A1DC4FE9B67B768780D379880129 /* GooglePlaces.debug.xcconfig */;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CLANG_ENABLE_OBJC_WEAK = NO;
-				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1048,9 +1020,9 @@
 			};
 			name = Debug;
 		};
-		0CECE09968112E9ED514F826214B2378 /* Debug */ = {
+		162179E424913B5C0EFE30CE2D843C40 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F88DDF362D245237DE02C96532CFFBB7 /* ExytePopupView.debug.xcconfig */;
+			baseConfigurationReference = 37DAD273C6BFC4437D3CB7D92C4724DD /* SwiftUIIntrospect.debug.xcconfig */;
 			buildSettings = {
 				CLANG_ENABLE_OBJC_WEAK = NO;
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
@@ -1061,10 +1033,42 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_MODULE_VERIFIER = NO;
-				ENABLE_USER_SCRIPT_SANDBOXING = NO;
+				GCC_PREFIX_HEADER = "Target Support Files/SwiftUIIntrospect/SwiftUIIntrospect-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/SwiftUIIntrospect/SwiftUIIntrospect-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MODULEMAP_FILE = "Target Support Files/SwiftUIIntrospect/SwiftUIIntrospect.modulemap";
+				PRODUCT_MODULE_NAME = SwiftUIIntrospect;
+				PRODUCT_NAME = SwiftUIIntrospect;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 5.7;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		1C2FBAEB6D008F37CD171288B39116BE /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = C3CBB1A7796295E194347020A4866119 /* ExytePopupView.release.xcconfig */;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
 				GCC_PREFIX_HEADER = "Target Support Files/ExytePopupView/ExytePopupView-prefix.pch";
-				GENERATE_INFOPLIST_FILE = NO;
 				INFOPLIST_FILE = "Target Support Files/ExytePopupView/ExytePopupView-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
@@ -1079,19 +1083,34 @@
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_INSTALL_OBJC_HEADER = YES;
 				SWIFT_VERSION = 5.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
+			name = Release;
+		};
+		2781E20240AF3FAD62CC056A7B42A561 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5B135C5717BE474C7CAD409CF59DB105 /* GooglePlaces.debug.xcconfig */;
+			buildSettings = {
+				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/GooglePlaces";
+				IBSC_MODULE = GooglePlaces;
+				INFOPLIST_FILE = "Target Support Files/GooglePlaces/ResourceBundle-GooglePlacesResources-GooglePlaces-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				PRODUCT_NAME = GooglePlacesResources;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				WRAPPER_EXTENSION = bundle;
+			};
 			name = Debug;
 		};
-		1927A685A649994BD5E2D158CAAD7F5D /* Debug */ = {
+		396ED6FCBE5BF33B5F633D4EA895BCC0 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 76BD901CE9C92AC1B886E065B838F284 /* Pods-StreetCare.debug.xcconfig */;
+			baseConfigurationReference = 4FD06125E45A4D53FA43ECB42E1C01FE /* ExytePopupView.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
 				CLANG_ENABLE_OBJC_WEAK = NO;
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
@@ -1101,32 +1120,99 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_MODULE_VERIFIER = NO;
-				ENABLE_USER_SCRIPT_SANDBOXING = NO;
-				INFOPLIST_FILE = "Target Support Files/Pods-StreetCare/Pods-StreetCare-Info.plist";
+				GCC_PREFIX_HEADER = "Target Support Files/ExytePopupView/ExytePopupView-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/ExytePopupView/ExytePopupView-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				MACH_O_TYPE = staticlib;
-				MODULEMAP_FILE = "Target Support Files/Pods-StreetCare/Pods-StreetCare.modulemap";
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PODS_ROOT = "$(SRCROOT)";
-				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
-				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				MODULEMAP_FILE = "Target Support Files/ExytePopupView/ExytePopupView.modulemap";
+				PRODUCT_MODULE_NAME = ExytePopupView;
+				PRODUCT_NAME = ExytePopupView;
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 5.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
 			name = Debug;
 		};
-		30E0B9EFD9A5C45D0D351231E81B30B3 /* Release */ = {
+		3D88282E73AEFBBCA92CD4C712FD225F /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = C77F9D7916DD80F4CD80DF73B26A7A41 /* GoogleMaps.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		823FEBD33293DDA0FC28AD32D6B2867B /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = C77F9D7916DD80F4CD80DF73B26A7A41 /* GoogleMaps.release.xcconfig */;
+			buildSettings = {
+				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/GoogleMaps";
+				IBSC_MODULE = GoogleMaps;
+				INFOPLIST_FILE = "Target Support Files/GoogleMaps/ResourceBundle-GoogleMapsResources-GoogleMaps-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				PRODUCT_NAME = GoogleMapsResources;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				WRAPPER_EXTENSION = bundle;
+			};
+			name = Release;
+		};
+		A4D7B8A38DC408803A1718E6EE989F6A /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = F8F1FFF62CFED06B78A6FFA1C24733CE /* SwiftUIIntrospect.release.xcconfig */;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				GCC_PREFIX_HEADER = "Target Support Files/SwiftUIIntrospect/SwiftUIIntrospect-prefix.pch";
+				INFOPLIST_FILE = "Target Support Files/SwiftUIIntrospect/SwiftUIIntrospect-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MODULEMAP_FILE = "Target Support Files/SwiftUIIntrospect/SwiftUIIntrospect.modulemap";
+				PRODUCT_MODULE_NAME = SwiftUIIntrospect;
+				PRODUCT_NAME = SwiftUIIntrospect;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
+				SWIFT_VERSION = 5.7;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		B86D71A5E7AB53EB2C08DEA39FBD2050 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -1176,7 +1262,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1188,25 +1274,7 @@
 			};
 			name = Release;
 		};
-		420E148215EC1473E460FB1F347E336C /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 10AA17EF5C8D7C00E4A68FFE827724FA /* GoogleMaps.debug.xcconfig */;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CLANG_ENABLE_OBJC_WEAK = NO;
-				ENABLE_USER_SCRIPT_SANDBOXING = NO;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				SDKROOT = iphoneos;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
-		46C9D0A3FCAB2DE034568A8D487D4043 /* Release */ = {
+		BB43FB434399F4B3DE47217A002C2B0A /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = C6DBBB21105DF5CD19F00E92BE967996 /* Pods-StreetCare.release.xcconfig */;
 			buildSettings = {
@@ -1220,11 +1288,9 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_MODULE_VERIFIER = NO;
-				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				INFOPLIST_FILE = "Target Support Files/Pods-StreetCare/Pods-StreetCare-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1246,196 +1312,7 @@
 			};
 			name = Release;
 		};
-		58BECF8D87B41DF2300C123A0FD2441A /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = D6230659B18A367DD7DDC0368802450B /* ExytePopupView.release.xcconfig */;
-			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = NO;
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_MODULE_VERIFIER = NO;
-				ENABLE_USER_SCRIPT_SANDBOXING = NO;
-				GCC_PREFIX_HEADER = "Target Support Files/ExytePopupView/ExytePopupView-prefix.pch";
-				GENERATE_INFOPLIST_FILE = NO;
-				INFOPLIST_FILE = "Target Support Files/ExytePopupView/ExytePopupView-Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MODULEMAP_FILE = "Target Support Files/ExytePopupView/ExytePopupView.modulemap";
-				PRODUCT_MODULE_NAME = ExytePopupView;
-				PRODUCT_NAME = ExytePopupView;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_INSTALL_OBJC_HEADER = YES;
-				SWIFT_VERSION = 5.2;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
-		};
-		71425309D048161D46CA9F84E632C4E7 /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8A15F624CA6D6A938DB0302F8FDD67FF /* SwiftUIIntrospect.release.xcconfig */;
-			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = NO;
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_MODULE_VERIFIER = NO;
-				ENABLE_USER_SCRIPT_SANDBOXING = NO;
-				GCC_PREFIX_HEADER = "Target Support Files/SwiftUIIntrospect/SwiftUIIntrospect-prefix.pch";
-				GENERATE_INFOPLIST_FILE = NO;
-				INFOPLIST_FILE = "Target Support Files/SwiftUIIntrospect/SwiftUIIntrospect-Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MODULEMAP_FILE = "Target Support Files/SwiftUIIntrospect/SwiftUIIntrospect.modulemap";
-				PRODUCT_MODULE_NAME = SwiftUIIntrospect;
-				PRODUCT_NAME = SwiftUIIntrospect;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_INSTALL_OBJC_HEADER = YES;
-				SWIFT_VERSION = 5.7;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Release;
-		};
-		83657721E415D61FAC94F93214A91C8C /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = ED52D211E6736B00706D12DF9EFB3587 /* GoogleMaps.release.xcconfig */;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				CLANG_ENABLE_OBJC_WEAK = NO;
-				ENABLE_USER_SCRIPT_SANDBOXING = NO;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				SDKROOT = iphoneos;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VALIDATE_PRODUCT = YES;
-			};
-			name = Release;
-		};
-		8832FE89A298CDD385A7565F5B94C440 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 65190689345476684480B011F4E03089 /* SwiftUIIntrospect.debug.xcconfig */;
-			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = NO;
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				ENABLE_MODULE_VERIFIER = NO;
-				ENABLE_USER_SCRIPT_SANDBOXING = NO;
-				GCC_PREFIX_HEADER = "Target Support Files/SwiftUIIntrospect/SwiftUIIntrospect-prefix.pch";
-				GENERATE_INFOPLIST_FILE = NO;
-				INFOPLIST_FILE = "Target Support Files/SwiftUIIntrospect/SwiftUIIntrospect-Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
-				MODULEMAP_FILE = "Target Support Files/SwiftUIIntrospect/SwiftUIIntrospect.modulemap";
-				PRODUCT_MODULE_NAME = SwiftUIIntrospect;
-				PRODUCT_NAME = SwiftUIIntrospect;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "$(inherited) ";
-				SWIFT_INSTALL_OBJC_HEADER = YES;
-				SWIFT_VERSION = 5.7;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				VERSIONING_SYSTEM = "apple-generic";
-				VERSION_INFO_PREFIX = "";
-			};
-			name = Debug;
-		};
-		9618623FA8B641598AC890B71B817FFE /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 9070A1DC4FE9B67B768780D379880129 /* GooglePlaces.debug.xcconfig */;
-			buildSettings = {
-				CODE_SIGNING_ALLOWED = NO;
-				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/GooglePlaces";
-				IBSC_MODULE = GooglePlaces;
-				INFOPLIST_FILE = "Target Support Files/GooglePlaces/ResourceBundle-GooglePlacesResources-GooglePlaces-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
-				PRODUCT_NAME = GooglePlacesResources;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				WRAPPER_EXTENSION = bundle;
-			};
-			name = Debug;
-		};
-		A40B39EB2458EF4E11BD3F9999FC806A /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 10AA17EF5C8D7C00E4A68FFE827724FA /* GoogleMaps.debug.xcconfig */;
-			buildSettings = {
-				CODE_SIGNING_ALLOWED = NO;
-				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/GoogleMaps";
-				IBSC_MODULE = GoogleMaps;
-				INFOPLIST_FILE = "Target Support Files/GoogleMaps/ResourceBundle-GoogleMapsResources-GoogleMaps-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
-				PRODUCT_NAME = GoogleMapsResources;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				WRAPPER_EXTENSION = bundle;
-			};
-			name = Debug;
-		};
-		E8A441FB667170B56EB32D36D68C849E /* Release */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8BCF25F5BB403C43822B1004B1714E45 /* GooglePlaces.release.xcconfig */;
-			buildSettings = {
-				CODE_SIGNING_ALLOWED = NO;
-				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/GooglePlaces";
-				IBSC_MODULE = GooglePlaces;
-				INFOPLIST_FILE = "Target Support Files/GooglePlaces/ResourceBundle-GooglePlacesResources-GooglePlaces-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
-				PRODUCT_NAME = GooglePlacesResources;
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				WRAPPER_EXTENSION = bundle;
-			};
-			name = Release;
-		};
-		F4FF6A0D1970CA9705974E3CB2134802 /* Debug */ = {
+		BD5E84F7B72D348654A4D58B6BA51118 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
@@ -1488,7 +1365,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -1501,11 +1378,98 @@
 			};
 			name = Debug;
 		};
-		FD5C4C93A4E257469B2FD78A0C8B2612 /* Release */ = {
+		C31AA37497A1ACCAFF051D14768BD507 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = ED52D211E6736B00706D12DF9EFB3587 /* GoogleMaps.release.xcconfig */;
+			baseConfigurationReference = 76BD901CE9C92AC1B886E065B838F284 /* Pods-StreetCare.debug.xcconfig */;
 			buildSettings = {
-				CODE_SIGNING_ALLOWED = NO;
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = "Target Support Files/Pods-StreetCare/Pods-StreetCare-Info.plist";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MACH_O_TYPE = staticlib;
+				MODULEMAP_FILE = "Target Support Files/Pods-StreetCare/Pods-StreetCare.modulemap";
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PODS_ROOT = "$(SRCROOT)";
+				PRODUCT_BUNDLE_IDENTIFIER = "org.cocoapods.${PRODUCT_NAME:rfc1034identifier}";
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		C732250448007D6B3584BE4BDA23ED4E /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D2F34EA18F3881D514F7AC76D25F66A2 /* GooglePlaces.release.xcconfig */;
+			buildSettings = {
+				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/GooglePlaces";
+				IBSC_MODULE = GooglePlaces;
+				INFOPLIST_FILE = "Target Support Files/GooglePlaces/ResourceBundle-GooglePlacesResources-GooglePlaces-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				PRODUCT_NAME = GooglePlacesResources;
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				WRAPPER_EXTENSION = bundle;
+			};
+			name = Release;
+		};
+		DCD0AAA553584ACB285AACA4AEFD4DA4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5B135C5717BE474C7CAD409CF59DB105 /* GooglePlaces.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		EC9E06B5419C1A597A7DA9CECE03C886 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D2F34EA18F3881D514F7AC76D25F66A2 /* GooglePlaces.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CLANG_ENABLE_OBJC_WEAK = NO;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		EDE2E77112FD6E33C435E57095D77DED /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = A5055D3E5DDA212AC809D3700D123D57 /* GoogleMaps.debug.xcconfig */;
+			buildSettings = {
 				CONFIGURATION_BUILD_DIR = "$(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/GoogleMaps";
 				IBSC_MODULE = GoogleMaps;
 				INFOPLIST_FILE = "Target Support Files/GoogleMaps/ResourceBundle-GoogleMapsResources-GoogleMaps-Info.plist";
@@ -1516,25 +1480,16 @@
 				TARGETED_DEVICE_FAMILY = "1,2";
 				WRAPPER_EXTENSION = bundle;
 			};
-			name = Release;
+			name = Debug;
 		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		1FCD49E0E10F578A125F2DC628BE3B71 /* Build configuration list for PBXNativeTarget "ExytePopupView" */ = {
+		1C48553D29B31ED50957C73CF9654226 /* Build configuration list for PBXNativeTarget "SwiftUIIntrospect" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				0CECE09968112E9ED514F826214B2378 /* Debug */,
-				58BECF8D87B41DF2300C123A0FD2441A /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		38DB6D37482344886E1D7A443E2309BC /* Build configuration list for PBXNativeTarget "SwiftUIIntrospect" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				8832FE89A298CDD385A7565F5B94C440 /* Debug */,
-				71425309D048161D46CA9F84E632C4E7 /* Release */,
+				162179E424913B5C0EFE30CE2D843C40 /* Debug */,
+				A4D7B8A38DC408803A1718E6EE989F6A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -1542,8 +1497,8 @@
 		47C5605859EECC4DAA8398F8266E85C4 /* Build configuration list for PBXAggregateTarget "GoogleMaps" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				420E148215EC1473E460FB1F347E336C /* Debug */,
-				83657721E415D61FAC94F93214A91C8C /* Release */,
+				05916A0CE1BC21DA1A6F765EC424392A /* Debug */,
+				3D88282E73AEFBBCA92CD4C712FD225F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -1551,26 +1506,17 @@
 		4821239608C13582E20E6DA73FD5F1F9 /* Build configuration list for PBXProject "Pods" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				F4FF6A0D1970CA9705974E3CB2134802 /* Debug */,
-				30E0B9EFD9A5C45D0D351231E81B30B3 /* Release */,
+				BD5E84F7B72D348654A4D58B6BA51118 /* Debug */,
+				B86D71A5E7AB53EB2C08DEA39FBD2050 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		7CA9AF15B46BFFB54B8B187FD4435EFB /* Build configuration list for PBXNativeTarget "GooglePlaces-GooglePlacesResources" */ = {
+		9D6ACFCF74A8228FC31DD6C0D5B7E538 /* Build configuration list for PBXNativeTarget "GooglePlaces-GooglePlacesResources" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				9618623FA8B641598AC890B71B817FFE /* Debug */,
-				E8A441FB667170B56EB32D36D68C849E /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		8CE12BC03DBA1FA6408826A9C5B88187 /* Build configuration list for PBXNativeTarget "GoogleMaps-GoogleMapsResources" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				A40B39EB2458EF4E11BD3F9999FC806A /* Debug */,
-				FD5C4C93A4E257469B2FD78A0C8B2612 /* Release */,
+				2781E20240AF3FAD62CC056A7B42A561 /* Debug */,
+				C732250448007D6B3584BE4BDA23ED4E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -1578,8 +1524,8 @@
 		A7D443F9469A5D12089D3645FE0D3B81 /* Build configuration list for PBXNativeTarget "Pods-StreetCare" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				1927A685A649994BD5E2D158CAAD7F5D /* Debug */,
-				46C9D0A3FCAB2DE034568A8D487D4043 /* Release */,
+				C31AA37497A1ACCAFF051D14768BD507 /* Debug */,
+				BB43FB434399F4B3DE47217A002C2B0A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -1587,8 +1533,26 @@
 		C77040D703478EDADEB4E839F298401F /* Build configuration list for PBXAggregateTarget "GooglePlaces" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				03AF7043535FFDA7AE31F2CE8246A436 /* Debug */,
-				0294E14E225E1D28BFB9CB27413C3E81 /* Release */,
+				DCD0AAA553584ACB285AACA4AEFD4DA4 /* Debug */,
+				EC9E06B5419C1A597A7DA9CECE03C886 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		D2CB7D96214801FE42E7782BD645F8C7 /* Build configuration list for PBXNativeTarget "GoogleMaps-GoogleMapsResources" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EDE2E77112FD6E33C435E57095D77DED /* Debug */,
+				823FEBD33293DDA0FC28AD32D6B2867B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		F5BB94D06A88A812640CF03AC9834A82 /* Build configuration list for PBXNativeTarget "ExytePopupView" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				396ED6FCBE5BF33B5F633D4EA895BCC0 /* Debug */,
+				1C2FBAEB6D008F37CD171288B39116BE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

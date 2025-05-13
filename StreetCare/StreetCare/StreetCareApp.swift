@@ -82,11 +82,11 @@ struct StreetCareApp: App {
     var body: some Scene {
         WindowGroup {
             SplashView()
-                .onOpenURL { url in
-                          GIDSignIn.sharedInstance.handle(url)
+                        .onOpenURL { url in
+                            GIDSignIn.sharedInstance.handle(url)
                         }
-                .environmentObject(userAuth)
-                .navigationViewStyle(.stack)
+                        .environmentObject(userAuth)
+                        .navigationViewStyle(.stack)
         }
     }
 

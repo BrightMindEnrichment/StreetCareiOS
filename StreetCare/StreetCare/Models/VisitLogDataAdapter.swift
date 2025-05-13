@@ -57,21 +57,23 @@ class VisitLogDataAdapter {
         userData["durationMinutes"] = visitLog.durationMinutes
         userData["numberOfHelpers"] = visitLog.numberOfHelpers // totalpeoplecount
         userData["volunteerAgain"] = visitLog.volunteerAgain
-        userData["peopleNeedFurtherHelp"] = visitLog.peopleNeedFurtherHelp
         userData["furtherFoodAndDrinks"] = visitLog.furtherfoodAndDrinks
         userData["furtherClothes"] = visitLog.furtherClothes
         userData["furtherHygine"] = visitLog.furtherHygine
         userData["furtherWellness"] = visitLog.furtherWellness
         userData["furtherOther"] = visitLog.furtherOther
-        userData["furtherOtherNotes"] = visitLog.furtherOtherNotes
         userData["followUpWhenVisit"] = visitLog.followUpWhenVisit
-
-
+        userData["peopleHelpedDescription"] = visitLog.peopleHelpedDescription
+        userData["furtherOtherNotes"] = visitLog.furtherOtherNotes
+        
         if visitLog.location.latitude != 0 {
             userData["latitude"] = visitLog.location.latitude
             userData["longitude"] = visitLog.location.longitude
         }
-        
+        userData["futureNotes"] = visitLog.futureNotes
+        userData["stillNeedHelpDescription"] = visitLog.stillNeedHelpDescription
+        userData["stillNeedHelpCount"] = visitLog.stillNeedHelpCount
+        userData["itemQty"] = visitLog.itemQty
         userData["timestamp"] = Date()
         userData["uid"] = user.uid
         
@@ -320,7 +322,7 @@ class VisitLogDataAdapter {
                     if let otherNotes = document["otherNotes"] as? String {
                         log.otherNotes = otherNotes
                     }
-
+                   
                     if let rating = document["rating"] as? Int {
                         log.rating = rating
                     }
@@ -336,6 +338,10 @@ class VisitLogDataAdapter {
                     if let durationMinutes = document["durationMinutes"] as? Int {
                         log.durationMinutes = durationMinutes
                     }
+                    
+                    if let itemQty = document["itemQty"] as? Int {
+                        log.itemQty = itemQty
+                    }
 
                     if let numberOfHelpers = document["numberOfHelpers"] as? Int {
                         log.numberOfHelpers = numberOfHelpers
@@ -345,10 +351,6 @@ class VisitLogDataAdapter {
                         log.volunteerAgain = volunteerAgain
                     }
 
-                    if let peopleNeedFurtherHelp = document["peopleNeedFurtherHelp"] as? Int {
-                        log.peopleNeedFurtherHelp = peopleNeedFurtherHelp
-                    }
-                    
                     if let furtherFoodAndDrinks = document["furtherFoodAndDrinks"] as? Bool {
                         log.furtherfoodAndDrinks = furtherFoodAndDrinks
                     }
@@ -368,9 +370,23 @@ class VisitLogDataAdapter {
                     if let furtherOther = document["furtherOther"] as? Bool {
                         log.furtherOther = furtherOther
                     }
-
                     if let furtherOtherNotes = document["furtherOtherNotes"] as? String {
-                        log.furtherOtherNotes = furtherOtherNotes
+                            log.furtherOtherNotes = furtherOtherNotes    
+                        }
+
+                    if let peopleHelpedDescription = document["peopleHelpedDescription"] as? String {
+                        log.peopleHelpedDescription = peopleHelpedDescription
+                    }
+                    if let stillNeedHelpCount = document["stillNeedHelpCount"] as? Int {
+                        log.stillNeedHelpCount = stillNeedHelpCount
+                    }
+
+                    if let stillNeedHelpDescription = document["stillNeedHelpDescription"] as? String {
+                        log.stillNeedHelpDescription = stillNeedHelpDescription
+                    }
+
+                    if let futureNotes = document["futureNotes"] as? String {
+                        log.futureNotes = futureNotes
                     }
 
                     self.visitLogs.append(log)
