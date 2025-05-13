@@ -79,43 +79,64 @@ struct VisitLogView: View {
                 }
                 Spacer(minLength: 20.0)
                 if log.peopleHelped > 0 {
-                    HStack {
-                        VisitLogDetailRow(title: "People helped", detail: "\(log.peopleHelped)")
-                        
-                        NavigationLink(
-                            destination: InputTileNumber(
-                                questionNumber: 1,
-                                totalQuestions: 1,
-                                tileWidth: 320,
-                                tileHeight: 520,
-                                question1: "Edit the number of",
-                                question2: "people you helped",
-                                question3: "",
-                                question4: "",
-                                descriptionLabel: nil,
-                                disclaimerText: nil,
-                                placeholderText: nil,
-                                number: $editedPeopleHelped,
-                                nextAction: {
-                                    updatePeopleHelpedInFirestore(newValue: editedPeopleHelped)
-                                },
-                                previousAction: {},
-                                skipAction: {
-                                    navigateToEdit = false
-                                },
-                                showProgressBar: false
-                            ),
-                            isActive: $navigateToEdit
-                        ) {
-                            Button("Edit") {
+                    VStack(alignment: .leading) {
+                        HStack {
+                            Text("People helped")
+                                .font(.system(size: 16.0)).bold()
+                                .padding(EdgeInsets(top: 10.0, leading: 20.0, bottom: 0.0, trailing: 20.0))
+                            
+                            Button(action: {
                                 editedPeopleHelped = log.peopleHelped
                                 navigateToEdit = true
+                            }) {
+                                Image(systemName: "pencil")
+                                    .font(.system(size: 20, weight: .medium)) // slightly larger
+                                    .foregroundColor(.gray)
+                                    //.padding(6)
+                                    //.background(Circle().stroke(Color.gray, lineWidth: 1))
                             }
-                            .font(.footnote)
-                            .padding(.horizontal, 12)
-                            .padding(.vertical, 6)
-                            .background(Capsule().stroke(Color.blue, lineWidth: 1))
+                            .buttonStyle(BorderlessButtonStyle())
                         }
+                        //.padding(.horizontal, 10)
+                        //.padding(.top, 10)
+
+                        Text("\(log.peopleHelped)")
+                            .font(.system(size: 15.0))
+                            .padding(EdgeInsets(top: 10.0, leading: 20.0, bottom: 0.0, trailing: 20.0))
+                            //.padding(.horizontal, 20)
+                            //.padding(.bottom, 10)
+                        
+                        Rectangle()
+                            .frame(width: 350.0, height: 2.0)
+                            .foregroundColor(.gray)
+                    }
+
+                    NavigationLink(
+                        destination: InputTileNumber(
+                            questionNumber: 1,
+                            totalQuestions: 1,
+                            tileWidth: 320,
+                            tileHeight: 330,
+                            question1: "Edit the number of",
+                            question2: "people you helped",
+                            question3: "",
+                            question4: "",
+                            descriptionLabel: nil,
+                            disclaimerText: nil,
+                            placeholderText: nil,
+                            number: $editedPeopleHelped,
+                            nextAction: {
+                                updatePeopleHelpedInFirestore(newValue: editedPeopleHelped)
+                            },
+                            previousAction: {},
+                            skipAction: {
+                                navigateToEdit = false
+                            },
+                            showProgressBar: false
+                        ),
+                        isActive: $navigateToEdit
+                    ) {
+                        EmptyView()
                     }
                 }
                 

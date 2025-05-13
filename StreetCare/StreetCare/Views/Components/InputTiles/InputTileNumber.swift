@@ -24,6 +24,7 @@ struct InputTileNumber: View {
     @State private var peopledescription = ""
     @State private var showAlert = false
     @State private var showSuccessAlert = false
+    @Environment(\.presentationMode) var presentationMode
     
     var nextAction: () -> ()
     var previousAction: () -> ()
@@ -192,7 +193,7 @@ struct InputTileNumber: View {
                 .padding()*/
                 HStack {
                     Button("Cancel") {
-                        skipAction()
+                        presentationMode.wrappedValue.dismiss()
                     }
                     .foregroundColor(Color("SecondaryColor"))
                     .font(.footnote)
@@ -207,7 +208,7 @@ struct InputTileNumber: View {
                         if let validNumber = Int(numberString), validNumber >= 0 {
                             number = validNumber
                             showSuccessAlert = true
-                            skipAction()
+                            nextAction() 
                         } else {
                             showAlert = true
                         }
@@ -226,11 +227,14 @@ struct InputTileNumber: View {
                 title: Text("Updated"),
                 message: Text("Number of people helped was successfully updated."),
                 dismissButton: .default(Text("OK")) {
-                    skipAction()
+                    presentationMode.wrappedValue.dismiss() // 👈 Dismiss this view
                 }
             )
         }
         .frame(width: tileWidth, height: tileHeight)
+        .onAppear {
+            numberString = String(number) // Sync when view appears
+        }
         if showProgressBar {
             SegmentedProgressBar(
                 totalSegments: totalQuestions,
