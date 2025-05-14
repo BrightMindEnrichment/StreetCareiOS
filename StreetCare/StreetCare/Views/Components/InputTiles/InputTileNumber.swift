@@ -1,5 +1,10 @@
 import SwiftUI
 
+enum ButtonMode {
+    case navigation  // Shows Previous & Next
+    case update      // Shows Update & Cancel
+}
+
 struct InputTileNumber: View {
     
     var questionNumber: Int
@@ -30,6 +35,7 @@ struct InputTileNumber: View {
     var previousAction: () -> ()
     var skipAction: () -> ()
     var showProgressBar: Bool
+    var buttonMode: ButtonMode
     init(
         questionNumber: Int,
         totalQuestions: Int,
@@ -46,7 +52,8 @@ struct InputTileNumber: View {
         nextAction: @escaping () -> Void,
         previousAction: @escaping () -> Void,
         skipAction: @escaping () -> Void,
-        showProgressBar: Bool = true
+        showProgressBar: Bool = true,
+        buttonMode: ButtonMode = .navigation
     ) {
         self.questionNumber = questionNumber
         self.totalQuestions = totalQuestions
@@ -65,6 +72,7 @@ struct InputTileNumber: View {
         self.previousAction = previousAction
         self.skipAction = skipAction
         self.showProgressBar = showProgressBar
+        self.buttonMode = buttonMode
     }
 
     var body: some View {
@@ -160,66 +168,69 @@ struct InputTileNumber: View {
                         .padding(.top, 8)
                 }
                 
-                /*HStack {
-                    Button("Previous") {
-                        previousAction()
-                    }
-                    .foregroundColor(Color("SecondaryColor"))
-                    .font(.footnote)
-                    .padding(.horizontal, 16)
-                    .padding(.vertical, 8)
-                    .background(Capsule().fill(Color.white))
-                    .overlay(Capsule().stroke(Color("SecondaryColor"), lineWidth: 2))
-                    
-                    Spacer()
-                    
-                    Button("Next") {
-                        if let validNumber = Int(numberString), validNumber >= 0 {
-                            number = validNumber
-                            nextAction()
-                        } else {
-                            showAlert = true
+                if buttonMode == .navigation {
+                    HStack {
+                        Button("Previous") {
+                            previousAction()
+                        }
+                        .foregroundColor(Color("SecondaryColor"))
+                        .font(.footnote)
+                        .padding(.horizontal, 16)
+                        .padding(.vertical, 8)
+                        .background(Capsule().fill(Color.white))
+                        .overlay(Capsule().stroke(Color("SecondaryColor"), lineWidth: 2))
+                        
+                        Spacer()
+                        
+                        Button("Next") {
+                            if let validNumber = Int(numberString), validNumber >= 0 {
+                                number = validNumber
+                                nextAction()
+                            } else {
+                                showAlert = true
+                            }
+                        }
+                        .foregroundColor(Color("PrimaryColor"))
+                        .fontWeight(.bold)
+                        .padding(.horizontal, 16)
+                        .padding(.vertical, 8)
+                        .background(Capsule().fill(Color("SecondaryColor")))
+                        .alert(isPresented: $showAlert) {
+                            Alert(title: Text("Invalid Input"), message: Text("Please enter a valid number."), dismissButton: .default(Text("OK")))
                         }
                     }
-                    .foregroundColor(Color("PrimaryColor"))
-                    .fontWeight(.bold)
-                    .padding(.horizontal, 16)
-                    .padding(.vertical, 8)
-                    .background(Capsule().fill(Color("SecondaryColor")))
-                    .alert(isPresented: $showAlert) {
-                        Alert(title: Text("Invalid Input"), message: Text("Please enter a valid number."), dismissButton: .default(Text("OK")))
-                    }
-                }
-                .padding()*/
-                HStack {
-                    Button("Cancel") {
-                        presentationMode.wrappedValue.dismiss()
-                    }
-                    .foregroundColor(Color("SecondaryColor"))
-                    .font(.footnote)
-                    .padding(.horizontal, 16)
-                    .padding(.vertical, 8)
-                    .background(Capsule().fill(Color.white))
-                    .overlay(Capsule().stroke(Color("SecondaryColor"), lineWidth: 2))
-
-                    Spacer()
-
-                    Button("Update") {
-                        if let validNumber = Int(numberString), validNumber >= 0 {
-                            number = validNumber
-                            showSuccessAlert = true
-                            nextAction() 
-                        } else {
-                            showAlert = true
+                    .padding()
+                } else if buttonMode == .update {
+                    HStack {
+                        Button("Cancel") {
+                            presentationMode.wrappedValue.dismiss()
                         }
+                        .foregroundColor(Color("SecondaryColor"))
+                        .font(.footnote)
+                        .padding(.horizontal, 16)
+                        .padding(.vertical, 8)
+                        .background(Capsule().fill(Color.white))
+                        .overlay(Capsule().stroke(Color("SecondaryColor"), lineWidth: 2))
+                        
+                        Spacer()
+                        
+                        Button("Update") {
+                            if let validNumber = Int(numberString), validNumber >= 0 {
+                                number = validNumber
+                                showSuccessAlert = true
+                                nextAction()
+                            } else {
+                                showAlert = true
+                            }
+                        }
+                        .foregroundColor(Color("PrimaryColor"))
+                        .fontWeight(.bold)
+                        .padding(.horizontal, 16)
+                        .padding(.vertical, 8)
+                        .background(Capsule().fill(Color("SecondaryColor")))
                     }
-                    .foregroundColor(Color("PrimaryColor"))
-                    .fontWeight(.bold)
-                    .padding(.horizontal, 16)
-                    .padding(.vertical, 8)
-                    .background(Capsule().fill(Color("SecondaryColor")))
+                    .padding()
                 }
-                .padding()
             }
         }
         .alert(isPresented: $showSuccessAlert) {

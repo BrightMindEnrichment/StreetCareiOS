@@ -132,7 +132,8 @@ struct VisitLogView: View {
                             skipAction: {
                                 navigateToEdit = false
                             },
-                            showProgressBar: false
+                            showProgressBar: false,
+                            buttonMode: .update 
                         ),
                         isActive: $navigateToEdit
                     ) {
