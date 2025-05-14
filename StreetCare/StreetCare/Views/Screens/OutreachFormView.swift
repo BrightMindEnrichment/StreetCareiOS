@@ -7,6 +7,7 @@
 import SwiftUI
 import Firebase
 import GooglePlaces
+import FirebaseAuth
 
 struct OutreachFormView: View {
     @Binding var isPresented: Bool
