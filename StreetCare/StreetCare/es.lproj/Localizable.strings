@@ -77,7 +77,7 @@
 "iCanHelpText2" = "La presencia en grupo ofrece seguridad y eficacia para enfrentar situaciones y personas desconocidas, beneficiando tanto a los voluntarios como a las personas sin hogar.";
 "iCanHelpText3" = "¿Cómo funciona el outreach en Street Care?";
 "iCanHelpText4" = "Publicamos el outreach para ti, y otros voluntarios pueden inscribirse para acompañarte.";
-"saveEventButtonTitle" = "Guardar";
+"saveEventButtonTitle" = "Publicar";
 "discardButtonTitle" = "Descartar";
 "selectSkillsButtonTitle" = "SELECCIONAR HABILIDADES";
 
@@ -126,6 +126,8 @@
 "guestWarningMessage" = "No podrá ver ni editar sus registros de visitas sin iniciar sesión";
 "login" = "INICIAR SESIÓN";
 "emptytext" = " ";
+"Contact Number"= "Número de contacto";
+"consentLine" = "Al seleccionar esta casilla, doy mi consentimiento para compartir mis datos de contacto y la dirección del evento públicamente en esta plataforma / espacio comunitario para facilitar la participación en el evento de alcance. Entiendo que esta información será visible para otros y reconozco las consideraciones de privacidad asociadas.";
 
 //"helloWorld" = "¡Hola Mundo!";
 //"welcome" = "Bienvenido a\nStreet Care";

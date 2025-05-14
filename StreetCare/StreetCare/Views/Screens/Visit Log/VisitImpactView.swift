@@ -34,7 +34,7 @@ struct VisitImpactView: View {
             VStack {
                 Text("INTERACTION LOG").font(.system(size: 18, weight: .bold)).padding()
                 ImpactView(peopleHelped: peopleHelped, outreaches: outreaches, itemsDonated: itemsDonated)
-                Spacer(minLength: -5)
+                //Spacer(minLength: -5)
                 Button(action: {
                     if user != nil {
                         showAlert = true
@@ -69,7 +69,7 @@ struct VisitImpactView: View {
                     VisitLogEntry()
                 }
 
-                Spacer(minLength: 15.0)
+                //Spacer(minLength: 15.0)
                 Divider().frame(maxWidth: UIScreen.main.bounds.width - 150 ,minHeight: 0.5)
                     .background(Color.black)
                     .padding(.top, 8)

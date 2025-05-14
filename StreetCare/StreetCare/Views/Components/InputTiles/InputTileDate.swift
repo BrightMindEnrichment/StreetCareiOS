@@ -102,17 +102,22 @@ struct InputTileDate: View {
                 //Spacer()
                 
                 HStack(spacing: 12) {
-                    HStack {
+                    // Date Picker Box
+                    HStack(spacing: 8) {
                         Image(systemName: "calendar")
                             .foregroundColor(.black)
 
-                        Text(dateFormatter.string(from: datetimeValue))
-                            .foregroundColor(.black)
-                            .font(.body)
-                            //.bold()
+                        DatePicker(
+                            "",
+                            selection: $datetimeValue,
+                            displayedComponents: [.date]
+                        )
+                        .labelsHidden()
+                        .datePickerStyle(.compact)
                     }
-                    .padding()
-                    .frame(width: 160, alignment: .leading) // Half of 300 width (timezone box) with little spacing
+                    .padding(.leading, 12)
+                    .padding(.vertical, 10)
+                    .frame(width: 175, alignment: .leading)
                     .background(Color.white)
                     .overlay(
                         RoundedRectangle(cornerRadius: 10)
@@ -120,17 +125,22 @@ struct InputTileDate: View {
                     )
                     .cornerRadius(10)
 
-                    HStack {
+                    // Time Picker Box
+                    HStack(spacing: 8) {
                         Image(systemName: "clock")
                             .foregroundColor(.black)
 
-                        Text(timeFormatter.string(from: datetimeValue))
-                            .foregroundColor(.black)
-                            .font(.body)
-                            //.bold()
+                        DatePicker(
+                            "",
+                            selection: $datetimeValue,
+                            displayedComponents: [.hourAndMinute]
+                        )
+                        .labelsHidden()
+                        .datePickerStyle(.compact)
                     }
-                    .padding()
-                    .frame(width: 140, alignment: .leading) // Same width as date box
+                    .padding(.leading, 12)
+                    .padding(.vertical, 10)
+                    .frame(width: 140, alignment: .leading)
                     .background(Color.white)
                     .overlay(
                         RoundedRectangle(cornerRadius: 10)
@@ -138,9 +148,11 @@ struct InputTileDate: View {
                     )
                     .cornerRadius(10)
                 }
-                .frame(width: 320)
-                .padding(.horizontal) // Only left and right padding
-                //.padding(.bottom)     // Padding only below
+                .frame(width: 335)
+                .padding(.horizontal)
+
+
+
 
                 Menu {
                     Picker("Time Zone", selection: $selectedTimeZone) {
@@ -176,7 +188,7 @@ struct InputTileDate: View {
                             .stroke(Color.black, lineWidth: 1)
                     )
                     .cornerRadius(10)
-                    .frame(width: 310, alignment: .leading)
+                    .frame(width: 335, alignment: .leading)
                     .padding(.horizontal)
                 }
                 
