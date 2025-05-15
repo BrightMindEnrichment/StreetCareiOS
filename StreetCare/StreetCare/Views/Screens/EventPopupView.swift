@@ -91,24 +91,33 @@ struct EventPopupView: View {
                         .padding(8)
                 }
                 
-                HStack {
-                    Image(systemName: "clock")
-                    if let date = event.date.2{
-                        Text("\(date)")
+                HStack(spacing: 6) {
+                    Image(systemName: "calendar")
+                        .foregroundColor(.black)
+
+                    VStack(alignment: .leading, spacing: 2) {
+                        let date = event.date.0 ?? ""
+                        let day = event.date.1 ?? ""
+                        let time = event.date.2 ?? ""
+                        let monthyear = event.monthYear
+
+                        Text("\(monthyear), \(day) \(date), \(time)")
                             .font(.system(size: 13))
                     }
                 }
+
+
                 
                 if event.event.consentStatus {
                     if let contact = event.event.contactNumber, !contact.isEmpty {
-                        HStack{
+                        HStack(spacing: 6){
                             Image(systemName: "phone")
                             Text(contact).font(.system(size: 13))
                         }
                     }
                     
                     if let emailAddress = event.event.emailAddress, !emailAddress.isEmpty {
-                        HStack{
+                        HStack(spacing: 6){
                             Image(systemName: "envelope")
                             Text(emailAddress).font(.system(size: 13))
                         }
@@ -123,7 +132,7 @@ struct EventPopupView: View {
                        let state = event.event.stateAbbv,
                        let zip = event.event.zipcode,
                        !street.isEmpty, !city.isEmpty, !state.isEmpty {
-                        HStack {
+                        HStack(spacing: 6){
                             Image(systemName: "mappin.and.ellipse")
                             Text("\(street), \(city), \(state) \(zip)")
                                 .font(.system(size: 13))
@@ -133,7 +142,7 @@ struct EventPopupView: View {
                     if let city = event.event.city,
                        let state = event.event.stateAbbv,
                        !city.isEmpty, !state.isEmpty {
-                        HStack {
+                        HStack(spacing: 6){
                             Image(systemName: "mappin.and.ellipse")
                             Text("\(city), \(state)").font(.system(size: 13))
                         }
@@ -277,6 +286,19 @@ struct EventPopupView: View {
     }
 }
 
+func formattedYear(_ date: Date?) -> String {
+    guard let date = date else { return "" }
+    let formatter = DateFormatter()
+    formatter.dateFormat = "yyyy"
+    return formatter.string(from: date)
+}
+
+func formattedTime(_ date: Date?) -> String {
+    guard let date = date else { return "" }
+    let formatter = DateFormatter()
+    formatter.timeStyle = .short // e.g., 3:00 PM
+    return formatter.string(from: date)
+}
 
 
 struct BottomSheetModifier<SheetContent: View>: ViewModifier {
