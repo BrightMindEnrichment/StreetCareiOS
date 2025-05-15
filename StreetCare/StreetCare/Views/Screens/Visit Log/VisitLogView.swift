@@ -13,18 +13,36 @@ struct VisitLogDetailRow: View {
     
     var title: String
     var detail: String
-    
+    var onEdit: (() -> Void)? = nil
+
     var body: some View {
         VStack {
-            Text(title)
-                .screenLeft()
-                .font(.system(size: 16.0)).bold()
-                .padding(EdgeInsets(top: 10.0, leading: 20.0, bottom: 0.0, trailing: 20.0))
-            
+            HStack {
+                Text(title)
+                    .screenLeft()
+                    .font(.system(size: 16.0)).bold()
+                    .padding(EdgeInsets(top: 10.0, leading: 20.0, bottom: 0.0, trailing: 20.0))
+                
+                Spacer()
+                
+                if let onEdit = onEdit {
+                    Button(action: onEdit) {
+                        Image("Tab-VisitLog-Inactive")
+                            .resizable()
+                            .frame(width: 16, height: 16)
+                            .foregroundColor(.gray)
+                    }
+                    .buttonStyle(BorderlessButtonStyle())
+                    .padding(.top, 10)
+                    .padding(.trailing, 20)
+                }
+            }
+
             Text(detail)
-                .screenLeft().font(.system(size: 15.0))
+                .screenLeft()
+                .font(.system(size: 15.0))
                 .padding(EdgeInsets(top: 10.0, leading: 20.0, bottom: 10.0, trailing: 20.0))
-            
+
             Rectangle()
                 .frame(width: 350.0, height: 2.0)
                 .foregroundColor(.gray)
@@ -78,39 +96,16 @@ struct VisitLogView: View {
                         .frame(width: 350, height: 300)
                 }
                 Spacer(minLength: 20.0)
+                
                 if log.peopleHelped > 0 {
-                    VStack(alignment: .leading) {
-                        HStack {
-                            Text("People helped")
-                                .font(.system(size: 16.0)).bold()
-                                .padding(EdgeInsets(top: 10.0, leading: 20.0, bottom: 0.0, trailing: 20.0))
-                            
-                            Button(action: {
-                                editedPeopleHelped = log.peopleHelped
-                                navigateToEdit = true
-                            }) {
-                                Image("Tab-VisitLog-Inactive")
-                                    .resizable()
-                                    .frame(width: 16, height: 16) 
-                                    .foregroundColor(.gray)
-                                    //.padding(6)
-                                    //.background(Circle().stroke(Color.gray, lineWidth: 1))
-                            }
-                            .buttonStyle(BorderlessButtonStyle())
+                    VisitLogDetailRow(
+                        title: "People helped",
+                        detail: "\(log.peopleHelped)",
+                        onEdit: {
+                            editedPeopleHelped = log.peopleHelped
+                            navigateToEdit = true
                         }
-                        //.padding(.horizontal, 10)
-                        //.padding(.top, 10)
-
-                        Text("\(log.peopleHelped)")
-                            .font(.system(size: 15.0))
-                            .padding(EdgeInsets(top: 10.0, leading: 20.0, bottom: 0.0, trailing: 20.0))
-                            //.padding(.horizontal, 20)
-                            //.padding(.bottom, 10)
-                        
-                        Rectangle()
-                            .frame(width: 350.0, height: 2.0)
-                            .foregroundColor(.gray)
-                    }
+                    )
 
                     NavigationLink(
                         destination: InputTileNumber(
@@ -134,13 +129,14 @@ struct VisitLogView: View {
                                 navigateToEdit = false
                             },
                             showProgressBar: false,
-                            buttonMode: .update 
+                            buttonMode: .update
                         ),
                         isActive: $navigateToEdit
                     ) {
                         EmptyView()
                     }
                 }
+
                 
                 if log.didProvideSpecificHelp {
                     VStack {
@@ -208,6 +204,78 @@ struct VisitLogView: View {
                     .onTapGesture {
                         showDeleteDialog = true
                     }
+                // Time spent on outreach
+                if log.durationHours > 0 || log.durationMinutes > 0 {
+                    VisitLogDetailRow(
+                        title: "Approximate time spent on outreach",
+                        detail: "\(log.durationHours) hours and \(log.durationMinutes) minutes"
+                    )
+                }
+
+                // Items donated
+                if log.itemQty > 0 {
+                    VisitLogDetailRow(
+                        title: "Items donated",
+                        detail: "\(log.itemQty)"
+                    )
+                }
+
+                // People who still need support
+                if log.peopleNeedFurtherHelp > 0 {
+                    VisitLogDetailRow(
+                        title: "People who still need support",
+                        detail: "\(log.peopleNeedFurtherHelp)"
+                    )
+                }
+
+                // Support they still need
+                if log.furtherfoodAndDrinks || log.furtherClothes || log.furtherHygine || log.furtherWellness || log.furtherOther {
+                    VStack {
+                        Text("Support they still need")
+                            .screenLeft()
+                            .font(.system(size: 16.0)).bold()
+                            .padding(EdgeInsets(top: 10.0, leading: 20.0, bottom: 0.0, trailing: 20.0))
+                        
+                        VStack {
+                            if log.furtherfoodAndDrinks {
+                                Text("Food & Drinks").screenLeft().padding(.horizontal, 20).font(.system(size: 15.0))
+                            }
+                            if log.furtherClothes {
+                                Text("Clothes").screenLeft().padding(.horizontal, 20).font(.system(size: 15.0))
+                            }
+                            if log.furtherHygine {
+                                Text("Hygiene Products").screenLeft().padding(.horizontal, 20).font(.system(size: 15.0))
+                            }
+                            if log.furtherWellness {
+                                Text("Wellness/Emotional Support").screenLeft().padding(.horizontal, 20).font(.system(size: 15.0))
+                            }
+                            if log.furtherOther && log.furtherOtherNotes.count > 0 {
+                                Text(log.furtherOtherNotes).screenLeft().padding(.horizontal, 20).font(.system(size: 15.0))
+                            }
+                        }
+                        
+                        Rectangle()
+                            .frame(width: 350.0, height: 2.0)
+                            .foregroundColor(.gray)
+                    }
+                }
+
+                // Planned follow-up date
+                if log.followUpWhenVisit != Date.distantPast {
+                    VisitLogDetailRow(
+                        title: "Planned follow-up date",
+                        detail: log.followUpWhenVisit.formatted(date: .abbreviated, time: .omitted)
+                    )
+                }
+
+                // Volunteer again
+                if log.volunteerAgain >= 0 {
+                    VisitLogDetailRow(
+                        title: "Would you like to volunteer again?",
+                        detail: log.volunteerAgain == 1 ? "Yes" :
+                                log.volunteerAgain == 2 ? "Maybe" : "No"
+                    )
+                }
             }
         }
         .onAppear {
