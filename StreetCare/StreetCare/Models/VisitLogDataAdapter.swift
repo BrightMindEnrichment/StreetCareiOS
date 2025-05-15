@@ -41,6 +41,16 @@ class VisitLogDataAdapter {
             }
         }
     }
+    func updateItemQty(_ logId: String, newValue: Int, completion: @escaping () -> Void) {
+        let db = Firestore.firestore()
+        db.collection("visitLogs").document(logId).updateData(["itemQty": newValue]) { error in
+            if error == nil {
+                completion()
+            } else {
+                print("⚠️ Error updating itemQty: \(error!.localizedDescription)")
+            }
+        }
+    }
     
     func addVisitLog(_ visitLog: VisitLog) {
     

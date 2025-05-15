@@ -75,6 +75,8 @@ struct VisitLogView: View {
     @State private var isEditingPeopleHelped = false
     @State private var editedPeopleHelped: Int = 0
     @State private var navigateToEdit = false
+    @State private var navigateToEditItems = false
+    @State private var editedItemQty: Int = 0
     
     func updatePeopleHelpedInFirestore(newValue: Int) {
         let adapter = VisitLogDataAdapter()
@@ -216,8 +218,47 @@ struct VisitLogView: View {
                 if log.itemQty > 0 {
                     VisitLogDetailRow(
                         title: "Items donated",
-                        detail: "\(log.itemQty)"
+                        detail: "\(log.itemQty)",
+                        onEdit: {
+                            editedItemQty = log.itemQty
+                            navigateToEditItems = true
+                        }
                     )
+
+                    NavigationLink(
+                        destination: InputTileNumber(
+                            questionNumber: 5,
+                            totalQuestions: 6,
+                            tileWidth: 300,
+                            tileHeight: 460,
+                            question1: "How many items",
+                            question2: "did you donate?",
+                            question3: "",
+                            question4: "",
+                            descriptionLabel: "",
+                            disclaimerText: "",
+                            placeholderText: "Enter notes here",
+                            number: $editedItemQty,
+                            nextAction: {
+                                let adapter = VisitLogDataAdapter()
+                                adapter.updateItemQty(log.id, newValue: editedItemQty) {
+                                    log.itemQty = editedItemQty
+                                    navigateToEditItems = false
+                                }
+                            },
+                            previousAction: {
+                                navigateToEditItems = false
+                            },
+                            skipAction: {
+                                navigateToEditItems = false
+                            },
+                            showProgressBar: false,
+                            buttonMode: .update
+                        ),
+                        isActive: $navigateToEditItems
+                    ) {
+                        EmptyView()
+                    }
                 }
 
                 // People who still need support
