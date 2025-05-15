@@ -89,8 +89,9 @@ struct VisitLogView: View {
                                 editedPeopleHelped = log.peopleHelped
                                 navigateToEdit = true
                             }) {
-                                Image(systemName: "pencil")
-                                    .font(.system(size: 20, weight: .medium)) // slightly larger
+                                Image("Tab-VisitLog-Inactive")
+                                    .resizable()
+                                    .frame(width: 16, height: 16) 
                                     .foregroundColor(.gray)
                                     //.padding(6)
                                     //.background(Circle().stroke(Color.gray, lineWidth: 1))
