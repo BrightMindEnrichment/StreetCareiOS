@@ -8,30 +8,23 @@
 import SwiftUI
 import MapKit
 
-
 struct VisitLogDetailRow: View {
-    
     var title: String
     var detail: String
-    
+
     var body: some View {
-        VStack {
+        VStack(alignment: .leading, spacing: 4) {
             Text(title)
-                .screenLeft()
-                .font(.system(size: 16.0)).bold()
-                .padding(EdgeInsets(top: 10.0, leading: 20.0, bottom: 0.0, trailing: 20.0))
-            
+                .font(.system(size: 16.0, weight: .semibold))
             Text(detail)
-                .screenLeft().font(.system(size: 15.0))
-                .padding(EdgeInsets(top: 10.0, leading: 20.0, bottom: 10.0, trailing: 20.0))
-            
-            Rectangle()
-                .frame(width: 350.0, height: 2.0)
-                .foregroundColor(.gray)
+                .font(.system(size: 15.0))
+                .foregroundColor(.secondary)
+            Divider()
         }
+        .padding(.horizontal)
+        .padding(.top, 12)
     }
 }
-
 
 struct MapLocation: Identifiable {
     let id = UUID()
@@ -42,7 +35,6 @@ struct MapLocation: Identifiable {
         CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
     }
 }
-
 
 struct VisitLogView: View {
     
@@ -57,123 +49,216 @@ struct VisitLogView: View {
     
     var body: some View {
         ScrollView {
-            VStack {
-                let location = log.whenVisit.formatted(date: .abbreviated, time: .omitted) + ", " + log.whereVisit
-                Text(location).font(.system(size: 17.0)).bold()
-                
-                if log.location.latitude != 0 {
-                    Map(coordinateRegion: $region, annotationItems: mapLocations) { location in
-                        MapMarker(coordinate: location.coordinate)
-                    }
-                        .frame(width: 350, height: 300)
-                }
-                Spacer(minLength: 20.0)
-                if log.peopleHelped > 0 {
-                    VisitLogDetailRow(title: "People helped", detail: "\(log.peopleHelped)")
-                }
-                
-                if log.didProvideSpecificHelp {
-                    VStack {
-                        Text("Type of help provided")
-                            .screenLeft()
-                            .font(.system(size: 16.0)).bold()
-                            .padding(EdgeInsets(top: 10.0, leading: 20.0, bottom: 0.0, trailing: 20.0)) 
-                        
-                        VStack {
-                            if log.foodAndDrinks {
-                                Text("Food & Drinks").screenLeft().padding(EdgeInsets(top: 10.0, leading: 20.0, bottom: 10.0, trailing: 20.0)).font(.system(size: 15.0))
-                            }
-                            
-                            if log.clothes {
-                                Text("Clothes").screenLeft().padding(EdgeInsets(top: 10.0, leading: 20.0, bottom: 10.0, trailing: 20.0)).font(.system(size: 15.0))
-                            }
-                            
-                            if log.hygine {
-                                Text("Hygiene Products").screenLeft().padding(EdgeInsets(top: 10.0, leading: 20.0, bottom: 10.0, trailing: 20.0)).font(.system(size: 15.0))
-                            }
-                            
-                            if log.wellness {
-                                Text("Wellness/Emotional Support").screenLeft().padding(EdgeInsets(top: 10.0, leading: 20.0, bottom: 10.0, trailing: 20.0)).font(.system(size: 15.0))
-                            }
-                            
-                            if log.other && log.otherNotes.count > 0 {
-                                Text(log.otherNotes).screenLeft().padding(EdgeInsets(top: 10.0, leading: 20.0, bottom: 10.0, trailing: 20.0)).font(.system(size: 15.0))
-                            }
-                        }
-                        
-                        Rectangle()
-                            .frame(width: 350.0, height: 2.0)
-                            .foregroundColor(.gray)
-                    }
-                }
-                
-                if log.rating > 0 {
-                    Text("Rate your outreach experience")
-                        .screenLeft()
-                        .font(.headline)
-                        .padding(EdgeInsets(top: 10.0, leading: 20.0, bottom: 0.0, trailing: 20.0))
-                    
-                    RatingView(rating: $log.rating, readOnly: true)
-                        .padding(EdgeInsets(top: 10.0, leading: 20.0, bottom: 10.0, trailing: 20.0))
-                    
-                    Rectangle()
-                        .frame(width: 350.0, height: 2.0)
-                        .foregroundColor(.gray)
-                }
-                
-
-//                if log.durationHours > 0 || log.durationMinutes > 0 {
-//                    VisitLogDetailRow(title: "Approximate time spent on outreach?", detail: "\(log.durationHours) hours and \(log.durationMinutes) minutes")
-//                }
-                
-                
-                if log.numberOfHelpers > 0 {
-                    VisitLogDetailRow(title: "How many people joined or helped you prepare?", detail: "\(log.numberOfHelpers)")
-                }
-
-                // VisitLogDetailRow(title: "Would you like to volunteer again?", detail: "\(log.volunteerAgainText)")
-                
-                NavLinkButton(title: "Delete Log", width: 190.0, secondaryButton: true, noBorder: false, color: Color.red)
-                    .padding()
-                    .onTapGesture {
-                        showDeleteDialog = true
-                    }
+            VStack(alignment: .leading, spacing: 12) {
+                headerSection
+                coreDetailsSection
+                supportSection
+                feedbackSection
+                actionButtonsSection
             }
         }
         .onAppear {
             if log.location.latitude != 0 {
-                print("📍 Updated Location in view is: \(log.location.latitude), \(log.location.longitude)")
                 region = MKCoordinateRegion(center: log.location, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
                 mapLocations = [MapLocation(name: "Help", latitude: log.location.latitude, longitude: log.location.longitude)]
             }
         }
         .alert("Delete visit log?", isPresented: $showDeleteDialog) {
-            Button("OK", role: .destructive)
-            {
+            Button("OK", role: .destructive) {
                 let adapter = VisitLogDataAdapter()
                 adapter.deleteVisitLog(self.log.id) {
                     presentation.wrappedValue.dismiss()
                 }
             }
+            Button("Cancel", role: .cancel) {}
+        }
+        .navigationTitle("Visit Log")
+    }
+    
+    private var headerSection: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            Text("Interaction Details")
+                .font(.title3).bold()
+                .padding(.horizontal)
             
-            Button("Cancel", role: .cancel) {
-                showDeleteDialog = false
+            if log.location.latitude != 0 {
+                Map(coordinateRegion: $region, annotationItems: mapLocations) { location in
+                    MapMarker(coordinate: location.coordinate)
+                }
+                .frame(height: 250)
+                .cornerRadius(12)
+                .padding(.horizontal)
             }
         }
-        .navigationTitle("Interaction Log")
-    } // end body
+    }
     
+    private var coreDetailsSection: some View {
+        Group {
+            VisitLogDetailRow(title: "When was your Interaction?", detail: "\(log.whenVisit.formatted(date: .abbreviated, time: .shortened))")
+            VisitLogDetailRow(title: "Where was your Interaction?", detail: log.whereVisit)
+            VisitLogDetailRow(title: "Describe who you supported and how many individuals were involved.", detail: "\(log.peopleHelped)")
+            
+            if !log.peopleHelpedDescription.isEmpty {
+                VisitLogDetailRow(title: "Description", detail: log.peopleHelpedDescription)
+            }
+        }
+    }
     
-} // end struct
-
+    private var supportSection: some View {
+        Group {
+            if log.didProvideSpecificHelp {
+                VisitLogDetailRow(
+                    title: "What kind of support did you provide?",
+                    detail: [
+                        log.foodAndDrinks ? "Food & Drinks" : nil,
+                        log.clothes ? "Clothes" : nil,
+                        log.hygine ? "Hygiene Products" : nil,
+                        log.wellness ? "Wellness / Emotional Support" : nil,
+                        log.medical ? "Medical Help / Doctor" : nil,
+                        log.socialworker ? "Social Worker / Psychiatrist" : nil,
+                        log.legal ? "Lawyer / Legal" : nil,
+                        log.other ? log.otherNotes : nil
+                    ].compactMap { $0 }.joined(separator: ", ")
+                )
+            }
+            
+            VisitLogDetailRow(title: "How many items did you donate?", detail: "\(log.itemQty)")
+            
+            if !log.otherNotes.isEmpty {
+                VisitLogDetailRow(title: "Notes", detail: log.otherNotes)
+            }
+        }
+    }
+    
+    private var feedbackSection: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            
+            if log.rating > 0 {
+                                Text("Rate your outreach experience")
+                                    .screenLeft()
+                                    .font(.headline)
+                                    .padding(EdgeInsets(top: 10.0, leading: 20.0, bottom: 0.0, trailing: 20.0))
+                                
+                                RatingView(rating: $log.rating, readOnly: true)
+                                    .padding(EdgeInsets(top: 10.0, leading: 20.0, bottom: 10.0, trailing: 20.0))
+                                
+                                Rectangle()
+                                    .frame(width: 350.0, height: 2.0)
+                                    .foregroundColor(.gray)
+                            }
+            
+            if log.durationHours > 0 || log.durationMinutes > 0 {
+                VisitLogDetailRow(
+                    title: "How much time did you spend?",
+                    detail: "\(log.durationHours) hrs \(log.durationMinutes) min"
+                )
+            }
+            
+            if log.numberOfHelpers > 0 {
+                VisitLogDetailRow(
+                    title: "Who helped you prepare or join?",
+                    detail: "\(log.numberOfHelpers) people"
+                )
+            }
+            
+            if log.peopleNeedFurtherHelp > 0 {
+                VisitLogDetailRow(
+                    title: "How many people still need support?",
+                    detail: "\(log.peopleNeedFurtherHelp)"
+                )
+            }
+            
+            if !log.stillNeedHelpDescription.isEmpty {
+                VisitLogDetailRow(
+                    title: "Describe their needs",
+                    detail: log.stillNeedHelpDescription
+                )
+            }
+            
+            if log.furtherfoodAndDrinks || log.furtherClothes || log.furtherHygine || log.furtherWellness || log.furtherOther {
+                VisitLogDetailRow(
+                    title: "What kind of support do they still need?",
+                    detail: [
+                        log.furtherfoodAndDrinks ? "Food & Drinks" : nil,
+                        log.furtherClothes ? "Clothes" : nil,
+                        log.furtherHygine ? "Hygiene Products" : nil,
+                        log.furtherWellness ? "Wellness / Emotional Support" : nil,
+                        log.furtherOther ? log.furtherOtherNotes : nil
+                    ].compactMap { $0 }.joined(separator: ", ")
+                )
+            }
+            
+            if !log.futureNotes.isEmpty {
+                VisitLogDetailRow(
+                    title: "Is there anything future volunteers should know?",
+                    detail: log.futureNotes
+                )
+            }
+            
+            if log.followUpWhenVisit != Date.distantPast {
+                VisitLogDetailRow(
+                    title: "Planned date to interact again",
+                    detail: log.followUpWhenVisit.formatted(date: .abbreviated, time: .shortened)
+                )
+            }
+            
+            VisitLogDetailRow(
+                title: "Would you like to volunteer again?",
+                detail: log.volunteerAgainText
+            )
+        }
+    }
+    private var actionButtonsSection: some View {
+        Group {
+            HStack(spacing: 12) {
+                Button("Edit") {
+                    // TODO: Handle Edit Action
+                }
+                .foregroundColor(Color("PrimaryColor"))
+                .frame(maxWidth: .infinity, minHeight: 44)
+                .font(.caption)
+                .fontWeight(.bold)
+                .background(
+                    Capsule().fill(Color("SecondaryColor"))
+                )
+                .padding(.horizontal, 6)
+                
+                Button("Delete") {
+                    showDeleteDialog = true
+                }
+                .foregroundColor(Color("PrimaryColor"))
+                .frame(maxWidth: .infinity, minHeight: 44)
+                .font(.caption)
+                .fontWeight(.bold)
+                .background(
+                    Capsule().fill(Color("SecondaryColor"))
+                )
+                .padding(.horizontal, 6)
+            }
+            .padding(.horizontal)
+            
+            Button("Share with Community") {
+                // TODO: Handle Share Action
+            }
+            .foregroundColor(Color.black)
+            .frame(maxWidth: .infinity, minHeight: 44)
+            .font(.caption)
+            .fontWeight(.bold)
+            .background(
+                Capsule().fill(Color.white)
+            )
+            .overlay(
+                Capsule().stroke(Color("SecondaryColor"), lineWidth: 2)
+            )
+            .padding(.horizontal)
+            .padding(.top, 4)
+        }
+    }
+}
 struct VisitLogView_Previews: PreviewProvider {
-    
     static var log = VisitLog(id: "123456")
-    
+
     static var previews: some View {
         VisitLogView(log: log)
-            .onAppear {
-                log.whereVisit = "under a bridge"
-            }
     }
 }

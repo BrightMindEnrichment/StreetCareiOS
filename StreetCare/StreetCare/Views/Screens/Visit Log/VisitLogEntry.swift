@@ -18,232 +18,258 @@ struct VisitLogEntry: View {
     @State var totalQuestions = 6
     @State private var selectedLocation = CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0)
     
-    @StateObject var visitLog = VisitLog(id: UUID().uuidString)  
+    @StateObject var visitLog = VisitLog(id: UUID().uuidString)
     
     var currentUser = Auth.auth().currentUser
     @State var isLoading = false
-    @State var isComplete = false
-    @State private var volunteerAgain: Int = -1
     
     
     var body: some View {
-        NavigationStack {
-            VStack {
-                
-                if !isComplete{
+            NavigationStack {
+                VStack {
+                    
                     Text("Log Your Interaction")
                         .font(.title)
                         .fontWeight(.bold)
                         .padding()
-                }
-                                
-                switch questionNumber {
-                case 1:
-                    InputTileDate(questionNumber: 1, totalQuestions: 6, question1: "When was your",question2: "Interaction?",question3: "", showSkip: false,  datetimeValue: $visitLog.whenVisit) {
-                        questionNumber += 1
-                    } skipAction: {
-                        questionNumber += 1
-                    } previousAction: {
-                        questionNumber -= 1
-                    }
                     
-                case 2:
-                    InputTileLocation(
-                        questionNumber: 2,
-                        totalQuestions: 6,
-                        question1: "Where was your" , question2: "Interaction?",
-                        textValue: Binding(
-                            get: { visitLog.whereVisit },
-                            set: { newValue in
-                                visitLog.whereVisit = newValue // ✅ Updates whereVisit
-                                print("📍 Updated visitLog.whereVisit: \(visitLog.whereVisit)")
-                            }
-                        ),
-                        location: Binding(
-                            get: { visitLog.location }, // ✅ Ensure visitLog.location updates
-                            set: { newValue in
-                                visitLog.location = newValue
-                                print("📍 Updated visitLog.location: \(visitLog.location.latitude), \(visitLog.location.longitude)")
-                            }
-                        )
-                    ) {
-                        questionNumber += 1
-                    } previousAction: {
-                        questionNumber -= 1
-                    } skipAction: {
-                        questionNumber += 1
-                    }
-                    
-                case 3:
-                    InputTileNumber(questionNumber: 3, totalQuestions: 6, tileWidth: 300, tileHeight: 560, question1: "Describe who you" , question2: "supported and how",question3: "many individuals",question4: "were involved.",descriptionLabel: "Description", disclaimerText: NSLocalizedString("disclaimer", comment: ""), placeholderText: NSLocalizedString("peopledescription", comment: ""), number: $visitLog.peopleHelped) {
-                        questionNumber += 1
-                    } previousAction: {
-                        questionNumber -= 1
-                    } skipAction: {
-                        questionNumber += 1
-                    }
-                    
-                case 4:
-                    InputTileList(
-                        questionNumber: 4,
-                        totalQuestions: 6,
-                        question1: "What kind of support",
-                        question2: "did you provide?",
-                        foodAndDrinks: $visitLog.foodAndDrinks,
-                        clothes: $visitLog.clothes,
-                        hygine: $visitLog.hygine,
-                        wellness: $visitLog.wellness,
-                        medical: $visitLog.medical,
-                        socialworker: $visitLog.socialworker,
-                        legal: $visitLog.legal,
-                        other: $visitLog.other,
-                        otherNotes: $visitLog.otherNotes
-                    ) {
-                        questionNumber += 1
-                    } previousAction: {
-                        questionNumber -= 1
-                    } skipAction: {
-                        questionNumber += 1
-                    }
-                
-                case 5:
-                    InputTileNumber(questionNumber: 5, totalQuestions: 6, tileWidth: 300, tileHeight: 460, question1: "How many items" , question2: "did you donate?", question3:"", question4:"", descriptionLabel: "", disclaimerText: "", placeholderText: "Enter notes here", number: $visitLog.itemQty) {
-                        questionNumber += 1
-                    } previousAction: {
-                        questionNumber -= 1
-                    } skipAction: {
-                        questionNumber += 1
-                    }
-                case 6:
-                    InputTileRate(questionNumber: 6, totalQuestions: 6, question1: "How would you rate your", question2: "outreach experience?", textValue: $visitLog.ratingNotes, rating: $visitLog.rating) {
-                        questionNumber += 1
-                    } previousAction: {
-                        questionNumber -= 1
-                    } skipAction: {
-                        questionNumber += 1
-                    }
-
-                case 7:
-                    
-                    InputTileMoreQuestions(question1: "Would you like to" , question2: "answer a few more", question3:"questions?", questionNumber: 6, totalQuestions: 6) {
-                        saveVisitLog()
-                        questionNumber = 100
-                    } skipAction: {
-                        questionNumber -= 1
-                    } yesAction: {
-                        questionNumber += 1
-                    } noAction: {
-                        saveVisitLog()
-                        isComplete = true
-                        questionNumber = 100
-                    }
-                  case 8:
-                    InputTileDuration(
-                        questionNumber: 1,
-                        totalQuestions: 7,
-                        tileWidth: 360,
-                        tileHeight: 361,
-                        questionLine1: "How much time did",
-                        questionLine2: "you spend on the",
-                        questionLine3: "outreach?",
-                        hours: $visitLog.durationHours, minutes: $visitLog.durationMinutes
-                    ) {
-                        questionNumber += 1
-                    } previousAction: {
-                        questionNumber -= 1
-                    } skipAction: {
-                        questionNumber += 1
-                    }
-                    
-                case 9:
-                    InputTileNumber(questionNumber: 2, totalQuestions: 7, tileWidth: 360, tileHeight: 326, question1: "Who helped you" , question2: "prepared or joined",question3: "",question4: "", number: $visitLog.numberOfHelpers) {
-                        questionNumber += 1
-                    } previousAction: {
-                        questionNumber -= 1
-                    } skipAction: {
-                        questionNumber += 1
-                    }
-                    
-                case 10:
-                    InputTileNumber(questionNumber: 3, totalQuestions: 7, tileWidth: 360, tileHeight: 467, question1: "How many people" , question2: "still need support?", question3: "", question4: "", descriptionLabel: "Description", disclaimerText: "", placeholderText: NSLocalizedString("peopledescription", comment: ""), number: $visitLog.peopleNeedFurtherHelp) {
-                        questionNumber += 1
-                    } previousAction: {
-                        questionNumber -= 1
-                    } skipAction: {
-                        questionNumber += 1
-                    }
-                case 11:
-                    InputTileList(
-                        questionNumber: 4,
-                        totalQuestions: 7,
-                        question1: "What kind of support",
-                        question2: "do they still need?",
-                        foodAndDrinks: $visitLog.furtherfoodAndDrinks,
-                        clothes: $visitLog.furtherClothes,
-                        hygine: $visitLog.furtherHygine,
-                        wellness: $visitLog.furtherWellness,
-                        medical: $visitLog.medical,
-                        socialworker: $visitLog.socialworker,
-                        legal: $visitLog.legal,
-                        other: $visitLog.furtherOther,
-                        otherNotes: $visitLog.furtherOtherNotes
-                    ) {
-                        questionNumber += 1
-                    } previousAction: {
-                        questionNumber -= 1
-                    } skipAction: {
-                        questionNumber += 1
-                    }
-                case 14:
-                    InputTileVolunteerAgain(questionNumber: 7, totalQuestions: 7, question1: "Would you like to", question2: "volunteer again?", volunteerAgain: $visitLog.volunteerAgain) {
-                        saveVisitLog()
-                        isComplete = true
-                        questionNumber = 100
-                    } previousAction: {
-                        questionNumber -= 1
-                    } skipAction: {
-                        saveVisitLog()
-                        isComplete = true
-                        questionNumber = 100
-                    }
-                case 12:
-                    InputTileDate(questionNumber: 5, totalQuestions: 7, question1: "Is there a planned date",question2: "to interact with them", question3: "again?", showSkip: true, datetimeValue: $visitLog.followUpWhenVisit) {
-                        questionNumber += 1
-                    } skipAction: {
-                        questionNumber += 1
-                    } previousAction: {
-                        questionNumber -= 1
-                    }
-                    
-                case 13:
-                    InputTileNotes(questionNumber: 6, totalQuestions: 7,tileWidth: 300, tileHeight: 380, question1: "Is there anything future",question2: "volunteers should", question3: "know?", placeholderText: "Enter notes here", otherNotes: $visitLog.furtherOtherNotes) {
-                        questionNumber += 1
-                    } previousAction: {
-                        questionNumber -= 1
-                    } skipAction: {
-                        saveVisitLog()
-                        questionNumber += 1
-                    }
-                    
+                    switch questionNumber {
+                    // MARK: — Core 6 Questions
+                    case 1:
+                        InputTileDate(questionNumber: 1, totalQuestions: 6, question1: "When was your",question2: "Interaction?",question3: "", showSkip: false,  datetimeValue: $visitLog.whenVisit) {
+                                               questionNumber += 1
+                                           } skipAction: {
+                                               questionNumber += 1
+                                           } previousAction: {
+                                               questionNumber -= 1
+                                           }
+                        
+                    case 2:
+                        InputTileLocation(
+                            questionNumber: 2, totalQuestions: totalQuestions,
+                            question1: "Where was your", question2: "Interaction?",
+                            textValue: $visitLog.whereVisit,
+                            location: $visitLog.location
+                        ) {
+                            questionNumber += 1
+                        } previousAction: {
+                            questionNumber -= 1
+                        } skipAction: {
+                            questionNumber += 1
+                        }
+                        
+                    case 3:
+                        InputTileNumber(
+                            questionNumber: 3, totalQuestions: totalQuestions,
+                            tileWidth: 300, tileHeight: 560,
+                            question1: "Describe who you", question2: "supported and how",
+                            question3: "many individuals", question4: "were involved.",
+                            descriptionLabel: "Description",
+                            disclaimerText: NSLocalizedString("disclaimer", comment: ""),
+                            placeholderText: NSLocalizedString("peopledescription", comment: ""),
+                            number: $visitLog.peopleHelped
+                        ) {
+                            questionNumber += 1
+                        } previousAction: {
+                            questionNumber -= 1
+                        } skipAction: {
+                            questionNumber += 1
+                        }
+                        
+                    case 4:
+                        InputTileList(
+                            questionNumber: 4, totalQuestions: totalQuestions,
+                            question1: "What kind of support", question2: "did you provide?",
+                            foodAndDrinks: $visitLog.foodAndDrinks,
+                            clothes:         $visitLog.clothes,
+                            hygine:          $visitLog.hygine,
+                            wellness:        $visitLog.wellness,
+                            medical:         $visitLog.medical,
+                            socialworker:    $visitLog.socialworker,
+                            legal:           $visitLog.legal,
+                            other:           $visitLog.other,
+                            otherNotes:      $visitLog.otherNotes
+                        ) {
+                            questionNumber += 1
+                        } previousAction: {
+                            questionNumber -= 1
+                        } skipAction: {
+                            questionNumber += 1
+                        }
+                        
+                    case 5:
+                        InputTileNumber(
+                            questionNumber: 5, totalQuestions: totalQuestions,
+                            tileWidth: 300, tileHeight: 480,
+                            question1: "How many items", question2: "did you donate?",
+                            question3: "", question4: "",
+                            descriptionLabel: "", disclaimerText: "",
+                            placeholderText: "Enter notes here",
+                            number: $visitLog.itemQty
+                        ) {
+                            questionNumber += 1
+                        } previousAction: {
+                            questionNumber -= 1
+                        } skipAction: {
+                            questionNumber += 1
+                        }
+                        
+                    case 6:
+                        InputTileRate(
+                            questionNumber: 6, totalQuestions: totalQuestions,
+                            question1: "How would you rate your", question2: "outreach experience?",
+                            textValue: $visitLog.ratingNotes,
+                            rating: $visitLog.rating
+                        ) {
+                            questionNumber += 1
+                        } previousAction: {
+                            questionNumber -= 1
+                        } skipAction: {
+                            questionNumber += 1
+                        }
+                        
+                    // MARK: — “More Questions?” Gate
+                    case 7:
+                        InputTileMoreQuestions(
+                            question1: "Would you like to", question2: "answer a few more", question3: "questions?",
+                            questionNumber: totalQuestions, totalQuestions: totalQuestions
+                        ) {
+                            // User said “Yes”
+                            // switch into the 7-question follow-up flow
+                            questionNumber = 8
+                        } skipAction: {
+                            // User said “Skip/No” → jump straight to Done
+                            questionNumber = 100
+                        } yesAction: {
+                            questionNumber = 8
+                        } noAction: {
+                            questionNumber = 100
+                        }
+                        
+                    // MARK: — Follow-Up Flow (7 questions)
+                    case 8:
+                        InputTileDuration(
+                                               questionNumber: 1,
+                                               totalQuestions: 7,
+                                               tileWidth: 360,
+                                               tileHeight: 361,
+                                               questionLine1: "How much time did",
+                                               questionLine2: "you spend on the",
+                                               questionLine3: "outreach?",
+                                               hours: $visitLog.durationHours, minutes: $visitLog.durationMinutes
+                                           ) {
+                                               questionNumber += 1
+                                           } previousAction: {
+                                               questionNumber -= 1
+                                           } skipAction: {
+                                               questionNumber += 1
+                                           }
+                        
+                    case 9:
+                        InputTileNumber(
+                            questionNumber: 2, totalQuestions: 7,
+                            tileWidth: 300, tileHeight: 490,
+                            question1: "Who helped you", question2: "prepare or join?",
+                            question3: "", question4: "",
+                            descriptionLabel: "", disclaimerText: "",
+                            placeholderText: "",
+                            number: $visitLog.numberOfHelpers
+                        ) {
+                            questionNumber += 1
+                        } previousAction: {
+                            questionNumber -= 1
+                        } skipAction: {
+                            questionNumber += 1
+                        }
+                        
+                    case 10:
+                        InputTileNumber(
+                            questionNumber: 3, totalQuestions: 7,
+                            tileWidth: 300, tileHeight: 490,
+                            question1: "How many people", question2: "still need support?",
+                            question3: "", question4: "",
+                            descriptionLabel: "", disclaimerText: "",
+                            placeholderText: "",
+                            number: $visitLog.peopleNeedFurtherHelp
+                        ) {
+                            questionNumber += 1
+                        } previousAction: {
+                            questionNumber -= 1
+                        } skipAction: {
+                            questionNumber += 1
+                        }
+                        
+                    case 11:
+                        InputTileList(
+                            questionNumber: 4, totalQuestions: 7,
+                            question1: "What kind of support", question2: "do they still need?",
+                            foodAndDrinks: $visitLog.furtherfoodAndDrinks,
+                            clothes:       $visitLog.furtherClothes,
+                            hygine:        $visitLog.furtherHygine,
+                            wellness:      $visitLog.furtherWellness,
+                            medical:       $visitLog.medical,
+                            socialworker:  $visitLog.socialworker,
+                            legal:         $visitLog.legal,
+                            other:         $visitLog.furtherOther,
+                            otherNotes:    $visitLog.furtherOtherNotes
+                        ) {
+                            questionNumber += 1
+                        } previousAction: {
+                            questionNumber -= 1
+                        } skipAction: {
+                            questionNumber += 1
+                        }
+                        
+                    case 13:
+                        InputTileNotes(questionNumber: 6, totalQuestions: 7,tileWidth: 300, tileHeight: 490, question1: "Is there anything future",question2: "volunteers should", question3: "know?", placeholderText: "Enter notes here", otherNotes: $visitLog.futureNotes) {
+                                                questionNumber += 1
+                                            } previousAction: {
+                                                questionNumber -= 1
+                                            } skipAction: {
+                                                saveVisitLog()
+                                                questionNumber += 1
+                                            }
+                        
+                    case 12:
+                        InputTileDate(questionNumber: 5, totalQuestions: 7, question1: "Is there a planned date",question2: "to interact with them", question3: "again?", showSkip: true, datetimeValue: $visitLog.followUpWhenVisit
+                        ) {
+                            saveVisitLog()
+                            questionNumber += 1
+                        } skipAction: {
+                            saveVisitLog()
+                            questionNumber += 1
+                        } previousAction: {
+                            questionNumber -= 1
+                        }
+                        
+                    case 14:
+                        InputTileVolunteerAgain(questionNumber: 7, totalQuestions: 7, question1: "Would you like to", question2: "volunteer again?", volunteerAgain: $visitLog.volunteerAgain
+                        ) {
+                            saveVisitLog()
+                            questionNumber = 100
+                        } previousAction: {
+                            questionNumber -= 1
+                        } skipAction: {
+                            saveVisitLog()
+                            questionNumber = 100
+                        }
                 case 100:
-                    InputTileComplete() {
-                        //saveVisitLog() // Regular save
-                        presentation.wrappedValue.dismiss()
-                    } shareAction: {
-                        //saveVisitLog()
-                        saveVisitLog_Community() // Save for community
-                    }
-                    
+                                   InputTileComplete() {
+                                       //saveVisitLog() // Regular save
+                                       presentation.wrappedValue.dismiss()
+                                   } shareAction: {
+                                       //saveVisitLog()
+                                       saveVisitLog_Community() // Save for community
+                                   }
                 default:
                     Text("An error has occured")
-                }                
+                }
             }
             .onAppear {
                 questionNumber = 1
-                
+
                 if currentUser == nil {
                     self.isLoading = true
-                    
                     Auth.auth().signInAnonymously { result, error in
                         print("signed in anon")
                         self.isLoading = false
@@ -251,9 +277,8 @@ struct VisitLogEntry: View {
                 }
             }
         }.navigationTitle("Interaction Log")
-    } // end body
+    }
      
-    
     func saveVisitLog() {
         let adapter = VisitLogDataAdapter()
         adapter.addVisitLog(self.visitLog)
@@ -261,10 +286,8 @@ struct VisitLogEntry: View {
     
     func saveVisitLog_Community() {
         let adapter = VisitLogDataAdapter()
-        //adapter.addVisitLog(self.visitLog)
         adapter.addVisitLog_Community(self.visitLog)
     }
-    
 } // end struct
 
 struct VisitLogEntry_Previews: PreviewProvider {
