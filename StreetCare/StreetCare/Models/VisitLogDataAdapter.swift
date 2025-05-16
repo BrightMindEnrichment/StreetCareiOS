@@ -43,7 +43,7 @@ class VisitLogDataAdapter {
     }
     func updateItemQty(_ logId: String, newValue: Int, completion: @escaping () -> Void) {
         let db = Firestore.firestore()
-        db.collection("visitLogs").document(logId).updateData(["itemQty": newValue]) { error in
+        db.collection("VisitLogBook").document(logId).updateData(["itemQty": newValue]) { error in
             if error == nil {
                 completion()
             } else {
@@ -68,6 +68,7 @@ class VisitLogDataAdapter {
         userData["whereVisit"] = visitLog.whereVisit
         userData["whenVisit"] = visitLog.whenVisit
         userData["peopleHelped"] = visitLog.peopleHelped
+        userData["itemQty"] = visitLog.itemQty
         userData["foodAndDrinks"] = visitLog.foodAndDrinks
         userData["clothes"] = visitLog.clothes
         userData["hygine"] = visitLog.hygine
@@ -345,6 +346,10 @@ class VisitLogDataAdapter {
 
                     if let otherNotes = document["otherNotes"] as? String {
                         log.otherNotes = otherNotes
+                    }
+                    
+                    if let itemQty = document["itemQty"] as? Int {
+                        log.itemQty = itemQty
                     }
 
                     if let rating = document["rating"] as? Int {

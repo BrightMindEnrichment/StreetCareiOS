@@ -88,8 +88,6 @@ struct VisitLogView: View {
     var body: some View {
         ScrollView {
             VStack {
-                let location = log.whenVisit.formatted(date: .abbreviated, time: .omitted) + ", " + log.whereVisit
-                Text(location).font(.system(size: 17.0)).bold()
                 
                 if log.location.latitude != 0 {
                     Map(coordinateRegion: $region, annotationItems: mapLocations) { location in
@@ -99,9 +97,20 @@ struct VisitLogView: View {
                 }
                 Spacer(minLength: 20.0)
                 
+                VisitLogDetailRow(
+                    title: "When was your Interaction?",
+                    detail: "\(log.whenVisit)")
+                
+                /*let location = log.whenVisit.formatted(date: .abbreviated, time: .omitted) + ", " + log.whereVisit
+                Text(location).font(.system(size: 17.0)).bold()*/
+                
+                VisitLogDetailRow(
+                    title: "Where was your Interaction?",
+                    detail: "\(log.whereVisit)")
+                
                 if log.peopleHelped > 0 {
                     VisitLogDetailRow(
-                        title: "People helped",
+                        title: "Describe who you supported and how many individuals were involved.",
                         detail: "\(log.peopleHelped)",
                         onEdit: {
                             editedPeopleHelped = log.peopleHelped
@@ -142,7 +151,7 @@ struct VisitLogView: View {
                 
                 if log.didProvideSpecificHelp {
                     VStack {
-                        Text("Type of help provided")
+                        Text("What kind of support did you provide?")
                             .screenLeft()
                             .font(.system(size: 16.0)).bold()
                             .padding(EdgeInsets(top: 10.0, leading: 20.0, bottom: 0.0, trailing: 20.0)) 
@@ -168,56 +177,15 @@ struct VisitLogView: View {
                                 Text(log.otherNotes).screenLeft().padding(EdgeInsets(top: 10.0, leading: 20.0, bottom: 10.0, trailing: 20.0)).font(.system(size: 15.0))
                             }
                         }
-                        
                         Rectangle()
                             .frame(width: 350.0, height: 2.0)
                             .foregroundColor(.gray)
                     }
                 }
-                
-                if log.rating > 0 {
-                    Text("Rate your outreach experience")
-                        .screenLeft()
-                        .font(.headline)
-                        .padding(EdgeInsets(top: 10.0, leading: 20.0, bottom: 0.0, trailing: 20.0))
-                    
-                    RatingView(rating: $log.rating, readOnly: true)
-                        .padding(EdgeInsets(top: 10.0, leading: 20.0, bottom: 10.0, trailing: 20.0))
-                    
-                    Rectangle()
-                        .frame(width: 350.0, height: 2.0)
-                        .foregroundColor(.gray)
-                }
-                
-
-//                if log.durationHours > 0 || log.durationMinutes > 0 {
-//                    VisitLogDetailRow(title: "Approximate time spent on outreach?", detail: "\(log.durationHours) hours and \(log.durationMinutes) minutes")
-//                }
-                
-                
-                if log.numberOfHelpers > 0 {
-                    VisitLogDetailRow(title: "How many people joined or helped you prepare?", detail: "\(log.numberOfHelpers)")
-                }
-
-                // VisitLogDetailRow(title: "Would you like to volunteer again?", detail: "\(log.volunteerAgainText)")
-                
-                NavLinkButton(title: "Delete Log", width: 190.0, secondaryButton: true, noBorder: false, color: Color.red)
-                    .padding()
-                    .onTapGesture {
-                        showDeleteDialog = true
-                    }
-                // Time spent on outreach
-                if log.durationHours > 0 || log.durationMinutes > 0 {
-                    VisitLogDetailRow(
-                        title: "Approximate time spent on outreach",
-                        detail: "\(log.durationHours) hours and \(log.durationMinutes) minutes"
-                    )
-                }
-
                 // Items donated
                 if log.itemQty > 0 {
                     VisitLogDetailRow(
-                        title: "Items donated",
+                        title: "How many items did you donate?",
                         detail: "\(log.itemQty)",
                         onEdit: {
                             editedItemQty = log.itemQty
@@ -260,11 +228,35 @@ struct VisitLogView: View {
                         EmptyView()
                     }
                 }
+                
+                if log.rating > 0 {
+                    Text("How would you rate your outreach experience?")
+                        .screenLeft()
+                        .font(.headline)
+                        .padding(EdgeInsets(top: 10.0, leading: 20.0, bottom: 0.0, trailing: 20.0))
+                    
+                    RatingView(rating: $log.rating, readOnly: true)
+                        .padding(EdgeInsets(top: 10.0, leading: 20.0, bottom: 10.0, trailing: 20.0))
+                    
+                    Rectangle()
+                        .frame(width: 350.0, height: 2.0)
+                        .foregroundColor(.gray)
+                }
+                if log.durationHours > 0 || log.durationMinutes > 0 {
+                    VisitLogDetailRow(title: "How much time did you spend on the outreach?", detail: "\(log.durationHours) hours and \(log.durationMinutes) minutes")
+                }
+                
+                if log.numberOfHelpers > 0 {
+                    VisitLogDetailRow(title: "Who helped you prepare or joined?", detail: "\(log.numberOfHelpers)")
+                }
+
+                // VisitLogDetailRow(title: "Would you like to volunteer again?", detail: "\(log.volunteerAgainText)")
+                
 
                 // People who still need support
                 if log.peopleNeedFurtherHelp > 0 {
                     VisitLogDetailRow(
-                        title: "People who still need support",
+                        title: "How many people still need support?",
                         detail: "\(log.peopleNeedFurtherHelp)"
                     )
                 }
@@ -272,7 +264,7 @@ struct VisitLogView: View {
                 // Support they still need
                 if log.furtherfoodAndDrinks || log.furtherClothes || log.furtherHygine || log.furtherWellness || log.furtherOther {
                     VStack {
-                        Text("Support they still need")
+                        Text("What kind of support do they still need?")
                             .screenLeft()
                             .font(.system(size: 16.0)).bold()
                             .padding(EdgeInsets(top: 10.0, leading: 20.0, bottom: 0.0, trailing: 20.0))
@@ -304,7 +296,7 @@ struct VisitLogView: View {
                 // Planned follow-up date
                 if log.followUpWhenVisit != Date.distantPast {
                     VisitLogDetailRow(
-                        title: "Planned follow-up date",
+                        title: "Is there a planned date to interact with them again?",
                         detail: log.followUpWhenVisit.formatted(date: .abbreviated, time: .omitted)
                     )
                 }
@@ -317,6 +309,12 @@ struct VisitLogView: View {
                                 log.volunteerAgain == 2 ? "Maybe" : "No"
                     )
                 }
+                
+                NavLinkButton(title: "Delete Log", width: 190.0, secondaryButton: true, noBorder: false, color: Color.red)
+                    .padding()
+                    .onTapGesture {
+                        showDeleteDialog = true
+                    }
             }
         }
         .onAppear {
@@ -325,6 +323,7 @@ struct VisitLogView: View {
                 region = MKCoordinateRegion(center: log.location, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
                 mapLocations = [MapLocation(name: "Help", latitude: log.location.latitude, longitude: log.location.longitude)]
             }
+            print("ItemQty: \(log.itemQty)")
         }
         .alert("Delete visit log?", isPresented: $showDeleteDialog) {
             Button("OK", role: .destructive)
