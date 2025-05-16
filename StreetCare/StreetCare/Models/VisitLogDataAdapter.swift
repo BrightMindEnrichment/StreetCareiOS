@@ -28,26 +28,17 @@ class VisitLogDataAdapter {
     func resetLogs() {
         visitLogs = [VisitLog]()
     }
-    
-    func updatePeopleHelped(_ logId: String, newValue: Int, completion: @escaping () -> Void) {
+
+    func updateVisitLogField(_ logId: String, field: String, value: Any, completion: @escaping () -> Void) {
         let db = Firestore.firestore()
         db.collection("VisitLogBook").document(logId).updateData([
-            "peopleHelped": newValue
+            field: value
         ]) { error in
             if let error = error {
-                print("Error updating Firestore: \(error)")
+                print("⚠️ Error updating \(field): \(error.localizedDescription)")
             } else {
+                print("✅ \(field) updated successfully.")
                 completion()
-            }
-        }
-    }
-    func updateItemQty(_ logId: String, newValue: Int, completion: @escaping () -> Void) {
-        let db = Firestore.firestore()
-        db.collection("VisitLogBook").document(logId).updateData(["itemQty": newValue]) { error in
-            if error == nil {
-                completion()
-            } else {
-                print("⚠️ Error updating itemQty: \(error!.localizedDescription)")
             }
         }
     }

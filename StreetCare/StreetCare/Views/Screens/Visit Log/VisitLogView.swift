@@ -77,14 +77,15 @@ struct VisitLogView: View {
     @State private var navigateToEdit = false
     @State private var navigateToEditItems = false
     @State private var editedItemQty: Int = 0
+    @State private var navigateToEditHelpers = false
+    @State private var editedHelpers: Int = 0
+    @State private var navigateToEditPeopleNeedHelp = false
+    @State private var editedPeopleNeedHelp: Int = 0
+    @State private var navigateToEditInteractionDate = false
+    @State private var editedInteractionDate = Date()
+    @State private var navigateToEditFollowUpDate = false
+    @State private var editedFollowUpDate = Date()
     
-    func updatePeopleHelpedInFirestore(newValue: Int) {
-        let adapter = VisitLogDataAdapter()
-        adapter.updatePeopleHelped(log.id, newValue: newValue) {
-            log.peopleHelped = newValue
-            isEditingPeopleHelped = false
-        }
-    }
     var body: some View {
         ScrollView {
             VStack {
@@ -99,7 +100,38 @@ struct VisitLogView: View {
                 
                 VisitLogDetailRow(
                     title: "When was your Interaction?",
-                    detail: "\(log.whenVisit)")
+                    detail: log.whenVisit.formatted(date: .abbreviated, time: .omitted),
+                    onEdit: {
+                        editedInteractionDate = log.whenVisit
+                        navigateToEditInteractionDate = true
+                    }
+                )
+
+                NavigationLink(
+                    destination: InputTileDate(
+                        questionNumber: 1,
+                        totalQuestions: 1,
+                        question1: "When was your",
+                        question2: "Interaction?",
+                        question3: "",
+                        showSkip: false,
+                        showProgressBar: false,
+                        buttonMode: .update,
+                        datetimeValue: $editedInteractionDate,
+                        nextAction: {
+                            let adapter = VisitLogDataAdapter()
+                            adapter.updateVisitLogField(log.id, field: "whenVisit", value: editedInteractionDate) {
+                                log.whenVisit = editedInteractionDate
+                                navigateToEditInteractionDate = false
+                            }
+                        },
+                        skipAction: { navigateToEditInteractionDate = false },
+                        previousAction: { navigateToEditInteractionDate = false }
+                    ),
+                    isActive: $navigateToEditInteractionDate
+                ) {
+                    EmptyView()
+                }
                 
                 /*let location = log.whenVisit.formatted(date: .abbreviated, time: .omitted) + ", " + log.whereVisit
                 Text(location).font(.system(size: 17.0)).bold()*/
@@ -133,7 +165,11 @@ struct VisitLogView: View {
                             placeholderText: nil,
                             number: $editedPeopleHelped,
                             nextAction: {
-                                updatePeopleHelpedInFirestore(newValue: editedPeopleHelped)
+                                let adapter = VisitLogDataAdapter()
+                                adapter.updateVisitLogField(log.id, field: "peopleHelped", value: editedPeopleHelped) {
+                                    log.peopleHelped = editedPeopleHelped
+                                    isEditingPeopleHelped = false
+                                }
                             },
                             previousAction: {},
                             skipAction: {
@@ -209,7 +245,7 @@ struct VisitLogView: View {
                             number: $editedItemQty,
                             nextAction: {
                                 let adapter = VisitLogDataAdapter()
-                                adapter.updateItemQty(log.id, newValue: editedItemQty) {
+                                adapter.updateVisitLogField(log.id, field: "itemQty", value: editedItemQty) {
                                     log.itemQty = editedItemQty
                                     navigateToEditItems = false
                                 }
@@ -247,7 +283,45 @@ struct VisitLogView: View {
                 }
                 
                 if log.numberOfHelpers > 0 {
-                    VisitLogDetailRow(title: "Who helped you prepare or joined?", detail: "\(log.numberOfHelpers)")
+                    VisitLogDetailRow(
+                        title: "Who helped you prepare or joined?",
+                        detail: "\(log.numberOfHelpers)",
+                        onEdit: {
+                            editedHelpers = log.numberOfHelpers
+                            navigateToEditHelpers = true
+                        }
+                    )
+
+                    NavigationLink(
+                        destination: InputTileNumber(
+                            questionNumber: 1,
+                            totalQuestions: 1,
+                            tileWidth: 320,
+                            tileHeight: 330,
+                            question1: "Who helped you",
+                            question2: "prepare or joined?",
+                            question3: "",
+                            question4: "",
+                            descriptionLabel: nil,
+                            disclaimerText: nil,
+                            placeholderText: nil,
+                            number: $editedHelpers,
+                            nextAction: {
+                                let adapter = VisitLogDataAdapter()
+                                adapter.updateVisitLogField(log.id, field: "numberOfHelpers", value: editedHelpers) {
+                                    log.numberOfHelpers = editedHelpers
+                                    navigateToEditHelpers = false
+                                }
+                            },
+                            previousAction: { navigateToEditHelpers = false },
+                            skipAction: { navigateToEditHelpers = false },
+                            showProgressBar: false,
+                            buttonMode: .update
+                        ),
+                        isActive: $navigateToEditHelpers
+                    ) {
+                        EmptyView()
+                    }
                 }
 
                 // VisitLogDetailRow(title: "Would you like to volunteer again?", detail: "\(log.volunteerAgainText)")
@@ -257,36 +331,104 @@ struct VisitLogView: View {
                 if log.peopleNeedFurtherHelp > 0 {
                     VisitLogDetailRow(
                         title: "How many people still need support?",
-                        detail: "\(log.peopleNeedFurtherHelp)"
+                        detail: "\(log.peopleNeedFurtherHelp)",
+                        onEdit: {
+                            editedPeopleNeedHelp = log.peopleNeedFurtherHelp
+                            navigateToEditPeopleNeedHelp = true
+                        }
                     )
+
+                    NavigationLink(
+                        destination: InputTileNumber(
+                            questionNumber: 1,
+                            totalQuestions: 1,
+                            tileWidth: 320,
+                            tileHeight: 330,
+                            question1: "How many people",
+                            question2: "still need support?",
+                            question3: "",
+                            question4: "",
+                            descriptionLabel: nil,
+                            disclaimerText: nil,
+                            placeholderText: nil,
+                            number: $editedPeopleNeedHelp,
+                            nextAction: {
+                                let adapter = VisitLogDataAdapter()
+                                adapter.updateVisitLogField(log.id, field: "peopleNeedFurtherHelp", value: editedPeopleNeedHelp) {
+                                    log.peopleNeedFurtherHelp = editedPeopleNeedHelp
+                                    navigateToEditPeopleNeedHelp = false
+                                }
+                            },
+                            previousAction: { navigateToEditPeopleNeedHelp = false },
+                            skipAction: { navigateToEditPeopleNeedHelp = false },
+                            showProgressBar: false,
+                            buttonMode: .update
+                        ),
+                        isActive: $navigateToEditPeopleNeedHelp
+                    ) {
+                        EmptyView()
+                    }
                 }
 
                 // Support they still need
-                if log.furtherfoodAndDrinks || log.furtherClothes || log.furtherHygine || log.furtherWellness || log.furtherOther {
+                if log.furtherfoodAndDrinks || log.furtherClothes || log.furtherHygine || log.furtherWellness || log.furthermedical || log.furthersocialworker || log.furtherlegal || log.furtherOther {
                     VStack {
                         Text("What kind of support do they still need?")
                             .screenLeft()
                             .font(.system(size: 16.0)).bold()
                             .padding(EdgeInsets(top: 10.0, leading: 20.0, bottom: 0.0, trailing: 20.0))
                         
-                        VStack {
+                        VStack(alignment: .leading, spacing: 8) {
                             if log.furtherfoodAndDrinks {
-                                Text("Food & Drinks").screenLeft().padding(.horizontal, 20).font(.system(size: 15.0))
+                                Text("Food & Drinks")
+                                    .screenLeft()
+                                    .padding(EdgeInsets(top: 10.0, leading: 20.0, bottom: 10.0, trailing: 20.0)).font(.system(size: 15.0))
+                                    .font(.system(size: 15.0))
                             }
                             if log.furtherClothes {
-                                Text("Clothes").screenLeft().padding(.horizontal, 20).font(.system(size: 15.0))
+                                Text("Clothes")
+                                    .screenLeft()
+                                    .padding(EdgeInsets(top: 10.0, leading: 20.0, bottom: 10.0, trailing: 20.0)).font(.system(size: 15.0))
+                                    .font(.system(size: 15.0))
                             }
                             if log.furtherHygine {
-                                Text("Hygiene Products").screenLeft().padding(.horizontal, 20).font(.system(size: 15.0))
+                                Text("Hygiene Products")
+                                    .screenLeft()
+                                    .padding(EdgeInsets(top: 10.0, leading: 20.0, bottom: 10.0, trailing: 20.0)).font(.system(size: 15.0))
+                                    .font(.system(size: 15.0))
                             }
                             if log.furtherWellness {
-                                Text("Wellness/Emotional Support").screenLeft().padding(.horizontal, 20).font(.system(size: 15.0))
+                                Text("Wellness/Emotional Support")
+                                    .screenLeft()
+                                    .padding(EdgeInsets(top: 10.0, leading: 20.0, bottom: 10.0, trailing: 20.0)).font(.system(size: 15.0))
+                                    .font(.system(size: 15.0))
                             }
-                            if log.furtherOther && log.furtherOtherNotes.count > 0 {
-                                Text(log.furtherOtherNotes).screenLeft().padding(.horizontal, 20).font(.system(size: 15.0))
+                            if log.furthermedical {
+                                Text("Medical Help")
+                                    .screenLeft()
+                                    .padding(EdgeInsets(top: 10.0, leading: 20.0, bottom: 10.0, trailing: 20.0)).font(.system(size: 15.0))
+                                    .font(.system(size: 15.0))
+                            }
+                            if log.furthersocialworker {
+                                Text("Social Worker")
+                                    .screenLeft()
+                                    .padding(EdgeInsets(top: 10.0, leading: 20.0, bottom: 10.0, trailing: 20.0)).font(.system(size: 15.0))
+                                    .font(.system(size: 15.0))
+                            }
+                            if log.furtherlegal {
+                                Text("Legal Assistance")
+                                    .screenLeft()
+                                    .padding(EdgeInsets(top: 10.0, leading: 20.0, bottom: 10.0, trailing: 20.0)).font(.system(size: 15.0))
+                                    .font(.system(size: 15.0))
+                            }
+                            if log.furtherOther && !log.furtherOtherNotes.isEmpty {
+                                Text(log.furtherOtherNotes)
+                                    .screenLeft()
+                                    .padding(EdgeInsets(top: 10.0, leading: 20.0, bottom: 10.0, trailing: 20.0)).font(.system(size: 15.0))
+                                    .font(.system(size: 15.0))
                             }
                         }
-                        
+
                         Rectangle()
                             .frame(width: 350.0, height: 2.0)
                             .foregroundColor(.gray)
@@ -297,8 +439,38 @@ struct VisitLogView: View {
                 if log.followUpWhenVisit != Date.distantPast {
                     VisitLogDetailRow(
                         title: "Is there a planned date to interact with them again?",
-                        detail: log.followUpWhenVisit.formatted(date: .abbreviated, time: .omitted)
+                        detail: log.followUpWhenVisit.formatted(date: .abbreviated, time: .omitted),
+                        onEdit: {
+                            editedFollowUpDate = log.followUpWhenVisit
+                            navigateToEditFollowUpDate = true
+                        }
                     )
+
+                    NavigationLink(
+                        destination: InputTileDate(
+                            questionNumber: 1,
+                            totalQuestions: 1,
+                            question1: "Is there anything future",
+                            question2: "volunteers should",
+                            question3: "know?",
+                            showSkip: false,
+                            showProgressBar: false,
+                            buttonMode: .update,
+                            datetimeValue: $editedFollowUpDate,
+                            nextAction: {
+                                let adapter = VisitLogDataAdapter()
+                                adapter.updateVisitLogField(log.id, field: "followUpWhenVisit", value: editedFollowUpDate) {
+                                    log.followUpWhenVisit = editedFollowUpDate
+                                    navigateToEditFollowUpDate = false
+                                }
+                            },
+                            skipAction: { navigateToEditFollowUpDate = false },
+                            previousAction: { navigateToEditFollowUpDate = false }
+                        ),
+                        isActive: $navigateToEditFollowUpDate
+                    ) {
+                        EmptyView()
+                    }
                 }
 
                 // Volunteer again

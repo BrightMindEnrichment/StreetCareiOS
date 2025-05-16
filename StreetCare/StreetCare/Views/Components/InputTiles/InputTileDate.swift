@@ -1,3 +1,4 @@
+
 //
 //  InputTileDate.swift
 //  StreetCare
@@ -7,6 +8,10 @@
 
 import SwiftUI
 
+/*enum ButtonMode {
+    case navigation  // Shows Previous & Next
+    case update      // Shows Update & Cancel
+}*/
 
 struct InputTileDate: View {
 
@@ -17,20 +22,24 @@ struct InputTileDate: View {
     var question1: String
     var question2: String
     var question3: String
-    var showSkip: Bool
+    var showSkip: Bool = true
+    var showProgressBar: Bool = true
+    var buttonMode: ButtonMode = .navigation
     
-        
     @Binding var datetimeValue: Date
     @State private var selectedTimeZone: String = TimeZone.current.identifier
     let timeZones = TimeZone.knownTimeZoneIdentifiers.sorted()
     let usTimeZones = TimeZone.knownTimeZoneIdentifiers
         .filter { $0.starts(with: "America/") }
         .sorted()
-        
+    
     var nextAction: () -> ()
     var skipAction: () -> ()
     var previousAction: () -> ()
     
+    @Environment(\.presentationMode) var presentationMode
+    @State private var showSuccessAlert = false
+
     private var dateFormatter: DateFormatter {
         let formatter = DateFormatter()
         formatter.dateFormat = "MM/dd/yyyy"
@@ -42,106 +51,81 @@ struct InputTileDate: View {
         formatter.dateFormat = "hh:mm a"
         return formatter
     }
-    
+
     var body: some View {
-        
         ZStack {
-            BasicTile(size: CGSize(width: size.width, height: size.height))
-            
+            BasicTile(size: size)
+
             VStack {
-                
-                HStack {
+                /*HStack {
                     Text("Question \(questionNumber)/\(totalQuestions)")
                         .foregroundColor(.black)
-                        //.font(.footnote)
+                        .screenLeft()
+                }*/
                     
-                    Spacer()
-                    
-                    if showSkip{
-                        Button("Skip") {
-                            skipAction()
+                if buttonMode == .navigation {
+                    HStack {
+                        Text("Question \(questionNumber)/\(totalQuestions)")
+                            .foregroundColor(.black)
+                        
+                        Spacer()
+
+                        if showSkip {
+                            Button("Skip") {
+                                skipAction()
+                            }
+                            .foregroundColor(Color("SecondaryColor"))
+                            .font(.footnote)
+                            .padding(.horizontal, 16)
+                            .padding(.vertical, 8)
+                            .background(Capsule().fill(Color.white))
+                            .overlay(Capsule().stroke(Color("SecondaryColor"), lineWidth: 2))
                         }
-                        .foregroundColor(Color("SecondaryColor"))
-                        .font(.footnote)
-                        .padding(.horizontal, 16)
-                        .padding(.vertical, 8)
-                        .background(
-                            Capsule()
-                                .fill(Color.white)
-                        )
-                        .overlay(
-                            Capsule()
-                                .stroke(Color("SecondaryColor"), lineWidth: 2)
-                        )
                     }
-                    
-                }
-                .padding(.horizontal)
-                .padding(.top, 12)
-                //.padding()
-                
-                Divider()
-                    .background(Color.gray.opacity(0.3))
                     .padding(.horizontal)
-                
-                VStack{
-                    Text(question1)
-                        .font(.title2)
-                        .padding(.top, 6)
-                        .fontWeight(.bold)
-                    Text(question2)
-                        .font(.title2)
-                        .fontWeight(.bold)
-                        .fontWeight(.bold)
-                    Text(question3)
-                        .font(.title2)
-                        .padding(.bottom, 12)
-                        .fontWeight(.bold)
+                    .padding(.top, 12)
+
+                    Divider()
+                        .background(Color.gray.opacity(0.3))
+                        .padding(.horizontal)
                 }
+
+                VStack {
+                    Text(question1).font(.title2).fontWeight(.bold)
+                    Text(question2).font(.title2).fontWeight(.bold)
+                    Text(question3).font(.title2).fontWeight(.bold)
+                }
+                .padding(.bottom, 12)
                 
-                //Spacer()
-                
+                if buttonMode == .navigation{
+                    Spacer()
+                }
+
                 HStack(spacing: 12) {
                     HStack {
                         Image(systemName: "calendar")
-                            .foregroundColor(.black)
-
                         Text(dateFormatter.string(from: datetimeValue))
-                            .foregroundColor(.black)
-                            .font(.body)
-                            //.bold()
                     }
                     .padding()
-                    .frame(width: 160, alignment: .leading) // Half of 300 width (timezone box) with little spacing
+                    .frame(width: 160)
                     .background(Color.white)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 10)
-                            .stroke(Color.black, lineWidth: 1)
-                    )
-                    .cornerRadius(10)
+                    .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color.black, lineWidth: 1))
 
                     HStack {
                         Image(systemName: "clock")
-                            .foregroundColor(.black)
-
                         Text(timeFormatter.string(from: datetimeValue))
-                            .foregroundColor(.black)
-                            .font(.body)
-                            //.bold()
                     }
                     .padding()
-                    .frame(width: 140, alignment: .leading) // Same width as date box
+                    .frame(width: 140)
                     .background(Color.white)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 10)
-                            .stroke(Color.black, lineWidth: 1)
-                    )
-                    .cornerRadius(10)
+                    .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color.black, lineWidth: 1))
                 }
+                .cornerRadius(10)
                 .frame(width: 320)
-                .padding(.horizontal) // Only left and right padding
-                //.padding(.bottom)     // Padding only below
-
+                
+                if buttonMode == .navigation{
+                    Spacer()
+                }
                 Menu {
                     Picker("Time Zone", selection: $selectedTimeZone) {
                         ForEach(usTimeZones, id: \.self) { zone in
@@ -152,88 +136,97 @@ struct InputTileDate: View {
                 } label: {
                     HStack(spacing: 8) {
                         Image(systemName: "globe")
-                            .foregroundColor(.black)
-
                         Text("\(selectedTimeZone.replacingOccurrences(of: "America/", with: "").replacingOccurrences(of: "_", with: " ")) (\(TimeZone(identifier: selectedTimeZone)?.abbreviation() ?? ""))")
-                            .foregroundColor(.black)
-                            .font(.body)
-                            .lineLimit(1)
-
                         Spacer()
-
                         Image(systemName: "triangle.fill")
                             .resizable()
                             .frame(width: 8, height: 6)
                             .rotationEffect(.degrees(180))
-                            .foregroundColor(.black)
                     }
-                    //.padding(.horizontal)
-                    //.padding(.vertical, 6)
                     .padding()
                     .background(Color.white)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 10)
-                            .stroke(Color.black, lineWidth: 1)
-                    )
+                    .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color.black, lineWidth: 1))
                     .cornerRadius(10)
-                    .frame(width: 310, alignment: .leading)
-                    .padding(.horizontal)
+                    .frame(width: 310)
                 }
-                
-                HStack {
-                    Button("Previous") {
-                        previousAction()
+                .padding(.horizontal)
+
+                if buttonMode == .navigation {
+                    HStack {
+                        Button("Previous") {
+                            previousAction()
+                        }
+                        .foregroundColor(Color("SecondaryColor"))
+                        .font(.footnote)
+                        .padding(.horizontal, 16)
+                        .padding(.vertical, 8)
+                        .background(Capsule().fill(Color.white))
+                        .overlay(Capsule().stroke(Color("SecondaryColor"), lineWidth: 2))
+
+                        Spacer()
+
+                        Button(" Next  ") {
+                            nextAction()
+                        }
+                        .foregroundColor(Color("PrimaryColor"))
+                        .fontWeight(.bold)
+                        .padding(.horizontal, 16)
+                        .padding(.vertical, 8)
+                        .background(Capsule().fill(Color("SecondaryColor")))
                     }
-                    .foregroundColor(Color("SecondaryColor"))
-                    .font(.footnote)
-                    .padding(.horizontal, 16)
-                    .padding(.vertical, 8)
-                    .background(
-                        Capsule()
-                            .fill(Color.white) // Fill with white
-                    )
-                    .overlay(
-                        Capsule()
-                            .stroke(Color("SecondaryColor"), lineWidth: 2) // Stroke with dark green
-                    )
-                    
-                    Spacer()
-                    
-                    Button(" Next  ") {
-                        nextAction()
+                    .padding()
+                } else if buttonMode == .update {
+                    HStack {
+                        Button("Cancel") {
+                            presentationMode.wrappedValue.dismiss()
+                        }
+                        .foregroundColor(Color("SecondaryColor"))
+                        .font(.footnote)
+                        .padding(.horizontal, 16)
+                        .padding(.vertical, 8)
+                        .background(Capsule().fill(Color.white))
+                        .overlay(Capsule().stroke(Color("SecondaryColor"), lineWidth: 2))
+
+                        Spacer()
+
+                        Button("Update") {
+                            showSuccessAlert = true
+                            nextAction()
+                        }
+                        .foregroundColor(Color("PrimaryColor"))
+                        .fontWeight(.bold)
+                        .padding(.horizontal, 16)
+                        .padding(.vertical, 8)
+                        .background(Capsule().fill(Color("SecondaryColor")))
                     }
-                    .foregroundColor(Color("PrimaryColor"))
-                    .fontWeight(.bold)
-                    .padding(.horizontal, 16)
-                    .padding(.vertical, 8)
-                    .background(
-                        Capsule()
-                            .fill(Color("SecondaryColor"))
-                    )
+                    .padding()
                 }
-                .padding()
-                
-            
             }
         }
-        .frame(width: size.width, height: size.height)
-        SegmentedProgressBar(
-            totalSegments: totalQuestions,
-            filledSegments: questionNumber,
-            tileWidth: 350
-        )
-
-        Text("Progress")
-            .font(.footnote)
-            .padding(.top, 4)
-            .fontWeight(.bold)
-    }
-        
-        
-        // Function to get the current time zone abbreviation (e.g., CST, EST, PST)
-        func getTimeZoneAbbreviation() -> String {
-            return TimeZone.current.abbreviation() ?? "UTC"
+        .alert(isPresented: $showSuccessAlert) {
+            Alert(
+                title: Text("Updated"),
+                message: Text("Date was successfully updated."),
+                dismissButton: .default(Text("OK")) {
+                    presentationMode.wrappedValue.dismiss()
+                }
+            )
         }
+        .frame(width: size.width, height: size.height)
+
+        if showProgressBar {
+            SegmentedProgressBar(
+                totalSegments: totalQuestions,
+                filledSegments: questionNumber,
+                tileWidth: 350
+            )
+
+            Text("Progress")
+                .font(.footnote)
+                .padding(.top, 4)
+                .fontWeight(.bold)
+        }
+    }
 }
 
 
@@ -242,16 +235,17 @@ struct InputTileDate_Previews: PreviewProvider {
     @State static var input = Date()
 
     static var previews: some View {
-
-        InputTileDate(questionNumber: 3, totalQuestions: 4, question1: "Is there a planned date to",question2: "interact with them again?",question3: "", showSkip: true, datetimeValue: $input) {
-            //
-        } skipAction: {
-            //
-        } previousAction: {
-            //
-        }
-
+        InputTileDate(
+            questionNumber: 3,
+            totalQuestions: 4,
+            question1: "Is there a planned date to",
+            question2: "interact with them again?",
+            question3: "",
+            showSkip: true,
+            datetimeValue: $input,
+            nextAction: {},
+            skipAction: {},
+            previousAction: {}
+        )
     }
 }
-
-
