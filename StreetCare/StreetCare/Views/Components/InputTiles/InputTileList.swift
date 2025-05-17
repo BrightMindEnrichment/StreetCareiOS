@@ -89,13 +89,21 @@ struct InputTileList: View {
                         checkbox("Hygiene Products", isChecked: $hygine)
                         checkbox("Wellness/Emotional Support", isChecked: $wellness)
                         checkbox("Medical Help", isChecked: $medical)
-                        checkbox("Social Worker/Psychiatrist", isChecked: $socialworker)
+                        checkbox("Social Worker/Psychological support", isChecked: $socialworker)
                         checkbox("Legal/Lawyer", isChecked: $legal)
                         checkbox("Other", isChecked: $other)
 
                         if other {
                             AutoGrowingTextEditor(text: $otherNotes, placeholder: NSLocalizedString("otherNotes", comment: ""))
                         }
+                        (
+                            Text("Note: ").bold() +
+                            Text("You may check more than one box.")
+                        )
+                        .font(.footnote)
+                        .foregroundColor(.gray)
+                        .padding(.top, 10)
+
                     }
                     .padding()
                 }

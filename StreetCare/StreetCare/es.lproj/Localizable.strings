@@ -128,6 +128,9 @@
 "emptytext" = " ";
 "Contact Number"= "Número de contacto";
 "consentLine" = "Al seleccionar esta casilla, doy mi consentimiento para compartir mis datos de contacto y la dirección del evento públicamente en esta plataforma / espacio comunitario para facilitar la participación en el evento de alcance. Entiendo que esta información será visible para otros y reconozco las consideraciones de privacidad asociadas.";
+"aq2des" = "Por ejemplo, mi tía Mary ayudó a preparar (mary@gmail.com), y mis hermanos Bob y Bill salieron conmigo (bob@gmail.com, bill@gmail.com, 702-506-6101).";
+"aq3des" = "Ej., Jill — una niña de 15 años que se escapó y llevaba un vestido azul.";
+"aq6des" = "Ej. 'Tom tiene diabetes y prefiere no consumir snacks azucarados'";
 
 //"helloWorld" = "¡Hola Mundo!";
 //"welcome" = "Bienvenido a\nStreet Care";

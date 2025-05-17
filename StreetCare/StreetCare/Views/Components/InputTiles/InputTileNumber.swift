@@ -106,7 +106,7 @@ struct InputTileNumber: View {
                 }
                 
                 if let placeholder = placeholderText, !placeholder.isEmpty {
-                    AutoGrowingTextEditor(text: $peopledescription, placeholder: placeholder)
+                    AutoGrowingTextEditor(text: $peopledescription, placeholder: placeholder).font(.system(size: 15))
                 }
                 
                 if let disclaimer = disclaimerText, !disclaimer.isEmpty {

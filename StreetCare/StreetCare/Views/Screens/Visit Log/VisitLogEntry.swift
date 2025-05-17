@@ -156,7 +156,7 @@ struct VisitLogEntry: View {
                     }
                     
                 case 9:
-                    InputTileNumber(questionNumber: 2, totalQuestions: 7, tileWidth: 360, tileHeight: 326, question1: "Who helped you" , question2: "prepared or joined",question3: "",question4: "", number: $visitLog.numberOfHelpers) {
+                    InputTileNumber(questionNumber: 2, totalQuestions: 7, tileWidth: 360, tileHeight: 467, question1: "Who helped you" , question2: "prepare, or joined with you?",question3: "",question4: "",placeholderText: NSLocalizedString("aq2des", comment: ""), number: $visitLog.numberOfHelpers) {
                         questionNumber += 1
                     } previousAction: {
                         questionNumber -= 1
@@ -165,7 +165,7 @@ struct VisitLogEntry: View {
                     }
                     
                 case 10:
-                    InputTileNumber(questionNumber: 3, totalQuestions: 7, tileWidth: 360, tileHeight: 467, question1: "How many people" , question2: "still need support?", question3: "", question4: "", descriptionLabel: "Description", disclaimerText: "", placeholderText: NSLocalizedString("peopledescription", comment: ""), number: $visitLog.peopleNeedFurtherHelp) {
+                    InputTileNumber(questionNumber: 3, totalQuestions: 7, tileWidth: 360, tileHeight: 467, question1: "How many people" , question2: "still need support?", question3: "", question4: "", descriptionLabel: "Description", disclaimerText: "", placeholderText: NSLocalizedString("aq3des", comment: ""), number: $visitLog.peopleNeedFurtherHelp) {
                         questionNumber += 1
                     } previousAction: {
                         questionNumber -= 1
@@ -207,7 +207,7 @@ struct VisitLogEntry: View {
                         questionNumber = 100
                     }
                 case 12:
-                    InputTileDate(questionNumber: 5, totalQuestions: 7, question1: "Is there a planned date",question2: "to interact with them", question3: "again?", showSkip: true, datetimeValue: $visitLog.followUpWhenVisit) {
+                    InputTileDate(questionNumber: 5, totalQuestions: 7, question1: "Do you have a plan to help",question2: "this person / these people ", question3: "again?", showSkip: true, datetimeValue: $visitLog.followUpWhenVisit) {
                         questionNumber += 1
                     } skipAction: {
                         questionNumber += 1
@@ -216,7 +216,7 @@ struct VisitLogEntry: View {
                     }
                     
                 case 13:
-                    InputTileNotes(questionNumber: 6, totalQuestions: 7,tileWidth: 300, tileHeight: 380, question1: "Is there anything future",question2: "volunteers should", question3: "know?", placeholderText: "Enter notes here", otherNotes: $visitLog.furtherOtherNotes) {
+                    InputTileNotes(questionNumber: 6, totalQuestions: 7,tileWidth: 360, tileHeight: 380, question1: "Is there anything other volunteers",question2: "who help him / her / them", question3: "should know?", placeholderText: NSLocalizedString("aq6des", comment: ""), otherNotes: $visitLog.furtherOtherNotes) {
                         questionNumber += 1
                     } previousAction: {
                         questionNumber -= 1
