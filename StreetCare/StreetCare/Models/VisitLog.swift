@@ -40,27 +40,32 @@ class VisitLog: ObservableObject, Identifiable {
     @Published var furtherClothes = false
     @Published var furtherHygine = false
     @Published var furtherWellness = false
+    @Published var furtherOther = false
+    @Published var furtherOtherNotes = ""
     @Published var furthermedical = false
     @Published var furthersocialworker = false
     @Published var furtherlegal = false
-    @Published var furtherOther = false
-    @Published var furtherOtherNotes = ""
+    @Published var peopleNeedFurtherHelp = 0
     
     @Published var rating = 0
     @Published var ratingNotes = ""
     
-    @Published var durationHours = -1
-    @Published var durationMinutes = -1
+    @Published var durationHours = 0
+    @Published var durationMinutes = 30
     
     @Published var numberOfHelpers = 0
     
-    @Published var volunteerAgain = -1
+    @Published var volunteerAgain = 0
     
     @Published var location = CLLocationCoordinate2D.init(latitude: 0.0, longitude: 0.0)
     
-    @Published var peopleNeedFurtherHelp = 0
     @Published var followUpWhenVisit = Date()
-    @Published var itemQty = 0
+    @Published var itemQty = 1
+    
+    // Newly added fields for detail view
+    @Published var peopleHelpedDescription = ""
+    @Published var stillNeedHelpDescription = ""
+    @Published var futureNotes = ""
 
     var whatGiven: [String] {
         var given = [String]()
@@ -142,4 +147,3 @@ class VisitLog: ObservableObject, Identifiable {
         task.resume()
     }
 } // end class
-
