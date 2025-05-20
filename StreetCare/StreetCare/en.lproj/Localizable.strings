@@ -110,8 +110,8 @@
 "enterEventTitle" = "Enter the Event Name here";
 "location" = "Location*";
 "street" = "Street";
-"state" = "State*";
-"city" = "City*";
+"state" = "State";
+"city" = "City";
 "zipcode" = "Zip Code";
 "startDate" = "Start Date";
 "startTime" = "Start Time";

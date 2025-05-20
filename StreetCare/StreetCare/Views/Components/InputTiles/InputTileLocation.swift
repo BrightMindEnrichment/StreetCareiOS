@@ -9,10 +9,10 @@ import CoreLocation
 import CoreLocationUI
 
 struct InputTileLocation: View {
-
+    
     var questionNumber: Int
     var totalQuestions: Int
-        
+    
     var size = CGSize(width: 320.0, height: 460.0)
     var question1: String
     var question2: String
@@ -31,29 +31,29 @@ struct InputTileLocation: View {
     @State private var landmark = ""
     @State private var stateAbbreviation = ""
     @State private var showAddressSearch = false
-        
+    
     var nextAction: () -> ()
     var previousAction: () -> ()
     var skipAction: () -> ()
     
     var body: some View {
-
+        
         ZStack {
             BasicTile(size: CGSize(width: size.width, height: size.height))
-
+            
             VStack {
                 HStack {
                     Text("Question \(questionNumber)/\(totalQuestions)")
                         .foregroundColor(.black)
-                        //.font(.footnote)
+                    //.font(.footnote)
                     
                     Spacer()
                     
                     /*Button("Skip") {
-                        skipAction()
-                    }
-                    .foregroundColor(.gray)
-                    .padding()*/
+                     skipAction()
+                     }
+                     .foregroundColor(.gray)
+                     .padding()*/
                     
                 }
                 .padding(.horizontal)
@@ -62,7 +62,7 @@ struct InputTileLocation: View {
                 Divider()
                     .background(Color.gray.opacity(0.3))
                     .padding(.horizontal)
-    
+                
                 VStack{
                     Text(question1)
                         .font(.title2)
@@ -73,28 +73,28 @@ struct InputTileLocation: View {
                         .padding(.bottom, 12)
                         .fontWeight(.bold)
                 }
-
-                    HStack {
-                        Image(systemName: "magnifyingglass")
-                            .foregroundColor(.gray)
-                        
-                        Text(street.isEmpty ? "Search for address" : street)
-                            .foregroundColor(street.isEmpty ? .gray : .primary)
-                            .frame(maxWidth: .infinity, alignment: .leading) //
-                    }
-                    .padding()
-                    .frame(height: 45)
-                    .background()
-                    .cornerRadius(8)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 8)
-                            .stroke(Color.gray.opacity(0.5), lineWidth: 1)
-                    )
-                    .padding(.horizontal, 20)
-                    .onTapGesture {
-                        showAddressSearch = true
-                    }
-
+                
+                HStack {
+                    Image(systemName: "magnifyingglass")
+                        .foregroundColor(.gray)
+                    
+                    Text(street.isEmpty ? "Search for address" : street)
+                        .foregroundColor(street.isEmpty ? .gray : .primary)
+                        .frame(maxWidth: .infinity, alignment: .leading) //
+                }
+                .padding()
+                .frame(height: 45)
+                .background()
+                .cornerRadius(8)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 8)
+                        .stroke(Color.gray.opacity(0.5), lineWidth: 1)
+                )
+                .padding(.horizontal, 20)
+                .onTapGesture {
+                    showAddressSearch = true
+                }
+                
                 VStack {
                     HStack {
                         TextField(NSLocalizedString("city", comment: ""), text: $city)
@@ -105,7 +105,7 @@ struct InputTileLocation: View {
                                 RoundedRectangle(cornerRadius: 8)
                                     .stroke(Color.gray.opacity(0.5), lineWidth: 1)
                             )
-
+                        
                         TextField(NSLocalizedString("state", comment: ""), text: $stateAbbreviation)
                             .textFieldStyle(RoundedBorderTextFieldStyle())
                             .layoutPriority(0)
@@ -117,7 +117,7 @@ struct InputTileLocation: View {
                     }
                     .padding(.horizontal)
                     .padding(.top, 12)
-
+                    
                     TextField(NSLocalizedString("zipcode", comment: ""), text: $zipcode)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                         .padding(.horizontal)
@@ -149,31 +149,20 @@ struct InputTileLocation: View {
                         Spacer()
                         
                         Button(" Next  ") {
-                            if city.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ||
-                               stateAbbreviation.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-                                // Show an alert or feedback to user
-                                failedToFindLocation = true
-                            } else {
-                                // Manually composed address from input fields
-                                let manualAddress = [
-                                    street.isEmpty ? nil : street,
-                                    city.isEmpty ? nil : city,
-                                    (stateAbbreviation.isEmpty ? state : stateAbbreviation).isEmpty ? nil : (stateAbbreviation.isEmpty ? state : stateAbbreviation),
-                                    zipcode.isEmpty ? nil : zipcode
-                                ]
+                            // Manually composed address from input fields
+                            let manualAddress = [
+                                street.isEmpty ? nil : street,
+                                city.isEmpty ? nil : city,
+                                (stateAbbreviation.isEmpty ? state : stateAbbreviation).isEmpty ? nil : (stateAbbreviation.isEmpty ? state : stateAbbreviation),
+                                zipcode.isEmpty ? nil : zipcode
+                            ]
                                 .compactMap { $0 }
                                 .joined(separator: ", ")
-
-                                if !manualAddress.isEmpty {
-                                    textValue = manualAddress
-                                    print("📍 Updated textValue manually or partially: \(textValue)")
-                                }
-
-                                nextAction()
-                            }
+                            textValue = manualAddress
+                            print("📍 Updated textValue manually or partially: \(textValue)")
+                            nextAction()
+                            
                         }
-
-
                         .foregroundColor(Color("PrimaryColor"))
                         .fontWeight(.bold)
                         .padding(.horizontal, 16)
@@ -188,11 +177,6 @@ struct InputTileLocation: View {
             }
         }
         .frame(width: size.width, height: size.height)
-        .alert("Missing Required Fields", isPresented: $failedToFindLocation, actions: {
-            Button("OK") {}
-        }, message: {
-            Text("Please enter both city and state before continuing.")
-        })
         .loadingAnimation(isLoading: isLoading)
         .onAppear {
             locationManager = LocationManager {
@@ -237,13 +221,13 @@ struct InputTileLocation: View {
             filledSegments: questionNumber,
             tileWidth: 320
         )
-
+        
         Text("Progress")
             .font(.footnote)
             .padding(.top, 4)
             .fontWeight(.bold)
         
-
+        
     }
     
     func newLocation() {
@@ -263,7 +247,7 @@ struct AutoGrowingTextEditor: View {
     @Binding var text: String
     var placeholder: String // ✅ New parameter
     @State private var dynamicHeight: CGFloat = 100
-
+    
     var body: some View {
         ZStack(alignment: .topLeading) {
             // Background height-measuring text
@@ -282,7 +266,7 @@ struct AutoGrowingTextEditor: View {
                     }
                 )
                 .hidden()
-
+            
             // Placeholder
             if text.isEmpty {
                 Text(placeholder) // ✅ Use parameter here
@@ -291,7 +275,7 @@ struct AutoGrowingTextEditor: View {
                     .padding(.leading, 10)
                     .zIndex(1)
             }
-
+            
             // TextEditor
             TextEditor(text: $text)
                 .font(.body)
