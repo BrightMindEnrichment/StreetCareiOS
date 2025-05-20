@@ -142,8 +142,8 @@
 "cmintrowithlink2" = "If you prefer to sign and send ina copy or save it for later reference, please download the form here.";
 "enteraddress" = "Enter Address*";
 "landmark" = "Describe the location/landmark.";
-"peopledescription" = "Example: Tom, a senior citizen in a wheelchair, wearing a navy blue shirt and brown shoes.";
-"disclaimer" = "Disclaimer: Completing one interaction     log per person helps us serve you better. Optional, any information helps.";
+"peopledescription" = "Example: Tom, wheelchair user, wearing a navy blue shirt or Helped 26 people on the South Side.";
+"disclaimer" = "Note: Completing one Interaction Log per person helps us help more people. If needed, you may fill out one log for your entire day.";
 "comments" = "Questions/Comments/Notes";
 "otherNotes" = "If Other, please specify here.";
 "emptytext" = "  ";
