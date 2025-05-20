@@ -58,6 +58,7 @@ class VisitLogDataAdapter {
         userData["numberOfHelpers"] = visitLog.numberOfHelpers // totalpeoplecount
         userData["volunteerAgain"] = visitLog.volunteerAgain
         userData["peopleNeedFurtherHelp"] = visitLog.peopleNeedFurtherHelp
+        userData["peopleNeedFurtherHelpLocation"] = visitLog.peopleNeedFurtherHelpLocation
         userData["furtherFoodAndDrinks"] = visitLog.furtherfoodAndDrinks
         userData["furtherClothes"] = visitLog.furtherClothes
         userData["furtherHygine"] = visitLog.furtherHygine
@@ -351,7 +352,9 @@ class VisitLogDataAdapter {
                     if let peopleNeedFurtherHelp = document["peopleNeedFurtherHelp"] as? Int {
                         log.peopleNeedFurtherHelp = peopleNeedFurtherHelp
                     }
-                    
+                    if let peopleNeedFurtherHelpLocation = document["peopleNeedFurtherHelpLocation"] as? String {
+                        log.peopleNeedFurtherHelpLocation = peopleNeedFurtherHelpLocation
+                    }
                     if let furtherFoodAndDrinks = document["furtherFoodAndDrinks"] as? Bool {
                         log.furtherfoodAndDrinks = furtherFoodAndDrinks
                     }

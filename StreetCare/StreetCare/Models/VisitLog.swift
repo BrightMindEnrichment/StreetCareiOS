@@ -59,6 +59,7 @@ class VisitLog: ObservableObject, Identifiable {
     @Published var location = CLLocationCoordinate2D.init(latitude: 0.0, longitude: 0.0)
     
     @Published var peopleNeedFurtherHelp = 0
+    @Published var peopleNeedFurtherHelpLocation = ""
     @Published var followUpWhenVisit = Date()
     @Published var itemQty = 0
 

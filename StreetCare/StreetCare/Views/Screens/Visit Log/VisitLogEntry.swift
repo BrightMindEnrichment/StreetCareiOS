@@ -156,7 +156,7 @@ struct VisitLogEntry: View {
                     }
                     
                 case 9:
-                    InputTileNumber(questionNumber: 2, totalQuestions: 7, tileWidth: 360, tileHeight: 467, question1: "Who helped you" , question2: "prepare, or joined with you?",question3: "",question4: "",placeholderText: NSLocalizedString("aq2des", comment: ""), number: $visitLog.numberOfHelpers) {
+                    InputTileNumber(questionNumber: 2, totalQuestions: 7, tileWidth: 360, tileHeight: 467, question1: "Who helped you" , question2: "prepare or joined with you?",question3: "",question4: "",placeholderText: NSLocalizedString("aq2des", comment: ""), number: $visitLog.numberOfHelpers) {
                         questionNumber += 1
                     } previousAction: {
                         questionNumber -= 1
@@ -165,7 +165,7 @@ struct VisitLogEntry: View {
                     }
                     
                 case 10:
-                    InputTileNumber(questionNumber: 3, totalQuestions: 7, tileWidth: 360, tileHeight: 467, question1: "How many people" , question2: "still need support?", question3: "", question4: "", descriptionLabel: "Description", disclaimerText: "", placeholderText: NSLocalizedString("aq3des", comment: ""), number: $visitLog.peopleNeedFurtherHelp) {
+                    InputTileNumber(questionNumber: 3, totalQuestions: 7, tileWidth: 360, tileHeight: 600, question1: "How many people" , question2: "still need support?", question3: "", question4: "", descriptionLabel: "Description", disclaimerText: "", placeholderText: NSLocalizedString("aq3des", comment: ""), descriptionLabel2: "Location Description",placeholderText2: "Please describe their location or landmark  E.g. 187 Hambridge Street, NY", number: $visitLog.peopleNeedFurtherHelp, peopleLocationDescription: $visitLog.peopleNeedFurtherHelpLocation) {
                         questionNumber += 1
                     } previousAction: {
                         questionNumber -= 1

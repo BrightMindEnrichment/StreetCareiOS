@@ -17,9 +17,16 @@ struct InputTileNumber: View {
     var disclaimerText: String?
     var placeholderText: String?
     
+    var descriptionLabel2: String?
+    var placeholderText2: String?
+    var disclaimerText2: String?
+
+    
     @Binding var number: Int
-    @State private var numberString = "0" 
+    var peopleLocationDescription: Binding<String>?
+    @State private var numberString = "0"
     @State private var peopledescription = ""
+    @State private var peopledescription2 = ""
     @State private var showAlert = false
     
     var nextAction: () -> ()
@@ -118,6 +125,32 @@ struct InputTileNumber: View {
                         .padding(.horizontal)
                         .padding(.top, 8)
                 }
+                
+                if let binding = peopleLocationDescription {
+                    if let label2 = descriptionLabel2, !label2.isEmpty {
+                        Text(label2)
+                            .font(.headline)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .padding(.horizontal)
+                            .foregroundColor(Color("SecondaryColor"))
+                    }
+
+                    if let placeholder2 = placeholderText2, !placeholder2.isEmpty {
+                        AutoGrowingTextEditor(text: binding, placeholder: placeholder2)
+                            .font(.system(size: 15))
+                    }
+
+                    if let disclaimer2 = disclaimerText2, !disclaimer2.isEmpty {
+                        Text(disclaimer2)
+                            .font(.footnote)
+                            .multilineTextAlignment(.center)
+                            .fixedSize(horizontal: false, vertical: true)
+                            .frame(maxWidth: .infinity)
+                            .padding(.horizontal)
+                            .padding(.top, 8)
+                    }
+                }
+
                 
                 HStack {
                     Button("Previous") {
