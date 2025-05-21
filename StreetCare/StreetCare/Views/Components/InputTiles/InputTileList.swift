@@ -19,6 +19,7 @@ struct InputTileList: View {
     var size = CGSize(width: 350.0, height: 450.0)
     var question1: String
     var question2: String
+
     
     @Binding var foodAndDrinks: Bool
     @Binding var clothes: Bool
@@ -33,7 +34,10 @@ struct InputTileList: View {
     var nextAction: () -> ()
     var previousAction: () -> ()
     var skipAction: () -> ()
-    
+    var buttonMode: ButtonMode = .navigation
+    var showProgressBar: Bool = true
+    @Environment(\.presentationMode) var presentationMode
+    @State private var showSuccessAlert = false
     var body: some View {
 
         ZStack {
@@ -103,55 +107,84 @@ struct InputTileList: View {
                 
                 Spacer()
                 
-                HStack {
-                    Button("Previous") {
-                        previousAction()
+                if buttonMode == .navigation {
+                    HStack {
+                        Button("Previous") {
+                            previousAction()
+                        }
+                        .foregroundColor(Color("SecondaryColor"))
+                        .font(.footnote)
+                        .padding(.horizontal, 16)
+                        .padding(.vertical, 8)
+                        .background(Capsule().fill(Color.white))
+                        .overlay(Capsule().stroke(Color("SecondaryColor"), lineWidth: 2))
+                        
+                        Spacer()
+                        
+                        Button("Next") {
+                            nextAction()
+                        }
+                        .foregroundColor(Color("PrimaryColor"))
+                        .fontWeight(.bold)
+                        .padding(.horizontal, 16)
+                        .padding(.vertical, 8)
+                        .background(Capsule().fill(Color("SecondaryColor")))
                     }
-                    .foregroundColor(Color("SecondaryColor"))
-                    .font(.footnote)
-                    .padding(.horizontal, 16)
-                    .padding(.vertical, 8)
-                    .background(
-                        Capsule()
-                            .fill(Color.white) // Fill with white
-                    )
-                    .overlay(
-                        Capsule()
-                            .stroke(Color("SecondaryColor"), lineWidth: 2) // Stroke with dark green
-                    )
-                    
-                    Spacer()
-                    
-                    Button(" Next  ") {
-                        nextAction()
+                    .padding()
+                } else if buttonMode == .update {
+                    HStack {
+                        Button("Cancel") {
+                            presentationMode.wrappedValue.dismiss()
+                        }
+                        .foregroundColor(Color("SecondaryColor"))
+                        .font(.footnote)
+                        .padding(.horizontal, 16)
+                        .padding(.vertical, 8)
+                        .background(Capsule().fill(Color.white))
+                        .overlay(Capsule().stroke(Color("SecondaryColor"), lineWidth: 2))
+                        
+                        Spacer()
+                        
+                        Button("Update") {
+                            showSuccessAlert = true
+                            nextAction()
+                        }
+                        .foregroundColor(Color("PrimaryColor"))
+                        .fontWeight(.bold)
+                        .padding(.horizontal, 16)
+                        .padding(.vertical, 8)
+                        .background(Capsule().fill(Color("SecondaryColor")))
                     }
-                    .foregroundColor(Color("PrimaryColor"))
-                    .fontWeight(.bold)
-                    .padding(.horizontal, 16)
-                    .padding(.vertical, 8)
-                    .background(
-                        Capsule()
-                            .fill(Color("SecondaryColor"))
-                    )
+                    .padding()
                 }
-                .padding()
                 
             }
         }
         .frame(width: size.width, height: size.height)
+        .alert(isPresented: $showSuccessAlert) {
+            Alert(
+                title: Text("Updated"),
+                message: Text("The information was successfully updated."),
+                dismissButton: .default(Text("OK")) {
+                    presentationMode.wrappedValue.dismiss()
+                }
+            )
+        }
         
-        SegmentedProgressBar(
-            totalSegments: totalQuestions,
-            filledSegments: questionNumber,
-            tileWidth: 300
-        )
-        
-        Text("Progress")
-            .font(.footnote)
-            .padding(.top, 4)
-            .fontWeight(.bold)
+        if showProgressBar {
+            SegmentedProgressBar(
+                totalSegments: totalQuestions,
+                filledSegments: questionNumber,
+                tileWidth: 300
+            )
+            Text("Progress")
+                .font(.footnote)
+                .padding(.top, 4)
+                .fontWeight(.bold)
+        }
 
     } // end body
+    
 } // end struct
 
 

@@ -8,10 +8,6 @@
 
 import SwiftUI
 
-/*enum ButtonMode {
-    case navigation  // Shows Previous & Next
-    case update      // Shows Update & Cancel
-}*/
 
 struct InputTileDate: View {
 
@@ -102,27 +98,55 @@ struct InputTileDate: View {
                 }
 
                 HStack(spacing: 12) {
-                    HStack {
+                    // Date Picker Box
+                    HStack(spacing: 8) {
                         Image(systemName: "calendar")
-                        Text(dateFormatter.string(from: datetimeValue))
-                    }
-                    .padding()
-                    .frame(width: 160)
-                    .background(Color.white)
-                    .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color.black, lineWidth: 1))
+                            .foregroundColor(.black)
 
-                    HStack {
-                        Image(systemName: "clock")
-                        Text(timeFormatter.string(from: datetimeValue))
+                        DatePicker(
+                            "",
+                            selection: $datetimeValue,
+                            displayedComponents: [.date]
+                        )
+                        .labelsHidden()
+                        .datePickerStyle(.compact)
                     }
-                    .padding()
-                    .frame(width: 140)
+                    .padding(.leading, 12)
+                    .padding(.vertical, 10)
+                    .frame(width: 175, alignment: .leading)
                     .background(Color.white)
-                    .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color.black, lineWidth: 1))
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 10)
+                            .stroke(Color.black, lineWidth: 1)
+                    )
+                    .cornerRadius(10)
+
+                    // Time Picker Box
+                    HStack(spacing: 8) {
+                        Image(systemName: "clock")
+                            .foregroundColor(.black)
+
+                        DatePicker(
+                            "",
+                            selection: $datetimeValue,
+                            displayedComponents: [.hourAndMinute]
+                        )
+                        .labelsHidden()
+                        .datePickerStyle(.compact)
+                    }
+                    .padding(.leading, 12)
+                    .padding(.vertical, 10)
+                    .frame(width: 140, alignment: .leading)
+                    .background(Color.white)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 10)
+                            .stroke(Color.black, lineWidth: 1)
+                    )
+                    .cornerRadius(10)
                 }
-                .cornerRadius(10)
-                .frame(width: 320)
-                
+                .frame(width: 335)
+                .padding(.horizontal)
+
                 if buttonMode == .navigation{
                     Spacer()
                 }
@@ -136,20 +160,33 @@ struct InputTileDate: View {
                 } label: {
                     HStack(spacing: 8) {
                         Image(systemName: "globe")
+                            .foregroundColor(.black)
+
                         Text("\(selectedTimeZone.replacingOccurrences(of: "America/", with: "").replacingOccurrences(of: "_", with: " ")) (\(TimeZone(identifier: selectedTimeZone)?.abbreviation() ?? ""))")
+                            .foregroundColor(.black)
+                            .font(.body)
+                            .lineLimit(1)
+
                         Spacer()
+
                         Image(systemName: "triangle.fill")
                             .resizable()
                             .frame(width: 8, height: 6)
                             .rotationEffect(.degrees(180))
+                            .foregroundColor(.black)
                     }
+                    //.padding(.horizontal)
+                    //.padding(.vertical, 6)
                     .padding()
                     .background(Color.white)
-                    .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color.black, lineWidth: 1))
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 10)
+                            .stroke(Color.black, lineWidth: 1)
+                    )
                     .cornerRadius(10)
-                    .frame(width: 310)
+                    .frame(width: 335, alignment: .leading)
+                    .padding(.horizontal)
                 }
-                .padding(.horizontal)
 
                 if buttonMode == .navigation {
                     HStack {
