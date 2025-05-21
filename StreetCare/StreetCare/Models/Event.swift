@@ -41,7 +41,7 @@ class Event: Identifiable {
     var eventDateStamp : Timestamp?
     var eventStartTimeStamp : Timestamp?
     var eventEndTimeStamp : Timestamp?
-    //var isRegistered : Bool
+    var timeZone: String?
     var isFlagged : Bool = false
     var flaggedByUser:String? = ""
     
@@ -60,6 +60,7 @@ class EventData : ObservableObject, Identifiable{
     @Published var monthYear : String = ""
     @Published var date : (String?, String?, String?) = ("","","")
     @Published var event =  Event()
+
 }
 
 class HelpRequest {

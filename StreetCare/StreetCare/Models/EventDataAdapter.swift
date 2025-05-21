@@ -226,6 +226,9 @@ class EventDataAdapter {
                             event.eventStartTime = event.eventStartTimeStamp?.dateValue()
                             event.eventEndTimeStamp = data["eventEndTime"] as? Timestamp
                             event.eventEndTime = event.eventEndTimeStamp?.dateValue()
+                            print("📍 TimeZone from Firestore: \(data["timeZone"] ?? "nil")")
+                            event.timeZone = data["timeZone"] as? String
+
                             
                             event.uid = data["uid"] as? String
                             
@@ -615,6 +618,9 @@ class EventViewModel: ObservableObject {
                     event.emailAddress = data["emailAddress"] as? String
                     event.contactNumber = data["contactNumber"] as? String
                     event.consentStatus = data["consentStatus"] as? Bool ?? false
+                    event.timeZone = data["timeZone"] as? String
+                    
+                    
 
                     // Wrap Event in EventData
                     let eventData = EventData()

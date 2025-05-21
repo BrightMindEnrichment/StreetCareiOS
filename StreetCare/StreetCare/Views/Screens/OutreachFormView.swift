@@ -55,7 +55,9 @@ struct OutreachFormView: View {
         !state.isEmpty &&
         !city.isEmpty &&
         !helpType.isEmpty &&
-        !maxCapacity.isEmpty
+        !maxCapacity.isEmpty &&
+        !eventDescription.isEmpty
+        
     }
 
     func saveToFirestore() {
@@ -116,6 +118,15 @@ struct OutreachFormView: View {
             return
             
         }
+        if eventDescription.isEmpty{
+            alertMessage = "Please enter Event Description"
+            alertTitle = "Missing Event Description"
+            chaptermemberMessage1 = ""
+            primaryButtonText = "OK"
+            secondaryButtonText = "Exit"
+            showAlert = true
+            return
+        }
         if !contactNumber.isEmpty && contactNumber.count < 10 {
             alertTitle = "Invalid Number"
             alertMessage = "Please enter a 10-digit contact number."
@@ -143,6 +154,7 @@ struct OutreachFormView: View {
             "eventDate": Timestamp(date: startDate),
             "eventStartTime": Timestamp(date: startTime),
             "eventEndTime": Timestamp(date: endTime),
+            "timeZone": TimeZoneHelper.getLocalizedTimeZoneAbbreviation(),
             "helpRequest": [
                 "helpType": helpType,
                 "interests": 1,
@@ -545,74 +557,77 @@ struct TimePickerWithTimeZone: View {
     @Binding var startTime: Date
     @Binding var endDate: Date
     @Binding var endTime: Date
-
+    
     var body: some View {
         VStack(alignment: .leading, spacing: 15) {
             // Start Date
             HStack {
                 Text(NSLocalizedString("startDate", comment: "Start Date Label"))
                     .font(.headline)
-
+                
                 Spacer()
-
+                
                 DatePicker("", selection: $startDate, displayedComponents: .date)
                     .labelsHidden()
                     .datePickerStyle(CompactDatePickerStyle())
             }
-
+            
             // Start Time
             HStack {
                 Text(NSLocalizedString("startTime", comment: "Start Time Label"))
                     .font(.headline)
-
+                
                 Spacer()
-
+                
                 DatePicker("", selection: $startTime, displayedComponents: .hourAndMinute)
                     .labelsHidden()
                     .datePickerStyle(CompactDatePickerStyle())
-
-                Text(getLocalizedTimeZoneAbbreviation())
+                
+                Text(TimeZoneHelper.getLocalizedTimeZoneAbbreviation())
                     .font(.subheadline)
                     .foregroundColor(.gray)
             }
-
+            
             // End Date
             HStack {
                 Text(NSLocalizedString("endDate", comment: "End Date Label"))
                     .font(.headline)
-
+                
                 Spacer()
-
+                
                 DatePicker("", selection: $endDate, displayedComponents: .date)
                     .labelsHidden()
                     .datePickerStyle(CompactDatePickerStyle())
             }
-
+            
             // End Time
             HStack {
                 Text(NSLocalizedString("endTime", comment: "End Time Label"))
                     .font(.headline)
-
+                
                 Spacer()
-
+                
                 DatePicker("", selection: $endTime, displayedComponents: .hourAndMinute)
                     .labelsHidden()
                     .datePickerStyle(CompactDatePickerStyle())
-
-                Text(getLocalizedTimeZoneAbbreviation())
+                
+                Text(TimeZoneHelper.getLocalizedTimeZoneAbbreviation())
                     .font(.subheadline)
                     .foregroundColor(.gray)
             }
         }
         .padding()
     }
+}
 
     // Function to get the localized time zone abbreviation
-    func getLocalizedTimeZoneAbbreviation() -> String {
-        let abbreviation = TimeZone.current.abbreviation() ?? "UTC"
-        return NSLocalizedString(abbreviation, comment: "Localized Time Zone Abbreviation")
+struct TimeZoneHelper {
+    static func getLocalizedTimeZoneAbbreviation() -> String {
+        return TimeZone.current.abbreviation() ?? "UTC"
     }
 }
+
+
 struct GooglePlacesAutocomplete: UIViewControllerRepresentable {
     @Binding var street: String
     @Binding var city: String

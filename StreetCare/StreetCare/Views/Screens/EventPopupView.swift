@@ -100,9 +100,12 @@ struct EventPopupView: View {
                         let day = event.date.1 ?? ""
                         let time = event.date.2 ?? ""
                         let monthyear = event.monthYear
+                        let timeZone = event.event.timeZone ?? ""
 
-                        Text("\(monthyear), \(day) \(date), \(time)")
+                        Text("\(monthyear), \(day) \(date), \(time) \(timeZone)")
                             .font(.system(size: 13))
+                        
+                         
                     }
                 }
 
