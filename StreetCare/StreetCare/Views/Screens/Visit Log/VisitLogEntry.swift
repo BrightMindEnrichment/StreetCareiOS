@@ -89,22 +89,17 @@ struct VisitLogEntry: View {
                         totalQuestions: 6,
                         question1: "What kind of support",
                         question2: "did you provide?",
-                        foodAndDrinks: $visitLog.foodAndDrinks,
-                        clothes: $visitLog.clothes,
-                        hygine: $visitLog.hygine,
-                        wellness: $visitLog.wellness,
-                        medical: $visitLog.medical,
-                        socialworker: $visitLog.socialworker,
-                        legal: $visitLog.legal,
-                        other: $visitLog.other,
-                        otherNotes: $visitLog.otherNotes
-                    ) {
-                        questionNumber += 1
-                    } previousAction: {
-                        questionNumber -= 1
-                    } skipAction: {
-                        questionNumber += 1
-                    }
+                        visitLog: visitLog,
+                        nextAction: {
+                            questionNumber += 1
+                        },
+                        previousAction: {
+                            questionNumber -= 1
+                        },
+                        skipAction: {
+                            questionNumber += 1
+                        }
+                    )
                 
                 case 5:
                     InputTileNumber(questionNumber: 5, totalQuestions: 6, tileWidth: 300, tileHeight: 460, question1: "How many items" , question2: "did you donate?", question3:"", question4:"", descriptionLabel: "", disclaimerText: "", placeholderText: "Enter notes here", number: $visitLog.itemQty) {
@@ -178,22 +173,17 @@ struct VisitLogEntry: View {
                         totalQuestions: 7,
                         question1: "What kind of support",
                         question2: "do they still need?",
-                        foodAndDrinks: $visitLog.furtherfoodAndDrinks,
-                        clothes: $visitLog.furtherClothes,
-                        hygine: $visitLog.furtherHygine,
-                        wellness: $visitLog.furtherWellness,
-                        medical: $visitLog.medical,
-                        socialworker: $visitLog.socialworker,
-                        legal: $visitLog.legal,
-                        other: $visitLog.furtherOther,
-                        otherNotes: $visitLog.furtherOtherNotes
-                    ) {
-                        questionNumber += 1
-                    } previousAction: {
-                        questionNumber -= 1
-                    } skipAction: {
-                        questionNumber += 1
-                    }
+                        visitLog: visitLog,
+                        nextAction: {
+                            questionNumber += 1
+                        },
+                        previousAction: {
+                            questionNumber -= 1
+                        },
+                        skipAction: {
+                            questionNumber += 1
+                        }
+                    )
                 case 14:
                     InputTileVolunteerAgain(questionNumber: 7, totalQuestions: 7, question1: "Would you like to", question2: "volunteer again?", volunteerAgain: $visitLog.volunteerAgain) {
                         saveVisitLog()

@@ -89,6 +89,8 @@ struct VisitLogView: View {
     @State private var editedSupportProvided = VisitLog(id: "")
     @State private var navigateToEditSupportNeeded = false
     @State private var editedSupportNeeded = VisitLog(id: "")
+    @StateObject var editedFurtherSupport = VisitLog(id: "")
+    @State private var navigateToEditFurtherSupport = false
     
     var body: some View {
         ScrollView {
@@ -187,41 +189,7 @@ struct VisitLogView: View {
                         EmptyView()
                     }
                 }
-                
-                
-                if log.didProvideSpecificHelp {
-                    VStack {
-                        Text("What kind of support did you provide?")
-                            .screenLeft()
-                            .font(.system(size: 16.0)).bold()
-                            .padding(EdgeInsets(top: 10.0, leading: 20.0, bottom: 0.0, trailing: 20.0))
-                        
-                        VStack {
-                            if log.foodAndDrinks {
-                                Text("Food & Drinks").screenLeft().padding(EdgeInsets(top: 10.0, leading: 20.0, bottom: 10.0, trailing: 20.0)).font(.system(size: 15.0))
-                            }
-                            
-                            if log.clothes {
-                                Text("Clothes").screenLeft().padding(EdgeInsets(top: 10.0, leading: 20.0, bottom: 10.0, trailing: 20.0)).font(.system(size: 15.0))
-                            }
-                            
-                            if log.hygine {
-                                Text("Hygiene Products").screenLeft().padding(EdgeInsets(top: 10.0, leading: 20.0, bottom: 10.0, trailing: 20.0)).font(.system(size: 15.0))
-                            }
-                            
-                            if log.wellness {
-                                Text("Wellness/Emotional Support").screenLeft().padding(EdgeInsets(top: 10.0, leading: 20.0, bottom: 10.0, trailing: 20.0)).font(.system(size: 15.0))
-                            }
-                            
-                            if log.other && log.otherNotes.count > 0 {
-                                Text(log.otherNotes).screenLeft().padding(EdgeInsets(top: 10.0, leading: 20.0, bottom: 10.0, trailing: 20.0)).font(.system(size: 15.0))
-                            }
-                        }
-                        Rectangle()
-                            .frame(width: 350.0, height: 2.0)
-                            .foregroundColor(.gray)
-                    }
-                }
+
                 if log.didProvideSpecificHelp {
                     HStack {
                         Text("What kind of support did you provide?")
@@ -243,28 +211,46 @@ struct VisitLogView: View {
                         .buttonStyle(BorderlessButtonStyle())
                         .padding(.trailing, 20.0)
                     }
+                    let supportList = [
+                        log.foodAndDrinks ? "Food and Drink" : nil,
+                        log.clothes ? "Clothes" : nil,
+                        log.hygine ? "Hygiene Products" : nil,
+                        log.wellness ? "Wellness/Emotional Support" : nil,
+                        log.medical ? "Medical Help" : nil,
+                        log.socialworker ? "Social Worker/Psychiatrist" : nil,
+                        log.legal ? "Legal/Lawyer" : nil,
+                        (log.other && !log.otherNotes.isEmpty) ? log.otherNotes : nil
+                    ].compactMap { $0 }.joined(separator: ", ")
+
+                    Text(supportList)
+                        .font(.system(size: 15.0))
+                    
+                    Rectangle()
+                        .frame(width: 350.0, height: 2.0)
+                        .foregroundColor(.gray)
+                    
                     NavigationLink(
                         destination: InputTileList(
                             questionNumber: 1,
                             totalQuestions: 1,
                             question1: "Edit the support you provided",
                             question2: "",
-                            foodAndDrinks: $editedSupportProvided.foodAndDrinks,
-                            clothes: $editedSupportProvided.clothes,
-                            hygine: $editedSupportProvided.hygine,
-                            wellness: $editedSupportProvided.wellness,
-                            medical: $editedSupportProvided.medical,
-                            socialworker: $editedSupportProvided.socialworker,
-                            legal: $editedSupportProvided.legal,
-                            other: $editedSupportProvided.other,
-                            otherNotes: $editedSupportProvided.otherNotes,
+                            visitLog: editedSupportProvided,
                             nextAction: {
+                                let updatedFields: [String: Any] = [
+                                    "foodAndDrinks": editedSupportProvided.foodAndDrinks,
+                                    "clothes": editedSupportProvided.clothes,
+                                    "hygine": editedSupportProvided.hygine,
+                                    "wellness": editedSupportProvided.wellness,
+                                    "medical": editedSupportProvided.medical,
+                                    "socialworker": editedSupportProvided.socialworker,
+                                    "legal": editedSupportProvided.legal,
+                                    "other": editedSupportProvided.other,
+                                    "otherNotes": editedSupportProvided.otherNotes
+                                ]
+
                                 let adapter = VisitLogDataAdapter()
-                                adapter.updateVisitLogField(
-                                    log.id,
-                                    field: "didProvideSpecificHelp", // or whatever field you're storing the whole support struct in
-                                    value: editedSupportProvided.toDictionary()
-                                ) {
+                                adapter.updateVisitLogFields(log.id, fields: updatedFields) {
                                     log.foodAndDrinks = editedSupportProvided.foodAndDrinks
                                     log.clothes = editedSupportProvided.clothes
                                     log.hygine = editedSupportProvided.hygine
@@ -439,7 +425,7 @@ struct VisitLogView: View {
                         }
                     }
                     
-                    // Support they still need
+                    /*// Support they still need
                     if log.furtherfoodAndDrinks || log.furtherClothes || log.furtherHygine || log.furtherWellness || log.furthermedical || log.furthersocialworker || log.furtherlegal || log.furtherOther {
                         VStack {
                             Text("What kind of support do they still need?")
@@ -502,9 +488,104 @@ struct VisitLogView: View {
                                 .frame(width: 350.0, height: 2.0)
                                 .foregroundColor(.gray)
                         }
-                    }
+                    }*/
+                
+
                     
                     // Planned follow-up date
+                if log.furtherfoodAndDrinks || log.furtherClothes || log.furtherHygine || log.furtherWellness || log.furthermedical || log.furthersocialworker || log.furtherlegal || log.furtherOther {
+                    HStack {
+                        Text("What kind of support do they still need?")
+                            .screenLeft()
+                            .font(.system(size: 16.0)).bold()
+                            .padding(.leading, 20.0)
+                        
+                        Spacer()
+                        
+                        Button(action: {
+                            editedFurtherSupport.furtherfoodAndDrinks = log.furtherfoodAndDrinks
+                            editedFurtherSupport.furtherClothes = log.furtherClothes
+                            editedFurtherSupport.furtherHygine = log.furtherHygine
+                            editedFurtherSupport.furtherWellness = log.furtherWellness
+                            editedFurtherSupport.furthermedical = log.furthermedical
+                            editedFurtherSupport.furthersocialworker = log.furthersocialworker
+                            editedFurtherSupport.furtherlegal = log.furtherlegal
+                            editedFurtherSupport.furtherOther = log.furtherOther
+                            editedFurtherSupport.furtherOtherNotes = log.furtherOtherNotes
+                            navigateToEditFurtherSupport = true
+                        }) {
+                            Image("Tab-VisitLog-Inactive")
+                                .resizable()
+                                .frame(width: 16, height: 16)
+                                .foregroundColor(.gray)
+                        }
+                        .buttonStyle(BorderlessButtonStyle())
+                        .padding(.trailing, 20.0)
+                    }
+
+                    let supportStillNeededList = [
+                        log.furtherfoodAndDrinks ? "Food and Drink" : nil,
+                        log.furtherClothes ? "Clothes" : nil,
+                        log.furtherHygine ? "Hygiene Products" : nil,
+                        log.furtherWellness ? "Wellness/Emotional Support" : nil,
+                        log.furthermedical ? "Medical Help" : nil,
+                        log.furthersocialworker ? "Social Worker/Psychiatrist" : nil,
+                        log.furtherlegal ? "Legal/Lawyer" : nil,
+                        (log.furtherOther && !log.furtherOtherNotes.isEmpty) ? log.furtherOtherNotes : nil
+                    ].compactMap { $0 }.joined(separator: ", ")
+
+                    Text(supportStillNeededList)
+                        .font(.system(size: 15.0))
+
+                    Rectangle()
+                        .frame(width: 350.0, height: 2.0)
+                        .foregroundColor(.gray)
+
+                    NavigationLink(
+                        destination: InputTileList(
+                            questionNumber: 1,
+                            totalQuestions: 1,
+                            question1: "Edit the support they still need",
+                            question2: "",
+                            visitLog: editedFurtherSupport,
+                            nextAction: {
+                                let updatedFields: [String: Any] = [
+                                    "furtherfoodAndDrinks": editedFurtherSupport.furtherfoodAndDrinks,
+                                    "furtherClothes": editedFurtherSupport.furtherClothes,
+                                    "furtherHygine": editedFurtherSupport.furtherHygine,
+                                    "furtherWellness": editedFurtherSupport.furtherWellness,
+                                    "furthermedical": editedFurtherSupport.furthermedical,
+                                    "furthersocialworker": editedFurtherSupport.furthersocialworker,
+                                    "furtherlegal": editedFurtherSupport.furtherlegal,
+                                    "furtherOther": editedFurtherSupport.furtherOther,
+                                    "furtherOtherNotes": editedFurtherSupport.furtherOtherNotes
+                                ]
+
+                                let adapter = VisitLogDataAdapter()
+                                adapter.updateVisitLogFields(log.id, fields: updatedFields) {
+                                    log.furtherfoodAndDrinks = editedFurtherSupport.furtherfoodAndDrinks
+                                    log.furtherClothes = editedFurtherSupport.furtherClothes
+                                    log.furtherHygine = editedFurtherSupport.furtherHygine
+                                    log.furtherWellness = editedFurtherSupport.furtherWellness
+                                    log.furthermedical = editedFurtherSupport.furthermedical
+                                    log.furthersocialworker = editedFurtherSupport.furthersocialworker
+                                    log.furtherlegal = editedFurtherSupport.furtherlegal
+                                    log.furtherOther = editedFurtherSupport.furtherOther
+                                    log.furtherOtherNotes = editedFurtherSupport.furtherOtherNotes
+                                    navigateToEditFurtherSupport = false
+                                }
+                            },
+                            previousAction: { navigateToEditFurtherSupport = false },
+                            skipAction: { navigateToEditFurtherSupport = false },
+                            buttonMode: .update,
+                            showProgressBar: false
+                        ),
+                        isActive: $navigateToEditFurtherSupport
+                    ) {
+                        EmptyView()
+                    }
+                }
+                // Planned follow-up date
                     if log.followUpWhenVisit != Date.distantPast {
                         VisitLogDetailRow(
                             title: "Is there a planned date to interact with them again?",

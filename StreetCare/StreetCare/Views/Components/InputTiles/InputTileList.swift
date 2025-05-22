@@ -19,17 +19,7 @@ struct InputTileList: View {
     var size = CGSize(width: 350.0, height: 450.0)
     var question1: String
     var question2: String
-
-    
-    @Binding var foodAndDrinks: Bool
-    @Binding var clothes: Bool
-    @Binding var hygine: Bool
-    @Binding var wellness: Bool
-    @Binding var medical: Bool
-    @Binding var socialworker: Bool
-    @Binding var legal: Bool
-    @Binding var other: Bool
-    @Binding var otherNotes: String
+    @ObservedObject var visitLog: VisitLog
 
     var nextAction: () -> ()
     var previousAction: () -> ()
@@ -88,17 +78,17 @@ struct InputTileList: View {
                 
                 ScrollView {
                     VStack(alignment: .leading, spacing: 10) {
-                        checkbox("Food & Drinks", isChecked: $foodAndDrinks)
-                        checkbox("Clothes", isChecked: $clothes)
-                        checkbox("Hygiene Products", isChecked: $hygine)
-                        checkbox("Wellness/Emotional Support", isChecked: $wellness)
-                        checkbox("Medical Help", isChecked: $medical)
-                        checkbox("Social Worker/Psychiatrist", isChecked: $socialworker)
-                        checkbox("Legal/Lawyer", isChecked: $legal)
-                        checkbox("Other", isChecked: $other)
+                        checkbox("Food & Drinks", isChecked: $visitLog.foodAndDrinks)
+                        checkbox("Clothes", isChecked: $visitLog.clothes)
+                        checkbox("Hygiene Products", isChecked: $visitLog.hygine)
+                        checkbox("Wellness/Emotional Support", isChecked: $visitLog.wellness)
+                        checkbox("Medical Help", isChecked: $visitLog.medical)
+                        checkbox("Social Worker/Psychiatrist", isChecked: $visitLog.socialworker)
+                        checkbox("Legal/Lawyer", isChecked: $visitLog.legal)
+                        checkbox("Other", isChecked: $visitLog.other)
 
-                        if other {
-                            AutoGrowingTextEditor(text: $otherNotes, placeholder: NSLocalizedString("otherNotes", comment: ""))
+                        if visitLog.other {
+                            AutoGrowingTextEditor(text: $visitLog.otherNotes, placeholder: NSLocalizedString("otherNotes", comment: ""))
                         }
                     }
                     .padding()
@@ -186,35 +176,14 @@ struct InputTileList: View {
     } // end body
     
 } // end struct
-
-
 struct InputTileList_Previews: PreviewProvider {
-    
-    @State static var foodAndDrinks = false
-    @State static var clothes = false
-    @State static var hygine = false
-    @State static var wellness = false
-    @State static var medical = false
-    @State static var socialworker = false
-    @State static var legal = false
-    @State static var other = false
-    @State static var otherNotes = ""
-
     static var previews: some View {
         InputTileList(
             questionNumber: 1,
             totalQuestions: 5,
             question1: "What kind of help did you provide?",
             question2: "",
-            foodAndDrinks: $foodAndDrinks,
-            clothes: $clothes,
-            hygine: $hygine,
-            wellness: $wellness,
-            medical: $medical,
-            socialworker: $socialworker,
-            legal: $legal,
-            other: $other,
-            otherNotes: $otherNotes,
+            visitLog: VisitLog(id: UUID().uuidString),
             nextAction: {},
             previousAction: {},
             skipAction: {}
