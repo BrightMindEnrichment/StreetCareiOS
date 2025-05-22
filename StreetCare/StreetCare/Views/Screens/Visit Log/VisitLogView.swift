@@ -98,7 +98,7 @@ struct VisitLogView: View {
                     Map(coordinateRegion: $region, annotationItems: mapLocations) { location in
                         MapMarker(coordinate: location.coordinate)
                     }
-                        .frame(width: 350, height: 300)
+                    .frame(width: 350, height: 300)
                 }
                 Spacer(minLength: 20.0)
                 
@@ -110,7 +110,7 @@ struct VisitLogView: View {
                         navigateToEditInteractionDate = true
                     }
                 )
-
+                
                 NavigationLink(
                     destination: InputTileDate(
                         questionNumber: 1,
@@ -138,7 +138,7 @@ struct VisitLogView: View {
                 }
                 
                 /*let location = log.whenVisit.formatted(date: .abbreviated, time: .omitted) + ", " + log.whereVisit
-                Text(location).font(.system(size: 17.0)).bold()*/
+                 Text(location).font(.system(size: 17.0)).bold()*/
                 
                 VisitLogDetailRow(
                     title: "Where was your Interaction?",
@@ -153,7 +153,7 @@ struct VisitLogView: View {
                             navigateToEdit = true
                         }
                     )
-
+                    
                     NavigationLink(
                         destination: InputTileNumber(
                             questionNumber: 1,
@@ -187,14 +187,14 @@ struct VisitLogView: View {
                         EmptyView()
                     }
                 }
-
+                
                 
                 if log.didProvideSpecificHelp {
                     VStack {
                         Text("What kind of support did you provide?")
                             .screenLeft()
                             .font(.system(size: 16.0)).bold()
-                            .padding(EdgeInsets(top: 10.0, leading: 20.0, bottom: 0.0, trailing: 20.0)) 
+                            .padding(EdgeInsets(top: 10.0, leading: 20.0, bottom: 0.0, trailing: 20.0))
                         
                         VStack {
                             if log.foodAndDrinks {
