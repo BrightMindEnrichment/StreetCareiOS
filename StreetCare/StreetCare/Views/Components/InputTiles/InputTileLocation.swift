@@ -149,11 +149,11 @@ struct InputTileLocation: View {
                         Spacer()
                         
                         Button(" Next  ") {
-                            if city.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ||
-                               stateAbbreviation.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-                                // Show an alert or feedback to user
-                                failedToFindLocation = true
-                            } else {
+//                            if city.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ||
+//                               stateAbbreviation.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+//                                // Show an alert or feedback to user
+//                                failedToFindLocation = true
+//                            } else {
                                 // Manually composed address from input fields
                                 let manualAddress = [
                                     street.isEmpty ? nil : street,
@@ -170,7 +170,7 @@ struct InputTileLocation: View {
                                 }
 
                                 nextAction()
-                            }
+//                            }
                         }
 
 
@@ -188,11 +188,11 @@ struct InputTileLocation: View {
             }
         }
         .frame(width: size.width, height: size.height)
-        .alert("Missing Required Fields", isPresented: $failedToFindLocation, actions: {
-            Button("OK") {}
-        }, message: {
-            Text("Please enter both city and state before continuing.")
-        })
+//        .alert("Missing Required Fields", isPresented: $failedToFindLocation, actions: {
+//            Button("OK") {}
+//        }, message: {
+//            Text("Please enter both city and state before continuing.")
+//        })
         .loadingAnimation(isLoading: isLoading)
         .onAppear {
             locationManager = LocationManager {

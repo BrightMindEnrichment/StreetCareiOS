@@ -75,7 +75,7 @@ struct VisitLogEntry: View {
                     }
                     
                 case 3:
-                    InputTileNumber(questionNumber: 3, totalQuestions: 6, tileWidth: 300, tileHeight: 560, question1: "Describe who you" , question2: "supported and how",question3: "many individuals",question4: "were involved.",descriptionLabel: "Description", disclaimerText: NSLocalizedString("disclaimer", comment: ""), placeholderText: NSLocalizedString("peopledescription", comment: ""), number: $visitLog.peopleHelped) {
+                    InputTileNumber(questionNumber: 3, totalQuestions: 6, tileWidth: 360, tileHeight: 560, question1: "Describe who you" , question2: "supported and how",question3: "many individuals",question4: "were involved.",descriptionLabel: "Description", disclaimerText: NSLocalizedString("disclaimer", comment: ""), placeholderText: NSLocalizedString("peopledescription", comment: ""), number: $visitLog.peopleHelped) {
                         questionNumber += 1
                     } previousAction: {
                         questionNumber -= 1
@@ -107,7 +107,7 @@ struct VisitLogEntry: View {
                     }
                 
                 case 5:
-                    InputTileNumber(questionNumber: 5, totalQuestions: 6, tileWidth: 300, tileHeight: 460, question1: "How many items" , question2: "did you donate?", question3:"", question4:"", descriptionLabel: "", disclaimerText: "", placeholderText: "Enter notes here", number: $visitLog.itemQty) {
+                    InputTileNumber(questionNumber: 5, totalQuestions: 6, tileWidth: 300, tileHeight: 460, question1: "What and how many items" , question2: "did you share?", question3:"", question4:"", descriptionLabel: "", disclaimerText: "", placeholderText: "E.g. 2 bottles of water, 3 apples, 1 orange, 1 sandwich", number: $visitLog.itemQty) {
                         questionNumber += 1
                     } previousAction: {
                         questionNumber -= 1

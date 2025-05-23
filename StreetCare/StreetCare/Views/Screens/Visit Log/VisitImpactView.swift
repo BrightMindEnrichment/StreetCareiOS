@@ -160,13 +160,16 @@ struct VisitImpactView: View {
                                                 
                                                 Text("\(city), \(stateAbbr)")
                                                     .font(.system(size: 13.0))
-                                            }  else {
+                                            }  else if components.count >= 1 {
                                                 let city = components.indices.contains(0) ? components[0] : ""
                                                 let fullState = components.indices.contains(1) ? components[1] : ""
                                                 let stateAbbr = stateAbbreviations[fullState] ?? fullState
                                                 Text("\(city), \(stateAbbr)")
                                                     .font(.system(size: 13.0))
                                                 
+                                            } else {
+                                                Text("No location available")
+                                                    .font(.system(size: 13.0))
                                             }
                                         }
                                         
