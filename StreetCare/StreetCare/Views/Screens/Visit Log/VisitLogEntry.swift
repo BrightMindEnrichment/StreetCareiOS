@@ -139,10 +139,12 @@ struct VisitLogEntry: View {
                             questionNumber = 8
                         } skipAction: {
                             // User said “Skip/No” → jump straight to Done
+                            saveVisitLog()
                             questionNumber = 100
                         } yesAction: {
                             questionNumber = 8
                         } noAction: {
+                            saveVisitLog()
                             questionNumber = 100
                         }
                         
@@ -168,7 +170,7 @@ struct VisitLogEntry: View {
                     case 9:
                         InputTileNumber(
                             questionNumber: 2, totalQuestions: 7,
-                            tileWidth: 300, tileHeight: 490,
+                            tileWidth: 360, tileHeight: 467,
                             question1: "Who helped you", question2: "prepare or join?",
                             question3: "", question4: "",
                             descriptionLabel: "", disclaimerText: "",
@@ -185,7 +187,7 @@ struct VisitLogEntry: View {
                     case 10:
                         InputTileNumber(
                             questionNumber: 3, totalQuestions: 7,
-                            tileWidth: 300, tileHeight: 490,
+                            tileWidth: 360, tileHeight: 600,
                             question1: "How many people", question2: "still need support?",
                             question3: "", question4: "",
                             descriptionLabel: "", disclaimerText: "",

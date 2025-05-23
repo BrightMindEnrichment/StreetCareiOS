@@ -50,8 +50,8 @@ class VisitLog: ObservableObject, Identifiable {
     @Published var rating = 0
     @Published var ratingNotes = ""
     
-    @Published var durationHours = 0
-    @Published var durationMinutes = 30
+    @Published var durationHours = -1
+    @Published var durationMinutes = -1
     
     @Published var numberOfHelpers = 0
     
