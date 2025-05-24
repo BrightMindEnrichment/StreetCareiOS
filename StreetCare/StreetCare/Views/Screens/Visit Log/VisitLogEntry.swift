@@ -22,17 +22,19 @@ struct VisitLogEntry: View {
     
     var currentUser = Auth.auth().currentUser
     @State var isLoading = false
-    
+    @State var isComplete = false
+    @State private var volunteerAgain: Int = -1
     
     var body: some View {
             NavigationStack {
                 VStack {
                     
-                    Text("Log Your Interaction")
-                        .font(.title)
-                        .fontWeight(.bold)
-                        .padding()
-                    
+                    if !isComplete{
+                        Text("Log Your Interaction")
+                            .font(.title)
+                            .fontWeight(.bold)
+                            .padding()
+                    }
                     switch questionNumber {
                     // MARK: — Core 6 Questions
                     case 1:
@@ -47,17 +49,28 @@ struct VisitLogEntry: View {
                     case 2:
                         InputTileLocation(
                             questionNumber: 2, totalQuestions: totalQuestions,
-                            question1: "Where was your", question2: "Interaction?",
-                            textValue: $visitLog.whereVisit,
-                            location: $visitLog.location
-                        ) {
-                            questionNumber += 1
-                        } previousAction: {
-                            questionNumber -= 1
-                        } skipAction: {
-                            questionNumber += 1
-                        }
-                        
+                            question1: "Where was your" , question2: "Interaction?",
+                                                    textValue: Binding(
+                                                        get: { visitLog.whereVisit },
+                                                        set: { newValue in
+                                                            visitLog.whereVisit = newValue // ✅ Updates whereVisit
+                                                            print("📍 Updated visitLog.whereVisit: \(visitLog.whereVisit)")
+                                                        }
+                                                    ),
+                                                    location: Binding(
+                                                        get: { visitLog.location }, // ✅ Ensure visitLog.location updates
+                                                        set: { newValue in
+                                                            visitLog.location = newValue
+                                                            print("📍 Updated visitLog.location: \(visitLog.location.latitude), \(visitLog.location.longitude)")
+                                                        }
+                                                    )
+                                                ) {
+                                                    questionNumber += 1
+                                                } previousAction: {
+                                                    questionNumber -= 1
+                                                } skipAction: {
+                                                    questionNumber += 1
+                                                }
                     case 3:
                         InputTileNumber(
                             questionNumber: 3, totalQuestions: totalQuestions,
@@ -100,7 +113,7 @@ struct VisitLogEntry: View {
                     case 5:
                         InputTileNumber(
                             questionNumber: 5, totalQuestions: totalQuestions,
-                            tileWidth: 300, tileHeight: 480,
+                            tileWidth: 300, tileHeight: 460,
                             question1: "How many items", question2: "did you donate?",
                             question3: "", question4: "",
                             descriptionLabel: "", disclaimerText: "",
@@ -171,7 +184,7 @@ struct VisitLogEntry: View {
                         InputTileNumber(
                             questionNumber: 2, totalQuestions: 7,
                             tileWidth: 360, tileHeight: 467,
-                            question1: "Who helped you", question2: "prepare or join?",
+                            question1: "Who helped you", question2: "prepare or joined with you?",
                             question3: "", question4: "",
                             descriptionLabel: "", disclaimerText: "",
                             placeholderText: "",
@@ -223,7 +236,7 @@ struct VisitLogEntry: View {
                         }
                         
                     case 13:
-                        InputTileNotes(questionNumber: 6, totalQuestions: 7,tileWidth: 300, tileHeight: 490, question1: "Is there anything future",question2: "volunteers should", question3: "know?", placeholderText: "Enter notes here", otherNotes: $visitLog.futureNotes) {
+                        InputTileNotes(questionNumber: 6, totalQuestions: 7,tileWidth: 360, tileHeight: 380, question1: "Is there anything other volunteers",question2: "who help him / her / them", question3: "should know?", placeholderText: "Enter notes here", otherNotes: $visitLog.futureNotes) {
                                                 questionNumber += 1
                                             } previousAction: {
                                                 questionNumber -= 1
