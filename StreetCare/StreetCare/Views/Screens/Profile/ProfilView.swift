@@ -184,7 +184,7 @@ struct ProfilView: View {
                 newDonations += 1
             }
 
-            if visitLog.hygine {
+            if visitLog.hygiene {
                 newDonations += 1
             }
             

@@ -7,27 +7,31 @@
 
 import SwiftUI
 
-
+enum SupportMode {
+    case provided
+    case needed
+}
 
 struct InputTileList: View {
     
+
     var questionNumber: Int
     var totalQuestions: Int
-    
-    var optionCount = 5
-    
-    var size = CGSize(width: 350.0, height: 450.0)
+    var optionCount: Int
+    var size: CGSize
     var question1: String
     var question2: String
     @ObservedObject var visitLog: VisitLog
-
     var nextAction: () -> ()
     var previousAction: () -> ()
     var skipAction: () -> ()
     var buttonMode: ButtonMode = .navigation
     var showProgressBar: Bool = true
+    var supportMode: SupportMode = .provided
+
     @Environment(\.presentationMode) var presentationMode
     @State private var showSuccessAlert = false
+    
     var body: some View {
 
         ZStack {
@@ -78,17 +82,32 @@ struct InputTileList: View {
                 
                 ScrollView {
                     VStack(alignment: .leading, spacing: 10) {
-                        checkbox("Food & Drinks", isChecked: $visitLog.foodAndDrinks)
-                        checkbox("Clothes", isChecked: $visitLog.clothes)
-                        checkbox("Hygiene Products", isChecked: $visitLog.hygine)
-                        checkbox("Wellness/Emotional Support", isChecked: $visitLog.wellness)
-                        checkbox("Medical Help", isChecked: $visitLog.medical)
-                        checkbox("Social Worker/Psychiatrist", isChecked: $visitLog.socialworker)
-                        checkbox("Legal/Lawyer", isChecked: $visitLog.legal)
-                        checkbox("Other", isChecked: $visitLog.other)
+                        switch supportMode {
+                        case .provided:
+                            checkbox("Food & Drinks", isChecked: $visitLog.foodAndDrinks)
+                            checkbox("Clothes", isChecked: $visitLog.clothes)
+                            checkbox("Hygiene Products", isChecked: $visitLog.hygiene) // fix to $visitLog.hygiene if renamed
+                            checkbox("Wellness/Emotional Support", isChecked: $visitLog.wellness)
+                            checkbox("Medical Help", isChecked: $visitLog.medical)
+                            checkbox("Social Worker/Psychiatrist", isChecked: $visitLog.social)
+                            checkbox("Legal/Lawyer", isChecked: $visitLog.legal)
+                            checkbox("Other", isChecked: $visitLog.other)
+                            if visitLog.other {
+                                AutoGrowingTextEditor(text: $visitLog.otherNotes, placeholder: NSLocalizedString("otherNotes", comment: ""))
+                            }
 
-                        if visitLog.other {
-                            AutoGrowingTextEditor(text: $visitLog.otherNotes, placeholder: NSLocalizedString("otherNotes", comment: ""))
+                        case .needed:
+                            checkbox("Food & Drinks", isChecked: $visitLog.furtherFoodAndDrinks)
+                            checkbox("Clothes", isChecked: $visitLog.furtherClothes)
+                            checkbox("Hygiene Products", isChecked: $visitLog.furtherHygiene) // fix to $visitLog.furtherHygiene if renamed
+                            checkbox("Wellness/Emotional Support", isChecked: $visitLog.furtherWellness)
+                            checkbox("Medical Help", isChecked: $visitLog.furtherMedical)
+                            checkbox("Social Worker/Psychiatrist", isChecked: $visitLog.furtherSocial)
+                            checkbox("Legal/Lawyer", isChecked: $visitLog.furtherLegal)
+                            checkbox("Other", isChecked: $visitLog.furtherOther)
+                            if visitLog.furtherOther {
+                                AutoGrowingTextEditor(text: $visitLog.furtherOtherNotes, placeholder: NSLocalizedString("furtherOtherNotes", comment: ""))
+                            }
                         }
                     }
                     .padding()
@@ -181,6 +200,8 @@ struct InputTileList_Previews: PreviewProvider {
         InputTileList(
             questionNumber: 1,
             totalQuestions: 5,
+            optionCount: 5,
+            size: CGSize(width: 350, height: 450),
             question1: "What kind of help did you provide?",
             question2: "",
             visitLog: VisitLog(id: UUID().uuidString),

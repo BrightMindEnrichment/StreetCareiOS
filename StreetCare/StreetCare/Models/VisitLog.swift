@@ -12,84 +12,113 @@ import CoreLocation
 class VisitLog: ObservableObject, Identifiable {
     
     @Published var id: String
-    
+
+    // Visit details
     @Published var whereVisit = ""
+    @Published var locationDescription = ""
+    @Published var whenVisit = Date()
+    @Published var followUpWhenVisit = Date()
+    @Published var timeStamp = Date() // initial log creation time
+    @Published var lastEdited = Date() // most recent update time
+    
+    // Address components
     @Published var street = ""
     @Published var city = ""
     @Published var state = ""
     @Published var stateAbbv = ""
     @Published var zipcode = ""
+    @Published var location = CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0)
     
-    @Published var whenVisit = Date()
-    @Published var peopleHelped = 1
-    @Published var status = ""
-    @Published var flaggedByUser = ""
-    //@Published var public = false
+    // People helped
+    @Published var peopleHelped = 0
+    @Published var peopleHelpedDescription = ""
     
+    // Type of help provided
     @Published var foodAndDrinks = false
     @Published var clothes = false
-    @Published var hygine = false
+    @Published var hygiene = false
     @Published var wellness = false
     @Published var medical = false
-    @Published var socialworker = false
+    @Published var social = false
     @Published var legal = false
     @Published var other = false
     @Published var otherNotes = ""
 
-    @Published var furtherfoodAndDrinks = false
-    @Published var furtherClothes = false
-    @Published var furtherHygine = false
-    @Published var furtherWellness = false
-    @Published var furthermedical = false
-    @Published var furthersocialworker = false
-    @Published var furtherlegal = false
-    @Published var furtherOther = false
-    @Published var furtherOtherNotes = ""
-    
-    @Published var rating = 0
-    @Published var ratingNotes = ""
-    
-    @Published var durationHours = -1
-    @Published var durationMinutes = -1
-    
-    @Published var numberOfHelpers = 0
-    
-    @Published var volunteerAgain = -1
-    
-    @Published var location = CLLocationCoordinate2D.init(latitude: 0.0, longitude: 0.0)
-    
-    @Published var peopleNeedFurtherHelp = 0
-    @Published var followUpWhenVisit = Date()
+    // Items given
     @Published var itemQty = 0
+    @Published var itemQtyDescription = ""
 
     var whatGiven: [String] {
         var given = [String]()
-        
         if foodAndDrinks { given.append("Food and Drink") }
         if clothes { given.append("Clothes") }
-        if hygine { given.append("Hygiene Products") }
+        if hygiene { given.append("Hygiene Products") }
         if wellness { given.append("Wellness/ Emotional Support") }
         if medical { given.append("Medical Help") }
-        if socialworker { given.append("Social Worker /Psychiatrist") }
+        if social { given.append("Social Worker /Psychiatrist") }
         if legal { given.append("Legal/Lawyer") }
         if other, !otherNotes.isEmpty { given.append(otherNotes) }
-        
         return given
     }
-    var didProvideSpecificHelp: Bool {
-        return foodAndDrinks || clothes || hygine || wellness || other
+
+    // Rating
+    @Published var rating = 0
+    @Published var ratingNotes = ""
+
+    // Duration
+    @Published var durationHours = -1
+    @Published var durationMinutes = -1
+
+    // Helpers
+    @Published var numberOfHelpers = 0
+    @Published var numberOfHelpersComment = ""
+
+    // People still needing help
+    @Published var peopleNeedFurtherHelp = 0
+    @Published var peopleNeedFurtherHelpComment = ""
+    @Published var peopleNeedFurtherHelpLocation = ""
+    
+    // Further help needed
+    @Published var furtherFoodAndDrinks = false
+    @Published var furtherClothes = false
+    @Published var furtherHygiene = false
+    @Published var furtherWellness = false
+    @Published var furtherMedical = false
+    @Published var furtherSocial = false
+    @Published var furtherLegal = false
+    @Published var furtherOther = false
+    @Published var furtherOtherNotes = ""
+    
+    var whatGivenFurther: [String] {
+        var further = [String]()
+        if furtherFoodAndDrinks { further.append("Food and Drink") }
+        if furtherClothes { further.append("Clothes") }
+        if furtherHygiene { further.append("Hygiene Products") }
+        if furtherWellness { further.append("Wellness/ Emotional Support") }
+        if furtherMedical { further.append("Medical Help") }
+        if furtherSocial { further.append("Social Worker /Psychiatrist") }
+        if furtherLegal { further.append("Legal/Lawyer") }
+        if furtherOther, !furtherOtherNotes.isEmpty { further.append(furtherOtherNotes) }
+        return further
     }
-    
-    
+
+    // Volunteer preference
+    @Published var volunteerAgain = -1
     var volunteerAgainText: String {
-        switch(volunteerAgain) {
-        case 0:
-            return "No"
-        case 1:
-            return "Yes"
-        default:
-            return "Maybe"
+        switch volunteerAgain {
+        case 1: return "Yes"
+        case 0: return "No"
+        default: return "Maybe"
         }
+    }
+
+    // Misc
+    @Published var type = "" // "Android" or "iOS"
+    @Published var status = ""
+    @Published var flaggedByUser = ""
+    
+    var didProvideSpecificHelp: Bool {
+        return foodAndDrinks || clothes || hygiene || wellness || medical || social || legal || other
     }
 
     init(id: String) {

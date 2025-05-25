@@ -87,18 +87,17 @@ struct VisitLogEntry: View {
                     InputTileList(
                         questionNumber: 4,
                         totalQuestions: 6,
+                        optionCount: 5,
+                        size: CGSize(width: 350, height: 450),
                         question1: "What kind of support",
                         question2: "did you provide?",
                         visitLog: visitLog,
-                        nextAction: {
-                            questionNumber += 1
-                        },
-                        previousAction: {
-                            questionNumber -= 1
-                        },
-                        skipAction: {
-                            questionNumber += 1
-                        }
+                        nextAction: { questionNumber += 1 },
+                        previousAction: { questionNumber -= 1 },
+                        skipAction: { questionNumber += 1 },
+                        buttonMode: .navigation,
+                        showProgressBar: true,
+                        supportMode: .provided
                     )
                 
                 case 5:
@@ -171,18 +170,17 @@ struct VisitLogEntry: View {
                     InputTileList(
                         questionNumber: 4,
                         totalQuestions: 7,
+                        optionCount: 5,
+                        size: CGSize(width: 350, height: 450),
                         question1: "What kind of support",
                         question2: "do they still need?",
                         visitLog: visitLog,
-                        nextAction: {
-                            questionNumber += 1
-                        },
-                        previousAction: {
-                            questionNumber -= 1
-                        },
-                        skipAction: {
-                            questionNumber += 1
-                        }
+                        nextAction: { questionNumber += 1 },
+                        previousAction: { questionNumber -= 1 },
+                        skipAction: { questionNumber += 1 },
+                        buttonMode: .navigation,
+                        showProgressBar: true,
+                        supportMode: .needed
                     )
                 case 14:
                     InputTileVolunteerAgain(questionNumber: 7, totalQuestions: 7, question1: "Would you like to", question2: "volunteer again?", volunteerAgain: $visitLog.volunteerAgain) {

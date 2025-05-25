@@ -214,10 +214,10 @@ struct VisitLogView: View {
                     let supportList = [
                         log.foodAndDrinks ? "Food and Drink" : nil,
                         log.clothes ? "Clothes" : nil,
-                        log.hygine ? "Hygiene Products" : nil,
+                        log.hygiene ? "Hygiene Products" : nil,
                         log.wellness ? "Wellness/Emotional Support" : nil,
                         log.medical ? "Medical Help" : nil,
-                        log.socialworker ? "Social Worker/Psychiatrist" : nil,
+                        log.social ? "Social Worker/Psychiatrist" : nil,
                         log.legal ? "Legal/Lawyer" : nil,
                         (log.other && !log.otherNotes.isEmpty) ? log.otherNotes : nil
                     ].compactMap { $0 }.joined(separator: ", ")
@@ -240,7 +240,7 @@ struct VisitLogView: View {
                                 let updatedFields: [String: Any] = [
                                     "foodAndDrinks": editedSupportProvided.foodAndDrinks,
                                     "clothes": editedSupportProvided.clothes,
-                                    "hygine": editedSupportProvided.hygine,
+                                    "hygine": editedSupportProvided.hygiene,
                                     "wellness": editedSupportProvided.wellness,
                                     "medical": editedSupportProvided.medical,
                                     "socialworker": editedSupportProvided.socialworker,
@@ -253,10 +253,10 @@ struct VisitLogView: View {
                                 adapter.updateVisitLogFields(log.id, fields: updatedFields) {
                                     log.foodAndDrinks = editedSupportProvided.foodAndDrinks
                                     log.clothes = editedSupportProvided.clothes
-                                    log.hygine = editedSupportProvided.hygine
+                                    log.hygiene = editedSupportProvided.hygiene
                                     log.wellness = editedSupportProvided.wellness
                                     log.medical = editedSupportProvided.medical
-                                    log.socialworker = editedSupportProvided.socialworker
+                                    log.social = editedSupportProvided.social
                                     log.legal = editedSupportProvided.legal
                                     log.other = editedSupportProvided.other
                                     log.otherNotes = editedSupportProvided.otherNotes
@@ -493,7 +493,7 @@ struct VisitLogView: View {
 
                     
                     // Planned follow-up date
-                if log.furtherfoodAndDrinks || log.furtherClothes || log.furtherHygine || log.furtherWellness || log.furthermedical || log.furthersocialworker || log.furtherlegal || log.furtherOther {
+                if log.furtherFoodAndDrinks || log.furtherClothes || log.furtherHygiene || log.furtherWellness || log.furtherMedical || log.furtherSocial || log.furtherLegal || log.furtherOther {
                     HStack {
                         Text("What kind of support do they still need?")
                             .screenLeft()
@@ -503,13 +503,13 @@ struct VisitLogView: View {
                         Spacer()
                         
                         Button(action: {
-                            editedFurtherSupport.furtherfoodAndDrinks = log.furtherfoodAndDrinks
+                            editedFurtherSupport.furtherFoodAndDrinks = log.furtherFoodAndDrinks
                             editedFurtherSupport.furtherClothes = log.furtherClothes
-                            editedFurtherSupport.furtherHygine = log.furtherHygine
+                            editedFurtherSupport.furtherHygiene = log.furtherHygiene
                             editedFurtherSupport.furtherWellness = log.furtherWellness
-                            editedFurtherSupport.furthermedical = log.furthermedical
-                            editedFurtherSupport.furthersocialworker = log.furthersocialworker
-                            editedFurtherSupport.furtherlegal = log.furtherlegal
+                            editedFurtherSupport.furtherMedical = log.furtherMedical
+                            editedFurtherSupport.furtherSocial = log.furtherSocial
+                            editedFurtherSupport.furtherLegal = log.furtherLegal
                             editedFurtherSupport.furtherOther = log.furtherOther
                             editedFurtherSupport.furtherOtherNotes = log.furtherOtherNotes
                             navigateToEditFurtherSupport = true
@@ -524,13 +524,13 @@ struct VisitLogView: View {
                     }
 
                     let supportStillNeededList = [
-                        log.furtherfoodAndDrinks ? "Food and Drink" : nil,
+                        log.furtherFoodAndDrinks ? "Food and Drink" : nil,
                         log.furtherClothes ? "Clothes" : nil,
-                        log.furtherHygine ? "Hygiene Products" : nil,
+                        log.furtherHygiene ? "Hygiene Products" : nil,
                         log.furtherWellness ? "Wellness/Emotional Support" : nil,
-                        log.furthermedical ? "Medical Help" : nil,
-                        log.furthersocialworker ? "Social Worker/Psychiatrist" : nil,
-                        log.furtherlegal ? "Legal/Lawyer" : nil,
+                        log.furtherMedical ? "Medical Help" : nil,
+                        log.furtherSocial ? "Social Worker/Psychiatrist" : nil,
+                        log.furtherLegal ? "Legal/Lawyer" : nil,
                         (log.furtherOther && !log.furtherOtherNotes.isEmpty) ? log.furtherOtherNotes : nil
                     ].compactMap { $0 }.joined(separator: ", ")
 
@@ -550,26 +550,26 @@ struct VisitLogView: View {
                             visitLog: editedFurtherSupport,
                             nextAction: {
                                 let updatedFields: [String: Any] = [
-                                    "furtherfoodAndDrinks": editedFurtherSupport.furtherfoodAndDrinks,
+                                    "furtherfoodAndDrinks": editedFurtherSupport.furtherFoodAndDrinks,
                                     "furtherClothes": editedFurtherSupport.furtherClothes,
-                                    "furtherHygine": editedFurtherSupport.furtherHygine,
+                                    "furtherHygine": editedFurtherSupport.furtherHygiene,
                                     "furtherWellness": editedFurtherSupport.furtherWellness,
-                                    "furthermedical": editedFurtherSupport.furthermedical,
-                                    "furthersocialworker": editedFurtherSupport.furthersocialworker,
-                                    "furtherlegal": editedFurtherSupport.furtherlegal,
+                                    "furthermedical": editedFurtherSupport.furtherMedical,
+                                    "furthersocialworker": editedFurtherSupport.furtherSocial,
+                                    "furtherlegal": editedFurtherSupport.furtherLegal,
                                     "furtherOther": editedFurtherSupport.furtherOther,
                                     "furtherOtherNotes": editedFurtherSupport.furtherOtherNotes
                                 ]
 
                                 let adapter = VisitLogDataAdapter()
                                 adapter.updateVisitLogFields(log.id, fields: updatedFields) {
-                                    log.furtherfoodAndDrinks = editedFurtherSupport.furtherfoodAndDrinks
+                                    log.furtherFoodAndDrinks = editedFurtherSupport.furtherFoodAndDrinks
                                     log.furtherClothes = editedFurtherSupport.furtherClothes
-                                    log.furtherHygine = editedFurtherSupport.furtherHygine
+                                    log.furtherHygiene = editedFurtherSupport.furtherHygiene
                                     log.furtherWellness = editedFurtherSupport.furtherWellness
-                                    log.furthermedical = editedFurtherSupport.furthermedical
-                                    log.furthersocialworker = editedFurtherSupport.furthersocialworker
-                                    log.furtherlegal = editedFurtherSupport.furtherlegal
+                                    log.furtherMedical = editedFurtherSupport.furtherMedical
+                                    log.furtherSocial = editedFurtherSupport.furtherSocial
+                                    log.furtherLegal = editedFurtherSupport.furtherLegal
                                     log.furtherOther = editedFurtherSupport.furtherOther
                                     log.furtherOtherNotes = editedFurtherSupport.furtherOtherNotes
                                     navigateToEditFurtherSupport = false
