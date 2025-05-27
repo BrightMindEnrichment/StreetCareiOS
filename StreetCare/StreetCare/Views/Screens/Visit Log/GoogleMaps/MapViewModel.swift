@@ -19,6 +19,7 @@ class MapViewModel: ObservableObject {
         do {
             let snapshot = try await db.collection("visitLogWebProd")
                 .whereField("public", isEqualTo: true)
+                .whereField("status", isEqualTo: "approved")
                 .order(by: "dateTime", descending: true)
                 .limit(to: 50)
                 .getDocuments()
