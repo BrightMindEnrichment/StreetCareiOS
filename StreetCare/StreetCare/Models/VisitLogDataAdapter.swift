@@ -69,6 +69,7 @@ class VisitLogDataAdapter {
         userData["furtherOther"] = visitLog.furtherOther
         userData["furtherOtherNotes"] = visitLog.furtherOtherNotes
         userData["followUpWhenVisit"] = visitLog.followUpWhenVisit
+        userData["itemQty"] = visitLog.itemQty
 
 
         if visitLog.location.latitude != 0 {
@@ -88,6 +89,7 @@ class VisitLogDataAdapter {
             }
         }
     }
+
     func addVisitLog_Community(_ visitLog: VisitLog) {
     
         guard let user = Auth.auth().currentUser else {
@@ -390,6 +392,10 @@ class VisitLogDataAdapter {
 
                     if let furtherOtherNotes = document["furtherOtherNotes"] as? String {
                         log.furtherOtherNotes = furtherOtherNotes
+                    }
+                    
+                    if let itemQty = document["itemQty"] as? Int {
+                        log.itemQty = itemQty
                     }
 
                     self.visitLogs.append(log)
