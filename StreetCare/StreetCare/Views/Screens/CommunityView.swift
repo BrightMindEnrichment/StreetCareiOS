@@ -86,7 +86,7 @@ struct CommunityView: View {
                                         .frame(width: 66.0)
                                     Image("HelpingHands").frame(width: 15.0, height: 15.0)
                                 }
-                                Text(NSLocalizedString("helpRequests", comment: "")).fontWeight(.regular).foregroundColor(Color("TextColor"))
+                                Text(NSLocalizedString("publicinteractions", comment: "")).fontWeight(.regular).foregroundColor(Color("TextColor"))
                             }
                         }
                         if AppSettings.shared.mapsAvailable {
@@ -115,11 +115,7 @@ struct CommunityView: View {
                                     Circle()
                                         .fill(Color.yellow)
                                         .frame(width: 10, height: 10)
-                                    Text("Events")
-                                    Circle()
-                                        .fill(Color.red)
-                                        .frame(width: 10, height: 10)
-                                    Text("Help needed")
+                                    Text("Public Interactions")
                                 }
                                 .padding(.horizontal, 5)
                                 .padding(.vertical, 5)
@@ -128,6 +124,7 @@ struct CommunityView: View {
                                         .fill(Color.white)
                                         .shadow(radius: 3)
                                 )
+
                             }
                         } else {
                             VStack(spacing: 30) {

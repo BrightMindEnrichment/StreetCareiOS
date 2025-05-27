@@ -128,6 +128,8 @@
 "emptytext" = " ";
 "Contact Number"= "Número de contacto";
 "consentLine" = "Al seleccionar esta casilla, doy mi consentimiento para compartir mis datos de contacto y la dirección del evento públicamente en esta plataforma / espacio comunitario para facilitar la participación en el evento de alcance. Entiendo que esta información será visible para otros y reconozco las consideraciones de privacidad asociadas.";
+"publicinteractions" = "Interacciones públicas";
+
 
 //"helloWorld" = "¡Hola Mundo!";
 //"welcome" = "Bienvenido a\nStreet Care";

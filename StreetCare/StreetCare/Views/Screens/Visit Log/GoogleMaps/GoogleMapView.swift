@@ -73,25 +73,24 @@ struct GoogleMapView: UIViewRepresentable {
 
     func updateUIView(_ mapView: GMSMapView, context: Context) {
         mapView.clear()
-        for request in viewModel.helpRequests {
-            let marker = GMSMarker(position: request.location)
-            marker.title = request.helpType
-            marker.snippet = request.description
-            // defaults red marker
+
+        for log in viewModel.visitLogs {
+            let marker = GMSMarker(position: log.location)
+            marker.title = log.title
+            marker.snippet = log.description
+            marker.icon = createCustomYellowMarker() // optional custom icon
             marker.map = mapView
         }
-        for event in viewModel.outreachEvents {
-            let marker = GMSMarker(position: event.location)
-            marker.title = event.title
-            marker.snippet = event.description
-            if let customYellowMarker = createCustomYellowMarker() {
-                marker.icon = customYellowMarker
-            }
-            marker.map = mapView
+
+        if let first = viewModel.visitLogs.first {
+            let camera = GMSCameraPosition.camera(withTarget: first.location, zoom: 11)
+            mapView.animate(to: camera)
+        } else {
+            let defaultCamera = GMSCameraPosition.camera(withLatitude: 42.333774, longitude: -71.064937, zoom: 11)
+            mapView.animate(to: defaultCamera)
         }
-        let defaultCamera = GMSCameraPosition.camera(withLatitude: 42.333774, longitude: -71.064937, zoom: 11)
-        mapView.animate(to: defaultCamera)
     }
+
     
     func createCustomYellowMarker() -> UIImage? {
         let size = CGSize(width: 35, height: 45)
