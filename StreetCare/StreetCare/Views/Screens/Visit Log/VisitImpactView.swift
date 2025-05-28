@@ -184,31 +184,43 @@ struct VisitImpactView: View {
                                         Text("\(item.whenVisit.formatted(date: .abbreviated, time: .omitted)) | \(item.whenVisit.formatted(date: .omitted, time: .shortened))").font(.system(size: 13)).lineLimit(1).layoutPriority(1)
                                         GeometryReader { geo in
                                             ZStack {
-                                                Button("Details") {
-                                                    print("Details tapped")
+                                                VStack(spacing: 4) {
+                                                    Button("Details") {
+                                                        print("Details tapped")
+                                                    }
+                                                    .font(.custom("Poppins-SemiBold", size: 13))
+                                                    .foregroundColor(Color(red: 1.0, green: 0.933, blue: 0.0))
+                                                    .padding(.horizontal, 16)
+                                                    .padding(.vertical, 8)
+                                                    .background(
+                                                        Capsule()
+                                                            .fill(Color(red: 0, green: 0.16, blue: 0.145))
+                                                    )
+                                                    .frame(width: 80)
+
+                                                    if item.isPublished {
+                                                        Text("PUBLISHED")
+                                                            .font(.caption2)
+                                                            .fontWeight(.bold)
+                                                            .foregroundColor(.white)
+                                                            .padding(.horizontal, 6)
+                                                            .padding(.vertical, 4)
+                                                            .background(Capsule().fill(Color.green))
+                                                    }
+
+                                                    NavigationLink(destination: VisitLogView(log: item)) {
+                                                        EmptyView()
+                                                    }
+                                                    .opacity(0)
                                                 }
-                                                .font(.custom("Poppins-SemiBold", size: 13))
-                                                .foregroundColor(Color(red: 1.0, green: 0.933, blue: 0.0)) // textColor
-                                                .padding(.horizontal, 16)
-                                                .padding(.vertical, 8)
-                                                .background(
-                                                    Capsule()
-                                                        .fill(Color(red: 0, green: 0.16, blue: 0.145)) // background color
-                                                )
-                                                .frame(width: 80)
-                                                
-                                                
-                                                NavigationLink(destination: VisitLogView(log: item)) {
-                                                    EmptyView()
-                                                }
-                                                .opacity(0)
+                                                .offset(y: 15)
                                             }
                                             .position(
                                                 x: geo.size.width / 2 ,
                                                 y: 0
                                             )
                                         }
-                                        .frame(height: 30) //room you want for the button
+                                        .frame(height: 50) //room you want for the button
                                         
                                     }
                                     .padding(.top, -5)
