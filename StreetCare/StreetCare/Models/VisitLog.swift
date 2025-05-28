@@ -8,7 +8,6 @@
 import Foundation
 import CoreLocation
 
-
 class VisitLog: ObservableObject, Identifiable {
     
     @Published var id: String
@@ -24,7 +23,10 @@ class VisitLog: ObservableObject, Identifiable {
     @Published var peopleHelped = 1
     @Published var status = ""
     @Published var flaggedByUser = ""
-    //@Published var public = false
+    @Published var isPublic = false
+    @Published var isFlagged = false
+    @Published var helpGiven = [String]()
+    @Published var user = UserDetails()
     
     @Published var foodAndDrinks = false
     @Published var clothes = false
@@ -139,3 +141,9 @@ class VisitLog: ObservableObject, Identifiable {
         task.resume()
     }
 } // end class
+
+class PublicVisitLogData: ObservableObject, Identifiable {
+    @Published var monthYear : String = ""
+    @Published var date : (String?, String?, String?) = ("","","")
+    @Published var log: VisitLog?
+}

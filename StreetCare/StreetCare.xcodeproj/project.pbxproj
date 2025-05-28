@@ -78,6 +78,11 @@
 		4CB7D8CC29F8D5B00002495E /* VisitLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB7D8CB29F8D5B00002495E /* VisitLog.swift */; };
 		4CB7D8CE29F8DCBC0002495E /* TimeDurationPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB7D8CD29F8DCBC0002495E /* TimeDurationPicker.swift */; };
 		4CB7D8D029F8DD040002495E /* InputTileDuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB7D8CF29F8DD040002495E /* InputTileDuration.swift */; };
+		6D308B612DD2ACA00098A3EC /* PublicVisitLogDataAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D308B602DD2AC880098A3EC /* PublicVisitLogDataAdapter.swift */; };
+		6D308B692DDE9E870098A3EC /* PublicLogViewCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D308B682DDE9E820098A3EC /* PublicLogViewCard.swift */; };
+		6D308B6B2DDEA0650098A3EC /* PublicVisitLogViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D308B6A2DDEA0610098A3EC /* PublicVisitLogViewModel.swift */; };
+		6D85BF3B2DE4BA6500C31C92 /* UserDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D85BF3A2DE4BA5F00C31C92 /* UserDetails.swift */; };
+		6DBDC7AF2DCCEFC300914D6D /* PublicVisitLogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6DBDC7AE2DCCEFC300914D6D /* PublicVisitLogView.swift */; };
 		71392FAD2BAA40F900496CA5 /* GoogleUserAuthModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 71392FAC2BAA40F900496CA5 /* GoogleUserAuthModel.swift */; };
 		71392FAF2BAA413400496CA5 /* GoogleSignIn in Frameworks */ = {isa = PBXBuildFile; productRef = 71392FAE2BAA413400496CA5 /* GoogleSignIn */; };
 		71392FB12BAA413400496CA5 /* GoogleSignInSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 71392FB02BAA413400496CA5 /* GoogleSignInSwift */; };
@@ -188,6 +193,11 @@
 		4CB7D8CD29F8DCBC0002495E /* TimeDurationPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeDurationPicker.swift; sourceTree = "<group>"; };
 		4CB7D8CF29F8DD040002495E /* InputTileDuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputTileDuration.swift; sourceTree = "<group>"; };
 		5B3FB734328ABC03284A67BF /* Pods_StreetCare.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_StreetCare.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6D308B602DD2AC880098A3EC /* PublicVisitLogDataAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicVisitLogDataAdapter.swift; sourceTree = "<group>"; };
+		6D308B682DDE9E820098A3EC /* PublicLogViewCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicLogViewCard.swift; sourceTree = "<group>"; };
+		6D308B6A2DDEA0610098A3EC /* PublicVisitLogViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicVisitLogViewModel.swift; sourceTree = "<group>"; };
+		6D85BF3A2DE4BA5F00C31C92 /* UserDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDetails.swift; sourceTree = "<group>"; };
+		6DBDC7AE2DCCEFC300914D6D /* PublicVisitLogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicVisitLogView.swift; sourceTree = "<group>"; };
 		71392FAC2BAA40F900496CA5 /* GoogleUserAuthModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GoogleUserAuthModel.swift; sourceTree = "<group>"; };
 		7153D3F42BB5AA8300226F34 /* CustomAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomAlertView.swift; sourceTree = "<group>"; };
 		71B0D5C42B9214B70061033B /* BadgesView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BadgesView.swift; sourceTree = "<group>"; };
@@ -223,6 +233,13 @@
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		EDB93D152DB1D18300C7174F /* Fonts */ = {isa = PBXFileSystemSynchronizedRootGroup; explicitFileTypes = {}; explicitFolders = (); path = Fonts; sourceTree = "<group>"; };
+		EDB93D152DB1D18300C7174F /* Fonts */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -248,12 +265,15 @@
 		4C17ED4F2A00A3390013EF52 /* Visit Log */ = {
 			isa = PBXGroup;
 			children = (
+				6D308B6A2DDEA0610098A3EC /* PublicVisitLogViewModel.swift */,
+				6D308B682DDE9E820098A3EC /* PublicLogViewCard.swift */,
 				74FDD8232D64907C00E23293 /* GoogleMaps */,
 				4C2F5A7529FF456A00CFD288 /* VisitImpactView.swift */,
 				ED1A73152DADD3BC004E3D17 /* NotLoggedInView.swift */,
 				4CA8693429E3FA8600BB6972 /* VisitLogEntry.swift */,
 				4CB65D9E29D0DEAE00684BD1 /* VisitLogView.swift */,
 				4C17ED502A00A3610013EF52 /* VisitLogUnauthorized.swift */,
+				6DBDC7AE2DCCEFC300914D6D /* PublicVisitLogView.swift */,
 			);
 			path = "Visit Log";
 			sourceTree = "<group>";
@@ -419,6 +439,8 @@
 		4CB7D8CA29F8D5980002495E /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				6D85BF3A2DE4BA5F00C31C92 /* UserDetails.swift */,
+				6D308B602DD2AC880098A3EC /* PublicVisitLogDataAdapter.swift */,
 				71B0D5C62B92187A0061033B /* Badges.swift */,
 				4CB7D8CB29F8D5B00002495E /* VisitLog.swift */,
 				4C2F5A7129FF1D4500CFD288 /* VisitLogDataAdapter.swift */,
@@ -663,6 +685,7 @@
 				ED1A73162DADD3BC004E3D17 /* NotLoggedInView.swift in Sources */,
 				4CB65E6029DA91C000684BD1 /* Playlist.swift in Sources */,
 				BE9D1DDD2A43641400072835 /* RatingView.swift in Sources */,
+				6D308B6B2DDEA0650098A3EC /* PublicVisitLogViewModel.swift in Sources */,
 				4CB7D8CC29F8D5B00002495E /* VisitLog.swift in Sources */,
 				BE9D1DD72A37933500072835 /* LocationManager.swift in Sources */,
 				4CB7D8C529F63AEC0002495E /* InputTileRate.swift in Sources */,
@@ -696,6 +719,8 @@
 				BE9D1DCE2A37626C00072835 /* ImagePickerView.swift in Sources */,
 				4CB65DA329D0DEDA00684BD1 /* ProfilView.swift in Sources */,
 				4C2F5A7629FF456A00CFD288 /* VisitImpactView.swift in Sources */,
+				6D85BF3B2DE4BA6500C31C92 /* UserDetails.swift in Sources */,
+				6D308B692DDE9E870098A3EC /* PublicLogViewCard.swift in Sources */,
 				BEA872762A290F360053D4F4 /* ProfileDetail.swift in Sources */,
 				BEA872742A28D0330053D4F4 /* ProfileDetails.swift in Sources */,
 				BE9D1DD52A37819E00072835 /* AvatarView.swift in Sources */,
@@ -714,6 +739,7 @@
 				BE9D1DD92A3A419A00072835 /* LoadingView.swift in Sources */,
 				4C0E4FF129DDF726009D33C1 /* DonateView.swift in Sources */,
 				BE9D1DD32A377E9100072835 /* StorgeManager.swift in Sources */,
+				6DBDC7AF2DCCEFC300914D6D /* PublicVisitLogView.swift in Sources */,
 				74CD87FD2D4DE955000E5DBD /* LandingScreenViewModel.swift in Sources */,
 				4C7136BB2A01F7E90060EB7D /* ForgotPasswordView.swift in Sources */,
 				4CA8693329E3D05300BB6972 /* InputTile.swift in Sources */,
@@ -725,6 +751,7 @@
 				4CB65E6729DA91C000684BD1 /* PlaylistController.swift in Sources */,
 				4CA8693129E3CD5F00BB6972 /* BasicTile.swift in Sources */,
 				4C82441729ECD993003D1575 /* SignUpView.swift in Sources */,
+				6D308B612DD2ACA00098A3EC /* PublicVisitLogDataAdapter.swift in Sources */,
 				4C2F5A7029FE6B0A00CFD288 /* InputTileVolunteerAgain.swift in Sources */,
 				BEA872782A2910B90053D4F4 /* ProfileDetailsAdapter.swift in Sources */,
 				4CB65DA129D0DEC700684BD1 /* CommunityView.swift in Sources */,

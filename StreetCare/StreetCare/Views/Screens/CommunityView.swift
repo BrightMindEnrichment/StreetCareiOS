@@ -11,25 +11,27 @@ import FirebaseAuth
 struct CommunityView: View {
     
     @State var user: User?
+    @State var userDetails: UserDetails? = UserDetails()
     
     let adapter = EventDataAdapter()
+    let userDetailsAdapter = UserDetailsAdapter()
     @State var events = [Event]()
     @State var isPresented: Bool = false
     @StateObject var mapViewModel = MapViewModel()
     
     let formatter = DateFormatter()
- 
+    
     
     var body: some View {
         NavigationView {
-        VStack {
-            Text("Community")
-                .font(.title)
-            
+            VStack {
+                Text("Community")
+                    .font(.title)
+                
                 ScrollView{
                     VStack{
                         Spacer().frame(height: 10)
-//                        Text("City: Unavailable").bold()
+                        //                        Text("City: Unavailable").bold()
                         Spacer().frame(height: 35)
                         HStack{
                             NavigationLink {
@@ -73,7 +75,8 @@ struct CommunityView: View {
                         Spacer().frame(height: 10)
                         
                         NavigationLink {
-                            HelpRequestView()
+                            //                            HelpRequestView()
+                            PublicVisitLogView(loggedInUserDetails: userDetails ?? UserDetails())
                         } label:{
                             VStack{
                                 ZStack {
@@ -141,16 +144,19 @@ struct CommunityView: View {
                         }
                     }
                 }
-        }
-        .onAppear {
-            if let user = Auth.auth().currentUser {
-                self.user = user
-                
-                adapter.delegate = self
-                adapter.refresh()
+            }
+            .onAppear {
+                if let user = Auth.auth().currentUser {
+                    self.user = user
+                    
+                    adapter.delegate = self
+                    adapter.refresh()
+                    // Fetch user details
+                    userDetailsAdapter.delegate = self
+                    userDetailsAdapter.getUserDetails(uid: self.user?.uid)
+                }
             }
         }
-    }
     }
 }
 
@@ -164,6 +170,14 @@ extension CommunityView: EventDataAdapterProtocol {
         self.events = events.filter({ event in
             return event.eventDate != nil
         })
+    }
+}
+
+extension CommunityView: UserDetailsDataAdapterDelegateProtocol {
+    func userDetailsFetched(_ user: UserDetails?) {
+        if let userDetails = user {
+            self.userDetails = userDetails
+        }
     }
 }
 
