@@ -5,7 +5,7 @@
 //  Created by Michael on 3/27/23.
 //
 
-import SwiftUI
+/*import SwiftUI
 import MapKit
 
 
@@ -243,7 +243,7 @@ struct VisitLogView: View {
                                     "hygine": editedSupportProvided.hygiene,
                                     "wellness": editedSupportProvided.wellness,
                                     "medical": editedSupportProvided.medical,
-                                    "socialworker": editedSupportProvided.socialworker,
+                                    "socialworker": editedSupportProvided.social,
                                     "legal": editedSupportProvided.legal,
                                     "other": editedSupportProvided.other,
                                     "otherNotes": editedSupportProvided.otherNotes
@@ -676,5 +676,545 @@ struct VisitLogView_Previews: PreviewProvider {
             .onAppear {
                 log.whereVisit = "under a bridge"
             }
+    }
+}
+*/
+import SwiftUI
+import MapKit
+
+struct VisitLogView: View {
+    @Environment(\.presentationMode) var presentation
+    @State var log: VisitLog
+
+    @State private var region = MKCoordinateRegion(center: CLLocationCoordinate2D(), span: MKCoordinateSpan())
+    @State private var mapLocations = [MapLocation(name: "dummy", latitude: 0.0, longitude: 0.0)]
+
+    @State private var showDeleteDialog = false
+
+    @State private var navigateToEdit = false
+    @State private var editedPeopleHelped: Int = 0
+
+    @State private var navigateToEditItems = false
+    @State private var editedItemQty: Int = 0
+    
+    @State private var editedInteractionDate = Date()
+    @State private var navigateToEditInteractionDate = false
+
+    @State private var navigateToEditSupportProvided = false
+    @State private var editedSupportProvided = VisitLog(id: "")
+
+    @State private var navigateToEditFollowUpDate = false
+    @State private var editedFollowUpDate = Date()
+
+    @State private var navigateToEditPeopleNeedHelp = false
+    @State private var editedPeopleNeedHelp: Int = 0
+
+    @State private var navigateToEditFurtherSupport = false
+    @StateObject var editedFurtherSupport = VisitLog(id: "")
+    @State private var isEditingPeopleHelped = false
+    
+    @State private var navigateToEditHelpers = false
+    @State private var editedHelpers: Int = 0
+
+    var body: some View {
+        ScrollView {
+            VStack {
+                
+                mapSection()
+                interactionDateSection()
+                locationSection()
+                peopleHelpedSection()
+                providedhelpSection()
+                itemQtySection()
+                ratingSection()
+                durationSection()
+                numberOfHelpersSection()
+                peopleNeedHelpSection()
+                furtherSupportNeededSection()
+                followUpSection()
+                volunteerAgainSection()
+                peopleNeedFurtherHelpSection()
+                
+
+                NavigationLink(destination: Text("Edit People Helped"), isActive: $navigateToEdit) { EmptyView() }
+                NavigationLink(destination: Text("Edit Item Quantity"), isActive: $navigateToEditItems) { EmptyView() }
+                NavigationLink(destination: Text("Edit Support Provided"), isActive: $navigateToEditSupportProvided) { EmptyView() }
+                NavigationLink(destination: Text("Edit Follow-Up Date"), isActive: $navigateToEditFollowUpDate) { EmptyView() }
+                NavigationLink(destination: Text("Edit People Still Need Help"), isActive: $navigateToEditPeopleNeedHelp) { EmptyView() }
+                NavigationLink(destination: Text("Edit Further Support Needed"), isActive: $navigateToEditFurtherSupport) { EmptyView() }
+            }
+        }
+        .onAppear {
+            if log.location.latitude != 0 {
+                region = MKCoordinateRegion(center: log.location, span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01))
+                mapLocations = [MapLocation(name: "Help", latitude: log.location.latitude, longitude: log.location.longitude)]
+            }
+        }
+        .alert("Delete visit log?", isPresented: $showDeleteDialog) {
+            Button("OK", role: .destructive) {
+                let adapter = VisitLogDataAdapter()
+                adapter.deleteVisitLog(self.log.id) {
+                    presentation.wrappedValue.dismiss()
+                }
+            }
+            Button("Cancel", role: .cancel) {}
+        }
+        .navigationTitle("Visit Log")
+    }
+
+    @ViewBuilder
+    private func mapSection() -> some View {
+        if log.location.latitude != 0 {
+            Map(coordinateRegion: $region, annotationItems: mapLocations) { location in
+                MapMarker(coordinate: location.coordinate)
+            }
+            .frame(width: 350, height: 300)
+        }
+    }
+
+    @ViewBuilder
+    private func interactionDateSection() -> some View {
+        VisitLogDetailRow(
+            title: "When was your Interaction?",
+            detail: log.whenVisit.formatted(date: .abbreviated, time: .omitted),
+            onEdit: {
+                editedInteractionDate = log.whenVisit
+                navigateToEditInteractionDate = true
+            }
+        )
+        
+        NavigationLink(
+            destination: InputTileDate(
+                questionNumber: 1,
+                totalQuestions: 1,
+                question1: "When was your",
+                question2: "Interaction?",
+                question3: "",
+                showSkip: false,
+                showProgressBar: false,
+                buttonMode: .update,
+                datetimeValue: $editedInteractionDate,
+                nextAction: {
+                    let adapter = VisitLogDataAdapter()
+                    adapter.updateVisitLogField(log.id, field: "whenVisit", value: editedInteractionDate) {
+                        log.whenVisit = editedInteractionDate
+                        navigateToEditInteractionDate = false
+                    }
+                },
+                skipAction: { navigateToEditInteractionDate = false },
+                previousAction: { navigateToEditInteractionDate = false }
+            ),
+            isActive: $navigateToEditInteractionDate
+        ) {
+            EmptyView()
+        }
+    }
+
+    @ViewBuilder
+    private func locationSection() -> some View {
+        VisitLogDetailRow(title: "Where was your Interaction?", detail: "\(log.whereVisit)")
+    }
+
+    @ViewBuilder
+    private func peopleHelpedSection() -> some View {
+        if log.peopleHelped > 0 {
+            VisitLogDetailRow(
+                title: "Describe who you supported and how many individuals were involved.",
+                detail: "\(log.peopleHelped)",
+                onEdit: {
+                    editedPeopleHelped = log.peopleHelped
+                    navigateToEdit = true
+                }
+            )
+            
+            NavigationLink(
+                destination: InputTileNumber(
+                    questionNumber: 1,
+                    totalQuestions: 1,
+                    tileWidth: 320,
+                    tileHeight: 330,
+                    question1: "Edit the number of",
+                    question2: "people you helped",
+                    question3: "",
+                    question4: "",
+                    descriptionLabel: nil,
+                    disclaimerText: nil,
+                    placeholderText: nil,
+                    number: $editedPeopleHelped,
+                    nextAction: {
+                        let adapter = VisitLogDataAdapter()
+                        adapter.updateVisitLogField(log.id, field: "peopleHelped", value: editedPeopleHelped) {
+                            log.peopleHelped = editedPeopleHelped
+                            isEditingPeopleHelped = false
+                        }
+                    },
+                    previousAction: {},
+                    skipAction: {
+                        navigateToEdit = false
+                    },
+                    showProgressBar: false,
+                    buttonMode: .update
+                ),
+                isActive: $navigateToEdit
+            ) {
+                EmptyView()
+            }
+        }
+    }
+    
+    @ViewBuilder
+    private func providedhelpSection() -> some View {
+        if log.didProvideSpecificHelp {
+            HStack {
+                Text("What kind of support did you provide?")
+                    .screenLeft()
+                    .font(.system(size: 16.0)).bold()
+                    .padding(.leading, 20.0)
+                
+                Spacer()
+                
+                Button(action: {
+                    editedSupportProvided = log
+                    navigateToEditSupportProvided = true
+                }) {
+                    Image("Tab-VisitLog-Inactive")
+                        .resizable()
+                        .frame(width: 16, height: 16)
+                        .foregroundColor(.gray)
+                }
+                .buttonStyle(BorderlessButtonStyle())
+                .padding(.trailing, 20.0)
+            }
+            let supportList = [
+                log.foodAndDrinks ? "Food and Drink" : nil,
+                log.clothes ? "Clothes" : nil,
+                log.hygiene ? "Hygiene Products" : nil,
+                log.wellness ? "Wellness/Emotional Support" : nil,
+                log.medical ? "Medical Help" : nil,
+                log.social ? "Social Worker/Psychiatrist" : nil,
+                log.legal ? "Legal/Lawyer" : nil,
+                (log.other && !log.otherNotes.isEmpty) ? log.otherNotes : nil
+            ].compactMap { $0 }.joined(separator: ", ")
+
+            Text(supportList)
+                .font(.system(size: 15.0))
+            
+            Rectangle()
+                .frame(width: 350.0, height: 2.0)
+                .foregroundColor(.gray)
+            
+            NavigationLink(
+                destination: InputTileList(
+                    questionNumber: 1,
+                    totalQuestions: 1,
+                    optionCount: 8,
+                    size: CGSize(width: 350, height: 350),
+                    question1: "Edit the support you provided",
+                    question2: "",
+                    visitLog: editedSupportProvided,
+                    nextAction: {
+                        let updatedFields: [String: Any] = [
+                            "foodAndDrinks": editedSupportProvided.foodAndDrinks,
+                            "clothes": editedSupportProvided.clothes,
+                            "hygine": editedSupportProvided.hygiene,
+                            "wellness": editedSupportProvided.wellness,
+                            "medical": editedSupportProvided.medical,
+                            "socialworker": editedSupportProvided.social,
+                            "legal": editedSupportProvided.legal,
+                            "other": editedSupportProvided.other,
+                            "otherNotes": editedSupportProvided.otherNotes
+                        ]
+
+                        let adapter = VisitLogDataAdapter()
+                        adapter.updateVisitLogFields(log.id, fields: updatedFields) {
+                            log.foodAndDrinks = editedSupportProvided.foodAndDrinks
+                            log.clothes = editedSupportProvided.clothes
+                            log.hygiene = editedSupportProvided.hygiene
+                            log.wellness = editedSupportProvided.wellness
+                            log.medical = editedSupportProvided.medical
+                            log.social = editedSupportProvided.social
+                            log.legal = editedSupportProvided.legal
+                            log.other = editedSupportProvided.other
+                            log.otherNotes = editedSupportProvided.otherNotes
+                            navigateToEditSupportProvided = false
+                        }
+                    },
+                    previousAction: { navigateToEditSupportProvided = false },
+                    skipAction: { navigateToEditSupportProvided = false },
+                    buttonMode: .update,
+                    showProgressBar: false
+                ),
+                isActive: $navigateToEditSupportProvided
+            ) {
+                EmptyView()
+            }
+        }
+    }
+
+    @ViewBuilder
+    private func itemQtySection() -> some View {
+        if log.itemQty > 0 {
+            VisitLogDetailRow(
+                title: "How many items did you donate?",
+                detail: "\(log.itemQty)",
+                onEdit: {
+                    editedItemQty = log.itemQty
+                    navigateToEditItems = true
+                }
+            )
+            
+            NavigationLink(
+                destination: InputTileNumber(
+                    questionNumber: 5,
+                    totalQuestions: 6,
+                    tileWidth: 300,
+                    tileHeight: 460,
+                    question1: "How many items",
+                    question2: "did you donate?",
+                    question3: "",
+                    question4: "",
+                    descriptionLabel: "",
+                    disclaimerText: "",
+                    placeholderText: "Enter notes here",
+                    number: $editedItemQty,
+                    nextAction: {
+                        let adapter = VisitLogDataAdapter()
+                        adapter.updateVisitLogField(log.id, field: "itemQty", value: editedItemQty) {
+                            log.itemQty = editedItemQty
+                            navigateToEditItems = false
+                        }
+                    },
+                    previousAction: {
+                        navigateToEditItems = false
+                    },
+                    skipAction: {
+                        navigateToEditItems = false
+                    },
+                    showProgressBar: false,
+                    buttonMode: .update
+                ),
+                isActive: $navigateToEditItems
+            ) {
+                EmptyView()
+            }
+        }
+    }
+
+    @ViewBuilder
+    private func ratingSection() -> some View {
+        if log.rating > 0 {
+            Text("How would you rate your outreach experience?")
+                .font(.headline)
+                .padding(.horizontal, 20)
+            RatingView(rating: $log.rating, readOnly: true)
+                .padding(.horizontal, 20)
+            Rectangle()
+                .frame(width: 350.0, height: 2.0)
+                .foregroundColor(.gray)
+        }
+    }
+
+    @ViewBuilder
+    private func durationSection() -> some View {
+        if log.durationHours > 0 || log.durationMinutes > 0 {
+            VisitLogDetailRow(
+                title: "How much time did you spend on the outreach?",
+                detail: "\(log.durationHours) hours and \(log.durationMinutes) minutes"
+            )
+        }
+    }
+    
+    @ViewBuilder
+    private func numberOfHelpersSection() -> some View {
+        if log.numberOfHelpers > 0 {
+            VisitLogDetailRow(
+                title: "Who helped you prepare or joined?",
+                detail: "\(log.numberOfHelpers)",
+                onEdit: {
+                    editedHelpers = log.numberOfHelpers
+                    navigateToEditHelpers = true
+                }
+            )
+            
+            NavigationLink(
+                destination: InputTileNumber(
+                    questionNumber: 1,
+                    totalQuestions: 1,
+                    tileWidth: 320,
+                    tileHeight: 330,
+                    question1: "Who helped you",
+                    question2: "prepare or joined?",
+                    question3: "",
+                    question4: "",
+                    descriptionLabel: nil,
+                    disclaimerText: nil,
+                    placeholderText: nil,
+                    number: $editedHelpers,
+                    nextAction: {
+                        let adapter = VisitLogDataAdapter()
+                        adapter.updateVisitLogField(log.id, field: "numberOfHelpers", value: editedHelpers) {
+                            log.numberOfHelpers = editedHelpers
+                            navigateToEditHelpers = false
+                        }
+                    },
+                    previousAction: { navigateToEditHelpers = false },
+                    skipAction: { navigateToEditHelpers = false },
+                    showProgressBar: false,
+                    buttonMode: .update
+                ),
+                isActive: $navigateToEditHelpers
+            ) {
+                EmptyView()
+            }
+        }
+    }
+    @ViewBuilder
+    private func peopleNeedFurtherHelpSection() -> some View {
+        // People who still need support
+        if log.peopleNeedFurtherHelp > 0 {
+            VisitLogDetailRow(
+                title: "How many people still need support?",
+                detail: "\(log.peopleNeedFurtherHelp)",
+                onEdit: {
+                    editedPeopleNeedHelp = log.peopleNeedFurtherHelp
+                    navigateToEditPeopleNeedHelp = true
+                }
+            )
+            
+            NavigationLink(
+                destination: InputTileNumber(
+                    questionNumber: 1,
+                    totalQuestions: 1,
+                    tileWidth: 320,
+                    tileHeight: 330,
+                    question1: "How many people",
+                    question2: "still need support?",
+                    question3: "",
+                    question4: "",
+                    descriptionLabel: nil,
+                    disclaimerText: nil,
+                    placeholderText: nil,
+                    number: $editedPeopleNeedHelp,
+                    nextAction: {
+                        let adapter = VisitLogDataAdapter()
+                        adapter.updateVisitLogField(log.id, field: "peopleNeedFurtherHelp", value: editedPeopleNeedHelp) {
+                            log.peopleNeedFurtherHelp = editedPeopleNeedHelp
+                            navigateToEditPeopleNeedHelp = false
+                        }
+                    },
+                    previousAction: { navigateToEditPeopleNeedHelp = false },
+                    skipAction: { navigateToEditPeopleNeedHelp = false },
+                    showProgressBar: false,
+                    buttonMode: .update
+                ),
+                isActive: $navigateToEditPeopleNeedHelp
+            ) {
+                EmptyView()
+            }
+        }
+    }
+
+    @ViewBuilder
+    private func volunteerAgainSection() -> some View {
+        if log.volunteerAgain >= 0 {
+            let response = log.volunteerAgain == 1 ? "Yes" : log.volunteerAgain == 2 ? "Maybe" : "No"
+            VisitLogDetailRow(
+                title: "Would you like to volunteer again?",
+                detail: response
+            )
+        }
+    }
+
+    @ViewBuilder
+    private func followUpSection() -> some View {
+        if log.followUpWhenVisit != Date.distantPast {
+            VisitLogDetailRow(
+                title: "Is there a planned date to interact with them again?",
+                detail: log.followUpWhenVisit.formatted(date: .abbreviated, time: .omitted),
+                onEdit: {
+                    navigateToEditFollowUpDate = true
+                }
+            )
+        }
+    }
+
+    @ViewBuilder
+    private func peopleNeedHelpSection() -> some View {
+        if log.peopleNeedFurtherHelp > 0 {
+            VisitLogDetailRow(
+                title: "How many people still need support?",
+                detail: "\(log.peopleNeedFurtherHelp)",
+                onEdit: {
+                    navigateToEditPeopleNeedHelp = true
+                }
+            )
+        }
+    }
+
+    @ViewBuilder
+    private func furtherSupportNeededSection() -> some View {
+        if log.furtherFoodAndDrinks || log.furtherClothes || log.furtherHygiene || log.furtherWellness || log.furtherMedical || log.furtherSocial || log.furtherLegal || log.furtherOther {
+            let needs = [
+                log.furtherFoodAndDrinks ? "Food and Drink" : nil,
+                log.furtherClothes ? "Clothes" : nil,
+                log.furtherHygiene ? "Hygiene Products" : nil,
+                log.furtherWellness ? "Wellness/Emotional Support" : nil,
+                log.furtherMedical ? "Medical Help" : nil,
+                log.furtherSocial ? "Social Worker/Psychiatrist" : nil,
+                log.furtherLegal ? "Legal/Lawyer" : nil,
+                (log.furtherOther && !log.furtherOtherNotes.isEmpty) ? log.furtherOtherNotes : nil
+            ].compactMap { $0 }.joined(separator: ", ")
+
+            VisitLogDetailRow(
+                title: "What kind of support do they still need?",
+                detail: needs,
+                onEdit: {
+                    navigateToEditFurtherSupport = true
+                }
+            )
+        }
+    }
+}
+
+struct VisitLogDetailRow: View {
+    var title: String
+    var detail: String
+    var onEdit: (() -> Void)? = nil
+
+    var body: some View {
+        VStack {
+            HStack {
+                Text(title)
+                    .font(.system(size: 16.0)).bold()
+                    .padding(.leading, 20)
+                Spacer()
+                if let onEdit = onEdit {
+                    Button(action: onEdit) {
+                        Image("Tab-VisitLog-Inactive")
+                            .resizable()
+                            .frame(width: 16, height: 16)
+                            .foregroundColor(.gray)
+                    }
+                    .buttonStyle(BorderlessButtonStyle())
+                    .padding(.trailing, 20)
+                }
+            }
+            Text(detail)
+                .font(.system(size: 15.0))
+                .padding(.horizontal, 20)
+            Rectangle()
+                .frame(width: 350.0, height: 2.0)
+                .foregroundColor(.gray)
+        }
+    }
+}
+
+struct MapLocation: Identifiable {
+    let id = UUID()
+    let name: String
+    let latitude: Double
+    let longitude: Double
+    var coordinate: CLLocationCoordinate2D {
+        CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
     }
 }
