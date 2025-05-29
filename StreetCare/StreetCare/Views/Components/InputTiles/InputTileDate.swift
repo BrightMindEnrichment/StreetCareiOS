@@ -201,7 +201,7 @@ struct InputTileDate: View {
                         .overlay(Capsule().stroke(Color("SecondaryColor"), lineWidth: 2))
 
                         Spacer()
-
+ 
                         Button(" Next  ") {
                             nextAction()
                         }

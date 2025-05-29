@@ -1230,9 +1230,36 @@ struct VisitLogView: View {
                 title: "Is there a planned date to interact with them again?",
                 detail: log.followUpWhenVisit.formatted(date: .abbreviated, time: .omitted),
                 onEdit: {
-                    navigateToEditFollowUpDate = true
-                }
-            )
+                editedInteractionDate = log.followUpWhenVisit
+                navigateToEditInteractionDate = true
+            }
+        )
+        
+        NavigationLink(
+            destination: InputTileDate(
+                questionNumber: 1,
+                totalQuestions: 1,
+                question1: "Is there a planned",
+                question2: "date to interact",
+                question3: "with them again?",
+                showSkip: false,
+                showProgressBar: false,
+                buttonMode: .update,
+                datetimeValue: $editedInteractionDate,
+                nextAction: {
+                    let adapter = VisitLogDataAdapter()
+                    adapter.updateVisitLogField(log.id, field: "followUpWhenVisit", value: editedInteractionDate) {
+                        log.followUpWhenVisit = editedInteractionDate
+                        navigateToEditInteractionDate = false
+                    }
+                },
+                skipAction: { navigateToEditInteractionDate = false },
+                previousAction: { navigateToEditInteractionDate = false }
+            ),
+            isActive: $navigateToEditInteractionDate
+        ) {
+            EmptyView()
+        }
         }
     }
     @ViewBuilder
