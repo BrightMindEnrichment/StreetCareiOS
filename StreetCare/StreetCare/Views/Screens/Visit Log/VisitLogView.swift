@@ -722,6 +722,9 @@ struct VisitLogView: View {
     @State private var showConfirmationDialog = false
     @State private var hasShared = false
     
+    @State private var editedVolunteerAgain: Int = 0
+    @State private var navigateToEditVolunteerAgain = false
+    
     var body: some View {
         ScrollView {
             VStack {
@@ -746,23 +749,24 @@ struct VisitLogView: View {
                         Button("Share with Community") {
                             showConfirmationDialog = true
                         }
-                        .foregroundColor(Color.black)
-                        .frame(maxWidth: 180)
+                        .foregroundColor(Color("PrimaryColor"))
+                        .frame(maxWidth: 350)
                         .padding(.vertical, 12)
                         .padding(.horizontal, 12)
-                        .font(.caption)
+                        //.font(.caption)
                         .fontWeight(.bold)
                         .background(
                             Capsule()
-                                .fill(Color.white)
+                                .fill(Color("SecondaryColor"))
                         )
                         .overlay(
                             Capsule()
                                 .stroke(Color("SecondaryColor"), lineWidth: 2)
                         )
                     }
+                    .padding()
                 }
-                NavLinkButton(title: "Delete Log", width: 190.0, secondaryButton: true, noBorder: false, color: Color.red)
+                NavLinkButton(title: "Delete", width: 350.0, secondaryButton: true, noBorder: false, color: Color.red)
                     .padding()
                     .onTapGesture {
                         showDeleteDialog = true
@@ -1187,8 +1191,35 @@ struct VisitLogView: View {
             VisitLogDetailRow(
                 title: "Would you like to volunteer again?",
                 detail: log.volunteerAgain == 1 ? "Yes" :
-                    log.volunteerAgain == 2 ? "Maybe" : "No"
+                        log.volunteerAgain == 2 ? "Maybe" : "No",
+                onEdit: {
+                    editedVolunteerAgain = log.volunteerAgain
+                    navigateToEditVolunteerAgain = true
+                }
             )
+            
+            NavigationLink(
+                destination: InputTileVolunteerAgain(
+                    questionNumber: 3,
+                    totalQuestions: 3,
+                    question1: "Would you be willing",
+                    question2: "to volunteer again?",
+                    volunteerAgain: $editedVolunteerAgain,
+                    nextAction: {
+                        let adapter = VisitLogDataAdapter()
+                        adapter.updateVisitLogField(log.id, field: "volunteerAgain", value: editedVolunteerAgain) {
+                            log.volunteerAgain = editedVolunteerAgain
+                            navigateToEditVolunteerAgain = false
+                        }
+                    },
+                    previousAction: { navigateToEditVolunteerAgain = false },
+                    skipAction: { navigateToEditVolunteerAgain = false },
+                    buttonMode: .update
+                ),
+                isActive: $navigateToEditVolunteerAgain
+            ) {
+                EmptyView()
+            }
         }
     }
 

@@ -22,38 +22,25 @@ struct InputTileVolunteerAgain: View {
     var previousAction: () -> ()
     var skipAction: () -> ()
     
+    @Environment(\.presentationMode) var presentationMode
+    var buttonMode: ButtonMode = .navigation
+    @State private var showSuccessAlert = false
+    
     var body: some View {
 
         ZStack {
             BasicTile(size: CGSize(width: size.width, height: size.height))
             
             VStack {
-                HStack {
-                    Text("Question \(questionNumber)/\(totalQuestions)")
-                        .foregroundColor(.black)
-                        //.font(.footnote)
-                    
-                    Spacer()
-                    
-                    /*Button("Skip") {
-                        skipAction()
+                if buttonMode == .navigation {
+                    HStack {
+                        Text("Question \(questionNumber)/\(totalQuestions)")
+                            .foregroundColor(.black)
+                        Spacer()
                     }
-                    .foregroundColor(Color("SecondaryColor"))
-                    .font(.footnote)
-                    .padding(.horizontal, 16)
-                    .padding(.vertical, 8)
-                    .background(
-                        Capsule()
-                            .fill(Color.white)
-                    )
-                    .overlay(
-                        Capsule()
-                            .stroke(Color("SecondaryColor"), lineWidth: 2)
-                    )*/
-                    
+                    .padding(.horizontal)
+                    .padding(.top, 12)
                 }
-                .padding(.horizontal)
-                .padding(.top, 12)
                 
                 Divider()
                     .background(Color.gray.opacity(0.3))
@@ -134,51 +121,79 @@ struct InputTileVolunteerAgain: View {
                 //.padding(.horizontal)
                 .padding()
                 
-                HStack {
-                    Button("Previous") {
-                        previousAction()
+                if buttonMode == .navigation {
+                    HStack {
+                        Button("Previous") {
+                            previousAction()
+                        }
+                        .foregroundColor(Color("SecondaryColor"))
+                        .font(.footnote)
+                        .padding(.horizontal, 16)
+                        .padding(.vertical, 8)
+                        .background(Capsule().fill(Color.white))
+                        .overlay(Capsule().stroke(Color("SecondaryColor"), lineWidth: 2))
+
+                        Spacer()
+
+                        Button("Finish") {
+                            nextAction()
+                        }
+                        .foregroundColor(Color("PrimaryColor"))
+                        .fontWeight(.bold)
+                        .padding(.horizontal, 16)
+                        .padding(.vertical, 8)
+                        .background(Capsule().fill(Color("SecondaryColor")))
                     }
-                    .foregroundColor(Color("SecondaryColor"))
-                    .font(.footnote)
-                    .padding(.horizontal, 16)
-                    .padding(.vertical, 8)
-                    .background(
-                        Capsule()
-                            .fill(Color.white) // Fill with white
-                    )
-                    .overlay(
-                        Capsule()
-                            .stroke(Color("SecondaryColor"), lineWidth: 2) // Stroke with dark green
-                    )
-                    
-                    Spacer()
-                    
-                    Button(" Finish ") {
-                        nextAction()
+                    .padding(.horizontal)
+                } else if buttonMode == .update {
+                    HStack {
+                        Button("Cancel") {
+                            presentationMode.wrappedValue.dismiss()
+                        }
+                        .foregroundColor(Color("SecondaryColor"))
+                        .font(.footnote)
+                        .padding(.horizontal, 16)
+                        .padding(.vertical, 8)
+                        .background(Capsule().fill(Color.white))
+                        .overlay(Capsule().stroke(Color("SecondaryColor"), lineWidth: 2))
+
+                        Spacer()
+
+                        Button("Update") {
+                            showSuccessAlert = true
+                            nextAction()
+                        }
+                        .foregroundColor(Color("PrimaryColor"))
+                        .fontWeight(.bold)
+                        .padding(.horizontal, 16)
+                        .padding(.vertical, 8)
+                        .background(Capsule().fill(Color("SecondaryColor")))
                     }
-                    .foregroundColor(Color("PrimaryColor"))
-                    .fontWeight(.bold)
-                    .padding(.horizontal, 16)
-                    .padding(.vertical, 8)
-                    .background(
-                        Capsule()
-                            .fill(Color("SecondaryColor"))
-                    )
+                    .padding(.horizontal)
                 }
-                //.padding()
-                .padding(.horizontal)
             }
         }
+        .alert(isPresented: $showSuccessAlert) {
+            Alert(
+                title: Text("Updated"),
+                message: Text("Your response was successfully updated."),
+                dismissButton: .default(Text("OK")) {
+                    presentationMode.wrappedValue.dismiss()
+                }
+            )
+        }
         .frame(width: size.width, height: size.height)
-        SegmentedProgressBar(
-            totalSegments: totalQuestions,
-            filledSegments: questionNumber,
-            tileWidth: 300
-        )
-        
-        Text("Progress")
-            .font(.caption)
-            .padding(.top, 4)
+        if buttonMode == .navigation {
+            SegmentedProgressBar(
+                totalSegments: totalQuestions,
+                filledSegments: questionNumber,
+                tileWidth: 300
+            )
+
+            Text("Progress")
+                .font(.caption)
+                .padding(.top, 4)
+        }
 
     } // end body
 } // end struct
