@@ -345,13 +345,14 @@ class VisitLogDataAdapter {
                     log.status = document["status"] as? String ?? ""
                     log.flaggedByUser = document["flaggedByUser"] as? String ?? ""
                     
-                    if let volunteerAgainStr = document["volunteerAgain"] as? String {
+                    /*if let volunteerAgainStr = document["volunteerAgain"] as? String {
                         switch volunteerAgainStr {
                         case "Yes": log.volunteerAgain = 1
                         case "No": log.volunteerAgain = 0
                         default: log.volunteerAgain = -1
                         }
-                    }
+                    }*/
+                    log.volunteerAgain = document["volunteerAgain"] as? Int ?? 0
                     
                     if let whenVisit = document["whenVisit"] as? Timestamp {
                         log.whenVisit = whenVisit.dateValue()

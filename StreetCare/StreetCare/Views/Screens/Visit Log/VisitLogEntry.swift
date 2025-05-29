@@ -204,14 +204,29 @@ struct VisitLogEntry: View {
                     }
                     
                 case 13:
-                    InputTileNotes(questionNumber: 6, totalQuestions: 7,tileWidth: 300, tileHeight: 380, question1: "Is there anything future",question2: "volunteers should", question3: "know?", placeholderText: "Enter notes here", otherNotes: $visitLog.furtherOtherNotes) {
-                        questionNumber += 1
-                    } previousAction: {
-                        questionNumber -= 1
-                    } skipAction: {
-                        saveVisitLog()
-                        questionNumber += 1
-                    }
+                    InputTileNotes(
+                        questionNumber: 6,
+                        totalQuestions: 7,
+                        tileWidth: 300,
+                        tileHeight: 380,
+                        question1: "Is there anything future",
+                        question2: "volunteers should",
+                        question3: "know?",
+                        placeholderText: "Enter notes here",
+                        otherNotes: $visitLog.furtherOtherNotes,
+                        nextAction: {
+                            //saveVisitLog()
+                            questionNumber += 1
+                        },
+                        previousAction: {
+                            questionNumber -= 1
+                        },
+                        skipAction: {
+                            saveVisitLog()
+                            questionNumber += 1
+                        },
+                        buttonMode: .navigation
+                    )
                     
                 case 100:
                     InputTileComplete() {

@@ -715,7 +715,13 @@ struct VisitLogView: View {
     
     @State private var navigateToEditHelpers = false
     @State private var editedHelpers: Int = 0
-
+    
+    @State private var navigateToEditFurtherOtherNotes = false
+    @State private var editedFurtherOtherNotes: String = ""
+    
+    @State private var showConfirmationDialog = false
+    @State private var hasShared = false
+    
     var body: some View {
         ScrollView {
             VStack {
@@ -732,16 +738,37 @@ struct VisitLogView: View {
                 peopleNeedHelpSection()
                 furtherSupportNeededSection()
                 followUpSection()
+                furthernotesSection()
                 volunteerAgainSection()
-                peopleNeedFurtherHelpSection()
                 
+                if !hasShared {
+                    HStack {
+                        Button("Share with Community") {
+                            showConfirmationDialog = true
+                        }
+                        .foregroundColor(Color.black)
+                        .frame(maxWidth: 180)
+                        .padding(.vertical, 12)
+                        .padding(.horizontal, 12)
+                        .font(.caption)
+                        .fontWeight(.bold)
+                        .background(
+                            Capsule()
+                                .fill(Color.white)
+                        )
+                        .overlay(
+                            Capsule()
+                                .stroke(Color("SecondaryColor"), lineWidth: 2)
+                        )
+                    }
+                }
+                NavLinkButton(title: "Delete Log", width: 190.0, secondaryButton: true, noBorder: false, color: Color.red)
+                    .padding()
+                    .onTapGesture {
+                        showDeleteDialog = true
+                    }
 
-                NavigationLink(destination: Text("Edit People Helped"), isActive: $navigateToEdit) { EmptyView() }
-                NavigationLink(destination: Text("Edit Item Quantity"), isActive: $navigateToEditItems) { EmptyView() }
-                NavigationLink(destination: Text("Edit Support Provided"), isActive: $navigateToEditSupportProvided) { EmptyView() }
-                NavigationLink(destination: Text("Edit Follow-Up Date"), isActive: $navigateToEditFollowUpDate) { EmptyView() }
-                NavigationLink(destination: Text("Edit People Still Need Help"), isActive: $navigateToEditPeopleNeedHelp) { EmptyView() }
-                NavigationLink(destination: Text("Edit Further Support Needed"), isActive: $navigateToEditFurtherSupport) { EmptyView() }
+                
             }
         }
         .onAppear {
@@ -750,7 +777,7 @@ struct VisitLogView: View {
                 mapLocations = [MapLocation(name: "Help", latitude: log.location.latitude, longitude: log.location.longitude)]
             }
         }
-        .alert("Delete visit log?", isPresented: $showDeleteDialog) {
+        /*.alert("Delete visit log?", isPresented: $showDeleteDialog) {
             Button("OK", role: .destructive) {
                 let adapter = VisitLogDataAdapter()
                 adapter.deleteVisitLog(self.log.id) {
@@ -758,6 +785,46 @@ struct VisitLogView: View {
                 }
             }
             Button("Cancel", role: .cancel) {}
+        }*/
+        .alert(isPresented: Binding(
+            get: { showConfirmationDialog || showDeleteDialog },
+            set: { _ in }
+        )) {
+            if showConfirmationDialog {
+                return Alert(
+                    title: Text("Confirm Sharing"),
+                    message: Text("""
+                    The following information will be shared when posted to the community:
+                    - Your Name
+                    - Your Profile Picture
+                    - Your Location
+                    - Type of Help Provided
+                    """),
+                    primaryButton: .default(Text("Confirm")) {
+                        let adapter = VisitLogDataAdapter()
+                        adapter.addVisitLog_Community(self.log)
+                        hasShared = true
+                        showConfirmationDialog = false
+                    },
+                    secondaryButton: .cancel {
+                        showConfirmationDialog = false
+                    }
+                )
+            } else {
+                return Alert(
+                    title: Text("Delete visit log?"),
+                    message: Text("This action cannot be undone."),
+                    primaryButton: .destructive(Text("OK")) {
+                        let adapter = VisitLogDataAdapter()
+                        adapter.deleteVisitLog(log.id) {
+                            presentation.wrappedValue.dismiss()
+                        }
+                    },
+                    secondaryButton: .cancel {
+                        showDeleteDialog = false
+                    }
+                )
+            }
         }
         .navigationTitle("Visit Log")
     }
@@ -1117,10 +1184,10 @@ struct VisitLogView: View {
     @ViewBuilder
     private func volunteerAgainSection() -> some View {
         if log.volunteerAgain >= 0 {
-            let response = log.volunteerAgain == 1 ? "Yes" : log.volunteerAgain == 2 ? "Maybe" : "No"
             VisitLogDetailRow(
                 title: "Would you like to volunteer again?",
-                detail: response
+                detail: log.volunteerAgain == 1 ? "Yes" :
+                    log.volunteerAgain == 2 ? "Maybe" : "No"
             )
         }
     }
@@ -1137,7 +1204,47 @@ struct VisitLogView: View {
             )
         }
     }
-
+    @ViewBuilder
+    private func furthernotesSection() -> some View {
+        if log.furtherOtherNotes.count > 0 {
+            VisitLogDetailRow(
+                title: "Is there anything future volunteers should know?",
+                detail: "\(log.furtherOtherNotes)",
+                onEdit: {
+                    editedFurtherOtherNotes = log.furtherOtherNotes
+                    navigateToEditFurtherOtherNotes = true
+                }
+            )
+            NavigationLink(
+                destination: InputTileNotes(
+                    questionNumber: 6,
+                    totalQuestions: 7,
+                    tileWidth: 300,
+                    tileHeight: 380,
+                    question1: "Is there anything future",
+                    question2: "volunteers should",
+                    question3: "know?",
+                    placeholderText: "Enter notes here",
+                    otherNotes: $editedFurtherOtherNotes,
+                    nextAction: {
+                        let adapter = VisitLogDataAdapter()
+                        adapter.updateVisitLogField(log.id, field: "furtherOtherNotes", value: editedFurtherOtherNotes) {
+                            log.furtherOtherNotes = editedFurtherOtherNotes
+                            navigateToEditFurtherOtherNotes = false
+                        }
+                    },
+                    previousAction: { navigateToEditFurtherOtherNotes = false },
+                    skipAction: { navigateToEditFurtherOtherNotes = false },
+                    buttonMode: .update
+                ),
+                isActive: $navigateToEditFurtherOtherNotes
+            ) {
+                EmptyView()
+            }
+        }
+    }
+    
+    
     @ViewBuilder
     private func peopleNeedHelpSection() -> some View {
         if log.peopleNeedFurtherHelp > 0 {
