@@ -184,14 +184,14 @@ struct VisitImpactView: View {
                                         Text("\(item.whenVisit.formatted(date: .abbreviated, time: .omitted)) | \(item.whenVisit.formatted(date: .omitted, time: .shortened))").font(.system(size: 13)).lineLimit(1).layoutPriority(1)
                                         GeometryReader { geo in
                                             ZStack {
-                                                VStack(spacing: 4) {
+                                                VStack(spacing: 3) {
                                                     Button("Details") {
                                                         print("Details tapped")
                                                     }
                                                     .font(.custom("Poppins-SemiBold", size: 13))
                                                     .foregroundColor(Color(red: 1.0, green: 0.933, blue: 0.0))
                                                     .padding(.horizontal, 16)
-                                                    .padding(.vertical, 8)
+                                                    .padding(.vertical, 4)
                                                     .background(
                                                         Capsule()
                                                             .fill(Color(red: 0, green: 0.16, blue: 0.145))
@@ -204,7 +204,7 @@ struct VisitImpactView: View {
                                                             .fontWeight(.bold)
                                                             .foregroundColor(.white)
                                                             .padding(.horizontal, 6)
-                                                            .padding(.vertical, 4)
+                                                            .padding(.vertical, 2)
                                                             .background(Capsule().fill(Color.green))
                                                     }
 
@@ -223,10 +223,10 @@ struct VisitImpactView: View {
                                         .frame(height: 50) //room you want for the button
                                         
                                     }
-                                    .padding(.top, -5)
+                                    .padding(.top, -8)
                                     .padding(.leading, 20)
                                 }
-                                .padding(.vertical, 15) //card size
+                                .padding(.vertical, 13) //card size
                                 .padding(.leading, 55)
                                 .background(Color.white)
                                 .clipShape(HalfCapsuleShape())
