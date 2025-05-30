@@ -155,6 +155,6 @@ extension PublicVisitLogView: PublicVisitLogDataAdapterProtocol {
     }
 }
 
-//#Preview {
-//    PublicVisitLogView()
-//}
+#Preview {
+    PublicVisitLogView(loggedInUserDetails: UserDetails())
+}

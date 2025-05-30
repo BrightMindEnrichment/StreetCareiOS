@@ -28,12 +28,13 @@ struct PublicLogViewCard: View {
                         // profile picture
                         Group {
                             if let image = user.image {
-                                Image(uiImage: image).resizable()
+                                Image(uiImage: image)
+                                    .resizable()
                                     .aspectRatio(contentMode: .fit)
                                     .frame(width: 30, height: 30)
                                     .clipShape(Circle())
                             } else {
-                                Image(systemName: "person")
+                                Image("PublicLogDefaultProfile")
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
                                     .frame(width: 30, height: 30)
@@ -43,7 +44,7 @@ struct PublicLogViewCard: View {
                         Text(log.user.userName).font(.headline)
                     }
                     Spacer()
-                    HStack(spacing: 2) {
+                    HStack(spacing: 5) {
                         Image(systemName: "flag.fill")
                             .foregroundColor(log.isFlagged ? .red : .gray)
                             .onTapGesture {
@@ -51,7 +52,7 @@ struct PublicLogViewCard: View {
                                 
                                 // If the public log is flagged, only users that flagged the event or internal users can unflag it
                                 if log.isFlagged {
-                                    if log.flaggedByUser == loggedInUser.uid || loggedInUser.userType == "Chapter Leader" {
+                                    if log.flaggedByUser == loggedInUser.uid || loggedInUser.userType == "Street Care Hub Leader" {
                                         // unflag
                                         updateFlagStatus(log: log, isFlagged: false, flaggedByUser: nil)
                                         log.isFlagged = false
@@ -105,10 +106,11 @@ struct PublicLogViewCard: View {
                 Button("Details") {
                     onDetailsClick()
                 }
-                .frame(width: 60, height: 20)
+                .frame(width: 60, height: 15)
                 .foregroundColor(Color("PrimaryColor"))
+                .font(.footnote)
                 .fontWeight(.bold)
-                .padding(.horizontal, 16)
+                .padding(.horizontal, 10)
                 .padding(.vertical, 8)
                 .background(
                     Capsule()
@@ -119,10 +121,11 @@ struct PublicLogViewCard: View {
             }
             
         }
-        .padding()
+        .padding(4)
+        .padding(.horizontal, 8)
         .background(Color.white)
         .clipShape(RoundedRectangle(cornerRadius: 15))
-        .clipShape(RoundedCorner(radius: 40, corners: [.topLeft]))
+        .clipShape(RoundedCorner(radius: 35, corners: [.topLeft]))
         .shadow(radius: 2)
         .alert(isPresented: $showAlert) {
             Alert(
