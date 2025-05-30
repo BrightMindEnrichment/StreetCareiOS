@@ -19,55 +19,50 @@ struct InputTileDuration: View {
     var nextAction: () -> ()
     var previousAction: () -> ()
     var skipAction: () -> ()
+    var buttonMode: ButtonMode = .navigation
+    @Environment(\.presentationMode) var presentationMode
+    @State private var showSuccessAlert = false
     
     var body: some View {
         ZStack {
             BasicTile(size: CGSize(width: tileWidth, height: tileHeight))
             
             VStack {
-                HStack {
-                    Text("Question \(questionNumber)/\(totalQuestions)")
-                        .foregroundColor(.black)
-                    
-                    Spacer()
-                    
-                    Button("Skip") {
-                        skipAction()
+                if buttonMode == .navigation {
+                    HStack {
+                        Text("Question \(questionNumber)/\(totalQuestions)")
+                            .foregroundColor(.black)
+                        Spacer()
+                        Button("Skip") {
+                            skipAction()
+                        }
+                        .foregroundColor(Color("SecondaryColor"))
+                        .font(.footnote)
+                        .padding(.horizontal, 16)
+                        .padding(.vertical, 8)
+                        .background(Capsule().fill(Color.white))
+                        .overlay(Capsule().stroke(Color("SecondaryColor"), lineWidth: 2))
                     }
-                    .foregroundColor(Color("SecondaryColor"))
-                    .font(.footnote)
-                    .padding(.horizontal, 16)
-                    .padding(.vertical, 8)
-                    .background(
-                        Capsule()
-                            .fill(Color.white)
-                    )
-                    .overlay(
-                        Capsule()
-                            .stroke(Color("SecondaryColor"), lineWidth: 2)
-                    )
-                }
-                .padding(.horizontal)
-                //.padding(.top, -30)
-                
-                Divider()
-                    .background(Color.gray.opacity(0.3))
                     .padding(.horizontal)
+
+                    Divider()
+                        .background(Color.gray.opacity(0.3))
+                        .padding(.horizontal)
+                }
                 
                 VStack {
-                    Text(questionLine1)
-                        .font(.title2)
-                        .fontWeight(.bold)
-                        .padding(.top, 6)
-                    Text(questionLine2)
-                        .font(.title2)
-                        .fontWeight(.bold)
-                        
-                    Text(questionLine3)
-                        .font(.title2)
-                        .fontWeight(.bold)
-                        .padding(.bottom, 12)
-                }
+                        Text(questionLine1)
+                            .font(.title2)
+                            .fontWeight(.bold)
+                            .padding(.top, 6)
+                        Text(questionLine2)
+                            .font(.title2)
+                            .fontWeight(.bold)
+                        Text(questionLine3)
+                            .font(.title2)
+                            .fontWeight(.bold)
+                            .padding(.bottom, 12)
+                    }
 
                 HStack(spacing: 16) {
                     CustomDropdown(title: "Hours", selection: $hours, options: Array(0..<13).reversed())
@@ -76,43 +71,81 @@ struct InputTileDuration: View {
                 .padding(.horizontal)
                 .padding()
 
-                HStack {
-                    Button("Previous") {
-                        previousAction()
-                    }
-                    .foregroundColor(Color("SecondaryColor"))
-                    .font(.footnote)
-                    .padding(.horizontal, 16)
-                    .padding(.vertical, 8)
-                    .background(Capsule().fill(Color.white))
-                    .overlay(Capsule().stroke(Color("SecondaryColor"), lineWidth: 2))
+                if buttonMode == .navigation {
+                    HStack {
+                        Button("Previous") {
+                            previousAction()
+                        }
+                        .foregroundColor(Color("SecondaryColor"))
+                        .font(.footnote)
+                        .padding(.horizontal, 16)
+                        .padding(.vertical, 8)
+                        .background(Capsule().fill(Color.white))
+                        .overlay(Capsule().stroke(Color("SecondaryColor"), lineWidth: 2))
 
-                    Spacer()
+                        Spacer()
 
-                    Button(" Next  ") {
-                        nextAction()
+                        Button(" Next  ") {
+                            nextAction()
+                        }
+                        .foregroundColor(Color("PrimaryColor"))
+                        .fontWeight(.bold)
+                        .padding(.horizontal, 16)
+                        .padding(.vertical, 8)
+                        .background(Capsule().fill(Color("SecondaryColor")))
                     }
-                    .foregroundColor(Color("PrimaryColor"))
-                    .fontWeight(.bold)
-                    .padding(.horizontal, 16)
-                    .padding(.vertical, 8)
-                    .background(Capsule().fill(Color("SecondaryColor")))
+                    .padding()
+                } else if buttonMode == .update {
+                    HStack {
+                        Button("Cancel") {
+                            presentationMode.wrappedValue.dismiss()
+                        }
+                        .foregroundColor(Color("SecondaryColor"))
+                        .font(.footnote)
+                        .padding(.horizontal, 16)
+                        .padding(.vertical, 8)
+                        .background(Capsule().fill(Color.white))
+                        .overlay(Capsule().stroke(Color("SecondaryColor"), lineWidth: 2))
+
+                        Spacer()
+
+                        Button("Update") {
+                            showSuccessAlert = true
+                            nextAction()
+                        }
+                        .foregroundColor(Color("PrimaryColor"))
+                        .fontWeight(.bold)
+                        .padding(.horizontal, 16)
+                        .padding(.vertical, 8)
+                        .background(Capsule().fill(Color("SecondaryColor")))
+                    }
+                    .padding()
                 }
-                .padding()
             }
         }
         .frame(width: tileWidth, height: tileHeight)
+        .alert(isPresented: $showSuccessAlert) {
+            Alert(
+                title: Text("Updated"),
+                message: Text("Your response was successfully updated."),
+                dismissButton: .default(Text("OK")) {
+                    presentationMode.wrappedValue.dismiss()
+                }
+            )
+        }
 
-        SegmentedProgressBar(
-            totalSegments: totalQuestions,
-            filledSegments: questionNumber,
-            tileWidth: 350
-        )
+        if buttonMode == .navigation {
+            SegmentedProgressBar(
+                totalSegments: totalQuestions,
+                filledSegments: questionNumber,
+                tileWidth: 350
+            )
 
-        Text("Progress")
-            .font(.footnote)
-            .fontWeight(.bold)
-            .padding(.top, 4)
+            Text("Progress")
+                .font(.footnote)
+                .fontWeight(.bold)
+                .padding(.top, 4)
+        }
     }
 }
 struct CustomDropdown: View {

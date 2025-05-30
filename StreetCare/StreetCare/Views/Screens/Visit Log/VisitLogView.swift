@@ -685,6 +685,8 @@ import MapKit
 struct VisitLogView: View {
     @Environment(\.presentationMode) var presentation
     @State var log: VisitLog
+    @State private var navigateToEditFurtherSupport = false
+    @StateObject var editedVisitLog = VisitLog(id: "")
 
     @State private var region = MKCoordinateRegion(center: CLLocationCoordinate2D(), span: MKCoordinateSpan())
     @State private var mapLocations = [MapLocation(name: "dummy", latitude: 0.0, longitude: 0.0)]
@@ -709,7 +711,6 @@ struct VisitLogView: View {
     @State private var navigateToEditPeopleNeedHelp = false
     @State private var editedPeopleNeedHelp: Int = 0
 
-    @State private var navigateToEditFurtherSupport = false
     @StateObject var editedFurtherSupport = VisitLog(id: "")
     @State private var isEditingPeopleHelped = false
     
@@ -725,6 +726,20 @@ struct VisitLogView: View {
     @State private var editedVolunteerAgain: Int = 0
     @State private var navigateToEditVolunteerAgain = false
     
+    @State private var editedRating: Int = 0
+    @State private var editedRatingComment: String = ""
+    @State private var navigateToEditRating = false
+
+    @State private var editedFurtherFoodAndDrinks = false
+    @State private var editedFurtherClothes = false
+    @State private var editedFurtherHygiene = false
+    @State private var editedFurtherWellness = false
+    @State private var editedFurtherMedical = false
+    @State private var editedFurtherSocial = false
+    @State private var editedFurtherLegal = false
+    @State private var editedFurtherOther = false
+    
+    @State private var navigateToEditDuration = false
     var body: some View {
         ScrollView {
             VStack {
@@ -940,7 +955,7 @@ struct VisitLogView: View {
                 Text("What kind of support did you provide?")
                     .screenLeft()
                     .font(.system(size: 16.0)).bold()
-                    .padding(.leading, 20.0)
+                    .padding(EdgeInsets(top: 10.0, leading: 20.0, bottom: 0.0, trailing: 20.0))
                 
                 Spacer()
                 
@@ -968,7 +983,9 @@ struct VisitLogView: View {
             ].compactMap { $0 }.joined(separator: ", ")
 
             Text(supportList)
+                .screenLeft()
                 .font(.system(size: 15.0))
+                .padding(EdgeInsets(top: 10.0, leading: 20.0, bottom: 10.0, trailing: 20.0))
             
             Rectangle()
                 .frame(width: 350.0, height: 2.0)
@@ -1074,14 +1091,64 @@ struct VisitLogView: View {
     @ViewBuilder
     private func ratingSection() -> some View {
         if log.rating > 0 {
-            Text("How would you rate your outreach experience?")
-                .font(.headline)
-                .padding(.horizontal, 20)
+            HStack {
+                Text("How would you rate your outreach experience?")
+                    .screenLeft()
+                    .font(.system(size: 16.0)).bold()
+                    .padding(.leading, 20)
+                    .padding(.top, 10)
+
+                Spacer()
+
+                Button(action: {
+                    editedRating = log.rating
+                    //editedRatingComment = log.ratingComment
+                    navigateToEditRating = true
+                }) {
+                    Image("Tab-VisitLog-Inactive")
+                        .resizable()
+                        .frame(width: 16, height: 16)
+                        .foregroundColor(.gray)
+                }
+                .buttonStyle(BorderlessButtonStyle())
+                //.padding(.top, 10)
+                .padding(.trailing, 20)
+            }
+
             RatingView(rating: $log.rating, readOnly: true)
-                .padding(.horizontal, 20)
+                .screenLeft()
+                .font(.system(size: 15.0))
+                .padding(.horizontal, 5)
+
             Rectangle()
                 .frame(width: 350.0, height: 2.0)
                 .foregroundColor(.gray)
+            NavigationLink(
+                destination: InputTileRate(
+                    questionNumber: 1,
+                    totalQuestions: 1,
+                    question1: "How would you rate your",
+                    question2: "overall outreach experience?",
+                    textValue: $editedRatingComment,
+                    rating: $editedRating,
+                    nextAction: {
+                        let adapter = VisitLogDataAdapter()
+                        adapter.updateVisitLogField(log.id, field: "rating", value: editedRating) {
+                            adapter.updateVisitLogField(log.id, field: "ratingComment", value: editedRatingComment) {
+                                log.rating = editedRating
+                                //log.ratingComment = editedRatingComment
+                                navigateToEditRating = false
+                            }
+                        }
+                    },
+                    previousAction: { navigateToEditRating = false },
+                    skipAction: { navigateToEditRating = false },
+                    buttonMode: .update
+                ),
+                isActive: $navigateToEditRating
+            ) {
+                EmptyView()
+            }
         }
     }
 
@@ -1090,7 +1157,10 @@ struct VisitLogView: View {
         if log.durationHours > 0 || log.durationMinutes > 0 {
             VisitLogDetailRow(
                 title: "How much time did you spend on the outreach?",
-                detail: "\(log.durationHours) hours and \(log.durationMinutes) minutes"
+                detail: "\(log.durationHours) hours and \(log.durationMinutes) minutes",
+                onEdit: {
+                    navigateToEditDuration = true
+                }
             )
         }
     }
@@ -1314,6 +1384,33 @@ struct VisitLogView: View {
                 }
             )
         }
+        NavigationLink(
+            destination: InputTileDuration(
+                questionNumber: 1,
+                totalQuestions: 1,
+                tileWidth: 350,
+                tileHeight: 280,
+                questionLine1: "How much time did",
+                questionLine2: "you spend on the",
+                questionLine3: "outreach?",
+                hours: $log.durationHours,
+                minutes: $log.durationMinutes,
+                nextAction: {
+                    let adapter = VisitLogDataAdapter()
+                    adapter.updateVisitLogField(log.id, field: "durationHours", value: log.durationHours) {
+                        adapter.updateVisitLogField(log.id, field: "durationMinutes", value: log.durationMinutes) {
+                            navigateToEditDuration = false
+                        }
+                    }
+                },
+                previousAction: { navigateToEditDuration = false },
+                skipAction: { navigateToEditDuration = false },
+                buttonMode: .update
+            ),
+            isActive: $navigateToEditDuration
+        ) {
+            EmptyView()
+        }
     }
 
     @ViewBuilder
@@ -1338,10 +1435,50 @@ struct VisitLogView: View {
                 }
             )
         }
+        NavigationLink(
+            destination: InputTileList(
+                questionNumber: 1,
+                totalQuestions: 1,
+                optionCount: 8,
+                size: CGSize(width: 350, height: 450),
+                question1: "Edit the support they still need",
+                question2: "",
+                visitLog: log,
+                nextAction: {
+                    let adapter = VisitLogDataAdapter()
+                    let updates: [(String, Any)] = [
+                        ("furtherFoodAndDrinks", log.furtherFoodAndDrinks),
+                        ("furtherClothes", log.furtherClothes),
+                        ("furtherHygiene", log.furtherHygiene),
+                        ("furtherWellness", log.furtherWellness),
+                        ("furtherMedical", log.furtherMedical),
+                        ("furtherSocial", log.furtherSocial),
+                        ("furtherLegal", log.furtherLegal),
+                        ("furtherOther", log.furtherOther),
+                        ("furtherOtherNotes", log.furtherOtherNotes)
+                    ]
+
+                    for (field, value) in updates {
+                        adapter.updateVisitLogField(log.id, field: field, value: value) {
+                            // No need to reassign, since we're editing `log` directly
+                            navigateToEditFurtherSupport = false
+                        }
+                    }
+                },
+                previousAction: { navigateToEditFurtherSupport = false },
+                skipAction: { navigateToEditFurtherSupport = false },
+                buttonMode: .update,
+                showProgressBar: false,
+                supportMode: .needed
+            ),
+            isActive: $navigateToEditFurtherSupport
+        ) {
+            EmptyView()
+        }
     }
 }
 
-struct VisitLogDetailRow: View {
+/*struct VisitLogDetailRow: View {
     var title: String
     var detail: String
     var onEdit: (() -> Void)? = nil
@@ -1372,8 +1509,47 @@ struct VisitLogDetailRow: View {
                 .foregroundColor(.gray)
         }
     }
-}
+}*/
+struct VisitLogDetailRow: View {
+    
+    var title: String
+    var detail: String
+    var onEdit: (() -> Void)? = nil
 
+    var body: some View {
+        VStack {
+            HStack {
+                Text(title)
+                    .screenLeft()
+                    .font(.system(size: 16.0)).bold()
+                    .padding(EdgeInsets(top: 10.0, leading: 20.0, bottom: 0.0, trailing: 20.0))
+                
+                Spacer()
+                
+                if let onEdit = onEdit {
+                    Button(action: onEdit) {
+                        Image("Tab-VisitLog-Inactive")
+                            .resizable()
+                            .frame(width: 16, height: 16)
+                            .foregroundColor(.gray)
+                    }
+                    .buttonStyle(BorderlessButtonStyle())
+                    .padding(.top, 10)
+                    .padding(.trailing, 20)
+                }
+            }
+
+            Text(detail)
+                .screenLeft()
+                .font(.system(size: 15.0))
+                .padding(EdgeInsets(top: 10.0, leading: 20.0, bottom: 10.0, trailing: 20.0))
+
+            Rectangle()
+                .frame(width: 350.0, height: 2.0)
+                .foregroundColor(.gray)
+        }
+    }
+}
 struct MapLocation: Identifiable {
     let id = UUID()
     let name: String

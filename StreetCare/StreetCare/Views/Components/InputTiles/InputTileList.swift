@@ -38,36 +38,38 @@ struct InputTileList: View {
             BasicTile(size: CGSize(width: size.width, height: size.height))
             
             VStack {
-                HStack {
-                    Text("Question \(questionNumber)/\(totalQuestions)")
-                        .foregroundColor(.black)
+                if buttonMode == .navigation {
+                    HStack {
+                        Text("Question \(questionNumber)/\(totalQuestions)")
+                            .foregroundColor(.black)
                         //.font(.footnote)
-                    
-                    Spacer()
-                    
-                    Button("Skip") {
-                        skipAction()
+                        
+                        Spacer()
+                        
+                        Button("Skip") {
+                            skipAction()
+                        }
+                        .foregroundColor(Color("SecondaryColor"))
+                        .font(.footnote)
+                        .padding(.horizontal, 16)
+                        .padding(.vertical, 8)
+                        .background(
+                            Capsule()
+                                .fill(Color.white)
+                        )
+                        .overlay(
+                            Capsule()
+                                .stroke(Color("SecondaryColor"), lineWidth: 2)
+                        )
+                        
                     }
-                    .foregroundColor(Color("SecondaryColor"))
-                    .font(.footnote)
-                    .padding(.horizontal, 16)
-                    .padding(.vertical, 8)
-                    .background(
-                        Capsule()
-                            .fill(Color.white)
-                    )
-                    .overlay(
-                        Capsule()
-                            .stroke(Color("SecondaryColor"), lineWidth: 2)
-                    )
-                    
-                }
-                .padding(.horizontal)
-                .padding(.top, 12)
-                
-                Divider()
-                    .background(Color.gray.opacity(0.3))
                     .padding(.horizontal)
+                    .padding(.top, 12)
+                    
+                    Divider()
+                        .background(Color.gray.opacity(0.3))
+                        .padding(.horizontal)
+                }
     
                 VStack{
                     Text(question1)
