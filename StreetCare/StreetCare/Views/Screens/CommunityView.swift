@@ -89,7 +89,7 @@ struct CommunityView: View {
                                         .frame(width: 66.0)
                                     Image("HelpingHands").frame(width: 15.0, height: 15.0)
                                 }
-                                Text(NSLocalizedString("helpRequests", comment: "")).fontWeight(.regular).foregroundColor(Color("TextColor"))
+                                Text(NSLocalizedString("Public Interaction Logs", comment: "")).fontWeight(.regular).foregroundColor(Color("TextColor"))
                             }
                         }
                         if AppSettings.shared.mapsAvailable {
