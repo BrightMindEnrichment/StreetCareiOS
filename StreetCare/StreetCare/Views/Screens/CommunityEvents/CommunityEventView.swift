@@ -23,7 +23,8 @@ struct CommunityEventView: View {
     @State private var isNavigationActive = false
     @State private var popupRefresh = false
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
-
+    @ObservedObject var loggedInUserDetails: UserDetails
+    
     let formatter = DateFormatter()
     var eventType: EventType
     var noEventsText: String {
@@ -67,7 +68,7 @@ struct CommunityEventView: View {
                         ZStack(alignment: .topTrailing) {
                             Image(systemName: "line.horizontal.3.decrease.circle")
                                 .foregroundColor(.black)
-                            if selectedFilter != .none {
+                            if selectedFilter != .none && selectedFilter != .reset {
                                 Circle()
                                     .fill(Color.red)
                                     .frame(width: 8, height: 8)
@@ -129,7 +130,8 @@ struct CommunityEventView: View {
                                                     currentData.event = event.event
                                                     isBottomSheetPresented.toggle()
                                                 },
-                                                popupRefresh: $popupRefresh // ✅ pass down the binding
+                                                popupRefresh: $popupRefresh, // ✅ pass down the binding,
+                                                loggedInUser: loggedInUserDetails
                                             )
                                         }
                                     }

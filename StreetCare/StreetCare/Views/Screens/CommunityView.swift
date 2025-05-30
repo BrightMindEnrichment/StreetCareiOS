@@ -35,7 +35,7 @@ struct CommunityView: View {
                         Spacer().frame(height: 35)
                         HStack{
                             NavigationLink {
-                                CommunityEventView(isPresented: $isPresented, eventType: .future)
+                                CommunityEventView(isPresented: $isPresented, loggedInUserDetails: userDetails ?? UserDetails(), eventType: .future)
                             } label: {
                                 VStack{
                                     ZStack {
@@ -54,7 +54,7 @@ struct CommunityView: View {
                             Spacer().frame(width: (UIScreen.main.bounds.width / 2) / 2)
                             
                             NavigationLink {
-                                CommunityEventView(isPresented: $isPresented, eventType: .past)
+                                CommunityEventView(isPresented: $isPresented, loggedInUserDetails: userDetails ?? UserDetails(), eventType: .past)
                             } label: {
                                 VStack{
                                     ZStack {

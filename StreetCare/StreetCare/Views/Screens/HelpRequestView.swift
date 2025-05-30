@@ -224,7 +224,7 @@ func getVerificationColor(for userType: String?) -> Color {
         return Color.yellow
     case "Chapter Member":
         return Color.purple
-    case "Internal Member":
+    case "Street Care Hub Leader":
         return Color.blue
     case "Chapter Leader":
         return Color.green
