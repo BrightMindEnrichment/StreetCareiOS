@@ -40,6 +40,8 @@ class VisitLogDataAdapter {
  
         Firestore.firestore().settings = settings
         let db = Firestore.firestore()
+        let docRef = db.collection("VisitLogBook").document()
+        visitLog.id = docRef.documentID
         
         var userData = [String: Any]()
         userData["whereVisit"] = visitLog.whereVisit
@@ -69,7 +71,7 @@ class VisitLogDataAdapter {
         userData["furtherOther"] = visitLog.furtherOther
         userData["furtherOtherNotes"] = visitLog.furtherOtherNotes
         userData["followUpWhenVisit"] = visitLog.followUpWhenVisit
-
+        
 
         if visitLog.location.latitude != 0 {
             userData["latitude"] = visitLog.location.latitude
@@ -79,15 +81,19 @@ class VisitLogDataAdapter {
         userData["timestamp"] = Date()
         userData["uid"] = user.uid
         
-        db.collection(collectionName).document().setData(userData) { err in
-            if let err = err {
-                // don't bother user with this error
-                print(err.localizedDescription)
-            } else {
-                print("Document successfully written in VisitLogBook!")
+        // ✅ NEW: Set the default status to "draft"
+            userData["status"] = "draft"
+
+            // ✅ Now use the assigned docRef so `visitLog.id` matches the saved doc
+            docRef.setData(userData) { err in
+                if let err = err {
+                    // don't bother user with this error
+                    print(err.localizedDescription)
+                } else {
+                    print("Document successfully written in VisitLogBook!")
+                }
             }
         }
-    }
     func addVisitLog_Community(_ visitLog: VisitLog) {
     
         guard let user = Auth.auth().currentUser else {
@@ -102,6 +108,7 @@ class VisitLogDataAdapter {
 
         Firestore.firestore().settings = settings
         let db = Firestore.firestore()
+        let logId = visitLog.id
         
         var userData = [String: Any]()
         userData["city"] = visitLog.city
@@ -119,6 +126,8 @@ class VisitLogDataAdapter {
         userData["uid"] = uid
         userData["whatGiven"] = visitLog.whatGiven
         userData["zipcode"] = visitLog.zipcode
+        userData["status"] = "published"
+
 
 
         //if visitLog.location.latitude != 0 {
@@ -129,12 +138,23 @@ class VisitLogDataAdapter {
         //userData["timestamp"] = Date()
         //userData["uid"] = user.uid
         
-        db.collection(collectionName).document().setData(userData) { err in
+        db.collection("visitLogWebProd").document().setData(userData) { err in
             if let err = err {
                 // don't bother user with this error
                 print(err.localizedDescription)
             } else {
                 print("Document successfully written in visitLogWebProd!")
+            }
+        }
+
+        // ✅ NEW: Update VisitLogBook with status = "published"
+        db.collection("VisitLogBook").document(logId).updateData([
+            "status": "published"
+        ]) { error in
+            if let error = error {
+                print("Error updating VisitLogBook status: \(error.localizedDescription)")
+            } else {
+                print("VisitLogBook log also marked as published!")
             }
         }
     }
@@ -176,6 +196,7 @@ class VisitLogDataAdapter {
                 for document in querySnapshot!.documents {
                     
                     let log = VisitLog(id: document.documentID)
+                    log.isPublished = true
                     
                     if let city = document["city"] as? String {
                         log.city = city
@@ -218,7 +239,7 @@ class VisitLogDataAdapter {
                     }
                     
                     if let status = document["status"] as? String {
-                        log.otherNotes = status
+                        log.status = status
                     }
                     
                     if let street = document["street"] as? String {
@@ -287,6 +308,16 @@ class VisitLogDataAdapter {
                     
                     if let latitude = document["latitude"] as? Double, let longitude = document["longitude"] as? Double {
                         log.location = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
+                    }
+                    if let status = document["status"] as? String, status == "published" {
+                        log.isPublished = true
+                    }
+                
+                    if let status = document["status"] as? String {
+                        print("📄 Status for log \(document.documentID): \(status)")
+                        if status == "published" {
+                            log.isPublished = true
+                        }
                     }
                     
                     if let whenVisit = document["whenVisit"] as? Timestamp {

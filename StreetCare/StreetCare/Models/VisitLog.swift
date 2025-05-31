@@ -12,7 +12,8 @@ import CoreLocation
 class VisitLog: ObservableObject, Identifiable {
     
     @Published var id: String
-    
+    @Published var isPublished: Bool = false
+
     @Published var whereVisit = ""
     @Published var street = ""
     @Published var city = ""
