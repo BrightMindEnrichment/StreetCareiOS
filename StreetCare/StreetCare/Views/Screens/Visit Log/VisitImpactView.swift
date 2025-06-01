@@ -136,12 +136,12 @@ struct VisitImpactView: View {
                                 .frame(width: 0) // enough to hold the icon
                                 .zIndex(1)
                                 
-                                VStack(spacing: 5) {
+                                VStack(spacing: 1) {
                                     HStack(alignment: .top, spacing: 5) {
                                         Image("MapPin")
                                             .font(.system(size: 14))
                                             .foregroundColor(.black)
-                                            .padding(.top, 1)
+                                            .padding(.top, 6)
                                         // Extract street and state from `item.whereVisit`
                                         let components = item.whereVisit.components(separatedBy: ", ").filter { !$0.isEmpty }
                                         
@@ -172,7 +172,7 @@ struct VisitImpactView: View {
                                                     .font(.system(size: 13.0))
                                             }
                                         }
-                                        
+                                        .padding(.top, 5)
                                         Spacer()
                                     }
                                     .padding(.leading, 20)
@@ -198,14 +198,17 @@ struct VisitImpactView: View {
                                                     )
                                                     .frame(width: 80)
 
-                                                    if item.isPublished {
+                                                    if adapter.publishedLogIDs.contains(item.id) {
                                                         Text("PUBLISHED")
                                                             .font(.caption2)
                                                             .fontWeight(.bold)
                                                             .foregroundColor(.white)
                                                             .padding(.horizontal, 6)
                                                             .padding(.vertical, 2)
-                                                            .background(Capsule().fill(Color.green))
+                                                            .background(
+                                                                   RoundedRectangle(cornerRadius: 6)
+                                                                       .fill(Color("PublishedGreen"))
+                                                               )
                                                     }
 
                                                     NavigationLink(destination: VisitLogView(log: item)) {
@@ -226,7 +229,8 @@ struct VisitImpactView: View {
                                     .padding(.top, -8)
                                     .padding(.leading, 20)
                                 }
-                                .padding(.vertical, 13) //card size
+                                .padding(.top, 10) // keep top spacing
+                                .padding(.bottom, 0) // reduce bottom spacing
                                 .padding(.leading, 55)
                                 .background(Color.white)
                                 .clipShape(HalfCapsuleShape())
@@ -257,6 +261,7 @@ struct VisitImpactView: View {
                     }
                     if Auth.auth().currentUser != nil {
                         adapter.refresh()
+                        adapter.refreshWebProd()
                         self.isLoading = true
                     } else {
                         adapter.resetLogs()

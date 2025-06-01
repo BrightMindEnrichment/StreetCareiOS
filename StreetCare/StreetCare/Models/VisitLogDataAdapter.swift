@@ -24,6 +24,8 @@ class VisitLogDataAdapter {
     
     var visitLogs = [VisitLog]()
     var delegate: VisitLogDataAdapterProtocol?
+    var publishedLogIDs = Set<String>()
+
     
     func resetLogs() {
         visitLogs = [VisitLog]()
@@ -81,9 +83,6 @@ class VisitLogDataAdapter {
         userData["timestamp"] = Date()
         userData["uid"] = user.uid
         
-        // ✅ NEW: Set the default status to "draft"
-            userData["status"] = "draft"
-
             // ✅ Now use the assigned docRef so `visitLog.id` matches the saved doc
             docRef.setData(userData) { err in
                 if let err = err {
@@ -95,7 +94,7 @@ class VisitLogDataAdapter {
             }
         }
     func addVisitLog_Community(_ visitLog: VisitLog) {
-    
+        
         guard let user = Auth.auth().currentUser else {
             print("no user?")
             return
@@ -105,7 +104,7 @@ class VisitLogDataAdapter {
         
         let collectionName = "visitLogWebProd"
         let settings = FirestoreSettings()
-
+        
         Firestore.firestore().settings = settings
         let db = Firestore.firestore()
         let logId = visitLog.id
@@ -127,18 +126,18 @@ class VisitLogDataAdapter {
         userData["whatGiven"] = visitLog.whatGiven
         userData["zipcode"] = visitLog.zipcode
         userData["status"] = "published"
-
-
-
+        
+        
+        
         //if visitLog.location.latitude != 0 {
-            //userData["latitude"] = visitLog.location.latitude
-            //userData["longitude"] = visitLog.location.longitude
+        //userData["latitude"] = visitLog.location.latitude
+        //userData["longitude"] = visitLog.location.longitude
         //}
         
         //userData["timestamp"] = Date()
         //userData["uid"] = user.uid
         
-        db.collection("visitLogWebProd").document().setData(userData) { err in
+        db.collection("visitLogWebProd").document(logId).setData(userData) { err in
             if let err = err {
                 // don't bother user with this error
                 print(err.localizedDescription)
@@ -146,19 +145,18 @@ class VisitLogDataAdapter {
                 print("Document successfully written in visitLogWebProd!")
             }
         }
-
+        
         // ✅ NEW: Update VisitLogBook with status = "published"
-        db.collection("VisitLogBook").document(logId).updateData([
-            "status": "published"
-        ]) { error in
-            if let error = error {
-                print("Error updating VisitLogBook status: \(error.localizedDescription)")
-            } else {
-                print("VisitLogBook log also marked as published!")
-            }
-        }
+        /*db.collection("VisitLogBook").document(logId).updateData([
+         "status": "published"
+         ]) { error in
+         if let error = error {
+         print("Error updating VisitLogBook status: \(error.localizedDescription)")
+         } else {
+         print("VisitLogBook log also marked as published!")
+         }
+         }*/
     }
-    
     
     func deleteVisitLog(_ logId: String, completion: @escaping () -> ()) {
 
@@ -172,19 +170,68 @@ class VisitLogDataAdapter {
             completion()
         }
     }
-    /*func refreshWebProd() {
-        
+    func refreshWebProd() {
         guard let user = Auth.auth().currentUser else {
-            self.visitLogs = [VisitLog]()
-            self.delegate?.visitLogDataRefreshed(self.visitLogs)
             return
         }
-        
+
+        let db = Firestore.firestore()
+        db.collection("visitLogWebProd")
+            .whereField("uid", isEqualTo: user.uid)
+            .whereField("status", isEqualTo: "published")
+            .getDocuments { querySnapshot, error in
+                if let error = error {
+                    print("Error fetching published logs: \(error.localizedDescription)")
+                    return
+                }
+
+                guard let documents = querySnapshot?.documents else {
+                    print("No published documents found.")
+                    return
+                }
+
+                self.publishedLogIDs = Set(documents.map { $0.documentID })
+
+                // ✅ Notify the delegate that it’s refreshed (optional)
+                self.delegate?.visitLogDataRefreshed(self.visitLogs)
+            }
+    }
+    /*func refreshWebProd() {
+        guard let user = Auth.auth().currentUser else {
+            return
+        }
+
         let settings = FirestoreSettings()
         Firestore.firestore().settings = settings
         let db = Firestore.firestore()
+
+        db.collection("visitLogWebProd").whereField("uid", isEqualTo: user.uid).getDocuments { querySnapshot, error in
+            if let error = error {
+                print(error.localizedDescription)
+                return
+            }
+
+            guard let documents = querySnapshot?.documents else {
+                return
+            }
+
+            for document in documents {
+                let webProdLogID = document.documentID
+
+                // ✅ Update the isPublished flag on existing VisitLogBook logs
+                if let matchingIndex = self.visitLogs.firstIndex(where: { $0.id == webProdLogID }) {
+                    self.visitLogs[matchingIndex].isPublished = true
+                    print("Matched & marked published: \(webProdLogID)")
+                } else {
+                    print("No match found in VisitLogBook for: \(webProdLogID)")
+                }
+            }
+
+            // Notify UI to refresh
+            self.delegate?.visitLogDataRefreshed(self.visitLogs)
+        }
         
-        let _ = db.collection("visitLogWebProd").whereField("uid", isEqualTo: user.uid).getDocuments { querySnapshot, error in
+        /*let _ = db.collection("visitLogWebProd").whereField("uid", isEqualTo: user.uid).getDocuments { querySnapshot, error in
             
             if let error = error {
                 print(error.localizedDescription)
@@ -194,9 +241,11 @@ class VisitLogDataAdapter {
                 self.visitLogs.removeAll()
                 
                 for document in querySnapshot!.documents {
-                    
-                    let log = VisitLog(id: document.documentID)
-                    log.isPublished = true
+                    let id = document.documentID
+
+                    if let index = self.visitLogs.firstIndex(where: { $0.id == id }) {
+                        self.visitLogs[index].isPublished = true
+                    }
                     
                     if let city = document["city"] as? String {
                         log.city = city
@@ -272,7 +321,7 @@ class VisitLogDataAdapter {
             }
             
             self.delegate?.visitLogDataRefreshed(self.visitLogs)
-        }
+        }*/
     }*/
     
     func refresh() {
@@ -309,17 +358,7 @@ class VisitLogDataAdapter {
                     if let latitude = document["latitude"] as? Double, let longitude = document["longitude"] as? Double {
                         log.location = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
                     }
-                    if let status = document["status"] as? String, status == "published" {
-                        log.isPublished = true
-                    }
-                
-                    if let status = document["status"] as? String {
-                        print("📄 Status for log \(document.documentID): \(status)")
-                        if status == "published" {
-                            log.isPublished = true
-                        }
-                    }
-                    
+                   
                     if let whenVisit = document["whenVisit"] as? Timestamp {
                         log.whenVisit = whenVisit.dateValue()
                     }
