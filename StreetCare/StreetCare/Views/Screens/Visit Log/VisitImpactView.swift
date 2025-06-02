@@ -31,6 +31,13 @@ struct VisitImpactView: View {
     @State private var showCustomAlert = false
     @State private var doNotShowAgain = false
     @AppStorage("hideProvidedHelpAlert") private var hideProvidedHelpAlert: Bool = false
+    
+    @State private var selectedVisit: VisitLog? = nil
+    @State private var showPublicPopup = false
+    
+    @State private var userType: String = ""
+    @State private var popupRefresh = false
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
 
 
     var body: some View {
@@ -182,10 +189,12 @@ struct VisitImpactView: View {
                                             .foregroundColor(.black)
                                             .padding(.trailing, -5)
                                         Text("\(item.whenVisit.formatted(date: .abbreviated, time: .omitted)) | \(item.whenVisit.formatted(date: .omitted, time: .shortened))").font(.system(size: 13)).lineLimit(1).layoutPriority(1)
-                                        GeometryReader { geo in
-                                            ZStack {
+//                                        GeometryReader { geo in
+//                                            ZStack {
                                                 Button("Details") {
-                                                    print("Details tapped")
+//                                                    print("Details tapped")
+                                                    selectedVisit = item
+                                                    showPublicPopup = true
                                                 }
                                                 .font(.custom("Poppins-SemiBold", size: 13))
                                                 .foregroundColor(Color(red: 1.0, green: 0.933, blue: 0.0)) // textColor
@@ -197,19 +206,6 @@ struct VisitImpactView: View {
                                                 )
                                                 .frame(width: 80)
                                                 
-                                                
-                                                NavigationLink(destination: VisitLogView(log: item)) {
-                                                    EmptyView()
-                                                }
-                                                .opacity(0)
-                                            }
-                                            .position(
-                                                x: geo.size.width / 2 ,
-                                                y: 0
-                                            )
-                                        }
-                                        .frame(height: 30) //room you want for the button
-                                        
                                     }
                                     .padding(.top, -5)
                                     .padding(.leading, 20)
@@ -238,10 +234,19 @@ struct VisitImpactView: View {
                 .loadingAnimation(isLoading: isLoading)
                 .navigationBarTitleDisplayMode(.inline)
                 .onAppear {
-                    print("Impact view onAppear")
+//                    print("Impact view onAppear")
                     adapter.delegate = self
+                    
                     Auth.auth().addStateDidChangeListener { _, currentUser in
                         self.user = currentUser
+                        if let uid = currentUser?.uid {
+                            let db = Firestore.firestore()
+                            db.collection("users").document(uid).getDocument { snapshot, error in
+                                if let data = snapshot?.data(), let type = data["userType"] as? String {
+                                    self.userType = type
+                                }
+                            }
+                        }
                     }
                     if Auth.auth().currentUser != nil {
                         adapter.refresh()
@@ -254,7 +259,24 @@ struct VisitImpactView: View {
                         itemsDonated = 0
                     }
                 }
+                .bottomSheet(isPresented: $showPublicPopup, content:  {
+                    if let visit = selectedVisit {
+                        PublicInteractionPopupView(
+                            visit: visit,
+                            user: user,
+                            userType: userType,
+                            onCancel: {
+                                showPublicPopup = false
+                            },
+                            delegate: self,
+                            refresh: $popupRefresh
+                        )
+                        .frame(maxWidth: .infinity)
+                        .padding(.horizontal)
+                    }
+                }, heightRatio: 0.65)
             }
+            
             if showCustomAlert {
                 Color.black.opacity(0.4)
                     .edgesIgnoringSafeArea(.all)
@@ -415,6 +437,12 @@ extension VisitImpactView: VisitLogDataAdapterProtocol {
         self.history = logs
         self.updateCounts()
         self.isLoading = false
+    }
+}
+
+extension VisitImpactView: EventPopupViewDelegate {
+    func close() {
+        showPublicPopup = false
     }
 }
 
