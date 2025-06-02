@@ -397,6 +397,10 @@ class VisitLogDataAdapter {
                     if let itemQty = document["itemQty"] as? Int {
                         log.itemQty = itemQty
                     }
+                    
+                    if let isFlagged = document["isFlagged"] as? Bool {
+                        log.isFlagged = isFlagged
+                    }
 
                     self.visitLogs.append(log)
                 }

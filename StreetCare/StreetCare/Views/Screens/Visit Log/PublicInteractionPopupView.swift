@@ -6,228 +6,212 @@
 //
 
 import SwiftUI
+import FirebaseFirestore
+import FirebaseAuth
+
 
 struct PublicInteractionPopupView: View {
-    var name: String
-    var profileImageURL: URL?
-    var date: Date
-    //    var city: String
-    //    var state: String
-    var address: String
-    var interactionDescription: String
-
-    var peopleHelped: Int
-    var joinedPeople: Int
-    var itemsDonated: Int
-
-    var helpType: [String]
-
+    @ObservedObject var visit: VisitLog
+    var user: User?
+    var userType: String
     var onCancel: () -> Void
     var delegate : EventPopupViewDelegate?
     
-    @State private var isFlagged = false
-    @State private var isVerified = true
-
-
-//    var body: some View {
-//        VStack(alignment: .leading, spacing: 14) {
-//            // Top row: avatar, name, spacer, icons
-//            HStack {
-//                profileImage
-//                    .resizable()
-//                    .frame(width: 40, height: 40)
-//                    .clipShape(Circle())
-//                
-//                Text(name)
-//                    .font(.system(size: 15, weight: .semibold))
-//                
-//                Spacer()
-//                
-//                Image(systemName: "flag.fill")
-//                    .foregroundColor(.gray)
-//                
-//                Image(systemName: "checkmark.circle.fill")
-//                    .foregroundColor(.yellow)
-//            }
-//            
-//            // Location & date
-//            HStack(spacing: 8) {
-//                Image(systemName: "mappin.and.ellipse")
-//                    .foregroundColor(.gray)
-//                //                    Text("\(city), \(state)")
-//                //                        .font(.system(size: 13))
-//                Text("\(address)")
-//                    .font(.system(size: 13))
-//            }
-//            
-//            HStack(spacing: 8) {
-//                Image(systemName: "clock")
-//                    .foregroundColor(.gray)
-//                //                    Text(date.formatted(date: .long, time: .shortened))
-//                //                        .font(.system(size: 13))
-//                Text(formattedDateTime(date))
-//                    .font(.system(size: 13))
-//            }
-//            
-//            // Description
-//            VStack(alignment: .leading, spacing: 4) {
-//                Text("Interaction Description")
-//                    .font(.system(size: 14, weight: .semibold))
-//                Text("Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nibh ex, rhoncus ut tincidunt nec, pretium sit amet diam.")
-////                Text(interactionDescription)
-//                    .font(.system(size: 13))
-//                    .fixedSize(horizontal: false, vertical: true)
-//            }
-//            
-//            // Stats
-//            VStack(alignment: .leading, spacing: 12) {
-//                PublicInfoRow(title: "People Helped", value: "\(peopleHelped)", iconName: "Tab-Profile", iconColor: .yellow)
-//                
-//                PublicInfoRow(title: "People Who Joined", value: "\(joinedPeople)", iconName: "HelpingHands", iconColor: .yellow)
-//                
-//                PublicInfoRow(title: "Items Donated", value: "\(itemsDonated)", iconName: "Clothes", iconColor: .yellow)
-//                //                    PublicInfoRow(title: "Type of Help Offered", value: helpType.joined(separator: ", "))
-//                PublicInfoRow(
-//                    title: "Type of Help Offered",
-//                    value: helpType.isEmpty ? "N/A" : helpType.joined(separator: ", ")
-//                )
-//                
-//            }
-//            
-//            
-//            // Button
-//            NavLinkButton(title: "Close", width: UIScreen.main.bounds.width - 33, secondaryButton: true)
-//                .fontWeight(.semibold)
-//                .frame(maxWidth: .infinity, alignment: .center)
-//                .onTapGesture {
-//                    delegate?.close()
-//                }
-//        }
-//        //            .padding()
-//        //            .background(Color.white)
-//        .cornerRadius(20)
-//        //            .shadow(radius: 8)
-//        //            .padding(.horizontal)
-//        //            .frame(height: UIScreen.main.bounds.height * 0.6) // Or 0.7 for taller sheet
-//        .toolbar(.hidden, for: .tabBar) // 👈 this line hides the bottom tab bar
-//        
-//        
-//    }
+    @Binding var refresh: Bool
+    @State private var showCustomAlert = false
+    @State private var alertMessage = ""
     
     var body: some View {
-            VStack(alignment: .leading, spacing: 14) {
-                // Top row
-                HStack {
-//                    profileImage
-//                        .resizable()
-//                        .frame(width: 40, height: 40)
-//                        .clipShape(Circle())
-                    
-                    if let url = profileImageURL {
-                        AsyncImage(url: url) { image in
-                            image
-                                .resizable()
-                                .frame(width: 40, height: 40)
-                                .clipShape(Circle())
-                        } placeholder: {
-                            Image(systemName: "person.crop.circle")
-                                .resizable()
-                                .frame(width: 40, height: 40)
-                                .clipShape(Circle())
-                                .opacity(0.5)
-                        }
-                    } else {
+        VStack(alignment: .leading, spacing: 14) {
+            // Top row
+            HStack {
+                if let url = user?.photoURL {
+                    AsyncImage(url: url) { image in
+                        image
+                            .resizable()
+                            .frame(width: 40, height: 40)
+                            .clipShape(Circle())
+                    } placeholder: {
                         Image(systemName: "person.crop.circle")
                             .resizable()
                             .frame(width: 40, height: 40)
                             .clipShape(Circle())
+                            .opacity(0.5)
                     }
-
-                    Text(name)
-                        .font(.system(size: 15, weight: .semibold))
-
-                    Spacer()
-
-                    // Flag toggle
-                    Image(systemName: "flag.fill")
-                        .foregroundColor(isFlagged ? .red : .gray)
-                        .onTapGesture {
-                            isFlagged.toggle()
-                        }
-
-                    // Verified toggle (for demo)
-                    Image(systemName: "checkmark.circle.fill")
-                        .foregroundColor(isVerified ? .yellow : .gray)
+                } else {
+                    Image(systemName: "person.crop.circle")
+                        .resizable()
+                        .frame(width: 40, height: 40)
+                        .clipShape(Circle())
                 }
-
-                // Location & date
-                HStack(spacing: 8) {
-                    Image(systemName: "mappin.and.ellipse")
-                        .foregroundColor(.gray)
-                    Text(address)
-                        .font(.system(size: 13))
-                }
-
-                HStack(spacing: 8) {
-                    Image(systemName: "clock")
-                        .foregroundColor(.gray)
-                    Text(formattedDateTime(date))
-                        .font(.system(size: 13))
-                }
-
-                // Description
-                VStack(alignment: .leading, spacing: 4) {
-                    Text("Interaction Description")
-                        .font(.system(size: 14, weight: .semibold))
-                    Text(interactionDescription)
-                        .font(.system(size: 13))
-                        .fixedSize(horizontal: false, vertical: true)
-                }
-
-                // Stats
-                VStack(alignment: .leading, spacing: 12) {
-                    PublicInfoRow(title: "People Helped", value: "\(peopleHelped)", iconName: "Tab-Profile", iconColor: .yellow)
-                    PublicInfoRow(title: "People Who Joined", value: "\(joinedPeople)", iconName: "HelpingHands", iconColor: .yellow)
-                    PublicInfoRow(title: "Items Donated", value: "\(itemsDonated)", iconName: "Clothes", iconColor: .yellow)
-                    PublicInfoRow(title: "Type of Help Offered", value: helpType.isEmpty ? "N/A" : helpType.joined(separator: ", "))
-                }
-
-                // Close Button
-                NavLinkButton(title: "Close", width: UIScreen.main.bounds.width - 30, secondaryButton: true)
-                    .fontWeight(.semibold)
-                    .frame(maxWidth: .infinity, alignment: .center)
+                
+                Text(user?.displayName ?? "Firstname Lastname")
+                    .font(.system(size: 15, weight: .semibold))
+                
+                Spacer()
+                
+                // Flag toggle
+                Image(systemName: "flag.fill")
+                    .foregroundColor(visit.isFlagged ? .red : .gray)
                     .onTapGesture {
-                        delegate?.close()
-                        onCancel()
+                        Task {
+                            let db = Firestore.firestore()
+//                            print(visit.id)
+                            let ref = db.collection("VisitLogBook").document(visit.id) // have to check for the correct document
+//                            print(ref.documentID)
+                            let updates: [String: Any] = [
+                                "isFlagged": false,
+                                "flaggedByUser": NSNull()
+                            ]
+                            if visit.isFlagged {
+                                // UNFLAGGING
+                                // Allow to unflag if flagged by same user (==currentUser)
+//                                print("Checking if user \(user?.uid ?? "") is flagged by user \(visit.flaggedByUser ?? "")")
+                                if visit.flaggedByUser == user?.uid || userType == "Street Care Hub Leader" {
+                                    // Allow unflagging
+                                    do {
+                                        try await ref.updateData(updates)
+                                        
+                                        visit.isFlagged = false
+                                        visit.flaggedByUser = ""
+                                        refresh.toggle()
+//                                        print("Successfully unflagged event by user \(user?.uid ?? "")")
+                                    } catch {
+//                                        print("Error updating flag status: \(error)")
+                                    }
+
+                                } else {
+                                    // Not allowed, show alert
+                                    await MainActor.run {
+                                        alertMessage = "Only the user who flagged this event or a Street Care Hub Leader can unflag it."
+                                        showCustomAlert = true
+                                    }
+                                }
+                            } else {
+                                // FLAGGING
+                                let updates: [String: Any] = [
+                                    "isFlagged": true,
+                                    "flaggedByUser": user?.uid
+                                ]
+
+                                do {
+                                    try await ref.updateData(updates)
+
+                                    visit.isFlagged = true
+                                    visit.flaggedByUser = user?.uid ?? ""
+                                    refresh.toggle()
+//                                    print("Successfully flagged event by user \(user?.uid ?? "")")
+                                } catch {
+//                                    print("Error updating flag status: \(error)")
+                                }
+                            }
+                            
+                        }
                     }
+                
+                // checkmark
+                UserRoleBadge(userType: userType)
             }
-            .cornerRadius(20)
-            .toolbar(.hidden, for: .tabBar)
+            
+            // Location & date
+            HStack(spacing: 8) {
+                Image(systemName: "mappin.and.ellipse")
+                    .foregroundColor(.gray)
+                Text(visit.whereVisit)
+                    .font(.system(size: 13))
+            }
+            
+            HStack(spacing: 8) {
+                Image(systemName: "clock")
+                    .foregroundColor(.gray)
+                Text(formattedDateTime(visit.whenVisit))
+                    .font(.system(size: 13))
+            }
+            
+            // Description
+            VStack(alignment: .leading, spacing: 4) {
+                Text("Interaction Description")
+                    .font(.system(size: 14, weight: .semibold))
+                Text(visit.otherNotes)
+                    .font(.system(size: 13))
+                    .fixedSize(horizontal: false, vertical: true)
+            }
+            
+            // Stats
+            VStack(alignment: .leading, spacing: 12) {
+                PublicInfoRow(title: "People Helped", value: "\(visit.peopleHelped)", iconName: "Tab-Profile", iconColor: .yellow)
+                PublicInfoRow(title: "People Who Joined", value: "\(visit.numberOfHelpers)", iconName: "HelpingHands", iconColor: .yellow)
+                PublicInfoRow(title: "Items Donated", value: "\(visit.itemQty)", iconName: "Clothes", iconColor: .yellow)
+                PublicInfoRow(title: "Type of Help Offered", value: visit.whatGiven.isEmpty ? "N/A" : visit.whatGiven.joined(separator: ", "))
+            }
+            
+            // Close Button
+            NavLinkButton(title: "Close", width: UIScreen.main.bounds.width - 30, secondaryButton: true)
+                .fontWeight(.semibold)
+                .frame(maxWidth: .infinity, alignment: .center)
+                .onTapGesture {
+                    delegate?.close()
+                    onCancel()
+                }
         }
+        .cornerRadius(20)
+        .toolbar(.hidden, for: .tabBar)
+        .overlay(
+            Group {
+                if showCustomAlert {
+                    ZStack {
+                        // Softened dimmed background with subtle blur and corners
+                        RoundedRectangle(cornerRadius: 20)
+                            .fill(Color.clear)
+                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+                            .edgesIgnoringSafeArea(.all)
 
+                        // Alert Box
+                        VStack(spacing: 0) {
+                            VStack(spacing: 16) {
+                                Text("Unflag Error")
+                                    .font(.headline)
+                                    .foregroundColor(.black)
+
+                                Text(alertMessage)
+                                    .font(.subheadline)
+                                    .foregroundColor(.black)
+                                    .multilineTextAlignment(.center)
+                                    .fixedSize(horizontal: false, vertical: true) // ✅ Enables line wrapping
+                                    .frame(maxWidth: .infinity)
+                            }
+                            .padding()
+
+                            Divider()
+
+                            Button(action: {
+                                withAnimation {
+                                    showCustomAlert = false
+                                }
+                            }) {
+                                Text("OK")
+                                    .frame(maxWidth: .infinity)
+                                    .padding(.vertical, 12)
+                                    .foregroundColor(.blue)
+                            }
+                        }
+                        .frame(width: 300)
+                        .background(
+                            RoundedRectangle(cornerRadius: 14)
+                                .fill(Color.white)
+                                .shadow(radius: 20)
+                        )
+                        .transition(.scale)
+                    }
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                }
+            }
+
+        )
+    }
+    
+    
 }
-
-
-//struct InfoRowWithIcon: View {
-//    var icon: String
-//    var label: String
-//    var value: String
-//    
-//    var body: some View {
-//        HStack(alignment: .top, spacing: 8) {
-//            Image(systemName: icon)
-//                .foregroundColor(.gray)
-//                .frame(width: 10)
-//            VStack(alignment: .leading, spacing: 2) {
-//                Text(label)
-//                    .font(.caption)
-//                    .foregroundColor(.secondary)
-//                Text(value)
-//                    .font(.body)
-//            }
-//        }
-//    }
-//}
 
 func formattedDateTime(_ date: Date) -> String {
     let formatter = DateFormatter()
@@ -273,21 +257,27 @@ struct PublicInfoRow: View {
     }
 }
 
-
-#Preview {
-    PublicInteractionPopupView(
-        name: "John Doe",
-//        profileImageURL: "",
-        date: Date(),
-        address: "123 Main St, Springfield, IL",
-        interactionDescription: "Distributed food and clothes to 5 individuals at the park.",
-        peopleHelped: 5,
-        joinedPeople:  2,
-        itemsDonated: 10,
-        helpType: ["Food", "Clothes", "Water"],
-        onCancel: {},
-        delegate: nil
-    )
-    .padding()
-//    .previewLayout(.sizeThatFits)
+struct UserRoleBadge: View {
+    var userType: String
+    
+    func userTypeBadge(for userType: String) -> (Color, String) {
+        switch userType {
+        case "Chapter Leader":
+            return (.green, "Chapter Leader")
+        case "Street Care Hub Leader":
+            return (Color.blue.opacity(0.7), "Street Care Hub Leader")
+        case "Chapter Member":
+            return (.purple, "Chapter Member")
+        default:
+            return (.yellow, "Chapter Member")
+        }
+    }
+    
+    var body: some View {
+        let (badgeColor, badgeText) = userTypeBadge(for: userType)
+        HStack(spacing: 8) {
+            Image(systemName: "checkmark.circle.fill")
+                .foregroundColor(badgeColor)
+        }
+    }
 }

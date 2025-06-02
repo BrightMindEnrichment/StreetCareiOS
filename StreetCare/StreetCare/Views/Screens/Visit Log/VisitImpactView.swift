@@ -34,6 +34,10 @@ struct VisitImpactView: View {
     
     @State private var selectedVisit: VisitLog? = nil
     @State private var showPublicPopup = false
+    
+    @State private var userType: String = ""
+    @State private var popupRefresh = false
+    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
 
 
     var body: some View {
@@ -185,7 +189,7 @@ struct VisitImpactView: View {
 //                                        GeometryReader { geo in
 //                                            ZStack {
                                                 Button("Details") {
-                                                    print("Details tapped")
+//                                                    print("Details tapped")
                                                     selectedVisit = item
                                                     showPublicPopup = true
                                                 }
@@ -199,19 +203,6 @@ struct VisitImpactView: View {
                                                 )
                                                 .frame(width: 80)
                                                 
-                                                
-//                                                NavigationLink(destination: VisitLogView(log: item)) {
-//                                                    EmptyView()
-//                                                }
-//                                                .opacity(0)
-//                                            }
-//                                            .position(
-//                                                x: geo.size.width / 2 ,
-//                                                y: 0
-//                                            )
-//                                        }
-//                                        .frame(height: 30) //room you want for the button
-                                        
                                     }
                                     .padding(.top, -5)
                                     .padding(.leading, 20)
@@ -240,10 +231,19 @@ struct VisitImpactView: View {
                 .loadingAnimation(isLoading: isLoading)
                 .navigationBarTitleDisplayMode(.inline)
                 .onAppear {
-                    print("Impact view onAppear")
+//                    print("Impact view onAppear")
                     adapter.delegate = self
+                    
                     Auth.auth().addStateDidChangeListener { _, currentUser in
                         self.user = currentUser
+                        if let uid = currentUser?.uid {
+                            let db = Firestore.firestore()
+                            db.collection("users").document(uid).getDocument { snapshot, error in
+                                if let data = snapshot?.data(), let type = data["userType"] as? String {
+                                    self.userType = type
+                                }
+                            }
+                        }
                     }
                     if Auth.auth().currentUser != nil {
                         adapter.refresh()
@@ -259,28 +259,21 @@ struct VisitImpactView: View {
                 .bottomSheet(isPresented: $showPublicPopup, content:  {
                     if let visit = selectedVisit {
                         PublicInteractionPopupView(
-                            name: user?.displayName ?? "Firstname Lastname",
-                            profileImageURL: user?.photoURL,
-                            date: visit.whenVisit,
-                            address: visit.whereVisit,
-                            interactionDescription: visit.otherNotes ?? "N/A", // have to check
-                            
-                            peopleHelped: visit.peopleHelped, // q3
-                            joinedPeople: visit.numberOfHelpers,
-                            itemsDonated: visit.itemQty, // q4
-                            
-                            helpType: visit.whatGiven,
+                            visit: visit,
+                            user: user,
+                            userType: userType,
                             onCancel: {
                                 showPublicPopup = false
                             },
-                            delegate: self
+                            delegate: self,
+                            refresh: $popupRefresh
                         )
                         .frame(maxWidth: .infinity)
                         .padding(.horizontal)
                     }
                 }, heightRatio: 0.65)
-
             }
+            
             if showCustomAlert {
                 Color.black.opacity(0.4)
                     .edgesIgnoringSafeArea(.all)
