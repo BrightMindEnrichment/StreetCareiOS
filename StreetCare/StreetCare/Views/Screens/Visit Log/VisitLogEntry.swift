@@ -51,28 +51,33 @@ struct VisitLogEntry: View {
                     InputTileLocation(
                         questionNumber: 2,
                         totalQuestions: 6,
-                        question1: "Where was your" , question2: "Interaction?",
+                        question1: "Where was your",
+                        question2: "Interaction?",
                         textValue: Binding(
                             get: { visitLog.whereVisit },
                             set: { newValue in
-                                visitLog.whereVisit = newValue // ✅ Updates whereVisit
+                                visitLog.whereVisit = newValue
                                 print("📍 Updated visitLog.whereVisit: \(visitLog.whereVisit)")
                             }
                         ),
                         location: Binding(
-                            get: { visitLog.location }, // ✅ Ensure visitLog.location updates
+                            get: { visitLog.location },
                             set: { newValue in
                                 visitLog.location = newValue
                                 print("📍 Updated visitLog.location: \(visitLog.location.latitude), \(visitLog.location.longitude)")
                             }
-                        )
-                    ) {
-                        questionNumber += 1
-                    } previousAction: {
-                        questionNumber -= 1
-                    } skipAction: {
-                        questionNumber += 1
-                    }
+                        ),
+                        nextAction: {
+                            questionNumber += 1
+                        },
+                        previousAction: {
+                            questionNumber -= 1
+                        },
+                        skipAction: {
+                            questionNumber += 1
+                        },
+                        buttonMode: .navigation // 👈 required parameter
+                    )
                     
                 case 3:
                     InputTileNumber(questionNumber: 3, totalQuestions: 6, tileWidth: 300, tileHeight: 560, question1: "Describe who you" , question2: "supported and how",question3: "many individuals",question4: "were involved.",descriptionLabel: "Description", disclaimerText: NSLocalizedString("disclaimer", comment: ""), placeholderText: NSLocalizedString("peopledescription", comment: ""), number: $visitLog.peopleHelped) {

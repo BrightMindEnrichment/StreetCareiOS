@@ -31,37 +31,56 @@ struct InputTileLocation: View {
     @State private var landmark = ""
     @State private var stateAbbreviation = ""
     @State private var showAddressSearch = false
+    @State private var didPrefillFields = false
         
     var nextAction: () -> ()
     var previousAction: () -> ()
     var skipAction: () -> ()
     
+    var buttonMode: ButtonMode
+    private func handleLocationSubmit() {
+        if city.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ||
+            stateAbbreviation.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            failedToFindLocation = true
+            return
+        }
+
+        let manualAddress = [
+            street.isEmpty ? nil : street,
+            city.isEmpty ? nil : city,
+            (stateAbbreviation.isEmpty ? state : stateAbbreviation).isEmpty ? nil : (stateAbbreviation.isEmpty ? state : stateAbbreviation),
+            zipcode.isEmpty ? nil : zipcode
+        ].compactMap { $0 }.joined(separator: ", ")
+
+        if !manualAddress.isEmpty {
+            textValue = manualAddress
+            print("📍 Updated textValue manually: \(textValue)")
+        }
+
+        nextAction()
+    }
     var body: some View {
 
         ZStack {
             BasicTile(size: CGSize(width: size.width, height: size.height))
 
             VStack {
-                HStack {
-                    Text("Question \(questionNumber)/\(totalQuestions)")
-                        .foregroundColor(.black)
-                        //.font(.footnote)
-                    
-                    Spacer()
-                    
-                    /*Button("Skip") {
-                        skipAction()
+                if buttonMode == .navigation {
+                    HStack {
+                        Text("Question \(questionNumber)/\(totalQuestions)")
+                            .foregroundColor(.black)
+                        Spacer()
+
                     }
-                    .foregroundColor(.gray)
-                    .padding()*/
-                    
-                }
-                .padding(.horizontal)
-                .padding(.top, 12)
-                
-                Divider()
-                    .background(Color.gray.opacity(0.3))
                     .padding(.horizontal)
+                    .padding(.top, 12)
+                }
+                
+                if buttonMode == .navigation {
+                    Divider()
+                        .background(Color.gray.opacity(0.3))
+                        .padding(.horizontal)
+                }
     
                 VStack{
                     Text(question1)
@@ -80,7 +99,11 @@ struct InputTileLocation: View {
                         
                         Text(street.isEmpty ? "Search for address" : street)
                             .foregroundColor(street.isEmpty ? .gray : .primary)
-                            .frame(maxWidth: .infinity, alignment: .leading) //
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                        /*Text(textValue.isEmpty ? "Search for address" : textValue)
+                            .foregroundColor(textValue.isEmpty ? .gray : .primary)
+                            .frame(maxWidth: .infinity, alignment: .leading)*/
+                                                                               
                     }
                     .padding()
                     .frame(height: 45)
@@ -129,61 +152,57 @@ struct InputTileLocation: View {
                     
                     AutoGrowingTextEditor(text: $landmark, placeholder: NSLocalizedString("landmark", comment: ""))
                     
-                    HStack {
-                        Button("Previous") {
-                            previousAction()
-                        }
-                        .foregroundColor(Color("SecondaryColor"))
-                        .font(.footnote)
-                        .padding(.horizontal, 16)
-                        .padding(.vertical, 8)
-                        .background(
-                            Capsule()
-                                .fill(Color.white) // Fill with white
-                        )
-                        .overlay(
-                            Capsule()
-                                .stroke(Color("SecondaryColor"), lineWidth: 2) // Stroke with dark green
-                        )
-                        
-                        Spacer()
-                        
-                        Button(" Next  ") {
-                            if city.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ||
-                               stateAbbreviation.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-                                // Show an alert or feedback to user
-                                failedToFindLocation = true
-                            } else {
-                                // Manually composed address from input fields
-                                let manualAddress = [
-                                    street.isEmpty ? nil : street,
-                                    city.isEmpty ? nil : city,
-                                    (stateAbbreviation.isEmpty ? state : stateAbbreviation).isEmpty ? nil : (stateAbbreviation.isEmpty ? state : stateAbbreviation),
-                                    zipcode.isEmpty ? nil : zipcode
-                                ]
-                                .compactMap { $0 }
-                                .joined(separator: ", ")
-
-                                if !manualAddress.isEmpty {
-                                    textValue = manualAddress
-                                    print("📍 Updated textValue manually or partially: \(textValue)")
-                                }
-
-                                nextAction()
+                    switch buttonMode {
+                    case .navigation:
+                        HStack {
+                            Button("Previous") {
+                                previousAction()
                             }
+                            .foregroundColor(Color("SecondaryColor"))
+                            .font(.footnote)
+                            .padding(.horizontal, 16)
+                            .padding(.vertical, 8)
+                            .background(Capsule().fill(Color.white))
+                            .overlay(Capsule().stroke(Color("SecondaryColor"), lineWidth: 2))
+
+                            Spacer()
+
+                            Button("Next") {
+                                handleLocationSubmit()
+                            }
+                            .foregroundColor(Color("PrimaryColor"))
+                            .fontWeight(.bold)
+                            .padding(.horizontal, 16)
+                            .padding(.vertical, 8)
+                            .background(Capsule().fill(Color("SecondaryColor")))
                         }
+                        .padding()
 
+                    case .update:
+                        HStack {
+                            Button("Cancel") {
+                                previousAction()
+                            }
+                            .foregroundColor(Color("SecondaryColor"))
+                            .font(.footnote)
+                            .padding(.horizontal, 16)
+                            .padding(.vertical, 8)
+                            .background(Capsule().fill(Color.white))
+                            .overlay(Capsule().stroke(Color("SecondaryColor"), lineWidth: 2))
 
-                        .foregroundColor(Color("PrimaryColor"))
-                        .fontWeight(.bold)
-                        .padding(.horizontal, 16)
-                        .padding(.vertical, 8)
-                        .background(
-                            Capsule()
-                                .fill(Color("SecondaryColor"))
-                        )
+                            Spacer()
+
+                            Button("Update") {
+                                handleLocationSubmit()
+                            }
+                            .foregroundColor(Color("PrimaryColor"))
+                            .fontWeight(.bold)
+                            .padding(.horizontal, 16)
+                            .padding(.vertical, 8)
+                            .background(Capsule().fill(Color("SecondaryColor")))
+                        }
+                        .padding()
                     }
-                    .padding()
                 }
             }
         }
@@ -202,6 +221,14 @@ struct InputTileLocation: View {
                     nextAction()
                 }
             }
+            if !didPrefillFields {
+                let components = textValue.components(separatedBy: ",").map { $0.trimmingCharacters(in: .whitespaces) }
+                if components.indices.contains(0) { street = components[0] }
+                if components.indices.contains(1) { city = components[1] }
+                if components.indices.contains(2) { stateAbbreviation = components[2] }
+                if components.indices.contains(3) { zipcode = components[3] }
+                didPrefillFields = true
+            }
         }
         .sheet(isPresented: $showAddressSearch) {
             GooglePlacesAutocomplete(
@@ -216,7 +243,12 @@ struct InputTileLocation: View {
                         DispatchQueue.main.async {
                             if let newLocation = newValue {
                                 self.location = newLocation // ✅ Updates location
-                                self.textValue = "\(self.street), \(self.city), \(self.state) \(self.zipcode)" // ✅ Updates whereVisit
+                                self.textValue = [
+                                    self.street,
+                                    self.city,
+                                    self.stateAbbreviation,
+                                    self.zipcode
+                                ].filter { !$0.isEmpty }.joined(separator: ", ") // ✅ Updates whereVisit
                                 print("📍 Updated whereVisit: \(self.textValue)")
                                 print("📍 Updated location: \(self.location.latitude), \(self.location.longitude)")
                             }
@@ -232,16 +264,17 @@ struct InputTileLocation: View {
         }, message: {
             Text("Sorry, having a problem finding your current location.")
         })
-        SegmentedProgressBar(
-            totalSegments: totalQuestions,
-            filledSegments: questionNumber,
-            tileWidth: 320
-        )
-
-        Text("Progress")
-            .font(.footnote)
-            .padding(.top, 4)
-            .fontWeight(.bold)
+        if buttonMode == .navigation {
+            SegmentedProgressBar(
+                totalSegments: totalQuestions,
+                filledSegments: questionNumber,
+                tileWidth: 320
+            )
+            Text("Progress")
+                .font(.footnote)
+                .padding(.top, 4)
+                .fontWeight(.bold)
+        }
         
 
     }

@@ -740,6 +740,9 @@ struct VisitLogView: View {
     @State private var editedFurtherOther = false
     
     @State private var navigateToEditDuration = false
+    @State private var navigateToEditLocation = false
+    @State private var editedLocationText = ""
+    @State private var editedLocationCoord = CLLocationCoordinate2D()
     var body: some View {
         ScrollView {
             VStack {
@@ -898,7 +901,45 @@ struct VisitLogView: View {
 
     @ViewBuilder
     private func locationSection() -> some View {
-        VisitLogDetailRow(title: "Where was your Interaction?", detail: "\(log.whereVisit)")
+        VisitLogDetailRow(
+            title: "Where was your Interaction?",
+            detail: log.whereVisit,
+            onEdit: {
+                editedLocationText = log.whereVisit
+                editedLocationCoord = log.location
+                navigateToEditLocation = true
+            }
+        )
+
+        NavigationLink(
+            destination: InputTileLocation(
+                questionNumber: 1,
+                totalQuestions: 1,
+                question1: "Where was your",
+                question2: "Interaction?",
+                textValue: $editedLocationText,
+                location: $editedLocationCoord,
+                nextAction: {
+                    let adapter = VisitLogDataAdapter()
+                    adapter.updateVisitLogField(log.id, field: "whereVisit", value: editedLocationText) {
+                        adapter.updateVisitLogField(log.id, field: "location", value: [
+                            "latitude": editedLocationCoord.latitude,
+                            "longitude": editedLocationCoord.longitude
+                        ]) {
+                            log.whereVisit = editedLocationText
+                            log.location = editedLocationCoord
+                            navigateToEditLocation = false
+                        }
+                    }
+                },
+                previousAction: { navigateToEditLocation = false },
+                skipAction: { navigateToEditLocation = false },
+                buttonMode: .update
+            ),
+            isActive: $navigateToEditLocation
+        ) {
+            EmptyView()
+        }
     }
 
     @ViewBuilder

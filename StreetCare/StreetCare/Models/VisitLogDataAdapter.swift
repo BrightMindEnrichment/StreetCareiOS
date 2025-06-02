@@ -59,7 +59,7 @@ class VisitLogDataAdapter {
             return
         }
         
-        let collectionName = "VisitLogBook"
+        let collectionName = "VisitLogBook_New"
         let settings = FirestoreSettings()
         Firestore.firestore().settings = settings
         let db = Firestore.firestore()
