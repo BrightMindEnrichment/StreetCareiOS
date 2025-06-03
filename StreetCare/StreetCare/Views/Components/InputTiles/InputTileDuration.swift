@@ -127,7 +127,7 @@ struct InputTileDuration: View {
         .alert(isPresented: $showSuccessAlert) {
             Alert(
                 title: Text("Updated"),
-                message: Text("Your response was successfully updated."),
+                message: Text("Time spent on outreach was successfully updated."),
                 dismissButton: .default(Text("OK")) {
                     presentationMode.wrappedValue.dismiss()
                 }

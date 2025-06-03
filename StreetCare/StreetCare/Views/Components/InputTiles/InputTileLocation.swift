@@ -32,7 +32,8 @@ struct InputTileLocation: View {
     @State private var stateAbbreviation = ""
     @State private var showAddressSearch = false
     @State private var didPrefillFields = false
-        
+    @State private var showSuccessAlert = false
+    @Environment(\.presentationMode) var presentationMode
     var nextAction: () -> ()
     var previousAction: () -> ()
     var skipAction: () -> ()
@@ -194,6 +195,7 @@ struct InputTileLocation: View {
 
                             Button("Update") {
                                 handleLocationSubmit()
+                                showSuccessAlert = true
                             }
                             .foregroundColor(Color("PrimaryColor"))
                             .fontWeight(.bold)
@@ -207,6 +209,15 @@ struct InputTileLocation: View {
             }
         }
         .frame(width: size.width, height: size.height)
+        .alert(isPresented: $showSuccessAlert) {
+            Alert(
+                title: Text("Updated"),
+                message: Text("Interaction location was successfully updated."),
+                dismissButton: .default(Text("OK")) {
+                    presentationMode.wrappedValue.dismiss()
+                }
+            )
+        }
         .alert("Missing Required Fields", isPresented: $failedToFindLocation, actions: {
             Button("OK") {}
         }, message: {

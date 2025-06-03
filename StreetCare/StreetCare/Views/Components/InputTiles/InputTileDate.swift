@@ -229,6 +229,7 @@ struct InputTileDate: View {
                         Button("Update") {
                             showSuccessAlert = true
                             nextAction()
+                            //presentationMode.wrappedValue.dismiss()
                         }
                         .foregroundColor(Color("PrimaryColor"))
                         .fontWeight(.bold)
@@ -243,7 +244,7 @@ struct InputTileDate: View {
         .alert(isPresented: $showSuccessAlert) {
             Alert(
                 title: Text("Updated"),
-                message: Text("Date was successfully updated."),
+                message: Text("Interaction log was successfully updated."),
                 dismissButton: .default(Text("OK")) {
                     presentationMode.wrappedValue.dismiss()
                 }

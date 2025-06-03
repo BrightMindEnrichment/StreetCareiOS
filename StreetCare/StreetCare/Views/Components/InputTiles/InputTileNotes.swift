@@ -36,28 +36,30 @@ struct InputTileNotes: View {
             BasicTile(size: CGSize(width: tileWidth, height: tileHeight))
 
             VStack {
-                HStack {
-                    Text("Question \(questionNumber)/\(totalQuestions)")
-                        .foregroundColor(.black)
-
-                    Spacer()
-
-                    Button("Skip") {
-                        skipAction()
+                if buttonMode == .navigation{
+                    HStack {
+                        Text("Question \(questionNumber)/\(totalQuestions)")
+                            .foregroundColor(.black)
+                        
+                        Spacer()
+                        
+                        Button("Skip") {
+                            skipAction()
+                        }
+                        .foregroundColor(Color("SecondaryColor"))
+                        .font(.footnote)
+                        .padding(.horizontal, 16)
+                        .padding(.vertical, 8)
+                        .background(Capsule().fill(Color.white))
+                        .overlay(Capsule().stroke(Color("SecondaryColor"), lineWidth: 2))
                     }
-                    .foregroundColor(Color("SecondaryColor"))
-                    .font(.footnote)
-                    .padding(.horizontal, 16)
-                    .padding(.vertical, 8)
-                    .background(Capsule().fill(Color.white))
-                    .overlay(Capsule().stroke(Color("SecondaryColor"), lineWidth: 2))
-                }
-                .padding(.horizontal)
-                .padding(.top, 12)
-
-                Divider()
-                    .background(Color.gray.opacity(0.3))
                     .padding(.horizontal)
+                    .padding(.top, 12)
+                    
+                    Divider()
+                        .background(Color.gray.opacity(0.3))
+                        .padding(.horizontal)
+                }
 
                 VStack {
                     Text(question1).font(.title2).fontWeight(.bold).padding(.bottom, 1)
@@ -124,7 +126,7 @@ struct InputTileNotes: View {
         .alert(isPresented: $showSuccessAlert) {
             Alert(
                 title: Text("Updated"),
-                message: Text("Notes successfully updated."),
+                message: Text("Interaction Log was successfully updated."),
                 dismissButton: .default(Text("OK")) {
                     presentationMode.wrappedValue.dismiss()
                 }

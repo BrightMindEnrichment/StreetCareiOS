@@ -684,6 +684,7 @@ import MapKit
 
 struct VisitLogView: View {
     @Environment(\.presentationMode) var presentation
+    @Environment(\.presentationMode) var presentationMode
     @State var log: VisitLog
     @State private var navigateToEditFurtherSupport = false
     @StateObject var editedVisitLog = VisitLog(id: "")
@@ -756,7 +757,7 @@ struct VisitLogView: View {
                 ratingSection()
                 durationSection()
                 numberOfHelpersSection()
-                peopleNeedHelpSection()
+                peopleNeedFurtherHelpSection()
                 furtherSupportNeededSection()
                 followUpSection()
                 furthernotesSection()
@@ -848,7 +849,7 @@ struct VisitLogView: View {
                 )
             }
         }
-        .navigationTitle("Visit Log")
+        .navigationTitle("Interaction Log")
     }
 
     @ViewBuilder
@@ -889,6 +890,7 @@ struct VisitLogView: View {
                         log.whenVisit = editedInteractionDate
                         navigateToEditInteractionDate = false
                     }
+                    //presentationMode.wrappedValue.dismiss()
                 },
                 skipAction: { navigateToEditInteractionDate = false },
                 previousAction: { navigateToEditInteractionDate = false }
@@ -959,7 +961,7 @@ struct VisitLogView: View {
                     questionNumber: 1,
                     totalQuestions: 1,
                     tileWidth: 320,
-                    tileHeight: 330,
+                    tileHeight: 280,
                     question1: "Edit the number of",
                     question2: "people you helped",
                     question3: "",
@@ -1097,7 +1099,7 @@ struct VisitLogView: View {
                     questionNumber: 5,
                     totalQuestions: 6,
                     tileWidth: 300,
-                    tileHeight: 460,
+                    tileHeight: 420,
                     question1: "How many items",
                     question2: "did you donate?",
                     question3: "",
@@ -1203,6 +1205,33 @@ struct VisitLogView: View {
                     navigateToEditDuration = true
                 }
             )
+        }
+        NavigationLink(
+            destination: InputTileDuration(
+                questionNumber: 1,
+                totalQuestions: 1,
+                tileWidth: 350,
+                tileHeight: 280,
+                questionLine1: "How much time did",
+                questionLine2: "you spend on the",
+                questionLine3: "outreach?",
+                hours: $log.durationHours,
+                minutes: $log.durationMinutes,
+                nextAction: {
+                    let adapter = VisitLogDataAdapter()
+                    adapter.updateVisitLogField(log.id, field: "durationHours", value: log.durationHours) {
+                        adapter.updateVisitLogField(log.id, field: "durationMinutes", value: log.durationMinutes) {
+                            navigateToEditDuration = false
+                        }
+                    }
+                },
+                previousAction: { navigateToEditDuration = false },
+                skipAction: { navigateToEditDuration = false },
+                buttonMode: .update
+            ),
+            isActive: $navigateToEditDuration
+        ) {
+            EmptyView()
         }
     }
     
@@ -1341,34 +1370,33 @@ struct VisitLogView: View {
                 title: "Is there a planned date to interact with them again?",
                 detail: log.followUpWhenVisit.formatted(date: .abbreviated, time: .omitted),
                 onEdit: {
-                editedInteractionDate = log.followUpWhenVisit
-                navigateToEditInteractionDate = true
+                    editedFollowUpDate = log.followUpWhenVisit
+                    navigateToEditFollowUpDate = true
             }
         )
-        
-        NavigationLink(
-            destination: InputTileDate(
-                questionNumber: 1,
-                totalQuestions: 1,
-                question1: "Is there a planned",
-                question2: "date to interact",
-                question3: "with them again?",
-                showSkip: false,
-                showProgressBar: false,
-                buttonMode: .update,
-                datetimeValue: $editedInteractionDate,
-                nextAction: {
-                    let adapter = VisitLogDataAdapter()
-                    adapter.updateVisitLogField(log.id, field: "followUpWhenVisit", value: editedInteractionDate) {
-                        log.followUpWhenVisit = editedInteractionDate
-                        navigateToEditInteractionDate = false
-                    }
-                },
-                skipAction: { navigateToEditInteractionDate = false },
-                previousAction: { navigateToEditInteractionDate = false }
-            ),
-            isActive: $navigateToEditInteractionDate
-        ) {
+            NavigationLink(
+                destination: InputTileDate(
+                    questionNumber: 1,
+                    totalQuestions: 1,
+                    question1: "Is there a planned",
+                    question2: "date to interact",
+                    question3: "with them again?",
+                    showSkip: false,
+                    showProgressBar: false,
+                    buttonMode: .update,
+                    datetimeValue: $editedFollowUpDate,
+                    nextAction: {
+                        let adapter = VisitLogDataAdapter()
+                        adapter.updateVisitLogField(log.id, field: "followUpWhenVisit", value: editedFollowUpDate) {
+                            log.followUpWhenVisit = editedFollowUpDate
+                            navigateToEditFollowUpDate = false
+                        }
+                    },
+                    skipAction: { navigateToEditFollowUpDate = false },
+                    previousAction: { navigateToEditFollowUpDate = false }
+                ),
+                isActive: $navigateToEditFollowUpDate
+            ) {
             EmptyView()
         }
         }
@@ -1389,7 +1417,7 @@ struct VisitLogView: View {
                     questionNumber: 6,
                     totalQuestions: 7,
                     tileWidth: 300,
-                    tileHeight: 380,
+                    tileHeight: 350,
                     question1: "Is there anything future",
                     question2: "volunteers should",
                     question3: "know?",
@@ -1413,46 +1441,6 @@ struct VisitLogView: View {
         }
     }
     
-    
-    @ViewBuilder
-    private func peopleNeedHelpSection() -> some View {
-        if log.peopleNeedFurtherHelp > 0 {
-            VisitLogDetailRow(
-                title: "How many people still need support?",
-                detail: "\(log.peopleNeedFurtherHelp)",
-                onEdit: {
-                    navigateToEditPeopleNeedHelp = true
-                }
-            )
-        }
-        NavigationLink(
-            destination: InputTileDuration(
-                questionNumber: 1,
-                totalQuestions: 1,
-                tileWidth: 350,
-                tileHeight: 280,
-                questionLine1: "How much time did",
-                questionLine2: "you spend on the",
-                questionLine3: "outreach?",
-                hours: $log.durationHours,
-                minutes: $log.durationMinutes,
-                nextAction: {
-                    let adapter = VisitLogDataAdapter()
-                    adapter.updateVisitLogField(log.id, field: "durationHours", value: log.durationHours) {
-                        adapter.updateVisitLogField(log.id, field: "durationMinutes", value: log.durationMinutes) {
-                            navigateToEditDuration = false
-                        }
-                    }
-                },
-                previousAction: { navigateToEditDuration = false },
-                skipAction: { navigateToEditDuration = false },
-                buttonMode: .update
-            ),
-            isActive: $navigateToEditDuration
-        ) {
-            EmptyView()
-        }
-    }
 
     @ViewBuilder
     private func furtherSupportNeededSection() -> some View {
