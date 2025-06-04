@@ -61,39 +61,47 @@ struct InputTileLocation: View {
         nextAction()
     }
     var body: some View {
-
-        ZStack {
-            BasicTile(size: CGSize(width: size.width, height: size.height))
-
-            VStack {
-                if buttonMode == .navigation {
-                    HStack {
-                        Text("Question \(questionNumber)/\(totalQuestions)")
-                            .foregroundColor(.black)
-                        Spacer()
-
-                    }
-                    .padding(.horizontal)
-                    .padding(.top, 12)
-                }
+        VStack(spacing: 0) {
+            if buttonMode == .update {
+                Text("Edit Your Interaction")
+                    .font(.title2)
+                    .fontWeight(.bold)
+                    //.padding(.top, 16)
+                    .padding(.bottom, 50)
+            }
+            
+            ZStack {
+                BasicTile(size: CGSize(width: size.width, height: size.height))
                 
-                if buttonMode == .navigation {
-                    Divider()
-                        .background(Color.gray.opacity(0.3))
+                VStack {
+                    if buttonMode == .navigation {
+                        HStack {
+                            Text("Question \(questionNumber)/\(totalQuestions)")
+                                .foregroundColor(.black)
+                            Spacer()
+                            
+                        }
                         .padding(.horizontal)
-                }
-    
-                VStack{
-                    Text(question1)
-                        .font(.title2)
-                        .padding(.top, 6)
-                        .fontWeight(.bold)
-                    Text(question2)
-                        .font(.title2)
-                        .padding(.bottom, 12)
-                        .fontWeight(.bold)
-                }
-
+                        .padding(.top, 12)
+                    }
+                    
+                    if buttonMode == .navigation {
+                        Divider()
+                            .background(Color.gray.opacity(0.3))
+                            .padding(.horizontal)
+                    }
+                    
+                    VStack{
+                        Text(question1)
+                            .font(.title2)
+                            .padding(.top, 6)
+                            .fontWeight(.bold)
+                        Text(question2)
+                            .font(.title2)
+                            .padding(.bottom, 12)
+                            .fontWeight(.bold)
+                    }
+                    
                     HStack {
                         Image(systemName: "magnifyingglass")
                             .foregroundColor(.gray)
@@ -102,9 +110,9 @@ struct InputTileLocation: View {
                             .foregroundColor(street.isEmpty ? .gray : .primary)
                             .frame(maxWidth: .infinity, alignment: .leading)
                         /*Text(textValue.isEmpty ? "Search for address" : textValue)
-                            .foregroundColor(textValue.isEmpty ? .gray : .primary)
-                            .frame(maxWidth: .infinity, alignment: .leading)*/
-                                                                               
+                         .foregroundColor(textValue.isEmpty ? .gray : .primary)
+                         .frame(maxWidth: .infinity, alignment: .leading)*/
+                        
                     }
                     .padding()
                     .frame(height: 45)
@@ -118,173 +126,176 @@ struct InputTileLocation: View {
                     .onTapGesture {
                         showAddressSearch = true
                     }
-
-                VStack {
-                    HStack {
-                        TextField(NSLocalizedString("city", comment: ""), text: $city)
-                            .textFieldStyle(RoundedBorderTextFieldStyle())
-                            .layoutPriority(1) // Higher priority
-                            .frame(maxWidth: 300)
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 8)
-                                    .stroke(Color.gray.opacity(0.5), lineWidth: 1)
-                            )
-
-                        TextField(NSLocalizedString("state", comment: ""), text: $stateAbbreviation)
-                            .textFieldStyle(RoundedBorderTextFieldStyle())
-                            .layoutPriority(0)
-                            .frame(maxWidth: 100) // Optional: limit the width
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 8)
-                                    .stroke(Color.gray.opacity(0.5), lineWidth: 1)
-                            )
-                    }
-                    .padding(.horizontal)
-                    .padding(.top, 12)
-
-                    TextField(NSLocalizedString("zipcode", comment: ""), text: $zipcode)
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
+                    
+                    VStack {
+                        HStack {
+                            TextField(NSLocalizedString("city", comment: ""), text: $city)
+                                .textFieldStyle(RoundedBorderTextFieldStyle())
+                                .layoutPriority(1) // Higher priority
+                                .frame(maxWidth: 300)
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 8)
+                                        .stroke(Color.gray.opacity(0.5), lineWidth: 1)
+                                )
+                            
+                            TextField(NSLocalizedString("state", comment: ""), text: $stateAbbreviation)
+                                .textFieldStyle(RoundedBorderTextFieldStyle())
+                                .layoutPriority(0)
+                                .frame(maxWidth: 100) // Optional: limit the width
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 8)
+                                        .stroke(Color.gray.opacity(0.5), lineWidth: 1)
+                                )
+                        }
                         .padding(.horizontal)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 8)
-                                .stroke(Color.gray.opacity(0.5), lineWidth: 1)
-                                .padding(.horizontal)
-                        )
-                    
-                    AutoGrowingTextEditor(text: $landmark, placeholder: NSLocalizedString("landmark", comment: ""))
-                    
-                    switch buttonMode {
-                    case .navigation:
-                        HStack {
-                            Button("Previous") {
-                                previousAction()
+                        .padding(.top, 12)
+                        
+                        TextField(NSLocalizedString("zipcode", comment: ""), text: $zipcode)
+                            .textFieldStyle(RoundedBorderTextFieldStyle())
+                            .padding(.horizontal)
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 8)
+                                    .stroke(Color.gray.opacity(0.5), lineWidth: 1)
+                                    .padding(.horizontal)
+                            )
+                        
+                        AutoGrowingTextEditor(text: $landmark, placeholder: NSLocalizedString("landmark", comment: ""))
+                        
+                        switch buttonMode {
+                        case .navigation:
+                            HStack {
+                                Button("Previous") {
+                                    previousAction()
+                                }
+                                .foregroundColor(Color("SecondaryColor"))
+                                .font(.footnote)
+                                .padding(.horizontal, 16)
+                                .padding(.vertical, 8)
+                                .background(Capsule().fill(Color.white))
+                                .overlay(Capsule().stroke(Color("SecondaryColor"), lineWidth: 2))
+                                
+                                Spacer()
+                                
+                                Button("Next") {
+                                    handleLocationSubmit()
+                                }
+                                .foregroundColor(Color("PrimaryColor"))
+                                .fontWeight(.bold)
+                                .padding(.horizontal, 16)
+                                .padding(.vertical, 8)
+                                .background(Capsule().fill(Color("SecondaryColor")))
                             }
-                            .foregroundColor(Color("SecondaryColor"))
-                            .font(.footnote)
-                            .padding(.horizontal, 16)
-                            .padding(.vertical, 8)
-                            .background(Capsule().fill(Color.white))
-                            .overlay(Capsule().stroke(Color("SecondaryColor"), lineWidth: 2))
-
-                            Spacer()
-
-                            Button("Next") {
-                                handleLocationSubmit()
+                            .padding()
+                            
+                        case .update:
+                            HStack {
+                                Button("Cancel") {
+                                    previousAction()
+                                }
+                                .foregroundColor(Color("SecondaryColor"))
+                                .font(.footnote)
+                                .padding(.horizontal, 16)
+                                .padding(.vertical, 8)
+                                .background(Capsule().fill(Color.white))
+                                .overlay(Capsule().stroke(Color("SecondaryColor"), lineWidth: 2))
+                                
+                                Spacer()
+                                
+                                Button("Update") {
+                                    handleLocationSubmit()
+                                    showSuccessAlert = true
+                                }
+                                .foregroundColor(Color("PrimaryColor"))
+                                .fontWeight(.bold)
+                                .padding(.horizontal, 16)
+                                .padding(.vertical, 8)
+                                .background(Capsule().fill(Color("SecondaryColor")))
                             }
-                            .foregroundColor(Color("PrimaryColor"))
-                            .fontWeight(.bold)
-                            .padding(.horizontal, 16)
-                            .padding(.vertical, 8)
-                            .background(Capsule().fill(Color("SecondaryColor")))
+                            .padding()
                         }
-                        .padding()
-
-                    case .update:
-                        HStack {
-                            Button("Cancel") {
-                                previousAction()
-                            }
-                            .foregroundColor(Color("SecondaryColor"))
-                            .font(.footnote)
-                            .padding(.horizontal, 16)
-                            .padding(.vertical, 8)
-                            .background(Capsule().fill(Color.white))
-                            .overlay(Capsule().stroke(Color("SecondaryColor"), lineWidth: 2))
-
-                            Spacer()
-
-                            Button("Update") {
-                                handleLocationSubmit()
-                                showSuccessAlert = true
-                            }
-                            .foregroundColor(Color("PrimaryColor"))
-                            .fontWeight(.bold)
-                            .padding(.horizontal, 16)
-                            .padding(.vertical, 8)
-                            .background(Capsule().fill(Color("SecondaryColor")))
-                        }
-                        .padding()
                     }
                 }
             }
-        }
-        .frame(width: size.width, height: size.height)
-        .alert(isPresented: $showSuccessAlert) {
-            Alert(
-                title: Text("Updated"),
-                message: Text("Interaction location was successfully updated."),
-                dismissButton: .default(Text("OK")) {
-                    presentationMode.wrappedValue.dismiss()
-                }
-            )
-        }
-        .alert("Missing Required Fields", isPresented: $failedToFindLocation, actions: {
-            Button("OK") {}
-        }, message: {
-            Text("Please enter both city and state before continuing.")
-        })
-        .loadingAnimation(isLoading: isLoading)
-        .onAppear {
-            locationManager = LocationManager {
-                isLoading = false
-                newLocation()
-                if !failedToFindLocation {
-                    nextAction()
-                }
-            }
-            if !didPrefillFields {
-                let components = textValue.components(separatedBy: ",").map { $0.trimmingCharacters(in: .whitespaces) }
-                if components.indices.contains(0) { street = components[0] }
-                if components.indices.contains(1) { city = components[1] }
-                if components.indices.contains(2) { stateAbbreviation = components[2] }
-                if components.indices.contains(3) { zipcode = components[3] }
-                didPrefillFields = true
-            }
-        }
-        .sheet(isPresented: $showAddressSearch) {
-            GooglePlacesAutocomplete(
-                street: $street,
-                city: $city,
-                state: $state,
-                stateAbbreviation: $stateAbbreviation,
-                zipcode: $zipcode,
-                location: Binding<CLLocationCoordinate2D?>(
-                    get: { Optional(self.location) },
-                    set: { newValue in
-                        DispatchQueue.main.async {
-                            if let newLocation = newValue {
-                                self.location = newLocation // ✅ Updates location
-                                self.textValue = [
-                                    self.street,
-                                    self.city,
-                                    self.stateAbbreviation,
-                                    self.zipcode
-                                ].filter { !$0.isEmpty }.joined(separator: ", ") // ✅ Updates whereVisit
-                                print("📍 Updated whereVisit: \(self.textValue)")
-                                print("📍 Updated location: \(self.location.latitude), \(self.location.longitude)")
-                            }
-                        }
+            .navigationBarTitleDisplayMode(.inline)
+            .navigationTitle("Interaction Log")
+            .frame(width: size.width, height: size.height)
+            .alert(isPresented: $showSuccessAlert) {
+                Alert(
+                    title: Text("Updated"),
+                    message: Text("Interaction location was successfully updated."),
+                    dismissButton: .default(Text("OK")) {
+                        presentationMode.wrappedValue.dismiss()
                     }
                 )
-            )
-        }
-        .alert("Error...", isPresented: $failedToFindLocation, actions: {
-            Button("OK") {
-                // nothing to do
             }
-        }, message: {
-            Text("Sorry, having a problem finding your current location.")
-        })
-        if buttonMode == .navigation {
-            SegmentedProgressBar(
-                totalSegments: totalQuestions,
-                filledSegments: questionNumber,
-                tileWidth: 320
-            )
-            Text("Progress")
-                .font(.footnote)
-                .padding(.top, 4)
-                .fontWeight(.bold)
+            .alert("Missing Required Fields", isPresented: $failedToFindLocation, actions: {
+                Button("OK") {}
+            }, message: {
+                Text("Please enter both city and state before continuing.")
+            })
+            .loadingAnimation(isLoading: isLoading)
+            .onAppear {
+                locationManager = LocationManager {
+                    isLoading = false
+                    newLocation()
+                    if !failedToFindLocation {
+                        nextAction()
+                    }
+                }
+                if !didPrefillFields {
+                    let components = textValue.components(separatedBy: ",").map { $0.trimmingCharacters(in: .whitespaces) }
+                    if components.indices.contains(0) { street = components[0] }
+                    if components.indices.contains(1) { city = components[1] }
+                    if components.indices.contains(2) { stateAbbreviation = components[2] }
+                    if components.indices.contains(3) { zipcode = components[3] }
+                    didPrefillFields = true
+                }
+            }
+            .sheet(isPresented: $showAddressSearch) {
+                GooglePlacesAutocomplete(
+                    street: $street,
+                    city: $city,
+                    state: $state,
+                    stateAbbreviation: $stateAbbreviation,
+                    zipcode: $zipcode,
+                    location: Binding<CLLocationCoordinate2D?>(
+                        get: { Optional(self.location) },
+                        set: { newValue in
+                            DispatchQueue.main.async {
+                                if let newLocation = newValue {
+                                    self.location = newLocation // ✅ Updates location
+                                    self.textValue = [
+                                        self.street,
+                                        self.city,
+                                        self.stateAbbreviation,
+                                        self.zipcode
+                                    ].filter { !$0.isEmpty }.joined(separator: ", ") // ✅ Updates whereVisit
+                                    print("📍 Updated whereVisit: \(self.textValue)")
+                                    print("📍 Updated location: \(self.location.latitude), \(self.location.longitude)")
+                                }
+                            }
+                        }
+                    )
+                )
+            }
+            .alert("Error...", isPresented: $failedToFindLocation, actions: {
+                Button("OK") {
+                    // nothing to do
+                }
+            }, message: {
+                Text("Sorry, having a problem finding your current location.")
+            })
+            if buttonMode == .navigation {
+                SegmentedProgressBar(
+                    totalSegments: totalQuestions,
+                    filledSegments: questionNumber,
+                    tileWidth: 320
+                )
+                Text("Progress")
+                    .font(.footnote)
+                    .padding(.top, 4)
+                    .fontWeight(.bold)
+            }
         }
         
 

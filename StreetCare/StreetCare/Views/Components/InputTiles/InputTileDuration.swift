@@ -24,33 +24,41 @@ struct InputTileDuration: View {
     @State private var showSuccessAlert = false
     
     var body: some View {
-        ZStack {
-            BasicTile(size: CGSize(width: tileWidth, height: tileHeight))
-            
-            VStack {
-                if buttonMode == .navigation {
-                    HStack {
-                        Text("Question \(questionNumber)/\(totalQuestions)")
-                            .foregroundColor(.black)
-                        Spacer()
-                        Button("Skip") {
-                            skipAction()
-                        }
-                        .foregroundColor(Color("SecondaryColor"))
-                        .font(.footnote)
-                        .padding(.horizontal, 16)
-                        .padding(.vertical, 8)
-                        .background(Capsule().fill(Color.white))
-                        .overlay(Capsule().stroke(Color("SecondaryColor"), lineWidth: 2))
-                    }
-                    .padding(.horizontal)
-
-                    Divider()
-                        .background(Color.gray.opacity(0.3))
-                        .padding(.horizontal)
-                }
+        VStack(spacing: 0) {
+            if buttonMode == .update {
+                Text("Edit Your Interaction")
+                    .font(.title2)
+                    .fontWeight(.bold)
+                //.padding(.top, 16)
+                    .padding(.bottom, 50)
+            }
+            ZStack {
+                BasicTile(size: CGSize(width: tileWidth, height: tileHeight))
                 
                 VStack {
+                    if buttonMode == .navigation {
+                        HStack {
+                            Text("Question \(questionNumber)/\(totalQuestions)")
+                                .foregroundColor(.black)
+                            Spacer()
+                            Button("Skip") {
+                                skipAction()
+                            }
+                            .foregroundColor(Color("SecondaryColor"))
+                            .font(.footnote)
+                            .padding(.horizontal, 16)
+                            .padding(.vertical, 8)
+                            .background(Capsule().fill(Color.white))
+                            .overlay(Capsule().stroke(Color("SecondaryColor"), lineWidth: 2))
+                        }
+                        .padding(.horizontal)
+                        
+                        Divider()
+                            .background(Color.gray.opacity(0.3))
+                            .padding(.horizontal)
+                    }
+                    
+                    VStack {
                         Text(questionLine1)
                             .font(.title2)
                             .fontWeight(.bold)
@@ -63,66 +71,69 @@ struct InputTileDuration: View {
                             .fontWeight(.bold)
                             .padding(.bottom, 12)
                     }
-
-                HStack(spacing: 16) {
-                    CustomDropdown(title: "Hours", selection: $hours, options: Array(0..<13).reversed())
-                    CustomDropdown(title: "Minutes", selection: $minutes, options: Array(0..<61).reversed())
-                }
-                .padding(.horizontal)
-                .padding()
-
-                if buttonMode == .navigation {
-                    HStack {
-                        Button("Previous") {
-                            previousAction()
-                        }
-                        .foregroundColor(Color("SecondaryColor"))
-                        .font(.footnote)
-                        .padding(.horizontal, 16)
-                        .padding(.vertical, 8)
-                        .background(Capsule().fill(Color.white))
-                        .overlay(Capsule().stroke(Color("SecondaryColor"), lineWidth: 2))
-
-                        Spacer()
-
-                        Button(" Next  ") {
-                            nextAction()
-                        }
-                        .foregroundColor(Color("PrimaryColor"))
-                        .fontWeight(.bold)
-                        .padding(.horizontal, 16)
-                        .padding(.vertical, 8)
-                        .background(Capsule().fill(Color("SecondaryColor")))
+                    
+                    HStack(spacing: 16) {
+                        CustomDropdown(title: "Hours", selection: $hours, options: Array(0..<13).reversed())
+                        CustomDropdown(title: "Minutes", selection: $minutes, options: Array(0..<61).reversed())
                     }
+                    .padding(.horizontal)
                     .padding()
-                } else if buttonMode == .update {
-                    HStack {
-                        Button("Cancel") {
-                            presentationMode.wrappedValue.dismiss()
+                    
+                    if buttonMode == .navigation {
+                        HStack {
+                            Button("Previous") {
+                                previousAction()
+                            }
+                            .foregroundColor(Color("SecondaryColor"))
+                            .font(.footnote)
+                            .padding(.horizontal, 16)
+                            .padding(.vertical, 8)
+                            .background(Capsule().fill(Color.white))
+                            .overlay(Capsule().stroke(Color("SecondaryColor"), lineWidth: 2))
+                            
+                            Spacer()
+                            
+                            Button(" Next  ") {
+                                nextAction()
+                            }
+                            .foregroundColor(Color("PrimaryColor"))
+                            .fontWeight(.bold)
+                            .padding(.horizontal, 16)
+                            .padding(.vertical, 8)
+                            .background(Capsule().fill(Color("SecondaryColor")))
                         }
-                        .foregroundColor(Color("SecondaryColor"))
-                        .font(.footnote)
-                        .padding(.horizontal, 16)
-                        .padding(.vertical, 8)
-                        .background(Capsule().fill(Color.white))
-                        .overlay(Capsule().stroke(Color("SecondaryColor"), lineWidth: 2))
-
-                        Spacer()
-
-                        Button("Update") {
-                            showSuccessAlert = true
-                            nextAction()
+                        .padding()
+                    } else if buttonMode == .update {
+                        HStack {
+                            Button("Cancel") {
+                                presentationMode.wrappedValue.dismiss()
+                            }
+                            .foregroundColor(Color("SecondaryColor"))
+                            .font(.footnote)
+                            .padding(.horizontal, 16)
+                            .padding(.vertical, 8)
+                            .background(Capsule().fill(Color.white))
+                            .overlay(Capsule().stroke(Color("SecondaryColor"), lineWidth: 2))
+                            
+                            Spacer()
+                            
+                            Button("Update") {
+                                showSuccessAlert = true
+                                nextAction()
+                            }
+                            .foregroundColor(Color("PrimaryColor"))
+                            .fontWeight(.bold)
+                            .padding(.horizontal, 16)
+                            .padding(.vertical, 8)
+                            .background(Capsule().fill(Color("SecondaryColor")))
                         }
-                        .foregroundColor(Color("PrimaryColor"))
-                        .fontWeight(.bold)
-                        .padding(.horizontal, 16)
-                        .padding(.vertical, 8)
-                        .background(Capsule().fill(Color("SecondaryColor")))
+                        .padding()
                     }
-                    .padding()
                 }
             }
         }
+        .navigationBarTitleDisplayMode(.inline)
+        .navigationTitle("Interaction Log")
         .frame(width: tileWidth, height: tileHeight)
         .alert(isPresented: $showSuccessAlert) {
             Alert(

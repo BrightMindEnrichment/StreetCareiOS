@@ -76,165 +76,176 @@ struct InputTileNumber: View {
     }
 
     var body: some View {
-        ZStack {
-            BasicTile(size: CGSize(width: tileWidth, height: tileHeight))
-            
-            VStack {
-                if buttonMode == .navigation{
-                    HStack {
-                        Text("Question \(questionNumber)/\(totalQuestions)")
-                            .foregroundColor(.black)
-                        Spacer()
-                        Button("Skip") {
-                            skipAction()
-                        }
-                        .foregroundColor(Color("SecondaryColor"))
-                        .font(.footnote)
-                        .padding(.horizontal, 16)
-                        .padding(.vertical, 8)
-                        .background(Capsule().fill(Color.white))
-                        .overlay(Capsule().stroke(Color("SecondaryColor"), lineWidth: 2))
-                    }
-                    .padding(.horizontal)
-                    .padding(.top, 12)
-                    
-                    Divider()
-                        .background(Color.gray.opacity(0.3))
-                        .padding(.horizontal)
-                }
+        VStack(spacing: 0) {
+            if buttonMode == .update {
+                Text("Edit Your Interaction")
+                    .font(.title2)
+                    .fontWeight(.bold)
+                //.padding(.top, 16)
+                    .padding(.bottom, 50)
+            }
+            ZStack {
+                BasicTile(size: CGSize(width: tileWidth, height: tileHeight))
                 
                 VStack {
-                    Text(question1).font(.title2).fontWeight(.bold).padding(.bottom, 1)
-                    Text(question2).font(.title2).fontWeight(.bold).padding(.bottom, 1)
-                    Text(question3).font(.title2).fontWeight(.bold).padding(.bottom, 1)
-                    Text(question4).font(.title2).fontWeight(.bold)
-                }
-                .padding(.vertical)
-                
-                HStack(spacing: 20) {
-                    Button(action: {
-                        if let current = Int(numberString), current > 0 {
-                            numberString = "\(current - 1)"
+                    if buttonMode == .navigation{
+                        HStack {
+                            Text("Question \(questionNumber)/\(totalQuestions)")
+                                .foregroundColor(.black)
+                            Spacer()
+                            Button("Skip") {
+                                skipAction()
+                            }
+                            .foregroundColor(Color("SecondaryColor"))
+                            .font(.footnote)
+                            .padding(.horizontal, 16)
+                            .padding(.vertical, 8)
+                            .background(Capsule().fill(Color.white))
+                            .overlay(Capsule().stroke(Color("SecondaryColor"), lineWidth: 2))
                         }
-                    }) {
-                        Image(systemName: "minus")
-                            .foregroundColor(Color("PrimaryColor"))
-                            .frame(width: 30, height: 30)
-                            .background(Color("SecondaryColor"))
-                            .clipShape(Circle())
+                        .padding(.horizontal)
+                        .padding(.top, 12)
+                        
+                        Divider()
+                            .background(Color.gray.opacity(0.3))
+                            .padding(.horizontal)
                     }
                     
-                    TextField("", text: $numberString)
-                        .keyboardType(.numberPad)
-                        .multilineTextAlignment(.center)
-                        .font(.title2)
-                        .fontWeight(.bold)
-                        .frame(width: 60)
-                        .textFieldStyle(PlainTextFieldStyle())
+                    VStack {
+                        Text(question1).font(.title2).fontWeight(.bold).padding(.bottom, 1)
+                        Text(question2).font(.title2).fontWeight(.bold).padding(.bottom, 1)
+                        Text(question3).font(.title2).fontWeight(.bold).padding(.bottom, 1)
+                        Text(question4).font(.title2).fontWeight(.bold)
+                    }
+                    .padding(.vertical)
                     
-                    Button(action: {
-                        if let current = Int(numberString) {
-                            numberString = "\(current + 1)"
-                        } else {
-                            numberString = "1"
+                    HStack(spacing: 20) {
+                        Button(action: {
+                            if let current = Int(numberString), current > 0 {
+                                numberString = "\(current - 1)"
+                            }
+                        }) {
+                            Image(systemName: "minus")
+                                .foregroundColor(Color("PrimaryColor"))
+                                .frame(width: 30, height: 30)
+                                .background(Color("SecondaryColor"))
+                                .clipShape(Circle())
                         }
-                    }) {
-                        Image(systemName: "plus")
+                        
+                        TextField("", text: $numberString)
+                            .keyboardType(.numberPad)
+                            .multilineTextAlignment(.center)
+                            .font(.title2)
+                            .fontWeight(.bold)
+                            .frame(width: 60)
+                            .textFieldStyle(PlainTextFieldStyle())
+                        
+                        Button(action: {
+                            if let current = Int(numberString) {
+                                numberString = "\(current + 1)"
+                            } else {
+                                numberString = "1"
+                            }
+                        }) {
+                            Image(systemName: "plus")
+                                .foregroundColor(Color("PrimaryColor"))
+                                .frame(width: 30, height: 30)
+                                .background(Color("SecondaryColor"))
+                                .clipShape(Circle())
+                        }
+                    }
+                    .padding(.bottom)
+                    
+                    if let label = descriptionLabel, !label.isEmpty {
+                        Text(label)
+                            .font(.headline)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .padding(.horizontal)
+                            .foregroundColor(Color("SecondaryColor"))
+                    }
+                    
+                    if let placeholder = placeholderText, !placeholder.isEmpty {
+                        AutoGrowingTextEditor(text: $peopledescription, placeholder: placeholder)
+                    }
+                    
+                    if let disclaimer = disclaimerText, !disclaimer.isEmpty {
+                        Text(disclaimer)
+                            .font(.footnote)
+                            .multilineTextAlignment(.center)
+                            .fixedSize(horizontal: false, vertical: true)
+                            .frame(maxWidth: .infinity)
+                            .padding(.horizontal)
+                            .padding(.top, 8)
+                    }
+                    
+                    if buttonMode == .navigation {
+                        HStack {
+                            Button("Previous") {
+                                previousAction()
+                            }
+                            .foregroundColor(Color("SecondaryColor"))
+                            .font(.footnote)
+                            .padding(.horizontal, 16)
+                            .padding(.vertical, 8)
+                            .background(Capsule().fill(Color.white))
+                            .overlay(Capsule().stroke(Color("SecondaryColor"), lineWidth: 2))
+                            
+                            Spacer()
+                            
+                            Button("Next") {
+                                if let validNumber = Int(numberString), validNumber >= 0 {
+                                    number = validNumber
+                                    nextAction()
+                                } else {
+                                    showAlert = true
+                                }
+                            }
                             .foregroundColor(Color("PrimaryColor"))
-                            .frame(width: 30, height: 30)
-                            .background(Color("SecondaryColor"))
-                            .clipShape(Circle())
-                    }
-                }
-                .padding(.bottom)
-                
-                if let label = descriptionLabel, !label.isEmpty {
-                    Text(label)
-                        .font(.headline)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(.horizontal)
-                        .foregroundColor(Color("SecondaryColor"))
-                }
-                
-                if let placeholder = placeholderText, !placeholder.isEmpty {
-                    AutoGrowingTextEditor(text: $peopledescription, placeholder: placeholder)
-                }
-                
-                if let disclaimer = disclaimerText, !disclaimer.isEmpty {
-                    Text(disclaimer)
-                        .font(.footnote)
-                        .multilineTextAlignment(.center)
-                        .fixedSize(horizontal: false, vertical: true)
-                        .frame(maxWidth: .infinity)
-                        .padding(.horizontal)
-                        .padding(.top, 8)
-                }
-                
-                if buttonMode == .navigation {
-                    HStack {
-                        Button("Previous") {
-                            previousAction()
-                        }
-                        .foregroundColor(Color("SecondaryColor"))
-                        .font(.footnote)
-                        .padding(.horizontal, 16)
-                        .padding(.vertical, 8)
-                        .background(Capsule().fill(Color.white))
-                        .overlay(Capsule().stroke(Color("SecondaryColor"), lineWidth: 2))
-                        
-                        Spacer()
-                        
-                        Button("Next") {
-                            if let validNumber = Int(numberString), validNumber >= 0 {
-                                number = validNumber
-                                nextAction()
-                            } else {
-                                showAlert = true
+                            .fontWeight(.bold)
+                            .padding(.horizontal, 16)
+                            .padding(.vertical, 8)
+                            .background(Capsule().fill(Color("SecondaryColor")))
+                            .alert(isPresented: $showAlert) {
+                                Alert(title: Text("Invalid Input"), message: Text("Please enter a valid number."), dismissButton: .default(Text("OK")))
                             }
                         }
-                        .foregroundColor(Color("PrimaryColor"))
-                        .fontWeight(.bold)
-                        .padding(.horizontal, 16)
-                        .padding(.vertical, 8)
-                        .background(Capsule().fill(Color("SecondaryColor")))
-                        .alert(isPresented: $showAlert) {
-                            Alert(title: Text("Invalid Input"), message: Text("Please enter a valid number."), dismissButton: .default(Text("OK")))
-                        }
-                    }
-                    .padding()
-                } else if buttonMode == .update {
-                    HStack {
-                        Button("Cancel") {
-                            presentationMode.wrappedValue.dismiss()
-                        }
-                        .foregroundColor(Color("SecondaryColor"))
-                        .font(.footnote)
-                        .padding(.horizontal, 16)
-                        .padding(.vertical, 8)
-                        .background(Capsule().fill(Color.white))
-                        .overlay(Capsule().stroke(Color("SecondaryColor"), lineWidth: 2))
-                        
-                        Spacer()
-                        
-                        Button("Update") {
-                            if let validNumber = Int(numberString), validNumber >= 0 {
-                                number = validNumber
-                                showSuccessAlert = true
-                                nextAction()
-                            } else {
-                                showAlert = true
+                        .padding()
+                    } else if buttonMode == .update {
+                        HStack {
+                            Button("Cancel") {
+                                presentationMode.wrappedValue.dismiss()
                             }
+                            .foregroundColor(Color("SecondaryColor"))
+                            .font(.footnote)
+                            .padding(.horizontal, 16)
+                            .padding(.vertical, 8)
+                            .background(Capsule().fill(Color.white))
+                            .overlay(Capsule().stroke(Color("SecondaryColor"), lineWidth: 2))
+                            
+                            Spacer()
+                            
+                            Button("Update") {
+                                if let validNumber = Int(numberString), validNumber >= 0 {
+                                    number = validNumber
+                                    showSuccessAlert = true
+                                    nextAction()
+                                } else {
+                                    showAlert = true
+                                }
+                            }
+                            .foregroundColor(Color("PrimaryColor"))
+                            .fontWeight(.bold)
+                            .padding(.horizontal, 16)
+                            .padding(.vertical, 8)
+                            .background(Capsule().fill(Color("SecondaryColor")))
                         }
-                        .foregroundColor(Color("PrimaryColor"))
-                        .fontWeight(.bold)
-                        .padding(.horizontal, 16)
-                        .padding(.vertical, 8)
-                        .background(Capsule().fill(Color("SecondaryColor")))
+                        .padding()
                     }
-                    .padding()
                 }
             }
         }
+        .navigationBarTitleDisplayMode(.inline)
+        .navigationTitle("Interaction Log")
         .alert(isPresented: $showSuccessAlert) {
             Alert(
                 title: Text("Updated"),

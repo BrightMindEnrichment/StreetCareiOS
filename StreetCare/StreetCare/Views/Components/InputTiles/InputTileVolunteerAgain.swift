@@ -27,152 +27,163 @@ struct InputTileVolunteerAgain: View {
     @State private var showSuccessAlert = false
     
     var body: some View {
-
-        ZStack {
-            BasicTile(size: CGSize(width: size.width, height: size.height))
+        VStack(spacing: 0) {
+            if buttonMode == .update {
+                Text("Edit Your Interaction")
+                    .font(.title2)
+                    .fontWeight(.bold)
+                //.padding(.top, 16)
+                    .padding(.bottom, 50)
+            }
             
-            VStack {
-                if buttonMode == .navigation {
-                    HStack {
-                        Text("Question \(questionNumber)/\(totalQuestions)")
-                            .foregroundColor(.black)
-                        Spacer()
-                    }
-                    .padding(.horizontal)
-                    .padding(.top, 12)
-                }
+            ZStack {
+                BasicTile(size: CGSize(width: size.width, height: size.height))
                 
-                Divider()
-                    .background(Color.gray.opacity(0.3))
-                    .padding(.horizontal)
-    
-                VStack{
-                    Text(question1)
-                        .font(.title2)
+                VStack {
+                    if buttonMode == .navigation {
+                        HStack {
+                            Text("Question \(questionNumber)/\(totalQuestions)")
+                                .foregroundColor(.black)
+                            Spacer()
+                        }
+                        .padding(.horizontal)
                         .padding(.top, 12)
-                        .fontWeight(.bold)
-                    Text(question2)
-                        .font(.title2)
-                        .padding(.bottom, 6)
-                        .fontWeight(.bold)
-                }
-                
-                VStack(spacing: 12) {
-                    Button(action: {
-                        volunteerAgain = 1
-                    }) {
-                        Text("Yes")
-                            .font(.footnote)
-                            .foregroundColor(volunteerAgain == 1 ? .white : Color("SecondaryColor"))
-                            //.foregroundColor(Color.black)
-                            .frame(maxWidth: 120)
-                            .padding(.vertical, 8)
+                    }
+                    
+                    Divider()
+                        .background(Color.gray.opacity(0.3))
+                        .padding(.horizontal)
+                    
+                    VStack{
+                        Text(question1)
+                            .font(.title2)
+                            .padding(.top, 12)
                             .fontWeight(.bold)
-                            .background(
-                                Capsule()
-                                    .fill(volunteerAgain == 1 ? Color("SecondaryColor") : Color.white)
-                            )
-                            .overlay(
-                                Capsule()
-                                    .stroke(Color("SecondaryColor"), lineWidth: 2)
-                            )
-                    }
-
-                    Button(action: {
-                        volunteerAgain = 0
-                    }) {
-                        Text("No")
-                            .font(.footnote)
-                            .foregroundColor(volunteerAgain == 0 ? .white : Color("SecondaryColor"))
-                            //.foregroundColor(Color.black)
+                        Text(question2)
+                            .font(.title2)
+                            .padding(.bottom, 6)
                             .fontWeight(.bold)
-                            .frame(maxWidth: 120)
-                            .padding(.vertical, 8)
-                            .background(
-                                Capsule()
-                                    .fill(volunteerAgain == 0 ? Color("SecondaryColor") : Color.white)
-                            )
-                            .overlay(
-                                Capsule()
-                                    .stroke(Color("SecondaryColor"), lineWidth: 2)
-                            )
                     }
-
-                    Button(action: {
-                        volunteerAgain = 2
-                    }) {
-                        Text("Maybe")
-                            .font(.footnote)
-                            .foregroundColor(volunteerAgain == 2 ? .white : Color("SecondaryColor"))
+                    
+                    VStack(spacing: 12) {
+                        Button(action: {
+                            volunteerAgain = 1
+                        }) {
+                            Text("Yes")
+                                .font(.footnote)
+                                .foregroundColor(volunteerAgain == 1 ? .white : Color("SecondaryColor"))
                             //.foregroundColor(Color.black)
-                            .fontWeight(.bold)
-                            .frame(maxWidth: 120)
+                                .frame(maxWidth: 120)
+                                .padding(.vertical, 8)
+                                .fontWeight(.bold)
+                                .background(
+                                    Capsule()
+                                        .fill(volunteerAgain == 1 ? Color("SecondaryColor") : Color.white)
+                                )
+                                .overlay(
+                                    Capsule()
+                                        .stroke(Color("SecondaryColor"), lineWidth: 2)
+                                )
+                        }
+                        
+                        Button(action: {
+                            volunteerAgain = 0
+                        }) {
+                            Text("No")
+                                .font(.footnote)
+                                .foregroundColor(volunteerAgain == 0 ? .white : Color("SecondaryColor"))
+                            //.foregroundColor(Color.black)
+                                .fontWeight(.bold)
+                                .frame(maxWidth: 120)
+                                .padding(.vertical, 8)
+                                .background(
+                                    Capsule()
+                                        .fill(volunteerAgain == 0 ? Color("SecondaryColor") : Color.white)
+                                )
+                                .overlay(
+                                    Capsule()
+                                        .stroke(Color("SecondaryColor"), lineWidth: 2)
+                                )
+                        }
+                        
+                        Button(action: {
+                            volunteerAgain = 2
+                        }) {
+                            Text("Maybe")
+                                .font(.footnote)
+                                .foregroundColor(volunteerAgain == 2 ? .white : Color("SecondaryColor"))
+                            //.foregroundColor(Color.black)
+                                .fontWeight(.bold)
+                                .frame(maxWidth: 120)
+                                .padding(.vertical, 8)
+                                .background(
+                                    Capsule()
+                                        .fill(volunteerAgain == 2 ? Color("SecondaryColor") : Color.white)
+                                )
+                                .overlay(
+                                    Capsule()
+                                        .stroke(Color("SecondaryColor"), lineWidth: 2)
+                                )
+                        }
+                    }
+                    //.padding(.horizontal)
+                    .padding()
+                    
+                    if buttonMode == .navigation {
+                        HStack {
+                            Button("Previous") {
+                                previousAction()
+                            }
+                            .foregroundColor(Color("SecondaryColor"))
+                            .font(.footnote)
+                            .padding(.horizontal, 16)
                             .padding(.vertical, 8)
-                            .background(
-                                Capsule()
-                                    .fill(volunteerAgain == 2 ? Color("SecondaryColor") : Color.white)
-                            )
-                            .overlay(
-                                Capsule()
-                                    .stroke(Color("SecondaryColor"), lineWidth: 2)
-                            )
+                            .background(Capsule().fill(Color.white))
+                            .overlay(Capsule().stroke(Color("SecondaryColor"), lineWidth: 2))
+                            
+                            Spacer()
+                            
+                            Button("Finish") {
+                                nextAction()
+                            }
+                            .foregroundColor(Color("PrimaryColor"))
+                            .fontWeight(.bold)
+                            .padding(.horizontal, 16)
+                            .padding(.vertical, 8)
+                            .background(Capsule().fill(Color("SecondaryColor")))
+                        }
+                        .padding(.horizontal)
+                    } else if buttonMode == .update {
+                        HStack {
+                            Button("Cancel") {
+                                presentationMode.wrappedValue.dismiss()
+                            }
+                            .foregroundColor(Color("SecondaryColor"))
+                            .font(.footnote)
+                            .padding(.horizontal, 16)
+                            .padding(.vertical, 8)
+                            .background(Capsule().fill(Color.white))
+                            .overlay(Capsule().stroke(Color("SecondaryColor"), lineWidth: 2))
+                            
+                            Spacer()
+                            
+                            Button("Update") {
+                                showSuccessAlert = true
+                                nextAction()
+                            }
+                            .foregroundColor(Color("PrimaryColor"))
+                            .fontWeight(.bold)
+                            .padding(.horizontal, 16)
+                            .padding(.vertical, 8)
+                            .background(Capsule().fill(Color("SecondaryColor")))
+                        }
+                        .padding(.horizontal)
                     }
-                }
-                //.padding(.horizontal)
-                .padding()
-                
-                if buttonMode == .navigation {
-                    HStack {
-                        Button("Previous") {
-                            previousAction()
-                        }
-                        .foregroundColor(Color("SecondaryColor"))
-                        .font(.footnote)
-                        .padding(.horizontal, 16)
-                        .padding(.vertical, 8)
-                        .background(Capsule().fill(Color.white))
-                        .overlay(Capsule().stroke(Color("SecondaryColor"), lineWidth: 2))
-
-                        Spacer()
-
-                        Button("Finish") {
-                            nextAction()
-                        }
-                        .foregroundColor(Color("PrimaryColor"))
-                        .fontWeight(.bold)
-                        .padding(.horizontal, 16)
-                        .padding(.vertical, 8)
-                        .background(Capsule().fill(Color("SecondaryColor")))
-                    }
-                    .padding(.horizontal)
-                } else if buttonMode == .update {
-                    HStack {
-                        Button("Cancel") {
-                            presentationMode.wrappedValue.dismiss()
-                        }
-                        .foregroundColor(Color("SecondaryColor"))
-                        .font(.footnote)
-                        .padding(.horizontal, 16)
-                        .padding(.vertical, 8)
-                        .background(Capsule().fill(Color.white))
-                        .overlay(Capsule().stroke(Color("SecondaryColor"), lineWidth: 2))
-
-                        Spacer()
-
-                        Button("Update") {
-                            showSuccessAlert = true
-                            nextAction()
-                        }
-                        .foregroundColor(Color("PrimaryColor"))
-                        .fontWeight(.bold)
-                        .padding(.horizontal, 16)
-                        .padding(.vertical, 8)
-                        .background(Capsule().fill(Color("SecondaryColor")))
-                    }
-                    .padding(.horizontal)
                 }
             }
         }
+        .navigationBarTitleDisplayMode(.inline)
+        .navigationTitle("Interaction Log")
         .alert(isPresented: $showSuccessAlert) {
             Alert(
                 title: Text("Updated"),

@@ -26,111 +26,122 @@ struct InputTileRate: View {
     @State private var showSuccessAlert = false
     
     var body: some View {
-
-        ZStack {
-            BasicTile(size: CGSize(width: size.width, height: size.height))
-            
-            VStack {
-                
-                if buttonMode == .navigation {
-                    HStack {
-                        Text("Question \(questionNumber)/\(totalQuestions)")
-                            .foregroundColor(.black)
-                        //.font(.footnote)
-                        
-                        Spacer()
-                        
-                        /*Button("Skip") {
-                         skipAction()
-                         }
-                         .foregroundColor(Color("SecondaryColor"))
-                         .padding(.horizontal, 16)
-                         .padding(.vertical, 8)
-                         .background(
-                         Capsule()
-                         .fill(Color.white)
-                         )
-                         .overlay(
-                         Capsule()
-                         .stroke(Color("SecondaryColor"), lineWidth: 2)
-                         )*/
-                        
-                    }
-                    .padding(.horizontal)
-                    .padding(.top, 12)
-                    
-                    Divider()
-                        .background(Color.gray.opacity(0.3))
-                        .padding(.horizontal)
-                }
-    
-                VStack{
-                    Text(question1)
-                        .font(.title3)
-                        .padding(.top, 12)
-                        .fontWeight(.bold)
-                    Text(question2)
-                        .font(.title3)
-                        //.padding(.bottom, 12)
-                        .fontWeight(.bold)
-                }
-                RatingView(rating: $rating)
-                
-                
-                AutoGrowingTextEditor(text: $textValue, placeholder: NSLocalizedString("comments", comment: ""))
-                if buttonMode == .navigation {
-                    HStack {
-                        Button("Previous") {
-                            previousAction()
-                        }
-                        .foregroundColor(Color("SecondaryColor"))
-                        .font(.footnote)
-                        .padding(.horizontal, 16)
-                        .padding(.vertical, 8)
-                        .background(Capsule().fill(Color.white))
-                        .overlay(Capsule().stroke(Color("SecondaryColor"), lineWidth: 2))
-
-                        Spacer()
-
-                        Button("Next") {
-                            nextAction()
-                        }
-                        .foregroundColor(Color("PrimaryColor"))
-                        .fontWeight(.bold)
-                        .padding(.horizontal, 16)
-                        .padding(.vertical, 8)
-                        .background(Capsule().fill(Color("SecondaryColor")))
-                    }
-                    .padding()
-                } else if buttonMode == .update {
-                    HStack {
-                        Button("Cancel") {
-                            presentationMode.wrappedValue.dismiss()
-                        }
-                        .foregroundColor(Color("SecondaryColor"))
-                        .font(.footnote)
-                        .padding(.horizontal, 16)
-                        .padding(.vertical, 8)
-                        .background(Capsule().fill(Color.white))
-                        .overlay(Capsule().stroke(Color("SecondaryColor"), lineWidth: 2))
-
-                        Spacer()
-
-                        Button("Update") {
-                            showSuccessAlert = true
-                            nextAction()
-                        }
-                        .foregroundColor(Color("PrimaryColor"))
-                        .fontWeight(.bold)
-                        .padding(.horizontal, 16)
-                        .padding(.vertical, 8)
-                        .background(Capsule().fill(Color("SecondaryColor")))
-                    }
-                    .padding()
-                }
+        VStack(spacing: 0) {
+            if buttonMode == .update {
+                Text("Edit Your Interaction")
+                    .font(.title2)
+                    .fontWeight(.bold)
+                //.padding(.top, 16)
+                    .padding(.bottom, 50)
             }
-        
+            
+            ZStack {
+                BasicTile(size: CGSize(width: size.width, height: size.height))
+                
+                VStack {
+                    
+                    if buttonMode == .navigation {
+                        HStack {
+                            Text("Question \(questionNumber)/\(totalQuestions)")
+                                .foregroundColor(.black)
+                            //.font(.footnote)
+                            
+                            Spacer()
+                            
+                            /*Button("Skip") {
+                             skipAction()
+                             }
+                             .foregroundColor(Color("SecondaryColor"))
+                             .padding(.horizontal, 16)
+                             .padding(.vertical, 8)
+                             .background(
+                             Capsule()
+                             .fill(Color.white)
+                             )
+                             .overlay(
+                             Capsule()
+                             .stroke(Color("SecondaryColor"), lineWidth: 2)
+                             )*/
+                            
+                        }
+                        .padding(.horizontal)
+                        .padding(.top, 12)
+                        
+                        Divider()
+                            .background(Color.gray.opacity(0.3))
+                            .padding(.horizontal)
+                    }
+                    
+                    VStack{
+                        Text(question1)
+                            .font(.title3)
+                            .padding(.top, 12)
+                            .fontWeight(.bold)
+                        Text(question2)
+                            .font(.title3)
+                        //.padding(.bottom, 12)
+                            .fontWeight(.bold)
+                    }
+                    RatingView(rating: $rating)
+                    
+                    
+                    AutoGrowingTextEditor(text: $textValue, placeholder: NSLocalizedString("comments", comment: ""))
+                    if buttonMode == .navigation {
+                        HStack {
+                            Button("Previous") {
+                                previousAction()
+                            }
+                            .foregroundColor(Color("SecondaryColor"))
+                            .font(.footnote)
+                            .padding(.horizontal, 16)
+                            .padding(.vertical, 8)
+                            .background(Capsule().fill(Color.white))
+                            .overlay(Capsule().stroke(Color("SecondaryColor"), lineWidth: 2))
+                            
+                            Spacer()
+                            
+                            Button("Next") {
+                                nextAction()
+                            }
+                            .foregroundColor(Color("PrimaryColor"))
+                            .fontWeight(.bold)
+                            .padding(.horizontal, 16)
+                            .padding(.vertical, 8)
+                            .background(Capsule().fill(Color("SecondaryColor")))
+                        }
+                        .padding()
+                    } else if buttonMode == .update {
+                        HStack {
+                            Button("Cancel") {
+                                presentationMode.wrappedValue.dismiss()
+                            }
+                            .foregroundColor(Color("SecondaryColor"))
+                            .font(.footnote)
+                            .padding(.horizontal, 16)
+                            .padding(.vertical, 8)
+                            .background(Capsule().fill(Color.white))
+                            .overlay(Capsule().stroke(Color("SecondaryColor"), lineWidth: 2))
+                            
+                            Spacer()
+                            
+                            Button("Update") {
+                                showSuccessAlert = true
+                                nextAction()
+                            }
+                            .foregroundColor(Color("PrimaryColor"))
+                            .fontWeight(.bold)
+                            .padding(.horizontal, 16)
+                            .padding(.vertical, 8)
+                            .background(Capsule().fill(Color("SecondaryColor")))
+                        }
+                        .padding()
+                    }
+                }
+                
+            }
         }
+        .navigationBarTitleDisplayMode(.inline)
+        .navigationTitle("Interaction Log")
         .alert(isPresented: $showSuccessAlert) {
             Alert(
                 title: Text("Updated"),

@@ -849,7 +849,7 @@ struct VisitLogView: View {
                 )
             }
         }
-        .navigationTitle("Interaction Log")
+        .navigationTitle("Interaction Details")
     }
 
     @ViewBuilder
