@@ -130,11 +130,9 @@ class VisitLogDataAdapter {
         userData["numberPeopleHelped"] = visitLog.peopleHelped
         userData["public"] = true
         userData["rating"] = visitLog.rating
-        userData["stateAbbv"] = visitLog.stateAbbv
-        userData["street"] = visitLog.street
+        userData["status"] = "pending"
         userData["uid"] = uid
         userData["whatGiven"] = visitLog.whatGiven
-        userData["zipcode"] = visitLog.zipcode
         
         
         
