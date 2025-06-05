@@ -112,13 +112,6 @@ class VisitLogDataAdapter {
             "flaggedByUser": visitLog.flaggedByUser
         ]
 
-        /*if visitLog.location.latitude != 0 || visitLog.location.longitude != 0 {
-            userData["location"] = [
-                "latitude": visitLog.location.latitude,
-                "longitude": visitLog.location.longitude
-            ]
-        }*/
-        // 🔍 Add these debug statements here:
         print("User UID:", user.uid)
         print("VisitLog UID:", visitLog.uid)
         print("userData keys:", userData.keys.sorted())
@@ -193,108 +186,11 @@ class VisitLogDataAdapter {
         db.collection("visitLogWebProd").document(logId).delete { _ in
             completion()
         }
+        db.collection("VisitLogBook_New").document(logId).delete { _ in
+            completion()
+        }
     }
-    /*func refreshWebProd() {
-     
-     guard let user = Auth.auth().currentUser else {
-     self.visitLogs = [VisitLog]()
-     self.delegate?.visitLogDataRefreshed(self.visitLogs)
-     return
-     }
-     
-     let settings = FirestoreSettings()
-     Firestore.firestore().settings = settings
-     let db = Firestore.firestore()
-     
-     let _ = db.collection("visitLogWebProd").whereField("uid", isEqualTo: user.uid).getDocuments { querySnapshot, error in
-     
-     if let error = error {
-     print(error.localizedDescription)
-     } else {
-     
-     // Clear out the existing logs
-     self.visitLogs.removeAll()
-     
-     for document in querySnapshot!.documents {
-     
-     let log = VisitLog(id: document.documentID)
-     
-     if let city = document["city"] as? String {
-     log.city = city
-     }
-     
-     if let dateTime = document["dateTime"] as? Timestamp {
-     log.whenVisit = dateTime.dateValue()
-     }
-     
-     if let description = document["description"] as? String {
-     log.otherNotes = description
-     }
-     
-     if let isFlagged = document["isFlagged"] as? Bool {
-     log.other = isFlagged
-     }
-     
-     if let itemQty = document["itemQty"] as? Int {
-     log.itemQty = itemQty
-     }
-     
-     if let numberPeopleHelped = document["numberPeopleHelped"] as? Int {
-     log.peopleHelped = numberPeopleHelped
-     }
-     
-     if let publicStatus = document["public"] as? Bool {
-     log.other = publicStatus
-     }
-     
-     if let rating = document["rating"] as? Int {
-     log.rating = rating
-     }
-     
-     if let state = document["state"] as? String {
-     log.state = state
-     }
-     
-     if let stateAbbv = document["stateAbbv"] as? String {
-     log.stateAbbv = stateAbbv
-     }
-     
-     if let status = document["status"] as? String {
-     log.otherNotes = status
-     }
-     
-     if let street = document["street"] as? String {
-     log.street = street
-     }
-     
-     if let zipcode = document["zipcode"] as? String {
-     log.zipcode = zipcode
-     }
-     
-     // ** Full Mapping of `whatGiven` **
-     if let whatGiven = document["whatGiven"] as? [String] {
-     log.foodAndDrinks = whatGiven.contains("Food and Drink")
-     log.clothes = whatGiven.contains("Clothes")
-     log.hygine = whatGiven.contains("Hygiene Products")
-     log.wellness = whatGiven.contains("Wellness/ Emotional Support")
-     log.medical = whatGiven.contains("Medical Help")
-     log.socialworker = whatGiven.contains("Social Worker /Psychiatrist")
-     log.legal = whatGiven.contains("Legal/Lawyer")
-     
-     // If "Other" category exists, assign `other` to true
-     if let otherItem = whatGiven.first(where: { !["Food and Drink", "Clothes", "Hygiene Products", "Wellness/ Emotional Support", "Medical Help", "Social Worker /Psychiatrist", "Legal/Lawyer"].contains($0) }) {
-     log.other = true
-     log.otherNotes = otherItem  // Store custom other item description
-     }
-     }
-     
-     self.visitLogs.append(log)
-     }
-     }
-     
-     self.delegate?.visitLogDataRefreshed(self.visitLogs)
-     }
-     }*/
+
     func refresh_new() {
         print("📥 refresh_new called")
         guard let user = Auth.auth().currentUser else {
@@ -447,13 +343,6 @@ class VisitLogDataAdapter {
                     log.status = document["status"] as? String ?? ""
                     log.flaggedByUser = document["flaggedByUser"] as? String ?? ""
                     
-                    /*if let volunteerAgainStr = document["volunteerAgain"] as? String {
-                        switch volunteerAgainStr {
-                        case "Yes": log.volunteerAgain = 1
-                        case "No": log.volunteerAgain = 0
-                        default: log.volunteerAgain = -1
-                        }
-                    }*/
                     log.volunteerAgain = document["volunteerAgain"] as? String ?? ""
                     
                     if let whenVisit = document["whenVisit"] as? Timestamp {
