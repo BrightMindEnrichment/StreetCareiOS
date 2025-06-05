@@ -154,7 +154,7 @@ class VisitLogDataAdapter {
             }
         }
         
-        // ✅ NEW: Update VisitLogBook with status = "published"
+        // NEW: Update VisitLogBook with status = "published"
         /*db.collection("VisitLogBook").document(logId).updateData([
          "status": "published"
          ]) { error in
