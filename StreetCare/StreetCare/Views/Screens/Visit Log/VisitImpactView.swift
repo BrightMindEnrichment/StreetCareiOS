@@ -203,12 +203,25 @@ struct VisitImpactView: View {
                                                             .font(.caption2)
                                                             .fontWeight(.bold)
                                                             .foregroundColor(.white)
-                                                            .padding(.horizontal, 6)
                                                             .padding(.vertical, 2)
-                                                            .background(
-                                                                   RoundedRectangle(cornerRadius: 6)
-                                                                       .fill(Color("PublishedGreen"))
-                                                               )
+                                                            .frame(width: 70)
+                                                            .background(RoundedRectangle(cornerRadius: 6).fill(Color("PublishedGreen")))
+                                                    } else if adapter.pendingLogIDs.contains(item.id) {
+                                                        Text("PENDING")
+                                                            .font(.caption2)
+                                                            .fontWeight(.bold)
+                                                            .foregroundColor(.white)
+                                                            .padding(.vertical, 2)
+                                                            .frame(width: 70)
+                                                            .background(RoundedRectangle(cornerRadius: 6).fill(Color("Pending")))
+                                                    } else if adapter.rejectedLogIDs.contains(item.id) {
+                                                        Text("REJECTED")
+                                                            .font(.caption2)
+                                                            .fontWeight(.bold)
+                                                            .foregroundColor(.white)
+                                                            .padding(.vertical, 2)
+                                                            .frame(width: 70)
+                                                            .background(RoundedRectangle(cornerRadius: 6).fill(Color("RejectedRed")))
                                                     }
 
                                                     NavigationLink(destination: VisitLogView(log: item)) {

@@ -20,7 +20,7 @@ struct InputTileNumber: View {
     var descriptionLabel2: String?
     var placeholderText2: String?
     var disclaimerText2: String?
-
+    
     
     @Binding var number: Int
     var peopleLocationDescription: Binding<String>?
@@ -28,6 +28,8 @@ struct InputTileNumber: View {
     @State private var peopledescription = ""
     @State private var peopledescription2 = ""
     @State private var showAlert = false
+    @StateObject private var keyboard = KeyboardResponder()
+
     
     var nextAction: () -> ()
     var previousAction: () -> ()
@@ -58,90 +60,66 @@ struct InputTileNumber: View {
                 Divider()
                     .background(Color.gray.opacity(0.3))
                     .padding(.horizontal)
-                
-                VStack {
-                    Text(question1).font(.title2).fontWeight(.bold).padding(.bottom, 1)
-                    Text(question2).font(.title2).fontWeight(.bold).padding(.bottom, 1)
-                    Text(question3).font(.title2).fontWeight(.bold).padding(.bottom, 1)
-                    Text(question4).font(.title2).fontWeight(.bold)
-                }
-                .padding(.vertical)
-                
-                HStack(spacing: 20) {
-                    Button(action: {
-                        if let current = Int(numberString), current > 0 {
-                            numberString = "\(current - 1)"
-                        }
-                    }) {
-                        Image(systemName: "minus")
-                            .foregroundColor(Color("PrimaryColor"))
-                            .frame(width: 30, height: 30)
-                            .background(Color("SecondaryColor"))
-                            .clipShape(Circle())
+                ScrollView {
+                    VStack {
+                        Text(question1).font(.title2).fontWeight(.bold).padding(.bottom, 1)
+                        Text(question2).font(.title2).fontWeight(.bold).padding(.bottom, 1)
+                        Text(question3).font(.title2).fontWeight(.bold).padding(.bottom, 1)
+                        Text(question4).font(.title2).fontWeight(.bold)
                     }
+                    .padding(.vertical)
                     
-                    TextField("", text: $numberString)
-                        .keyboardType(.numberPad)
-                        .multilineTextAlignment(.center)
-                        .font(.title2)
-                        .fontWeight(.bold)
-                        .frame(width: 60)
-                        .textFieldStyle(PlainTextFieldStyle())
-                    
-                    Button(action: {
-                        if let current = Int(numberString) {
-                            numberString = "\(current + 1)"
-                        } else {
-                            numberString = "1"
+                    HStack(spacing: 20) {
+                        Button(action: {
+                            if let current = Int(numberString), current > 0 {
+                                numberString = "\(current - 1)"
+                            }
+                        }) {
+                            Image(systemName: "minus")
+                                .foregroundColor(Color("PrimaryColor"))
+                                .frame(width: 30, height: 30)
+                                .background(Color("SecondaryColor"))
+                                .clipShape(Circle())
                         }
-                    }) {
-                        Image(systemName: "plus")
-                            .foregroundColor(Color("PrimaryColor"))
-                            .frame(width: 30, height: 30)
-                            .background(Color("SecondaryColor"))
-                            .clipShape(Circle())
+                        
+                        TextField("", text: $numberString)
+                            .keyboardType(.numberPad)
+                            .multilineTextAlignment(.center)
+                            .font(.title2)
+                            .fontWeight(.bold)
+                            .frame(width: 60)
+                            .textFieldStyle(PlainTextFieldStyle())
+                        
+                        Button(action: {
+                            if let current = Int(numberString) {
+                                numberString = "\(current + 1)"
+                            } else {
+                                numberString = "1"
+                            }
+                        }) {
+                            Image(systemName: "plus")
+                                .foregroundColor(Color("PrimaryColor"))
+                                .frame(width: 30, height: 30)
+                                .background(Color("SecondaryColor"))
+                                .clipShape(Circle())
+                        }
                     }
-                }
-                .padding(.bottom)
-                
-                if let label = descriptionLabel, !label.isEmpty {
-                    Text(label)
-                        .font(.headline)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(.horizontal)
-                        .foregroundColor(Color("SecondaryColor"))
-                }
-                
-                if let placeholder = placeholderText, !placeholder.isEmpty {
-                    AutoGrowingTextEditor(text: $peopledescription, placeholder: placeholder).font(.system(size: 15))
-                }
-                
-                if let disclaimer = disclaimerText, !disclaimer.isEmpty {
-                    Text(disclaimer)
-                        .font(.footnote)
-                        .multilineTextAlignment(.center)
-                        .fixedSize(horizontal: false, vertical: true)
-                        .frame(maxWidth: .infinity)
-                        .padding(.horizontal)
-                        .padding(.top, 8)
-                }
-                
-                if let binding = peopleLocationDescription {
-                    if let label2 = descriptionLabel2, !label2.isEmpty {
-                        Text(label2)
+                    .padding(.bottom)
+                    
+                    if let label = descriptionLabel, !label.isEmpty {
+                        Text(label)
                             .font(.headline)
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .padding(.horizontal)
                             .foregroundColor(Color("SecondaryColor"))
                     }
-
-                    if let placeholder2 = placeholderText2, !placeholder2.isEmpty {
-                        AutoGrowingTextEditor(text: binding, placeholder: placeholder2)
-                            .font(.system(size: 15))
+                    
+                    if let placeholder = placeholderText, !placeholder.isEmpty {
+                        AutoGrowingTextEditor(text: $peopledescription, placeholder: placeholder).font(.system(size: 15))
                     }
-
-                    if let disclaimer2 = disclaimerText2, !disclaimer2.isEmpty {
-                        Text(disclaimer2)
+                    
+                    if let disclaimer = disclaimerText, !disclaimer.isEmpty {
+                        Text(disclaimer)
                             .font(.footnote)
                             .multilineTextAlignment(.center)
                             .fixedSize(horizontal: false, vertical: true)
@@ -149,55 +127,83 @@ struct InputTileNumber: View {
                             .padding(.horizontal)
                             .padding(.top, 8)
                     }
-                }
-
-                
-                HStack {
-                    Button("Previous") {
-                        previousAction()
-                    }
-                    .foregroundColor(Color("SecondaryColor"))
-                    .font(.footnote)
-                    .padding(.horizontal, 16)
-                    .padding(.vertical, 8)
-                    .background(Capsule().fill(Color.white))
-                    .overlay(Capsule().stroke(Color("SecondaryColor"), lineWidth: 2))
                     
-                    Spacer()
-                    
-                    Button("Next") {
-                        if let validNumber = Int(numberString), validNumber >= 0 {
-                            number = validNumber
-                            nextAction()
-                        } else {
-                            showAlert = true
+                    if let binding = peopleLocationDescription {
+                        if let label2 = descriptionLabel2, !label2.isEmpty {
+                            Text(label2)
+                                .font(.headline)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                                .padding(.horizontal)
+                                .foregroundColor(Color("SecondaryColor"))
+                        }
+                        
+                        if let placeholder2 = placeholderText2, !placeholder2.isEmpty {
+                            AutoGrowingTextEditor(text: binding, placeholder: placeholder2)
+                                .font(.system(size: 15))
+                        }
+                        
+                        if let disclaimer2 = disclaimerText2, !disclaimer2.isEmpty {
+                            Text(disclaimer2)
+                                .font(.footnote)
+                                .multilineTextAlignment(.center)
+                                .fixedSize(horizontal: false, vertical: true)
+                                .frame(maxWidth: .infinity)
+                                .padding(.horizontal)
+                                .padding(.top, 8)
                         }
                     }
-                    .foregroundColor(Color("PrimaryColor"))
-                    .fontWeight(.bold)
-                    .padding(.horizontal, 16)
-                    .padding(.vertical, 8)
-                    .background(Capsule().fill(Color("SecondaryColor")))
-                    .alert(isPresented: $showAlert) {
-                        Alert(title: Text("Invalid Input"), message: Text("Please enter a valid number."), dismissButton: .default(Text("OK")))
+                    HStack {
+                        Button("Previous") {
+                            previousAction()
+                        }
+                        .foregroundColor(Color("SecondaryColor"))
+                        .font(.footnote)
+                        .padding(.horizontal, 16)
+                        .padding(.vertical, 8)
+                        .background(Capsule().fill(Color.white))
+                        .overlay(Capsule().stroke(Color("SecondaryColor"), lineWidth: 2))
+                        
+                        Spacer()
+                        
+                        Button("Next") {
+                            if let validNumber = Int(numberString), validNumber >= 0 {
+                                number = validNumber
+                                nextAction()
+                            } else {
+                                showAlert = true
+                            }
+                        }
+                        .foregroundColor(Color("PrimaryColor"))
+                        .fontWeight(.bold)
+                        .padding(.horizontal, 16)
+                        .padding(.vertical, 8)
+                        .background(Capsule().fill(Color("SecondaryColor")))
+                        .alert(isPresented: $showAlert) {
+                            Alert(title: Text("Invalid Input"), message: Text("Please enter a valid number."), dismissButton: .default(Text("OK")))
+                        }
                     }
+                    .padding()
                 }
-                .padding()
             }
+            .padding(.bottom, keyboard.currentHeight == 0 ? 0 : min(keyboard.currentHeight, 60)) // push content up when keyboard appears
+            .animation(.easeOut(duration: 0.15), value: keyboard.currentHeight)
+           }
+           
+            .frame(width: tileWidth, height: tileHeight)
+            SegmentedProgressBar(
+                totalSegments: totalQuestions,
+                filledSegments: questionNumber,
+                tileWidth: tileWidth
+            )
+            
+            Text("Progress")
+                .font(.footnote)
+                .padding(.top, 4)
+                .fontWeight(.bold)
         }
-        .frame(width: tileWidth, height: tileHeight)
-        SegmentedProgressBar(
-            totalSegments: totalQuestions,
-            filledSegments: questionNumber,
-            tileWidth: tileWidth
-        )
-        
-        Text("Progress")
-            .font(.footnote)
-            .padding(.top, 4)
-            .fontWeight(.bold)
     }
-}
+       
+    
 
 // Preview
 struct InputTileNumber_Previews: PreviewProvider {
