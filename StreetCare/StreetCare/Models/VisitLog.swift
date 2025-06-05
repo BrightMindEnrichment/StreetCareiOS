@@ -105,7 +105,7 @@ class VisitLog: ObservableObject, Identifiable {
     @Published var timeStamp = Date()
 
     // 42. type (string)
-    @Published var type = "" // "iOS" or "Android"
+    @Published var type = "iOS"
 
     // 43. uid (string)
     @Published var uid = ""
@@ -128,19 +128,20 @@ class VisitLog: ObservableObject, Identifiable {
     @Published var state = ""
     @Published var stateAbbv = ""
     @Published var zipcode = ""
+    @Published var status = ""
 
     init(id: String) {
         self.id = id
     }
 
-    /// Optional: Convert legacy int values (1, 0, -1) to new string type
+    /*/// Optional: Convert legacy int values (1, 0, -1) to new string type
     func setVolunteerAgain(from intValue: Int) {
         switch intValue {
         case 1: self.volunteerAgain = "Yes"
         case 0: self.volunteerAgain = "No"
         default: self.volunteerAgain = "Maybe"
         }
-    }
+    }*/
 
     // Optional: Reverse geocoding for debug/UI use only
     func reverseGeocode(latitude: Double, longitude: Double) {

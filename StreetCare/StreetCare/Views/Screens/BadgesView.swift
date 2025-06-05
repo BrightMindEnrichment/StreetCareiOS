@@ -103,6 +103,11 @@ extension BadgesView: VisitLogDataAdapterProtocol {
         self.history = logs
         self.updateCounts()
     }
+    func visitLogDataRefreshedNew(_ logs: [VisitLog]) {
+        self.history.append(contentsOf: logs)
+        self.updateCounts()
+        
+    }
 }
 
 

@@ -724,7 +724,7 @@ struct VisitLogView: View {
     @State private var showConfirmationDialog = false
     @State private var hasShared = false
     
-    @State private var editedVolunteerAgain: Int = 0
+    @State private var editedVolunteerAgain: String = ""
     @State private var navigateToEditVolunteerAgain = false
     
     @State private var editedRating: Int = 0
@@ -993,7 +993,7 @@ struct VisitLogView: View {
     
     @ViewBuilder
     private func providedhelpSection() -> some View {
-        if log.didProvideSpecificHelp {
+        if !log.whatGiven.isEmpty {
             HStack {
                 Text("What kind of support did you provide?")
                     .screenLeft()
@@ -1014,18 +1014,8 @@ struct VisitLogView: View {
                 .buttonStyle(BorderlessButtonStyle())
                 .padding(.trailing, 20.0)
             }
-            let supportList = [
-                log.foodAndDrinks ? "Food and Drink" : nil,
-                log.clothes ? "Clothes" : nil,
-                log.hygiene ? "Hygiene Products" : nil,
-                log.wellness ? "Wellness/Emotional Support" : nil,
-                log.medical ? "Medical Help" : nil,
-                log.social ? "Social Worker/Psychiatrist" : nil,
-                log.legal ? "Legal/Lawyer" : nil,
-                (log.other && !log.otherNotes.isEmpty) ? log.otherNotes : nil
-            ].compactMap { $0 }.joined(separator: ", ")
-
-            Text(supportList)
+            
+            Text(log.whatGiven.joined(separator: ", "))
                 .screenLeft()
                 .font(.system(size: 15.0))
                 .padding(EdgeInsets(top: 10.0, leading: 20.0, bottom: 10.0, trailing: 20.0))
@@ -1047,13 +1037,14 @@ struct VisitLogView: View {
                         let updatedFields: [String: Any] = [
                             "foodAndDrinks": editedSupportProvided.foodAndDrinks,
                             "clothes": editedSupportProvided.clothes,
-                            "hygine": editedSupportProvided.hygiene,
+                            "hygiene": editedSupportProvided.hygiene,
                             "wellness": editedSupportProvided.wellness,
                             "medical": editedSupportProvided.medical,
-                            "socialworker": editedSupportProvided.social,
+                            "social": editedSupportProvided.social,
                             "legal": editedSupportProvided.legal,
                             "other": editedSupportProvided.other,
-                            "otherNotes": editedSupportProvided.otherNotes
+                            "otherNotes": editedSupportProvided.otherNotes,
+                            "whatGiven": editedSupportProvided.whatGiven
                         ]
 
                         let adapter = VisitLogDataAdapter()
@@ -1067,6 +1058,7 @@ struct VisitLogView: View {
                             log.legal = editedSupportProvided.legal
                             log.other = editedSupportProvided.other
                             log.otherNotes = editedSupportProvided.otherNotes
+                            log.whatGiven = editedSupportProvided.whatGiven
                             navigateToEditSupportProvided = false
                         }
                     },
@@ -1327,17 +1319,16 @@ struct VisitLogView: View {
 
     @ViewBuilder
     private func volunteerAgainSection() -> some View {
-        if log.volunteerAgain >= 0 {
+        if !log.volunteerAgain.isEmpty {
             VisitLogDetailRow(
                 title: "Would you like to volunteer again?",
-                detail: log.volunteerAgain == 1 ? "Yes" :
-                        log.volunteerAgain == 2 ? "Maybe" : "No",
+                detail: log.volunteerAgain,
                 onEdit: {
                     editedVolunteerAgain = log.volunteerAgain
                     navigateToEditVolunteerAgain = true
                 }
             )
-            
+
             NavigationLink(
                 destination: InputTileVolunteerAgain(
                     questionNumber: 3,

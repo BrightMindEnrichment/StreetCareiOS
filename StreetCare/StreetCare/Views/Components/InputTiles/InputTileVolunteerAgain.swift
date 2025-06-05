@@ -16,7 +16,7 @@ struct InputTileVolunteerAgain: View {
     var question1: String
     var question2: String
     
-    @Binding var volunteerAgain: Int
+    @Binding var volunteerAgain: String
         
     var nextAction: () -> ()
     var previousAction: () -> ()
@@ -67,58 +67,55 @@ struct InputTileVolunteerAgain: View {
                     
                     VStack(spacing: 12) {
                         Button(action: {
-                            volunteerAgain = 1
+                            volunteerAgain = "Yes"
                         }) {
                             Text("Yes")
                                 .font(.footnote)
-                                .foregroundColor(volunteerAgain == 1 ? .white : Color("SecondaryColor"))
-                            //.foregroundColor(Color.black)
+                                .foregroundColor(volunteerAgain == "Yes" ? .white : Color("SecondaryColor"))
+                                .fontWeight(.bold)
                                 .frame(maxWidth: 120)
                                 .padding(.vertical, 8)
-                                .fontWeight(.bold)
                                 .background(
                                     Capsule()
-                                        .fill(volunteerAgain == 1 ? Color("SecondaryColor") : Color.white)
+                                        .fill(volunteerAgain == "Yes" ? Color("SecondaryColor") : Color.white)
                                 )
                                 .overlay(
                                     Capsule()
                                         .stroke(Color("SecondaryColor"), lineWidth: 2)
                                 )
                         }
-                        
+
                         Button(action: {
-                            volunteerAgain = 0
+                            volunteerAgain = "No"
                         }) {
                             Text("No")
                                 .font(.footnote)
-                                .foregroundColor(volunteerAgain == 0 ? .white : Color("SecondaryColor"))
-                            //.foregroundColor(Color.black)
+                                .foregroundColor(volunteerAgain == "No" ? .white : Color("SecondaryColor"))
                                 .fontWeight(.bold)
                                 .frame(maxWidth: 120)
                                 .padding(.vertical, 8)
                                 .background(
                                     Capsule()
-                                        .fill(volunteerAgain == 0 ? Color("SecondaryColor") : Color.white)
+                                        .fill(volunteerAgain == "No" ? Color("SecondaryColor") : Color.white)
                                 )
                                 .overlay(
                                     Capsule()
                                         .stroke(Color("SecondaryColor"), lineWidth: 2)
                                 )
                         }
-                        
+
                         Button(action: {
-                            volunteerAgain = 2
+                            volunteerAgain = "Maybe"
                         }) {
                             Text("Maybe")
                                 .font(.footnote)
-                                .foregroundColor(volunteerAgain == 2 ? .white : Color("SecondaryColor"))
-                            //.foregroundColor(Color.black)
+                                .foregroundColor(volunteerAgain == "Maybe" ? .white : Color("SecondaryColor"))
                                 .fontWeight(.bold)
                                 .frame(maxWidth: 120)
                                 .padding(.vertical, 8)
                                 .background(
                                     Capsule()
-                                        .fill(volunteerAgain == 2 ? Color("SecondaryColor") : Color.white)
+                                        .fill(volunteerAgain == "Maybe" ? Color("SecondaryColor") : Color.white)
                                 )
                                 .overlay(
                                     Capsule()
@@ -126,9 +123,7 @@ struct InputTileVolunteerAgain: View {
                                 )
                         }
                     }
-                    //.padding(.horizontal)
                     .padding()
-                    
                     if buttonMode == .navigation {
                         HStack {
                             Button("Previous") {

@@ -242,6 +242,7 @@ struct VisitImpactView: View {
                 }
                 if Auth.auth().currentUser != nil {
                     adapter.refresh()
+                    adapter.refresh_new()
                     self.isLoading = true
                 } else {
                     adapter.resetLogs()
@@ -355,6 +356,12 @@ struct HalfCapsuleShape: Shape {
 extension VisitImpactView: VisitLogDataAdapterProtocol {
     func visitLogDataRefreshed(_ logs: [VisitLog]) {
         self.history = logs
+        self.updateCounts()
+        self.isLoading = false
+    }
+    func visitLogDataRefreshedNew(_ logs: [VisitLog]) {
+        print("✅ visitLogDataRefreshedNew called with \(logs.count) logs")
+        self.history.append(contentsOf: logs)
         self.updateCounts()
         self.isLoading = false
     }

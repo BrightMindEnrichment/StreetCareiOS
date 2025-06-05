@@ -14,6 +14,7 @@ import CoreLocation
 
 protocol VisitLogDataAdapterProtocol {
     func visitLogDataRefreshed(_ logs: [VisitLog])
+    func visitLogDataRefreshedNew(_ logs: [VisitLog]) 
 }
 
 
@@ -103,21 +104,24 @@ class VisitLogDataAdapter {
             "futureNotes": visitLog.futureNotes,
             "volunteerAgain": visitLog.volunteerAgain,
             "lastEdited": Timestamp(date: Date()),
-            "timeStamp": Timestamp(date: visitLog.timeStamp),
             "type": visitLog.type,
+            "timeStamp": Timestamp(date: visitLog.timeStamp),
             "uid": user.uid,
             "isPublic": visitLog.isPublic,
             "isFlagged": visitLog.isFlagged,
             "flaggedByUser": visitLog.flaggedByUser
         ]
 
-        if visitLog.location.latitude != 0 || visitLog.location.longitude != 0 {
+        /*if visitLog.location.latitude != 0 || visitLog.location.longitude != 0 {
             userData["location"] = [
                 "latitude": visitLog.location.latitude,
                 "longitude": visitLog.location.longitude
             ]
-        }
-
+        }*/
+        // 🔍 Add these debug statements here:
+        print("User UID:", user.uid)
+        print("VisitLog UID:", visitLog.uid)
+        print("userData keys:", userData.keys.sorted())
         db.collection(collectionName).document().setData(userData) { error in
             if let error = error {
                 print("⚠️ Error writing VisitLog: \(error.localizedDescription)")
@@ -292,6 +296,7 @@ class VisitLogDataAdapter {
      }
      }*/
     func refresh_new() {
+        print("📥 refresh_new called")
         guard let user = Auth.auth().currentUser else {
             self.visitLogs = [VisitLog]()
             self.delegate?.visitLogDataRefreshed(self.visitLogs)
@@ -299,7 +304,8 @@ class VisitLogDataAdapter {
         }
 
         let db = Firestore.firestore()
-        db.collection("VisitLogBook_New").whereField("uid", isEqualTo: user.uid).getDocuments { querySnapshot, error in
+        db.collection("VisitLogBook_New").whereField("uid", isEqualTo: user.uid).getDocuments {
+            querySnapshot, error in
             if let error = error {
                 print("⚠️", error.localizedDescription)
             } else {
@@ -365,17 +371,22 @@ class VisitLogDataAdapter {
                     log.isFlagged = document["isFlagged"] as? Bool ?? false
                     log.flaggedByUser = document["flaggedByUser"] as? String ?? ""
 
-                    if let location = document["location"] as? [String: Any],
-                       let lat = location["latitude"] as? Double,
-                       let lon = location["longitude"] as? Double {
+                    if let lat = document["latitude"] as? Double,
+                       let lon = document["longitude"] as? Double {
                         log.location = CLLocationCoordinate2D(latitude: lat, longitude: lon)
                     }
+                    print("✅ Loaded log from VisitLogBook_New with id:", log.id)
 
                     self.visitLogs.append(log)
                 }
             }
-
-            self.delegate?.visitLogDataRefreshed(self.visitLogs)
+            if let snapshot = querySnapshot {
+                print("📄 Document count: \(snapshot.documents.count)")
+                for doc in snapshot.documents {
+                    print("📌 Doc ID: \(doc.documentID), Data: \(doc.data())")
+                }
+            }
+            self.delegate?.visitLogDataRefreshedNew(self.visitLogs)
         }
     }
     
@@ -443,7 +454,7 @@ class VisitLogDataAdapter {
                         default: log.volunteerAgain = -1
                         }
                     }*/
-                    log.volunteerAgain = document["volunteerAgain"] as? Int ?? 0
+                    log.volunteerAgain = document["volunteerAgain"] as? String ?? ""
                     
                     if let whenVisit = document["whenVisit"] as? Timestamp {
                         log.whenVisit = whenVisit.dateValue()
