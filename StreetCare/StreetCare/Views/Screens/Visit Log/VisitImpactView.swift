@@ -136,12 +136,12 @@ struct VisitImpactView: View {
                                 .frame(width: 0) // enough to hold the icon
                                 .zIndex(1)
                                 
-                                VStack(spacing: 5) {
+                                VStack(spacing: 1) {
                                     HStack(alignment: .top, spacing: 5) {
                                         Image("MapPin")
                                             .font(.system(size: 14))
                                             .foregroundColor(.black)
-                                            .padding(.top, 1)
+                                            .padding(.top, 6)
                                         // Extract street and state from `item.whereVisit`
                                         let components = item.whereVisit.components(separatedBy: ", ").filter { !$0.isEmpty }
                                         
@@ -172,7 +172,7 @@ struct VisitImpactView: View {
                                                     .font(.system(size: 13.0))
                                             }
                                         }
-                                        
+                                        .padding(.top, 5)
                                         Spacer()
                                     }
                                     .padding(.leading, 20)
@@ -184,37 +184,66 @@ struct VisitImpactView: View {
                                         Text("\(item.whenVisit.formatted(date: .abbreviated, time: .omitted)) | \(item.whenVisit.formatted(date: .omitted, time: .shortened))").font(.system(size: 13)).lineLimit(1).layoutPriority(1)
                                         GeometryReader { geo in
                                             ZStack {
-                                                Button("Details") {
-                                                    print("Details tapped")
+                                                VStack(spacing: 3) {
+                                                    Button("Details") {
+                                                        print("Details tapped")
+                                                    }
+                                                    .font(.custom("Poppins-SemiBold", size: 13))
+                                                    .foregroundColor(Color(red: 1.0, green: 0.933, blue: 0.0))
+                                                    .padding(.horizontal, 16)
+                                                    .padding(.vertical, 4)
+                                                    .background(
+                                                        Capsule()
+                                                            .fill(Color(red: 0, green: 0.16, blue: 0.145))
+                                                    )
+                                                    .frame(width: 80)
+
+                                                    if adapter.publishedLogIDs.contains(item.id) {
+                                                        Text("PUBLISHED")
+                                                            .font(.caption2)
+                                                            .fontWeight(.bold)
+                                                            .foregroundColor(.white)
+                                                            .padding(.vertical, 2)
+                                                            .frame(width: 70)
+                                                            .background(RoundedRectangle(cornerRadius: 6).fill(Color("PublishedGreen")))
+                                                    } else if adapter.pendingLogIDs.contains(item.id) {
+                                                        Text("PENDING")
+                                                            .font(.caption2)
+                                                            .fontWeight(.bold)
+                                                            .foregroundColor(.white)
+                                                            .padding(.vertical, 2)
+                                                            .frame(width: 70)
+                                                            .background(RoundedRectangle(cornerRadius: 6).fill(Color("Pending")))
+                                                    } else if adapter.rejectedLogIDs.contains(item.id) {
+                                                        Text("REJECTED")
+                                                            .font(.caption2)
+                                                            .fontWeight(.bold)
+                                                            .foregroundColor(.white)
+                                                            .padding(.vertical, 2)
+                                                            .frame(width: 70)
+                                                            .background(RoundedRectangle(cornerRadius: 6).fill(Color("RejectedRed")))
+                                                    }
+
+                                                    NavigationLink(destination: VisitLogView(log: item)) {
+                                                        EmptyView()
+                                                    }
+                                                    .opacity(0)
                                                 }
-                                                .font(.custom("Poppins-SemiBold", size: 13))
-                                                .foregroundColor(Color(red: 1.0, green: 0.933, blue: 0.0)) // textColor
-                                                .padding(.horizontal, 16)
-                                                .padding(.vertical, 8)
-                                                .background(
-                                                    Capsule()
-                                                        .fill(Color(red: 0, green: 0.16, blue: 0.145)) // background color
-                                                )
-                                                .frame(width: 80)
-                                                
-                                                
-                                                NavigationLink(destination: VisitLogView(log: item)) {
-                                                    EmptyView()
-                                                }
-                                                .opacity(0)
+                                                .offset(y: 15)
                                             }
                                             .position(
                                                 x: geo.size.width / 2 ,
                                                 y: 0
                                             )
                                         }
-                                        .frame(height: 30) //room you want for the button
+                                        .frame(height: 50) //room you want for the button
                                         
                                     }
-                                    .padding(.top, -5)
+                                    .padding(.top, -8)
                                     .padding(.leading, 20)
                                 }
-                                .padding(.vertical, 15) //card size
+                                .padding(.top, 10) // keep top spacing
+                                .padding(.bottom, 0) // reduce bottom spacing
                                 .padding(.leading, 55)
                                 .background(Color.white)
                                 .clipShape(HalfCapsuleShape())
@@ -245,6 +274,7 @@ struct VisitImpactView: View {
                     }
                     if Auth.auth().currentUser != nil {
                         adapter.refresh()
+                        adapter.refreshWebProd()
                         self.isLoading = true
                     } else {
                         adapter.resetLogs()
