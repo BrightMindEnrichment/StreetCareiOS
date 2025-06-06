@@ -67,6 +67,13 @@ struct VisitLogEntry: View {
                                 print("📍 Updated visitLog.location: \(visitLog.location.latitude), \(visitLog.location.longitude)")
                             }
                         ),
+                        locationDescription: Binding(
+                            get: { visitLog.locationDescription },
+                            set: { newValue in
+                                visitLog.locationDescription = newValue
+                                print("📝 Updated visitLog.locationDescription: \(visitLog.locationDescription)")
+                            }
+                        ),
                         nextAction: {
                             questionNumber += 1
                         },

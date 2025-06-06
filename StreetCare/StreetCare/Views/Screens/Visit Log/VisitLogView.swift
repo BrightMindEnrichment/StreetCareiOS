@@ -14,6 +14,7 @@ struct VisitLogView: View {
     @State var log: VisitLog
     @State private var navigateToEditFurtherSupport = false
     @StateObject var editedVisitLog = VisitLog(id: "")
+    @State var editedLocationDescription: String = ""
 
     //@State private var region = MKCoordinateRegion(center: CLLocationCoordinate2D(), span: MKCoordinateSpan())
     //@State private var mapLocations = [MapLocation(name: "dummy", latitude: 0.0, longitude: 0.0)]
@@ -22,6 +23,7 @@ struct VisitLogView: View {
 
     @State private var navigateToEdit = false
     @State private var editedPeopleHelped: Int = 0
+    @State var editedPeopleHelpedDescription: String = ""
 
     @State private var navigateToEditItems = false
     @State private var editedItemQty: Int = 0
@@ -265,7 +267,7 @@ struct VisitLogView: View {
     private func interactionDateSection() -> some View {
         VisitLogDetailRow(
             title: "When was your Interaction?",
-            detail: log.whenVisit.formatted(date: .abbreviated, time: .omitted),
+            detail1: log.whenVisit.formatted(date: .abbreviated, time: .omitted),
             onEdit: {
                 editedInteractionDate = log.whenVisit
                 navigateToEditInteractionDate = true
@@ -304,10 +306,13 @@ struct VisitLogView: View {
     private func locationSection() -> some View {
         VisitLogDetailRow(
             title: "Where was your Interaction?",
-            detail: log.whereVisit,
+            detail1: log.whereVisit,
+            detail2: log.locationDescription,
+            separator: ", ",
             onEdit: {
                 editedLocationText = log.whereVisit
                 editedLocationCoord = log.location
+                editedLocationDescription = log.locationDescription
                 navigateToEditLocation = true
             }
         )
@@ -320,6 +325,7 @@ struct VisitLogView: View {
                 question2: "Interaction?",
                 textValue: $editedLocationText,
                 location: $editedLocationCoord,
+                locationDescription: $editedLocationDescription,
                 nextAction: {
                     let adapter = VisitLogDataAdapter()
                     adapter.updateVisitLogField(log.id, field: "whereVisit", value: editedLocationText) {
@@ -327,9 +333,12 @@ struct VisitLogView: View {
                             "latitude": editedLocationCoord.latitude,
                             "longitude": editedLocationCoord.longitude
                         ]) {
-                            log.whereVisit = editedLocationText
-                            log.location = editedLocationCoord
-                            navigateToEditLocation = false
+                            adapter.updateVisitLogField(log.id, field: "locationDescription", value: editedLocationDescription){
+                                log.whereVisit = editedLocationText
+                                log.location = editedLocationCoord
+                                log.locationDescription = editedLocationDescription
+                                navigateToEditLocation = false
+                            }
                         }
                     }
                 },
@@ -348,7 +357,7 @@ struct VisitLogView: View {
         if log.peopleHelped > 0 {
             VisitLogDetailRow(
                 title: "Describe who you supported and how many individuals were involved.",
-                detail: "\(log.peopleHelped)",
+                detail1: "\(log.peopleHelped)",
                 onEdit: {
                     editedPeopleHelped = log.peopleHelped
                     navigateToEdit = true
@@ -478,7 +487,7 @@ struct VisitLogView: View {
         if log.itemQty > 0 {
             VisitLogDetailRow(
                 title: "How many items did you donate?",
-                detail: "\(log.itemQty)",
+                detail1: "\(log.itemQty)",
                 onEdit: {
                     editedItemQty = log.itemQty
                     navigateToEditItems = true
@@ -591,7 +600,7 @@ struct VisitLogView: View {
         if log.durationHours > 0 || log.durationMinutes > 0 {
             VisitLogDetailRow(
                 title: "How much time did you spend on the outreach?",
-                detail: "\(log.durationHours) hours and \(log.durationMinutes) minutes",
+                detail1: "\(log.durationHours) hours and \(log.durationMinutes) minutes",
                 onEdit: {
                     navigateToEditDuration = true
                 }
@@ -631,7 +640,7 @@ struct VisitLogView: View {
         if log.numberOfHelpers > 0 {
             VisitLogDetailRow(
                 title: "Who helped you prepare or joined?",
-                detail: "\(log.numberOfHelpers)",
+                detail1: "\(log.numberOfHelpers)",
                 onEdit: {
                     editedHelpers = log.numberOfHelpers
                     navigateToEditHelpers = true
@@ -676,7 +685,7 @@ struct VisitLogView: View {
         if log.peopleNeedFurtherHelp > 0 {
             VisitLogDetailRow(
                 title: "How many people still need support?",
-                detail: "\(log.peopleNeedFurtherHelp)",
+                detail1: "\(log.peopleNeedFurtherHelp)",
                 onEdit: {
                     editedPeopleNeedHelp = log.peopleNeedFurtherHelp
                     navigateToEditPeopleNeedHelp = true
@@ -721,7 +730,7 @@ struct VisitLogView: View {
         if !log.volunteerAgain.isEmpty {
             VisitLogDetailRow(
                 title: "Would you like to volunteer again?",
-                detail: log.volunteerAgain,
+                detail1: log.volunteerAgain,
                 onEdit: {
                     editedVolunteerAgain = log.volunteerAgain
                     navigateToEditVolunteerAgain = true
@@ -758,7 +767,7 @@ struct VisitLogView: View {
         if log.followUpWhenVisit != Date.distantPast {
             VisitLogDetailRow(
                 title: "Is there a planned date to interact with them again?",
-                detail: log.followUpWhenVisit.formatted(date: .abbreviated, time: .omitted),
+                detail1: log.followUpWhenVisit.formatted(date: .abbreviated, time: .omitted),
                 onEdit: {
                     editedFollowUpDate = log.followUpWhenVisit
                     navigateToEditFollowUpDate = true
@@ -796,7 +805,7 @@ struct VisitLogView: View {
         if log.furtherOtherNotes.count > 0 {
             VisitLogDetailRow(
                 title: "Is there anything future volunteers should know?",
-                detail: "\(log.furtherOtherNotes)",
+                detail1: "\(log.furtherOtherNotes)",
                 onEdit: {
                     editedFurtherOtherNotes = log.furtherOtherNotes
                     navigateToEditFurtherOtherNotes = true
@@ -848,7 +857,7 @@ struct VisitLogView: View {
 
             VisitLogDetailRow(
                 title: "What kind of support do they still need?",
-                detail: needs,
+                detail1: needs,
                 onEdit: {
                     navigateToEditFurtherSupport = true
                 }
@@ -930,9 +939,10 @@ struct VisitLogView: View {
     }
 }*/
 struct VisitLogDetailRow: View {
-    
     var title: String
-    var detail: String
+    var detail1: String
+    var detail2: String? = nil
+    var separator: String = " • "
     var onEdit: (() -> Void)? = nil
 
     var body: some View {
@@ -941,7 +951,8 @@ struct VisitLogDetailRow: View {
                 Text(title)
                     .screenLeft()
                     .font(.system(size: 16.0)).bold()
-                    .padding(EdgeInsets(top: 10.0, leading: 20.0, bottom: 0.0, trailing: 20.0))
+                    .padding(.top, 10)
+                    .padding(.horizontal, 20)
                 
                 Spacer()
                 
@@ -958,10 +969,15 @@ struct VisitLogDetailRow: View {
                 }
             }
 
-            Text(detail)
-                .screenLeft()
-                .font(.system(size: 15.0))
-                .padding(EdgeInsets(top: 10.0, leading: 20.0, bottom: 10.0, trailing: 20.0))
+            Text(
+                detail2 != nil && !detail2!.isEmpty
+                ? "\(detail1)\(separator)\(detail2!)"
+                : detail1
+            )
+            .screenLeft()
+            .font(.system(size: 15.0))
+            .padding(.vertical, 10)
+            .padding(.horizontal, 20)
 
             Rectangle()
                 .frame(width: 350.0, height: 2.0)

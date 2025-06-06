@@ -32,14 +32,37 @@ class VisitLogDataAdapter {
     
     func updateVisitLogField(_ logId: String, field: String, value: Any, completion: @escaping () -> Void) {
         let db = Firestore.firestore()
-        db.collection("VisitLogBook").document(logId).updateData([
-            field: value
-        ]) { error in
-            if let error = error {
-                print("⚠️ Error updating \(field): \(error.localizedDescription)")
+        
+        let primaryRef = db.collection("VisitLogBook").document(logId)
+        let fallbackRef = db.collection("VisitLogBook_New").document(logId)
+        
+        // Try updating in the primary collection
+        primaryRef.getDocument { docSnapshot, error in
+            if let doc = docSnapshot, doc.exists {
+                primaryRef.updateData([field: value]) { error in
+                    if let error = error {
+                        print("⚠️ Error updating \(field) in VisitLogBook: \(error.localizedDescription)")
+                    } else {
+                        print("✅ \(field) updated successfully in VisitLogBook.")
+                        completion()
+                    }
+                }
             } else {
-                print("✅ \(field) updated successfully.")
-                completion()
+                // Try the fallback collection
+                fallbackRef.getDocument { fallbackDocSnapshot, _ in
+                    if let fallbackDoc = fallbackDocSnapshot, fallbackDoc.exists {
+                        fallbackRef.updateData([field: value]) { error in
+                            if let error = error {
+                                print("⚠️ Error updating \(field) in VisitLogBook_New: \(error.localizedDescription)")
+                            } else {
+                                print("✅ \(field) updated successfully in VisitLogBook_New.")
+                                completion()
+                            }
+                        }
+                    } else {
+                        print("❌ Document \(logId) not found in either collection.")
+                    }
+                }
             }
         }
     }
@@ -77,7 +100,17 @@ class VisitLogDataAdapter {
             "social": visitLog.social,
             "legal": visitLog.legal,
             "other": visitLog.other,
-            "whatGiven": visitLog.whatGiven,
+            //"whatGiven": visitLog.whatGiven,
+            "whatGiven": [
+                visitLog.foodAndDrinks ? "Food and Drinks" : nil,
+                visitLog.clothes ? "Clothes" : nil,
+                visitLog.hygiene ? "Hygiene" : nil,
+                visitLog.wellness ? "Wellness" : nil,
+                visitLog.medical ? "Medical" : nil,
+                visitLog.social ? "Social" : nil,
+                visitLog.legal ? "Legal" : nil,
+                visitLog.other ? "Other" : nil
+            ].compactMap { $0 },
             "otherNotes": visitLog.otherNotes,
             "itemQty": visitLog.itemQty,
             "itemQtyDescription": visitLog.itemQtyDescription,
@@ -99,7 +132,17 @@ class VisitLogDataAdapter {
             "furtherLegal": visitLog.furtherLegal,
             "furtherOther": visitLog.furtherOther,
             "furtherOtherNotes": visitLog.furtherOtherNotes,
-            "whatGivenFurther": visitLog.whatGivenFurther,
+            //"whatGivenFurther": visitLog.whatGivenFurther,
+            "whatGivenFurther": [
+                visitLog.furtherFoodAndDrinks ? "Food and Drinks" : nil,
+                visitLog.furtherClothes ? "Clothes" : nil,
+                visitLog.furtherHygiene ? "Hygiene" : nil,
+                visitLog.furtherWellness ? "Wellness" : nil,
+                visitLog.furtherMedical ? "Medical" : nil,
+                visitLog.furtherSocial ? "Social" : nil,
+                visitLog.furtherLegal ? "Legal" : nil,
+                visitLog.furtherOther ? "Other" : nil
+            ].compactMap { $0 },
             "followUpWhenVisit": Timestamp(date: visitLog.followUpWhenVisit),
             "futureNotes": visitLog.futureNotes,
             "volunteerAgain": visitLog.volunteerAgain,

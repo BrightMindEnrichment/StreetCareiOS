@@ -28,7 +28,7 @@ struct InputTileLocation: View {
     @State private var state = ""
     @State private var city = ""
     @State private var zipcode = ""
-    @State private var landmark = ""
+    @Binding var locationDescription: String
     @State private var stateAbbreviation = ""
     @State private var showAddressSearch = false
     @State private var didPrefillFields = false
@@ -159,7 +159,7 @@ struct InputTileLocation: View {
                                     .padding(.horizontal)
                             )
                         
-                        AutoGrowingTextEditor(text: $landmark, placeholder: NSLocalizedString("landmark", comment: ""))
+                        AutoGrowingTextEditor(text: $locationDescription, placeholder: NSLocalizedString("landmark", comment: ""))
                         
                         switch buttonMode {
                         case .navigation:
