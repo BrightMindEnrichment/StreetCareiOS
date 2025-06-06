@@ -27,6 +27,7 @@ struct VisitLogView: View {
 
     @State private var navigateToEditItems = false
     @State private var editedItemQty: Int = 0
+    @State var editedItemQtyDescription: String = ""
     
     @State private var editedInteractionDate = Date()
     @State private var navigateToEditInteractionDate = false
@@ -39,12 +40,14 @@ struct VisitLogView: View {
 
     @State private var navigateToEditPeopleNeedHelp = false
     @State private var editedPeopleNeedHelp: Int = 0
+    @State var editedPeopleNeedHelpComment: String = ""
 
     @StateObject var editedFurtherSupport = VisitLog(id: "")
     @State private var isEditingPeopleHelped = false
     
     @State private var navigateToEditHelpers = false
     @State private var editedHelpers: Int = 0
+    @State var editedHelpersComment: String = ""
     
     @State private var navigateToEditFurtherOtherNotes = false
     @State private var editedFurtherOtherNotes: String = ""
@@ -358,8 +361,11 @@ struct VisitLogView: View {
             VisitLogDetailRow(
                 title: "Describe who you supported and how many individuals were involved.",
                 detail1: "\(log.peopleHelped)",
+                detail2: log.peopleHelpedDescription,
+                separator: ", ",
                 onEdit: {
                     editedPeopleHelped = log.peopleHelped
+                    editedPeopleHelpedDescription = log.peopleHelpedDescription
                     navigateToEdit = true
                 }
             )
@@ -369,20 +375,24 @@ struct VisitLogView: View {
                     questionNumber: 1,
                     totalQuestions: 1,
                     tileWidth: 320,
-                    tileHeight: 280,
-                    question1: "Edit the number of",
-                    question2: "people you helped",
-                    question3: "",
-                    question4: "",
-                    descriptionLabel: nil,
-                    disclaimerText: nil,
-                    placeholderText: nil,
+                    tileHeight: 560,
+                    question1: "Describe who you",
+                    question2: "supported and how",
+                    question3: "many individuals",
+                    question4: "were involved.",
+                    descriptionLabel: "Description",
+                    disclaimerText: NSLocalizedString("disclaimer", comment: ""),
+                    placeholderText: NSLocalizedString("peopledescription", comment: ""),
                     number: $editedPeopleHelped,
+                    generalDescription: $editedPeopleHelpedDescription,
                     nextAction: {
                         let adapter = VisitLogDataAdapter()
                         adapter.updateVisitLogField(log.id, field: "peopleHelped", value: editedPeopleHelped) {
-                            log.peopleHelped = editedPeopleHelped
-                            isEditingPeopleHelped = false
+                            adapter.updateVisitLogField(log.id, field: "peopleHelpedDescription", value: editedPeopleHelpedDescription) {
+                                log.peopleHelped = editedPeopleHelped
+                                log.peopleHelpedDescription = editedPeopleHelpedDescription
+                                isEditingPeopleHelped = false
+                            }
                         }
                     },
                     previousAction: {},
@@ -438,8 +448,8 @@ struct VisitLogView: View {
                     totalQuestions: 1,
                     optionCount: 8,
                     size: CGSize(width: 350, height: 350),
-                    question1: "Edit the support you provided",
-                    question2: "",
+                    question1: "What kind of support",
+                    question2: "did you provide?",
                     visitLog: editedSupportProvided,
                     nextAction: {
                         let updatedFields: [String: Any] = [
@@ -488,8 +498,11 @@ struct VisitLogView: View {
             VisitLogDetailRow(
                 title: "How many items did you donate?",
                 detail1: "\(log.itemQty)",
+                detail2: log.itemQtyDescription,
+                separator: ", ",
                 onEdit: {
                     editedItemQty = log.itemQty
+                    editedItemQtyDescription = log.itemQtyDescription 
                     navigateToEditItems = true
                 }
             )
@@ -508,11 +521,15 @@ struct VisitLogView: View {
                     disclaimerText: "",
                     placeholderText: "Enter notes here",
                     number: $editedItemQty,
+                    generalDescription: $editedItemQtyDescription,
                     nextAction: {
                         let adapter = VisitLogDataAdapter()
                         adapter.updateVisitLogField(log.id, field: "itemQty", value: editedItemQty) {
-                            log.itemQty = editedItemQty
-                            navigateToEditItems = false
+                            adapter.updateVisitLogField(log.id, field: "itemQtyDescription", value: editedItemQtyDescription) {
+                                log.itemQty = editedItemQty
+                                log.itemQtyDescription = editedItemQtyDescription
+                                navigateToEditItems = false
+                            }
                         }
                     },
                     previousAction: {
@@ -571,7 +588,7 @@ struct VisitLogView: View {
                     questionNumber: 1,
                     totalQuestions: 1,
                     question1: "How would you rate your",
-                    question2: "overall outreach experience?",
+                    question2: "outreach experience?",
                     textValue: $editedRatingComment,
                     rating: $editedRating,
                     nextAction: {
@@ -661,15 +678,23 @@ struct VisitLogView: View {
                     disclaimerText: nil,
                     placeholderText: nil,
                     number: $editedHelpers,
+                    generalDescription: $editedHelpersComment,
                     nextAction: {
                         let adapter = VisitLogDataAdapter()
                         adapter.updateVisitLogField(log.id, field: "numberOfHelpers", value: editedHelpers) {
-                            log.numberOfHelpers = editedHelpers
-                            navigateToEditHelpers = false
+                            adapter.updateVisitLogField(log.id, field: "numberOfHelpersComment", value: editedHelpersComment) {
+                                log.numberOfHelpers = editedHelpers
+                                log.numberOfHelpersComment = editedHelpersComment
+                                navigateToEditHelpers = false
+                            }
                         }
                     },
-                    previousAction: { navigateToEditHelpers = false },
-                    skipAction: { navigateToEditHelpers = false },
+                    previousAction: {
+                        navigateToEditHelpers = false
+                    },
+                    skipAction: {
+                        navigateToEditHelpers = false
+                    },
                     showProgressBar: false,
                     buttonMode: .update
                 ),
@@ -696,25 +721,33 @@ struct VisitLogView: View {
                 destination: InputTileNumber(
                     questionNumber: 1,
                     totalQuestions: 1,
-                    tileWidth: 320,
-                    tileHeight: 330,
+                    tileWidth: 360,
+                    tileHeight: 467,
                     question1: "How many people",
                     question2: "still need support?",
                     question3: "",
                     question4: "",
-                    descriptionLabel: nil,
+                    descriptionLabel: "Description",
                     disclaimerText: nil,
-                    placeholderText: nil,
+                    placeholderText: NSLocalizedString("peopledescription", comment: ""),
                     number: $editedPeopleNeedHelp,
+                    generalDescription: $editedPeopleNeedHelpComment,
                     nextAction: {
                         let adapter = VisitLogDataAdapter()
                         adapter.updateVisitLogField(log.id, field: "peopleNeedFurtherHelp", value: editedPeopleNeedHelp) {
-                            log.peopleNeedFurtherHelp = editedPeopleNeedHelp
-                            navigateToEditPeopleNeedHelp = false
+                            adapter.updateVisitLogField(log.id, field: "peopleNeedFurtherHelpComment", value: editedPeopleNeedHelpComment) {
+                                log.peopleNeedFurtherHelp = editedPeopleNeedHelp
+                                log.peopleNeedFurtherHelpComment = editedPeopleNeedHelpComment
+                                navigateToEditPeopleNeedHelp = false
+                            }
                         }
                     },
-                    previousAction: { navigateToEditPeopleNeedHelp = false },
-                    skipAction: { navigateToEditPeopleNeedHelp = false },
+                    previousAction: {
+                        navigateToEditPeopleNeedHelp = false
+                    },
+                    skipAction: {
+                        navigateToEditPeopleNeedHelp = false
+                    },
                     showProgressBar: false,
                     buttonMode: .update
                 ),

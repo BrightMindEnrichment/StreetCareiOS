@@ -26,7 +26,8 @@ struct InputTileNumber: View {
     //@State private var numberString = "0"
     @State private var numberString: String
 
-    @State private var peopledescription = ""
+    @Binding var generalDescription: String
+    var showTextEditor: Bool = true
     @State private var showAlert = false
     @State private var showSuccessAlert = false
     @Environment(\.presentationMode) var presentationMode
@@ -49,6 +50,7 @@ struct InputTileNumber: View {
         disclaimerText: String? = nil,
         placeholderText: String? = nil,
         number: Binding<Int>,
+        generalDescription: Binding<String>,
         nextAction: @escaping () -> Void,
         previousAction: @escaping () -> Void,
         skipAction: @escaping () -> Void,
@@ -68,6 +70,7 @@ struct InputTileNumber: View {
         self.placeholderText = placeholderText
         self._number = number
         self._numberString = State(initialValue: String(number.wrappedValue))
+        self._generalDescription = generalDescription
         self.nextAction = nextAction
         self.previousAction = previousAction
         self.skipAction = skipAction
@@ -164,8 +167,8 @@ struct InputTileNumber: View {
                             .foregroundColor(Color("SecondaryColor"))
                     }
                     
-                    if let placeholder = placeholderText, !placeholder.isEmpty {
-                        AutoGrowingTextEditor(text: $peopledescription, placeholder: placeholder)
+                    if showTextEditor {
+                        AutoGrowingTextEditor(text: $generalDescription, placeholder: placeholderText ?? "")
                     }
                     
                     if let disclaimer = disclaimerText, !disclaimer.isEmpty {
@@ -276,6 +279,7 @@ struct InputTileNumber: View {
 // Preview
 struct InputTileNumber_Previews: PreviewProvider {
     @State static var number = 3
+    @State static var string = "Whats UP"
 
     static var previews: some View {
         InputTileNumber(
@@ -291,6 +295,7 @@ struct InputTileNumber_Previews: PreviewProvider {
             disclaimerText: "Note: Avoid personal identifiers in your response.",
             placeholderText: "E.g., Two elderly individuals needing assistance",
             number: $number,
+            generalDescription: $string,
             nextAction: {},
             previousAction: {},
             skipAction: {}

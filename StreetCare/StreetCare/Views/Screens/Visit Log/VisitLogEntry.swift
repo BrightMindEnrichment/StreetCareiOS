@@ -87,13 +87,30 @@ struct VisitLogEntry: View {
                     )
                     
                 case 3:
-                    InputTileNumber(questionNumber: 3, totalQuestions: 6, tileWidth: 300, tileHeight: 560, question1: "Describe who you" , question2: "supported and how",question3: "many individuals",question4: "were involved.",descriptionLabel: "Description", disclaimerText: NSLocalizedString("disclaimer", comment: ""), placeholderText: NSLocalizedString("peopledescription", comment: ""), number: $visitLog.peopleHelped) {
-                        questionNumber += 1
-                    } previousAction: {
-                        questionNumber -= 1
-                    } skipAction: {
-                        questionNumber += 1
-                    }
+                    InputTileNumber(
+                        questionNumber: 3,
+                        totalQuestions: 6,
+                        tileWidth: 300,
+                        tileHeight: 560,
+                        question1: "Describe who you",
+                        question2: "supported and how",
+                        question3: "many individuals",
+                        question4: "were involved.",
+                        descriptionLabel: "Description",
+                        disclaimerText: NSLocalizedString("disclaimer", comment: ""),
+                        placeholderText: NSLocalizedString("peopledescription", comment: ""),
+                        number: $visitLog.peopleHelped,
+                        generalDescription: $visitLog.peopleHelpedDescription,
+                        nextAction: {
+                            questionNumber += 1
+                        },
+                        previousAction: {
+                            questionNumber -= 1
+                        },
+                        skipAction: {
+                            questionNumber += 1
+                        }
+                    )
                     
                 case 4:
                     InputTileList(
@@ -113,13 +130,30 @@ struct VisitLogEntry: View {
                     )
                 
                 case 5:
-                    InputTileNumber(questionNumber: 5, totalQuestions: 6, tileWidth: 300, tileHeight: 460, question1: "How many items" , question2: "did you donate?", question3:"", question4:"", descriptionLabel: "", disclaimerText: "", placeholderText: "Enter notes here", number: $visitLog.itemQty) {
-                        questionNumber += 1
-                    } previousAction: {
-                        questionNumber -= 1
-                    } skipAction: {
-                        questionNumber += 1
-                    }
+                    InputTileNumber(
+                        questionNumber: 5,
+                        totalQuestions: 6,
+                        tileWidth: 300,
+                        tileHeight: 460,
+                        question1: "How many items",
+                        question2: "did you donate?",
+                        question3: "",
+                        question4: "",
+                        descriptionLabel: "",
+                        disclaimerText: "",
+                        placeholderText: "Enter notes here",
+                        number: $visitLog.itemQty,
+                        generalDescription: $visitLog.itemQtyDescription,
+                        nextAction: {
+                            questionNumber += 1
+                        },
+                        previousAction: {
+                            questionNumber -= 1
+                        },
+                        skipAction: {
+                            questionNumber += 1
+                        }
+                    )
                 case 6:
                     InputTileRate(questionNumber: 6, totalQuestions: 6, question1: "How would you rate your", question2: "outreach experience?", textValue: $visitLog.ratingNotes, rating: $visitLog.rating) {
                         questionNumber += 1
@@ -162,22 +196,56 @@ struct VisitLogEntry: View {
                     }
                     
                 case 9:
-                    InputTileNumber(questionNumber: 2, totalQuestions: 7, tileWidth: 360, tileHeight: 326, question1: "Who helped you" , question2: "prepared or joined",question3: "",question4: "", number: $visitLog.numberOfHelpers) {
-                        questionNumber += 1
-                    } previousAction: {
-                        questionNumber -= 1
-                    } skipAction: {
-                        questionNumber += 1
-                    }
+                    InputTileNumber(
+                        questionNumber: 2,
+                        totalQuestions: 7,
+                        tileWidth: 360,
+                        tileHeight: 326,
+                        question1: "Who helped you",
+                        question2: "prepared or joined",
+                        question3: "",
+                        question4: "",
+                        descriptionLabel: nil,
+                        disclaimerText: nil,
+                        placeholderText: "Enter helper notes here",
+                        number: $visitLog.numberOfHelpers,
+                        generalDescription: $visitLog.numberOfHelpersComment,
+                        nextAction: {
+                            questionNumber += 1
+                        },
+                        previousAction: {
+                            questionNumber -= 1
+                        },
+                        skipAction: {
+                            questionNumber += 1
+                        }
+                    )
                     
                 case 10:
-                    InputTileNumber(questionNumber: 3, totalQuestions: 7, tileWidth: 360, tileHeight: 467, question1: "How many people" , question2: "still need support?", question3: "", question4: "", descriptionLabel: "Description", disclaimerText: "", placeholderText: NSLocalizedString("peopledescription", comment: ""), number: $visitLog.peopleNeedFurtherHelp) {
-                        questionNumber += 1
-                    } previousAction: {
-                        questionNumber -= 1
-                    } skipAction: {
-                        questionNumber += 1
-                    }
+                    InputTileNumber(
+                        questionNumber: 3,
+                        totalQuestions: 7,
+                        tileWidth: 360,
+                        tileHeight: 467,
+                        question1: "How many people",
+                        question2: "still need support?",
+                        question3: "",
+                        question4: "",
+                        descriptionLabel: "Description",
+                        disclaimerText: "",
+                        placeholderText: NSLocalizedString("peopledescription", comment: ""),
+                        number: $visitLog.peopleNeedFurtherHelp,
+                        generalDescription: $visitLog.peopleNeedFurtherHelpComment,
+                        nextAction: {
+                            questionNumber += 1
+                        },
+                        previousAction: {
+                            questionNumber -= 1
+                        },
+                        skipAction: {
+                            questionNumber += 1
+                        }
+                    )
                 case 11:
                     InputTileList(
                         questionNumber: 4,
