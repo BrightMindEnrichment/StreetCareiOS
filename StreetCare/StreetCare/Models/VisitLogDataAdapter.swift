@@ -123,6 +123,14 @@ class VisitLogDataAdapter {
         
         var userData = [String: Any]()
         userData["whereVisit"] = visitLog.whereVisit
+        let parts = visitLog.whereVisit.split(separator: ",").map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
+
+        if parts.count == 4 {
+            visitLog.street = parts[0]
+            visitLog.city = parts[1]
+            visitLog.stateAbbv = parts[2]
+            visitLog.zipcode = parts[3]
+        }
         userData["dateTime"] = visitLog.whenVisit
         userData["description"] = ""
         userData["isFlagged"] = false
@@ -133,7 +141,11 @@ class VisitLogDataAdapter {
         userData["status"] = "pending"
         userData["uid"] = uid
         userData["whatGiven"] = visitLog.whatGiven
-        
+        userData["city"] = visitLog.city
+        userData["state"] = visitLog.state
+        userData["stateAbbv"] = visitLog.stateAbbv
+        userData["street"] = visitLog.street
+        userData["zipcode"] = visitLog.zipcode
         
         
         //if visitLog.location.latitude != 0 {
