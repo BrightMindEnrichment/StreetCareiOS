@@ -306,13 +306,14 @@ func formattedTime(_ date: Date?) -> String {
 
 struct BottomSheetModifier<SheetContent: View>: ViewModifier {
     @Binding var isPresented: Bool
+    let heightRatio: CGFloat
     let sheetContent: () -> SheetContent
 
     func body(content: Content) -> some View {
         ZStack {
             content
             if isPresented {
-                BottomSheetView(isPresented: $isPresented, content: sheetContent)
+                BottomSheetView(isPresented: $isPresented, heightRatio: heightRatio, content: sheetContent)
                     .edgesIgnoringSafeArea(.all)
             }
         }
@@ -320,17 +321,19 @@ struct BottomSheetModifier<SheetContent: View>: ViewModifier {
 }
 
 extension View {
-    func bottomSheet<SheetContent: View>(isPresented: Binding<Bool>, @ViewBuilder content: @escaping () -> SheetContent) -> some View {
-        self.modifier(BottomSheetModifier(isPresented: isPresented, sheetContent: content))
+    func bottomSheet<SheetContent: View>(isPresented: Binding<Bool>, @ViewBuilder content: @escaping () -> SheetContent,  heightRatio: CGFloat = 0.5) -> some View {
+        self.modifier(BottomSheetModifier(isPresented: isPresented, heightRatio: heightRatio, sheetContent: content))
     }
 }
 
 struct BottomSheetView<Content: View>: View {
     @Binding var isPresented: Bool
     let content: Content
+    var heightRatio: CGFloat = 0.5 // ✅ default 50%
 
-    init(isPresented: Binding<Bool>, @ViewBuilder content: () -> Content) {
+    init(isPresented: Binding<Bool>, heightRatio: CGFloat = 0.5, @ViewBuilder content: () -> Content) {
         self._isPresented = isPresented
+        self.heightRatio = heightRatio
         self.content = content()
     }
 
@@ -341,7 +344,7 @@ struct BottomSheetView<Content: View>: View {
                 VStack {
                     self.content
                 }
-                .frame(width: geometry.size.width, height: UIScreen.main.bounds.height / 2) // Adjust height as needed
+                .frame(width: geometry.size.width, height: geometry.size.height * heightRatio) // Adjust height as needed
                 .background(Color.white)
                 .cornerRadius(20)
                 .shadow(radius: 10)
@@ -358,3 +361,41 @@ struct BottomSheetView<Content: View>: View {
         }
     }
 }
+
+
+
+//struct BottomSheetView<Content: View>: View {
+//    @Binding var isPresented: Bool
+//    let content: Content
+//    var heightRatio: CGFloat = 0.5
+//
+//    init(isPresented: Binding<Bool>, heightRatio: CGFloat = 0.5, @ViewBuilder content: () -> Content) {
+//        self._isPresented = isPresented
+//        self.heightRatio = heightRatio
+//        self.content = content()
+//    }
+//
+//    var body: some View {
+//        GeometryReader { geometry in
+//            ZStack(alignment: .bottom) {
+//                // Dimmed background
+//                if isPresented {
+//                    Color.black.opacity(0.3)
+//                        .edgesIgnoringSafeArea(.all)
+//                        .onTapGesture {
+//                            self.isPresented = false
+//                        }
+//                }
+//
+//                // Bottom Sheet
+//                content
+//                    .frame(width: geometry.size.width, height: geometry.size.height * heightRatio)
+//                    .background(Color.white)
+//                    .cornerRadius(20)
+//                    .shadow(radius: 10)
+//                    .transition(.move(edge: .bottom))
+//                    .animation(.easeInOut, value: isPresented)
+//            }
+//        }
+//    }
+//}
