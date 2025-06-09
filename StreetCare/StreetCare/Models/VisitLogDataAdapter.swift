@@ -302,6 +302,10 @@ class VisitLogDataAdapter {
                     if let peopleHelped = document["peopleHelped"] as? Int {
                         log.peopleHelped = peopleHelped
                     }
+                    
+                    if let peopleHelpedDescription = document["peopleHelpedDescription"] as? String {
+                        log.peopleHelpedDescription = peopleHelpedDescription
+                    }
 
                     if let foodAndDrinks = document["foodAndDrinks"] as? Bool {
                         log.foodAndDrinks = foodAndDrinks

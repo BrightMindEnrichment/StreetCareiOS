@@ -57,7 +57,7 @@ struct PublicInteractionPopupView: View {
                         Task {
                             let db = Firestore.firestore()
 //                            print(visit.id)
-                            let ref = db.collection("VisitLogBook").document(visit.id) // have to check for the correct document
+                            let ref = db.collection("visitLogWebProd").document(visit.id)
 //                            print(ref.documentID)
                             let updates: [String: Any] = [
                                 "isFlagged": false,
@@ -132,7 +132,7 @@ struct PublicInteractionPopupView: View {
             VStack(alignment: .leading, spacing: 4) {
                 Text("Interaction Description")
                     .font(.system(size: 14, weight: .semibold))
-                Text(visit.otherNotes)
+                Text(visit.peopleHelpedDescription)
                     .font(.system(size: 13))
                     .fixedSize(horizontal: false, vertical: true)
             }

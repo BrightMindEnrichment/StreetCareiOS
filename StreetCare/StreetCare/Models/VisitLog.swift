@@ -63,6 +63,7 @@ class VisitLog: ObservableObject, Identifiable {
     @Published var followUpWhenVisit = Date()
     @Published var itemQty = 0
     @Published var isFlagged = false
+    @Published var peopleHelpedDescription = ""
 
     var whatGiven: [String] {
         var given = [String]()
