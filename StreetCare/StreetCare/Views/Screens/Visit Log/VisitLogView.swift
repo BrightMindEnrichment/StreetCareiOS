@@ -658,25 +658,28 @@ struct VisitLogView: View {
             VisitLogDetailRow(
                 title: "Who helped you prepare or joined?",
                 detail1: "\(log.numberOfHelpers)",
+                detail2: log.numberOfHelpersComment,
+                separator: ", ",
                 onEdit: {
                     editedHelpers = log.numberOfHelpers
+                    editedHelpersComment = log.numberOfHelpersComment
                     navigateToEditHelpers = true
                 }
             )
             
             NavigationLink(
                 destination: InputTileNumber(
-                    questionNumber: 1,
-                    totalQuestions: 1,
-                    tileWidth: 320,
-                    tileHeight: 330,
+                    questionNumber: 4,
+                    totalQuestions: 6,
+                    tileWidth: 300,
+                    tileHeight: 420,
                     question1: "Who helped you",
                     question2: "prepare or joined?",
                     question3: "",
                     question4: "",
-                    descriptionLabel: nil,
-                    disclaimerText: nil,
-                    placeholderText: nil,
+                    descriptionLabel: "",
+                    disclaimerText: "",
+                    placeholderText: "Enter notes here",
                     number: $editedHelpers,
                     generalDescription: $editedHelpersComment,
                     nextAction: {
@@ -706,30 +709,32 @@ struct VisitLogView: View {
     }
     @ViewBuilder
     private func peopleNeedFurtherHelpSection() -> some View {
-        // People who still need support
         if log.peopleNeedFurtherHelp > 0 {
             VisitLogDetailRow(
                 title: "How many people still need support?",
                 detail1: "\(log.peopleNeedFurtherHelp)",
+                detail2: log.peopleNeedFurtherHelpComment,
+                separator: ", ",
                 onEdit: {
                     editedPeopleNeedHelp = log.peopleNeedFurtherHelp
+                    editedPeopleNeedHelpComment = log.peopleNeedFurtherHelpComment
                     navigateToEditPeopleNeedHelp = true
                 }
             )
             
             NavigationLink(
                 destination: InputTileNumber(
-                    questionNumber: 1,
-                    totalQuestions: 1,
-                    tileWidth: 360,
-                    tileHeight: 467,
+                    questionNumber: 6,
+                    totalQuestions: 6,
+                    tileWidth: 300,
+                    tileHeight: 420,
                     question1: "How many people",
                     question2: "still need support?",
                     question3: "",
                     question4: "",
-                    descriptionLabel: "Description",
-                    disclaimerText: nil,
-                    placeholderText: NSLocalizedString("peopledescription", comment: ""),
+                    descriptionLabel: "",
+                    disclaimerText: "",
+                    placeholderText: "Enter notes here",
                     number: $editedPeopleNeedHelp,
                     generalDescription: $editedPeopleNeedHelpComment,
                     nextAction: {
