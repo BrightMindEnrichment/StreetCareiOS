@@ -191,13 +191,14 @@
 "addNew" = "ADD NEW";
 "history" = "History";
 "noLoggedHistory" = "You have no logged history.";
-"donar" = "Donate";
+"donate" = "Donate";
 "guest" = "Guest";
 "forgotPassword" = "Forgot your password?";
 "usernamePlaceholder" = "Username/Email";
 "password" = "Password";
 "childcare" = "Childcare";
 "counsellingandsupport" = "Counselling and Support";
+"counselingandsupport" = "Counselling and Support";
 "clothing" = "Clothing";
 "education" = "Education";
 "personalcare" = "Personal Care";

@@ -177,6 +177,7 @@
 "password" = "Contraseña";
 "childcare" = "cuidado de niños";
 "counsellingandsupport" = "Asesoramiento y apoyo";
+"counselingandsupport" = "Asesoramiento y apoyo";
 "clothing" = "Ropa";
 "education" = "Educación";
 "personalcare" = "cuidado personal";
@@ -205,6 +206,8 @@
 "enterContactNumber" = "Ingrese su número de contacto aquí";
 "Enter your Email Address here" = "Introduzca su dirección de correo electrónico aquí";
 "completedText" = "Terminada";
+"eventDescription" = "Descripción del evento";
+"enterEventDescription" = "Ingrese la descripción del evento";
 
 //"helloWorld" = "¡Hola Mundo!";
 //"welcome" = "Bienvenido a\nStreet Care";
