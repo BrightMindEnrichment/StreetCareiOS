@@ -249,7 +249,7 @@ struct OutreachFormView: View {
                 Text(NSLocalizedString("Contact Number", comment: ""))
                     .font(.headline)
                 
-                TextField("Enter your Contact Number here", text: $contactNumber)
+                TextField(NSLocalizedString("enterContactNumber", comment: ""), text: $contactNumber)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .keyboardType(.phonePad)
                     .onChange(of: contactNumber) { newValue in
@@ -263,12 +263,12 @@ struct OutreachFormView: View {
                 Text(NSLocalizedString("Email", comment: ""))
                     .font(.headline)
 
-                TextField("Enter your Email Address here", text: $emailAddress)
+                TextField(NSLocalizedString("enterContactNumber", comment: ""), text: $emailAddress)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .autocapitalization(.none)
                 
                 //address
-                Text(NSLocalizedString("enteraddress", comment: ""))
+                Text(NSLocalizedString("enterEmailAddress", comment: ""))
                     .font(.headline)
 
                 HStack {

@@ -17,11 +17,11 @@ struct ImpactView: View {
     
     var body: some View {
         VStack {
-            Text("YOUR IMPACT").font(.system(size: 18)).bold()
+            Text(NSLocalizedString("yourImpact", comment: "")).font(.system(size: 18)).bold()
             HStack {
-                AchievementBadge(count: peopleHelped, title: "People helped", imageName: "Tab-Profile")
-                AchievementBadge(count: outreaches, title: "Outreaches", imageName: "HelpingHands")
-                AchievementBadge(count: itemsDonated, title: "Items donated", imageName: "Clothes")
+                AchievementBadge(count: peopleHelped, title: NSLocalizedString("peopleHelped", comment: ""), imageName: "Tab-Profile")
+                AchievementBadge(count: outreaches, title: NSLocalizedString("outreaches", comment: ""), imageName: "HelpingHands")
+                AchievementBadge(count: itemsDonated, title: NSLocalizedString("itemsDonated", comment: ""), imageName: "Clothes")
             }.frame(height: 170)
         }
     }

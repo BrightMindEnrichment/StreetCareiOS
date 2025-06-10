@@ -37,7 +37,7 @@ struct VisitImpactView: View {
         ZStack{
             NavigationStack {
                 VStack {
-                    Text("INTERACTION LOG").font(.system(size: 18, weight: .bold)).padding()
+                    Text(NSLocalizedString("interactionLog", comment: "").uppercased()).font(.system(size: 18, weight: .bold)).padding()
                     ImpactView(peopleHelped: peopleHelped, outreaches: outreaches, itemsDonated: itemsDonated)
                     //Spacer(minLength: -5)
                     Button(action: {
@@ -52,7 +52,7 @@ struct VisitImpactView: View {
                         }
                     }) {
                         ZStack {
-                            NavLinkButton(title: "ADD NEW+", width: 197.0, height: 40.0)
+                            NavLinkButton(title: NSLocalizedString("addNew", comment: "") + "+", width: 197.0, height: 40.0)
                                 .clipShape(Capsule())
                         }
                     }
@@ -75,14 +75,14 @@ struct VisitImpactView: View {
                         .padding(.top, 8)
                     //Spacer(minLength: 10.0)
                     
-                    Text("HISTORY")
+                    Text(NSLocalizedString("history", comment: "").uppercased())
                         .font(.custom("Poppins-Regular", size: 20))
                     //.font(.system(size: 16))
                         .fontWeight(.bold)
                         .padding(.top, 8)
                     
                     if history.isEmpty {
-                        Text("You have no logged history.")
+                        Text(NSLocalizedString("noLoggedHistory", comment: ""))
                             .font(.custom("Poppins-Light", size: 14))
                             .foregroundColor(.secondary)
                             .multilineTextAlignment(.center)

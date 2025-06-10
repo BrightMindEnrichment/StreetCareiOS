@@ -23,7 +23,7 @@ struct CommunityView: View {
     var body: some View {
         NavigationView {
         VStack {
-            Text("Community")
+            Text(NSLocalizedString("community", comment: ""))
                 .font(.title)
             
                 ScrollView{
