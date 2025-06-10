@@ -31,6 +31,7 @@ struct InputTileLocation: View {
     @State private var landmark = ""
     @State private var stateAbbreviation = ""
     @State private var showAddressSearch = false
+    @State private var didUseSearchBar = false
         
     var nextAction: () -> ()
     var previousAction: () -> ()
@@ -92,6 +93,7 @@ struct InputTileLocation: View {
                     )
                     .padding(.horizontal, 20)
                     .onTapGesture {
+                        didUseSearchBar = true
                         showAddressSearch = true
                     }
 
@@ -155,12 +157,16 @@ struct InputTileLocation: View {
 //                                failedToFindLocation = true
 //                            } else {
                                 // Manually composed address from input fields
-                                let manualAddress = [
-                                    street.isEmpty ? nil : street,
-                                    city.isEmpty ? nil : city,
-                                    (stateAbbreviation.isEmpty ? state : stateAbbreviation).isEmpty ? nil : (stateAbbreviation.isEmpty ? state : stateAbbreviation),
-                                    zipcode.isEmpty ? nil : zipcode
-                                ]
+                            let manualStreet = didUseSearchBar
+                                ? (street.isEmpty ? nil : street)
+                                : ((street.isEmpty && landmark.isEmpty) ? nil : "\(street) \(landmark)".trimmingCharacters(in: .whitespaces))
+
+                            let manualAddress = [
+                                manualStreet,
+                                city.isEmpty ? nil : city,
+                                (stateAbbreviation.isEmpty ? state : stateAbbreviation).isEmpty ? nil : (stateAbbreviation.isEmpty ? state : stateAbbreviation),
+                                zipcode.isEmpty ? nil : zipcode
+                            ]
                                 .compactMap { $0 }
                                 .joined(separator: ", ")
 

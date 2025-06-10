@@ -120,17 +120,18 @@ class VisitLogDataAdapter {
         Firestore.firestore().settings = settings
         let db = Firestore.firestore()
         let logId = visitLog.id
-        
-        var userData = [String: Any]()
-        userData["whereVisit"] = visitLog.whereVisit
         let parts = visitLog.whereVisit.split(separator: ",").map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
 
-        if parts.count == 4 {
+        if parts.count >= 4 {
             visitLog.street = parts[0]
             visitLog.city = parts[1]
             visitLog.stateAbbv = parts[2]
+            visitLog.state = fullStateName(from: visitLog.stateAbbv)
             visitLog.zipcode = parts[3]
         }
+        
+        var userData = [String: Any]()
+        //userData["whereVisit"] = visitLog.whereVisit
         userData["dateTime"] = visitLog.whenVisit
         userData["description"] = ""
         userData["isFlagged"] = false
@@ -146,7 +147,6 @@ class VisitLogDataAdapter {
         userData["stateAbbv"] = visitLog.stateAbbv
         userData["street"] = visitLog.street
         userData["zipcode"] = visitLog.zipcode
-        
         
         //if visitLog.location.latitude != 0 {
         //userData["latitude"] = visitLog.location.latitude
@@ -176,6 +176,22 @@ class VisitLogDataAdapter {
          print("VisitLogBook log also marked as published!")
          }
          }*/
+    }
+    func fullStateName(from abbreviation: String) -> String {
+        let states = [
+            "AL": "Alabama", "AK": "Alaska", "AZ": "Arizona", "AR": "Arkansas", "CA": "California",
+            "CO": "Colorado", "CT": "Connecticut", "DE": "Delaware", "FL": "Florida", "GA": "Georgia",
+            "HI": "Hawaii", "ID": "Idaho", "IL": "Illinois", "IN": "Indiana", "IA": "Iowa",
+            "KS": "Kansas", "KY": "Kentucky", "LA": "Louisiana", "ME": "Maine", "MD": "Maryland",
+            "MA": "Massachusetts", "MI": "Michigan", "MN": "Minnesota", "MS": "Mississippi",
+            "MO": "Missouri", "MT": "Montana", "NE": "Nebraska", "NV": "Nevada", "NH": "New Hampshire",
+            "NJ": "New Jersey", "NM": "New Mexico", "NY": "New York", "NC": "North Carolina",
+            "ND": "North Dakota", "OH": "Ohio", "OK": "Oklahoma", "OR": "Oregon", "PA": "Pennsylvania",
+            "RI": "Rhode Island", "SC": "South Carolina", "SD": "South Dakota", "TN": "Tennessee",
+            "TX": "Texas", "UT": "Utah", "VT": "Vermont", "VA": "Virginia", "WA": "Washington",
+            "WV": "West Virginia", "WI": "Wisconsin", "WY": "Wyoming"
+        ]
+        return states[abbreviation.uppercased()] ?? abbreviation
     }
     
     func deleteVisitLog(_ logId: String, completion: @escaping () -> ()) {
