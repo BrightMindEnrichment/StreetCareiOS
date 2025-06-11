@@ -19,6 +19,7 @@ struct InputTileLocation: View {
     
     @Binding var textValue: String
     @Binding var location: CLLocationCoordinate2D
+    var visitLog: VisitLog
     
     @State var locationManager: LocationManager!
     
@@ -156,30 +157,39 @@ struct InputTileLocation: View {
 //                                // Show an alert or feedback to user
 //                                failedToFindLocation = true
 //                            } else {
-                                // Manually composed address from input fields
-                            let manualStreet = didUseSearchBar
-                                ? (street.isEmpty ? nil : street)
-                                : ((street.isEmpty && landmark.isEmpty) ? nil : "\(street) \(landmark)".trimmingCharacters(in: .whitespaces))
+                            // Check if any field was entered manually
+                            let didUseManualEntry = !didUseSearchBar
 
-                            let manualAddress = [
-                                manualStreet,
+                            if didUseManualEntry {
+                                if !city.trimmingCharacters(in: .whitespaces).isEmpty {
+                                    visitLog.city = city
+                                }
+                                if !stateAbbreviation.trimmingCharacters(in: .whitespaces).isEmpty {
+                                    visitLog.state = stateAbbreviation
+                                }
+                                if !zipcode.trimmingCharacters(in: .whitespaces).isEmpty {
+                                    visitLog.zipcode = zipcode
+                                }
+                            }
+
+                            // Existing logic to update `textValue` (you can keep or skip)
+                            let composedAddress = [
+                                street.isEmpty ? nil : street,
                                 city.isEmpty ? nil : city,
-                                (stateAbbreviation.isEmpty ? state : stateAbbreviation).isEmpty ? nil : (stateAbbreviation.isEmpty ? state : stateAbbreviation),
+                                stateAbbreviation.isEmpty ? nil : stateAbbreviation,
                                 zipcode.isEmpty ? nil : zipcode
                             ]
                                 .compactMap { $0 }
                                 .joined(separator: ", ")
 
-                                if !manualAddress.isEmpty {
-                                    textValue = manualAddress
+                            if !composedAddress.isEmpty {
+                                textValue = composedAddress
                                     print("📍 Updated textValue manually or partially: \(textValue)")
                                 }
 
                                 nextAction()
 //                            }
                         }
-
-
                         .foregroundColor(Color("PrimaryColor"))
                         .fontWeight(.bold)
                         .padding(.horizontal, 16)

@@ -65,7 +65,8 @@ struct VisitLogEntry: View {
                                 visitLog.location = newValue
                                 print("📍 Updated visitLog.location: \(visitLog.location.latitude), \(visitLog.location.longitude)")
                             }
-                        )
+                        ),
+                        visitLog: visitLog
                     ) {
                         questionNumber += 1
                     } previousAction: {
