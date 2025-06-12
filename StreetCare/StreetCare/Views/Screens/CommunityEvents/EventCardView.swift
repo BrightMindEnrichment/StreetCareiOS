@@ -45,8 +45,10 @@ struct EventCardView: View {
                         Image("HelpType")
                             .resizable()
                             .frame(width: 20.0, height: 20.0)
-                        
-                        Text(helpType.capitalized)
+                        let help = helpType.split(separator: ",").map({ NSLocalizedString($0.lowercased().replacingOccurrences(of: ".", with: "").replacingOccurrences(of: " ", with: ""), comment: "")
+                        }).joined(separator: ", ")
+//                        let text = NSLocalizedString(helpType.lowercased(), comment: helpType)
+                        Text(help.capitalized)
                             .font(.system(size: 13))
                             .padding(.horizontal, 10)
                             .padding(.vertical, 5)

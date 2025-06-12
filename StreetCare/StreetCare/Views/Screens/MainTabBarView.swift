@@ -19,7 +19,7 @@ struct MainTabBarView: View {
             
             LandingScreenView()
                 .tabItem {
-                    TabButtonView(imageName: "Tab-HowToHelp", title: "How to Help", isActive: (selection == 0))
+                    TabButtonView(imageName: "Tab-HowToHelp", title: NSLocalizedString("howToHelp", comment: ""), isActive: (selection == 0))
                 }
                 .tag(0)
             
@@ -31,19 +31,19 @@ struct MainTabBarView: View {
                 }
             }
             .tabItem {
-                TabButtonView(imageName: "Tab-VisitLog", title: "Interaction Log", isActive: (selection == 1))
+                TabButtonView(imageName: "Tab-VisitLog", title: NSLocalizedString("interactionLog", comment: ""), isActive: (selection == 1))
             }
             .tag(1)
             
             CommunityView()
                 .tabItem {
-                    TabButtonView(imageName: "Tab-Community", title: "Community", isActive: (selection == 2))
+                    TabButtonView(imageName: "Tab-Community", title: NSLocalizedString("community", comment: ""), isActive: (selection == 2))
                 }
                 .tag(2)
             
             ProfilView(selection: $selection, loginRequested: $loginRequested)
                 .tabItem {
-                    TabButtonView(imageName: "Tab-Profile", title: "Profile", isActive: (selection == 3))
+                    TabButtonView(imageName: "Tab-Profile", title: NSLocalizedString("profile", comment: ""), isActive: (selection == 3))
                 }
                 .tag(3)
         }

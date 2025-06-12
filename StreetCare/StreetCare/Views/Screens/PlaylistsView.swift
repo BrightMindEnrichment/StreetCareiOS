@@ -11,11 +11,11 @@ import SwiftUI
 struct PlaylistsView: View {
 
     var links: [PlaylistDefinition] = [        
-        PlaylistDefinition(title: "How to use Street Care App", playlistId: "PLh7GZtyt8qiJKRJ0O_oJ5qRlvGeZUH2Zk"),
-        PlaylistDefinition(title: "An Introduction to Street Outreach", playlistId: "PLh7GZtyt8qiLKwO_WoE0Vmcu6UMV1AtV9"),
-        PlaylistDefinition(title: "Homeless Veterans", playlistId: "PLh7GZtyt8qiKevwz9gkTs0OyaglNnfUcl"),
-        PlaylistDefinition(title: "Street Safety", playlistId: "PLh7GZtyt8qiJsEwIitzTaZ2l3aA1Kiyx0"),
-        PlaylistDefinition(title: "Homelessnes and Mental Illness", playlistId: "PLh7GZtyt8qiKCy8iYdDzMXttuw6s7fdkP")
+        PlaylistDefinition(title: NSLocalizedString("howToUseApp", comment: ""), playlistId: "PLh7GZtyt8qiJKRJ0O_oJ5qRlvGeZUH2Zk"),
+        PlaylistDefinition(title: NSLocalizedString("introductionToStreetOutreach", comment: ""), playlistId: "PLh7GZtyt8qiLKwO_WoE0Vmcu6UMV1AtV9"),
+        PlaylistDefinition(title: NSLocalizedString("homelessVeterans", comment: ""), playlistId: "PLh7GZtyt8qiKevwz9gkTs0OyaglNnfUcl"),
+        PlaylistDefinition(title: NSLocalizedString("streetSafety", comment: ""), playlistId: "PLh7GZtyt8qiJsEwIitzTaZ2l3aA1Kiyx0"),
+        PlaylistDefinition(title: NSLocalizedString("homelessnesAndMentalIllness", comment: ""), playlistId: "PLh7GZtyt8qiKCy8iYdDzMXttuw6s7fdkP")
     ]
 
     
@@ -37,7 +37,7 @@ struct PlaylistsView: View {
                 }
             }
         }.padding()
-        .navigationTitle("During Outreach")
+        .navigationTitle(NSLocalizedString("duringOutreach", comment: ""))
         
     } // end body
 } // end struct

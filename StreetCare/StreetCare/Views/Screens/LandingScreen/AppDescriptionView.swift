@@ -11,14 +11,14 @@ import SwiftUI
 struct AppDescriptionView: View {
     var body: some View {
         VStack(spacing: 8) {
-            Text("Your toolkit to help homeless individuals")
+            Text(NSLocalizedString("yourToolkitToHelpHomelessIndividuals", comment: ""))
                 .font(.headline)
                 .fontWeight(.bold)
                 .foregroundColor(Color("TextColor"))
                 .padding(.top, 15)
                 .padding(.bottom, 10)
             
-            Text("Street Care is brought to you by homelessness care experts to share tools that will enable you to provide transformative help to homeless families and individuals.")
+            Text(NSLocalizedString("streetCareDescText", comment: ""))
                 .foregroundColor(Color("TextColor"))
         }
     }

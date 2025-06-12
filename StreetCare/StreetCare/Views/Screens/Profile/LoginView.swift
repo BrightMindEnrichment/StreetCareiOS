@@ -29,11 +29,11 @@ struct LoginView: View {
             }
             VStack(spacing: 29.0) {
 
-                TextField("Username/Email", text: $email)
+                TextField(NSLocalizedString("usernamePlaceholder", comment: ""), text: $email)
                     .keyboardType(.emailAddress)
                     .textFieldStyle(.roundedBorder)
                 
-                SecureField("Password", text: $password)
+                SecureField(NSLocalizedString("password", comment: ""), text: $password)
                     .textFieldStyle(.roundedBorder)
             }
             .frame(width: 340, height: 43)
@@ -43,7 +43,7 @@ struct LoginView: View {
                 NavigationLink {
                     ForgotPasswordView()
                 } label: {
-                    NavLinkButton(title: "Forgot your password?", width: 150.0, secondaryButton: true, noBorder: true,color: Color(
+                    NavLinkButton(title: NSLocalizedString("forgotPassword", comment: ""), width: 150.0, secondaryButton: true, noBorder: true,color: Color(
                         red:   0/255,
                         green: 122/255,
                         blue: 255/255

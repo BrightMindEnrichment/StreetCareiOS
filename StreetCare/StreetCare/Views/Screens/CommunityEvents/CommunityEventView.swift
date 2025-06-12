@@ -53,7 +53,7 @@ struct CommunityEventView: View {
                             applyFilter(filterType: selectedFilter)
                         }) {
                             HStack {
-                                Text(filter.rawValue)
+                                Text(NSLocalizedString( filter.rawValue, comment: ""))
                                 Spacer()
                                 if selectedFilter == filter {
                                     Image(systemName: "checkmark")
@@ -74,7 +74,7 @@ struct CommunityEventView: View {
                                     .offset(x: 10, y: -5)
                             }
                         }
-                        Text("Filter")
+                        Text(NSLocalizedString("filter", comment: ""))
                     }
                     .padding(.horizontal, 10)
                     .foregroundColor(.black)
@@ -253,7 +253,7 @@ struct SectionHeaderView: View {
                 .font(.system(size: 14, weight: .bold))
                 .foregroundColor(Color("TextColor"))
             Spacer()
-            Text("(\(eventCount) events)")
+            Text("(\(eventCount)" + " " +  NSLocalizedString("events", comment: "") + ")")
                 .font(.system(size: 14, weight: .regular))
                 .foregroundColor(Color("TextColor"))
         }
@@ -265,10 +265,10 @@ struct SectionHeaderView: View {
 struct LegendView: View {
     var body: some View {
         HStack(spacing: 12) {
-            LegendItem(icon: "checkmark.circle.fill", color: .green, text: "Chapter Leader")
-            LegendItem(icon: "checkmark.circle.fill", color: Color.blue.opacity(0.7), text: "Street Care Hub Leader")
-            LegendItem(icon: "checkmark.circle.fill", color: .purple, text: "Chapter Member")
-            LegendItem(icon: "checkmark.circle.fill", color: .yellow, text: "Account Holder")
+            LegendItem(icon: "checkmark.circle.fill", color: .green, text: NSLocalizedString("chapterLeader", comment: ""))
+            LegendItem(icon: "checkmark.circle.fill", color: Color.blue.opacity(0.7), text: NSLocalizedString("streetCareHubLeader", comment: ""))
+            LegendItem(icon: "checkmark.circle.fill", color: .purple, text: NSLocalizedString("chapterMember", comment: ""))
+            LegendItem(icon: "checkmark.circle.fill", color: .yellow, text: NSLocalizedString("accountHolder", comment: ""))
         }
         .padding(8)
         .cornerRadius(8)

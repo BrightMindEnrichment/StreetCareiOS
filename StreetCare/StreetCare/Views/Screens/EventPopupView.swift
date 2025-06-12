@@ -154,7 +154,7 @@ struct EventPopupView: View {
                 
                 
                 if let description = event.event.description, !description.isEmpty {
-                    Text("Event Description").font(.system(size: 14)).fontWeight(.semibold)
+                    Text(NSLocalizedString("eventDescription", comment: "")).font(.system(size: 14)).fontWeight(.semibold)
                     Text(description).font(.system(size: 13))
                 }
                 
@@ -164,7 +164,9 @@ struct EventPopupView: View {
                 if let helpType = event.event.helpType, !helpType.isEmpty {
                     HStack {
                         Image("HelpType").resizable().frame(width: 20.0,height: 20.0)
-                        Text(helpType.capitalized)
+                        let help = helpType.split(separator: ",").map({ NSLocalizedString($0.lowercased().replacingOccurrences(of: ".", with: "").replacingOccurrences(of: " ", with: ""), comment: "")
+                        }).joined(separator: ", ")
+                        Text(help.capitalized)
                             .font(.system(size: 13))
                             .padding(.horizontal, 10)
                             .padding(.vertical, 5)
@@ -177,7 +179,7 @@ struct EventPopupView: View {
                     if let skills = event.event.skills{
                         ForEach(0..<skills.count, id: \.self) { index in
                             HStack {
-                                Text("  \(skills[index])  ")
+                                Text("  \(NSLocalizedString(skills[index].lowercased().replacingOccurrences(of: " ", with: ""), comment: "").capitalized)  ")
                                     .font(.system(size: 10))
                             }.frame(height: 30.0).overlay(
                                 RoundedRectangle(cornerRadius: 15.0)

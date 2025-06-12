@@ -54,14 +54,14 @@ struct ProfilView: View {
                     NavigationLink {
                         ProfileDetails()
                     } label: {
-                        NavLinkButton(title:"Edit Profile", width: 160.0, height: 40.0,secondaryButton: true,noBorder: true, color: .blue)
+                        NavLinkButton(title: NSLocalizedString("editProfile", comment: ""), width: 160.0, height: 40.0,secondaryButton: true,noBorder: true, color: .blue)
                     }
                    // Spacer().frame(height: 10)
 
                     NavigationLink {
                         BadgesView()
                     } label: {
-                        NavLinkButton(title:"Badges Earned", width: 160.0, height: 40.0,secondaryButton: true,noBorder: true, color: .blue)
+                        NavLinkButton(title:NSLocalizedString("badgesEarned", comment: ""), width: 160.0, height: 40.0,secondaryButton: true,noBorder: true, color: .blue)
                     }
                     Spacer()
 
@@ -83,7 +83,7 @@ struct ProfilView: View {
                             }
                         }
 
-                    NavLinkButton(title: "Delete Account", width: 190.0, secondaryButton: true, noBorder: true, color: Color.black)
+                    NavLinkButton(title:NSLocalizedString("deleteAccount", comment: ""), width: 190.0, secondaryButton: true, noBorder: true, color: Color.black)
                         .padding()
                         .onTapGesture {
                             showUserDeleteDialog = true

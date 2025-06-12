@@ -25,7 +25,7 @@ struct NotLoggedInView: View {
                         selection = 3
                     }
                     label: {
-                        Text("Log in")
+                        Text(NSLocalizedString("loginButtonTitle", comment: ""))
                             .foregroundColor(Color("PrimaryColor"))
                             .frame(width: 189, height: 40)
                             .background(Color("SecondaryColor"))
@@ -36,8 +36,8 @@ struct NotLoggedInView: View {
                     Button {
                         showGuestWarning = true
                     } label: {
-                        Text("Guest")
-                            .fontWeight(.bold)              
+                        Text(NSLocalizedString("guest", comment: ""))
+                            .fontWeight(.bold)
                             .foregroundColor(.black)
                             .frame(width: 189, height: 40)
                             .background(Color.white)
