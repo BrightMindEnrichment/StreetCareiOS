@@ -21,6 +21,7 @@ struct InputTileDate: View {
     
         
     @Binding var datetimeValue: Date
+    @Binding var convertedDate: Date
     @State private var selectedTimeZone: String = TimeZone.current.identifier
     let timeZones = TimeZone.knownTimeZoneIdentifiers.sorted()
     let usTimeZones = TimeZone.knownTimeZoneIdentifiers
@@ -212,6 +213,11 @@ struct InputTileDate: View {
                     Spacer()
                     
                     Button(" Next  ") {
+                        if let converted = convertToCurrentTimeZone(from: datetimeValue, selectedTimeZoneID: selectedTimeZone) {
+                            convertedDate = converted  // ✅ Save to parent state
+                        } else {
+                            convertedDate = datetimeValue  // fallback
+                        }
                         nextAction()
                     }
                     .foregroundColor(Color("PrimaryColor"))
@@ -226,6 +232,14 @@ struct InputTileDate: View {
                 .padding()
                 
             
+            }
+        }
+        .onChange(of: selectedTimeZone) { newValue in
+            if let converted = convertToCurrentTimeZone(from: datetimeValue, selectedTimeZoneID: newValue) {
+                let formatter = DateFormatter()
+                formatter.dateStyle = .medium
+                formatter.timeStyle = .medium
+                formatter.timeZone = TimeZone.current
             }
         }
         .frame(width: size.width, height: size.height)
@@ -249,13 +263,31 @@ struct InputTileDate: View {
 }
 
 
+func convertToCurrentTimeZone(from date: Date, selectedTimeZoneID: String) -> Date? {
+    guard let selectedTimeZone = TimeZone(identifier: selectedTimeZoneID) else {
+        print("❌ Invalid Time Zone Identifier")
+        return nil
+    }
+
+    let currentTimeZone = TimeZone.current
+
+    let selectedOffset = TimeInterval(selectedTimeZone.secondsFromGMT(for: date))
+    let currentOffset = TimeInterval(currentTimeZone.secondsFromGMT(for: date))
+
+    // Adjust the date by the difference in offsets
+    let timeDifference = currentOffset - selectedOffset
+    return date.addingTimeInterval(timeDifference)
+}
+
+
+
 struct InputTileDate_Previews: PreviewProvider {
 
     @State static var input = Date()
 
     static var previews: some View {
 
-        InputTileDate(questionNumber: 3, totalQuestions: 4, question1: "Is there a planned date to",question2: "interact with them again?",question3: "", showSkip: true, datetimeValue: $input) {
+        InputTileDate(questionNumber: 3, totalQuestions: 4, question1: "Is there a planned date to",question2: "interact with them again?",question3: "", showSkip: true, datetimeValue: $input, convertedDate: $input ) { 
             //
         } skipAction: {
             //
