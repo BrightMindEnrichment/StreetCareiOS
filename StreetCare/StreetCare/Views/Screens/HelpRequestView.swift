@@ -225,7 +225,7 @@ func getVerificationColor(for userType: String?) -> Color {
     case "Chapter Member":
         return Color.purple
     case "Street Care Hub Leader":
-        return Color.blue
+        return Color.blue.opacity(0.7)
     case "Chapter Leader":
         return Color.green
     default:

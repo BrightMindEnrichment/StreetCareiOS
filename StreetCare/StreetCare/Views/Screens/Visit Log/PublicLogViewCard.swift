@@ -75,11 +75,18 @@ struct PublicLogViewCard: View {
                     }
                 }.padding([.bottom], 5)
                 // location
-                HStack {
-                    Image(systemName: "mappin.and.ellipse")
-                    Text("\(log.city), \(log.stateAbbv)")
-                        .font(.system(size: 13))
+                if log.city != "" || log.stateAbbv != "" {
+                    HStack {
+                        Image(systemName: "mappin.and.ellipse")
+                        Text("\(log.city), \(log.stateAbbv)")
+                            .font(.system(size: 13))
+                    }
+                } else {
+                    HStack {
+                        Spacer()
+                    }
                 }
+                
                 // time
                 HStack {
                     Image(systemName: "clock")
@@ -118,8 +125,7 @@ struct PublicLogViewCard: View {
                 )
                 .buttonStyle(BorderlessButtonStyle())
                 Spacer()
-            }
-            
+            }            
         }
         .padding(4)
         .padding(.horizontal, 8)
