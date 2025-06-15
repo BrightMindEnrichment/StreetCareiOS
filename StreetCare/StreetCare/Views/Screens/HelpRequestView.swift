@@ -45,7 +45,7 @@ struct HelpRequestView: View {
                         }.listRowSeparatorTint(.clear, edges: .all)
                             .listSectionSeparatorTint(.clear, edges: .all)
                     }.listStyle(PlainListStyle())
-                        .navigationTitle(NSLocalizedString("helpRequests", comment: ""))
+                        .navigationTitle(NSLocalizedString("publicinteractions", comment: ""))
                         .scrollContentBackground(.hidden)
                         .background(Color.clear)
                     

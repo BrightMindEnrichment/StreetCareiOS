@@ -73,13 +73,20 @@ struct GoogleMapView: UIViewRepresentable {
 
     func updateUIView(_ mapView: GMSMapView, context: Context) {
         mapView.clear()
-        for request in viewModel.helpRequests {
-            let marker = GMSMarker(position: request.location)
-            marker.title = request.helpType
-            marker.snippet = request.description
-            // defaults red marker
+//        for request in viewModel.helpRequests {
+//            let marker = GMSMarker(position: request.location)
+//            marker.title = request.helpType
+//            marker.snippet = request.description
+//            // defaults red marker
+//            marker.map = mapView
+//        }
+        for event in viewModel.mapVisitLogs {
+            let marker = GMSMarker(position: event.0)
+            marker.title = event.1
+            marker.snippet = event.2
             marker.map = mapView
         }
+
         for event in viewModel.outreachEvents {
             let marker = GMSMarker(position: event.location)
             marker.title = event.title
