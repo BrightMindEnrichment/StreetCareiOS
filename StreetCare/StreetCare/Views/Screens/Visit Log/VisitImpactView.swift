@@ -277,7 +277,7 @@ struct VisitImpactView: View {
                                 .font(.system(size: 20))
                         }
                         
-                        Text("Do not show again")
+                        Text(NSLocalizedString("donotShowAgain", comment: ""))
                             .font(.body)
                         
                         Spacer()

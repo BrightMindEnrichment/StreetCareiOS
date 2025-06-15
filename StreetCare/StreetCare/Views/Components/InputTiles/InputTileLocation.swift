@@ -43,7 +43,7 @@ struct InputTileLocation: View {
 
             VStack {
                 HStack {
-                    Text("Question \(questionNumber)/\(totalQuestions)")
+                    Text(NSLocalizedString("question", comment: "") + " \(questionNumber)/\(totalQuestions)")
                         .foregroundColor(.black)
                         //.font(.footnote)
                     
@@ -78,7 +78,7 @@ struct InputTileLocation: View {
                         Image(systemName: "magnifyingglass")
                             .foregroundColor(.gray)
                         
-                        Text(street.isEmpty ? "Search for address" : street)
+                        Text(street.isEmpty ? NSLocalizedString("searchAddress", comment: "") : street)
                             .foregroundColor(street.isEmpty ? .gray : .primary)
                             .frame(maxWidth: .infinity, alignment: .leading) //
                     }
@@ -130,7 +130,7 @@ struct InputTileLocation: View {
                     AutoGrowingTextEditor(text: $landmark, placeholder: NSLocalizedString("landmark", comment: ""))
                     
                     HStack {
-                        Button("Previous") {
+                        Button(NSLocalizedString("previous", comment: "")) {
                             previousAction()
                         }
                         .foregroundColor(Color("SecondaryColor"))
@@ -148,7 +148,7 @@ struct InputTileLocation: View {
                         
                         Spacer()
                         
-                        Button(" Next  ") {
+                        Button(" " + NSLocalizedString("next", comment: "") + " ") {
 //                            if city.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ||
 //                               stateAbbreviation.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
 //                                // Show an alert or feedback to user
@@ -238,7 +238,7 @@ struct InputTileLocation: View {
             tileWidth: 320
         )
 
-        Text("Progress")
+        Text(NSLocalizedString("progress", comment: ""))
             .font(.footnote)
             .padding(.top, 4)
             .fontWeight(.bold)

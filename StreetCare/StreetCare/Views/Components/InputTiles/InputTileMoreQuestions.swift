@@ -83,7 +83,7 @@ struct InputTileMoreQuestions: View {
             tileWidth: 300
         )
 
-        Text("Progress")
+        Text(NSLocalizedString("progress", comment: ""))
             .font(.footnote)
             .padding(.top, 4)
             .fontWeight(.bold)

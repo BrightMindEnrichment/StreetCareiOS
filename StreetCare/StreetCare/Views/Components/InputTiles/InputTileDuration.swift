@@ -26,12 +26,12 @@ struct InputTileDuration: View {
             
             VStack {
                 HStack {
-                    Text("Question \(questionNumber)/\(totalQuestions)")
+                    Text(NSLocalizedString("question", comment: "") + " \(questionNumber)/\(totalQuestions)")
                         .foregroundColor(.black)
                     
                     Spacer()
                     
-                    Button("Skip") {
+                    Button(NSLocalizedString("skip", comment: "")) {
                         skipAction()
                     }
                     .foregroundColor(Color("SecondaryColor"))
@@ -77,7 +77,7 @@ struct InputTileDuration: View {
                 .padding()
 
                 HStack {
-                    Button("Previous") {
+                    Button(NSLocalizedString("previous", comment: "")) {
                         previousAction()
                     }
                     .foregroundColor(Color("SecondaryColor"))
@@ -89,7 +89,7 @@ struct InputTileDuration: View {
 
                     Spacer()
 
-                    Button(" Next  ") {
+                    Button(" " + NSLocalizedString("next", comment: "") + " ") {
                         nextAction()
                     }
                     .foregroundColor(Color("PrimaryColor"))
@@ -109,7 +109,7 @@ struct InputTileDuration: View {
             tileWidth: 350
         )
 
-        Text("Progress")
+        Text(NSLocalizedString("progress", comment: ""))
             .font(.footnote)
             .fontWeight(.bold)
             .padding(.top, 4)

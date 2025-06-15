@@ -39,10 +39,10 @@ struct InputTileNumber: View {
             
             VStack {
                 HStack {
-                    Text("Question \(questionNumber)/\(totalQuestions)")
+                    Text(NSLocalizedString("question", comment: "") + " \(questionNumber)/\(totalQuestions)")
                         .foregroundColor(.black)
                     Spacer()
-                    Button("Skip") {
+                    Button(NSLocalizedString("skip", comment: "")) {
                         skipAction()
                     }
                     .foregroundColor(Color("SecondaryColor"))
@@ -153,7 +153,7 @@ struct InputTileNumber: View {
 
                 
                 HStack {
-                    Button("Previous") {
+                    Button(NSLocalizedString("previous", comment: "")) {
                         previousAction()
                     }
                     .foregroundColor(Color("SecondaryColor"))
@@ -165,7 +165,7 @@ struct InputTileNumber: View {
                     
                     Spacer()
                     
-                    Button("Next") {
+                    Button(" " + NSLocalizedString("next", comment: "") + " ") {
                         if let validNumber = Int(numberString), validNumber >= 0 {
                             number = validNumber
                             nextAction()
@@ -192,7 +192,7 @@ struct InputTileNumber: View {
             tileWidth: tileWidth
         )
         
-        Text("Progress")
+        Text(NSLocalizedString("progress", comment: ""))
             .font(.footnote)
             .padding(.top, 4)
             .fontWeight(.bold)

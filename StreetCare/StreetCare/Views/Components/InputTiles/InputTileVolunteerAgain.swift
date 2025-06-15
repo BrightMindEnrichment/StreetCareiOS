@@ -29,7 +29,7 @@ struct InputTileVolunteerAgain: View {
             
             VStack {
                 HStack {
-                    Text("Question \(questionNumber)/\(totalQuestions)")
+                    Text(NSLocalizedString("question", comment: "") + " \(questionNumber)/\(totalQuestions)")
                         .foregroundColor(.black)
                         //.font(.footnote)
                     
@@ -74,7 +74,7 @@ struct InputTileVolunteerAgain: View {
                     Button(action: {
                         volunteerAgain = 1
                     }) {
-                        Text("Yes")
+                        Text(NSLocalizedString("yes", comment: ""))
                             .font(.footnote)
                             .foregroundColor(volunteerAgain == 1 ? .white : Color("SecondaryColor"))
                             //.foregroundColor(Color.black)
@@ -135,7 +135,7 @@ struct InputTileVolunteerAgain: View {
                 .padding()
                 
                 HStack {
-                    Button("Previous") {
+                    Button(NSLocalizedString("previous", comment: ""))  {
                         previousAction()
                     }
                     .foregroundColor(Color("SecondaryColor"))
@@ -153,7 +153,7 @@ struct InputTileVolunteerAgain: View {
                     
                     Spacer()
                     
-                    Button(" Finish ") {
+                    Button(" " + NSLocalizedString("finish", comment: "") + " ") {
                         nextAction()
                     }
                     .foregroundColor(Color("PrimaryColor"))
@@ -176,7 +176,7 @@ struct InputTileVolunteerAgain: View {
             tileWidth: 300
         )
         
-        Text("Progress")
+        Text(NSLocalizedString("progress", comment: ""))
             .font(.caption)
             .padding(.top, 4)
 
