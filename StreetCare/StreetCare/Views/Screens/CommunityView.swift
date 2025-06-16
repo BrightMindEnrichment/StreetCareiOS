@@ -108,7 +108,12 @@ struct CommunityView: View {
                                             .scaleEffect(1.5)
                                             .progressViewStyle(CircularProgressViewStyle(tint: .blue))
                                     }
+                                       
                                 }
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 16)
+                                        .stroke(Color.black, lineWidth: 1)
+                                )
                                 .frame(width: 370, height: 300)
                                 .shadow(radius: 2)
                                 HStack {
