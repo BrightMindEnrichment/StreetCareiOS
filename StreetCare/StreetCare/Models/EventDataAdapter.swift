@@ -434,6 +434,7 @@ class EventDataAdapter {
         print("Fetching outreach events from Firebase...")
         db.collection("outreachEvents")
             .order(by: "eventDate", descending: false)
+            .whereField("status", isEqualTo: "approved")
             .limit(to: 50)
             .getDocuments { [weak self] (snapshot, error) in
                 guard let self = self else { return }
@@ -495,7 +496,7 @@ class EventDataAdapter {
                 }
             }
     }
-     func fetchPublicVisitLogLocations(completion: @escaping (Result<Void, Error>) -> Void) {
+    func fetchPublicVisitLogLocations(completion: @escaping (Result<Void, Error>) -> Void) {
         let db = Firestore.firestore()
         print("Fetching public visit logs from Firebase...")
 
@@ -528,7 +529,7 @@ class EventDataAdapter {
 
                 for (index, document) in documents.enumerated() {
                     group.enter()
-                    let delay = DispatchTime.now() + .milliseconds(index * 250)  // 250ms delay between geocodes
+                    let delay = DispatchTime.now() + .milliseconds(index * 250)
 
                     serialQueue.asyncAfter(deadline: delay) {
                         let data = document.data()
@@ -548,14 +549,23 @@ class EventDataAdapter {
                         let title = titleArray.joined(separator: ", ")
                         let description = data["description"] as? String
 
-                        print("Title: \(title) :: Address: \(address)")
+                        // ✅ Check cache first
+                        if let cachedCoordinates = self.getCachedCoordinates(for: address) {
+                            print("✅ Using cached coordinates for: \(address)")
+                            temporaryVisitLogs.append((cachedCoordinates, title, description))
+                            group.leave()
+                            return
+                        }
 
+                        print("🔍 Geocoding address: \(address)")
                         self.geocodeAddress(address) { result in
                             switch result {
                             case .success(let coordinates):
+                                // Cache the coordinates
+                                self.cacheCoordinates(for: address, coordinates: coordinates)
                                 temporaryVisitLogs.append((coordinates, title, description))
                             case .failure(let error):
-                                print("Failed to geocode address '\(address)': \(error.localizedDescription)")
+                                print("❌ Failed to geocode address '\(address)': \(error.localizedDescription)")
                             }
                             group.leave()
                         }
@@ -564,18 +574,19 @@ class EventDataAdapter {
 
                 group.notify(queue: .main) {
                     let count = temporaryVisitLogs.count
-                    print("Geocoded \(count) public visit logs successfully.")
+                    print("✅ Geocoded \(count) public visit logs successfully.")
                     self.mapVisitLogs = temporaryVisitLogs
 
                     if temporaryVisitLogs.isEmpty {
-                        completion(.failure(NSError(domain: "Geocoding", code: -1, userInfo: [NSLocalizedDescriptionKey: "No visit logs could be geocoded."])))
+                        completion(.failure(NSError(domain: "Geocoding", code: -1, userInfo: [
+                            NSLocalizedDescriptionKey: "No visit logs could be geocoded."
+                        ])))
                     } else {
                         completion(.success(()))
                     }
                 }
             }
     }
-
     
     
     
@@ -638,6 +649,19 @@ class EventDataAdapter {
     //    }
     //}
     
+    private func cacheCoordinates(for address: String, coordinates: CLLocationCoordinate2D) {
+        let dict: [String: Any] = ["lat": coordinates.latitude, "lng": coordinates.longitude]
+        UserDefaults.standard.set(dict, forKey: address)
+    }
+
+    private func getCachedCoordinates(for address: String) -> CLLocationCoordinate2D? {
+        if let dict = UserDefaults.standard.dictionary(forKey: address),
+           let lat = dict["lat"] as? CLLocationDegrees,
+           let lng = dict["lng"] as? CLLocationDegrees {
+            return CLLocationCoordinate2D(latitude: lat, longitude: lng)
+        }
+        return nil
+    }
     class EventViewModel: ObservableObject {
         @Published var events: [EventData] = [] // All events fetched from Firestore
         @Published var searchText: String = "" // For filtering based on search text
@@ -672,6 +696,8 @@ class EventDataAdapter {
                 }
                 .store(in: &cancellables)
         }
+        
+
         
         func fetchEvents(order: Bool = false) {
             let targetDate = Timestamp(date: Date()) // Current date and time
