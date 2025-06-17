@@ -274,7 +274,8 @@ struct VisitLogView: View {
             onEdit: {
                 editedInteractionDate = log.whenVisit
                 navigateToEditInteractionDate = true
-            }
+            },
+            canEdit: log.isFromOldCollection
         )
         
         NavigationLink(
@@ -317,7 +318,8 @@ struct VisitLogView: View {
                 editedLocationCoord = log.location
                 editedLocationDescription = log.locationDescription
                 navigateToEditLocation = true
-            }
+            },
+            canEdit: log.isFromOldCollection
         )
 
         NavigationLink(
@@ -367,7 +369,8 @@ struct VisitLogView: View {
                     editedPeopleHelped = log.peopleHelped
                     editedPeopleHelpedDescription = log.peopleHelpedDescription
                     navigateToEdit = true
-                }
+                },
+                canEdit: log.isFromOldCollection
             )
             
             NavigationLink(
@@ -420,17 +423,19 @@ struct VisitLogView: View {
                 
                 Spacer()
                 
-                Button(action: {
-                    editedSupportProvided = log
-                    navigateToEditSupportProvided = true
-                }) {
-                    Image("Tab-VisitLog-Inactive")
-                        .resizable()
-                        .frame(width: 16, height: 16)
-                        .foregroundColor(.gray)
+                if log.isFromOldCollection {
+                    Button(action: {
+                        editedSupportProvided = log
+                        navigateToEditSupportProvided = true
+                    }) {
+                        Image("Tab-VisitLog-Inactive")
+                            .resizable()
+                            .frame(width: 16, height: 16)
+                            .foregroundColor(.gray)
+                    }
+                    .buttonStyle(BorderlessButtonStyle())
+                    .padding(.trailing, 20.0)
                 }
-                .buttonStyle(BorderlessButtonStyle())
-                .padding(.trailing, 20.0)
             }
             
             Text(log.whatGiven.joined(separator: ", "))
@@ -504,7 +509,8 @@ struct VisitLogView: View {
                     editedItemQty = log.itemQty
                     editedItemQtyDescription = log.itemQtyDescription 
                     navigateToEditItems = true
-                }
+                },
+                canEdit: log.isFromOldCollection
             )
             
             NavigationLink(
@@ -559,7 +565,8 @@ struct VisitLogView: View {
                     .padding(.top, 10)
 
                 Spacer()
-
+                
+                if log.isFromOldCollection {
                 Button(action: {
                     editedRating = log.rating
                     //editedRatingComment = log.ratingComment
@@ -571,9 +578,9 @@ struct VisitLogView: View {
                         .foregroundColor(.gray)
                 }
                 .buttonStyle(BorderlessButtonStyle())
-                //.padding(.top, 10)
-                .padding(.trailing, 20)
+                .padding(.trailing, 20.0)
             }
+        }
 
             RatingView(rating: $log.rating, readOnly: true)
                 .screenLeft()
@@ -620,7 +627,8 @@ struct VisitLogView: View {
                 detail1: "\(log.durationHours) hours and \(log.durationMinutes) minutes",
                 onEdit: {
                     navigateToEditDuration = true
-                }
+                },
+                canEdit: log.isFromOldCollection
             )
         }
         NavigationLink(
@@ -664,7 +672,8 @@ struct VisitLogView: View {
                     editedHelpers = log.numberOfHelpers
                     editedHelpersComment = log.numberOfHelpersComment
                     navigateToEditHelpers = true
-                }
+                },
+                canEdit: log.isFromOldCollection
             )
             
             NavigationLink(
@@ -719,7 +728,8 @@ struct VisitLogView: View {
                     editedPeopleNeedHelp = log.peopleNeedFurtherHelp
                     editedPeopleNeedHelpComment = log.peopleNeedFurtherHelpComment
                     navigateToEditPeopleNeedHelp = true
-                }
+                },
+                canEdit: log.isFromOldCollection
             )
             
             NavigationLink(
@@ -772,7 +782,8 @@ struct VisitLogView: View {
                 onEdit: {
                     editedVolunteerAgain = log.volunteerAgain
                     navigateToEditVolunteerAgain = true
-                }
+                },
+                canEdit: log.isFromOldCollection
             )
 
             NavigationLink(
@@ -809,7 +820,8 @@ struct VisitLogView: View {
                 onEdit: {
                     editedFollowUpDate = log.followUpWhenVisit
                     navigateToEditFollowUpDate = true
-            }
+            },
+                canEdit: log.isFromOldCollection
         )
             NavigationLink(
                 destination: InputTileDate(
@@ -847,7 +859,8 @@ struct VisitLogView: View {
                 onEdit: {
                     editedFurtherOtherNotes = log.furtherOtherNotes
                     navigateToEditFurtherOtherNotes = true
-                }
+                },
+                canEdit: log.isFromOldCollection
             )
             NavigationLink(
                 destination: InputTileNotes(
@@ -898,7 +911,8 @@ struct VisitLogView: View {
                 detail1: needs,
                 onEdit: {
                     navigateToEditFurtherSupport = true
-                }
+                },
+                canEdit: log.isFromOldCollection
             )
         }
         NavigationLink(
@@ -982,6 +996,7 @@ struct VisitLogDetailRow: View {
     var detail2: String? = nil
     var separator: String = " • "
     var onEdit: (() -> Void)? = nil
+    var canEdit: Bool = true  // NEW
 
     var body: some View {
         VStack {
@@ -991,10 +1006,10 @@ struct VisitLogDetailRow: View {
                     .font(.system(size: 16.0)).bold()
                     .padding(.top, 10)
                     .padding(.horizontal, 20)
-                
+
                 Spacer()
-                
-                if let onEdit = onEdit {
+
+                if canEdit, let onEdit = onEdit {  // <-- Only show edit button if allowed
                     Button(action: onEdit) {
                         Image("Tab-VisitLog-Inactive")
                             .resizable()

@@ -63,7 +63,7 @@ class VisitLog: ObservableObject, Identifiable {
     @Published var stateAbbv = ""
     @Published var zipcode = ""
     @Published var status = ""
-
+    var isFromOldCollection: Bool = true
     init(id: String) {
         self.id = id
     }

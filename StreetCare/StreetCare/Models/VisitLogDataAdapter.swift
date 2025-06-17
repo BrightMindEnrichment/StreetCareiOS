@@ -387,6 +387,7 @@ class VisitLogDataAdapter {
                     log.flaggedByUser = document["flaggedByUser"] as? String ?? ""
                     
                     log.volunteerAgain = document["volunteerAgain"] as? String ?? ""
+                    log.isFromOldCollection = false
                     
                     if let whenVisit = document["whenVisit"] as? Timestamp {
                         log.whenVisit = whenVisit.dateValue()
