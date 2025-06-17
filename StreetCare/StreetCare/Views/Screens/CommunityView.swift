@@ -90,32 +90,35 @@ struct CommunityView: View {
                             }
                         }
                         if AppSettings.shared.mapsAvailable {
-                            VStack{
-                                Text(" Map")
-                                    .font(.title)
-                                    .frame(maxWidth: .infinity, alignment: .leading)
-                                ZStack {
-                                    GoogleMapView(viewModel: mapViewModel)
-                                        .edgesIgnoringSafeArea(.all)
-                                        .blur(radius: mapViewModel.isLoading ? 10 : 0)
-                                        .task {
-                                            print("GoogleMapView appeared, calling fetchMarkers()")
-                                            await mapViewModel.fetchMarkers()
-                                        }
+                            VStack {
+                                VStack(alignment: .leading, spacing: 8) {
+                                    Text("Map")
+                                        .font(.title)
                                     
-                                    if mapViewModel.isLoading {
-                                        ProgressView("Getting the Events")
-                                            .scaleEffect(1.5)
-                                            .progressViewStyle(CircularProgressViewStyle(tint: .blue))
+                                    ZStack {
+                                        GoogleMapView(viewModel: mapViewModel)
+                                            .edgesIgnoringSafeArea(.all)
+                                            .blur(radius: mapViewModel.isLoading ? 10 : 0)
+                                            .task {
+                                                print("GoogleMapView appeared, calling fetchMarkers()")
+                                                await mapViewModel.fetchMarkers()
+                                            }
+                                        
+                                        if mapViewModel.isLoading {
+                                            ProgressView("Getting the Events")
+                                                .scaleEffect(1.5)
+                                                .progressViewStyle(CircularProgressViewStyle(tint: .blue))
+                                        }
                                     }
-                                       
+                                    .overlay(
+                                        RoundedRectangle(cornerRadius: 16)
+                                            .stroke(Color.black, lineWidth: 1)
+                                    )
+                                    .frame(width: 370, height: 300)
+                                    .shadow(radius: 2)
                                 }
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 16)
-                                        .stroke(Color.black, lineWidth: 1)
-                                )
-                                .frame(width: 370, height: 300)
-                                .shadow(radius: 2)
+                                .frame(width: 370, alignment: .leading)
+                                
                                 HStack {
                                     Circle()
                                         .fill(Color.yellow)
@@ -134,6 +137,7 @@ struct CommunityView: View {
                                         .shadow(radius: 3)
                                 )
                             }
+                            
                         } else {
                             VStack(spacing: 30) {
                                 AppDescriptionView()
@@ -155,7 +159,7 @@ struct CommunityView: View {
                 adapter.refresh()
             }
         }
-    }
+        }
     }
 }
 
