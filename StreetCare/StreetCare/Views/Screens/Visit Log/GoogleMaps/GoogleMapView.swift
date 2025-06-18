@@ -103,7 +103,7 @@ struct GoogleMapView: UIViewRepresentable {
             }
             marker.map = mapView
         }
-        let defaultCamera = GMSCameraPosition.camera(withLatitude: 40.7831, longitude: -73.9712, zoom: 11)
+        let defaultCamera = GMSCameraPosition.camera(withLatitude: 40.7590, longitude: -73.9690, zoom: 11)
         mapView.animate(to: defaultCamera)
     }
     
