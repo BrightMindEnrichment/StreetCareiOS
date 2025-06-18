@@ -228,7 +228,7 @@ class EventDataAdapter {
                             event.eventStartTime = event.eventStartTimeStamp?.dateValue()
                             event.eventEndTimeStamp = data["eventEndTime"] as? Timestamp
                             event.eventEndTime = event.eventEndTimeStamp?.dateValue()
-                            print("📍 TimeZone from Firestore: \(data["timeZone"] ?? "nil")")
+                           // print("📍 TimeZone from Firestore: \(data["timeZone"] ?? "nil")")
                             event.timeZone = data["timeZone"] as? String
                             
                             

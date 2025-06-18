@@ -68,6 +68,13 @@ struct GoogleMapView: UIViewRepresentable {
         ])
 
         viewModel.mapView = mapView
+        DispatchQueue.main.async {
+              mapView.layer.cornerRadius = mapView.frame.height / 17
+              mapView.layer.masksToBounds = true
+              mapView.layer.borderWidth = 1
+              mapView.layer.borderColor = UIColor.black.cgColor
+          }
+
         return mapView
     }
 
@@ -96,7 +103,7 @@ struct GoogleMapView: UIViewRepresentable {
             }
             marker.map = mapView
         }
-        let defaultCamera = GMSCameraPosition.camera(withLatitude: 42.333774, longitude: -71.064937, zoom: 11)
+        let defaultCamera = GMSCameraPosition.camera(withLatitude: 40.7128, longitude: -74.0060, zoom: 11)
         mapView.animate(to: defaultCamera)
     }
     

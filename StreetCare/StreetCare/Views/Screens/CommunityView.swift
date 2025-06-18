@@ -15,7 +15,7 @@ struct CommunityView: View {
     let adapter = EventDataAdapter()
     @State var events = [Event]()
     @State var isPresented: Bool = false
-    @StateObject var mapViewModel = MapViewModel()
+    @ObservedObject var mapViewModel: MapViewModel
     
     let formatter = DateFormatter()
  
@@ -92,20 +92,16 @@ struct CommunityView: View {
                         if AppSettings.shared.mapsAvailable {
                             VStack {
                                 VStack(alignment: .leading, spacing: 8) {
-                                    Text("Map")
+                                    Text(NSLocalizedString("map", comment: ""))
                                         .font(.title)
                                     
                                     ZStack {
                                         GoogleMapView(viewModel: mapViewModel)
                                             .edgesIgnoringSafeArea(.all)
                                             .blur(radius: mapViewModel.isLoading ? 10 : 0)
-                                            .task {
-                                                print("GoogleMapView appeared, calling fetchMarkers()")
-                                                await mapViewModel.fetchMarkers()
-                                            }
-                                        
+
                                         if mapViewModel.isLoading {
-                                            ProgressView("Getting the Events")
+                                            ProgressView(NSLocalizedString("gettingTheEvents", comment: ""))
                                                 .scaleEffect(1.5)
                                                 .progressViewStyle(CircularProgressViewStyle(tint: .blue))
                                         }
@@ -123,11 +119,11 @@ struct CommunityView: View {
                                     Circle()
                                         .fill(Color.yellow)
                                         .frame(width: 10, height: 10)
-                                    Text("Events")
+                                    Text(NSLocalizedString("events", comment: ""))
                                     Circle()
                                         .fill(Color.red)
                                         .frame(width: 10, height: 10)
-                                    Text("Public Interactions")
+                                    Text(NSLocalizedString("publicInteractionLog", comment: ""))
                                 }
                                 .padding(.horizontal, 5)
                                 .padding(.vertical, 5)
@@ -145,7 +141,7 @@ struct CommunityView: View {
                             }
                             .padding(.horizontal)
                             .onAppear {
-                                print("Map is currently unavailable")
+                                print(NSLocalizedString("mapUnavailable", comment: ""))
                             }
                         }
                     }
@@ -179,7 +175,7 @@ extension CommunityView: EventDataAdapterProtocol {
 
 struct CommunityView_Previews: PreviewProvider {
     static var previews: some View {
-        CommunityView()
+        CommunityView(mapViewModel: MapViewModel())
     }
 }
 

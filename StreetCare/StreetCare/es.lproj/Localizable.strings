@@ -132,6 +132,13 @@
 "aq3des" = "Ej., Jill — una niña de 15 años que se escapó y llevaba un vestido azul.";
 "aq6des" = "Ej. 'Tom tiene diabetes y prefiere no consumir snacks azucarados'";
 "publicinteractions" = "Interacciones públicas";
+"events" = "Eventos";
+"publicInteractionLog" = "Registro de Interacciones Públicas";
+"gettingTheEvents" = "Obteniendo los eventos";
+"map" = "Mapa";
+"mapUnavailable" = "El mapa no está disponible actualmente";
+
+
 
 //"helloWorld" = "¡Hola Mundo!";
 //"welcome" = "Bienvenido a\nStreet Care";
