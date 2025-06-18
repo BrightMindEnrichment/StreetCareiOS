@@ -53,7 +53,7 @@ class ProfileDetailsAdapter {
                 "country": profile.country != "" ? profile.country : (Locale.current.region?.identifier ?? "Unknown"),
                 "deviceType": "iOS",
                 "isValid": true,
-                "type": profile.userType,
+                "Type": profile.userType,
                 "createdOutreaches": [],
                 "outreachEvents": [],
                 "personalVisitLogs": [],
@@ -110,12 +110,12 @@ class ProfileDetailsAdapter {
                         self.profile.country = country
                     }
 
-                    if let type = document["type"] as? String {
-                        self.profile.userType = type
+                    if let userType = document["Type"] as? String {
+                        self.profile.userType = userType
                     }else {
                         //Patch in default "Account Holder" type if missing
                         let ref = db.collection(self.collectionName).document(document.documentID)
-                        ref.setData(["type": "Account Holder"], merge: true)
+                        ref.setData(["Type": "Account Holder"], merge: true)
                         self.profile.userType = "Account Holder"
                     }                    
                 }

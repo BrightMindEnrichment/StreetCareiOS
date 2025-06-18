@@ -247,7 +247,7 @@ struct VisitImpactView: View {
                         if let uid = currentUser?.uid {
                             let db = Firestore.firestore()
                             db.collection("users").document(uid).getDocument { snapshot, error in
-                                if let data = snapshot?.data(), let type = data["userType"] as? String {
+                                if let data = snapshot?.data(), let type = data["Type"] as? String {
                                     self.userType = type
                                 }
                             }
@@ -339,7 +339,7 @@ struct VisitImpactView: View {
 
     }
     //With Caching
-    func preloadPopupData(for visit: VisitLog) async {
+    /*func preloadPopupData(for visit: VisitLog) async {
         guard let _ = Auth.auth().currentUser else { return }
         let db = Firestore.firestore()
 
@@ -389,9 +389,9 @@ struct VisitImpactView: View {
                 }
             }
         }
-    }
+    }*/
     //Without Caching
-    /*func preloadPopupData(for visit: VisitLog) async {
+    func preloadPopupData(for visit: VisitLog) async {
         guard let _ = Auth.auth().currentUser else { return }
         let db = Firestore.firestore()
 
@@ -412,7 +412,7 @@ struct VisitImpactView: View {
             let snapshot = try await query.getDocuments()
             if let userDoc = snapshot.documents.first {
                 let data = userDoc.data()
-                visit.userType = data["type"] as? String ?? "Account Holder"
+                visit.userType = data["Type"] as? String ?? "Account Holder"
                 visit.username = data["username"] as? String ?? "Firstname Lastname"
             }
         } catch {
@@ -423,7 +423,7 @@ struct VisitImpactView: View {
         await MainActor.run {
             let _ = StorageManager(uid: visit.uid).getImage()
         }
-    }*/
+    }
 
     private func updateCounts() {
 

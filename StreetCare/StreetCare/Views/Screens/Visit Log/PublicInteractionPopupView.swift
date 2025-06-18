@@ -144,7 +144,7 @@ struct PublicInteractionPopupView: View {
                 }
         }
         //with Caching
-        .onAppear {
+        /*.onAppear {
             imageLoader.uid = visit.uid
 
             // If image already preloaded, use it
@@ -180,9 +180,9 @@ struct PublicInteractionPopupView: View {
                             }
                         }
                     }
-        }
+        }*/
         //Without Caching
-        /*.onAppear {
+        .onAppear {
                     imageLoader.uid = visit.uid
                     imageLoader.getImage()
                     let db = Firestore.firestore()
@@ -203,7 +203,7 @@ struct PublicInteractionPopupView: View {
                                 }
                             }
                         }
-                }*/
+                }
         .cornerRadius(20)
         .toolbar(.hidden, for: .tabBar)
         .overlay(
