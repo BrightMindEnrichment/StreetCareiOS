@@ -25,7 +25,7 @@ struct InputTileNumber: View {
     @Binding var number: Int
     var peopleLocationDescription: Binding<String>?
     @State private var numberString = "0"
-    @State private var peopledescription = ""
+    var peopleHelpedDescription: Binding<String>? = nil
     @State private var peopledescription2 = ""
     @State private var showAlert = false
     
@@ -112,8 +112,9 @@ struct InputTileNumber: View {
                         .foregroundColor(Color("SecondaryColor"))
                 }
                 
-                if let placeholder = placeholderText, !placeholder.isEmpty {
-                    AutoGrowingTextEditor(text: $peopledescription, placeholder: placeholder).font(.system(size: 15))
+                if let binding = peopleHelpedDescription {
+                    AutoGrowingTextEditor(text: binding, placeholder: placeholderText ?? "")
+                        .font(.system(size: 15))
                 }
                 
                 if let disclaimer = disclaimerText, !disclaimer.isEmpty {

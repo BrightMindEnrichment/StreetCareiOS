@@ -8,7 +8,7 @@
 import SwiftUI
 import FirebaseFirestore
 import FirebaseAuth
-
+import FirebaseStorage
 
 struct PublicInteractionPopupView: View {
     @ObservedObject var visit: VisitLog
@@ -20,33 +20,33 @@ struct PublicInteractionPopupView: View {
     @Binding var refresh: Bool
     @State private var showCustomAlert = false
     @State private var alertMessage = ""
+    @State private var username: String = "Firstname Lastname"
+    @StateObject private var imageLoader = StorageManager(uid: "")
+    //@State private var userRoleType: String = "Account Holder"
     
     var body: some View {
         VStack(alignment: .leading, spacing: 14) {
             // Top row
             HStack {
-                if let url = user?.photoURL {
-                    AsyncImage(url: url) { image in
-                        image
-                            .resizable()
-                            .frame(width: 40, height: 40)
-                            .clipShape(Circle())
-                    } placeholder: {
-                        Image(systemName: "person.crop.circle")
-                            .resizable()
-                            .frame(width: 40, height: 40)
-                            .clipShape(Circle())
-                            .opacity(0.5)
-                    }
+                if let img = imageLoader.image {
+                    Image(uiImage: img)
+                        .resizable()
+                        .frame(width: 40, height: 40)
+                        .clipShape(Circle())
+                        .transition(.opacity)
+                        .animation(.easeInOut(duration: 0.3), value: imageLoader.image)
                 } else {
                     Image(systemName: "person.crop.circle")
                         .resizable()
                         .frame(width: 40, height: 40)
                         .clipShape(Circle())
+                        .opacity(0.5)
                 }
                 
-                Text(user?.displayName ?? "Firstname Lastname")
+                Text(username)
                     .font(.system(size: 15, weight: .semibold))
+                    .transition(.opacity)
+                    .animation(.easeInOut(duration: 0.3), value: username)
                 
                 Spacer()
                 
@@ -55,62 +55,51 @@ struct PublicInteractionPopupView: View {
                     .foregroundColor(visit.isFlagged ? .red : .gray)
                     .onTapGesture {
                         Task {
+                            guard let currentUser = Auth.auth().currentUser else { return }
                             let db = Firestore.firestore()
-//                            print(visit.id)
                             let ref = db.collection("visitLogWebProd").document(visit.id)
-//                            print(ref.documentID)
-                            let updates: [String: Any] = [
-                                "isFlagged": false,
-                                "flaggedByUser": NSNull()
-                            ]
+                            
                             if visit.isFlagged {
-                                // UNFLAGGING
-                                // Allow to unflag if flagged by same user (==currentUser)
-//                                print("Checking if user \(user?.uid ?? "") is flagged by user \(visit.flaggedByUser ?? "")")
-                                if visit.flaggedByUser == user?.uid || userType == "Street Care Hub Leader" {
-                                    // Allow unflagging
+                                // Try to unflag
+                                if visit.flaggedByUser == currentUser.uid || userType == "Street Care Hub Leader" {
+                                    let updates: [String: Any] = [
+                                        "isFlagged": false,
+                                        "flaggedByUser": user?.uid ?? ""
+                                    ]
                                     do {
                                         try await ref.updateData(updates)
-                                        
                                         visit.isFlagged = false
                                         visit.flaggedByUser = ""
                                         refresh.toggle()
-//                                        print("Successfully unflagged event by user \(user?.uid ?? "")")
                                     } catch {
-//                                        print("Error updating flag status: \(error)")
+                                        print("Unflagging error: \(error.localizedDescription)")
                                     }
-
                                 } else {
-                                    // Not allowed, show alert
                                     await MainActor.run {
                                         alertMessage = "Only the user who flagged this event or a Street Care Hub Leader can unflag it."
                                         showCustomAlert = true
                                     }
                                 }
                             } else {
-                                // FLAGGING
+                                // ✅ Flag it
                                 let updates: [String: Any] = [
                                     "isFlagged": true,
-                                    "flaggedByUser": user?.uid
+                                    "flaggedByUser": currentUser.uid
                                 ]
-
                                 do {
                                     try await ref.updateData(updates)
-
                                     visit.isFlagged = true
-                                    visit.flaggedByUser = user?.uid ?? ""
+                                    visit.flaggedByUser = currentUser.uid
                                     refresh.toggle()
-//                                    print("Successfully flagged event by user \(user?.uid ?? "")")
                                 } catch {
-//                                    print("Error updating flag status: \(error)")
+                                    print("Flagging error: \(error.localizedDescription)")
                                 }
                             }
-                            
                         }
                     }
                 
                 // checkmark
-                UserRoleBadge(userType: userType)
+                UserRoleBadge(userType: visit.userType)
             }
             
             // Location & date
@@ -154,6 +143,67 @@ struct PublicInteractionPopupView: View {
                     onCancel()
                 }
         }
+        //with Caching
+        .onAppear {
+            imageLoader.uid = visit.uid
+
+            // If image already preloaded, use it
+            if let img = visit.image {
+                imageLoader.image = img
+            } else {
+                imageLoader.getImage()
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                    if let loaded = imageLoader.image {
+                        visit.image = loaded // fallback cache
+                    }
+                }
+            }
+
+            // Use preloaded values
+            self.username = visit.username
+            //self.userRoleType = visit.userType
+            
+            //fetch the latest userType from Firestore
+                let db = Firestore.firestore()
+                db.collection("users")
+                    .whereField("uid", isEqualTo: visit.uid)
+                    .getDocuments { snapshot, error in
+                        if let error = error {
+                            print("Error fetching user type: \(error.localizedDescription)")
+                            return
+                        }
+
+                        if let document = snapshot?.documents.first {
+                            let data = document.data()
+                            if let fetchedType = data["type"] as? String {
+                                visit.userType = fetchedType
+                            }
+                        }
+                    }
+        }
+        //Without Caching
+        /*.onAppear {
+                    imageLoader.uid = visit.uid
+                    imageLoader.getImage()
+                    let db = Firestore.firestore()
+                    db.collection("users")
+                        .whereField("uid", isEqualTo: visit.uid)
+                        .getDocuments { snapshot, error in
+                            if let error = error {
+                                print("Error fetching user info: \(error.localizedDescription)")
+                                return
+                            }
+                            
+                            if let document = snapshot?.documents.first {
+                                let data = document.data()
+                                
+                                // Username
+                                if let fetchedUsername = data["username"] as? String {
+                                    self.username = fetchedUsername
+                                }
+                            }
+                        }
+                }*/
         .cornerRadius(20)
         .toolbar(.hidden, for: .tabBar)
         .overlay(
@@ -165,14 +215,14 @@ struct PublicInteractionPopupView: View {
                             .fill(Color.clear)
                             .frame(maxWidth: .infinity, maxHeight: .infinity)
                             .edgesIgnoringSafeArea(.all)
-
+                        
                         // Alert Box
                         VStack(spacing: 0) {
                             VStack(spacing: 16) {
                                 Text("Unflag Error")
                                     .font(.headline)
                                     .foregroundColor(.black)
-
+                                
                                 Text(alertMessage)
                                     .font(.subheadline)
                                     .foregroundColor(.black)
@@ -181,9 +231,9 @@ struct PublicInteractionPopupView: View {
                                     .frame(maxWidth: .infinity)
                             }
                             .padding()
-
+                            
                             Divider()
-
+                            
                             Button(action: {
                                 withAnimation {
                                     showCustomAlert = false
@@ -206,11 +256,8 @@ struct PublicInteractionPopupView: View {
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                 }
             }
-
         )
     }
-    
-    
 }
 
 func formattedDateTime(_ date: Date) -> String {
@@ -268,8 +315,10 @@ struct UserRoleBadge: View {
             return (Color.blue.opacity(0.7), "Street Care Hub Leader")
         case "Chapter Member":
             return (.purple, "Chapter Member")
-        default:
-            return (.yellow, "Chapter Member")
+        case "Account Holder":
+                    return (.yellow, "Account Holder")
+                default:
+                    return (.gray, "Unknown")
         }
     }
     

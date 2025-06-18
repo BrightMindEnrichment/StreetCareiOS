@@ -75,13 +75,27 @@ struct VisitLogEntry: View {
                     }
                     
                 case 3:
-                    InputTileNumber(questionNumber: 3, totalQuestions: 6, tileWidth: 300, tileHeight: 560, question1: "Describe who you" , question2: "supported and how",question3: "many individuals",question4: "were involved.",descriptionLabel: "Description", disclaimerText: NSLocalizedString("disclaimer", comment: ""), placeholderText: NSLocalizedString("peopledescription", comment: ""), number: $visitLog.peopleHelped) {
-                        questionNumber += 1
-                    } previousAction: {
-                        questionNumber -= 1
-                    } skipAction: {
-                        questionNumber += 1
-                    }
+                    InputTileNumber(
+                            questionNumber: 3,
+                            totalQuestions: 6,
+                            tileWidth: 300,
+                            tileHeight: 560,
+                            question1: "Describe who you",
+                            question2: "supported and how",
+                            question3: "many individuals",
+                            question4: "were involved.",
+                            descriptionLabel: "Description",
+                            disclaimerText: NSLocalizedString("disclaimer", comment: ""),
+                            placeholderText: NSLocalizedString("peopledescription", comment: ""),
+                            number: $visitLog.peopleHelped,
+                            peopleHelpedDescription: $visitLog.peopleHelpedDescription //Added this
+                        ) {
+                            questionNumber += 1
+                        } previousAction: {
+                            questionNumber -= 1
+                        } skipAction: {
+                            questionNumber += 1
+                        }
                     
                 case 4:
                     InputTileList(

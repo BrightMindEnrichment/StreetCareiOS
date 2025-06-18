@@ -7,11 +7,15 @@
 
 import Foundation
 import CoreLocation
-
+import UIKit
 
 class VisitLog: ObservableObject, Identifiable {
     
     @Published var id: String
+    @Published var isPublished: Bool = false
+    @Published var username: String = "Firstname Lastname"
+    @Published var userType: String = "Account Holder"
+    @Published var image: UIImage? = nil
     
     @Published var whereVisit = ""
     @Published var street = ""
@@ -23,7 +27,9 @@ class VisitLog: ObservableObject, Identifiable {
     @Published var whenVisit = Date()
     @Published var peopleHelped = 1
     @Published var status = ""
-    @Published var flaggedByUser = ""
+    @Published var isFlagged: Bool = false
+    @Published var flaggedByUser: String = ""
+    @Published var uid: String = ""
     //@Published var public = false
     
     @Published var foodAndDrinks = false
@@ -45,6 +51,7 @@ class VisitLog: ObservableObject, Identifiable {
     @Published var furtherlegal = false
     @Published var furtherOther = false
     @Published var furtherOtherNotes = ""
+    @Published var peopleHelpedDescription: String = ""
     
     @Published var rating = 0
     @Published var ratingNotes = ""
@@ -62,8 +69,6 @@ class VisitLog: ObservableObject, Identifiable {
     @Published var peopleNeedFurtherHelpLocation = ""
     @Published var followUpWhenVisit = Date()
     @Published var itemQty = 0
-    @Published var isFlagged = false
-    @Published var peopleHelpedDescription = ""
 
     var whatGiven: [String] {
         var given = [String]()
@@ -145,4 +150,3 @@ class VisitLog: ObservableObject, Identifiable {
         task.resume()
     }
 } // end class
-

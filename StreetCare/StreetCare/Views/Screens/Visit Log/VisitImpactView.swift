@@ -21,7 +21,7 @@ struct VisitImpactView: View {
     @State var itemsDonated = 0
 
     @State var showActionSheet = false
-    @State var isLoading = false
+    //@State var isLoading = false
     //@State private var navigateToAddNew = false
     @State var isNavigationActive = false
     @State var showLoginMessage = false
@@ -34,6 +34,9 @@ struct VisitImpactView: View {
     
     @State private var selectedVisit: VisitLog? = nil
     @State private var showPublicPopup = false
+    @State private var isLoadingPopup = false
+    @State private var usernameCache: [String: String] = [:]
+    @State private var imageCache: [String: UIImage] = [:]
     
     @State private var userType: String = ""
     @State private var popupRefresh = false
@@ -189,9 +192,14 @@ struct VisitImpactView: View {
 //                                        GeometryReader { geo in
 //                                            ZStack {
                                                 Button("Details") {
-//                                                    print("Details tapped")
+                                                    isLoadingPopup = true
                                                     selectedVisit = item
-                                                    showPublicPopup = true
+
+                                                    Task {
+                                                        await preloadPopupData(for: item)
+                                                        isLoadingPopup = false
+                                                        showPublicPopup = true
+                                                    }
                                                 }
                                                 .font(.custom("Poppins-SemiBold", size: 13))
                                                 .foregroundColor(Color(red: 1.0, green: 0.933, blue: 0.0)) // textColor
@@ -228,7 +236,7 @@ struct VisitImpactView: View {
                     
                     Spacer()
                 }
-                .loadingAnimation(isLoading: isLoading)
+                .loadingAnimation(isLoading: isLoadingPopup)
                 .navigationBarTitleDisplayMode(.inline)
                 .onAppear {
 //                    print("Impact view onAppear")
@@ -247,7 +255,7 @@ struct VisitImpactView: View {
                     }
                     if Auth.auth().currentUser != nil {
                         adapter.refresh()
-                        self.isLoading = true
+                        self.isLoadingPopup = true
                     } else {
                         adapter.resetLogs()
                         history = [VisitLog]()
@@ -271,7 +279,7 @@ struct VisitImpactView: View {
                         .frame(maxWidth: .infinity)
                         .padding(.horizontal)
                     }
-                }, heightRatio: 0.65)
+                }, heightRatio: 0.57)
             }
             
             if showCustomAlert {
@@ -330,6 +338,92 @@ struct VisitImpactView: View {
         }
 
     }
+    //With Caching
+    func preloadPopupData(for visit: VisitLog) async {
+        guard let _ = Auth.auth().currentUser else { return }
+        let db = Firestore.firestore()
+
+        // 1. Fetch from visitLogWebProd
+        do {
+            let doc = try await db.collection("visitLogWebProd").document(visit.id).getDocument()
+            if let data = doc.data() {
+                visit.isFlagged = data["isFlagged"] as? Bool ?? false
+                visit.flaggedByUser = data["flaggedByUser"] as? String ?? ""
+            }
+        } catch {
+            print("Error fetching from visitLogWebProd: \(error)")
+        }
+
+        // 2. Fetch from users (type and username)
+        if let cachedName = usernameCache[visit.uid] {
+                visit.username = cachedName
+            } else {
+                do {
+                    let query = db.collection("users").whereField("uid", isEqualTo: visit.uid)
+                    let snapshot = try await query.getDocuments()
+                    if let userDoc = snapshot.documents.first {
+                        let data = userDoc.data()
+                        let name = data["username"] as? String ?? "Firstname Lastname"
+                        //let type = data["type"] as? String ?? "Account Holder"
+                        visit.username = name
+                        //visit.userType = type
+                        usernameCache[visit.uid] = name
+                    }
+                } catch {
+                    print("Error fetching from users: \(error)")
+                }
+            }
+
+        // 3. Preload image from Firebase Storage (no need to wait for it to show popup)
+        if let cachedImage = imageCache[visit.uid] {
+            await MainActor.run {
+                visit.image = cachedImage
+            }
+        } else {
+            let manager = StorageManager(uid: visit.uid)
+            manager.getImage()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                if let img = manager.image {
+                    imageCache[visit.uid] = img
+                    visit.image = img
+                }
+            }
+        }
+    }
+    //Without Caching
+    /*func preloadPopupData(for visit: VisitLog) async {
+        guard let _ = Auth.auth().currentUser else { return }
+        let db = Firestore.firestore()
+
+        // 1. Fetch from visitLogWebProd
+        do {
+            let doc = try await db.collection("visitLogWebProd").document(visit.id).getDocument()
+            if let data = doc.data() {
+                visit.isFlagged = data["isFlagged"] as? Bool ?? false
+                visit.flaggedByUser = data["flaggedByUser"] as? String ?? ""
+            }
+        } catch {
+            print("❌ Error fetching from visitLogWebProd: \(error)")
+        }
+
+        // 2. Fetch from users (type and username)
+        do {
+            let query = db.collection("users").whereField("uid", isEqualTo: visit.uid)
+            let snapshot = try await query.getDocuments()
+            if let userDoc = snapshot.documents.first {
+                let data = userDoc.data()
+                visit.userType = data["type"] as? String ?? "Account Holder"
+                visit.username = data["username"] as? String ?? "Firstname Lastname"
+            }
+        } catch {
+            print("❌ Error fetching from users: \(error)")
+        }
+
+        // 3. Preload image from Firebase Storage (no need to wait for it to show popup)
+        await MainActor.run {
+            let _ = StorageManager(uid: visit.uid).getImage()
+        }
+    }*/
 
     private func updateCounts() {
 
@@ -433,7 +527,7 @@ extension VisitImpactView: VisitLogDataAdapterProtocol {
     func visitLogDataRefreshed(_ logs: [VisitLog]) {
         self.history = logs
         self.updateCounts()
-        self.isLoading = false
+        self.isLoadingPopup = false
     }
 }
 
