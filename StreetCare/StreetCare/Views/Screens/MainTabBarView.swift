@@ -13,11 +13,12 @@ struct MainTabBarView: View {
     @State private var selection = 0
     @State private var user: User? = nil
     @State private var loginRequested = false
+    @State private var shouldDismissAll = false
     
     var body: some View {
         TabView(selection: $selection) {
             
-            LandingScreenView()
+            LandingScreenView(shouldDismissAll: $shouldDismissAll)
                 .tabItem {
                     TabButtonView(imageName: "Tab-HowToHelp", title: "How to Help", isActive: (selection == 0))
                 }
