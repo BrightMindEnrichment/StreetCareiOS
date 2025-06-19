@@ -427,8 +427,8 @@ struct VisitImpactView: View {
             if !visit.photoURL.isEmpty, let url = URL(string: visit.photoURL) {
                 URLSession.shared.dataTask(with: url) { data, _, _ in
                     if let data = data, let image = UIImage(data: data) {
-                        DispatchQueue.main.async {
-                            // ✅ This is what your popup uses
+                        Task { @MainActor in
+                            // This is what your popup uses
                             imageLoader.image = image
                         }
                     }
