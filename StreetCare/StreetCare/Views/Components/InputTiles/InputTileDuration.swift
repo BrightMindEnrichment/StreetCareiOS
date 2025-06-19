@@ -22,7 +22,8 @@ struct InputTileDuration: View {
     var buttonMode: ButtonMode = .navigation
     @Environment(\.presentationMode) var presentationMode
     @State private var showSuccessAlert = false
-    
+    @State private var localHours: Int = 0
+    @State private var localMinutes: Int = 0
     var body: some View {
         VStack(spacing: 0) {
             if buttonMode == .update {
@@ -73,8 +74,8 @@ struct InputTileDuration: View {
                     }
                     
                     HStack(spacing: 16) {
-                        CustomDropdown(title: "Hours", selection: $hours, options: Array(0..<13).reversed())
-                        CustomDropdown(title: "Minutes", selection: $minutes, options: Array(0..<61).reversed())
+                        CustomDropdown(title: "Hours", selection: $localHours, options: Array(0..<13).reversed())
+                        CustomDropdown(title: "Minutes", selection: $localMinutes, options: Array(0..<61).reversed())
                     }
                     .padding(.horizontal)
                     .padding()
@@ -118,6 +119,8 @@ struct InputTileDuration: View {
                             Spacer()
                             
                             Button("Update") {
+                                hours = localHours
+                                minutes = localMinutes
                                 showSuccessAlert = true
                                 nextAction()
                             }
@@ -135,6 +138,10 @@ struct InputTileDuration: View {
         .navigationBarTitleDisplayMode(.inline)
         .navigationTitle("Interaction Log")
         .frame(width: tileWidth, height: tileHeight)
+        .onAppear {
+            localHours = hours
+            localMinutes = minutes
+        }
         .alert(isPresented: $showSuccessAlert) {
             Alert(
                 title: Text("Updated"),
@@ -168,14 +175,20 @@ struct CustomDropdown: View {
         Menu {
             ForEach(options, id: \.self) { option in
                 Button(action: {
-                    selection = option // Correct binding to ensure selection updates
+                    selection = option
                 }) {
-                    Text("\(option)")
+                    HStack {
+                        Text("\(option)")
+                        if option == selection {
+                            Spacer()
+                            Image(systemName: "checkmark")
+                        }
+                    }
                 }
             }
         } label: {
             HStack {
-                Text(selection == -1 ? title : "\(selection)")
+                Text("\(selection)")
                     .foregroundColor(.black)
                 Spacer()
                 Image(systemName: "chevron.down")

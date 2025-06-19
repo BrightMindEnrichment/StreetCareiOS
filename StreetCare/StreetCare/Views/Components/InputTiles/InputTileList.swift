@@ -31,6 +31,37 @@ struct InputTileList: View {
 
     @Environment(\.presentationMode) var presentationMode
     @State private var showSuccessAlert = false
+    private func updateSupportArray() {
+        var selected: [String] = []
+
+        switch supportMode {
+        case .provided:
+            if visitLog.foodAndDrinks { selected.append("Food & Drinks") }
+            if visitLog.clothes { selected.append("Clothes") }
+            if visitLog.hygiene { selected.append("Hygiene Products") }
+            if visitLog.wellness { selected.append("Wellness/Emotional Support") }
+            if visitLog.medical { selected.append("Medical Help") }
+            if visitLog.social { selected.append("Social Worker/Psychiatrist") }
+            if visitLog.legal { selected.append("Legal/Lawyer") }
+            if visitLog.other {
+                selected.append(visitLog.otherNotes.isEmpty ? "Other" : visitLog.otherNotes)
+            }
+            visitLog.whatGiven = selected
+
+        case .needed:
+            if visitLog.furtherFoodAndDrinks { selected.append("Food & Drinks") }
+            if visitLog.furtherClothes { selected.append("Clothes") }
+            if visitLog.furtherHygiene { selected.append("Hygiene Products") }
+            if visitLog.furtherWellness { selected.append("Wellness/Emotional Support") }
+            if visitLog.furtherMedical { selected.append("Medical Help") }
+            if visitLog.furtherSocial { selected.append("Social Worker/Psychiatrist") }
+            if visitLog.furtherLegal { selected.append("Legal/Lawyer") }
+            if visitLog.furtherOther {
+                selected.append(visitLog.furtherOtherNotes.isEmpty ? "Other" : visitLog.furtherOtherNotes)
+            }
+            visitLog.whatGiven = selected // Reused for further support too
+        }
+    }
     
     var body: some View {
         VStack(spacing: 0) {
@@ -178,6 +209,11 @@ struct InputTileList: View {
                     }
                     
                 }
+                if supportMode == .provided {
+                    SupportChangeObserverProvided(visitLog: visitLog, onUpdate: updateSupportArray)
+                } else {
+                    SupportChangeObserverNeeded(visitLog: visitLog, onUpdate: updateSupportArray)
+                }
             }
         }
         .navigationBarTitleDisplayMode(.inline)
@@ -208,6 +244,41 @@ struct InputTileList: View {
     } // end body
     
 } // end struct
+struct SupportChangeObserverProvided: View {
+    @ObservedObject var visitLog: VisitLog
+    var onUpdate: () -> Void
+
+    var body: some View {
+        EmptyView()
+            .onChange(of: visitLog.foodAndDrinks) { onUpdate() }
+            .onChange(of: visitLog.clothes) { onUpdate() }
+            .onChange(of: visitLog.hygiene) { onUpdate() }
+            .onChange(of: visitLog.wellness) { onUpdate() }
+            .onChange(of: visitLog.medical) { onUpdate() }
+            .onChange(of: visitLog.social) { onUpdate() }
+            .onChange(of: visitLog.legal) { onUpdate() }
+            .onChange(of: visitLog.other) { onUpdate() }
+            .onChange(of: visitLog.otherNotes) { onUpdate() }
+    }
+}
+
+struct SupportChangeObserverNeeded: View {
+    @ObservedObject var visitLog: VisitLog
+    var onUpdate: () -> Void
+
+    var body: some View {
+        EmptyView()
+            .onChange(of: visitLog.furtherFoodAndDrinks) { onUpdate() }
+            .onChange(of: visitLog.furtherClothes) { onUpdate() }
+            .onChange(of: visitLog.furtherHygiene) { onUpdate() }
+            .onChange(of: visitLog.furtherWellness) { onUpdate() }
+            .onChange(of: visitLog.furtherMedical) { onUpdate() }
+            .onChange(of: visitLog.furtherSocial) { onUpdate() }
+            .onChange(of: visitLog.furtherLegal) { onUpdate() }
+            .onChange(of: visitLog.furtherOther) { onUpdate() }
+            .onChange(of: visitLog.furtherOtherNotes) { onUpdate() }
+    }
+}
 struct InputTileList_Previews: PreviewProvider {
     static var previews: some View {
         InputTileList(

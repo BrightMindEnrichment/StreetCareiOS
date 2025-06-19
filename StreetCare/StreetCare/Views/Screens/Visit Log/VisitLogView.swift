@@ -482,6 +482,7 @@ struct VisitLogView: View {
                             log.other = editedSupportProvided.other
                             log.otherNotes = editedSupportProvided.otherNotes
                             log.whatGiven = editedSupportProvided.whatGiven
+                            log = editedSupportProvided
                             navigateToEditSupportProvided = false
                         }
                     },
@@ -565,31 +566,40 @@ struct VisitLogView: View {
                     .padding(.top, 10)
 
                 Spacer()
-                
+
                 if log.isFromOldCollection {
-                Button(action: {
-                    editedRating = log.rating
-                    //editedRatingComment = log.ratingComment
-                    navigateToEditRating = true
-                }) {
-                    Image("Tab-VisitLog-Inactive")
-                        .resizable()
-                        .frame(width: 16, height: 16)
-                        .foregroundColor(.gray)
+                    Button(action: {
+                        editedRating = log.rating
+                        editedRatingComment = log.ratingNotes
+                        navigateToEditRating = true
+                    }) {
+                        Image("Tab-VisitLog-Inactive")
+                            .resizable()
+                            .frame(width: 16, height: 16)
+                            .foregroundColor(.gray)
+                    }
+                    .buttonStyle(BorderlessButtonStyle())
+                    .padding(.trailing, 20.0)
                 }
-                .buttonStyle(BorderlessButtonStyle())
-                .padding(.trailing, 20.0)
             }
-        }
 
             RatingView(rating: $log.rating, readOnly: true)
                 .screenLeft()
                 .font(.system(size: 15.0))
                 .padding(.horizontal, 5)
 
+            if !log.ratingNotes.isEmpty {
+                Text(log.ratingNotes)
+                    .screenLeft()
+                    .font(.system(size: 15.0))
+                    .padding(.horizontal, 20)
+                    .padding(.bottom, 10)
+            }
+
             Rectangle()
                 .frame(width: 350.0, height: 2.0)
                 .foregroundColor(.gray)
+
             NavigationLink(
                 destination: InputTileRate(
                     questionNumber: 1,
@@ -603,7 +613,7 @@ struct VisitLogView: View {
                         adapter.updateVisitLogField(log.id, field: "rating", value: editedRating) {
                             adapter.updateVisitLogField(log.id, field: "ratingComment", value: editedRatingComment) {
                                 log.rating = editedRating
-                                //log.ratingComment = editedRatingComment
+                                log.ratingNotes = editedRatingComment // ✅ update local model
                                 navigateToEditRating = false
                             }
                         }
@@ -896,7 +906,7 @@ struct VisitLogView: View {
     private func furtherSupportNeededSection() -> some View {
         if log.furtherFoodAndDrinks || log.furtherClothes || log.furtherHygiene || log.furtherWellness || log.furtherMedical || log.furtherSocial || log.furtherLegal || log.furtherOther {
             let needs = [
-                log.furtherFoodAndDrinks ? "Food and Drink" : nil,
+                log.furtherFoodAndDrinks ? "Food & Drinks" : nil,
                 log.furtherClothes ? "Clothes" : nil,
                 log.furtherHygiene ? "Hygiene Products" : nil,
                 log.furtherWellness ? "Wellness/Emotional Support" : nil,
@@ -915,6 +925,7 @@ struct VisitLogView: View {
                 canEdit: log.isFromOldCollection
             )
         }
+
         NavigationLink(
             destination: InputTileList(
                 questionNumber: 1,
@@ -926,6 +937,20 @@ struct VisitLogView: View {
                 visitLog: log,
                 nextAction: {
                     let adapter = VisitLogDataAdapter()
+
+                    // Construct `whatGivenFurther` array
+                    var selected: [String] = []
+                    if log.furtherFoodAndDrinks { selected.append("Food & Drinks") }
+                    if log.furtherClothes { selected.append("Clothes") }
+                    if log.furtherHygiene { selected.append("Hygiene Products") }
+                    if log.furtherWellness { selected.append("Wellness/Emotional Support") }
+                    if log.furtherMedical { selected.append("Medical Help") }
+                    if log.furtherSocial { selected.append("Social Worker/Psychiatrist") }
+                    if log.furtherLegal { selected.append("Legal/Lawyer") }
+                    if log.furtherOther {
+                        selected.append(log.furtherOtherNotes.isEmpty ? "Other" : log.furtherOtherNotes)
+                    }
+
                     let updates: [(String, Any)] = [
                         ("furtherFoodAndDrinks", log.furtherFoodAndDrinks),
                         ("furtherClothes", log.furtherClothes),
@@ -935,12 +960,15 @@ struct VisitLogView: View {
                         ("furtherSocial", log.furtherSocial),
                         ("furtherLegal", log.furtherLegal),
                         ("furtherOther", log.furtherOther),
-                        ("furtherOtherNotes", log.furtherOtherNotes)
+                        ("furtherOtherNotes", log.furtherOtherNotes),
+                        ("whatGivenFurther", selected)
                     ]
 
                     for (field, value) in updates {
                         adapter.updateVisitLogField(log.id, field: field, value: value) {
-                            // No need to reassign, since we're editing `log` directly
+                            if field == "whatGivenFurther", let value = value as? [String] {
+                                log.whatGivenFurther = value
+                            }
                             navigateToEditFurtherSupport = false
                         }
                     }

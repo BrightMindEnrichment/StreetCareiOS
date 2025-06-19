@@ -68,7 +68,7 @@ class VisitLogDataAdapter {
     }
     func updateVisitLogFields(_ logId: String, fields: [String: Any], completion: @escaping () -> Void) {
         let db = Firestore.firestore()
-        db.collection("VisitLogBook").document(logId).updateData(fields) { error in
+        db.collection("VisitLogBook_New").document(logId).updateData(fields) { error in
             if let error = error {
                 print("⚠️ Error updating fields: \(error.localizedDescription)")
             } else {
