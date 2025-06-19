@@ -21,7 +21,7 @@ struct PublicInteractionPopupView: View {
     @State private var showCustomAlert = false
     @State private var alertMessage = ""
     @State private var username: String = "Firstname Lastname"
-    @StateObject private var imageLoader = StorageManager(uid: "")
+    @EnvironmentObject var imageLoader: StorageManager
     //@State private var userRoleType: String = "Account Holder"
     
     var body: some View {
@@ -64,7 +64,7 @@ struct PublicInteractionPopupView: View {
                                 if visit.flaggedByUser == currentUser.uid || userType == "Street Care Hub Leader" {
                                     let updates: [String: Any] = [
                                         "isFlagged": false,
-                                        "flaggedByUser": user?.uid ?? ""
+                                        "flaggedByUser": ""  //Reset to empty string
                                     ]
                                     do {
                                         try await ref.updateData(updates)

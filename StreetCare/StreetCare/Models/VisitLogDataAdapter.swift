@@ -135,6 +135,7 @@ class VisitLogDataAdapter {
         userData["dateTime"] = visitLog.whenVisit
         userData["description"] = ""
         userData["isFlagged"] = false
+        userData["flaggedByUser"] = ""
         userData["itemQty"] = visitLog.itemQty
         userData["numberPeopleHelped"] = visitLog.peopleHelped
         userData["public"] = true

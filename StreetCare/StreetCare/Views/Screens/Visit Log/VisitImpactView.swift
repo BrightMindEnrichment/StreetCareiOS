@@ -37,6 +37,7 @@ struct VisitImpactView: View {
     @State private var isLoadingPopup = false
     @State private var usernameCache: [String: String] = [:]
     @State private var imageCache: [String: UIImage] = [:]
+    @StateObject private var imageLoader = StorageManager(uid: "")
     
     @State private var userType: String = ""
     @State private var popupRefresh = false
@@ -276,6 +277,7 @@ struct VisitImpactView: View {
                             delegate: self,
                             refresh: $popupRefresh
                         )
+                        .environmentObject(imageLoader)
                         .frame(maxWidth: .infinity)
                         .padding(.horizontal)
                     }
@@ -394,7 +396,7 @@ struct VisitImpactView: View {
     func preloadPopupData(for visit: VisitLog) async {
         guard let _ = Auth.auth().currentUser else { return }
         let db = Firestore.firestore()
-
+        
         // 1. Fetch from visitLogWebProd
         do {
             let doc = try await db.collection("visitLogWebProd").document(visit.id).getDocument()
@@ -405,7 +407,7 @@ struct VisitImpactView: View {
         } catch {
             print("❌ Error fetching from visitLogWebProd: \(error)")
         }
-
+        
         // 2. Fetch from users (type and username)
         do {
             let query = db.collection("users").whereField("uid", isEqualTo: visit.uid)
@@ -414,14 +416,33 @@ struct VisitImpactView: View {
                 let data = userDoc.data()
                 visit.userType = data["Type"] as? String ?? "Account Holder"
                 visit.username = data["username"] as? String ?? "Firstname Lastname"
+                visit.photoURL = data["photoUrl"] as? String ?? ""
             }
         } catch {
             print("❌ Error fetching from users: \(error)")
         }
-
+        
         // 3. Preload image from Firebase Storage (no need to wait for it to show popup)
         await MainActor.run {
-            let _ = StorageManager(uid: visit.uid).getImage()
+            if !visit.photoURL.isEmpty, let url = URL(string: visit.photoURL) {
+                URLSession.shared.dataTask(with: url) { data, _, _ in
+                    if let data = data, let image = UIImage(data: data) {
+                        DispatchQueue.main.async {
+                            // ✅ This is what your popup uses
+                            imageLoader.image = image
+                        }
+                    }
+                }.resume()
+            } else {
+                let manager = StorageManager(uid: visit.uid)
+                manager.getImage()
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                    if let img = manager.image {
+                        // ✅ Again, assign to the loader popup uses
+                        imageLoader.image = img
+                    }
+                }
+            }
         }
     }
 

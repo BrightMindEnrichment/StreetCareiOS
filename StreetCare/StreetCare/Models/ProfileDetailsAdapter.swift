@@ -117,7 +117,11 @@ class ProfileDetailsAdapter {
                         let ref = db.collection(self.collectionName).document(document.documentID)
                         ref.setData(["Type": "Account Holder"], merge: true)
                         self.profile.userType = "Account Holder"
-                    }                    
+                    }
+                    if let photoUrl = document["photoUrl"] as? String {
+                        self.profile.photoURL = photoUrl
+                        print("Photo URL retrieved: \(photoUrl)")
+                    }
                 }
             }
 

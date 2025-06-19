@@ -16,6 +16,7 @@ class VisitLog: ObservableObject, Identifiable {
     @Published var username: String = "Firstname Lastname"
     @Published var userType: String = "Account Holder"
     @Published var image: UIImage? = nil
+    @Published var photoURL: String = ""
     
     @Published var whereVisit = ""
     @Published var street = ""
