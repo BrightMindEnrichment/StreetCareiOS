@@ -14,6 +14,7 @@ import CoreLocation
 
 protocol VisitLogDataAdapterProtocol {
     func visitLogDataRefreshed(_ logs: [VisitLog])
+    func visitLogDataRefreshedNew(_ logs: [VisitLog]) 
 }
 
 
@@ -24,84 +25,145 @@ class VisitLogDataAdapter {
     
     var visitLogs = [VisitLog]()
     var delegate: VisitLogDataAdapterProtocol?
-    var publishedLogIDs = Set<String>()
-    var pendingLogIDs = Set<String>()
-    var rejectedLogIDs = Set<String>()
-    
     
     func resetLogs() {
         visitLogs = [VisitLog]()
     }
     
-    func addVisitLog(_ visitLog: VisitLog) {
+    func updateVisitLogField(_ logId: String, field: String, value: Any, completion: @escaping () -> Void) {
+        let db = Firestore.firestore()
         
+        let primaryRef = db.collection("VisitLogBook").document(logId)
+        let fallbackRef = db.collection("VisitLogBook_New").document(logId)
+        
+        // Try updating in the primary collection
+        primaryRef.getDocument { docSnapshot, error in
+            if let doc = docSnapshot, doc.exists {
+                primaryRef.updateData([field: value]) { error in
+                    if let error = error {
+                        print("⚠️ Error updating \(field) in VisitLogBook: \(error.localizedDescription)")
+                    } else {
+                        print("✅ \(field) updated successfully in VisitLogBook.")
+                        completion()
+                    }
+                }
+            } else {
+                // Try the fallback collection
+                fallbackRef.getDocument { fallbackDocSnapshot, _ in
+                    if let fallbackDoc = fallbackDocSnapshot, fallbackDoc.exists {
+                        fallbackRef.updateData([field: value]) { error in
+                            if let error = error {
+                                print("⚠️ Error updating \(field) in VisitLogBook_New: \(error.localizedDescription)")
+                            } else {
+                                print("✅ \(field) updated successfully in VisitLogBook_New.")
+                                completion()
+                            }
+                        }
+                    } else {
+                        print("❌ Document \(logId) not found in either collection.")
+                    }
+                }
+            }
+        }
+    }
+    func updateVisitLogFields(_ logId: String, fields: [String: Any], completion: @escaping () -> Void) {
+        let db = Firestore.firestore()
+        db.collection("VisitLogBook_New").document(logId).updateData(fields) { error in
+            if let error = error {
+                print("⚠️ Error updating fields: \(error.localizedDescription)")
+            } else {
+                print("✅ All fields updated successfully.")
+                completion()
+            }
+        }
+    }
+    func addVisitLog(_ visitLog: VisitLog) {
         guard let user = Auth.auth().currentUser else {
-            print("no user?")
+            print("No user?")
             return
         }
+
         let collectionName = "VisitLogBook_New"
-        let settings = FirestoreSettings()
-        
-        Firestore.firestore().settings = settings
         let db = Firestore.firestore()
-        let docRef = db.collection("VisitLogBook_New").document()
-        visitLog.id = docRef.documentID
-        
-        var userData = [String: Any]()
-        userData["whereVisit"] = visitLog.whereVisit
-        userData["whenVisit"] = visitLog.whenVisit
-        userData["peopleHelped"] = visitLog.peopleHelped
-        userData["foodAndDrinks"] = visitLog.foodAndDrinks
-        userData["clothes"] = visitLog.clothes
-        userData["hygiene"] = visitLog.hygine
-        userData["wellness"] = visitLog.wellness
-        userData["medical"] = visitLog.medical
-        userData["social"] = visitLog.socialworker
-        userData["legal"] = visitLog.legal
-        userData["other"] = visitLog.other
-        userData["otherNotes"] = visitLog.otherNotes
-        userData["rating"] = visitLog.rating
-        userData["ratingNotes"] = visitLog.ratingNotes
-        userData["durationHours"] = visitLog.durationHours
-        userData["durationMinutes"] = visitLog.durationMinutes
-        userData["numberOfHelpers"] = visitLog.numberOfHelpers
-        userData["numberOfHelpersComment"] = ""
-        userData["volunteerAgain"] = visitLog.volunteerAgain
-        userData["peopleNeedFurtherHelp"] = visitLog.peopleNeedFurtherHelp
-        userData["peopleNeedFurtherHelpLocation"] = visitLog.peopleNeedFurtherHelpLocation
-        userData["peopleNeedFurtherHelpComment"] = ""
-        userData["furtherFoodAndDrinks"] = visitLog.furtherfoodAndDrinks
-        userData["furtherClothes"] = visitLog.furtherClothes
-        userData["furtherHygiene"] = visitLog.furtherHygine
-        userData["furtherWellness"] = visitLog.furtherWellness
-        userData["furtherMedical"] = visitLog.furthermedical
-        userData["furtherSocial"] = visitLog.furthersocialworker
-        userData["furtherLegal"] = visitLog.furtherlegal
-        userData["furtherOther"] = visitLog.furtherOther
-        userData["furtherOtherNotes"] = visitLog.furtherOtherNotes
-        userData["whatGiven"] = visitLog.whatGiven
-        userData["whatGivenFurther"] = []
-        userData["itemQty"] = visitLog.itemQty
-        userData["itemQtyDescription"] = ""
-        userData["locationDescription"] = ""
-        userData["peopleHelpedDescription"] = ""
-        userData["followUpWhenVisit"] = visitLog.followUpWhenVisit
-        userData["futureNotes"] = ""
-        userData["lastEdited"] = Date()
-        userData["type"] = "iOS"
-        userData["timeStamp"] = Date()
-        userData["uid"] = user.uid
-        userData["isPublic"] = false
-        userData["isFlagged"] = false
-        userData["flaggedByUser"] = ""
-        
-        // ✅ Now use the assigned docRef so `visitLog.id` matches the saved doc
-        docRef.setData(userData) { err in
-            if let err = err {
-                // don't bother user with this error
-                print(err.localizedDescription)
+
+        var userData: [String: Any] = [
+            "whenVisit": Timestamp(date: visitLog.whenVisit),
+            "whereVisit": visitLog.whereVisit,
+            "locationDescription": visitLog.locationDescription,
+            "peopleHelped": visitLog.peopleHelped,
+            "peopleHelpedDescription": visitLog.peopleHelpedDescription,
+            "foodAndDrinks": visitLog.foodAndDrinks,
+            "clothes": visitLog.clothes,
+            "hygiene": visitLog.hygiene,
+            "wellness": visitLog.wellness,
+            "medical": visitLog.medical,
+            "social": visitLog.social,
+            "legal": visitLog.legal,
+            "other": visitLog.other,
+            //"whatGiven": visitLog.whatGiven,
+            "whatGiven": [
+                visitLog.foodAndDrinks ? "Food and Drinks" : nil,
+                visitLog.clothes ? "Clothes" : nil,
+                visitLog.hygiene ? "Hygiene" : nil,
+                visitLog.wellness ? "Wellness" : nil,
+                visitLog.medical ? "Medical" : nil,
+                visitLog.social ? "Social" : nil,
+                visitLog.legal ? "Legal" : nil,
+                visitLog.other ? "Other" : nil
+            ].compactMap { $0 },
+            "otherNotes": visitLog.otherNotes,
+            "itemQty": visitLog.itemQty,
+            "itemQtyDescription": visitLog.itemQtyDescription,
+            "rating": visitLog.rating,
+            "ratingNotes": visitLog.ratingNotes,
+            "durationHours": visitLog.durationHours,
+            "durationMinutes": visitLog.durationMinutes,
+            "numberOfHelpers": visitLog.numberOfHelpers,
+            "numberOfHelpersComment": visitLog.numberOfHelpersComment,
+            "peopleNeedFurtherHelp": visitLog.peopleNeedFurtherHelp,
+            "peopleNeedFurtherHelpComment": visitLog.peopleNeedFurtherHelpComment,
+            "peopleNeedFurtherHelpLocation": visitLog.peopleNeedFurtherHelpLocation,
+            "furtherFoodAndDrinks": visitLog.furtherFoodAndDrinks,
+            "furtherClothes": visitLog.furtherClothes,
+            "furtherHygiene": visitLog.furtherHygiene,
+            "furtherWellness": visitLog.furtherWellness,
+            "furtherMedical": visitLog.furtherMedical,
+            "furtherSocial": visitLog.furtherSocial,
+            "furtherLegal": visitLog.furtherLegal,
+            "furtherOther": visitLog.furtherOther,
+            "furtherOtherNotes": visitLog.furtherOtherNotes,
+            //"whatGivenFurther": visitLog.whatGivenFurther,
+            "whatGivenFurther": [
+                visitLog.furtherFoodAndDrinks ? "Food and Drinks" : nil,
+                visitLog.furtherClothes ? "Clothes" : nil,
+                visitLog.furtherHygiene ? "Hygiene" : nil,
+                visitLog.furtherWellness ? "Wellness" : nil,
+                visitLog.furtherMedical ? "Medical" : nil,
+                visitLog.furtherSocial ? "Social" : nil,
+                visitLog.furtherLegal ? "Legal" : nil,
+                visitLog.furtherOther ? "Other" : nil
+            ].compactMap { $0 },
+            "followUpWhenVisit": Timestamp(date: visitLog.followUpWhenVisit),
+            "futureNotes": visitLog.futureNotes,
+            "volunteerAgain": visitLog.volunteerAgain,
+            "lastEdited": Timestamp(date: Date()),
+            "type": visitLog.type,
+            "timeStamp": Timestamp(date: visitLog.timeStamp),
+            "uid": user.uid,
+            "isPublic": visitLog.isPublic,
+            "isFlagged": visitLog.isFlagged,
+            "flaggedByUser": visitLog.flaggedByUser,
+            "status": visitLog.status
+        ]
+
+        print("User UID:", user.uid)
+        print("VisitLog UID:", visitLog.uid)
+        print("userData keys:", userData.keys.sorted())
+        db.collection(collectionName).document().setData(userData) { error in
+            if let error = error {
+                print("⚠️ Error writing VisitLog: \(error.localizedDescription)")
             } else {
-                print("Document successfully written in VisitLogBook!")
+                print("✅ Document successfully written to \(collectionName)!")
             }
         }
     }
@@ -119,19 +181,9 @@ class VisitLogDataAdapter {
         
         Firestore.firestore().settings = settings
         let db = Firestore.firestore()
-        let logId = visitLog.id
-        let parts = visitLog.whereVisit.split(separator: ",").map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
-
-        if parts.count >= 4 {
-            visitLog.street = parts[0]
-            visitLog.city = parts[1]
-            visitLog.stateAbbv = parts[2]
-            visitLog.state = fullStateName(from: visitLog.stateAbbv)
-            visitLog.zipcode = parts[3]
-        }
         
         var userData = [String: Any]()
-        //userData["whereVisit"] = visitLog.whereVisit
+        userData["city"] = visitLog.city
         userData["dateTime"] = visitLog.whenVisit
         userData["description"] = ""
         userData["isFlagged"] = false
@@ -139,14 +191,14 @@ class VisitLogDataAdapter {
         userData["numberPeopleHelped"] = visitLog.peopleHelped
         userData["public"] = true
         userData["rating"] = visitLog.rating
-        userData["status"] = "pending"
-        userData["uid"] = uid
-        userData["whatGiven"] = visitLog.whatGiven
-        userData["city"] = visitLog.city
         userData["state"] = visitLog.state
         userData["stateAbbv"] = visitLog.stateAbbv
+        userData["status"] = "pending"
         userData["street"] = visitLog.street
+        userData["uid"] = uid
+        userData["whatGiven"] = visitLog.whatGiven
         userData["zipcode"] = visitLog.zipcode
+        
         
         //if visitLog.location.latitude != 0 {
         //userData["latitude"] = visitLog.location.latitude
@@ -156,27 +208,16 @@ class VisitLogDataAdapter {
         //userData["timestamp"] = Date()
         //userData["uid"] = user.uid
         
-        db.collection("visitLogWebProd").document(logId).setData(userData) { err in
+        db.collection(collectionName).document().setData(userData) { err in
             if let err = err {
                 // don't bother user with this error
                 print(err.localizedDescription)
             } else {
                 print("Document successfully written in visitLogWebProd!")
-                self.refreshWebProd()
             }
         }
-        
-        // NEW: Update VisitLogBook with status = "published"
-        /*db.collection("VisitLogBook").document(logId).updateData([
-         "status": "published"
-         ]) { error in
-         if let error = error {
-         print("Error updating VisitLogBook status: \(error.localizedDescription)")
-         } else {
-         print("VisitLogBook log also marked as published!")
-         }
-         }*/
     }
+  
     func fullStateName(from abbreviation: String) -> String {
         let states = [
             "AL": "Alabama", "AK": "Alaska", "AZ": "Arizona", "AR": "Arkansas", "CA": "California",
@@ -194,6 +235,7 @@ class VisitLogDataAdapter {
         return states[abbreviation.uppercased()] ?? abbreviation
     }
     
+    
     func deleteVisitLog(_ logId: String, completion: @escaping () -> ()) {
         
         Firestore.firestore().settings = FirestoreSettings()
@@ -202,13 +244,14 @@ class VisitLogDataAdapter {
         db.collection("VisitLogBook").document(logId).delete { _ in
             completion()
         }
-        db.collection("VisitLogBook_New").document(logId).delete { _ in
-                completion()
-        }
         db.collection("visitLogWebProd").document(logId).delete { _ in
             completion()
         }
+        db.collection("VisitLogBook_New").document(logId).delete { _ in
+            completion()
+        }
     }
+  
     func refreshWebProd() {
         guard let user = Auth.auth().currentUser else { return }
         
@@ -254,133 +297,102 @@ class VisitLogDataAdapter {
                 self.delegate?.visitLogDataRefreshed(self.visitLogs)
             }
     }
-    /*func refreshWebProd() {
-     guard let user = Auth.auth().currentUser else {
-     return
-     }
-     
-     let settings = FirestoreSettings()
-     Firestore.firestore().settings = settings
-     let db = Firestore.firestore()
-     
-     db.collection("visitLogWebProd").whereField("uid", isEqualTo: user.uid).getDocuments { querySnapshot, error in
-     if let error = error {
-     print(error.localizedDescription)
-     return
-     }
-     
-     guard let documents = querySnapshot?.documents else {
-     return
-     }
-     
-     for document in documents {
-     let webProdLogID = document.documentID
-     
-     // ✅ Update the isPublished flag on existing VisitLogBook logs
-     if let matchingIndex = self.visitLogs.firstIndex(where: { $0.id == webProdLogID }) {
-     self.visitLogs[matchingIndex].isPublished = true
-     print("Matched & marked published: \(webProdLogID)")
-     } else {
-     print("No match found in VisitLogBook for: \(webProdLogID)")
-     }
-     }
-     
-     // Notify UI to refresh
-     self.delegate?.visitLogDataRefreshed(self.visitLogs)
-     }
-     
-     /*let _ = db.collection("visitLogWebProd").whereField("uid", isEqualTo: user.uid).getDocuments { querySnapshot, error in
-      
-      if let error = error {
-      print(error.localizedDescription)
-      } else {
-      
-      // Clear out the existing logs
-      self.visitLogs.removeAll()
-      
-      for document in querySnapshot!.documents {
-      let id = document.documentID
-      
-      if let index = self.visitLogs.firstIndex(where: { $0.id == id }) {
-      self.visitLogs[index].isPublished = true
-      }
-      
-      if let city = document["city"] as? String {
-      log.city = city
-      }
-      
-      if let dateTime = document["dateTime"] as? Timestamp {
-      log.whenVisit = dateTime.dateValue()
-      }
-      
-      if let description = document["description"] as? String {
-      log.otherNotes = description
-      }
-      
-      if let isFlagged = document["isFlagged"] as? Bool {
-      log.other = isFlagged
-      }
-      
-      if let itemQty = document["itemQty"] as? Int {
-      log.itemQty = itemQty
-      }
-      
-      if let numberPeopleHelped = document["numberPeopleHelped"] as? Int {
-      log.peopleHelped = numberPeopleHelped
-      }
-      
-      if let publicStatus = document["public"] as? Bool {
-      log.other = publicStatus
-      }
-      
-      if let rating = document["rating"] as? Int {
-      log.rating = rating
-      }
-      
-      if let state = document["state"] as? String {
-      log.state = state
-      }
-      
-      if let stateAbbv = document["stateAbbv"] as? String {
-      log.stateAbbv = stateAbbv
-      }
-      
-      if let status = document["status"] as? String {
-      log.status = status
-      }
-      
-      if let street = document["street"] as? String {
-      log.street = street
-      }
-      
-      if let zipcode = document["zipcode"] as? String {
-      log.zipcode = zipcode
-      }
-      
-      // ** Full Mapping of `whatGiven` **
-      if let whatGiven = document["whatGiven"] as? [String] {
-      log.foodAndDrinks = whatGiven.contains("Food and Drink")
-      log.clothes = whatGiven.contains("Clothes")
-      log.hygine = whatGiven.contains("Hygiene Products")
-      log.wellness = whatGiven.contains("Wellness/ Emotional Support")
-      log.medical = whatGiven.contains("Medical Help")
-      log.socialworker = whatGiven.contains("Social Worker /Psychiatrist")
-      log.legal = whatGiven.contains("Legal/Lawyer")
-      
-      // If "Other" category exists, assign `other` to true
-      if let otherItem = whatGiven.first(where: { !["Food and Drink", "Clothes", "Hygiene Products", "Wellness/ Emotional Support", "Medical Help", "Social Worker /Psychiatrist", "Legal/Lawyer"].contains($0) }) {
-      log.other = true
-      log.otherNotes = otherItem  // Store custom other item description
-      }
-      }
-      
-      self.visitLogs.append(log)
-      }
-      }
-      
-      self.delegate?.visitLogDataRefreshed(self.visitLogs)
-      }*/
-     }*/
+
+    func refresh_new() {
+        print("📥 refresh_new called")
+        guard let user = Auth.auth().currentUser else {
+            self.visitLogs = [VisitLog]()
+            self.delegate?.visitLogDataRefreshed(self.visitLogs)
+            return
+        }
+
+        let db = Firestore.firestore()
+        db.collection("VisitLogBook_New").whereField("uid", isEqualTo: user.uid).getDocuments {
+            querySnapshot, error in
+            if let error = error {
+                print("⚠️", error.localizedDescription)
+            } else {
+                self.visitLogs.removeAll()
+
+                for document in querySnapshot!.documents {
+                    let log = VisitLog(id: document.documentID)
+
+                    log.whenVisit = (document["whenVisit"] as? Timestamp)?.dateValue() ?? Date()
+                    log.whereVisit = document["whereVisit"] as? String ?? ""
+                    log.locationDescription = document["locationDescription"] as? String ?? ""
+                    log.peopleHelped = document["peopleHelped"] as? Int ?? 0
+                    log.peopleHelpedDescription = document["peopleHelpedDescription"] as? String ?? ""
+
+                    log.foodAndDrinks = document["foodAndDrinks"] as? Bool ?? false
+                    log.clothes = document["clothes"] as? Bool ?? false
+                    log.hygiene = document["hygiene"] as? Bool ?? false
+                    log.wellness = document["wellness"] as? Bool ?? false
+                    log.medical = document["medical"] as? Bool ?? false
+                    log.social = document["social"] as? Bool ?? false
+                    log.legal = document["legal"] as? Bool ?? false
+                    log.other = document["other"] as? Bool ?? false
+                    log.whatGiven = document["whatGiven"] as? [String] ?? []
+                    log.otherNotes = document["otherNotes"] as? String ?? ""
+
+                    log.itemQty = document["itemQty"] as? Int ?? 0
+                    log.itemQtyDescription = document["itemQtyDescription"] as? String ?? ""
+
+                    log.rating = document["rating"] as? Int ?? 0
+                    log.ratingNotes = document["ratingNotes"] as? String ?? ""
+
+                    log.durationHours = document["durationHours"] as? Int ?? -1
+                    log.durationMinutes = document["durationMinutes"] as? Int ?? -1
+
+                    log.numberOfHelpers = document["numberOfHelpers"] as? Int ?? 0
+                    log.numberOfHelpersComment = document["numberOfHelpersComment"] as? String ?? ""
+
+                    log.peopleNeedFurtherHelp = document["peopleNeedFurtherHelp"] as? Int ?? 0
+                    log.peopleNeedFurtherHelpComment = document["peopleNeedFurtherHelpComment"] as? String ?? ""
+                    log.peopleNeedFurtherHelpLocation = document["peopleNeedFurtherHelpLocation"] as? String ?? ""
+
+                    log.furtherFoodAndDrinks = document["furtherFoodAndDrinks"] as? Bool ?? false
+                    log.furtherClothes = document["furtherClothes"] as? Bool ?? false
+                    log.furtherHygiene = document["furtherHygiene"] as? Bool ?? false
+                    log.furtherWellness = document["furtherWellness"] as? Bool ?? false
+                    log.furtherMedical = document["furtherMedical"] as? Bool ?? false
+                    log.furtherSocial = document["furtherSocial"] as? Bool ?? false
+                    log.furtherLegal = document["furtherLegal"] as? Bool ?? false
+                    log.furtherOther = document["furtherOther"] as? Bool ?? false
+                    log.furtherOtherNotes = document["furtherOtherNotes"] as? String ?? ""
+                    log.whatGivenFurther = document["whatGivenFurther"] as? [String] ?? []
+
+                    log.followUpWhenVisit = (document["followUpWhenVisit"] as? Timestamp)?.dateValue() ?? Date()
+                    log.futureNotes = document["futureNotes"] as? String ?? ""
+                    log.volunteerAgain = document["volunteerAgain"] as? String ?? ""
+
+                    log.lastEdited = (document["lastEdited"] as? Timestamp)?.dateValue() ?? Date()
+                    log.timeStamp = (document["timeStamp"] as? Timestamp)?.dateValue() ?? Date()
+
+                    log.type = document["type"] as? String ?? ""
+                    log.uid = document["uid"] as? String ?? ""
+                    log.isPublic = document["isPublic"] as? Bool ?? false
+                    log.isFlagged = document["isFlagged"] as? Bool ?? false
+                    log.flaggedByUser = document["flaggedByUser"] as? String ?? ""
+                    log.status = document["status"] as? String ?? ""
+
+                    if let lat = document["latitude"] as? Double,
+                       let lon = document["longitude"] as? Double {
+                        log.location = CLLocationCoordinate2D(latitude: lat, longitude: lon)
+                    }
+                    print("✅ Loaded log from VisitLogBook_New with id:", log.id)
+
+                    self.visitLogs.append(log)
+                }
+            }
+            if let snapshot = querySnapshot {
+                print("📄 Document count: \(snapshot.documents.count)")
+                for doc in snapshot.documents {
+                    print("📌 Doc ID: \(doc.documentID), Data: \(doc.data())")
+                }
+            }
+            self.delegate?.visitLogDataRefreshedNew(self.visitLogs)
+        }
+    }
     
     func refresh() {
         guard let user = Auth.auth().currentUser else {
@@ -393,203 +405,72 @@ class VisitLogDataAdapter {
         Firestore.firestore().settings = settings
         let db = Firestore.firestore()
         
-        self.visitLogs.removeAll()
-        let group = DispatchGroup()
-        
-        // Fetch from VisitLogBook (old)
-        group.enter()
         db.collection("VisitLogBook").whereField("uid", isEqualTo: user.uid).getDocuments { querySnapshot, error in
             if let error = error {
-                print(error.localizedDescription)
+                print("⚠️", error.localizedDescription)
             } else {
+                self.visitLogs.removeAll()
+                
                 for document in querySnapshot!.documents {
                     let log = VisitLog(id: document.documentID)
                     
-                    if let whereVisit = document["whereVisit"] as? String {
-                        log.whereVisit = whereVisit
-                    }
-                    if let latitude = document["latitude"] as? Double, let longitude = document["longitude"] as? Double {
-                        log.location = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-                    }
-                    if let whenVisit = document["whenVisit"] as? Timestamp {
-                        log.whenVisit = whenVisit.dateValue()
-                    }
-                    if let followUpWhenVisit = document["followUpWhenVisit"] as? Timestamp {
-                        log.followUpWhenVisit = followUpWhenVisit.dateValue()
-                    }
-                    if let peopleHelped = document["peopleHelped"] as? Int {
-                        log.peopleHelped = peopleHelped
-                    }
-                    if let foodAndDrinks = document["foodAndDrinks"] as? Bool {
-                        log.foodAndDrinks = foodAndDrinks
-                    }
-                    if let clothes = document["clothes"] as? Bool {
-                        log.clothes = clothes
-                    }
-                    if let hygine = document["hygine"] as? Bool {
-                        log.hygine = hygine
-                    }
-                    if let wellness = document["wellness"] as? Bool {
-                        log.wellness = wellness
-                    }
-                    if let other = document["other"] as? Bool {
-                        log.other = other
-                    }
-                    if let otherNotes = document["otherNotes"] as? String {
-                        log.otherNotes = otherNotes
-                    }
-                    if let rating = document["rating"] as? Int {
-                        log.rating = rating
-                    }
-                    if let ratingNotes = document["ratingNotes"] as? String {
-                        log.ratingNotes = ratingNotes
-                    }
-                    if let durationHours = document["durationHours"] as? Int {
-                        log.durationHours = durationHours
-                    }
-                    if let durationMinutes = document["durationMinutes"] as? Int {
-                        log.durationMinutes = durationMinutes
-                    }
-                    if let numberOfHelpers = document["numberOfHelpers"] as? Int {
-                        log.numberOfHelpers = numberOfHelpers
-                    }
-                    if let volunteerAgain = document["volunteerAgain"] as? Int {
-                        log.volunteerAgain = volunteerAgain
-                    }
-                    if let peopleNeedFurtherHelp = document["peopleNeedFurtherHelp"] as? Int {
-                        log.peopleNeedFurtherHelp = peopleNeedFurtherHelp
-                    }
-                    if let peopleNeedFurtherHelpLocation = document["peopleNeedFurtherHelpLocation"] as? String {
-                        log.peopleNeedFurtherHelpLocation = peopleNeedFurtherHelpLocation
-                    }
-                    if let furtherFoodAndDrinks = document["furtherFoodAndDrinks"] as? Bool {
-                        log.furtherfoodAndDrinks = furtherFoodAndDrinks
-                    }
-                    if let furtherClothes = document["furtherClothes"] as? Bool {
-                        log.furtherClothes = furtherClothes
-                    }
-                    if let furtherHygine = document["furtherHygine"] as? Bool {
-                        log.furtherHygine = furtherHygine
-                    }
-                    if let furtherWellness = document["furtherWellness"] as? Bool {
-                        log.furtherWellness = furtherWellness
-                    }
-                    if let furthermedical = document["furthermedical"] as? Bool {
-                        log.furthermedical = furthermedical
-                    }
-                    if let furthersocialworker = document["furthersocialworker"] as? Bool {
-                        log.furthersocialworker = furthersocialworker
-                    }
-                    if let furtherlegal = document["furtherlegal"] as? Bool {
-                        log.furtherlegal = furtherlegal
-                    }
-                    if let furtherOtherNotes = document["furtherOtherNotes"] as? String {
-                        log.furtherOtherNotes = furtherOtherNotes
-                    }
-                    self.visitLogs.append(log)
-                }
-            }
-            group.leave()
-        }
-        
-        // Fetch from visitlogbook_New (new)
-        group.enter()
-        db.collection("VisitLogBook_New").whereField("uid", isEqualTo: user.uid).getDocuments { querySnapshot, error in
-            if let error = error {
-                print(error.localizedDescription)
-            } else {
-                for document in querySnapshot!.documents {
-                    let log = VisitLog(id: document.documentID)
+                    log.whereVisit = document["whereVisit"] as? String ?? ""
+                    log.locationDescription = document["locationDescription"] as? String ?? ""
+                    log.peopleHelped = document["peopleHelped"] as? Int ?? 0
+                    log.peopleHelpedDescription = document["peopleHelpedDescription"] as? String ?? ""
+                    log.foodAndDrinks = document["foodAndDrinks"] as? Bool ?? false
+                    log.clothes = document["clothes"] as? Bool ?? false
+                    log.hygiene = document["hygiene"] as? Bool ?? false
+                    log.wellness = document["wellness"] as? Bool ?? false
+                    log.medical = document["medical"] as? Bool ?? false
+                    log.social = document["social"] as? Bool ?? false
+                    log.legal = document["legal"] as? Bool ?? false
+                    log.other = document["other"] as? Bool ?? false
+                    log.otherNotes = document["otherNotes"] as? String ?? ""
+                    log.itemQty = document["itemQty"] as? Int ?? 0
+                    log.itemQtyDescription = document["itemQtyDescription"] as? String ?? ""
+                    log.rating = document["rating"] as? Int ?? 0
+                    log.ratingNotes = document["ratingNotes"] as? String ?? ""
+                    log.durationHours = document["durationHours"] as? Int ?? -1
+                    log.durationMinutes = document["durationMinutes"] as? Int ?? -1
+                    log.numberOfHelpers = document["numberOfHelpers"] as? Int ?? 0
+                    log.numberOfHelpersComment = document["numberOfHelpersComment"] as? String ?? ""
+                    log.peopleNeedFurtherHelp = document["peopleNeedFurtherHelp"] as? Int ?? 0
+                    log.peopleNeedFurtherHelpComment = document["peopleNeedFurtherHelpComment"] as? String ?? ""
+                    log.peopleNeedFurtherHelpLocation = document["peopleNeedFurtherHelpLocation"] as? String ?? ""
+                    log.furtherFoodAndDrinks = document["furtherFoodAndDrinks"] as? Bool ?? false
+                    log.furtherClothes = document["furtherClothes"] as? Bool ?? false
+                    log.furtherHygiene = document["furtherHygiene"] as? Bool ?? false
+                    log.furtherWellness = document["furtherWellness"] as? Bool ?? false
+                    log.furtherMedical = document["furtherMedical"] as? Bool ?? false
+                    log.furtherSocial = document["furtherSocial"] as? Bool ?? false
+                    log.furtherLegal = document["furtherLegal"] as? Bool ?? false
+                    log.furtherOther = document["furtherOther"] as? Bool ?? false
+                    log.furtherOtherNotes = document["furtherOtherNotes"] as? String ?? ""
+                    log.type = document["type"] as? String ?? ""
+                    log.status = document["status"] as? String ?? ""
+                    log.flaggedByUser = document["flaggedByUser"] as? String ?? ""
                     
-                    if let whereVisit = document["whereVisit"] as? String {
-                        log.whereVisit = whereVisit
-                    }
-                    if let latitude = document["latitude"] as? Double, let longitude = document["longitude"] as? Double {
-                        log.location = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
-                    }
+                    log.volunteerAgain = document["volunteerAgain"] as? String ?? ""
+                    log.isFromOldCollection = false
+                    
                     if let whenVisit = document["whenVisit"] as? Timestamp {
                         log.whenVisit = whenVisit.dateValue()
                     }
-                    if let followUpWhenVisit = document["followUpWhenVisit"] as? Timestamp {
-                        log.followUpWhenVisit = followUpWhenVisit.dateValue()
+                    if let followUp = document["followUpWhenVisit"] as? Timestamp {
+                        log.followUpWhenVisit = followUp.dateValue()
                     }
-                    if let peopleHelped = document["peopleHelped"] as? Int {
-                        log.peopleHelped = peopleHelped
+                    
+                    if let latitude = document["latitude"] as? Double,
+                       let longitude = document["longitude"] as? Double {
+                        log.location = CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
                     }
-                    if let foodAndDrinks = document["foodAndDrinks"] as? Bool {
-                        log.foodAndDrinks = foodAndDrinks
-                    }
-                    if let clothes = document["clothes"] as? Bool {
-                        log.clothes = clothes
-                    }
-                    if let hygine = document["hygine"] as? Bool {
-                        log.hygine = hygine
-                    }
-                    if let wellness = document["wellness"] as? Bool {
-                        log.wellness = wellness
-                    }
-                    if let other = document["other"] as? Bool {
-                        log.other = other
-                    }
-                    if let otherNotes = document["otherNotes"] as? String {
-                        log.otherNotes = otherNotes
-                    }
-                    if let rating = document["rating"] as? Int {
-                        log.rating = rating
-                    }
-                    if let ratingNotes = document["ratingNotes"] as? String {
-                        log.ratingNotes = ratingNotes
-                    }
-                    if let durationHours = document["durationHours"] as? Int {
-                        log.durationHours = durationHours
-                    }
-                    if let durationMinutes = document["durationMinutes"] as? Int {
-                        log.durationMinutes = durationMinutes
-                    }
-                    if let numberOfHelpers = document["numberOfHelpers"] as? Int {
-                        log.numberOfHelpers = numberOfHelpers
-                    }
-                    if let volunteerAgain = document["volunteerAgain"] as? Int {
-                        log.volunteerAgain = volunteerAgain
-                    }
-                    if let peopleNeedFurtherHelp = document["peopleNeedFurtherHelp"] as? Int {
-                        log.peopleNeedFurtherHelp = peopleNeedFurtherHelp
-                    }
-                    if let peopleNeedFurtherHelpLocation = document["peopleNeedFurtherHelpLocation"] as? String {
-                        log.peopleNeedFurtherHelpLocation = peopleNeedFurtherHelpLocation
-                    }
-                    if let furtherFoodAndDrinks = document["furtherFoodAndDrinks"] as? Bool {
-                        log.furtherfoodAndDrinks = furtherFoodAndDrinks
-                    }
-                    if let furtherClothes = document["furtherClothes"] as? Bool {
-                        log.furtherClothes = furtherClothes
-                    }
-                    if let furtherHygine = document["furtherHygine"] as? Bool {
-                        log.furtherHygine = furtherHygine
-                    }
-                    if let furtherWellness = document["furtherWellness"] as? Bool {
-                        log.furtherWellness = furtherWellness
-                    }
-                    if let furthermedical = document["furthermedical"] as? Bool {
-                        log.furthermedical = furthermedical
-                    }
-                    if let furthersocialworker = document["furthersocialworker"] as? Bool {
-                        log.furthersocialworker = furthersocialworker
-                    }
-                    if let furtherlegal = document["furtherlegal"] as? Bool {
-                        log.furtherlegal = furtherlegal
-                    }
-                    if let furtherOtherNotes = document["furtherOtherNotes"] as? String {
-                        log.furtherOtherNotes = furtherOtherNotes
-                    }
+                    
                     self.visitLogs.append(log)
                 }
             }
-            group.leave()
-        }
-        
-        group.notify(queue: .main) {
+            
             self.delegate?.visitLogDataRefreshed(self.visitLogs)
         }
-    }// end class
+    }
 }

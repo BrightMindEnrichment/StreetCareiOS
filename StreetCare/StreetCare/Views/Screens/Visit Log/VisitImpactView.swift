@@ -369,7 +369,19 @@ struct VisitImpactView: View {
             if visitLog.wellness {
                 newDonations += 1
             }
-
+                                               
+            if visitLog.medical {
+                newDonations += 1
+            }
+            
+            if visitLog.socialworker {
+                newDonations += 1
+            }
+            
+            if visitLog.legal {
+                newDonations += 1
+            }
+                                               
             if visitLog.other {
                 newDonations += 1
             }

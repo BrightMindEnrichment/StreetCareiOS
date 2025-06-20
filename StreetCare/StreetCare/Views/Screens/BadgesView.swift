@@ -81,7 +81,7 @@ struct BadgesView: View {
                 newDonations += 1
             }
 
-            if visitLog.hygine {
+            if visitLog.hygiene {
                 newDonations += 1
             }
             
@@ -102,6 +102,11 @@ extension BadgesView: VisitLogDataAdapterProtocol {
     func visitLogDataRefreshed(_ logs: [VisitLog]) {
         self.history = logs
         self.updateCounts()
+    }
+    func visitLogDataRefreshedNew(_ logs: [VisitLog]) {
+        self.history.append(contentsOf: logs)
+        self.updateCounts()
+        
     }
 }
 
