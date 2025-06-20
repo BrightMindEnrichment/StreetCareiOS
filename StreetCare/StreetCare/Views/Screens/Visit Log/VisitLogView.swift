@@ -289,6 +289,7 @@ struct VisitLogView: View {
                 showProgressBar: false,
                 buttonMode: .update,
                 datetimeValue: $editedInteractionDate,
+                convertedDate: $editedInteractionDate,
                 nextAction: {
                     let adapter = VisitLogDataAdapter()
                     adapter.updateVisitLogField(log.id, field: "whenVisit", value: editedInteractionDate) {
@@ -844,6 +845,7 @@ struct VisitLogView: View {
                     showProgressBar: false,
                     buttonMode: .update,
                     datetimeValue: $editedFollowUpDate,
+                    convertedDate: $editedFollowUpDate,
                     nextAction: {
                         let adapter = VisitLogDataAdapter()
                         adapter.updateVisitLogField(log.id, field: "followUpWhenVisit", value: editedFollowUpDate) {

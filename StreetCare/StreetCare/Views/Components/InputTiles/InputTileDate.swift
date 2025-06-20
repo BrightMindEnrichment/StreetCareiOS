@@ -276,24 +276,24 @@ struct InputTileDate: View {
             )
         }
         .frame(width: size.width, height: size.height)
-
+        
         if showProgressBar {
             SegmentedProgressBar(
                 totalSegments: totalQuestions,
                 filledSegments: questionNumber,
                 tileWidth: 350
             )
-
+            
             Text("Progress")
                 .font(.footnote)
                 .padding(.top, 4)
                 .fontWeight(.bold)
         }
+    }
               // Function to get the current time zone abbreviation (e.g., CST, EST, PST)
         func getTimeZoneAbbreviation() -> String {
             return TimeZone.current.abbreviation() ?? "UTC"
         }
-    }
 }
 
 func convertToCurrentTimeZone(from date: Date, selectedTimeZoneID: String) -> Date? {
@@ -324,6 +324,7 @@ struct InputTileDate_Previews: PreviewProvider {
             question3: "",
             showSkip: true,
             datetimeValue: $input,
+            convertedDate: $input,
             nextAction: {},
             skipAction: {},
             previousAction: {}

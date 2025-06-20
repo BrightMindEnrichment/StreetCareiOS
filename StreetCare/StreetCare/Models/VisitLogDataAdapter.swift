@@ -25,6 +25,9 @@ class VisitLogDataAdapter {
     
     var visitLogs = [VisitLog]()
     var delegate: VisitLogDataAdapterProtocol?
+    var publishedLogIDs = Set<String>()
+    var pendingLogIDs = Set<String>()
+    var rejectedLogIDs = Set<String>()
     
     func resetLogs() {
         visitLogs = [VisitLog]()
