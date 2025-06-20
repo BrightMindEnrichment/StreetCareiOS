@@ -102,13 +102,13 @@ struct BannerView: View {
                         showChapterMembershipForm = true
                     } label: {
                         Text("Become a Member")
-                            .font(.custom("Poppins-SemiBold", size: 12))
-                            .foregroundColor(.yellow)
-                            .padding(.vertical, 10)
-                            .padding(.horizontal, 28)
+                            .foregroundColor(Color("PrimaryColor"))
+                            .fontWeight(.bold)
+                            .padding(.horizontal, 16)
+                            .padding(.vertical, 8)
                             .background(
                                 Capsule()
-                                    .fill(Color(red: 0, green: 0.16, blue: 0.145))
+                                    .fill(Color("SecondaryColor"))
                             )
                     }
                 }
