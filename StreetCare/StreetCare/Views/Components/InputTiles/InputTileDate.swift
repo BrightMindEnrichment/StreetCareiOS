@@ -23,6 +23,7 @@ struct InputTileDate: View {
     var buttonMode: ButtonMode = .navigation
     
     @Binding var datetimeValue: Date
+    @Binding var convertedDate: Date
     @State private var selectedTimeZone: String = TimeZone.current.identifier
     let timeZones = TimeZone.knownTimeZoneIdentifiers.sorted()
     let usTimeZones = TimeZone.knownTimeZoneIdentifiers
@@ -61,12 +62,6 @@ struct InputTileDate: View {
                 BasicTile(size: size)
                 
                 VStack {
-                    /*HStack {
-                     Text("Question \(questionNumber)/\(totalQuestions)")
-                     .foregroundColor(.black)
-                     .screenLeft()
-                     }*/
-                    
                     if buttonMode == .navigation {
                         HStack {
                             Text("Question \(questionNumber)/\(totalQuestions)")
@@ -211,6 +206,11 @@ struct InputTileDate: View {
                             Spacer()
                             
                             Button(" Next  ") {
+                                if let converted = convertToCurrentTimeZone(from: datetimeValue, selectedTimeZoneID: selectedTimeZone) {
+                                    convertedDate = converted  // ✅ Save to parent state
+                                } else {
+                                    convertedDate = datetimeValue  // fallback
+                                }
                                 nextAction()
                             }
                             .foregroundColor(Color("PrimaryColor"))
@@ -235,6 +235,11 @@ struct InputTileDate: View {
                             Spacer()
                             
                             Button("Update") {
+                                if let converted = convertToCurrentTimeZone(from: datetimeValue, selectedTimeZoneID: selectedTimeZone) {
+                                    convertedDate = converted  // ✅ Save to parent state
+                                } else {
+                                    convertedDate = datetimeValue  // fallback
+                                }
                                 showSuccessAlert = true
                                 nextAction()
                                 //presentationMode.wrappedValue.dismiss()
@@ -252,6 +257,15 @@ struct InputTileDate: View {
         }
         .navigationBarTitleDisplayMode(.inline)
         .navigationTitle("Interaction Log")
+        .onChange(of: selectedTimeZone) { newValue in
+            if let converted = convertToCurrentTimeZone(from: datetimeValue, selectedTimeZoneID: newValue) {
+                let formatter = DateFormatter()
+                formatter.dateStyle = .medium
+                formatter.timeStyle = .medium
+                formatter.timeZone = TimeZone.current
+            }
+        }
+        .frame(width: size.width, height: size.height)
         .alert(isPresented: $showSuccessAlert) {
             Alert(
                 title: Text("Updated"),
@@ -275,10 +289,28 @@ struct InputTileDate: View {
                 .padding(.top, 4)
                 .fontWeight(.bold)
         }
+              // Function to get the current time zone abbreviation (e.g., CST, EST, PST)
+        func getTimeZoneAbbreviation() -> String {
+            return TimeZone.current.abbreviation() ?? "UTC"
+        }
     }
 }
 
+func convertToCurrentTimeZone(from date: Date, selectedTimeZoneID: String) -> Date? {
+    guard let selectedTimeZone = TimeZone(identifier: selectedTimeZoneID) else {
+        print("❌ Invalid Time Zone Identifier")
+        return nil
+    }
 
+    let currentTimeZone = TimeZone.current
+
+    let selectedOffset = TimeInterval(selectedTimeZone.secondsFromGMT(for: date))
+    let currentOffset = TimeInterval(currentTimeZone.secondsFromGMT(for: date))
+
+    // Adjust the date by the difference in offsets
+    let timeDifference = currentOffset - selectedOffset
+    return date.addingTimeInterval(timeDifference)
+}
 struct InputTileDate_Previews: PreviewProvider {
 
     @State static var input = Date()

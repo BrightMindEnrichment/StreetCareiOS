@@ -13,6 +13,8 @@ struct MainTabBarView: View {
     @State private var selection = 0
     @State private var user: User? = nil
     @State private var loginRequested = false
+    @StateObject var mapViewModel = MapViewModel()
+
     
     var body: some View {
         TabView(selection: $selection) {
@@ -35,7 +37,7 @@ struct MainTabBarView: View {
             }
             .tag(1)
             
-            CommunityView()
+            CommunityView(mapViewModel: mapViewModel)  // Pass mapViewModel
                 .tabItem {
                     TabButtonView(imageName: "Tab-Community", title: "Community", isActive: (selection == 2))
                 }
@@ -51,7 +53,13 @@ struct MainTabBarView: View {
             Auth.auth().addStateDidChangeListener { _, currentUser in
                 self.user = currentUser
             }
+            
+            Task {
+                print("🚀 MainTabBarView appeared, loading map markers...")
+                await mapViewModel.fetchMarkers()
+            }
         }
+
     }
 }
 

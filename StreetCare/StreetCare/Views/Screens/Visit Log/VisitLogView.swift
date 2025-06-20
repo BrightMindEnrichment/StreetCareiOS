@@ -986,38 +986,6 @@ struct VisitLogView: View {
     }
 }
 
-/*struct VisitLogDetailRow: View {
-    var title: String
-    var detail: String
-    var onEdit: (() -> Void)? = nil
-
-    var body: some View {
-        VStack {
-            HStack {
-                Text(title)
-                    .font(.system(size: 16.0)).bold()
-                    .padding(.leading, 20)
-                Spacer()
-                if let onEdit = onEdit {
-                    Button(action: onEdit) {
-                        Image("Tab-VisitLog-Inactive")
-                            .resizable()
-                            .frame(width: 16, height: 16)
-                            .foregroundColor(.gray)
-                    }
-                    .buttonStyle(BorderlessButtonStyle())
-                    .padding(.trailing, 20)
-                }
-            }
-            Text(detail)
-                .font(.system(size: 15.0))
-                .padding(.horizontal, 20)
-            Rectangle()
-                .frame(width: 350.0, height: 2.0)
-                .foregroundColor(.gray)
-        }
-    }
-}*/
 struct VisitLogDetailRow: View {
     var title: String
     var detail1: String

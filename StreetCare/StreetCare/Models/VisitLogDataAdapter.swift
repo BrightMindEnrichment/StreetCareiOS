@@ -152,7 +152,8 @@ class VisitLogDataAdapter {
             "uid": user.uid,
             "isPublic": visitLog.isPublic,
             "isFlagged": visitLog.isFlagged,
-            "flaggedByUser": visitLog.flaggedByUser
+            "flaggedByUser": visitLog.flaggedByUser,
+            "status": visitLog.status
         ]
 
         print("User UID:", user.uid)
@@ -216,6 +217,23 @@ class VisitLogDataAdapter {
             }
         }
     }
+  
+    func fullStateName(from abbreviation: String) -> String {
+        let states = [
+            "AL": "Alabama", "AK": "Alaska", "AZ": "Arizona", "AR": "Arkansas", "CA": "California",
+            "CO": "Colorado", "CT": "Connecticut", "DE": "Delaware", "FL": "Florida", "GA": "Georgia",
+            "HI": "Hawaii", "ID": "Idaho", "IL": "Illinois", "IN": "Indiana", "IA": "Iowa",
+            "KS": "Kansas", "KY": "Kentucky", "LA": "Louisiana", "ME": "Maine", "MD": "Maryland",
+            "MA": "Massachusetts", "MI": "Michigan", "MN": "Minnesota", "MS": "Mississippi",
+            "MO": "Missouri", "MT": "Montana", "NE": "Nebraska", "NV": "Nevada", "NH": "New Hampshire",
+            "NJ": "New Jersey", "NM": "New Mexico", "NY": "New York", "NC": "North Carolina",
+            "ND": "North Dakota", "OH": "Ohio", "OK": "Oklahoma", "OR": "Oregon", "PA": "Pennsylvania",
+            "RI": "Rhode Island", "SC": "South Carolina", "SD": "South Dakota", "TN": "Tennessee",
+            "TX": "Texas", "UT": "Utah", "VT": "Vermont", "VA": "Virginia", "WA": "Washington",
+            "WV": "West Virginia", "WI": "Wisconsin", "WY": "Wyoming"
+        ]
+        return states[abbreviation.uppercased()] ?? abbreviation
+    }
     
     
     func deleteVisitLog(_ logId: String, completion: @escaping () -> ()) {
@@ -232,6 +250,52 @@ class VisitLogDataAdapter {
         db.collection("VisitLogBook_New").document(logId).delete { _ in
             completion()
         }
+    }
+  
+    func refreshWebProd() {
+        guard let user = Auth.auth().currentUser else { return }
+        
+        let db = Firestore.firestore()
+        
+        db.collection("visitLogWebProd")
+            .whereField("uid", isEqualTo: user.uid)
+            .getDocuments { querySnapshot, error in
+                if let error = error {
+                    print("Error fetching logs: \(error.localizedDescription)")
+                    return
+                }
+                
+                guard let documents = querySnapshot?.documents else {
+                    print("No logs found.")
+                    return
+                }
+                
+                var published = Set<String>()
+                var pending = Set<String>()
+                var rejected = Set<String>()
+                
+                for doc in documents {
+                    let logID = doc.documentID
+                    let status = (doc["status"] as? String ?? "").lowercased()
+                    
+                    switch status {
+                    case "approved":
+                        published.insert(logID)
+                    case "pending":
+                        pending.insert(logID)
+                    case "rejected":
+                        rejected.insert(logID)
+                    default:
+                        break
+                    }
+                }
+                
+                self.publishedLogIDs = published
+                self.pendingLogIDs = pending
+                self.rejectedLogIDs = rejected
+                
+                self.delegate?.visitLogDataRefreshed(self.visitLogs)
+            }
     }
 
     func refresh_new() {
@@ -309,6 +373,7 @@ class VisitLogDataAdapter {
                     log.isPublic = document["isPublic"] as? Bool ?? false
                     log.isFlagged = document["isFlagged"] as? Bool ?? false
                     log.flaggedByUser = document["flaggedByUser"] as? String ?? ""
+                    log.status = document["status"] as? String ?? ""
 
                     if let lat = document["latitude"] as? Double,
                        let lon = document["longitude"] as? Double {

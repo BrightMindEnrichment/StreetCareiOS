@@ -25,6 +25,9 @@ struct VisitLogEntry: View {
     @State var isComplete = false
     @State private var volunteerAgain: Int = -1
     
+    @State var rawDate: Date = Date()
+    @State var adjustedDate: Date = Date()
+    
     
     var body: some View {
         NavigationStack {
@@ -39,7 +42,7 @@ struct VisitLogEntry: View {
                                 
                 switch questionNumber {
                 case 1:
-                    InputTileDate(questionNumber: 1, totalQuestions: 6, question1: "When was your",question2: "Interaction?",question3: "", showSkip: false,  datetimeValue: $visitLog.whenVisit) {
+                    InputTileDate(questionNumber: 1, totalQuestions: 6, question1: "When was your",question2: "Interaction?",question3: "", showSkip: false,  datetimeValue: $rawDate, convertedDate: $visitLog.whenVisit) {
                         questionNumber += 1
                     } skipAction: {
                         questionNumber += 1
@@ -275,7 +278,7 @@ struct VisitLogEntry: View {
                         questionNumber = 100
                     }
                 case 12:
-                    InputTileDate(questionNumber: 5, totalQuestions: 7, question1: "Is there a planned date",question2: "to interact with them", question3: "again?", showSkip: true, datetimeValue: $visitLog.followUpWhenVisit) {
+                    InputTileDate(questionNumber: 5, totalQuestions: 7, question1: "Is there a planned date",question2: "to interact with them", question3: "again?", showSkip: true, datetimeValue: $rawDate, convertedDate: $visitLog.followUpWhenVisit) {
                         questionNumber += 1
                     } skipAction: {
                         questionNumber += 1
