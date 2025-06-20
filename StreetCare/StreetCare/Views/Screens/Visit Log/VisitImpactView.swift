@@ -362,14 +362,26 @@ struct VisitImpactView: View {
                 newDonations += 1
             }
 
-            if visitLog.hygine {
+            if visitLog.hygiene {
                 newDonations += 1
             }
             
             if visitLog.wellness {
                 newDonations += 1
             }
-
+                                               
+            if visitLog.medical {
+                newDonations += 1
+            }
+            
+            if visitLog.social {
+                newDonations += 1
+            }
+            
+            if visitLog.legal {
+                newDonations += 1
+            }
+                                               
             if visitLog.other {
                 newDonations += 1
             }
@@ -442,6 +454,12 @@ struct HalfCapsuleShape: Shape {
 
 extension VisitImpactView: VisitLogDataAdapterProtocol {
     func visitLogDataRefreshed(_ logs: [VisitLog]) {
+        self.history = logs
+        self.updateCounts()
+        self.isLoading = false
+    }
+
+    func visitLogDataRefreshedNew(_ logs: [VisitLog]) {
         self.history = logs
         self.updateCounts()
         self.isLoading = false

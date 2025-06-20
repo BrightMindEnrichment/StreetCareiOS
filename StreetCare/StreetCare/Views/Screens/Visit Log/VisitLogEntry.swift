@@ -28,6 +28,7 @@ struct VisitLogEntry: View {
     @State var rawDate: Date = Date()
     @State var adjustedDate: Date = Date()
     
+    
     var body: some View {
         NavigationStack {
             VStack {
@@ -53,70 +54,109 @@ struct VisitLogEntry: View {
                     InputTileLocation(
                         questionNumber: 2,
                         totalQuestions: 6,
-                        question1: "Where was your" , question2: "Interaction?",
+                        question1: "Where was your",
+                        question2: "Interaction?",
                         textValue: Binding(
                             get: { visitLog.whereVisit },
                             set: { newValue in
-                                visitLog.whereVisit = newValue // ✅ Updates whereVisit
+                                visitLog.whereVisit = newValue
                                 print("📍 Updated visitLog.whereVisit: \(visitLog.whereVisit)")
                             }
                         ),
                         location: Binding(
-                            get: { visitLog.location }, // ✅ Ensure visitLog.location updates
+                            get: { visitLog.location },
                             set: { newValue in
                                 visitLog.location = newValue
                                 print("📍 Updated visitLog.location: \(visitLog.location.latitude), \(visitLog.location.longitude)")
                             }
                         ),
-                        visitLog: visitLog
-                    ) {
-                        questionNumber += 1
-                    } previousAction: {
-                        questionNumber -= 1
-                    } skipAction: {
-                        questionNumber += 1
-                    }
+                        locationDescription: Binding(
+                            get: { visitLog.locationDescription },
+                            set: { newValue in
+                                visitLog.locationDescription = newValue
+                                print("📝 Updated visitLog.locationDescription: \(visitLog.locationDescription)")
+                            }
+                        ),
+                        nextAction: {
+                            questionNumber += 1
+                        },
+                        previousAction: {
+                            questionNumber -= 1
+                        },
+                        skipAction: {
+                            questionNumber += 1
+                        },
+                        buttonMode: .navigation // 👈 required parameter
+                    )
                     
                 case 3:
-                        InputTileNumber(questionNumber: 3, totalQuestions: 6, tileWidth: 360, tileHeight: 560, question1: "Describe who you" , question2: "supported and how",question3: "many individuals",question4: "were involved.",descriptionLabel: "Description", disclaimerText: NSLocalizedString("disclaimer", comment: ""), placeholderText: NSLocalizedString("peopledescription", comment: ""), number: $visitLog.peopleHelped) {
+                    InputTileNumber(
+                        questionNumber: 3,
+                        totalQuestions: 6,
+                        tileWidth: 300,
+                        tileHeight: 560,
+                        question1: "Describe who you",
+                        question2: "supported and how",
+                        question3: "many individuals",
+                        question4: "were involved.",
+                        descriptionLabel: "Description",
+                        disclaimerText: NSLocalizedString("disclaimer", comment: ""),
+                        placeholderText: NSLocalizedString("peopledescription", comment: ""),
+                        number: $visitLog.peopleHelped,
+                        generalDescription: $visitLog.peopleHelpedDescription,
+                        nextAction: {
                             questionNumber += 1
-                        } previousAction: {
+                        },
+                        previousAction: {
                             questionNumber -= 1
-                        } skipAction: {
+                        },
+                        skipAction: {
                             questionNumber += 1
                         }
+                    )
+                    
                 case 4:
                     InputTileList(
                         questionNumber: 4,
                         totalQuestions: 6,
+                        optionCount: 5,
+                        size: CGSize(width: 350, height: 450),
                         question1: "What kind of support",
                         question2: "did you provide?",
-                        foodAndDrinks: $visitLog.foodAndDrinks,
-                        clothes: $visitLog.clothes,
-                        hygine: $visitLog.hygine,
-                        wellness: $visitLog.wellness,
-                        medical: $visitLog.medical,
-                        socialworker: $visitLog.socialworker,
-                        legal: $visitLog.legal,
-                        other: $visitLog.other,
-                        otherNotes: $visitLog.otherNotes
-                    ) {
-                        questionNumber += 1
-                    } previousAction: {
-                        questionNumber -= 1
-                    } skipAction: {
-                        questionNumber += 1
-                    }
-                    
-                    
+                        visitLog: visitLog,
+                        nextAction: { questionNumber += 1 },
+                        previousAction: { questionNumber -= 1 },
+                        skipAction: { questionNumber += 1 },
+                        buttonMode: .navigation,
+                        showProgressBar: true,
+                        supportMode: .provided
+                    )
+                
                 case 5:
-                    InputTileNumber(questionNumber: 5, totalQuestions: 6, tileWidth: 300, tileHeight: 460, question1: "What and how many items" , question2: "did you share?", question3:"", question4:"", descriptionLabel: "", disclaimerText: "", placeholderText: "E.g. 2 bottles of water, 3 apples, 1 orange, 1 sandwich", number: $visitLog.itemQty) {
-                        questionNumber += 1
-                    } previousAction: {
-                        questionNumber -= 1
-                    } skipAction: {
-                        questionNumber += 1
-                    }
+                    InputTileNumber(
+                        questionNumber: 5,
+                        totalQuestions: 6,
+                        tileWidth: 300,
+                        tileHeight: 460,
+                        question1: "How many items",
+                        question2: "did you donate?",
+                        question3: "",
+                        question4: "",
+                        descriptionLabel: "",
+                        disclaimerText: "",
+                        placeholderText: "Enter notes here",
+                        number: $visitLog.itemQty,
+                        generalDescription: $visitLog.itemQtyDescription,
+                        nextAction: {
+                            questionNumber += 1
+                        },
+                        previousAction: {
+                            questionNumber -= 1
+                        },
+                        skipAction: {
+                            questionNumber += 1
+                        }
+                    )
                 case 6:
                     InputTileRate(questionNumber: 6, totalQuestions: 6, question1: "How would you rate your", question2: "outreach experience?", textValue: $visitLog.ratingNotes, rating: $visitLog.rating) {
                         questionNumber += 1
@@ -159,44 +199,72 @@ struct VisitLogEntry: View {
                     }
                     
                 case 9:
-                    InputTileNumber(questionNumber: 2, totalQuestions: 7, tileWidth: 360, tileHeight: 467, question1: "Who helped you" , question2: "prepare or joined with you?",question3: "",question4: "",placeholderText: NSLocalizedString("aq2des", comment: ""), number: $visitLog.numberOfHelpers) {
-                        questionNumber += 1
-                    } previousAction: {
-                        questionNumber -= 1
-                    } skipAction: {
-                        questionNumber += 1
-                    }
+                    InputTileNumber(
+                        questionNumber: 2,
+                        totalQuestions: 7,
+                        tileWidth: 360,
+                        tileHeight: 326,
+                        question1: "Who helped you",
+                        question2: "prepared or joined",
+                        question3: "",
+                        question4: "",
+                        descriptionLabel: nil,
+                        disclaimerText: nil,
+                        placeholderText: "Enter helper notes here",
+                        number: $visitLog.numberOfHelpers,
+                        generalDescription: $visitLog.numberOfHelpersComment,
+                        nextAction: {
+                            questionNumber += 1
+                        },
+                        previousAction: {
+                            questionNumber -= 1
+                        },
+                        skipAction: {
+                            questionNumber += 1
+                        }
+                    )
                     
                 case 10:
-                    InputTileNumber(questionNumber: 3, totalQuestions: 7, tileWidth: 360, tileHeight: 600, question1: "How many people" , question2: "still need support?", question3: "", question4: "", descriptionLabel: "Description", disclaimerText: "", placeholderText: NSLocalizedString("aq3des", comment: ""), descriptionLabel2: "Location Description",placeholderText2: "Please describe their location or landmark  E.g. 187 Hambridge Street, NY", number: $visitLog.peopleNeedFurtherHelp, peopleLocationDescription: $visitLog.peopleNeedFurtherHelpLocation) {
-                        questionNumber += 1
-                    } previousAction: {
-                        questionNumber -= 1
-                    } skipAction: {
-                        questionNumber += 1
-                    }
+                    InputTileNumber(
+                        questionNumber: 3,
+                        totalQuestions: 7,
+                        tileWidth: 360,
+                        tileHeight: 467,
+                        question1: "How many people",
+                        question2: "still need support?",
+                        question3: "",
+                        question4: "",
+                        descriptionLabel: "Description",
+                        disclaimerText: "",
+                        placeholderText: NSLocalizedString("peopledescription", comment: ""),
+                        number: $visitLog.peopleNeedFurtherHelp,
+                        generalDescription: $visitLog.peopleNeedFurtherHelpComment,
+                        nextAction: {
+                            questionNumber += 1
+                        },
+                        previousAction: {
+                            questionNumber -= 1
+                        },
+                        skipAction: {
+                            questionNumber += 1
+                        }
+                    )
                 case 11:
                     InputTileList(
                         questionNumber: 4,
                         totalQuestions: 7,
+                        optionCount: 5,
+                        size: CGSize(width: 350, height: 450),
                         question1: "What kind of support",
                         question2: "do they still need?",
-                        foodAndDrinks: $visitLog.furtherfoodAndDrinks,
-                        clothes: $visitLog.furtherClothes,
-                        hygine: $visitLog.furtherHygine,
-                        wellness: $visitLog.furtherWellness,
-                        medical: $visitLog.medical,
-                        socialworker: $visitLog.socialworker,
-                        legal: $visitLog.legal,
-                        other: $visitLog.furtherOther,
-                        otherNotes: $visitLog.furtherOtherNotes
-                    ) {
-                        questionNumber += 1
-                    } previousAction: {
-                        questionNumber -= 1
-                    } skipAction: {
-                        questionNumber += 1
-                    }
+                        visitLog: visitLog,
+                        nextAction: { questionNumber += 1 },
+                        previousAction: { questionNumber -= 1 },
+                        skipAction: { questionNumber += 1 },
+                        buttonMode: .navigation,
+                        showProgressBar: true,
+                        supportMode: .needed
+                    )
                 case 14:
                     InputTileVolunteerAgain(questionNumber: 7, totalQuestions: 7, question1: "Would you like to", question2: "volunteer again?", volunteerAgain: $visitLog.volunteerAgain) {
                         saveVisitLog()
@@ -210,7 +278,7 @@ struct VisitLogEntry: View {
                         questionNumber = 100
                     }
                 case 12:
-                    InputTileDate(questionNumber: 5, totalQuestions: 7, question1: "Do you have a plan to help",question2: "this person / these people ", question3: "again?", showSkip: true, datetimeValue: $rawDate, convertedDate: $visitLog.followUpWhenVisit) {
+                    InputTileDate(questionNumber: 5, totalQuestions: 7, question1: "Is there a planned date",question2: "to interact with them", question3: "again?", showSkip: true, datetimeValue: $rawDate, convertedDate: $visitLog.followUpWhenVisit) {
                         questionNumber += 1
                     } skipAction: {
                         questionNumber += 1
@@ -219,14 +287,29 @@ struct VisitLogEntry: View {
                     }
                     
                 case 13:
-                    InputTileNotes(questionNumber: 6, totalQuestions: 7,tileWidth: 360, tileHeight: 380, question1: "Is there anything other volunteers",question2: "who help him / her / them", question3: "should know?", placeholderText: NSLocalizedString("aq6des", comment: ""), otherNotes: $visitLog.furtherOtherNotes) {
-                        questionNumber += 1
-                    } previousAction: {
-                        questionNumber -= 1
-                    } skipAction: {
-                        saveVisitLog()
-                        questionNumber += 1
-                    }
+                    InputTileNotes(
+                        questionNumber: 6,
+                        totalQuestions: 7,
+                        tileWidth: 300,
+                        tileHeight: 380,
+                        question1: "Is there anything future",
+                        question2: "volunteers should",
+                        question3: "know?",
+                        placeholderText: "Enter notes here",
+                        otherNotes: $visitLog.furtherOtherNotes,
+                        nextAction: {
+                            //saveVisitLog()
+                            questionNumber += 1
+                        },
+                        previousAction: {
+                            questionNumber -= 1
+                        },
+                        skipAction: {
+                            saveVisitLog()
+                            questionNumber += 1
+                        },
+                        buttonMode: .navigation
+                    )
                     
                 case 100:
                     InputTileComplete() {
