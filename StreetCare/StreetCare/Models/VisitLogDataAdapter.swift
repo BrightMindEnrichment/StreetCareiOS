@@ -105,7 +105,19 @@ class VisitLogDataAdapter {
             }
         }
     }
-    func addVisitLog_Community(_ visitLog: VisitLog) {
+    func makeLogPublic(_ visitLog: VisitLog) {
+        let db = Firestore.firestore()
+        db.collection("VisitLogBook_New").document(visitLog.id).updateData([
+            "isPublic": true
+        ]) { error in
+            if let error = error {
+                print("Error making log public: \(error.localizedDescription)")
+            } else {
+                print("Log marked as public in VisitLogBook_New")
+            }
+        }
+    }
+    /*func addVisitLog_Community(_ visitLog: VisitLog) {
         
         guard let user = Auth.auth().currentUser else {
             print("no user?")
@@ -177,7 +189,7 @@ class VisitLogDataAdapter {
          print("VisitLogBook log also marked as published!")
          }
          }*/
-    }
+    }*/
     func fullStateName(from abbreviation: String) -> String {
         let states = [
             "AL": "Alabama", "AK": "Alaska", "AZ": "Arizona", "AR": "Arkansas", "CA": "California",
@@ -524,6 +536,9 @@ class VisitLogDataAdapter {
                     }
                     if let whenVisit = document["whenVisit"] as? Timestamp {
                         log.whenVisit = whenVisit.dateValue()
+                    }
+                    if let isPublic = document["isPublic"] as? Bool {
+                        log.isPublished = isPublic
                     }
                     if let followUpWhenVisit = document["followUpWhenVisit"] as? Timestamp {
                         log.followUpWhenVisit = followUpWhenVisit.dateValue()

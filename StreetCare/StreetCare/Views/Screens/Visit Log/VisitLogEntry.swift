@@ -276,7 +276,7 @@ struct VisitLogEntry: View {
     func saveVisitLog_Community() {
         let adapter = VisitLogDataAdapter()
         //adapter.addVisitLog(self.visitLog)
-        adapter.addVisitLog_Community(self.visitLog)
+        adapter.makeLogPublic(self.visitLog)
     }
     
 } // end struct

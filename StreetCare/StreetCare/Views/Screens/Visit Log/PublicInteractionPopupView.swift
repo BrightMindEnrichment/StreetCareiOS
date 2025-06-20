@@ -25,6 +25,7 @@ struct PublicInteractionPopupView: View {
     //@State private var userRoleType: String = "Account Holder"
     
     var body: some View {
+        ScrollView {
         VStack(alignment: .leading, spacing: 14) {
             // Top row
             HStack {
@@ -57,7 +58,7 @@ struct PublicInteractionPopupView: View {
                         Task {
                             guard let currentUser = Auth.auth().currentUser else { return }
                             let db = Firestore.firestore()
-                            let ref = db.collection("visitLogWebProd").document(visit.id)
+                            let ref = db.collection("VisitLogBook_New").document(visit.id)
                             
                             if visit.isFlagged {
                                 // Try to unflag
@@ -118,20 +119,32 @@ struct PublicInteractionPopupView: View {
             }
             
             // Description
-            VStack(alignment: .leading, spacing: 4) {
-                Text("Interaction Description")
-                    .font(.system(size: 14, weight: .semibold))
-                Text(visit.peopleHelpedDescription)
-                    .font(.system(size: 13))
-                    .fixedSize(horizontal: false, vertical: true)
+            if !visit.peopleHelpedDescription.isEmpty && visit.peopleHelpedDescription != "N/A" {
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("Interaction Description")
+                        .font(.system(size: 14, weight: .semibold))
+                    Text(visit.peopleHelpedDescription)
+                        .font(.system(size: 13))
+                        .fixedSize(horizontal: false, vertical: true)
+                }
             }
             
             // Stats
             VStack(alignment: .leading, spacing: 12) {
-                PublicInfoRow(title: "People Helped", value: "\(visit.peopleHelped)", iconName: "Tab-Profile", iconColor: .yellow)
-                PublicInfoRow(title: "People Who Joined", value: "\(visit.numberOfHelpers)", iconName: "HelpingHands", iconColor: .yellow)
-                PublicInfoRow(title: "Items Donated", value: "\(visit.itemQty)", iconName: "Clothes", iconColor: .yellow)
-                PublicInfoRow(title: "Type of Help Offered", value: visit.whatGiven.isEmpty ? "N/A" : visit.whatGiven.joined(separator: ", "))
+                if visit.peopleHelped > 0 {
+                    PublicInfoRow(title: "People Helped", value: "\(visit.peopleHelped)", iconName: "Tab-Profile", iconColor: .yellow)
+                }
+
+                if visit.numberOfHelpers > 0 {
+                    PublicInfoRow(title: "People Who Joined", value: "\(visit.numberOfHelpers)", iconName: "HelpingHands", iconColor: .yellow)
+                }
+
+                if visit.itemQty > 0 {
+                    PublicInfoRow(title: "Items Donated", value: "\(visit.itemQty)", iconName: "Clothes", iconColor: .yellow)
+                }
+                if !visit.whatGiven.isEmpty {
+                    PublicInfoRow(title: "Type of Help Offered", value: visit.whatGiven.isEmpty ? "N/A" : visit.whatGiven.joined(separator: ", "))
+                }
             }
             
             // Close Button
@@ -143,6 +156,9 @@ struct PublicInteractionPopupView: View {
                     onCancel()
                 }
         }
+        .frame(minHeight: 100, alignment: .top)
+        .padding()
+    }
         //with Caching
         /*.onAppear {
             imageLoader.uid = visit.uid

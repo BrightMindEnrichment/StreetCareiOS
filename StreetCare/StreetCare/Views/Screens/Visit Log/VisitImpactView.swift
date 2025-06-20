@@ -190,28 +190,28 @@ struct VisitImpactView: View {
                                             .foregroundColor(.black)
                                             .padding(.trailing, -5)
                                         Text("\(item.whenVisit.formatted(date: .abbreviated, time: .omitted)) | \(item.whenVisit.formatted(date: .omitted, time: .shortened))").font(.system(size: 13)).lineLimit(1).layoutPriority(1)
-//                                        GeometryReader { geo in
-//                                            ZStack {
-                                                Button("Details") {
-                                                    isLoadingPopup = true
-                                                    selectedVisit = item
-
-                                                    Task {
-                                                        await preloadPopupData(for: item)
-                                                        isLoadingPopup = false
-                                                        showPublicPopup = true
-                                                    }
-                                                }
-                                                .font(.custom("Poppins-SemiBold", size: 13))
-                                                .foregroundColor(Color(red: 1.0, green: 0.933, blue: 0.0)) // textColor
-                                                .padding(.horizontal, 16)
-                                                .padding(.vertical, 8)
-                                                .background(
-                                                    Capsule()
-                                                        .fill(Color(red: 0, green: 0.16, blue: 0.145)) // background color
-                                                )
-                                                .frame(width: 80)
-                                                
+                                        //                                        GeometryReader { geo in
+                                        //                                            ZStack {
+                                        Button("Details") {
+                                            isLoadingPopup = true
+                                            selectedVisit = item
+                                            
+                                            Task {
+                                                await preloadPopupData(for: item)
+                                                isLoadingPopup = false
+                                                showPublicPopup = true
+                                            }
+                                        }
+                                        .font(.custom("Poppins-SemiBold", size: 13))
+                                        .foregroundColor(Color(red: 1.0, green: 0.933, blue: 0.0)) // textColor
+                                        .padding(.horizontal, 16)
+                                        .padding(.vertical, 8)
+                                        .background(
+                                            Capsule()
+                                                .fill(Color(red: 0, green: 0.16, blue: 0.145)) // background color
+                                        )
+                                        .frame(width: 80)
+                                        
                                     }
                                     .padding(.top, -5)
                                     .padding(.leading, 20)
@@ -240,7 +240,7 @@ struct VisitImpactView: View {
                 .loadingAnimation(isLoading: isLoadingPopup)
                 .navigationBarTitleDisplayMode(.inline)
                 .onAppear {
-//                    print("Impact view onAppear")
+                    //                    print("Impact view onAppear")
                     adapter.delegate = self
                     
                     Auth.auth().addStateDidChangeListener { _, currentUser in
@@ -265,7 +265,7 @@ struct VisitImpactView: View {
                         itemsDonated = 0
                     }
                 }
-                .bottomSheet(isPresented: $showPublicPopup, content:  {
+                .bottomSheet(isPresented: $showPublicPopup){
                     if let visit = selectedVisit {
                         PublicInteractionPopupView(
                             visit: visit,
@@ -281,7 +281,7 @@ struct VisitImpactView: View {
                         .frame(maxWidth: .infinity)
                         .padding(.horizontal)
                     }
-                }, heightRatio: 0.57)
+                }
             }
             
             if showCustomAlert {
@@ -399,7 +399,7 @@ struct VisitImpactView: View {
         
         // 1. Fetch from visitLogWebProd
         do {
-            let doc = try await db.collection("visitLogWebProd").document(visit.id).getDocument()
+            let doc = try await db.collection("VisitLogBook_New").document(visit.id).getDocument()
             if let data = doc.data() {
                 visit.isFlagged = data["isFlagged"] as? Bool ?? false
                 visit.flaggedByUser = data["flaggedByUser"] as? String ?? ""
