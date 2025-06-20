@@ -58,7 +58,7 @@
 "howToHelp" = "How to Help";
 "futureEvents" = "Future Events";
 "pastEvents" = "Past Events";
-"helpRequests" = "Help Requests";
+"publicinteractions" = "Public Interactions";
 
 "before_para1" = "The first thing to remember is that homeless people are a diverse group of people just like everyone else, no matter how they look, no matter their gender, age, or race. Some have fallen on hard times. Some may be struggling with mental illness. But everyone wants to be treated with respect and dignity. Here are some steps to follow before you go:";
 
@@ -158,6 +158,15 @@
 "aq2des" = "E.g, My Aunt Mary helped prepare (mary@gmail.com), and my brothers Bob and Bill went out with me (bob@gmail.com, bill@gmail.com, 702-506-6101).";
 "aq3des" = "Eg, Jill — a 15-year-old girl who ran away and was wearing a blue dress.";
 "aq6des" = "Eg. Tom has diabetes and prefers no sugary snacks.";
+"events" = "Events";
+"publicInteractionLog" = "Public Interaction Log";
+"gettingTheEvents" = "Getting the Events";
+"map" = "Map";
+"mapUnavailable" = "Map is currently unavailable";
+
+
+
+
 
 
 //"welcome" = "Welcome to\nStreet Care";

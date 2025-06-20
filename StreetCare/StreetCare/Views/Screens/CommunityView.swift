@@ -15,7 +15,7 @@ struct CommunityView: View {
     let adapter = EventDataAdapter()
     @State var events = [Event]()
     @State var isPresented: Bool = false
-    @StateObject var mapViewModel = MapViewModel()
+    @ObservedObject var mapViewModel: MapViewModel
     
     let formatter = DateFormatter()
  
@@ -86,40 +86,44 @@ struct CommunityView: View {
                                         .frame(width: 66.0)
                                     Image("HelpingHands").frame(width: 15.0, height: 15.0)
                                 }
-                                Text(NSLocalizedString("helpRequests", comment: "")).fontWeight(.regular).foregroundColor(Color("TextColor"))
+                                Text(NSLocalizedString("publicinteractions", comment: "")).fontWeight(.regular).foregroundColor(Color("TextColor"))
                             }
                         }
                         if AppSettings.shared.mapsAvailable {
-                            VStack{
-                                Text(" Map")
-                                    .font(.title)
-                                    .frame(maxWidth: .infinity, alignment: .leading)
-                                ZStack {
-                                    GoogleMapView(viewModel: mapViewModel)
-                                        .edgesIgnoringSafeArea(.all)
-                                        .blur(radius: mapViewModel.isLoading ? 10 : 0)
-                                        .task {
-                                            print("GoogleMapView appeared, calling fetchMarkers()")
-                                            await mapViewModel.fetchMarkers()
-                                        }
+                            VStack {
+                                VStack(alignment: .leading, spacing: 8) {
+                                    Text(NSLocalizedString("map", comment: ""))
+                                        .font(.title)
                                     
-                                    if mapViewModel.isLoading {
-                                        ProgressView("Getting the Events")
-                                            .scaleEffect(1.5)
-                                            .progressViewStyle(CircularProgressViewStyle(tint: .blue))
+                                    ZStack {
+                                        GoogleMapView(viewModel: mapViewModel)
+                                            .edgesIgnoringSafeArea(.all)
+                                            .blur(radius: mapViewModel.isLoading ? 10 : 0)
+
+                                        if mapViewModel.isLoading {
+                                            ProgressView(NSLocalizedString("gettingTheEvents", comment: ""))
+                                                .scaleEffect(1.5)
+                                                .progressViewStyle(CircularProgressViewStyle(tint: .blue))
+                                        }
                                     }
+                                    .overlay(
+                                        RoundedRectangle(cornerRadius: 16)
+                                            .stroke(Color.black, lineWidth: 1)
+                                    )
+                                    .frame(width: 370, height: 300)
+                                    .shadow(radius: 2)
                                 }
-                                .frame(width: 370, height: 300)
-                                .shadow(radius: 2)
+                                .frame(width: 370, alignment: .leading)
+                                
                                 HStack {
                                     Circle()
                                         .fill(Color.yellow)
                                         .frame(width: 10, height: 10)
-                                    Text("Events")
+                                    Text(NSLocalizedString("events", comment: ""))
                                     Circle()
                                         .fill(Color.red)
                                         .frame(width: 10, height: 10)
-                                    Text("Help needed")
+                                    Text(NSLocalizedString("publicInteractionLog", comment: ""))
                                 }
                                 .padding(.horizontal, 5)
                                 .padding(.vertical, 5)
@@ -129,6 +133,7 @@ struct CommunityView: View {
                                         .shadow(radius: 3)
                                 )
                             }
+                            
                         } else {
                             VStack(spacing: 30) {
                                 AppDescriptionView()
@@ -136,7 +141,7 @@ struct CommunityView: View {
                             }
                             .padding(.horizontal)
                             .onAppear {
-                                print("Map is currently unavailable")
+                                print(NSLocalizedString("mapUnavailable", comment: ""))
                             }
                         }
                     }
@@ -150,7 +155,7 @@ struct CommunityView: View {
                 adapter.refresh()
             }
         }
-    }
+        }
     }
 }
 
@@ -170,7 +175,7 @@ extension CommunityView: EventDataAdapterProtocol {
 
 struct CommunityView_Previews: PreviewProvider {
     static var previews: some View {
-        CommunityView()
+        CommunityView(mapViewModel: MapViewModel())
     }
 }
 

@@ -68,18 +68,32 @@ struct GoogleMapView: UIViewRepresentable {
         ])
 
         viewModel.mapView = mapView
+        DispatchQueue.main.async {
+              mapView.layer.cornerRadius = mapView.frame.height / 17
+              mapView.layer.masksToBounds = true
+              mapView.layer.borderWidth = 1
+              mapView.layer.borderColor = UIColor.black.cgColor
+          }
+
         return mapView
     }
 
     func updateUIView(_ mapView: GMSMapView, context: Context) {
         mapView.clear()
-        for request in viewModel.helpRequests {
-            let marker = GMSMarker(position: request.location)
-            marker.title = request.helpType
-            marker.snippet = request.description
-            // defaults red marker
+//        for request in viewModel.helpRequests {
+//            let marker = GMSMarker(position: request.location)
+//            marker.title = request.helpType
+//            marker.snippet = request.description
+//            // defaults red marker
+//            marker.map = mapView
+//        }
+        for event in viewModel.mapVisitLogs {
+            let marker = GMSMarker(position: event.0)
+            marker.title = event.1
+            marker.snippet = event.2
             marker.map = mapView
         }
+
         for event in viewModel.outreachEvents {
             let marker = GMSMarker(position: event.location)
             marker.title = event.title
@@ -89,7 +103,7 @@ struct GoogleMapView: UIViewRepresentable {
             }
             marker.map = mapView
         }
-        let defaultCamera = GMSCameraPosition.camera(withLatitude: 42.333774, longitude: -71.064937, zoom: 11)
+        let defaultCamera = GMSCameraPosition.camera(withLatitude: 40.7590, longitude: -73.9690, zoom: 11)
         mapView.animate(to: defaultCamera)
     }
     

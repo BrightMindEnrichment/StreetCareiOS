@@ -140,7 +140,7 @@ struct CommunityEventView: View {
                         .listSectionSeparatorTint(.clear, edges: .all)
                     }
                     .listStyle(PlainListStyle())
-                    .navigationTitle(eventType == .future ? NSLocalizedString("futureEvents", comment: "") : eventType == .past ? NSLocalizedString("pastEvents", comment: "") : NSLocalizedString("helpRequests", comment: ""))
+                    .navigationTitle(eventType == .future ? NSLocalizedString("futureEvents", comment: "") : eventType == .past ? NSLocalizedString("pastEvents", comment: "") : NSLocalizedString("publicinteractions", comment: ""))
                     .scrollContentBackground(.hidden)
                     .background(Color.clear)
                 }
