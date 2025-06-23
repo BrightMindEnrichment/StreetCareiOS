@@ -21,7 +21,7 @@ struct VisitImpactView: View {
     @State var itemsDonated = 0
 
     @State var showActionSheet = false
-    //@State var isLoading = false
+    @State var isLoading = false
     //@State private var navigateToAddNew = false
     @State var isNavigationActive = false
     @State var showLoginMessage = false
@@ -30,18 +30,10 @@ struct VisitImpactView: View {
     @Binding var selection: Int
     @State private var showCustomAlert = false
     @State private var doNotShowAgain = false
+    @State var logsOld = [VisitLog]()
+    @State var logsNew = [VisitLog]()
+   
     @AppStorage("hideProvidedHelpAlert") private var hideProvidedHelpAlert: Bool = false
-    
-    @State private var selectedVisit: VisitLog? = nil
-    @State private var showPublicPopup = false
-    @State private var isLoadingPopup = false
-    @State private var usernameCache: [String: String] = [:]
-    @State private var imageCache: [String: UIImage] = [:]
-    @StateObject private var imageLoader = StorageManager(uid: "")
-    
-    @State private var userType: String = ""
-    @State private var popupRefresh = false
-    @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
 
 
     var body: some View {
@@ -147,12 +139,12 @@ struct VisitImpactView: View {
                                 .frame(width: 0) // enough to hold the icon
                                 .zIndex(1)
                                 
-                                VStack(spacing: 5) {
+                                VStack(spacing: 1) {
                                     HStack(alignment: .top, spacing: 5) {
                                         Image("MapPin")
                                             .font(.system(size: 14))
                                             .foregroundColor(.black)
-                                            .padding(.top, 1)
+                                            .padding(.top, 6)
                                         // Extract street and state from `item.whereVisit`
                                         let components = item.whereVisit.components(separatedBy: ", ").filter { !$0.isEmpty }
                                         
@@ -171,16 +163,19 @@ struct VisitImpactView: View {
                                                 
                                                 Text("\(city), \(stateAbbr)")
                                                     .font(.system(size: 13.0))
-                                            }  else {
+                                            }  else if components.count >= 1 {
                                                 let city = components.indices.contains(0) ? components[0] : ""
                                                 let fullState = components.indices.contains(1) ? components[1] : ""
                                                 let stateAbbr = stateAbbreviations[fullState] ?? fullState
                                                 Text("\(city), \(stateAbbr)")
                                                     .font(.system(size: 13.0))
                                                 
+                                            } else {
+                                                Text("No location available")
+                                                    .font(.system(size: 13.0))
                                             }
                                         }
-                                        
+                                        .padding(.top, 5)
                                         Spacer()
                                     }
                                     .padding(.leading, 20)
@@ -190,33 +185,68 @@ struct VisitImpactView: View {
                                             .foregroundColor(.black)
                                             .padding(.trailing, -5)
                                         Text("\(item.whenVisit.formatted(date: .abbreviated, time: .omitted)) | \(item.whenVisit.formatted(date: .omitted, time: .shortened))").font(.system(size: 13)).lineLimit(1).layoutPriority(1)
-                                        //                                        GeometryReader { geo in
-                                        //                                            ZStack {
-                                        Button("Details") {
-                                            isLoadingPopup = true
-                                            selectedVisit = item
-                                            
-                                            Task {
-                                                await preloadPopupData(for: item)
-                                                isLoadingPopup = false
-                                                showPublicPopup = true
+                                        GeometryReader { geo in
+                                            ZStack {
+                                                VStack(spacing: 3) {
+                                                    Button("Details") {
+                                                        print("Details tapped")
+                                                    }
+                                                    .font(.custom("Poppins-SemiBold", size: 13))
+                                                    .foregroundColor(Color(red: 1.0, green: 0.933, blue: 0.0))
+                                                    .padding(.horizontal, 16)
+                                                    .padding(.vertical, 4)
+                                                    .background(
+                                                        Capsule()
+                                                            .fill(Color(red: 0, green: 0.16, blue: 0.145))
+                                                    )
+                                                    .frame(width: 80)
+
+                                                    if adapter.publishedLogIDs.contains(item.id) {
+                                                        Text("PUBLISHED")
+                                                            .font(.caption2)
+                                                            .fontWeight(.bold)
+                                                            .foregroundColor(.white)
+                                                            .padding(.vertical, 2)
+                                                            .frame(width: 70)
+                                                            .background(RoundedRectangle(cornerRadius: 6).fill(Color("PublishedGreen")))
+                                                    } else if adapter.pendingLogIDs.contains(item.id) {
+                                                        Text("PENDING")
+                                                            .font(.caption2)
+                                                            .fontWeight(.bold)
+                                                            .foregroundColor(.white)
+                                                            .padding(.vertical, 2)
+                                                            .frame(width: 70)
+                                                            .background(RoundedRectangle(cornerRadius: 6).fill(Color("Pending")))
+                                                    } else if adapter.rejectedLogIDs.contains(item.id) {
+                                                        Text("REJECTED")
+                                                            .font(.caption2)
+                                                            .fontWeight(.bold)
+                                                            .foregroundColor(.white)
+                                                            .padding(.vertical, 2)
+                                                            .frame(width: 70)
+                                                            .background(RoundedRectangle(cornerRadius: 6).fill(Color("RejectedRed")))
+                                                    }
+
+                                                    NavigationLink(destination: VisitLogView(log: item)) {
+                                                        EmptyView()
+                                                    }
+                                                    .opacity(0)
+                                                }
+                                                .offset(y: 15)
                                             }
+                                            .position(
+                                                x: geo.size.width / 2 ,
+                                                y: 0
+                                            )
                                         }
-                                        .font(.custom("Poppins-SemiBold", size: 13))
-                                        .foregroundColor(Color(red: 1.0, green: 0.933, blue: 0.0)) // textColor
-                                        .padding(.horizontal, 16)
-                                        .padding(.vertical, 8)
-                                        .background(
-                                            Capsule()
-                                                .fill(Color(red: 0, green: 0.16, blue: 0.145)) // background color
-                                        )
-                                        .frame(width: 80)
+                                        .frame(height: 50) //room you want for the button
                                         
                                     }
-                                    .padding(.top, -5)
+                                    .padding(.top, -8)
                                     .padding(.leading, 20)
                                 }
-                                .padding(.vertical, 15) //card size
+                                .padding(.top, 10) // keep top spacing
+                                .padding(.bottom, 0) // reduce bottom spacing
                                 .padding(.leading, 55)
                                 .background(Color.white)
                                 .clipShape(HalfCapsuleShape())
@@ -237,26 +267,19 @@ struct VisitImpactView: View {
                     
                     Spacer()
                 }
-                .loadingAnimation(isLoading: isLoadingPopup)
+                .loadingAnimation(isLoading: isLoading)
                 .navigationBarTitleDisplayMode(.inline)
                 .onAppear {
-                    //                    print("Impact view onAppear")
+                    print("Impact view onAppear")
                     adapter.delegate = self
-                    
                     Auth.auth().addStateDidChangeListener { _, currentUser in
                         self.user = currentUser
-                        if let uid = currentUser?.uid {
-                            let db = Firestore.firestore()
-                            db.collection("users").document(uid).getDocument { snapshot, error in
-                                if let data = snapshot?.data(), let type = data["Type"] as? String {
-                                    self.userType = type
-                                }
-                            }
-                        }
                     }
                     if Auth.auth().currentUser != nil {
                         adapter.refresh()
-                        self.isLoadingPopup = true
+                        adapter.refresh_new()
+                        adapter.refreshWebProd()
+                        self.isLoading = true
                     } else {
                         adapter.resetLogs()
                         history = [VisitLog]()
@@ -265,25 +288,7 @@ struct VisitImpactView: View {
                         itemsDonated = 0
                     }
                 }
-                .bottomSheet(isPresented: $showPublicPopup){
-                    if let visit = selectedVisit {
-                        PublicInteractionPopupView(
-                            visit: visit,
-                            user: user,
-                            userType: userType,
-                            onCancel: {
-                                showPublicPopup = false
-                            },
-                            delegate: self,
-                            refresh: $popupRefresh
-                        )
-                        .environmentObject(imageLoader)
-                        .frame(maxWidth: .infinity)
-                        .padding(.horizontal)
-                    }
-                }
             }
-            
             if showCustomAlert {
                 Color.black.opacity(0.4)
                     .edgesIgnoringSafeArea(.all)
@@ -340,111 +345,12 @@ struct VisitImpactView: View {
         }
 
     }
-    //With Caching
-    /*func preloadPopupData(for visit: VisitLog) async {
-        guard let _ = Auth.auth().currentUser else { return }
-        let db = Firestore.firestore()
-
-        // 1. Fetch from visitLogWebProd
-        do {
-            let doc = try await db.collection("visitLogWebProd").document(visit.id).getDocument()
-            if let data = doc.data() {
-                visit.isFlagged = data["isFlagged"] as? Bool ?? false
-                visit.flaggedByUser = data["flaggedByUser"] as? String ?? ""
-            }
-        } catch {
-            print("Error fetching from visitLogWebProd: \(error)")
-        }
-
-        // 2. Fetch from users (type and username)
-        if let cachedName = usernameCache[visit.uid] {
-                visit.username = cachedName
-            } else {
-                do {
-                    let query = db.collection("users").whereField("uid", isEqualTo: visit.uid)
-                    let snapshot = try await query.getDocuments()
-                    if let userDoc = snapshot.documents.first {
-                        let data = userDoc.data()
-                        let name = data["username"] as? String ?? "Firstname Lastname"
-                        //let type = data["type"] as? String ?? "Account Holder"
-                        visit.username = name
-                        //visit.userType = type
-                        usernameCache[visit.uid] = name
-                    }
-                } catch {
-                    print("Error fetching from users: \(error)")
-                }
-            }
-
-        // 3. Preload image from Firebase Storage (no need to wait for it to show popup)
-        if let cachedImage = imageCache[visit.uid] {
-            await MainActor.run {
-                visit.image = cachedImage
-            }
-        } else {
-            let manager = StorageManager(uid: visit.uid)
-            manager.getImage()
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                if let img = manager.image {
-                    imageCache[visit.uid] = img
-                    visit.image = img
-                }
-            }
-        }
-    }*/
-    //Without Caching
-    func preloadPopupData(for visit: VisitLog) async {
-        guard let _ = Auth.auth().currentUser else { return }
-        let db = Firestore.firestore()
-        
-        // 1. Fetch from visitLogWebProd
-        do {
-            let doc = try await db.collection("VisitLogBook_New").document(visit.id).getDocument()
-            if let data = doc.data() {
-                visit.isFlagged = data["isFlagged"] as? Bool ?? false
-                visit.flaggedByUser = data["flaggedByUser"] as? String ?? ""
-            }
-        } catch {
-            print("❌ Error fetching from visitLogWebProd: \(error)")
-        }
-        
-        // 2. Fetch from users (type and username)
-        do {
-            let query = db.collection("users").whereField("uid", isEqualTo: visit.uid)
-            let snapshot = try await query.getDocuments()
-            if let userDoc = snapshot.documents.first {
-                let data = userDoc.data()
-                visit.userType = data["Type"] as? String ?? "Account Holder"
-                visit.username = data["username"] as? String ?? "Firstname Lastname"
-                visit.photoURL = data["photoUrl"] as? String ?? ""
-            }
-        } catch {
-            print("❌ Error fetching from users: \(error)")
-        }
-        
-        // 3. Preload image from Firebase Storage (no need to wait for it to show popup)
-        await MainActor.run {
-            if !visit.photoURL.isEmpty, let url = URL(string: visit.photoURL) {
-                URLSession.shared.dataTask(with: url) { data, _, _ in
-                    if let data = data, let image = UIImage(data: data) {
-                        Task { @MainActor in
-                            // This is what your popup uses
-                            imageLoader.image = image
-                        }
-                    }
-                }.resume()
-            } else {
-                let manager = StorageManager(uid: visit.uid)
-                manager.getImage()
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                    if let img = manager.image {
-                        // ✅ Again, assign to the loader popup uses
-                        imageLoader.image = img
-                    }
-                }
-            }
-        }
+    
+    private func mergeLogs() {
+        self.history = (logsOld + logsNew)
+            .sorted { $0.whenVisit > $1.whenVisit }  // Sort newest first
     }
+
 
     private func updateCounts() {
 
@@ -466,14 +372,26 @@ struct VisitImpactView: View {
                 newDonations += 1
             }
 
-            if visitLog.hygine {
+            if visitLog.hygiene {
                 newDonations += 1
             }
             
             if visitLog.wellness {
                 newDonations += 1
             }
-
+                                               
+            if visitLog.medical {
+                newDonations += 1
+            }
+            
+            if visitLog.social {
+                newDonations += 1
+            }
+            
+            if visitLog.legal {
+                newDonations += 1
+            }
+                                               
             if visitLog.other {
                 newDonations += 1
             }
@@ -544,19 +462,24 @@ struct HalfCapsuleShape: Shape {
 }
 
 
+
+
 extension VisitImpactView: VisitLogDataAdapterProtocol {
     func visitLogDataRefreshed(_ logs: [VisitLog]) {
-        self.history = logs
-        self.updateCounts()
-        self.isLoadingPopup = false
+        self.logsOld = logs
+        self.mergeLogs()
+        self.isLoading = false
     }
+
+    func visitLogDataRefreshedNew(_ logs: [VisitLog]) {
+        self.logsNew = logs
+        self.mergeLogs()
+        self.isLoading = false
+    }
+    
 }
 
-extension VisitImpactView: EventPopupViewDelegate {
-    func close() {
-        showPublicPopup = false
-    }
-}
+
 
 struct VisitImpactView_Previews: PreviewProvider {
     static var previews: some View {
