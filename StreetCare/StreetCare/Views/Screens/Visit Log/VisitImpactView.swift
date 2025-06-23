@@ -30,6 +30,9 @@ struct VisitImpactView: View {
     @Binding var selection: Int
     @State private var showCustomAlert = false
     @State private var doNotShowAgain = false
+    @State var logsOld = [VisitLog]()
+    @State var logsNew = [VisitLog]()
+   
     @AppStorage("hideProvidedHelpAlert") private var hideProvidedHelpAlert: Bool = false
 
 
@@ -274,6 +277,7 @@ struct VisitImpactView: View {
                     }
                     if Auth.auth().currentUser != nil {
                         adapter.refresh()
+                        adapter.refresh_new()
                         adapter.refreshWebProd()
                         self.isLoading = true
                     } else {
@@ -341,6 +345,12 @@ struct VisitImpactView: View {
         }
 
     }
+    
+    private func mergeLogs() {
+        self.history = (logsOld + logsNew)
+            .sorted { $0.whenVisit > $1.whenVisit }  // Sort newest first
+    }
+
 
     private func updateCounts() {
 
@@ -452,19 +462,24 @@ struct HalfCapsuleShape: Shape {
 }
 
 
+
+
 extension VisitImpactView: VisitLogDataAdapterProtocol {
     func visitLogDataRefreshed(_ logs: [VisitLog]) {
-        self.history = logs
-        self.updateCounts()
+        self.logsOld = logs
+        self.mergeLogs()
         self.isLoading = false
     }
 
     func visitLogDataRefreshedNew(_ logs: [VisitLog]) {
-        self.history = logs
-        self.updateCounts()
+        self.logsNew = logs
+        self.mergeLogs()
         self.isLoading = false
     }
+    
 }
+
+
 
 struct VisitImpactView_Previews: PreviewProvider {
     static var previews: some View {

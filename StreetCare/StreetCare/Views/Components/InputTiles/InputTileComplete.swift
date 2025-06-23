@@ -91,24 +91,31 @@ struct InputTileComplete: View {
 //                    )
 //                }
 //                .padding(.bottom, 12)
-                
                 HStack {
-                    Button("Back to Interaction Log") {
+                    Button(action: {
+                       // VisitImpactView(selection: .constant(1)) // Adjust binding if needed
                         finishAction()
+                    }) {
+                        ZStack {
+                            NavLinkButton(
+                                title: "Back to Interaction Log",
+                                width: 210,
+                                cornerRadius: 20,
+                                fontSize: 13,
+                                textColor: Color("SecondaryColor"),
+                                buttonColor: Color("PrimaryColor")
+                            )
+                            .frame(width: 210, height: 25)
+                            .padding(.vertical, 6)
+                            .background(
+                                Capsule()
+                                    .fill(Color("SecondaryColor"))
+                            )
+                        }
                     }
-                    .foregroundColor(Color("PrimaryColor"))
-                    .frame(maxWidth: 180)
-                    .padding(.vertical, 12)
-                    .padding(.horizontal, 12)
-                    .font(.caption)
-                    .fontWeight(.bold)
-                    .background(
-                        Capsule()
-                            .fill(Color("SecondaryColor"))
-                    )
                 }
-                .padding(.bottom, 12)
-                
+
+
                 if !hasShared {
                     HStack {
                         Button("Share with Community") {

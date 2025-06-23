@@ -102,7 +102,7 @@ struct VisitLogView: View {
                 furthernotesSection()
                 volunteerAgainSection()
                 
-                if !hasShared {
+                if !log.isPublic {
                     HStack {
                         Button("Share with Community") {
                             showConfirmationDialog = true
@@ -152,7 +152,9 @@ struct VisitLogView: View {
                     """),
                     primaryButton: .default(Text("Confirm")) {
                         let adapter = VisitLogDataAdapter()
-                        adapter.addVisitLog_Community(self.log)
+                        adapter.updateVisitLogField(log.id, field: "isPublic", value: true) {
+                            print("🔓 Log is now public!")
+                        }
                         hasShared = true
                         showConfirmationDialog = false
                     },

@@ -86,7 +86,7 @@ class PublicVisitLogDataAdapter {
                     }
                     
                     if let whatGiven = document["whatGiven"] as? [String] {
-                        log.helpGiven.append(contentsOf: whatGiven)
+                        log.whatGiven.append(contentsOf: whatGiven)
                     }
                     
                     if let dateTime = document["dateTime"] as? Timestamp {
