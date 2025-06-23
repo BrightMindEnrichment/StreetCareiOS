@@ -11,6 +11,7 @@ import CoreLocation
 class VisitLog: ObservableObject, Identifiable {
     @Published var id: String
     @Published var whenVisit = Date()
+    @Published var user = UserDetails()
     @Published var whereVisit = ""
     @Published var locationDescription = ""
     @Published var peopleHelped = 0
@@ -107,4 +108,9 @@ class VisitLog: ObservableObject, Identifiable {
 
         task.resume()
     }
+}
+class PublicVisitLogData: ObservableObject, Identifiable {
+    @Published var monthYear : String = ""
+    @Published var date : (String?, String?, String?) = ("","","")
+    @Published var log: VisitLog?
 }
