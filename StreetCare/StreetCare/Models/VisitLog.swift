@@ -7,11 +7,16 @@
 
 import Foundation
 import CoreLocation
+import UIKit
 
 class VisitLog: ObservableObject, Identifiable {
     @Published var id: String
     @Published var whenVisit = Date()
     @Published var user = UserDetails()
+    @Published var username: String = "Firstname Lastname"
+    @Published var userType: String = "Account Holder"
+    @Published var image: UIImage? = nil
+    @Published var photoURL: String = ""
     @Published var whereVisit = ""
     @Published var locationDescription = ""
     @Published var peopleHelped = 0

@@ -8,6 +8,7 @@
 import SwiftUI
 import FirebaseStorage
 import FirebaseAuth
+import FirebaseFirestore
 
 struct ProfileDetails: View {
     
@@ -55,9 +56,27 @@ struct ProfileDetails: View {
                 adapter.refresh()
                 
                 storage.uid = user.uid
-                storage.getImage()
-            }
-        }
+                let db = Firestore.firestore()
+                        db.collection("users").whereField("uid", isEqualTo: user.uid).getDocuments { snapshot, error in
+                            if let docs = snapshot?.documents, let doc = docs.first {
+                                if let url = doc["photoUrl"] as? String, !url.isEmpty {
+                                    if let imageUrl = URL(string: url) {
+                                        URLSession.shared.dataTask(with: imageUrl) { data, response, error in
+                                            if let data = data, let image = UIImage(data: data) {
+                                                DispatchQueue.main.async {
+                                                    self.avatarImage = image
+                                                }
+                                            }
+                                        }.resume()
+                                    }
+                                } else {
+                                    storage.getImage()
+                                }
+        
+                            }
+                        }
+                    }
+                }
         .sheet(isPresented: self.$shouldShowPhotoDialog) {
             ImagePickerView(selectedImage: self.$avatarImage, sourceType: .camera)
         }
