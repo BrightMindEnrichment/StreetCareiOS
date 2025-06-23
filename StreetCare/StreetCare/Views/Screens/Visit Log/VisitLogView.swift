@@ -102,7 +102,7 @@ struct VisitLogView: View {
                 furthernotesSection()
                 volunteerAgainSection()
                 
-                if !hasShared {
+                if !log.isPublic {
                     HStack {
                         Button("Share with Community") {
                             showConfirmationDialog = true

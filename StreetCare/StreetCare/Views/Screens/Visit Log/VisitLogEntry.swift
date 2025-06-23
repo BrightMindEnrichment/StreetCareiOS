@@ -297,7 +297,7 @@ struct VisitLogEntry: View {
                         placeholderText: "Enter notes here",
                         otherNotes: $visitLog.furtherOtherNotes,
                         nextAction: {
-                            //saveVisitLog()
+                            saveVisitLog()
                             questionNumber += 1
                         },
                         previousAction: {
@@ -312,7 +312,7 @@ struct VisitLogEntry: View {
                     
                 case 100:
                     InputTileComplete() {
-                        saveVisitLog() // Regular save
+                        //saveVisitLog() // Regular save
                         presentation.wrappedValue.dismiss()
                     } shareAction: {
                         saveVisitLog_Community() // Save for community
