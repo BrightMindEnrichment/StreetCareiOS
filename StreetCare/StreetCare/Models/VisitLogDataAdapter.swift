@@ -162,11 +162,12 @@ class VisitLogDataAdapter {
         print("User UID:", user.uid)
         print("VisitLog UID:", visitLog.uid)
         print("userData keys:", userData.keys.sorted())
-        db.collection(collectionName).document().setData(userData) { error in
+        let docRef = db.collection(collectionName).document(visitLog.id) // Use visitLog.id
+        docRef.setData(userData) { error in
             if let error = error {
                 print("⚠️ Error writing VisitLog: \(error.localizedDescription)")
             } else {
-                print("✅ Document successfully written to \(collectionName)!")
+                print("✅ Document successfully written with ID \(visitLog.id) to \(collectionName)!")
             }
         }
     }

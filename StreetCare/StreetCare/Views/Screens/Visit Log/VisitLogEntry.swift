@@ -267,7 +267,6 @@ struct VisitLogEntry: View {
                     )
                 case 14:
                     InputTileVolunteerAgain(questionNumber: 7, totalQuestions: 7, question1: "Would you like to", question2: "volunteer again?", volunteerAgain: $visitLog.volunteerAgain) {
-                        saveVisitLog()
                         isComplete = true
                         questionNumber = 100
                     } previousAction: {
@@ -313,10 +312,9 @@ struct VisitLogEntry: View {
                     
                 case 100:
                     InputTileComplete() {
-                        //saveVisitLog() // Regular save
+                        saveVisitLog() // Regular save
                         presentation.wrappedValue.dismiss()
                     } shareAction: {
-                        //saveVisitLog()
                         saveVisitLog_Community() // Save for community
                     }
                     
@@ -347,8 +345,9 @@ struct VisitLogEntry: View {
     
     func saveVisitLog_Community() {
         let adapter = VisitLogDataAdapter()
-        //adapter.addVisitLog(self.visitLog)
-        adapter.addVisitLog_Community(self.visitLog)
+        adapter.updateVisitLogField(self.visitLog.id, field: "isPublic", value: true) {
+            print("🔓 Log is now public!")
+        }
     }
     
 } // end struct
