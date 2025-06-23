@@ -93,13 +93,13 @@ struct PublicLogViewCard: View {
                     Text("\(formatTime(log.whenVisit))")
                         .font(.system(size: 13))
                 }
-                if log.helpGiven.count != 0 {
+                if log.whatGiven.count != 0 {
                     HStack {
                         Image("HelpType")
                             .resizable()
                             .frame(width: 20.0, height: 20.0)
                         
-                        Text(log.helpGiven.joined(separator: ", "))
+                        Text(log.whatGiven.joined(separator: ", "))
                             .font(.system(size: 13))
                             .padding(.horizontal, 10)
                             .padding(.vertical, 5)
