@@ -171,7 +171,7 @@ class VisitLogDataAdapter {
             }
         }
     }
-    func addVisitLog_Community(_ visitLog: VisitLog) {
+    /*func addVisitLog_Community(_ visitLog: VisitLog) {
         
         guard let user = Auth.auth().currentUser else {
             print("no user?")
@@ -220,7 +220,7 @@ class VisitLogDataAdapter {
                 print("Document successfully written in visitLogWebProd!")
             }
         }
-    }
+    }*/
   
     func fullStateName(from abbreviation: String) -> String {
         let states = [
