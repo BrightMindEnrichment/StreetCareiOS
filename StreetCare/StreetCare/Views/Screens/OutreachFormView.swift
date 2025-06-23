@@ -7,6 +7,7 @@
 import SwiftUI
 import Firebase
 import GooglePlaces
+import FirebaseAuth
 
 struct OutreachFormView: View {
     @Binding var isPresented: Bool
@@ -16,6 +17,8 @@ struct OutreachFormView: View {
     @State private var showChapterMembershipForm = false
     @Environment(\.presentationMode) var presentationMode
     @State private var title = ""
+    @State private var contactNumber = ""
+    @State private var emailAddress = ""
     @State private var street = ""
     @State private var state = ""
     @State private var city = ""
@@ -36,6 +39,11 @@ struct OutreachFormView: View {
     @State private var isLoading = false
     @State private var chaptermemberMessage1 = ""
     @State private var showAddressSearch = false
+    @State private var consentStatus: Bool = false
+    @State private var primaryButtonText = ""
+    @State private var secondaryButtonText = ""
+
+
 
     let skills = ["Childcare", "Counselling and Support", "Clothing", "Education", "Personal Care", "Employment and Training", "Food and Water", "Healthcare", "Chinese", "Spanish", "Language (please specify)", "Legal", "Shelter", "Transportation", "LGBTQ Support", "Technology Access", "Social Integration", "Pet Care"]
 
@@ -44,21 +52,91 @@ struct OutreachFormView: View {
 
     var allFieldsFilled: Bool {
         !title.isEmpty &&
-        //!street.isEmpty &&
         !state.isEmpty &&
         !city.isEmpty &&
-        //!zipcode.isEmpty &&
         !helpType.isEmpty &&
-        !maxCapacity.isEmpty
+        !maxCapacity.isEmpty &&
+        !eventDescription.isEmpty
+        
     }
 
     func saveToFirestore() {
-        guard allFieldsFilled else {
-            alertMessage = "Please fill in all required fields."
-            alertTitle = "New Outreach Event"
+//        guard allFieldsFilled else {
+//            alertMessage = "Please fill in all required fields."
+//            alertTitle = "New Outreach Event"
+//            chaptermemberMessage1 = ""
+//            primaryButtonText = "OK"
+//            secondaryButtonText = "Exit"
+//            showAlert = true
+//            return
+//        }
+        if title.isEmpty {
+            alertMessage = "Please enter the event title."
+            alertTitle = "Missing Title"
+            chaptermemberMessage1 = ""
+            primaryButtonText = "OK"
+            secondaryButtonText = "Exit"
+            showAlert = true
+                return
+            }
+        if state.isEmpty {
+            alertMessage = "Please enter the state."
+            alertTitle = "Missing State"
+            chaptermemberMessage1 = ""
+            primaryButtonText = "OK"
+            secondaryButtonText = "Exit"
+            showAlert = true
+            return
+            
+        }
+        if city.isEmpty {
+            alertMessage = "Please enter the city."
+            alertTitle = "Missing City"
+            chaptermemberMessage1 = ""
+            primaryButtonText = "OK"
+            secondaryButtonText = "Exit"
+            showAlert = true
+            return
+            
+        }
+        if helpType.isEmpty {
+            alertMessage = "Please enter the type of support offered."
+            alertTitle = "Missing support type"
+            chaptermemberMessage1 = ""
+            primaryButtonText = "OK"
+            secondaryButtonText = "Exit"
+            showAlert = true
+            return
+           }
+        if maxCapacity.isEmpty {
+            alertMessage = "Please enter Total allowable participants"
+            alertTitle = "Missing Total allowable participants"
+            chaptermemberMessage1 = ""
+            primaryButtonText = "OK"
+            secondaryButtonText = "Exit"
+            showAlert = true
+            return
+            
+        }
+        if eventDescription.isEmpty{
+            alertMessage = "Please enter Event Description"
+            alertTitle = "Missing Event Description"
+            chaptermemberMessage1 = ""
+            primaryButtonText = "OK"
+            secondaryButtonText = "Exit"
             showAlert = true
             return
         }
+        if !contactNumber.isEmpty && contactNumber.count < 10 {
+            alertTitle = "Invalid Number"
+            alertMessage = "Please enter a 10-digit contact number."
+            chaptermemberMessage1 = ""
+            primaryButtonText = "OK"
+            secondaryButtonText = "Exit"
+            showAlert = true
+            return
+        }
+        
         guard let user = Auth.auth().currentUser else {
             print("No authenticated user")
             return
@@ -76,6 +154,7 @@ struct OutreachFormView: View {
             "eventDate": Timestamp(date: startDate),
             "eventStartTime": Timestamp(date: startTime),
             "eventEndTime": Timestamp(date: endTime),
+            "timeZone": TimeZoneHelper.getLocalizedTimeZoneAbbreviation(),
             "helpRequest": [
                 "helpType": helpType,
                 "interests": 1,
@@ -94,7 +173,10 @@ struct OutreachFormView: View {
             "status": "pending",
             "title": title,
             "totalSlots": maxCapacity,
-            "uid": user.uid
+            "uid": user.uid,
+            "contactNumber": contactNumber,
+            "consentStatus": consentStatus,
+            "emailAddress": emailAddress
         ]
 
         // Save to Firestore
@@ -110,6 +192,8 @@ struct OutreachFormView: View {
                 alertTitle = "Thank you for submitting your request!"
                 alertMessage = "Approval can take typically within four business days."
                 chaptermemberMessage1 = " Streamline your experience with Chapter membership."
+                primaryButtonText = "Sign Up"
+                secondaryButtonText = "Remind me Later"
                 showAlert = true
             }
         }
@@ -161,6 +245,29 @@ struct OutreachFormView: View {
                         .foregroundColor(.gray)
                 }
                 
+                //contact field
+                Text(NSLocalizedString("Contact Number", comment: ""))
+                    .font(.headline)
+                
+                TextField("Enter your Contact Number here", text: $contactNumber)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .keyboardType(.phonePad)
+                    .onChange(of: contactNumber) { newValue in
+                        let filtered = newValue.filter { $0.isNumber }
+                        contactNumber = String(filtered.prefix(10))
+                    }
+
+                
+        
+                //email
+                Text(NSLocalizedString("Email", comment: ""))
+                    .font(.headline)
+
+                TextField("Enter your Email Address here", text: $emailAddress)
+                    .textFieldStyle(RoundedBorderTextFieldStyle())
+                    .autocapitalization(.none)
+                
+                //address
                 Text(NSLocalizedString("enteraddress", comment: ""))
                     .font(.headline)
 
@@ -227,7 +334,26 @@ struct OutreachFormView: View {
                     text: $eventDescription,
                     limit: descriptionLimit
                 )
+                
+                //checkbox disclaimer
+                HStack(alignment: .top, spacing: 10) {
+                    Button(action: {
+                        consentStatus.toggle()
+                        print("consentStatus toggled: \(consentStatus)")
+                    }) {
+                        Image(systemName: consentStatus ? "checkmark.square" : "square")
+                            .foregroundColor(consentStatus ? .black : .gray)
+                            .font(.body)
+                    }
+                    .buttonStyle(PlainButtonStyle())
 
+                    Text(NSLocalizedString("consentLine", comment: ""))
+                        .font(.body)
+                        .multilineTextAlignment(.leading)
+                }
+                .padding(.top, 20)
+
+                
                 // Buttons Section
                 VStack(spacing: 20) {
                     NavLinkButton(title: NSLocalizedString("selectSkillsButtonTitle", comment: ""), width: 300, secondaryButton: false)
@@ -255,6 +381,7 @@ struct OutreachFormView: View {
                     NavLinkButton(title: NSLocalizedString("discardButtonTitle", comment: ""), width: 300, secondaryButton: true)
                         .onTapGesture {
                             isPresented = false
+                            presentationMode.wrappedValue.dismiss()
                         }
                 }
                 .frame(maxWidth: .infinity, alignment: .center)
@@ -272,13 +399,15 @@ struct OutreachFormView: View {
             Alert(
                 title: Text(alertTitle),
                 message: Text(alertMessage + chaptermemberMessage1),
-                primaryButton: .default(Text("Sign Up")) {
+                primaryButton: .default(Text(primaryButtonText)) {
                     // Navigate only if the alert message matches
-                    if alertMessage == "Approval may take up to 5 business days." {
+                    if alertMessage.contains("Approval can take typically within four business days.") {
+                        //isPresented = false
+                       // shouldDismissAll = true
                         showChapterMembershipForm = true
                     }
                 },
-                secondaryButton: .cancel(Text("Remind me Later")){
+                secondaryButton: .cancel(Text(secondaryButtonText)){
                     presentationMode.wrappedValue.dismiss()
                 }
             )
@@ -320,7 +449,7 @@ struct SkillSelectionView: View {
 
     var body: some View {
         VStack {
-            Text("Select the skills needed to provide help")
+            Text("Select the skills required to provide support")
                 .font(.headline)
                 .padding()
 
@@ -428,74 +557,77 @@ struct TimePickerWithTimeZone: View {
     @Binding var startTime: Date
     @Binding var endDate: Date
     @Binding var endTime: Date
-
+    
     var body: some View {
         VStack(alignment: .leading, spacing: 15) {
             // Start Date
             HStack {
                 Text(NSLocalizedString("startDate", comment: "Start Date Label"))
                     .font(.headline)
-
+                
                 Spacer()
-
+                
                 DatePicker("", selection: $startDate, displayedComponents: .date)
                     .labelsHidden()
                     .datePickerStyle(CompactDatePickerStyle())
             }
-
+            
             // Start Time
             HStack {
                 Text(NSLocalizedString("startTime", comment: "Start Time Label"))
                     .font(.headline)
-
+                
                 Spacer()
-
+                
                 DatePicker("", selection: $startTime, displayedComponents: .hourAndMinute)
                     .labelsHidden()
                     .datePickerStyle(CompactDatePickerStyle())
-
-                Text(getLocalizedTimeZoneAbbreviation())
+                
+                Text(TimeZoneHelper.getLocalizedTimeZoneAbbreviation())
                     .font(.subheadline)
                     .foregroundColor(.gray)
             }
-
+            
             // End Date
             HStack {
                 Text(NSLocalizedString("endDate", comment: "End Date Label"))
                     .font(.headline)
-
+                
                 Spacer()
-
+                
                 DatePicker("", selection: $endDate, displayedComponents: .date)
                     .labelsHidden()
                     .datePickerStyle(CompactDatePickerStyle())
             }
-
+            
             // End Time
             HStack {
                 Text(NSLocalizedString("endTime", comment: "End Time Label"))
                     .font(.headline)
-
+                
                 Spacer()
-
+                
                 DatePicker("", selection: $endTime, displayedComponents: .hourAndMinute)
                     .labelsHidden()
                     .datePickerStyle(CompactDatePickerStyle())
-
-                Text(getLocalizedTimeZoneAbbreviation())
+                
+                Text(TimeZoneHelper.getLocalizedTimeZoneAbbreviation())
                     .font(.subheadline)
                     .foregroundColor(.gray)
             }
         }
         .padding()
     }
+}
 
     // Function to get the localized time zone abbreviation
-    func getLocalizedTimeZoneAbbreviation() -> String {
-        let abbreviation = TimeZone.current.abbreviation() ?? "UTC"
-        return NSLocalizedString(abbreviation, comment: "Localized Time Zone Abbreviation")
+struct TimeZoneHelper {
+    static func getLocalizedTimeZoneAbbreviation() -> String {
+        return TimeZone.current.abbreviation() ?? "UTC"
     }
 }
+
+
 struct GooglePlacesAutocomplete: UIViewControllerRepresentable {
     @Binding var street: String
     @Binding var city: String

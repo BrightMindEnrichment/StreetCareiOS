@@ -16,6 +16,7 @@ class Event: Identifiable {
     var id = UUID() // test
     var eventId: String?
     var title: String = ""
+    
     var description: String?
     var eventDate: Date?
     var location : String?
@@ -40,9 +41,14 @@ class Event: Identifiable {
     var eventDateStamp : Timestamp?
     var eventStartTimeStamp : Timestamp?
     var eventEndTimeStamp : Timestamp?
-    //var isRegistered : Bool
+    var timeZone: String?
     var isFlagged : Bool = false
     var flaggedByUser:String? = ""
+    
+    var emailAddress: String?
+    var contactNumber: String?
+    var consentStatus: Bool = false
+
     
     func updateFlagStatus(newFlagState: Bool, userId: String?) {
         isFlagged = newFlagState
@@ -54,6 +60,7 @@ class EventData : ObservableObject, Identifiable{
     @Published var monthYear : String = ""
     @Published var date : (String?, String?, String?) = ("","","")
     @Published var event =  Event()
+
 }
 
 class HelpRequest {

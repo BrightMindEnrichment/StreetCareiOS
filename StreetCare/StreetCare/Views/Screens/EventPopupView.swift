@@ -91,26 +91,75 @@ struct EventPopupView: View {
                         .padding(8)
                 }
                 
-                if let city = event.event.city,
-                   let state = event.event.stateAbbv,
-                   !city.isEmpty, !state.isEmpty {
-                    HStack {
-                        Image(systemName: "mappin.and.ellipse")
-                        Text("\(city), \(state)").font(.system(size: 13))
+                HStack(spacing: 6) {
+                    Image(systemName: "calendar")
+                        .foregroundColor(.black)
+
+                    VStack(alignment: .leading, spacing: 2) {
+                        let date = event.date.0 ?? ""
+                        let day = event.date.1 ?? ""
+                        let time = event.date.2 ?? ""
+                        let monthyear = event.monthYear
+                        let timeZone = event.event.timeZone ?? ""
+
+                        Text("\(monthyear), \(day) \(date), \(time) \(timeZone)")
+                            .font(.system(size: 13))
+                        
+                         
+                    }
+                }
+
+
+                
+                if event.event.consentStatus {
+                    if let contact = event.event.contactNumber, !contact.isEmpty {
+                        HStack(spacing: 6){
+                            Image(systemName: "phone")
+                            Text(contact).font(.system(size: 13))
+                        }
+                    }
+                    
+                    if let emailAddress = event.event.emailAddress, !emailAddress.isEmpty {
+                        HStack(spacing: 6){
+                            Image(systemName: "envelope")
+                            Text(emailAddress).font(.system(size: 13))
+                        }
+                    }
+                    
+                    
+                }
+                
+                if event.event.consentStatus {
+                    if let street = event.event.street,
+                       let city = event.event.city,
+                       let state = event.event.stateAbbv,
+                       let zip = event.event.zipcode,
+                       !street.isEmpty, !city.isEmpty, !state.isEmpty {
+                        HStack(spacing: 6){
+                            Image(systemName: "mappin.and.ellipse")
+                            Text("\(street), \(city), \(state) \(zip)")
+                                .font(.system(size: 13))
+                        }
+                    }
+                } else {
+                    if let city = event.event.city,
+                       let state = event.event.stateAbbv,
+                       !city.isEmpty, !state.isEmpty {
+                        HStack(spacing: 6){
+                            Image(systemName: "mappin.and.ellipse")
+                            Text("\(city), \(state)").font(.system(size: 13))
+                        }
                     }
                 }
                 
-                HStack {
-                    Image(systemName: "clock")
-                    if let date = event.date.2{
-                        Text("\(date)")
-                            .font(.system(size: 13))
-                    }
-                }
+                
                 if let description = event.event.description, !description.isEmpty {
                     Text("Event Description").font(.system(size: 14)).fontWeight(.semibold)
                     Text(description).font(.system(size: 13))
                 }
+                
+                
+
                 
                 if let helpType = event.event.helpType, !helpType.isEmpty {
                     HStack {
@@ -226,10 +275,33 @@ struct EventPopupView: View {
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                 }
             }
+                .onAppear {
+                    print("EventPopupView appeared")
+                    print("Consent Box: \(event.event.consentStatus)")
+                    print("Email: \(event.event.emailAddress ?? "nil")")
+                    print("Contact Number: \(event.event.contactNumber ?? "nil")")
+                    print("title: \(event.event.title)")
+                    print("description: \(String(describing: event.event.description))")
+                    
+                }
+
         )
     }
 }
 
+func formattedYear(_ date: Date?) -> String {
+    guard let date = date else { return "" }
+    let formatter = DateFormatter()
+    formatter.dateFormat = "yyyy"
+    return formatter.string(from: date)
+}
+
+func formattedTime(_ date: Date?) -> String {
+    guard let date = date else { return "" }
+    let formatter = DateFormatter()
+    formatter.timeStyle = .short // e.g., 3:00 PM
+    return formatter.string(from: date)
+}
 
 
 struct BottomSheetModifier<SheetContent: View>: ViewModifier {

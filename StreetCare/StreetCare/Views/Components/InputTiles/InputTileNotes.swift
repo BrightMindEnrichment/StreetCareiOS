@@ -1,29 +1,36 @@
+//
+//  InputTileNotes.swift
+//  StreetCare
+//
+//  Created by Marian John on 4/24/25.
+//
+
 import SwiftUI
 
-struct InputTileDuration: View {
+struct InputTileNotes: View {
+
     var questionNumber: Int
     var totalQuestions: Int
-    
-    //var size = CGSize(width: 350.0, height: 320.0)
+
     var tileWidth: CGFloat
     var tileHeight: CGFloat
-    var questionLine1: String
-    var questionLine2: String
-    var questionLine3: String
-    
-    
-    @Binding var hours: Int
-    @Binding var minutes: Int
 
-    
+    var question1: String
+    var question2: String
+    var question3: String
+
+    var placeholderText: String
+    @Binding var otherNotes: String
+
     var nextAction: () -> ()
     var previousAction: () -> ()
     var skipAction: () -> ()
-    var buttonMode: ButtonMode = .navigation
+
+    var buttonMode: ButtonMode
+
     @Environment(\.presentationMode) var presentationMode
     @State private var showSuccessAlert = false
-    @State private var localHours: Int = 0
-    @State private var localMinutes: Int = 0
+
     var body: some View {
         VStack(spacing: 0) {
             if buttonMode == .update {
@@ -37,11 +44,13 @@ struct InputTileDuration: View {
                 BasicTile(size: CGSize(width: tileWidth, height: tileHeight))
                 
                 VStack {
-                    if buttonMode == .navigation {
+                    if buttonMode == .navigation{
                         HStack {
                             Text("Question \(questionNumber)/\(totalQuestions)")
                                 .foregroundColor(.black)
+                            
                             Spacer()
+                            
                             Button("Skip") {
                                 skipAction()
                             }
@@ -53,6 +62,7 @@ struct InputTileDuration: View {
                             .overlay(Capsule().stroke(Color("SecondaryColor"), lineWidth: 2))
                         }
                         .padding(.horizontal)
+                        .padding(.top, 12)
                         
                         Divider()
                             .background(Color.gray.opacity(0.3))
@@ -60,25 +70,13 @@ struct InputTileDuration: View {
                     }
                     
                     VStack {
-                        Text(questionLine1)
-                            .font(.title2)
-                            .fontWeight(.bold)
-                            .padding(.top, 6)
-                        Text(questionLine2)
-                            .font(.title2)
-                            .fontWeight(.bold)
-                        Text(questionLine3)
-                            .font(.title2)
-                            .fontWeight(.bold)
-                            .padding(.bottom, 12)
+                        Text(question1).font(.title2).fontWeight(.bold).padding(.bottom, 1)
+                        Text(question2).font(.title2).fontWeight(.bold).padding(.bottom, 1)
+                        Text(question3).font(.title2).fontWeight(.bold).padding(.bottom, 1)
                     }
+                    .padding(.vertical)
                     
-                    HStack(spacing: 16) {
-                        CustomDropdown(title: "Hours", selection: $localHours, options: Array(0..<13).reversed())
-                        CustomDropdown(title: "Minutes", selection: $localMinutes, options: Array(0..<61).reversed())
-                    }
-                    .padding(.horizontal)
-                    .padding()
+                    AutoGrowingTextEditor(text: $otherNotes, placeholder: placeholderText)
                     
                     if buttonMode == .navigation {
                         HStack {
@@ -94,7 +92,7 @@ struct InputTileDuration: View {
                             
                             Spacer()
                             
-                            Button(" Next  ") {
+                            Button("Next") {
                                 nextAction()
                             }
                             .foregroundColor(Color("PrimaryColor"))
@@ -119,8 +117,6 @@ struct InputTileDuration: View {
                             Spacer()
                             
                             Button("Update") {
-                                hours = localHours
-                                minutes = localMinutes
                                 showSuccessAlert = true
                                 nextAction()
                             }
@@ -138,14 +134,10 @@ struct InputTileDuration: View {
         .navigationBarTitleDisplayMode(.inline)
         .navigationTitle("Interaction Log")
         .frame(width: tileWidth, height: tileHeight)
-        .onAppear {
-            localHours = hours
-            localMinutes = minutes
-        }
         .alert(isPresented: $showSuccessAlert) {
             Alert(
                 title: Text("Updated"),
-                message: Text("Time spent on outreach was successfully updated."),
+                message: Text("Interaction Log was successfully updated."),
                 dismissButton: .default(Text("OK")) {
                     presentationMode.wrappedValue.dismiss()
                 }
@@ -156,75 +148,12 @@ struct InputTileDuration: View {
             SegmentedProgressBar(
                 totalSegments: totalQuestions,
                 filledSegments: questionNumber,
-                tileWidth: 350
+                tileWidth: tileWidth
             )
-
             Text("Progress")
                 .font(.footnote)
-                .fontWeight(.bold)
                 .padding(.top, 4)
-        }
-    }
-}
-struct CustomDropdown: View {
-    var title: String
-    @Binding var selection: Int
-    var options: [Int]
-
-    var body: some View {
-        Menu {
-            ForEach(options, id: \.self) { option in
-                Button(action: {
-                    selection = option
-                }) {
-                    HStack {
-                        Text("\(option)")
-                        if option == selection {
-                            Spacer()
-                            Image(systemName: "checkmark")
-                        }
-                    }
-                }
-            }
-        } label: {
-            HStack {
-                Text("\(selection)")
-                    .foregroundColor(.black)
-                Spacer()
-                Image(systemName: "chevron.down")
-                    .foregroundColor(.black)
-            }
-            .padding(.horizontal)
-            .frame(width: 139, height: 43)
-            .background(Color.white)
-            .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.black, lineWidth: 1))
-            .cornerRadius(8)
-        }
-    }
-}
-
-
-struct InputTileDuration_Previews: PreviewProvider {
-    @State static var hours = -1
-    @State static var minutes = -1
-
-    static var previews: some View {
-        InputTileDuration(
-            questionNumber: 1,
-            totalQuestions: 7,
-            tileWidth: 360,
-            tileHeight: 361,
-            questionLine1: "How much time did",
-            questionLine2: "you spend on the",
-            questionLine3: "outreach?",
-            hours: $hours,
-            minutes: $minutes
-        ) {
-            // next
-        } previousAction: {
-            // previous
-        } skipAction: {
-            // skip
+                .fontWeight(.bold)
         }
     }
 }

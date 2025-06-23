@@ -77,7 +77,7 @@
 "iCanHelpText2" = "La presencia en grupo ofrece seguridad y eficacia para enfrentar situaciones y personas desconocidas, beneficiando tanto a los voluntarios como a las personas sin hogar.";
 "iCanHelpText3" = "¿Cómo funciona el outreach en Street Care?";
 "iCanHelpText4" = "Publicamos el outreach para ti, y otros voluntarios pueden inscribirse para acompañarte.";
-"saveEventButtonTitle" = "Guardar";
+"saveEventButtonTitle" = "Publicar";
 "discardButtonTitle" = "Descartar";
 "selectSkillsButtonTitle" = "SELECCIONAR HABILIDADES";
 
@@ -93,9 +93,9 @@
 "startTime" = "Hora de inicio";
 "endDate" = "Fecha de finalización";
 "endTime" = "Hora de finalización";
-"helpType" = "Tipo de ayuda";
+"helpType" = "Tipo de apoyo requerido";
 "eghelpType" = "Por ejemplo, Se necesita especialista en niños";
-"maximumCapacity" = "Capacidad máxima";
+"maximumCapacity" = "Capacidad máxima permitida";
 "egmaximumCapacity" = "Capacidad máxima de participantes permitida";
 "eventDescription" = "Descripción del evento";
 "enterEventDescription" = "Ingrese la descripción del evento";
@@ -126,6 +126,19 @@
 "guestWarningMessage" = "No podrá ver ni editar sus registros de visitas sin iniciar sesión";
 "login" = "INICIAR SESIÓN";
 "emptytext" = " ";
+"Contact Number"= "Número de contacto";
+"consentLine" = "Al seleccionar esta casilla, doy mi consentimiento para compartir mis datos de contacto y la dirección del evento públicamente en esta plataforma / espacio comunitario para facilitar la participación en el evento de alcance. Entiendo que esta información será visible para otros y reconozco las consideraciones de privacidad asociadas.";
+"aq2des" = "Por ejemplo, mi tía Mary ayudó a preparar (mary@gmail.com), y mis hermanos Bob y Bill salieron conmigo (bob@gmail.com, bill@gmail.com, 702-506-6101).";
+"aq3des" = "Ej., Jill — una niña de 15 años que se escapó y llevaba un vestido azul.";
+"aq6des" = "Ej. 'Tom tiene diabetes y prefiere no consumir snacks azucarados'";
+"publicinteractions" = "Interacciones públicas";
+"events" = "Eventos";
+"publicInteractionLog" = "Registro de Interacciones Públicas";
+"gettingTheEvents" = "Obteniendo los eventos";
+"map" = "Mapa";
+"mapUnavailable" = "El mapa no está disponible actualmente";
+
+
 
 //"helloWorld" = "¡Hola Mundo!";
 //"welcome" = "Bienvenido a\nStreet Care";

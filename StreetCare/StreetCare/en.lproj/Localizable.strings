@@ -58,7 +58,7 @@
 "howToHelp" = "How to Help";
 "futureEvents" = "Future Events";
 "pastEvents" = "Past Events";
-"helpRequests" = "Help Requests";
+"publicinteractions" = "Public Interactions";
 
 "before_para1" = "The first thing to remember is that homeless people are a diverse group of people just like everyone else, no matter how they look, no matter their gender, age, or race. Some have fallen on hard times. Some may be struggling with mental illness. But everyone wants to be treated with respect and dignity. Here are some steps to follow before you go:";
 
@@ -93,7 +93,7 @@
 "guestCantCommunityError" = "Login to add an event.";
 
 "missingDataError" = "Please fill out all information.";
-"saveEventButtonTitle" = "Save";
+"saveEventButtonTitle" = "Publish";
 "discardButtonTitle" = "Discard";
 "selectSkillsButtonTitle" = "SELECT SKILLS";
 "rsvpExistingOutreach" = "RSVP EXISTING OUTREACH";
@@ -107,20 +107,20 @@
 
 "addNew" = "Add New";
 "title" = "Title*";
-"enterEventTitle" = "Enter Event Title";
+"enterEventTitle" = "Enter the Event Name here";
 "location" = "Location*";
-"street" = "Street*";
-"state" = "State*";
-"city" = "City*";
+"street" = "Street";
+"state" = "State";
+"city" = "City";
 "zipcode" = "Zip Code";
 "startDate" = "Start Date";
 "startTime" = "Start Time";
 "endDate" = "End Date";
 "endTime" = "End Time";
-"helpType" = "Help Type";
+"helpType" = "Required Support Type";
 "eghelpType" = "E.g, Children Specialist Needed";
-"maximumCapacity" = "Maximum Capacity";
-"egmaximumCapacity" = "Maximum capacity of participants allowed";
+"maximumCapacity" = "Total allowable participants";
+"egmaximumCapacity" = "Total allowable participants";
 "eventDescription" = "Event Description";
 "enterEventDescription" = "Enter Event Description";
 "additionalNotes" = "Additional Notes";
@@ -143,7 +143,7 @@
 "enteraddress" = "Enter Address*";
 "landmark" = "Describe the location/landmark.";
 "peopledescription" = "Example: Tom, a senior citizen in a wheelchair, wearing a navy blue shirt and brown shoes.";
-"disclaimer" = "Disclaimer: Completing one interaction     log per person helps us serve you better. Optional, any information helps.";
+"disclaimer" = "Disclaimer: Completing one interaction              log per person helps us serve you better. Optional, any information helps.";
 "comments" = "Questions/Comments/Notes";
 "otherNotes" = "If Other, please specify here.";
 "emptytext" = "  ";
@@ -153,7 +153,23 @@
 "loginRequiredMessage" = "Log in to enter an Interaction.";
 "notLoggedInPrompt" = "Please fill out this form each time you perform an outreach. This helps you track your contributions and allows Street Care to bring more support and services to help the community!";
 "guestWarningTitle"   = "Warning!";
-"guestWarningMessage" = "You will be unable to view or edit your visit logs without signing in";                                                                                                                     
+"guestWarningMessage" = "You will be unable to view or edit your visit logs without signing in";
+"Contact Number" = "Contact Number";
+"consentLine" = "By selecting this checkbox, I consent to sharing my contact details and event address publicly on this platform / community space to facilitate participation in the outreach event. I understand that this information will be visible to others and acknowledge the associated privacy considerations.";
+"aq2des" = "E.g, My Aunt Mary helped prepare (mary@gmail.com), and my brothers Bob and Bill went out with me (bob@gmail.com, bill@gmail.com, 702-506-6101).";
+"aq3des" = "Eg, Jill — a 15-year-old girl who ran away and was wearing a blue dress.";
+"aq6des" = "Eg. Tom has diabetes and prefers no sugary snacks.";
+"events" = "Events";
+"publicInteractionLog" = "Public Interaction Log";
+"gettingTheEvents" = "Getting the Events";
+"map" = "Map";
+"mapUnavailable" = "Map is currently unavailable";
+
+
+
+
+
+
 //"welcome" = "Welcome to\nStreet Care";
 //"loginButtonTitle" = "Login";
 //"signUpButtonTitle" = "Sign Up";
