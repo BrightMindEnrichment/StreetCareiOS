@@ -1,10 +1,3 @@
-//
-//  PublicVisitLogDataAdapter.swift
-//  StreetCare
-//
-//  Created by Aishwarya S on 12/05/25.
-//
-
 import Foundation
 import FirebaseAuth
 import FirebaseCore
@@ -19,109 +12,163 @@ protocol PublicVisitLogDataAdapterProtocol {
 
 class PublicVisitLogDataAdapter {
 
-    private let collectionName = ""
-    
     var visitLogs = [VisitLog]()
     var delegate: PublicVisitLogDataAdapterProtocol?
-    
-    func resetLogs() {
-        visitLogs = [VisitLog]()
-    }
-    
-    func refresh() {
-        let settings = FirestoreSettings()
 
-        Firestore.firestore().settings = settings
+    func resetLogs() {
+        visitLogs = []
+    }
+
+    func refreshAll() {
+        resetLogs()
+
+        var combinedLogs: [VisitLog] = []
+
+        let group = DispatchGroup()
+
+        group.enter()
+        refreshWebProd { logs in
+            combinedLogs.append(contentsOf: logs)
+            group.leave()
+        }
+
+        group.enter()
+        refreshVisitLogBookNew { logs in
+            combinedLogs.append(contentsOf: logs)
+            group.leave()
+        }
+
+        group.notify(queue: .main) {
+            self.visitLogs = combinedLogs.sorted { $0.whenVisit > $1.whenVisit }
+            self.delegate?.visitLogDataRefreshed(self.visitLogs)
+        }
+    }
+
+    private func refreshWebProd(completion: @escaping ([VisitLog]) -> Void) {
         let db = Firestore.firestore()
         let storage = Storage.storage()
-        
-        let _ = db.collection("visitLogWebProd")
+
+        db.collection("visitLogWebProd")
             .whereField("public", isEqualTo: true)
             .whereField("status", isEqualTo: "approved")
             .order(by: "dateTime", descending: true)
-            .getDocuments { querySnapshot, error in
-            
-            if let error = error {
-                print(error.localizedDescription)
-            }
-            else {
-                self.visitLogs.removeAll()
-                for document in querySnapshot!.documents {
-                                        
+            .getDocuments { snapshot, error in
+                if let error = error {
+                    print("⚠️ Error fetching WebProd logs: \(error.localizedDescription)")
+                    completion([])
+                    return
+                }
+
+                var logs: [VisitLog] = []
+
+                for document in snapshot?.documents ?? [] {
                     let log = VisitLog(id: document.documentID)
-                    if let isPublic = document["public"] as? Bool {
-                        log.isPublic = isPublic
-                    }
-                    
+
+                    log.isPublic = document["public"] as? Bool ?? false
+                    log.whenVisit = (document["dateTime"] as? Timestamp)?.dateValue() ?? Date()
+                    log.street = document["street"] as? String ?? ""
+                    log.city = document["city"] as? String ?? ""
+                    log.state = document["state"] as? String ?? ""
+                    log.stateAbbv = document["stateAbbv"] as? String ?? ""
+                    log.whatGiven = document["whatGiven"] as? [String] ?? []
+                    log.isFlagged = document["isFlagged"] as? Bool ?? false
+                    log.flaggedByUser = document["flaggedByUser"] as? String ?? ""
+
+                    // User info
                     if let uid = document["uid"] as? String {
-                        // fetch user details and profile picture url
-                        let user = UserDetails()
-                        db.collection("users")
-                            .whereField("uid", isEqualTo: uid)
-                            .limit(to: 1)
-                            .getDocuments { userDoc, error in
-                                if let error = error {
-                                print("Error fetching user data: \(error.localizedDescription)")
-                            } else if let userDoc = userDoc?.documents.first {
-                                let userData = userDoc.data()
-                                user.uid = uid
-                                user.userType = userData["Type"] as? String ?? ""
-                                user.userName = userData["username"] as? String ?? ""
+                        log.uid = uid
+                        self.fetchUserDetails(uid: uid, storage: storage) { userDetails in
+                            if let userDetails = userDetails {
+                                log.user = userDetails
                             }
                         }
-                        
-                        let reference = storage.reference().child("webappUserImages/").child(uid)
-                        user.profilePictureURL = reference.fullPath
-                        reference.getData(maxSize: .max) { data, error in
-                            if let error = error {
-                                user.image = nil
-                                print("error fetching image: \(error.localizedDescription)")
-                            }
-                            if let data = data {
-                                print("successs: \(uid)")
-                                user.image = UIImage(data: data)
+                    }
+
+                    logs.append(log)
+                }
+
+                completion(logs)
+            }
+    }
+
+    private func refreshVisitLogBookNew(completion: @escaping ([VisitLog]) -> Void) {
+        let db = Firestore.firestore()
+        let storage = Storage.storage()
+
+        db.collection("VisitLogBook_New")
+            .whereField("isPublic", isEqualTo: true)
+            .whereField("status", isEqualTo: "approved")
+            .order(by: "whenVisit", descending: true)
+            .getDocuments { snapshot, error in
+                if let error = error {
+                    print("⚠️ Error fetching VisitLogBook_New: \(error.localizedDescription)")
+                    completion([])
+                    return
+                }
+
+                var logs: [VisitLog] = []
+
+                for document in snapshot?.documents ?? [] {
+                    let log = VisitLog(id: document.documentID)
+
+                    log.isPublic = document["isPublic"] as? Bool ?? false
+                    log.whenVisit = (document["whenVisit"] as? Timestamp)?.dateValue() ?? Date()
+                    log.whereVisit = document["whereVisit"] as? String ?? ""
+                    log.peopleHelped = document["peopleHelped"] as? Int ?? 0
+                    log.whatGiven = document["whatGiven"] as? [String] ?? []
+                    log.isFlagged = document["isFlagged"] as? Bool ?? false
+                    log.flaggedByUser = document["flaggedByUser"] as? String ?? ""
+                    log.uid = document["uid"] as? String ?? ""
+                    //userdetails
+                    if let uid = document["uid"] as? String {
+                        log.uid = uid
+                        self.fetchUserDetails(uid: uid, storage: storage) { userDetails in
+                            if let userDetails = userDetails {
+                                log.user = userDetails
                             }
                         }
-                        log.user = user
                     }
-                    
-                    if let whatGiven = document["whatGiven"] as? [String] {
-                        log.whatGiven.append(contentsOf: whatGiven)
+
+                    logs.append(log)
+                }
+
+                completion(logs)
+            }
+    }
+
+    private func fetchUserDetails(uid: String, storage: Storage, completion: @escaping (UserDetails?) -> Void) {
+        let db = Firestore.firestore()
+        let userDetails = UserDetails()
+        userDetails.uid = uid
+
+        db.collection("users")
+            .whereField("uid", isEqualTo: uid)
+            .limit(to: 1)
+            .getDocuments { snapshot, error in
+                if let error = error {
+                    print("⚠️ Error fetching user details: \(error.localizedDescription)")
+                    completion(nil)
+                    return
+                }
+
+                if let data = snapshot?.documents.first?.data() {
+                    userDetails.userName = data["username"] as? String ?? ""
+                    userDetails.userType = data["Type"] as? String ?? ""
+                }
+
+                let ref = storage.reference().child("webappUserImages/\(uid)")
+                userDetails.profilePictureURL = ref.fullPath
+
+                ref.getData(maxSize: 5 * 1024 * 1024) { data, error in
+                    if let error = error {
+                        //print("⚠️ Error fetching profile image: \(error.localizedDescription)")
+                        userDetails.image = nil
+                    } else if let data = data {
+                        userDetails.image = UIImage(data: data)
                     }
-                    
-                    if let dateTime = document["dateTime"] as? Timestamp {
-                        log.whenVisit = dateTime.dateValue()
-                    }
-                    
-                    if let street = document["street"] as? String {
-                        log.street = street
-                    }
-                    
-                    if let state = document["state"] as? String {
-                        log.state = state
-                    }
-                    
-                    if let stateAbbv = document["stateAbbv"] as? String {
-                        log.stateAbbv = stateAbbv
-                    }
-                    
-                    if let city = document["city"] as? String {
-                        log.city = city
-                    }
-                    
-                    if let isFlagged = document["isFlagged"] as? Bool {
-                        log.isFlagged = isFlagged
-                    }
-                    
-                    if let flaggedByUser = document["flaggedByUser"] as? String {
-                        log.flaggedByUser = flaggedByUser
-                    }
-                    
-                    self.visitLogs.append(log)
+
+                    completion(userDetails)
                 }
             }
-            
-            self.delegate?.visitLogDataRefreshed(self.visitLogs)
-        }
     }
 }

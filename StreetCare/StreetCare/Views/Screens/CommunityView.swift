@@ -17,6 +17,7 @@ struct CommunityView: View {
     let userDetailsAdapter = UserDetailsAdapter()
     @State var events = [Event]()
     @State var isPresented: Bool = false
+    @ObservedObject var appSettings = AppSettings.shared
     @ObservedObject var mapViewModel: MapViewModel
     
     let formatter = DateFormatter()
@@ -92,7 +93,9 @@ struct CommunityView: View {
                                 Text(NSLocalizedString("Public Interaction Logs", comment: "")).fontWeight(.regular).foregroundColor(Color("TextColor"))
                             }
                         }
-                        if AppSettings.shared.mapsAvailable {
+                        
+
+                        if appSettings.mapsAvailable {
                             VStack {
                                 VStack(alignment: .leading, spacing: 8) {
                                     Text(NSLocalizedString("map", comment: ""))
@@ -139,12 +142,13 @@ struct CommunityView: View {
                             
                         } else {
                             VStack(spacing: 30) {
-                                AppDescriptionView()
-                                ImageSliderView()
+                                //AppDescriptionView()
+                                //ImageSliderView()
                             }
                             .padding(.horizontal)
                             .onAppear {
                                 print(NSLocalizedString("mapUnavailable", comment: ""))
+                                print("🗺️ mapsAvailable = \(AppSettings.shared.mapsAvailable)")
                             }
                         }
                     }
