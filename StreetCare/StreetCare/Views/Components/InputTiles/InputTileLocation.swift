@@ -23,7 +23,7 @@ struct InputTileLocation: View {
     @State var locationManager: LocationManager!
     
     @State var isLoading = false
-    @State var failedToFindLocation = false
+    //@State var failedToFindLocation = false
     @State private var street = ""
     @State private var state = ""
     @State private var city = ""
@@ -40,11 +40,11 @@ struct InputTileLocation: View {
     
     var buttonMode: ButtonMode
     private func handleLocationSubmit() {
-        if city.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ||
-            stateAbbreviation.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-            failedToFindLocation = true
-            return
-        }
+//        if city.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ||
+//            stateAbbreviation.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+//            failedToFindLocation = true
+//            return
+//        }
 
         let manualAddress = [
             street.isEmpty ? nil : street,
@@ -228,19 +228,17 @@ struct InputTileLocation: View {
                     }
                 )
             }
-            .alert("Missing Required Fields", isPresented: $failedToFindLocation, actions: {
-                Button("OK") {}
-            }, message: {
-                Text("Please enter both city and state before continuing.")
-            })
+//            .alert("Missing Required Fields", isPresented: $failedToFindLocation, actions: {
+//                Button("OK") {}
+//            }, message: {
+//                Text("Please enter both city and state before continuing.")
+//            })
             .loadingAnimation(isLoading: isLoading)
             .onAppear {
                 locationManager = LocationManager {
                     isLoading = false
                     newLocation()
-                    if !failedToFindLocation {
-                        nextAction()
-                    }
+                    nextAction()
                 }
                 if !didPrefillFields {
                     let components = textValue.components(separatedBy: ",").map { $0.trimmingCharacters(in: .whitespaces) }
@@ -278,13 +276,13 @@ struct InputTileLocation: View {
                     )
                 )
             }
-            .alert("Error...", isPresented: $failedToFindLocation, actions: {
-                Button("OK") {
-                    // nothing to do
-                }
-            }, message: {
-                Text("Sorry, having a problem finding your current location.")
-            })
+//            .alert("Error...", isPresented: $failedToFindLocation, actions: {
+//                Button("OK") {
+//                    // nothing to do
+//                }
+//            }, message: {
+//                Text("Sorry, having a problem finding your current location.")
+//            })
             if buttonMode == .navigation {
                 SegmentedProgressBar(
                     totalSegments: totalQuestions,
@@ -304,11 +302,11 @@ struct InputTileLocation: View {
     func newLocation() {
         if let loc = locationManager.location {
             self.location = loc
-            failedToFindLocation = false
+            //failedToFindLocation = false
             print("got a location")
         }
         else {
-            failedToFindLocation = true
+            //failedToFindLocation = true
             print("missing location!")
         }
     }

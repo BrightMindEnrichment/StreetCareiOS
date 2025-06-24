@@ -119,7 +119,38 @@ class PublicVisitLogDataAdapter {
                     log.isFlagged = document["isFlagged"] as? Bool ?? false
                     log.flaggedByUser = document["flaggedByUser"] as? String ?? ""
                     log.uid = document["uid"] as? String ?? ""
-                    //userdetails
+
+                    // Extract street, city, state from whereVisit
+                    let components = log.whereVisit
+                        .components(separatedBy: ",")
+                        .map { $0.trimmingCharacters(in: .whitespaces) }
+                        .filter { !$0.isEmpty }
+
+                    if components.count >= 4 {
+                        // Ex: "1122 24th Ave SW, Norman, OK, 73069"
+                        log.street = components.dropLast(3).joined(separator: ", ")
+                        log.city = components[components.count - 3]
+                        log.state = components[components.count - 2]
+                        // zip = components.last (optional if you want)
+                    } else if components.count == 3 {
+                        log.street = components[0]
+                        log.city = components[1]
+                        log.state = components[2]
+                    } else if components.count == 2 {
+                        log.street = ""
+                        log.city = components[0]
+                        log.state = components[1]
+                    } else if components.count == 1 {
+                        log.street = ""
+                        log.city = components[0]
+                        log.state = ""
+                    } else {
+                        log.street = ""
+                        log.city = ""
+                        log.state = ""
+                    }
+
+                    // Fetch user details
                     if let uid = document["uid"] as? String {
                         log.uid = uid
                         self.fetchUserDetails(uid: uid, storage: storage) { userDetails in
@@ -135,6 +166,7 @@ class PublicVisitLogDataAdapter {
                 completion(logs)
             }
     }
+
 
     private func fetchUserDetails(uid: String, storage: Storage, completion: @escaping (UserDetails?) -> Void) {
         let db = Firestore.firestore()
