@@ -25,10 +25,9 @@ struct CommunityView: View {
     
     var body: some View {
         NavigationView {
-            VStack {
-                Text("Community")
-                    .font(.title)
-                
+        VStack {
+            Text(NSLocalizedString("community", comment: ""))
+                .font(.title)
                 ScrollView{
                     VStack{
                         Spacer().frame(height: 10)

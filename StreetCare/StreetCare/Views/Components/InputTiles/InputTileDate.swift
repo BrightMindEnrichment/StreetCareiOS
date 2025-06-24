@@ -64,13 +64,13 @@ struct InputTileDate: View {
                 VStack {
                     if buttonMode == .navigation {
                         HStack {
-                            Text("Question \(questionNumber)/\(totalQuestions)")
+                            Text(NSLocalizedString("question", comment: "") + " \(questionNumber)/\(totalQuestions)")
                                 .foregroundColor(.black)
                             
                             Spacer()
                             
                             if showSkip {
-                                Button("Skip") {
+                                Button(NSLocalizedString("skip", comment: "")) {
                                     skipAction()
                                 }
                                 .foregroundColor(Color("SecondaryColor"))
@@ -193,7 +193,7 @@ struct InputTileDate: View {
                     
                     if buttonMode == .navigation {
                         HStack {
-                            Button("Previous") {
+                            Button(NSLocalizedString("previous", comment: "")) {
                                 previousAction()
                             }
                             .foregroundColor(Color("SecondaryColor"))
@@ -205,7 +205,7 @@ struct InputTileDate: View {
                             
                             Spacer()
                             
-                            Button(" Next  ") {
+                            Button(" " + NSLocalizedString("next", comment: "") + " ") {
                                 if let converted = convertToCurrentTimeZone(from: datetimeValue, selectedTimeZoneID: selectedTimeZone) {
                                     convertedDate = converted  // ✅ Save to parent state
                                 } else {
@@ -284,7 +284,7 @@ struct InputTileDate: View {
                 tileWidth: 350
             )
             
-            Text("Progress")
+            Text(NSLocalizedString("progress", comment: ""))
                 .font(.footnote)
                 .padding(.top, 4)
                 .fontWeight(.bold)

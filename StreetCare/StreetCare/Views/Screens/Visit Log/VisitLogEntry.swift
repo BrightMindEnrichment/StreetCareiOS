@@ -18,7 +18,7 @@ struct VisitLogEntry: View {
     @State var totalQuestions = 6
     @State private var selectedLocation = CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0)
     
-    @StateObject var visitLog = VisitLog(id: UUID().uuidString)  
+    @StateObject var visitLog = VisitLog(id: UUID().uuidString)
     
     var currentUser = Auth.auth().currentUser
     @State var isLoading = false
@@ -34,15 +34,16 @@ struct VisitLogEntry: View {
             VStack {
                 
                 if !isComplete{
-                    Text("Log Your Interaction")
+                    Text(NSLocalizedString("logYourInteraction", comment: ""))
                         .font(.title)
                         .fontWeight(.bold)
                         .padding()
                 }
-                                
+                
                 switch questionNumber {
-                case 1:
-                    InputTileDate(questionNumber: 1, totalQuestions: 6, question1: "When was your",question2: "Interaction?",question3: "", showSkip: false,  datetimeValue: $rawDate, convertedDate: $visitLog.whenVisit) {
+                case 1:   
+                    InputTileDate(questionNumber: 1, totalQuestions: 6, question1: NSLocalizedString("questionOne", comment: ""),question2: NSLocalizedString("interaction", comment: "") + "?",question3: "", showSkip: false,  datetimeValue: $rawDate, convertedDate: $visitLog.whenVisit) {
+
                         questionNumber += 1
                     } skipAction: {
                         questionNumber += 1
@@ -54,8 +55,9 @@ struct VisitLogEntry: View {
                     InputTileLocation(
                         questionNumber: 2,
                         totalQuestions: 6,
-                        question1: "Where was your",
-                        question2: "Interaction?",
+                        question1: NSLocalizedString("questionTwo", comment: ""),
+                        question2: NSLocalizedString("interaction", comment: "") + "?",
+
                         textValue: Binding(
                             get: { visitLog.whereVisit },
                             set: { newValue in
@@ -95,10 +97,10 @@ struct VisitLogEntry: View {
                         totalQuestions: 6,
                         tileWidth: 300,
                         tileHeight: 560,
-                        question1: "Describe who you",
-                        question2: "supported and how",
-                        question3: "many individuals",
-                        question4: "were involved.",
+                        question1: NSLocalizedString("questionThreePartOne", comment: ""),
+                        question2: NSLocalizedString("questionThreePartTwo", comment: ""),
+                        question3: NSLocalizedString("questionThreePartThree", comment: ""),
+                        question4: NSLocalizedString("questionThreePartFour", comment: ""),
                         descriptionLabel: "Description",
                         disclaimerText: NSLocalizedString("disclaimer", comment: ""),
                         placeholderText: NSLocalizedString("peopledescription", comment: ""),
@@ -121,8 +123,8 @@ struct VisitLogEntry: View {
                         totalQuestions: 6,
                         optionCount: 5,
                         size: CGSize(width: 350, height: 450),
-                        question1: "What kind of support",
-                        question2: "did you provide?",
+                        question1: NSLocalizedString("questionFourPartOne", comment: ""),
+                        question2: NSLocalizedString("questionFourPartTwo", comment: ""),
                         visitLog: visitLog,
                         nextAction: { questionNumber += 1 },
                         previousAction: { questionNumber -= 1 },
@@ -130,16 +132,15 @@ struct VisitLogEntry: View {
                         buttonMode: .navigation,
                         showProgressBar: true,
                         supportMode: .provided
-                    )
-                
+                    )         
                 case 5:
                     InputTileNumber(
                         questionNumber: 5,
                         totalQuestions: 6,
                         tileWidth: 300,
                         tileHeight: 460,
-                        question1: "How many items",
-                        question2: "did you donate?",
+                        question1: NSLocalizedString("questionFivePartOne", comment: ""),
+                        question2: NSLocalizedString("questionFivePartTwo", comment: ""),
                         question3: "",
                         question4: "",
                         descriptionLabel: "",
@@ -158,17 +159,17 @@ struct VisitLogEntry: View {
                         }
                     )
                 case 6:
-                    InputTileRate(questionNumber: 6, totalQuestions: 6, question1: "How would you rate your", question2: "outreach experience?", textValue: $visitLog.ratingNotes, rating: $visitLog.rating) {
+                    InputTileRate(questionNumber: 6, totalQuestions: 6, question1: NSLocalizedString("questionSixPartOne", comment: ""), question2: NSLocalizedString("questionSixPartTwo", comment: ""), textValue: $visitLog.ratingNotes, rating: $visitLog.rating) {
                         questionNumber += 1
                     } previousAction: {
                         questionNumber -= 1
                     } skipAction: {
                         questionNumber += 1
                     }
-
+                    
                 case 7:
                     
-                    InputTileMoreQuestions(question1: "Would you like to" , question2: "answer a few more", question3:"questions?", questionNumber: 6, totalQuestions: 6) {
+                    InputTileMoreQuestions(question1: NSLocalizedString("questionSevenPartOne", comment: "") , question2: NSLocalizedString("questionSevenPartTwo", comment: ""), question3:NSLocalizedString("questionSevenPartThree", comment: ""), questionNumber: 6, totalQuestions: 6) {
                         saveVisitLog()
                         questionNumber = 100
                     } skipAction: {
@@ -180,15 +181,15 @@ struct VisitLogEntry: View {
                         isComplete = true
                         questionNumber = 100
                     }
-                  case 8:
+                case 8:
                     InputTileDuration(
                         questionNumber: 1,
                         totalQuestions: 7,
                         tileWidth: 360,
                         tileHeight: 361,
-                        questionLine1: "How much time did",
-                        questionLine2: "you spend on the",
-                        questionLine3: "outreach?",
+                        questionLine1: NSLocalizedString("questionEightPartOne", comment: ""),
+                        questionLine2: NSLocalizedString("questionEightPartTwo", comment: ""),
+                        questionLine3: NSLocalizedString("questionEightPartThree", comment: ""),
                         hours: $visitLog.durationHours, minutes: $visitLog.durationMinutes
                     ) {
                         questionNumber += 1
@@ -204,13 +205,13 @@ struct VisitLogEntry: View {
                         totalQuestions: 7,
                         tileWidth: 360,
                         tileHeight: 326,
-                        question1: "Who helped you",
-                        question2: "prepared or joined",
+                        question1: NSLocalizedString("questionNinePartOne", comment: ""),
+                        question2: NSLocalizedString("questionNinePartTwo", comment: ""),
                         question3: "",
                         question4: "",
                         descriptionLabel: nil,
                         disclaimerText: nil,
-                        placeholderText: "Enter helper notes here",
+                        placeholderText: NSLocalizedString("aq2des", comment: ""),
                         number: $visitLog.numberOfHelpers,
                         generalDescription: $visitLog.numberOfHelpersComment,
                         nextAction: {
@@ -223,6 +224,8 @@ struct VisitLogEntry: View {
                             questionNumber += 1
                         }
                     )
+                  
+                
                     
                 case 10:
                     InputTileNumber(
@@ -230,8 +233,8 @@ struct VisitLogEntry: View {
                         totalQuestions: 7,
                         tileWidth: 360,
                         tileHeight: 467,
-                        question1: "How many people",
-                        question2: "still need support?",
+                        question1: NSLocalizedString("questionTenPartOne", comment: ""),
+                        question2: NSLocalizedString("questionTenPartTwo", comment: ""),
                         question3: "",
                         question4: "",
                         descriptionLabel: "Description",
@@ -249,14 +252,14 @@ struct VisitLogEntry: View {
                             questionNumber += 1
                         }
                     )
-                case 11:
+                 case 11:
                     InputTileList(
                         questionNumber: 4,
                         totalQuestions: 7,
                         optionCount: 5,
                         size: CGSize(width: 350, height: 450),
-                        question1: "What kind of support",
-                        question2: "do they still need?",
+                        question1: NSLocalizedString("questionElevenPartOne", comment: ""),
+                        question2: NSLocalizedString("questionElevenPartTwo", comment: ""),
                         visitLog: visitLog,
                         nextAction: { questionNumber += 1 },
                         previousAction: { questionNumber -= 1 },
@@ -265,8 +268,8 @@ struct VisitLogEntry: View {
                         showProgressBar: true,
                         supportMode: .needed
                     )
-                case 14:
-                    InputTileVolunteerAgain(questionNumber: 7, totalQuestions: 7, question1: "Would you like to", question2: "volunteer again?", volunteerAgain: $visitLog.volunteerAgain) {
+               case 14:
+                    InputTileVolunteerAgain(questionNumber: 7, totalQuestions: 7, question1: NSLocalizedString("questionFourteenPartOne", comment: ""), question2: NSLocalizedString("questionFourteenPartTwo", comment: ""), volunteerAgain: $visitLog.volunteerAgain) {
                         isComplete = true
                         questionNumber = 100
                     } previousAction: {
@@ -277,7 +280,7 @@ struct VisitLogEntry: View {
                         questionNumber = 100
                     }
                 case 12:
-                    InputTileDate(questionNumber: 5, totalQuestions: 7, question1: "Is there a planned date",question2: "to interact with them", question3: "again?", showSkip: true, datetimeValue: $rawDate, convertedDate: $visitLog.followUpWhenVisit) {
+                    InputTileDate(questionNumber: 5, totalQuestions: 7, question1: NSLocalizedString("questionTwelevePartOne", comment: ""),question2: NSLocalizedString("questionTwelevePartTwo", comment: ""), question3: NSLocalizedString("questionTwelevePartThree", comment: ""), showSkip: true, datetimeValue: $rawDate, convertedDate: $visitLog.followUpWhenVisit) {
                         questionNumber += 1
                     } skipAction: {
                         questionNumber += 1
@@ -291,10 +294,10 @@ struct VisitLogEntry: View {
                         totalQuestions: 7,
                         tileWidth: 300,
                         tileHeight: 380,
-                        question1: "Is there anything future",
-                        question2: "volunteers should",
-                        question3: "know?",
-                        placeholderText: "Enter notes here",
+                        question1: NSLocalizedString("questionThirteenPartOne", comment: ""),
+                        question2: NSLocalizedString("questionThirteenPartTwo", comment: ""),
+                        question3: NSLocalizedString("questionThirteenPartThree", comment: ""),
+                        placeholderText: NSLocalizedString("aq6des", comment: ""),
                         otherNotes: $visitLog.furtherOtherNotes,
                         nextAction: {
                             saveVisitLog()
@@ -320,7 +323,7 @@ struct VisitLogEntry: View {
                     
                 default:
                     Text("An error has occured")
-                }                
+                }
             }
             .onAppear {
                 questionNumber = 1
@@ -334,9 +337,9 @@ struct VisitLogEntry: View {
                     }
                 }
             }
-        }.navigationTitle("Interaction Log")
+        }.navigationTitle(NSLocalizedString("interactionLog", comment: ""))
     } // end body
-     
+    
     
     func saveVisitLog() {
         let adapter = VisitLogDataAdapter()
@@ -364,11 +367,11 @@ struct SegmentedProgressBar: View {
     var tileWidth: CGFloat
     let segmentHeight: CGFloat = 12
     let spacing: CGFloat = 8
-
+    
     var body: some View {
         let totalSpacing = spacing * CGFloat(totalSegments - 1)
         let segmentWidth = (tileWidth - totalSpacing - 20) / CGFloat(totalSegments)
-
+        
         HStack(spacing: spacing) {
             ForEach(0..<totalSegments, id: \.self) { index in
                 Capsule()

@@ -46,12 +46,12 @@ struct InputTileNotes: View {
                 VStack {
                     if buttonMode == .navigation{
                         HStack {
-                            Text("Question \(questionNumber)/\(totalQuestions)")
+                            Text(NSLocalizedString("question", comment: "") + " \(questionNumber)/\(totalQuestions)")
                                 .foregroundColor(.black)
                             
                             Spacer()
                             
-                            Button("Skip") {
+                            Button(NSLocalizedString("skip", comment: "")) {
                                 skipAction()
                             }
                             .foregroundColor(Color("SecondaryColor"))
@@ -150,7 +150,7 @@ struct InputTileNotes: View {
                 filledSegments: questionNumber,
                 tileWidth: tileWidth
             )
-            Text("Progress")
+            Text(NSLocalizedString("progress", comment: ""))
                 .font(.footnote)
                 .padding(.top, 4)
                 .fontWeight(.bold)

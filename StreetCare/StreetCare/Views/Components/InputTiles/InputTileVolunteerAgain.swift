@@ -42,7 +42,7 @@ struct InputTileVolunteerAgain: View {
                 VStack {
                     if buttonMode == .navigation {
                         HStack {
-                            Text("Question \(questionNumber)/\(totalQuestions)")
+                            Text(NSLocalizedString("question", comment: "") + " \(questionNumber)/\(totalQuestions)")
                                 .foregroundColor(.black)
                             Spacer()
                         }
@@ -69,7 +69,7 @@ struct InputTileVolunteerAgain: View {
                         Button(action: {
                             volunteerAgain = "Yes"
                         }) {
-                            Text("Yes")
+                            Text(NSLocalizedString("yes", comment: ""))
                                 .font(.footnote)
                                 .foregroundColor(volunteerAgain == "Yes" ? .white : Color("SecondaryColor"))
                                 .fontWeight(.bold)
@@ -126,7 +126,7 @@ struct InputTileVolunteerAgain: View {
                     .padding()
                     if buttonMode == .navigation {
                         HStack {
-                            Button("Previous") {
+                            Button(NSLocalizedString("previous", comment: "")) {
                                 previousAction()
                             }
                             .foregroundColor(Color("SecondaryColor"))
@@ -138,7 +138,7 @@ struct InputTileVolunteerAgain: View {
                             
                             Spacer()
                             
-                            Button("Finish") {
+                            Button(" " + NSLocalizedString("finish", comment: "") + " ") {
                                 nextAction()
                             }
                             .foregroundColor(Color("PrimaryColor"))
@@ -196,7 +196,7 @@ struct InputTileVolunteerAgain: View {
                 tileWidth: 300
             )
 
-            Text("Progress")
+            Text(NSLocalizedString("progress", comment: ""))
                 .font(.caption)
                 .padding(.top, 4)
         }
