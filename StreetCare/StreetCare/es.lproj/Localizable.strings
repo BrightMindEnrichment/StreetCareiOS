@@ -252,6 +252,14 @@
 "questionFivePlaceholder" = "Por ejemplo: 2 botellas de agua, 3 manzanas, 1 naranja, 1 sándwich.";
 "questionTenPlaceholder" = "Describa su ubicación o punto de referencia. Por ejemplo, 187 Hambridge Street, NY.";
 "donotShowAgain" = "No volver a mostrar";
+"publicinteractions" = "Interacciones públicas";
+"events" = "Eventos";
+"publicInteractionLog" = "Registro de Interacciones Públicas";
+"gettingTheEvents" = "Obteniendo los eventos";
+"map" = "Mapa";
+"mapUnavailable" = "El mapa no está disponible actualmente";
+
+
 
 
 //"helloWorld" = "¡Hola Mundo!";

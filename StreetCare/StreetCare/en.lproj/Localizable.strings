@@ -58,7 +58,7 @@
 "howToHelp" = "How to Help";
 "futureEvents" = "Future Events";
 "pastEvents" = "Past Events";
-"helpRequests" = "Help Requests";
+"publicinteractions" = "Public Interactions";
 
 "before_para1" = "The first thing to remember is that homeless people are a diverse group of people just like everyone else, no matter how they look, no matter their gender, age, or race. Some have fallen on hard times. Some may be struggling with mental illness. But everyone wants to be treated with respect and dignity. Here are some steps to follow before you go:";
 
@@ -142,8 +142,9 @@
 "cmintrowithlink2" = "If you prefer to sign and send ina copy or save it for later reference, please download the form here.";
 "enteraddress" = "Enter Address*";
 "landmark" = "Describe the location/landmark.";
-"peopledescription" = "Example: Tom, wheelchair user, wearing a navy blue shirt or Helped 26 people on the South Side.";
-"disclaimer" = "Note: Completing one Interaction Log per person helps us help more people. If needed, you may fill out one log for your entire day.";"comments" = "Questions/Comments/Notes";
+"peopledescription" = "Example: Tom, a senior citizen in a wheelchair, wearing a navy blue shirt and brown shoes.";
+"disclaimer" = "Disclaimer: Completing one interaction              log per person helps us serve you better. Optional, any information helps.";
+"comments" = "Questions/Comments/Notes";
 "otherNotes" = "If Other, please specify here.";
 "emptytext" = "  ";
 "providedHelpTitle" = "I provided help!";
@@ -267,6 +268,18 @@
 "questionFivePlaceholder" = "E.g. 2 bottles of water, 3 apples, 1 orange, 1 sandwich";
 "questionTenPlaceholder" = "Please describe their location or landmark  E.g. 187 Hambridge Street, NY";
 "donotShowAgain" = "Do not show again";
+"events" = "Events";
+"publicInteractionLog" = "Public Interaction Log";
+"gettingTheEvents" = "Getting the Events";
+"map" = "Map";
+"mapUnavailable" = "Map is currently unavailable";
+
+
+
+
+
+
+
 //"welcome" = "Welcome to\nStreet Care";
 //"loginButtonTitle" = "Login";
 //"signUpButtonTitle" = "Sign Up";

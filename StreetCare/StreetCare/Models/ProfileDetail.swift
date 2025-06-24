@@ -14,6 +14,8 @@ class ProfileDetail: ObservableObject, Identifiable {
     @Published var organization = ""
     @Published var country = ""
     @Published var email = ""
+    @Published var userType: String = "Account Holder"
+    @Published var photoURL: String = ""
 
     var documentId = ""
 }

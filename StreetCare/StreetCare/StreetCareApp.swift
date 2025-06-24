@@ -92,9 +92,10 @@ struct StreetCareApp: App {
 
 }
 
-final class AppSettings {
+final class AppSettings: ObservableObject {
     static let shared = AppSettings()
-    var mapsAvailable: Bool = false
+    
+    @Published var mapsAvailable: Bool = false
     
     private init() { }
 }

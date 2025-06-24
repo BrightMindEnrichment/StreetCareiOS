@@ -17,8 +17,7 @@ struct EventCardView: View {
     @State private var showAlert = false
     @State private var alertMessage = ""
     @Binding var popupRefresh: Bool
-
-
+    @ObservedObject var loggedInUser: UserDetails
 
     var body: some View {
         //let _ = refresh
@@ -90,7 +89,7 @@ struct EventCardView: View {
                             let currentUserId = currentUser.uid
                             
                             if event.event.isFlagged {
-                                if event.event.flaggedByUser == currentUserId {
+                                if event.event.flaggedByUser == currentUserId || loggedInUser.userType == "Street Care Hub Leader" {
                                     event.event.updateFlagStatus(newFlagState: false, userId: nil)
                                     
                                     let updates: [String: Any] = [

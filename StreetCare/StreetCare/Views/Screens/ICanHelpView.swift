@@ -52,7 +52,7 @@ struct ICanHelpView: View {
                 
                 Button(action: {
                 }) {
-                    NavigationLink(destination: CommunityEventView(isPresented: $isPresented, eventType: .future)) {
+                    NavigationLink(destination: CommunityEventView(isPresented: $isPresented, loggedInUserDetails: UserDetails(), eventType: .future)) {
                         Text(NSLocalizedString("rsvpExistingOutreach", comment: ""))
                             .padding(EdgeInsets(top: 8.0, leading: 20.0, bottom: 8.0, trailing: 20.0))
                             .foregroundColor(Color("PrimaryColor"))

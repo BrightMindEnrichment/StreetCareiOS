@@ -8,6 +8,7 @@
 import SwiftUI
 import FirebaseAuth
 import UIKit
+import FirebaseFirestore
 
 
 struct ProfilView: View {
@@ -102,7 +103,25 @@ struct ProfilView: View {
                     adapter.delegate = self
                     adapter.refresh()
                     storage.uid = u.uid
-                    storage.getImage()
+                    // 🔽 ADDED: Check Firestore for photoUrl (for web-created accounts)
+                    let db = Firestore.firestore()
+                    db.collection("users").whereField("uid", isEqualTo: u.uid).getDocuments { snapshot, error in
+                        if let docs = snapshot?.documents, let doc = docs.first {
+                            if let url = doc["photoUrl"] as? String, !url.isEmpty {
+                                if let imageUrl = URL(string: url) {
+                                    URLSession.shared.dataTask(with: imageUrl) { data, response, error in
+                                        if let data = data, let image = UIImage(data: data) {
+                                            DispatchQueue.main.async {
+                                                self.avatarImage = image
+                                            }
+                                        }
+                                    }.resume()
+                                }
+                            } else {
+                                storage.getImage()
+                            }
+                        }
+                    }
                 }
             }
             .onChange(of: selection) { _ in
@@ -184,7 +203,7 @@ struct ProfilView: View {
                 newDonations += 1
             }
 
-            if visitLog.hygine {
+            if visitLog.hygiene {
                 newDonations += 1
             }
             
@@ -208,6 +227,10 @@ extension ProfilView: VisitLogDataAdapterProtocol {
     
     func visitLogDataRefreshed(_ logs: [VisitLog]) {
         self.history = logs
+        self.updateCounts()
+    }
+    func visitLogDataRefreshedNew(_ logs: [VisitLog]) {
+        self.history.append(contentsOf: logs)
         self.updateCounts()
     }
 }
