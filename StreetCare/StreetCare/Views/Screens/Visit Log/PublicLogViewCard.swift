@@ -30,13 +30,13 @@ struct PublicLogViewCard: View {
                             if let image = user.image {
                                 Image(uiImage: image)
                                     .resizable()
-                                    .aspectRatio(contentMode: .fit)
+                                    .scaledToFill()
                                     .frame(width: 30, height: 30)
                                     .clipShape(Circle())
                             } else {
                                 Image("PublicLogDefaultProfile")
                                     .resizable()
-                                    .aspectRatio(contentMode: .fit)
+                                    .scaledToFill()
                                     .frame(width: 30, height: 30)
                                     .clipShape(Circle())
                             }

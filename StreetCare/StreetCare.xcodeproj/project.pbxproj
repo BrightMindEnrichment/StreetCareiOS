@@ -163,6 +163,8 @@
 		4C85F0EC2A08A6F000FFEDC8 /* BeforeOutreachView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeforeOutreachView.swift; sourceTree = "<group>"; };
 		4C85F0EE2A08A7A100FFEDC8 /* GrowingTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GrowingTextView.swift; sourceTree = "<group>"; };
 		4CA8693029E3CD5F00BB6972 /* BasicTile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasicTile.swift; sourceTree = "<group>"; };
+		7A03D72C2DE102290027D5E7 /* Secrets.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Secrets.plist; sourceTree = "<group>"; };
+		7A03D7422DE11E300027D5E7 /* PublicInteractionPopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicInteractionPopupView.swift; sourceTree = "<group>"; };
 		4CA8693229E3D05300BB6972 /* InputTile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputTile.swift; sourceTree = "<group>"; };
 		4CA8693429E3FA8600BB6972 /* VisitLogEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisitLogEntry.swift; sourceTree = "<group>"; };
 		4CB65D8C29D016AE00684BD1 /* StreetCare.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StreetCare.app; sourceTree = BUILT_PRODUCTS_DIR; };

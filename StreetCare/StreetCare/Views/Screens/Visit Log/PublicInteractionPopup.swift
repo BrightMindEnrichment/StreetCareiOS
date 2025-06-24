@@ -1,10 +1,9 @@
 //
-//  PublicInteractionPopupView.swift
+//  PublicInteractionPopup.swift
 //  StreetCare
 //
-//  Created by Nilesh Bhoi on 5/23/25.
+//  Created by Shaik Saheer on 23/06/25.
 //
-
 import SwiftUI
 import FirebaseFirestore
 import FirebaseAuth
@@ -29,12 +28,7 @@ struct PublicInteractionPopupView: View {
         VStack(alignment: .leading, spacing: 14) {
             // Top row
             HStack {
-                if let image = visit.image {
-                    Image(uiImage: image)
-                        .resizable()
-                        .frame(width: 40, height: 40)
-                        .clipShape(Circle())
-                } else if let img = imageLoader.image {
+                if let img = imageLoader.image {
                     Image(uiImage: img)
                         .resizable()
                         .frame(width: 40, height: 40)

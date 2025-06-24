@@ -261,7 +261,7 @@ class VisitLogDataAdapter {
         
         let db = Firestore.firestore()
         
-        db.collection("visitLogWebProd")
+        db.collection("VisitLogBook_New")
             .whereField("uid", isEqualTo: user.uid)
             .getDocuments { querySnapshot, error in
                 if let error = error {
