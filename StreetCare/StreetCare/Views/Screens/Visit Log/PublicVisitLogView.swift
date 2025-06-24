@@ -139,7 +139,7 @@ struct PublicVisitLogView: View {
         .onAppear {
             print("Public log view on appear.")
             adapter.delegate = self
-            adapter.refresh()
+            adapter.refreshAll()
         }
         .onDisappear {
             presentBottomSheet = false

@@ -75,10 +75,10 @@ struct PublicLogViewCard: View {
                     }
                 }.padding([.bottom], 5)
                 // location
-                if log.city != "" || log.stateAbbv != "" {
+                if !log.city.isEmpty || !log.state.isEmpty || !log.stateAbbv.isEmpty {
                     HStack {
                         Image(systemName: "mappin.and.ellipse")
-                        Text("\(log.city), \(log.stateAbbv)")
+                        Text("\(log.city)\(log.city.isEmpty || (log.state.isEmpty && log.stateAbbv.isEmpty) ? "" : ", ")\(log.state.isEmpty ? log.stateAbbv : log.state)")
                             .font(.system(size: 13))
                     }
                 } else {
@@ -86,6 +86,7 @@ struct PublicLogViewCard: View {
                         Spacer()
                     }
                 }
+
                 
                 // time
                 HStack {
