@@ -137,7 +137,7 @@ struct PublicVisitLogView: View {
             .background(Color.clear)
             .navigationTitle("Public Interaction Logs")
         }
-        .bottomSheet(isPresented: $presentBottomSheet) {
+        .publicPopupSheet(isPresented: $presentBottomSheet, heightRatio: 0.55) {
             bottomSheetContent
         }
         .onAppear {
@@ -238,6 +238,7 @@ extension PublicVisitLogView: EventPopupViewDelegate {
         // You can leave this empty if you already handle onCancel separately.
     }
 }
+
 #Preview {
     PublicVisitLogView(loggedInUserDetails: UserDetails())
 }

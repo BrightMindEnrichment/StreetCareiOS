@@ -148,16 +148,15 @@ struct PublicInteractionPopupView: View {
             NavLinkButton(title: "Close", width: UIScreen.main.bounds.width - 30, secondaryButton: true)
                 .fontWeight(.semibold)
                 .frame(maxWidth: .infinity, alignment: .center)
-                .padding(.bottom, 10)
+                .padding(.bottom, 20)
                 .onTapGesture {
                     delegate?.close()
                     onCancel()
                 }
         }
-        .padding(.top, 85)
+        .padding(.top, 30)
         .padding(.horizontal, 10)
-        .padding(.bottom, 10)
-        .frame(minHeight: 600, alignment: .top)
+        .frame(minHeight: 500, alignment: .top)
     //}
         //with Caching
         /*.onAppear {
@@ -334,7 +333,7 @@ struct UserRoleBadge: View {
         case "Account Holder":
                     return (.yellow, "Account Holder")
                 default:
-                    return (.gray, "Unknown")
+                    return (.yellow, "Account Holder")
         }
     }
     
