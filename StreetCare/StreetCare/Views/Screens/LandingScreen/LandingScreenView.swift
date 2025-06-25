@@ -16,8 +16,8 @@ struct LandingScreenView: View {
     var links: [LinkData] = [
         LinkData(icon: "startNow", title: "startNow", view: AnyView(StartNowView()), iden: 1),
         LinkData(icon: "IconSoap", title: "whatToGive", view: AnyView(WhatToBringView()), iden: 1),
-        LinkData(icon: "IconVideo", title: "How-to Videos", view: AnyView(PlaylistsView()), iden: 1),
-        LinkData(icon: "IconStreetcare", title: "Donate", view: AnyView(DonateView()), iden: 1)
+        LinkData(icon: "IconVideo", title: "howToVideos", view: AnyView(PlaylistsView()), iden: 1),
+        LinkData(icon: "IconStreetcare", title: "donate", view: AnyView(DonateView()), iden: 1)
     ]
 
     var body: some View {

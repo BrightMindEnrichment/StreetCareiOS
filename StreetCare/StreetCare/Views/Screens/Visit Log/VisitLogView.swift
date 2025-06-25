@@ -41,6 +41,7 @@ struct VisitLogView: View {
     @State private var navigateToEditPeopleNeedHelp = false
     @State private var editedPeopleNeedHelp: Int = 0
     @State var editedPeopleNeedHelpComment: String = ""
+    @State var editedPeopleNeedHelpLocation: String = ""
 
     @StateObject var editedFurtherSupport = VisitLog(id: "")
     @State private var isEditingPeopleHelped = false
@@ -391,6 +392,7 @@ struct VisitLogView: View {
                     placeholderText: NSLocalizedString("peopledescription", comment: ""),
                     number: $editedPeopleHelped,
                     generalDescription: $editedPeopleHelpedDescription,
+                    generalDescription2: .constant(""),
                     nextAction: {
                         let adapter = VisitLogDataAdapter()
                         adapter.updateVisitLogField(log.id, field: "peopleHelped", value: editedPeopleHelped) {
@@ -532,6 +534,7 @@ struct VisitLogView: View {
                     placeholderText: "Enter notes here",
                     number: $editedItemQty,
                     generalDescription: $editedItemQtyDescription,
+                    generalDescription2: .constant(""),
                     nextAction: {
                         let adapter = VisitLogDataAdapter()
                         adapter.updateVisitLogField(log.id, field: "itemQty", value: editedItemQty) {
@@ -704,6 +707,7 @@ struct VisitLogView: View {
                     placeholderText: "Enter notes here",
                     number: $editedHelpers,
                     generalDescription: $editedHelpersComment,
+                    generalDescription2: .constant(""),
                     nextAction: {
                         let adapter = VisitLogDataAdapter()
                         adapter.updateVisitLogField(log.id, field: "numberOfHelpers", value: editedHelpers) {
@@ -740,6 +744,7 @@ struct VisitLogView: View {
                 onEdit: {
                     editedPeopleNeedHelp = log.peopleNeedFurtherHelp
                     editedPeopleNeedHelpComment = log.peopleNeedFurtherHelpComment
+                    editedPeopleNeedHelpLocation = log.peopleNeedFurtherHelpLocation
                     navigateToEditPeopleNeedHelp = true
                 },
                 canEdit: log.isFromOldCollection
@@ -749,24 +754,29 @@ struct VisitLogView: View {
                 destination: InputTileNumber(
                     questionNumber: 6,
                     totalQuestions: 6,
-                    tileWidth: 300,
-                    tileHeight: 420,
+                    tileWidth: 360,
+                    tileHeight: 580,
                     question1: "How many people",
                     question2: "still need support?",
                     question3: "",
                     question4: "",
-                    descriptionLabel: "",
+                    descriptionLabel: "Description",
+                    descriptionLabel2: "Location Description",
                     disclaimerText: "",
                     placeholderText: "Enter notes here",
                     number: $editedPeopleNeedHelp,
                     generalDescription: $editedPeopleNeedHelpComment,
+                    generalDescription2: $editedPeopleNeedHelpLocation,
                     nextAction: {
                         let adapter = VisitLogDataAdapter()
                         adapter.updateVisitLogField(log.id, field: "peopleNeedFurtherHelp", value: editedPeopleNeedHelp) {
                             adapter.updateVisitLogField(log.id, field: "peopleNeedFurtherHelpComment", value: editedPeopleNeedHelpComment) {
-                                log.peopleNeedFurtherHelp = editedPeopleNeedHelp
-                                log.peopleNeedFurtherHelpComment = editedPeopleNeedHelpComment
-                                navigateToEditPeopleNeedHelp = false
+                                adapter.updateVisitLogField(log.id, field: "peopleNeedFurtherHelpLocation", value: editedPeopleNeedHelpLocation){
+                                    log.peopleNeedFurtherHelp = editedPeopleNeedHelp
+                                    log.peopleNeedFurtherHelpComment = editedPeopleNeedHelpComment
+                                    log.peopleNeedFurtherHelpLocation = editedPeopleNeedHelpLocation
+                                    navigateToEditPeopleNeedHelp = false
+                                }
                             }
                         }
                     },
@@ -777,6 +787,7 @@ struct VisitLogView: View {
                         navigateToEditPeopleNeedHelp = false
                     },
                     showProgressBar: false,
+                    showTextEditor2: true,
                     buttonMode: .update
                 ),
                 isActive: $navigateToEditPeopleNeedHelp

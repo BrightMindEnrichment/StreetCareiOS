@@ -42,7 +42,7 @@ struct InputTileRate: View {
                     
                     if buttonMode == .navigation {
                         HStack {
-                            Text("Question \(questionNumber)/\(totalQuestions)")
+                            Text(NSLocalizedString("question", comment: "") + " \(questionNumber)/\(totalQuestions)")
                                 .foregroundColor(.black)
                             //.font(.footnote)
                             
@@ -88,7 +88,7 @@ struct InputTileRate: View {
                     AutoGrowingTextEditor(text: $textValue, placeholder: NSLocalizedString("comments", comment: ""))
                     if buttonMode == .navigation {
                         HStack {
-                            Button("Previous") {
+                            Button(NSLocalizedString("previous", comment: "")) {
                                 previousAction()
                             }
                             .foregroundColor(Color("SecondaryColor"))
@@ -100,7 +100,7 @@ struct InputTileRate: View {
                             
                             Spacer()
                             
-                            Button("Next") {
+                            Button(" " + NSLocalizedString("next", comment: "") + " ") {
                                 nextAction()
                             }
                             .foregroundColor(Color("PrimaryColor"))
@@ -159,7 +159,7 @@ struct InputTileRate: View {
                 tileWidth: 300
             )
             
-            Text("Progress")
+            Text(NSLocalizedString("progress", comment: ""))
                 .font(.footnote)
                 .padding(.top, 4)
                 .fontWeight(.bold)

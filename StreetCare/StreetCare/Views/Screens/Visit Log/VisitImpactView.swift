@@ -32,6 +32,8 @@ struct VisitImpactView: View {
     @State private var doNotShowAgain = false
     @State var logsOld = [VisitLog]()
     @State var logsNew = [VisitLog]()
+    @State private var didReceiveOldLogs = false
+    @State private var didReceiveNewLogs = false
    
     @AppStorage("hideProvidedHelpAlert") private var hideProvidedHelpAlert: Bool = false
 
@@ -40,7 +42,7 @@ struct VisitImpactView: View {
         ZStack{
             NavigationStack {
                 VStack {
-                    Text("INTERACTION LOG").font(.system(size: 18, weight: .bold)).padding()
+                    Text(NSLocalizedString("interactionLog", comment: "").uppercased()).font(.system(size: 18, weight: .bold)).padding()
                     ImpactView(peopleHelped: peopleHelped, outreaches: outreaches, itemsDonated: itemsDonated)
                     //Spacer(minLength: -5)
                     Button(action: {
@@ -55,7 +57,7 @@ struct VisitImpactView: View {
                         }
                     }) {
                         ZStack {
-                            NavLinkButton(title: "ADD NEW+", width: 197.0, height: 40.0)
+                            NavLinkButton(title: NSLocalizedString("addNew", comment: "") + "+", width: 197.0, height: 40.0)
                                 .clipShape(Capsule())
                         }
                     }
@@ -78,14 +80,14 @@ struct VisitImpactView: View {
                         .padding(.top, 8)
                     //Spacer(minLength: 10.0)
                     
-                    Text("HISTORY")
+                    Text(NSLocalizedString("history", comment: "").uppercased())
                         .font(.custom("Poppins-Regular", size: 20))
                     //.font(.system(size: 16))
                         .fontWeight(.bold)
                         .padding(.top, 8)
                     
                     if history.isEmpty {
-                        Text("You have no logged history.")
+                        Text(NSLocalizedString("noLoggedHistory", comment: ""))
                             .font(.custom("Poppins-Light", size: 14))
                             .foregroundColor(.secondary)
                             .multilineTextAlignment(.center)
@@ -311,7 +313,7 @@ struct VisitImpactView: View {
                                 .font(.system(size: 20))
                         }
                         
-                        Text("Do not show again")
+                        Text(NSLocalizedString("donotShowAgain", comment: ""))
                             .font(.body)
                         
                         Spacer()
@@ -349,6 +351,13 @@ struct VisitImpactView: View {
     private func mergeLogs() {
         self.history = (logsOld + logsNew)
             .sorted { $0.whenVisit > $1.whenVisit }  // Sort newest first
+    }
+    private func tryMergeAndUpdate() {
+        guard didReceiveOldLogs && didReceiveNewLogs else { return }
+        self.history = (logsOld + logsNew)
+            .sorted { $0.whenVisit > $1.whenVisit }
+        self.updateCounts()
+        self.isLoading = false
     }
 
 
@@ -467,14 +476,14 @@ struct HalfCapsuleShape: Shape {
 extension VisitImpactView: VisitLogDataAdapterProtocol {
     func visitLogDataRefreshed(_ logs: [VisitLog]) {
         self.logsOld = logs
-        self.mergeLogs()
-        self.isLoading = false
+        self.didReceiveOldLogs = true
+        tryMergeAndUpdate()
     }
 
     func visitLogDataRefreshedNew(_ logs: [VisitLog]) {
         self.logsNew = logs
-        self.mergeLogs()
-        self.isLoading = false
+        self.didReceiveNewLogs = true
+        tryMergeAndUpdate()
     }
     
 }

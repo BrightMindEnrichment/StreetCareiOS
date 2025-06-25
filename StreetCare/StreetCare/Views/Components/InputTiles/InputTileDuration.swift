@@ -39,7 +39,7 @@ struct InputTileDuration: View {
                 VStack {
                     if buttonMode == .navigation {
                         HStack {
-                            Text("Question \(questionNumber)/\(totalQuestions)")
+                            Text(NSLocalizedString("question", comment: "") + " \(questionNumber)/\(totalQuestions)")
                                 .foregroundColor(.black)
                             Spacer()
                             Button("Skip") {
@@ -74,15 +74,15 @@ struct InputTileDuration: View {
                     }
                     
                     HStack(spacing: 16) {
-                        CustomDropdown(title: "Hours", selection: $localHours, options: Array(0..<13).reversed())
-                        CustomDropdown(title: "Minutes", selection: $localMinutes, options: Array(0..<61).reversed())
+                        CustomDropdown(title: "Hours", selection: $hours, options: Array(0..<13).reversed(), placeholder: "Hours")
+                        CustomDropdown(title: "Minutes", selection: $minutes, options: Array(0..<61).reversed(), placeholder: "Minutes")
                     }
                     .padding(.horizontal)
                     .padding()
                     
                     if buttonMode == .navigation {
                         HStack {
-                            Button("Previous") {
+                            Button(NSLocalizedString("previous", comment: "")) {
                                 previousAction()
                             }
                             .foregroundColor(Color("SecondaryColor"))
@@ -94,7 +94,7 @@ struct InputTileDuration: View {
                             
                             Spacer()
                             
-                            Button(" Next  ") {
+                            Button(" " + NSLocalizedString("next", comment: "") + " ") {
                                 nextAction()
                             }
                             .foregroundColor(Color("PrimaryColor"))
@@ -117,6 +117,8 @@ struct InputTileDuration: View {
                             .overlay(Capsule().stroke(Color("SecondaryColor"), lineWidth: 2))
                             
                             Spacer()
+                            
+                            
                             
                             Button("Update") {
                                 hours = localHours
@@ -159,7 +161,7 @@ struct InputTileDuration: View {
                 tileWidth: 350
             )
 
-            Text("Progress")
+            Text(NSLocalizedString("progress", comment: ""))
                 .font(.footnote)
                 .fontWeight(.bold)
                 .padding(.top, 4)
@@ -170,6 +172,7 @@ struct CustomDropdown: View {
     var title: String
     @Binding var selection: Int
     var options: [Int]
+    var placeholder: String?
 
     var body: some View {
         Menu {
@@ -188,7 +191,7 @@ struct CustomDropdown: View {
             }
         } label: {
             HStack {
-                Text("\(selection)")
+                Text(selection >= 0 ? "\(selection)" : (placeholder ?? "Select"))
                     .foregroundColor(.black)
                 Spacer()
                 Image(systemName: "chevron.down")

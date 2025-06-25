@@ -76,7 +76,7 @@ struct InputTileLocation: View {
                 VStack {
                     if buttonMode == .navigation {
                         HStack {
-                            Text("Question \(questionNumber)/\(totalQuestions)")
+                            Text(NSLocalizedString("question", comment: "") + " \(questionNumber)/\(totalQuestions)")
                                 .foregroundColor(.black)
                             Spacer()
                             
@@ -164,7 +164,7 @@ struct InputTileLocation: View {
                         switch buttonMode {
                         case .navigation:
                             HStack {
-                                Button("Previous") {
+                                Button(NSLocalizedString("previous", comment: "")) {
                                     previousAction()
                                 }
                                 .foregroundColor(Color("SecondaryColor"))
@@ -176,7 +176,7 @@ struct InputTileLocation: View {
                                 
                                 Spacer()
                                 
-                                Button("Next") {
+                                Button(" " + NSLocalizedString("next", comment: "") + " ") {
                                     handleLocationSubmit()
                                 }
                                 .foregroundColor(Color("PrimaryColor"))
@@ -289,7 +289,7 @@ struct InputTileLocation: View {
                     filledSegments: questionNumber,
                     tileWidth: 320
                 )
-                Text("Progress")
+                Text(NSLocalizedString("progress", comment: ""))
                     .font(.footnote)
                     .padding(.top, 4)
                     .fontWeight(.bold)

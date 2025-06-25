@@ -18,7 +18,11 @@ struct ProfilView: View {
     @Binding var loginRequested: Bool
     let adapter = VisitLogDataAdapter()
     @State var history = [VisitLog]()
+    @State var logsOld = [VisitLog]()
+    @State var logsNew = [VisitLog]()
     @EnvironmentObject var googleSignIn: UserAuthModel
+    @State private var didReceiveOldLogs = false
+    @State private var didReceiveNewLogs = false
 
     @State var peopleHelped = 0
     @State var outreaches = 0
@@ -32,6 +36,7 @@ struct ProfilView: View {
     @StateObject var storage = StorageManager(uid: "")
     @State private var avatarImage: UIImage?
     @State private var showLoginLink = false
+    @State var isLoading = false
     
     var body: some View {
         NavigationStack {
@@ -55,14 +60,14 @@ struct ProfilView: View {
                     NavigationLink {
                         ProfileDetails()
                     } label: {
-                        NavLinkButton(title:"Edit Profile", width: 160.0, height: 40.0,secondaryButton: true,noBorder: true, color: .blue)
+                        NavLinkButton(title: NSLocalizedString("editProfile", comment: ""), width: 160.0, height: 40.0,secondaryButton: true,noBorder: true, color: .blue)
                     }
                    // Spacer().frame(height: 10)
 
                     NavigationLink {
                         BadgesView()
                     } label: {
-                        NavLinkButton(title:"Badges Earned", width: 160.0, height: 40.0,secondaryButton: true,noBorder: true, color: .blue)
+                        NavLinkButton(title:NSLocalizedString("badgesEarned", comment: ""), width: 160.0, height: 40.0,secondaryButton: true,noBorder: true, color: .blue)
                     }
                     Spacer()
 
@@ -84,7 +89,7 @@ struct ProfilView: View {
                             }
                         }
 
-                    NavLinkButton(title: "Delete Account", width: 190.0, secondaryButton: true, noBorder: true, color: Color.black)
+                    NavLinkButton(title:NSLocalizedString("deleteAccount", comment: ""), width: 190.0, secondaryButton: true, noBorder: true, color: Color.black)
                         .padding()
                         .onTapGesture {
                             showUserDeleteDialog = true
@@ -102,6 +107,8 @@ struct ProfilView: View {
                     self.user = u
                     adapter.delegate = self
                     adapter.refresh()
+                    adapter.refresh_new()
+                    adapter.refreshWebProd()
                     storage.uid = u.uid
                     // 🔽 ADDED: Check Firestore for photoUrl (for web-created accounts)
                     let db = Firestore.firestore()
@@ -182,6 +189,18 @@ struct ProfilView: View {
            showLoginLink   = true
            loginRequested = false
        }
+    private func tryMergeAndUpdate() {
+        guard didReceiveOldLogs && didReceiveNewLogs else { return }
+        self.history = (logsOld + logsNew)
+            .sorted { $0.whenVisit > $1.whenVisit }
+        self.updateCounts()
+        self.isLoading = false
+    }
+    
+    private func mergeLogs() {
+        self.history = (logsOld + logsNew)
+            .sorted { $0.whenVisit > $1.whenVisit }  // Sort newest first
+    }
     
     private func updateCounts() {
 
@@ -210,14 +229,29 @@ struct ProfilView: View {
             if visitLog.wellness {
                 newDonations += 1
             }
-
+                                               
+            if visitLog.medical {
+                newDonations += 1
+            }
+            
+            if visitLog.social {
+                newDonations += 1
+            }
+            
+            if visitLog.legal {
+                newDonations += 1
+            }
+                                               
             if visitLog.other {
                 newDonations += 1
             }
 
             return partialResult + newDonations
-        })    
+        })
+
+        
     }
+
     
 } // end struct
 
@@ -226,12 +260,15 @@ struct ProfilView: View {
 extension ProfilView: VisitLogDataAdapterProtocol {
     
     func visitLogDataRefreshed(_ logs: [VisitLog]) {
-        self.history = logs
-        self.updateCounts()
+        self.logsOld = logs
+        self.didReceiveOldLogs = true
+        tryMergeAndUpdate()
     }
+
     func visitLogDataRefreshedNew(_ logs: [VisitLog]) {
-        self.history.append(contentsOf: logs)
-        self.updateCounts()
+        self.logsNew = logs
+        self.didReceiveNewLogs = true
+        tryMergeAndUpdate()
     }
 }
 
