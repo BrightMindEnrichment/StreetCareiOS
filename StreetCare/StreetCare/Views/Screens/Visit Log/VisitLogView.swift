@@ -744,6 +744,7 @@ struct VisitLogView: View {
                 onEdit: {
                     editedPeopleNeedHelp = log.peopleNeedFurtherHelp
                     editedPeopleNeedHelpComment = log.peopleNeedFurtherHelpComment
+                    editedPeopleNeedHelpLocation = log.peopleNeedFurtherHelpLocation
                     navigateToEditPeopleNeedHelp = true
                 },
                 canEdit: log.isFromOldCollection
@@ -753,13 +754,14 @@ struct VisitLogView: View {
                 destination: InputTileNumber(
                     questionNumber: 6,
                     totalQuestions: 6,
-                    tileWidth: 300,
-                    tileHeight: 420,
+                    tileWidth: 360,
+                    tileHeight: 580,
                     question1: "How many people",
                     question2: "still need support?",
                     question3: "",
                     question4: "",
-                    descriptionLabel: "",
+                    descriptionLabel: "Description",
+                    descriptionLabel2: "Location Description",
                     disclaimerText: "",
                     placeholderText: "Enter notes here",
                     number: $editedPeopleNeedHelp,
@@ -785,6 +787,7 @@ struct VisitLogView: View {
                         navigateToEditPeopleNeedHelp = false
                     },
                     showProgressBar: false,
+                    showTextEditor2: true,
                     buttonMode: .update
                 ),
                 isActive: $navigateToEditPeopleNeedHelp
