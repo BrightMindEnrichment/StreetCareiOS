@@ -78,6 +78,7 @@ struct CommunityView: View {
                         NavigationLink {
                             //                            HelpRequestView()
                             PublicVisitLogView(loggedInUserDetails: userDetails ?? UserDetails())
+                                .environmentObject(StorageManager(uid: userDetails?.uid ?? ""))
                         } label:{
                             VStack{
                                 ZStack {
