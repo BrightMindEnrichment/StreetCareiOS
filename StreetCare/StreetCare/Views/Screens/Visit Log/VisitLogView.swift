@@ -41,6 +41,7 @@ struct VisitLogView: View {
     @State private var navigateToEditPeopleNeedHelp = false
     @State private var editedPeopleNeedHelp: Int = 0
     @State var editedPeopleNeedHelpComment: String = ""
+    @State var editedPeopleNeedHelpLocation: String = ""
 
     @StateObject var editedFurtherSupport = VisitLog(id: "")
     @State private var isEditingPeopleHelped = false
@@ -391,6 +392,7 @@ struct VisitLogView: View {
                     placeholderText: NSLocalizedString("peopledescription", comment: ""),
                     number: $editedPeopleHelped,
                     generalDescription: $editedPeopleHelpedDescription,
+                    generalDescription2: .constant(""),
                     nextAction: {
                         let adapter = VisitLogDataAdapter()
                         adapter.updateVisitLogField(log.id, field: "peopleHelped", value: editedPeopleHelped) {
@@ -532,6 +534,7 @@ struct VisitLogView: View {
                     placeholderText: "Enter notes here",
                     number: $editedItemQty,
                     generalDescription: $editedItemQtyDescription,
+                    generalDescription2: .constant(""),
                     nextAction: {
                         let adapter = VisitLogDataAdapter()
                         adapter.updateVisitLogField(log.id, field: "itemQty", value: editedItemQty) {
@@ -704,6 +707,7 @@ struct VisitLogView: View {
                     placeholderText: "Enter notes here",
                     number: $editedHelpers,
                     generalDescription: $editedHelpersComment,
+                    generalDescription2: .constant(""),
                     nextAction: {
                         let adapter = VisitLogDataAdapter()
                         adapter.updateVisitLogField(log.id, field: "numberOfHelpers", value: editedHelpers) {
@@ -760,13 +764,17 @@ struct VisitLogView: View {
                     placeholderText: "Enter notes here",
                     number: $editedPeopleNeedHelp,
                     generalDescription: $editedPeopleNeedHelpComment,
+                    generalDescription2: $editedPeopleNeedHelpLocation,
                     nextAction: {
                         let adapter = VisitLogDataAdapter()
                         adapter.updateVisitLogField(log.id, field: "peopleNeedFurtherHelp", value: editedPeopleNeedHelp) {
                             adapter.updateVisitLogField(log.id, field: "peopleNeedFurtherHelpComment", value: editedPeopleNeedHelpComment) {
-                                log.peopleNeedFurtherHelp = editedPeopleNeedHelp
-                                log.peopleNeedFurtherHelpComment = editedPeopleNeedHelpComment
-                                navigateToEditPeopleNeedHelp = false
+                                adapter.updateVisitLogField(log.id, field: "peopleNeedFurtherHelpLocation", value: editedPeopleNeedHelpLocation){
+                                    log.peopleNeedFurtherHelp = editedPeopleNeedHelp
+                                    log.peopleNeedFurtherHelpComment = editedPeopleNeedHelpComment
+                                    log.peopleNeedFurtherHelpLocation = editedPeopleNeedHelpLocation
+                                    navigateToEditPeopleNeedHelp = false
+                                }
                             }
                         }
                     },

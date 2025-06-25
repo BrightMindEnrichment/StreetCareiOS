@@ -34,6 +34,7 @@ struct InputTileNumber: View {
     @State private var numberString: String
 
     @Binding var generalDescription: String
+    @Binding var generalDescription2: String
     var showTextEditor: Bool = true
     @State private var showAlert = false
     @State private var showSuccessAlert = false
@@ -62,6 +63,7 @@ struct InputTileNumber: View {
         placeholderText2: String? = nil,
         number: Binding<Int>,
         generalDescription: Binding<String>,
+        generalDescription2: Binding<String>,
         nextAction: @escaping () -> Void,
         previousAction: @escaping () -> Void,
         skipAction: @escaping () -> Void,
@@ -85,6 +87,7 @@ struct InputTileNumber: View {
         self._number = number
         self._numberString = State(initialValue: String(number.wrappedValue))
         self._generalDescription = generalDescription
+        self._generalDescription2 = generalDescription2
         self.nextAction = nextAction
         self.previousAction = previousAction
         self.skipAction = skipAction
@@ -196,7 +199,7 @@ struct InputTileNumber: View {
                         }
 
                         if showTextEditor2 {
-                            AutoGrowingTextEditor(text: $generalDescription, placeholder: placeholderText2 ?? "")
+                            AutoGrowingTextEditor(text: $generalDescription2, placeholder: placeholderText2 ?? "")
                         }
 
                         if let disclaimer = disclaimerText, !disclaimer.isEmpty {

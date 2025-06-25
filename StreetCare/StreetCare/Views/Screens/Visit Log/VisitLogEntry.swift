@@ -106,6 +106,7 @@ struct VisitLogEntry: View {
                         placeholderText: NSLocalizedString("peopledescription", comment: ""),
                         number: $visitLog.peopleHelped,
                         generalDescription: $visitLog.peopleHelpedDescription,
+                        generalDescription2: .constant(""),
                         nextAction: {
                             questionNumber += 1
                         },
@@ -148,6 +149,7 @@ struct VisitLogEntry: View {
                         placeholderText: "Enter notes here",
                         number: $visitLog.itemQty,
                         generalDescription: $visitLog.itemQtyDescription,
+                        generalDescription2: .constant(""),
                         nextAction: {
                             questionNumber += 1
                         },
@@ -214,6 +216,7 @@ struct VisitLogEntry: View {
                         placeholderText: NSLocalizedString("aq2des", comment: ""),
                         number: $visitLog.numberOfHelpers,
                         generalDescription: $visitLog.numberOfHelpersComment,
+                        generalDescription2: .constant(""),
                         nextAction: {
                             questionNumber += 1
                         },
@@ -244,6 +247,7 @@ struct VisitLogEntry: View {
                         placeholderText2: NSLocalizedString("questionTenPlaceholder", comment: ""),
                         number: $visitLog.peopleNeedFurtherHelp,
                         generalDescription: $visitLog.peopleNeedFurtherHelpComment,
+                        generalDescription2: $visitLog.peopleNeedFurtherHelpLocation,
                         nextAction: {
                             questionNumber += 1
                         },
@@ -303,7 +307,7 @@ struct VisitLogEntry: View {
                         placeholderText: NSLocalizedString("aq6des", comment: ""),
                         otherNotes: $visitLog.furtherOtherNotes,
                         nextAction: {
-                            saveVisitLog()
+                            //saveVisitLog()
                             questionNumber += 1
                         },
                         previousAction: {
@@ -318,7 +322,7 @@ struct VisitLogEntry: View {
                     
                 case 100:
                     InputTileComplete() {
-                        //saveVisitLog() // Regular save
+                        saveVisitLog() // Regular save
                         presentation.wrappedValue.dismiss()
                     } shareAction: {
                         saveVisitLog_Community() // Save for community

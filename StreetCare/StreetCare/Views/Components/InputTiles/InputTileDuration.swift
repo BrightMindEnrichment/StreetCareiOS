@@ -74,8 +74,8 @@ struct InputTileDuration: View {
                     }
                     
                     HStack(spacing: 16) {
-                        CustomDropdown(title: "Hours", selection: $localHours, options: Array(0..<13).reversed())
-                        CustomDropdown(title: "Minutes", selection: $localMinutes, options: Array(0..<61).reversed())
+                        CustomDropdown(title: "Hours", selection: $hours, options: Array(0..<13).reversed())
+                        CustomDropdown(title: "Minutes", selection: $minutes, options: Array(0..<61).reversed())
                     }
                     .padding(.horizontal)
                     .padding()
@@ -117,6 +117,8 @@ struct InputTileDuration: View {
                             .overlay(Capsule().stroke(Color("SecondaryColor"), lineWidth: 2))
                             
                             Spacer()
+                            
+                            
                             
                             Button("Update") {
                                 hours = localHours
