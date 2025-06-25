@@ -53,15 +53,16 @@ class PublicVisitLogDataAdapter {
             .whereField("status", isEqualTo: "approved")
             .order(by: "dateTime", descending: true)
             .getDocuments { snapshot, error in
-                if let error = error {
-                    print("⚠️ Error fetching WebProd logs: \(error.localizedDescription)")
+                guard let documents = snapshot?.documents, error == nil else {
+                    print("⚠️ Error fetching WebProd logs: \(error?.localizedDescription ?? "")")
                     completion([])
                     return
                 }
 
                 var logs: [VisitLog] = []
+                let dispatchGroup = DispatchGroup()
 
-                for document in snapshot?.documents ?? [] {
+                for document in documents {
                     let log = VisitLog(id: document.documentID)
 
                     log.isPublic = document["public"] as? Bool ?? false
@@ -74,20 +75,23 @@ class PublicVisitLogDataAdapter {
                     log.isFlagged = document["isFlagged"] as? Bool ?? false
                     log.flaggedByUser = document["flaggedByUser"] as? String ?? ""
 
-                    // User info
                     if let uid = document["uid"] as? String {
                         log.uid = uid
+                        dispatchGroup.enter()
                         self.fetchUserDetails(uid: uid, storage: storage) { userDetails in
                             if let userDetails = userDetails {
                                 log.user = userDetails
                             }
+                            dispatchGroup.leave()
                         }
                     }
 
                     logs.append(log)
                 }
 
-                completion(logs)
+                dispatchGroup.notify(queue: .main) {
+                    completion(logs)
+                }
             }
     }
 
@@ -100,15 +104,16 @@ class PublicVisitLogDataAdapter {
             .whereField("status", isEqualTo: "approved")
             .order(by: "whenVisit", descending: true)
             .getDocuments { snapshot, error in
-                if let error = error {
-                    print("⚠️ Error fetching VisitLogBook_New: \(error.localizedDescription)")
+                guard let documents = snapshot?.documents, error == nil else {
+                    print("⚠️ Error fetching VisitLogBook_New: \(error?.localizedDescription ?? "")")
                     completion([])
                     return
                 }
 
                 var logs: [VisitLog] = []
+                let dispatchGroup = DispatchGroup()
 
-                for document in snapshot?.documents ?? [] {
+                for document in documents {
                     let log = VisitLog(id: document.documentID)
 
                     log.isPublic = document["isPublic"] as? Bool ?? false
@@ -118,20 +123,16 @@ class PublicVisitLogDataAdapter {
                     log.whatGiven = document["whatGiven"] as? [String] ?? []
                     log.isFlagged = document["isFlagged"] as? Bool ?? false
                     log.flaggedByUser = document["flaggedByUser"] as? String ?? ""
-                    log.uid = document["uid"] as? String ?? ""
 
-                    // Extract street, city, state from whereVisit
                     let components = log.whereVisit
                         .components(separatedBy: ",")
                         .map { $0.trimmingCharacters(in: .whitespaces) }
                         .filter { !$0.isEmpty }
 
                     if components.count >= 4 {
-                        // Ex: "1122 24th Ave SW, Norman, OK, 73069"
                         log.street = components.dropLast(3).joined(separator: ", ")
                         log.city = components[components.count - 3]
                         log.state = components[components.count - 2]
-                        // zip = components.last (optional if you want)
                     } else if components.count == 3 {
                         log.street = components[0]
                         log.city = components[1]
@@ -144,29 +145,27 @@ class PublicVisitLogDataAdapter {
                         log.street = ""
                         log.city = components[0]
                         log.state = ""
-                    } else {
-                        log.street = ""
-                        log.city = ""
-                        log.state = ""
                     }
 
-                    // Fetch user details
                     if let uid = document["uid"] as? String {
                         log.uid = uid
+                        dispatchGroup.enter()
                         self.fetchUserDetails(uid: uid, storage: storage) { userDetails in
                             if let userDetails = userDetails {
                                 log.user = userDetails
                             }
+                            dispatchGroup.leave()
                         }
                     }
 
                     logs.append(log)
                 }
 
-                completion(logs)
+                dispatchGroup.notify(queue: .main) {
+                    completion(logs)
+                }
             }
     }
-
 
     private func fetchUserDetails(uid: String, storage: Storage, completion: @escaping (UserDetails?) -> Void) {
         let db = Firestore.firestore()
@@ -179,7 +178,9 @@ class PublicVisitLogDataAdapter {
             .getDocuments { snapshot, error in
                 if let error = error {
                     print("⚠️ Error fetching user details: \(error.localizedDescription)")
-                    completion(nil)
+                    DispatchQueue.main.async {
+                        completion(nil)
+                    }
                     return
                 }
 
@@ -192,14 +193,14 @@ class PublicVisitLogDataAdapter {
                 userDetails.profilePictureURL = ref.fullPath
 
                 ref.getData(maxSize: 5 * 1024 * 1024) { data, error in
-                    if let error = error {
-                        //print("⚠️ Error fetching profile image: \(error.localizedDescription)")
-                        userDetails.image = nil
-                    } else if let data = data {
-                        userDetails.image = UIImage(data: data)
+                    DispatchQueue.main.async {
+                        if let data = data {
+                            userDetails.image = UIImage(data: data)
+                        } else {
+                            userDetails.image = nil
+                        }
+                        completion(userDetails)
                     }
-
-                    completion(userDetails)
                 }
             }
     }
