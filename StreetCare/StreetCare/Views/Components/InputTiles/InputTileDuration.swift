@@ -74,8 +74,8 @@ struct InputTileDuration: View {
                     }
                     
                     HStack(spacing: 16) {
-                        CustomDropdown(title: "Hours", selection: $hours, options: Array(0..<13).reversed())
-                        CustomDropdown(title: "Minutes", selection: $minutes, options: Array(0..<61).reversed())
+                        CustomDropdown(title: "Hours", selection: $hours, options: Array(0..<13).reversed(), placeholder: "Hours")
+                        CustomDropdown(title: "Minutes", selection: $minutes, options: Array(0..<61).reversed(), placeholder: "Minutes")
                     }
                     .padding(.horizontal)
                     .padding()
@@ -172,6 +172,7 @@ struct CustomDropdown: View {
     var title: String
     @Binding var selection: Int
     var options: [Int]
+    var placeholder: String?
 
     var body: some View {
         Menu {
@@ -190,7 +191,7 @@ struct CustomDropdown: View {
             }
         } label: {
             HStack {
-                Text("\(selection)")
+                Text(selection >= 0 ? "\(selection)" : (placeholder ?? "Select"))
                     .foregroundColor(.black)
                 Spacer()
                 Image(systemName: "chevron.down")
