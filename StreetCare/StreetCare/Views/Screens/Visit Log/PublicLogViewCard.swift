@@ -30,13 +30,15 @@ struct PublicLogViewCard: View {
                             if let image = user.image {
                                 Image(uiImage: image)
                                     .resizable()
-                                    .aspectRatio(contentMode: .fill)
+
+                                    .scaledToFill()
+
                                     .frame(width: 30, height: 30)
                                     .clipShape(Circle())
                             } else {
                                 Image("PublicLogDefaultProfile")
                                     .resizable()
-                                    .aspectRatio(contentMode: .fit)
+                                    .scaledToFill()
                                     .frame(width: 30, height: 30)
                                     .clipShape(Circle())
                             }
@@ -180,7 +182,7 @@ struct RoundedCorner: Shape {
 func updateFlagStatus(log: VisitLog, isFlagged: Bool, flaggedByUser: String?) {
     Task {
         let db = Firestore.firestore()
-        let ref = db.collection("visitLogWebProd").document(log.id)
+        let ref = db.collection("VisitLogBook_New").document(log.id)
         
         let updates: [String: Any] = [
             "isFlagged": isFlagged,
