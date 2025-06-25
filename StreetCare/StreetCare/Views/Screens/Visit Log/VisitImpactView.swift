@@ -32,6 +32,8 @@ struct VisitImpactView: View {
     @State private var doNotShowAgain = false
     @State var logsOld = [VisitLog]()
     @State var logsNew = [VisitLog]()
+    @State private var didReceiveOldLogs = false
+    @State private var didReceiveNewLogs = false
    
     @AppStorage("hideProvidedHelpAlert") private var hideProvidedHelpAlert: Bool = false
 
@@ -350,6 +352,13 @@ struct VisitImpactView: View {
         self.history = (logsOld + logsNew)
             .sorted { $0.whenVisit > $1.whenVisit }  // Sort newest first
     }
+    private func tryMergeAndUpdate() {
+        guard didReceiveOldLogs && didReceiveNewLogs else { return }
+        self.history = (logsOld + logsNew)
+            .sorted { $0.whenVisit > $1.whenVisit }
+        self.updateCounts()
+        self.isLoading = false
+    }
 
 
     private func updateCounts() {
@@ -467,14 +476,14 @@ struct HalfCapsuleShape: Shape {
 extension VisitImpactView: VisitLogDataAdapterProtocol {
     func visitLogDataRefreshed(_ logs: [VisitLog]) {
         self.logsOld = logs
-        self.mergeLogs()
-        self.isLoading = false
+        self.didReceiveOldLogs = true
+        tryMergeAndUpdate()
     }
 
     func visitLogDataRefreshedNew(_ logs: [VisitLog]) {
         self.logsNew = logs
-        self.mergeLogs()
-        self.isLoading = false
+        self.didReceiveNewLogs = true
+        tryMergeAndUpdate()
     }
     
 }
