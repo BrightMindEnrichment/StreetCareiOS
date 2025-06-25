@@ -95,8 +95,8 @@ struct VisitLogEntry: View {
                     InputTileNumber(
                         questionNumber: 3,
                         totalQuestions: 6,
-                        tileWidth: 300,
-                        tileHeight: 560,
+                        tileWidth: 360,
+                        tileHeight: 520,
                         question1: NSLocalizedString("questionThreePartOne", comment: ""),
                         question2: NSLocalizedString("questionThreePartTwo", comment: ""),
                         question3: NSLocalizedString("questionThreePartThree", comment: ""),
@@ -122,7 +122,7 @@ struct VisitLogEntry: View {
                         questionNumber: 4,
                         totalQuestions: 6,
                         optionCount: 5,
-                        size: CGSize(width: 350, height: 450),
+                        size: CGSize(width: 360, height: 450),
                         question1: NSLocalizedString("questionFourPartOne", comment: ""),
                         question2: NSLocalizedString("questionFourPartTwo", comment: ""),
                         visitLog: visitLog,
@@ -137,8 +137,8 @@ struct VisitLogEntry: View {
                     InputTileNumber(
                         questionNumber: 5,
                         totalQuestions: 6,
-                        tileWidth: 300,
-                        tileHeight: 460,
+                        tileWidth: 360,
+                        tileHeight: 500,
                         question1: NSLocalizedString("questionFivePartOne", comment: ""),
                         question2: NSLocalizedString("questionFivePartTwo", comment: ""),
                         question3: "",
@@ -204,7 +204,7 @@ struct VisitLogEntry: View {
                         questionNumber: 2,
                         totalQuestions: 7,
                         tileWidth: 360,
-                        tileHeight: 326,
+                        tileHeight: 500,
                         question1: NSLocalizedString("questionNinePartOne", comment: ""),
                         question2: NSLocalizedString("questionNinePartTwo", comment: ""),
                         question3: "",
@@ -232,14 +232,16 @@ struct VisitLogEntry: View {
                         questionNumber: 3,
                         totalQuestions: 7,
                         tileWidth: 360,
-                        tileHeight: 467,
+                        tileHeight: 580,
                         question1: NSLocalizedString("questionTenPartOne", comment: ""),
                         question2: NSLocalizedString("questionTenPartTwo", comment: ""),
                         question3: "",
                         question4: "",
                         descriptionLabel: "Description",
+                        descriptionLabel2: "Location Description",
                         disclaimerText: "",
                         placeholderText: NSLocalizedString("peopledescription", comment: ""),
+                        placeholderText2: NSLocalizedString("questionTenPlaceholder", comment: ""),
                         number: $visitLog.peopleNeedFurtherHelp,
                         generalDescription: $visitLog.peopleNeedFurtherHelpComment,
                         nextAction: {
@@ -250,14 +252,15 @@ struct VisitLogEntry: View {
                         },
                         skipAction: {
                             questionNumber += 1
-                        }
+                        },
+                        showTextEditor2: true
                     )
                  case 11:
                     InputTileList(
                         questionNumber: 4,
                         totalQuestions: 7,
                         optionCount: 5,
-                        size: CGSize(width: 350, height: 450),
+                        size: CGSize(width: 360, height: 450),
                         question1: NSLocalizedString("questionElevenPartOne", comment: ""),
                         question2: NSLocalizedString("questionElevenPartTwo", comment: ""),
                         visitLog: visitLog,
@@ -292,7 +295,7 @@ struct VisitLogEntry: View {
                     InputTileNotes(
                         questionNumber: 6,
                         totalQuestions: 7,
-                        tileWidth: 300,
+                        tileWidth: 360,
                         tileHeight: 380,
                         question1: NSLocalizedString("questionThirteenPartOne", comment: ""),
                         question2: NSLocalizedString("questionThirteenPartTwo", comment: ""),
