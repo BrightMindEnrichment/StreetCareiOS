@@ -111,7 +111,14 @@ struct PublicInteractionPopupView: View {
             HStack(spacing: 8) {
                 Image(systemName: "mappin.and.ellipse")
                     .foregroundColor(.gray)
-                Text(visit.whereVisit)
+                Text(
+                    !visit.whereVisit.isEmpty
+                    ? visit.whereVisit
+                    : [visit.street, visit.city, visit.state, visit.stateAbbv, visit.zipcode]
+                        .filter { !$0.isEmpty }
+                        .joined(separator: ", ")
+                )
+
                     .font(.system(size: 13))
             }
             
