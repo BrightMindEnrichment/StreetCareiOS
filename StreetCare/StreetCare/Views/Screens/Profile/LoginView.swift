@@ -63,18 +63,30 @@ struct LoginView: View {
                 .background(Color("SecondaryColor"))
                 .clipShape(Capsule())
                 
+                Spacer().frame(height: 50)
                 
-//                Button(action: loginWithGoogle) {
-//                    HStack {
-//                        Image("Google")
-//                        Text("Continue with Google")
-//                            .padding(EdgeInsets(top: 8.0, leading: 20.0, bottom: 8.0, trailing: 20.0))
-//                            .foregroundColor(Color("PrimaryColor"))
-//                    }
-//                }
-//                .frame(width: 300.0)
-//                .background(Color("SecondaryColor"))
-//                .clipShape(Capsule())
+                Button(action: loginWithGoogle) {
+                    HStack(spacing: 10) {
+                        Image("Google")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 20, height: 20)
+                        
+                        Text("Continue with Google")
+                            .foregroundColor(.black)
+                            .font(.system(size: 16, weight: .medium))
+                    }
+                    .padding(.vertical, 12)
+                    .padding(.horizontal, 20)
+                    .frame(maxWidth: .infinity)
+                    .background(Color.white)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 24)
+                            .stroke(Color.gray.opacity(0.3), lineWidth: 1)
+                    )
+                    .cornerRadius(24)
+                }
+                .frame(width: 300)
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
