@@ -146,10 +146,13 @@ struct VisitLogView: View {
                     title: Text("Confirm Sharing"),
                     message: Text("""
                     The following information will be shared when posted to the community:
-                    - Your Name
-                    - Your Profile Picture
-                    - Your Location
-                    - Type of Help Provided
+                    - Name & Profile Picture
+                    - Date & Time of Interaction
+                    - City, State
+                    - People Helped
+                    - Type of Help Offered
+                    - Items Donated
+                    - People Who Joined
                     """),
                     primaryButton: .default(Text("Confirm")) {
                         let adapter = VisitLogDataAdapter()
