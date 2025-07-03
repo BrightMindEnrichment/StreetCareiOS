@@ -108,7 +108,7 @@ struct ProfilView: View {
                     adapter.delegate = self
                     adapter.refresh()
                     adapter.refresh_new()
-                    adapter.refreshWebProd()
+                    //adapter.refreshWebProd()
                     storage.uid = u.uid
                     // 🔽 ADDED: Check Firestore for photoUrl (for web-created accounts)
                     let db = Firestore.firestore()

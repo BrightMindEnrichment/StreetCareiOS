@@ -280,7 +280,7 @@ struct VisitImpactView: View {
                     if Auth.auth().currentUser != nil {
                         adapter.refresh()
                         adapter.refresh_new()
-                        adapter.refreshWebProd()
+                        //adapter.refreshWebProd()
                         self.isLoading = true
                     } else {
                         adapter.resetLogs()

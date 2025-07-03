@@ -256,7 +256,7 @@ class VisitLogDataAdapter {
         }
     }
     
-    func refreshWebProd() {
+    /*func refreshWebProd() {
         guard let user = Auth.auth().currentUser else { return }
         
         let db = Firestore.firestore()
@@ -276,7 +276,7 @@ class VisitLogDataAdapter {
                
                 self.delegate?.visitLogDataRefreshed(self.visitLogs)
             }
-    }
+    }*/
     
     func refresh_new() {
         print("📥 refresh_new called")
