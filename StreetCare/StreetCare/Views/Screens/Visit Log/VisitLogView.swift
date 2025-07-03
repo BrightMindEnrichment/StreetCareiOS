@@ -7,6 +7,8 @@
 
 import SwiftUI
 import MapKit
+import FirebaseFirestore
+import FirebaseFirestoreSwift
 
 struct VisitLogView: View {
     @Environment(\.presentationMode) var presentation
@@ -152,16 +154,32 @@ struct VisitLogView: View {
                     - Type of Help Provided
                     """),
                     primaryButton: .default(Text("Confirm")) {
-                        let adapter = VisitLogDataAdapter()
-                        adapter.updateVisitLogField(log.id, field: "isPublic", value: true) {
-                            print("🔓 Log is now public!")
-                        }
-                        hasShared = true
-                        showConfirmationDialog = false
-                    },
+                                let db = Firestore.firestore()
+                                let collectionName = log.source == "webProd" ? "visitLogWebProd" : "VisitLogBook_New"
+                                
+                                var updateData: [String: Any] = [
+                                    "status": "pending"
+                                ]
+                                
+                                if log.source == "webProd" {
+                                    updateData["public"] = true  //Use correct field name
+                                } else {
+                                    updateData["isPublic"] = true
+                                }
+
+                                db.collection(collectionName).document(log.id).updateData(updateData) { error in
+                                    if let error = error {
+                                        print("Error sharing log: \(error.localizedDescription)")
+                                    } else {
+                                        print("Log successfully shared with community.")
+                                        hasShared = true
+                                    }
+                                    showConfirmationDialog = false
+                                }
+                            },
                     secondaryButton: .cancel {
-                        showConfirmationDialog = false
-                    }
+                                    showConfirmationDialog = false
+                                }
                 )
             } else {
                 return Alert(

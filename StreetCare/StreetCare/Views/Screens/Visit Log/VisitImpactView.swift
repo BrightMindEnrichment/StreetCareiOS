@@ -154,7 +154,7 @@ struct VisitImpactView: View {
                                         let city = components.indices.contains(1) ? components[1] : ""
                                         let state = components.indices.contains(2) ? components[2] : ""  // no split
                                         let stateAbbr = stateAbbreviations[state] ?? state  // supports both "OK" and "Oklahoma"
-                                        
+
                                         VStack(alignment: .leading, spacing: 2) {
                                             if components.count >= 3 {
                                                 Text(street)

@@ -354,10 +354,11 @@ struct VisitLogEntry: View {
     }
     
     func saveVisitLog_Community() {
+        visitLog.isPublic = true
+        visitLog.status = "pending"
+        
         let adapter = VisitLogDataAdapter()
-        adapter.updateVisitLogField(self.visitLog.id, field: "isPublic", value: true) {
-            print("🔓 Log is now public!")
-        }
+        adapter.addVisitLog(self.visitLog)
     }
     
 } // end struct
