@@ -62,7 +62,8 @@ struct PublicInteractionPopupView: View {
                         Task {
                             guard let currentUser = Auth.auth().currentUser else { return }
                             let db = Firestore.firestore()
-                            let ref = db.collection("VisitLogBook_New").document(visit.id)
+                            let collectionName = visit.source == "webProd" ? "visitLogWebProd" : "VisitLogBook_New"
+                            let ref = db.collection(collectionName).document(visit.id)
                             
                             if visit.isFlagged {
                                 // Try to unflag
@@ -129,7 +130,7 @@ struct PublicInteractionPopupView: View {
                     .font(.system(size: 13))
             }
             
-            // Description
+           /* // Description
             //if !visit.peopleHelpedDescription.isEmpty && visit.peopleHelpedDescription != "N/A" {
             VStack(alignment: .leading, spacing: 4) {
                 Text("Interaction Description")
@@ -145,6 +146,52 @@ struct PublicInteractionPopupView: View {
                 PublicInfoRow(title: "People Helped", value: "\(visit.peopleHelped)", iconName: "Tab-Profile", iconColor: .yellow)
                 PublicInfoRow(title: "People Who Joined", value: "\(visit.numberOfHelpers)", iconName: "HelpingHands", iconColor: .yellow)
                 PublicInfoRow(title: "Items Donated", value: "\(visit.itemQty)", iconName: "Clothes", iconColor: .yellow)
+                PublicInfoRow(
+                    title: "Type of Help Offered",
+                    value: visit.whatGiven.isEmpty ? "N/A" : visit.whatGiven.joined(separator: ", ")
+                )
+            }*/
+            // Description
+            if !(visit.peopleHelpedDescription.isEmpty && visit.description.isEmpty) {
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("Interaction Description")
+                        .font(.system(size: 14, weight: .semibold))
+                    Text(visit.peopleHelpedDescription.isEmpty || visit.peopleHelpedDescription == "N/A"
+                          ? visit.description
+                          : visit.peopleHelpedDescription
+                    )
+                    .font(.system(size: 13))
+                    .fixedSize(horizontal: false, vertical: true)
+                }
+            }
+
+            // Stats
+            VStack(alignment: .leading, spacing: 12) {
+                PublicInfoRow(
+                    title: "People Helped",
+                    value: visit.peopleHelped > 0
+                        ? "\(visit.peopleHelped)"
+                        : (Int(visit.numberPeopleHelped) ?? 0 > 0 ? visit.numberPeopleHelped : "0"),
+                    iconName: "Tab-Profile",
+                    iconColor: .yellow
+                )
+
+                PublicInfoRow(
+                    title: "People Who Joined",
+                    value: "\(visit.numberOfHelpers)",
+                    iconName: "HelpingHands",
+                    iconColor: .yellow
+                )
+
+                PublicInfoRow(
+                    title: "Items Donated",
+                    value: visit.itemQty > 0
+                        ? "\(visit.itemQty)"
+                        : (Int(visit.itemQtyWeb) ?? 0 > 0 ? visit.itemQtyWeb : "0"),
+                    iconName: "Clothes",
+                    iconColor: .yellow
+                )
+
                 PublicInfoRow(
                     title: "Type of Help Offered",
                     value: visit.whatGiven.isEmpty ? "N/A" : visit.whatGiven.joined(separator: ", ")

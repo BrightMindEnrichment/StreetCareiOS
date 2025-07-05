@@ -64,6 +64,8 @@ class PublicVisitLogDataAdapter {
 
                 for document in documents {
                     let log = VisitLog(id: document.documentID)
+                    log.source = "webProd"
+
 
                     log.isPublic = document["public"] as? Bool ?? false
                     log.whenVisit = (document["dateTime"] as? Timestamp)?.dateValue() ?? Date()
@@ -74,6 +76,9 @@ class PublicVisitLogDataAdapter {
                     log.whatGiven = document["whatGiven"] as? [String] ?? []
                     log.isFlagged = document["isFlagged"] as? Bool ?? false
                     log.flaggedByUser = document["flaggedByUser"] as? String ?? ""
+                    log.description = document["description"] as? String ?? ""
+                    log.numberPeopleHelped = document["numberPeopleHelped"] as? String ?? "0"
+                    log.itemQtyWeb = document["itemQty"] as? String ?? "0"
 
                     if let uid = document["uid"] as? String {
                         log.uid = uid
@@ -115,6 +120,7 @@ class PublicVisitLogDataAdapter {
 
                 for document in documents {
                     let log = VisitLog(id: document.documentID)
+                    log.source = "new"
 
                     log.isPublic = document["isPublic"] as? Bool ?? false
                     log.whenVisit = (document["whenVisit"] as? Timestamp)?.dateValue() ?? Date()
