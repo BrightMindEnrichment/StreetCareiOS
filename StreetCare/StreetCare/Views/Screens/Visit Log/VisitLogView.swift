@@ -856,7 +856,7 @@ struct VisitLogView: View {
 
     @ViewBuilder
     private func followUpSection() -> some View {
-        if log.followUpWhenVisit != Date.distantPast {
+        //if log.followUpWhenVisit != Date.distantPast {
             VisitLogDetailRow(
                 title: "Is there a planned date to interact with them again?",
                 detail1: log.followUpWhenVisit.formatted(date: .abbreviated, time: .omitted),
@@ -891,7 +891,7 @@ struct VisitLogView: View {
                 isActive: $navigateToEditFollowUpDate
             ) {
             EmptyView()
-        }
+        //}
         }
     }
     @ViewBuilder

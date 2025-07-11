@@ -13,7 +13,7 @@ import CoreLocationUI
 struct VisitLogEntry: View {
     
     @Environment(\.presentationMode) var presentation
-    @State var questionNumber = 1
+    @State private var questionNumber: Int = 1
     @State var totalQuestions = 6
     @State private var selectedLocation = CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0)
     
@@ -25,6 +25,8 @@ struct VisitLogEntry: View {
     @State private var volunteerAgain: Int = -1
     
     @State var rawDate: Date = Date()
+    @State private var initialRawDate: Date = Date()
+    @State private var didSetInitialRawDate = false
     @State var adjustedDate: Date = Date()
     
     
@@ -41,7 +43,7 @@ struct VisitLogEntry: View {
                 
                 switch questionNumber {
                 case 1:   
-                    InputTileDate(questionNumber: 1, totalQuestions: 6, question1: NSLocalizedString("questionOne", comment: ""),question2: NSLocalizedString("interaction", comment: "") + "?",question3: "", showSkip: false,  datetimeValue: $rawDate, convertedDate: $visitLog.whenVisit) {
+                    InputTileDate(questionNumber: 1, totalQuestions: 6, question1: NSLocalizedString("questionOne", comment: ""),question2: NSLocalizedString("interaction", comment: "") + "?",question3: "", showSkip: false,  initialDateValue: rawDate, datetimeValue: $rawDate, convertedDate: $visitLog.whenVisit ) {
 
                         questionNumber += 1
                     } skipAction: {
@@ -287,7 +289,7 @@ struct VisitLogEntry: View {
                         questionNumber = 100
                     }
                 case 12:
-                    InputTileDate(questionNumber: 5, totalQuestions: 7, question1: NSLocalizedString("questionTwelevePartOne", comment: ""),question2: NSLocalizedString("questionTwelevePartTwo", comment: ""), question3: NSLocalizedString("questionTwelevePartThree", comment: ""), showSkip: true, datetimeValue: $rawDate, convertedDate: $visitLog.followUpWhenVisit) {
+                    InputTileDate(questionNumber: 5, totalQuestions: 7, question1: NSLocalizedString("questionTwelevePartOne", comment: ""),question2: NSLocalizedString("questionTwelevePartTwo", comment: ""), question3: NSLocalizedString("questionTwelevePartThree", comment: ""), showSkip: true, isFollowUpDate: true, initialDateValue: initialRawDate, datetimeValue: $rawDate, convertedDate: $visitLog.followUpWhenVisit) {
                         questionNumber += 1
                     } skipAction: {
                         questionNumber += 1
@@ -335,6 +337,7 @@ struct VisitLogEntry: View {
             .onAppear {
                 questionNumber = 1
                 
+                
                 if currentUser == nil {
                     self.isLoading = true
                     
@@ -344,6 +347,12 @@ struct VisitLogEntry: View {
                     }
                 }
             }
+            .onChange(of: questionNumber) { newValue in
+                if newValue == 12 && !didSetInitialRawDate {
+                    initialRawDate = rawDate
+                    didSetInitialRawDate = true
+                        }
+                    }
         }.navigationTitle(NSLocalizedString("interactionLog", comment: ""))
     } // end body
     
