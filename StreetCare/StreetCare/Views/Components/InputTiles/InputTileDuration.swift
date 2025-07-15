@@ -121,8 +121,8 @@ struct InputTileDuration: View {
                             
                             
                             Button("Update") {
-                                hours = localHours
-                                minutes = localMinutes
+                                hours = localHours < 0 ? 0 : localHours
+                                minutes = localMinutes < 0 ? 0 : localMinutes
                                 showSuccessAlert = true
                                 nextAction()
                             }
@@ -208,8 +208,8 @@ struct CustomDropdown: View {
 
 
 struct InputTileDuration_Previews: PreviewProvider {
-    @State static var hours = -1
-    @State static var minutes = -1
+    @State static var hours = 0
+    @State static var minutes = 0
 
     static var previews: some View {
         InputTileDuration(

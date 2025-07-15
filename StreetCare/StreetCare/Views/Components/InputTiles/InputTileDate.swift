@@ -21,7 +21,10 @@ struct InputTileDate: View {
     var showSkip: Bool = true
     var showProgressBar: Bool = true
     var buttonMode: ButtonMode = .navigation
-    
+    var isFollowUpDate: Bool = false
+    var initialDateValue: Date = Date()
+
+
     @Binding var datetimeValue: Date
     @Binding var convertedDate: Date
     @State private var selectedTimeZone: String = TimeZone.current.identifier
@@ -34,8 +37,11 @@ struct InputTileDate: View {
     var skipAction: () -> ()
     var previousAction: () -> ()
     
+    
     @Environment(\.presentationMode) var presentationMode
     @State private var showSuccessAlert = false
+    let placeholderDate = Calendar.current.date(from: DateComponents(year: 1900, month: 1, day: 1))!
+
 
     private var dateFormatter: DateFormatter {
         let formatter = DateFormatter()
@@ -207,9 +213,15 @@ struct InputTileDate: View {
                             
                             Button(" " + NSLocalizedString("next", comment: "") + " ") {
                                 if let converted = convertToCurrentTimeZone(from: datetimeValue, selectedTimeZoneID: selectedTimeZone) {
-                                    convertedDate = converted  // ✅ Save to parent state
+                                    if isFollowUpDate &&
+                                       selectedTimeZone == TimeZone.current.identifier &&
+                                       Calendar.current.isDate(datetimeValue, equalTo: initialDateValue, toGranularity: .minute) {
+                                        convertedDate = placeholderDate
+                                    } else {
+                                        convertedDate = converted
+                                    }
                                 } else {
-                                    convertedDate = datetimeValue  // fallback
+                                    convertedDate = datetimeValue
                                 }
                                 nextAction()
                             }
@@ -236,9 +248,15 @@ struct InputTileDate: View {
                             
                             Button("Update") {
                                 if let converted = convertToCurrentTimeZone(from: datetimeValue, selectedTimeZoneID: selectedTimeZone) {
-                                    convertedDate = converted  // ✅ Save to parent state
+                                    if isFollowUpDate &&
+                                       selectedTimeZone == TimeZone.current.identifier &&
+                                       Calendar.current.isDate(datetimeValue, equalTo: initialDateValue, toGranularity: .minute) {
+                                        convertedDate = placeholderDate
+                                    } else {
+                                        convertedDate = converted
+                                    }
                                 } else {
-                                    convertedDate = datetimeValue  // fallback
+                                    convertedDate = datetimeValue
                                 }
                                 showSuccessAlert = true
                                 nextAction()
@@ -258,6 +276,7 @@ struct InputTileDate: View {
         .navigationBarTitleDisplayMode(.inline)
         .navigationTitle("Interaction Log")
         .onChange(of: selectedTimeZone) { newValue in
+            
             if let converted = convertToCurrentTimeZone(from: datetimeValue, selectedTimeZoneID: newValue) {
                 let formatter = DateFormatter()
                 formatter.dateStyle = .medium
