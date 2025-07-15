@@ -69,18 +69,16 @@ struct ChapterMembershipForm: View {
     
     func updateUserTypeInFirestore(userID: String) {
         let db = Firestore.firestore()
-        let usersRef = db.collection("users")
-        
-        usersRef.whereField("uid", isEqualTo: userID).getDocuments { (snapshot, error) in
+        let userRef = db.collection("users").document(userID)
+
+        userRef.getDocument { document, error in
             if let error = error {
                 print("Error fetching user document: \(error.localizedDescription)")
                 return
             }
-            
-            if let document = snapshot?.documents.first {
-                let documentID = document.documentID
-                
-                usersRef.document(documentID).updateData(["Type": "Chapter Member"]) { error in
+
+            if let document = document, document.exists {
+                userRef.updateData(["Type": "Chapter Member"]) { error in
                     if let error = error {
                         print("Error updating user type: \(error.localizedDescription)")
                     } else {
@@ -96,14 +94,17 @@ struct ChapterMembershipForm: View {
                     "deviceType": "iOS",
                     "photoUrl": Auth.auth().currentUser?.photoURL?.absoluteString ?? "",
                     "isValid": true,
-                    "dateCreated": Timestamp(date: Date())
+                    "dateCreated": Timestamp(date: Date()),
+                    "personalVisitLogs": [],
+                    "outreachEvents": [],
+                    "createdOutreaches": []
                 ]
-                
-                usersRef.addDocument(data: newUserData) { error in
+
+                userRef.setData(newUserData) { error in
                     if let error = error {
                         print("Error creating new user document: \(error.localizedDescription)")
                     } else {
-                        print("New user document created successfully!")
+                        print("✅ New user document created successfully with correct UID as document ID!")
                     }
                 }
             }
