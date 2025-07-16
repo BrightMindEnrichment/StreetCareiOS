@@ -10,6 +10,10 @@ import CoreLocation
 import UIKit
 
 class VisitLog: ObservableObject, Identifiable {
+    @Published var description: String = ""               // from visitLogWebProd
+    @Published var numberPeopleHelped: String = "0"       // from visitLogWebProd
+    @Published var itemQtyWeb: String = "0"               // from visitLogWebProd
+    @Published var source: String = "" // "webProd" or "new"
     @Published var id: String
     @Published var whenVisit = Date()
     @Published var user = UserDetails()
