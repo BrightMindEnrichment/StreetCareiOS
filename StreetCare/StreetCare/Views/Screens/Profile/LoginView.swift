@@ -63,18 +63,30 @@ struct LoginView: View {
                 .background(Color("SecondaryColor"))
                 .clipShape(Capsule())
                 
+                Spacer().frame(height: 50)
                 
-//                Button(action: loginWithGoogle) {
-//                    HStack {
-//                        Image("Google")
-//                        Text("Continue with Google")
-//                            .padding(EdgeInsets(top: 8.0, leading: 20.0, bottom: 8.0, trailing: 20.0))
-//                            .foregroundColor(Color("PrimaryColor"))
-//                    }
-//                }
-//                .frame(width: 300.0)
-//                .background(Color("SecondaryColor"))
-//                .clipShape(Capsule())
+                Button(action: loginWithGoogle) {
+                    HStack(spacing: 10) {
+                        Image("Google")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 20, height: 20)
+                        
+                        Text("Continue with Google")
+                            .foregroundColor(.black)
+                            .font(.system(size: 16, weight: .medium))
+                    }
+                    .padding(.vertical, 12)
+                    .padding(.horizontal, 20)
+                    .frame(maxWidth: .infinity)
+                    .background(Color.white)
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 24)
+                            .stroke(Color.gray.opacity(0.3), lineWidth: 1)
+                    )
+                    .cornerRadius(24)
+                }
+                .frame(width: 300)
             }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
@@ -85,37 +97,69 @@ struct LoginView: View {
     
     
     func loginWithGoogle() {
-
-        guard let vc = (UIApplication.shared.connectedScenes.first as? UIWindowScene)?.windows.first?.rootViewController else {return}
-
+        guard let vc = (UIApplication.shared.connectedScenes.first as? UIWindowScene)?
+            .windows.first?.rootViewController else { return }
         guard let clientID = FirebaseApp.app()?.options.clientID else { return }
 
-        // Create Google Sign In configuration object.
         let config = GIDConfiguration(clientID: clientID)
         GIDSignIn.sharedInstance.configuration = config
 
         GIDSignIn.sharedInstance.signIn(withPresenting: vc) { result, error in
             guard error == nil else {
-                print("error \(error!.localizedDescription)")
+                print("⚠️ Google Sign-In error: \(error!.localizedDescription)")
                 return
             }
-            
-            guard let user = result?.user, let idToken = user.idToken?.tokenString else {
-                print("problem getting user ro token")
+
+            guard let user = result?.user,
+                  let idToken = user.idToken?.tokenString else {
+                print("⚠️ Failed to get ID token or user info")
                 return
             }
-            
-            let credential = GoogleAuthProvider.credential(withIDToken: idToken, accessToken: user.accessToken.tokenString)
-            
+
+            let credential = GoogleAuthProvider.credential(
+                withIDToken: idToken,
+                accessToken: user.accessToken.tokenString
+            )
+
             Auth.auth().signIn(with: credential) { result, error in
-                
                 if let error = error {
                     errorMessage = error.localizedDescription
                     return
                 }
-                    
-                if let result = result {
-                    print("created user \(result.user.uid)")
+
+                if let user = result?.user {
+                    let db = Firestore.firestore()
+                    let userRef = db.collection("users").document(user.uid)
+
+                    userRef.getDocument { docSnapshot, error in
+                        if let doc = docSnapshot, doc.exists {
+                            print("✅ User already exists")
+                        } else {
+                            userRef.setData([
+                                "uid": user.uid,
+                                "email": user.email ?? "",
+                                "username": user.displayName ?? "",
+                                "photoUrl": user.photoURL?.absoluteString ?? "",
+                                "Type": "Account Holder",
+                                "city": "",
+                                "state": "",
+                                "country": "",
+                                "deviceType": "iOS",
+                                "dateCreated": Timestamp(date: Date()),
+                                "isValid": true,
+                                "personalVisitLogs": [],
+                                "outreachEvents": [],
+                                "createdOutreaches": []
+                            ]) { err in
+                                if let err = err {
+                                    print("⚠️ Error saving user to Firestore: \(err.localizedDescription)")
+                                } else {
+                                    print("✅ New user document created in Firestore")
+                                }
+                            }
+                        }
+                    }
+
                     presentation.wrappedValue.dismiss()
                 }
             }
