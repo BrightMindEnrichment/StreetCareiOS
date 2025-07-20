@@ -12,7 +12,7 @@ import FirebaseFirestore
 import FirebaseFirestoreSwift
 import CoreLocation
 
-let placeholderDate = Calendar.current.date(from: DateComponents(year: 1900, month: 1, day: 1))!
+let placeholderDate = Date(timeIntervalSince1970: 0)
 
 protocol VisitLogDataAdapterProtocol {
     func visitLogDataRefreshed(_ logs: [VisitLog])
@@ -368,7 +368,12 @@ class VisitLogDataAdapter {
                     log.furtherOtherNotes = document["furtherOtherNotes"] as? String ?? ""
                     log.whatGivenFurther = document["whatGivenFurther"] as? [String] ?? []
 
-                    log.followUpWhenVisit = (document["followUpWhenVisit"] as? Timestamp)?.dateValue() ?? Date()
+                    //log.followUpWhenVisit = (document["followUpWhenVisit"] as? Timestamp)?.dateValue() ?? Date()
+                    if let timestamp = document["followUpWhenVisit"] as? Timestamp {
+                        log.followUpWhenVisit = timestamp.dateValue()
+                    } else {
+                        log.followUpWhenVisit = placeholderDate // explicitly set placeholder if not present
+                    }
                     log.futureNotes = document["futureNotes"] as? String ?? ""
                     log.volunteerAgain = document["volunteerAgain"] as? String ?? ""
 

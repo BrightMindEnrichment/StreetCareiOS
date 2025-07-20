@@ -84,6 +84,7 @@ struct VisitLogView: View {
         span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
     )
     @State private var mapLocations: [MapLocation] = []
+    let placeholderDate = Date(timeIntervalSince1970: 0)
     var body: some View {
         ScrollView {
             VStack {
@@ -859,7 +860,9 @@ struct VisitLogView: View {
         //if log.followUpWhenVisit != Date.distantPast {
             VisitLogDetailRow(
                 title: "Is there a planned date to interact with them again?",
-                detail1: log.followUpWhenVisit.formatted(date: .abbreviated, time: .omitted),
+                detail1: Calendar.current.isDate(log.followUpWhenVisit, equalTo: placeholderDate, toGranularity: .day)
+                    ? "No further date"
+                    : log.followUpWhenVisit.formatted(date: .abbreviated, time: .omitted),
                 onEdit: {
                     editedFollowUpDate = log.followUpWhenVisit
                     navigateToEditFollowUpDate = true

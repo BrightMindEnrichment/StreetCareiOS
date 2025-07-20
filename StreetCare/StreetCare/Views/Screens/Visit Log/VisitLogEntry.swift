@@ -324,6 +324,7 @@ struct VisitLogEntry: View {
                     
                 case 100:
                     InputTileComplete(log: visitLog) {
+                        visitLog.followUpWhenVisit = placeholderDate
                         saveVisitLog() // Regular save
                         presentation.wrappedValue.dismiss()
                     } shareAction: {

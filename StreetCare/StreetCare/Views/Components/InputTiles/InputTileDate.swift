@@ -40,7 +40,7 @@ struct InputTileDate: View {
     
     @Environment(\.presentationMode) var presentationMode
     @State private var showSuccessAlert = false
-    let placeholderDate = Calendar.current.date(from: DateComponents(year: 1900, month: 1, day: 1))!
+    let placeholderDate = Date(timeIntervalSince1970: 0) // Jan 1, 1970
 
 
     private var dateFormatter: DateFormatter {
@@ -77,6 +77,7 @@ struct InputTileDate: View {
                             
                             if showSkip {
                                 Button(NSLocalizedString("skip", comment: "")) {
+                                    convertedDate = placeholderDate
                                     skipAction()
                                 }
                                 .foregroundColor(Color("SecondaryColor"))
