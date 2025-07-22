@@ -143,7 +143,7 @@
 "enteraddress" = "Enter Address*";
 "landmark" = "Describe the location/landmark.";
 "peopledescription" = "Example: Tom, a senior citizen in a wheelchair, wearing a navy blue shirt and brown shoes.";
-"disclaimer" = "Disclaimer: Completing one interaction              log per person helps us serve you better. Optional, any information helps.";
+"disclaimer" = "Disclaimer: Completing one interaction log per person helps us serve you better. Optional, any information helps.";
 "comments" = "Questions/Comments/Notes";
 "otherNotes" = "If Other, please specify here.";
 "emptytext" = "  ";

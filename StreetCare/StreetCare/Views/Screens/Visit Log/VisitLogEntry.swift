@@ -28,6 +28,8 @@ struct VisitLogEntry: View {
     @State var rawDate: Date = Date()
     @State var adjustedDate: Date = Date()
     
+    @StateObject private var keyboard = KeyboardHeightObserver()
+
     
     var body: some View {
         NavigationStack {
@@ -92,31 +94,35 @@ struct VisitLogEntry: View {
                     )
                     
                 case 3:
-                    InputTileNumber(
-                        questionNumber: 3,
-                        totalQuestions: 6,
-                        tileWidth: 360,
-                        tileHeight: 520,
-                        question1: NSLocalizedString("questionThreePartOne", comment: ""),
-                        question2: NSLocalizedString("questionThreePartTwo", comment: ""),
-                        question3: NSLocalizedString("questionThreePartThree", comment: ""),
-                        question4: NSLocalizedString("questionThreePartFour", comment: ""),
-                        descriptionLabel: "Description",
-                        disclaimerText: NSLocalizedString("disclaimer", comment: ""),
-                        placeholderText: NSLocalizedString("peopledescription", comment: ""),
-                        number: $visitLog.peopleHelped,
-                        generalDescription: $visitLog.peopleHelpedDescription,
-                        generalDescription2: .constant(""),
-                        nextAction: {
-                            questionNumber += 1
-                        },
-                        previousAction: {
-                            questionNumber -= 1
-                        },
-                        skipAction: {
-                            questionNumber += 1
-                        }
-                    )
+                    ScrollView {
+                                InputTileNumber(
+                                        questionNumber: 3,
+                                        totalQuestions: 6,
+                                        tileWidth: 360,
+                                        tileHeight: 520,
+                                        question1: NSLocalizedString("questionThreePartOne", comment: ""),
+                                        question2: NSLocalizedString("questionThreePartTwo", comment: ""),
+                                        question3: NSLocalizedString("questionThreePartThree", comment: ""),
+                                        question4: NSLocalizedString("questionThreePartFour", comment: ""),
+                                        descriptionLabel: "Description",
+                                        disclaimerText: NSLocalizedString("disclaimer", comment: ""),
+                                        placeholderText: NSLocalizedString("peopledescription", comment: ""),
+                                        number: $visitLog.peopleHelped,
+                                        generalDescription: $visitLog.peopleHelpedDescription,
+                                        generalDescription2: .constant(""),
+                                        nextAction: {
+                                                    questionNumber += 1
+                                                },
+                                        previousAction: {
+                                                    questionNumber -= 1
+                                                },
+                                        skipAction: {
+                                                    questionNumber += 1
+                                                }
+                                        )
+                                        .padding(.bottom, keyboard.currentHeight == 0 ? 0 : 24)
+                                        .animation(.easeOut(duration: 0.16), value: keyboard.currentHeight)
+                                }
                     
                 case 4:
                     InputTileList(
@@ -231,6 +237,7 @@ struct VisitLogEntry: View {
                 
                     
                 case 10:
+                    ScrollView {
                     InputTileNumber(
                         questionNumber: 3,
                         totalQuestions: 7,
@@ -259,6 +266,9 @@ struct VisitLogEntry: View {
                         },
                         showTextEditor2: true
                     )
+                    .padding(.bottom, keyboard.currentHeight == 0 ? 0 : 24)
+                    .animation(.easeOut(duration: 0.16), value: keyboard.currentHeight)
+                }
                  case 11:
                     InputTileList(
                         questionNumber: 4,
