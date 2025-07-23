@@ -178,7 +178,8 @@ struct VisitLogEntry: View {
                         questionNumber -= 1
                     } skipAction: {
                         questionNumber += 1
-                    }
+                    }.padding(.bottom, keyboard.currentHeight == 0 ? 0 : 24)
+                        .animation(.easeOut(duration: 0.16), value: keyboard.currentHeight)
                     
                 case 7:
                     
