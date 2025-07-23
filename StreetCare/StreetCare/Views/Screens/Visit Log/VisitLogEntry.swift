@@ -91,10 +91,10 @@ struct VisitLogEntry: View {
                             questionNumber += 1
                         },
                         buttonMode: .navigation // 👈 required parameter
-                    )
+                    ) .padding(.bottom, keyboard.currentHeight == 0 ? 0 : 24)
+                    .animation(.easeOut(duration: 0.16), value: keyboard.currentHeight)
                     
                 case 3:
-                    ScrollView {
                                 InputTileNumber(
                                         questionNumber: 3,
                                         totalQuestions: 6,
@@ -120,9 +120,9 @@ struct VisitLogEntry: View {
                                                     questionNumber += 1
                                                 }
                                         )
-                                        .padding(.bottom, keyboard.currentHeight == 0 ? 0 : 24)
-                                        .animation(.easeOut(duration: 0.16), value: keyboard.currentHeight)
-                                }
+                                .padding(.bottom, keyboard.currentHeight == 0 ? 0 : 24)
+                        .animation(.easeOut(duration: 0.16), value: keyboard.currentHeight)
+                               
                     
                 case 4:
                     InputTileList(
@@ -139,7 +139,9 @@ struct VisitLogEntry: View {
                         buttonMode: .navigation,
                         showProgressBar: true,
                         supportMode: .provided
-                    )         
+                    ) .padding(.bottom, keyboard.currentHeight == 0 ? 0 : 24)
+                        .animation(.easeOut(duration: 0.16), value: keyboard.currentHeight)
+                
                 case 5:
                     InputTileNumber(
                         questionNumber: 5,
@@ -165,8 +167,11 @@ struct VisitLogEntry: View {
                         skipAction: {
                             questionNumber += 1
                         }
-                    )
+                    ).padding(.bottom, keyboard.currentHeight == 0 ? 0 : 24)
+                        .animation(.easeOut(duration: 0.16), value: keyboard.currentHeight)
+                    
                 case 6:
+                   
                     InputTileRate(questionNumber: 6, totalQuestions: 6, question1: NSLocalizedString("questionSixPartOne", comment: ""), question2: NSLocalizedString("questionSixPartTwo", comment: ""), textValue: $visitLog.ratingNotes, rating: $visitLog.rating) {
                         questionNumber += 1
                     } previousAction: {
@@ -237,7 +242,6 @@ struct VisitLogEntry: View {
                 
                     
                 case 10:
-                    ScrollView {
                     InputTileNumber(
                         questionNumber: 3,
                         totalQuestions: 7,
@@ -266,9 +270,9 @@ struct VisitLogEntry: View {
                         },
                         showTextEditor2: true
                     )
-                    .padding(.bottom, keyboard.currentHeight == 0 ? 0 : 24)
+                    .padding(.bottom, keyboard.currentHeight == 0 ? 0 : 50)
                     .animation(.easeOut(duration: 0.16), value: keyboard.currentHeight)
-                }
+                
                  case 11:
                     InputTileList(
                         questionNumber: 4,
