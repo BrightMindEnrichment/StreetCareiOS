@@ -490,7 +490,7 @@ class VisitLogDataAdapter {
                         log.whereVisit = [log.street, log.city, log.state, log.zipcode]
                             .filter { !$0.isEmpty }
                             .joined(separator: ", ")
-                        log.peopleHelped = document["numberPeopleHelped"] as? Int ?? 0
+                        log.numberPeopleHelped = document["numberPeopleHelped"] as? String ?? "0"
                         log.itemQty = document["itemQty"] as? Int ?? 0
                         log.whatGiven = document["whatGiven"] as? [String] ?? []
                         log.rating = document["rating"] as? Int ?? 0
