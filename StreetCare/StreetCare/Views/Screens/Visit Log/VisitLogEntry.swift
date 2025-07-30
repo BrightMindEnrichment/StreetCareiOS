@@ -369,7 +369,6 @@ struct VisitLogEntry: View {
 //            print("🔓 Log is now public!")
 //        }
     }// end struct
-    
 
 struct VisitLogEntry_Previews: PreviewProvider {
     static var previews: some View {
