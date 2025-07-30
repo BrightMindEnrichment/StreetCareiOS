@@ -13,8 +13,7 @@ import CoreLocationUI
 struct VisitLogEntry: View {
     
     @Environment(\.presentationMode) var presentation
-    
-    @State var questionNumber = 1
+    @State private var questionNumber: Int = 1
     @State var totalQuestions = 6
     @State private var selectedLocation = CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0)
     
@@ -26,6 +25,8 @@ struct VisitLogEntry: View {
     @State private var volunteerAgain: Int = -1
     
     @State var rawDate: Date = Date()
+    @State private var initialRawDate: Date = Date()
+    @State private var didSetInitialRawDate = false
     @State var adjustedDate: Date = Date()
     
     
@@ -42,7 +43,7 @@ struct VisitLogEntry: View {
                 
                 switch questionNumber {
                 case 1:   
-                    InputTileDate(questionNumber: 1, totalQuestions: 6, question1: NSLocalizedString("questionOne", comment: ""),question2: NSLocalizedString("interaction", comment: "") + "?",question3: "", showSkip: false,  datetimeValue: $rawDate, convertedDate: $visitLog.whenVisit) {
+                    InputTileDate(questionNumber: 1, totalQuestions: 6, question1: NSLocalizedString("questionOne", comment: ""),question2: NSLocalizedString("interaction", comment: "") + "?",question3: "", showSkip: false,  initialDateValue: rawDate, datetimeValue: $rawDate, convertedDate: $visitLog.whenVisit ) {
 
                         questionNumber += 1
                     } skipAction: {
@@ -172,7 +173,7 @@ struct VisitLogEntry: View {
                 case 7:
                     
                     InputTileMoreQuestions(question1: NSLocalizedString("questionSevenPartOne", comment: "") , question2: NSLocalizedString("questionSevenPartTwo", comment: ""), question3:NSLocalizedString("questionSevenPartThree", comment: ""), questionNumber: 6, totalQuestions: 6) {
-                        saveVisitLog()
+                       // saveVisitLog()
                         questionNumber = 100
                     } skipAction: {
                         questionNumber -= 1
@@ -279,6 +280,7 @@ struct VisitLogEntry: View {
                     InputTileVolunteerAgain(questionNumber: 7, totalQuestions: 7, question1: NSLocalizedString("questionFourteenPartOne", comment: ""), question2: NSLocalizedString("questionFourteenPartTwo", comment: ""), volunteerAgain: $visitLog.volunteerAgain) {
                         isComplete = true
                         questionNumber = 100
+                        saveVisitLog()
                     } previousAction: {
                         questionNumber -= 1
                     } skipAction: {
@@ -287,7 +289,7 @@ struct VisitLogEntry: View {
                         questionNumber = 100
                     }
                 case 12:
-                    InputTileDate(questionNumber: 5, totalQuestions: 7, question1: NSLocalizedString("questionTwelevePartOne", comment: ""),question2: NSLocalizedString("questionTwelevePartTwo", comment: ""), question3: NSLocalizedString("questionTwelevePartThree", comment: ""), showSkip: true, datetimeValue: $rawDate, convertedDate: $visitLog.followUpWhenVisit) {
+                    InputTileDate(questionNumber: 5, totalQuestions: 7, question1: NSLocalizedString("questionTwelevePartOne", comment: ""),question2: NSLocalizedString("questionTwelevePartTwo", comment: ""), question3: NSLocalizedString("questionTwelevePartThree", comment: ""), showSkip: true, isFollowUpDate: true, initialDateValue: initialRawDate, datetimeValue: $rawDate, convertedDate: $visitLog.followUpWhenVisit) {
                         questionNumber += 1
                     } skipAction: {
                         questionNumber += 1
@@ -321,11 +323,12 @@ struct VisitLogEntry: View {
                     )
                     
                 case 100:
-                    InputTileComplete() {
+                    InputTileComplete(log: visitLog) {
+                        visitLog.followUpWhenVisit = placeholderDate
                         saveVisitLog() // Regular save
                         presentation.wrappedValue.dismiss()
                     } shareAction: {
-                        saveVisitLog_Community() // Save for community
+                       /* saveVisitLog_Community()*/ // Save for community
                     }
                     
                 default:
@@ -334,6 +337,7 @@ struct VisitLogEntry: View {
             }
             .onAppear {
                 questionNumber = 1
+                
                 
                 if currentUser == nil {
                     self.isLoading = true
@@ -344,6 +348,12 @@ struct VisitLogEntry: View {
                     }
                 }
             }
+            .onChange(of: questionNumber) { newValue in
+                if newValue == 12 && !didSetInitialRawDate {
+                    initialRawDate = rawDate
+                    didSetInitialRawDate = true
+                        }
+                    }
         }.navigationTitle(NSLocalizedString("interactionLog", comment: ""))
     } // end body
     
@@ -353,15 +363,12 @@ struct VisitLogEntry: View {
         adapter.addVisitLog(self.visitLog)
     }
     
-    func saveVisitLog_Community() {
-        visitLog.isPublic = true
-        visitLog.status = "pending"
-        
-        let adapter = VisitLogDataAdapter()
-        adapter.addVisitLog(self.visitLog)
-    }
-    
-} // end struct
+//    func saveVisitLog_Community() {
+//        let adapter = VisitLogDataAdapter()
+//        adapter.updateVisitLogField(self.visitLog.id, field: "isPublic", value: true) {
+//            print("🔓 Log is now public!")
+//        }
+    }// end struct
 
 struct VisitLogEntry_Previews: PreviewProvider {
     static var previews: some View {

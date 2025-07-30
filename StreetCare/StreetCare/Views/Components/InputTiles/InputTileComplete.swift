@@ -12,6 +12,7 @@ struct InputTileComplete: View {
     var size = CGSize(width: 300.0, height: 300.0)
     @State private var showAlert = false
     @State private var alertMessage = ""
+    @State var log: VisitLog
     @State private var showConfirmationDialog = false // New state variable for confirmation
     @State private var navigateToVisitImpactView = false
     @State private var successMessage1 = ""
@@ -152,22 +153,32 @@ struct InputTileComplete: View {
                     title: Text("Confirm Sharing"),
                     message: Text("""
                     The following information will be shared when posted to the community:
-                    - Your Name
-                    - Your Profile Picture
-                    - Your Location
-                    - Type of Help Provided
+                    - Name & Profile Picture
+                    - Date & Time of Interaction
+                    - City, State
+                    - People Helped
+                    - Type of Help Offered
+                    - Items Donated
+                    - People Who Joined
                     """),
                     primaryButton: .default(Text("Confirm")) {
-                        shareAction() // Call the actual share action
-                        alertMessage = "Visit Log Shared Successfully!"
-                        successMessage1 = "Approval can take typically within"
-                        hasShared = true
-                        showAlert = true
-                        showConfirmationDialog = false
+                        let adapter = VisitLogDataAdapter()
+                        adapter.updateVisitLogField(log.id, field: "isPublic", value: true) {
+                            print("✅ Visit log marked as public from InputTileComplete")
+                            
+                            // After Firestore is updated
+                            shareAction()
+                            alertMessage = "Visit Log Shared Successfully!"
+                            successMessage1 = "Approval can typically take"
+                            hasShared = true
+                            showAlert = true
+                            showConfirmationDialog = false
+                        }
                     },
                     secondaryButton: .cancel {
                         showConfirmationDialog = false
                     }
+
                 )
             } else {
                 return Alert(

@@ -12,6 +12,8 @@ import FirebaseFirestore
 import FirebaseFirestoreSwift
 import CoreLocation
 
+let placeholderDate = Date(timeIntervalSince1970: 0)
+
 protocol VisitLogDataAdapterProtocol {
     func visitLogDataRefreshed(_ logs: [VisitLog])
     func visitLogDataRefreshedNew(_ logs: [VisitLog]) 
@@ -146,7 +148,8 @@ class VisitLogDataAdapter {
                 visitLog.furtherLegal ? "Legal" : nil,
                 visitLog.furtherOther ? "Other" : nil
             ].compactMap { $0 },
-            "followUpWhenVisit": Timestamp(date: visitLog.followUpWhenVisit),
+//            "followUpWhenVisit": visitLog.followUpWhenVisit,
+            "followUpWhenVisit": visitLog.followUpWhenVisit == placeholderDate ? nil : Timestamp(date: visitLog.followUpWhenVisit),
             "futureNotes": visitLog.futureNotes,
             "volunteerAgain": visitLog.volunteerAgain,
             "lastEdited": Timestamp(date: Date()),
@@ -341,8 +344,13 @@ class VisitLogDataAdapter {
                     log.furtherOther = document["furtherOther"] as? Bool ?? false
                     log.furtherOtherNotes = document["furtherOtherNotes"] as? String ?? ""
                     log.whatGivenFurther = document["whatGivenFurther"] as? [String] ?? []
-                    
-                    log.followUpWhenVisit = (document["followUpWhenVisit"] as? Timestamp)?.dateValue() ?? Date()
+
+                    //log.followUpWhenVisit = (document["followUpWhenVisit"] as? Timestamp)?.dateValue() ?? Date()
+                    if let timestamp = document["followUpWhenVisit"] as? Timestamp {
+                        log.followUpWhenVisit = timestamp.dateValue()
+                    } else {
+                        log.followUpWhenVisit = placeholderDate // explicitly set placeholder if not present
+                    }
                     log.futureNotes = document["futureNotes"] as? String ?? ""
                     log.volunteerAgain = document["volunteerAgain"] as? String ?? ""
                     

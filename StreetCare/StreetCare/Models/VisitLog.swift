@@ -56,7 +56,7 @@ class VisitLog: ObservableObject, Identifiable {
     @Published var furtherOther = false
     @Published var furtherOtherNotes = ""
     @Published var whatGivenFurther: [String] = []
-    @Published var followUpWhenVisit = Date()
+    @Published var followUpWhenVisit: Date = placeholderDate
     @Published var futureNotes = ""
     @Published var volunteerAgain = ""
     @Published var lastEdited = Date()

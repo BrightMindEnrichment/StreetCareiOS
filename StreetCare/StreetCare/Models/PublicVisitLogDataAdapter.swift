@@ -69,6 +69,9 @@ class PublicVisitLogDataAdapter {
 
                     log.isPublic = document["public"] as? Bool ?? false
                     log.whenVisit = (document["dateTime"] as? Timestamp)?.dateValue() ?? Date()
+                    log.peopleHelped = document["peopleHelped"] as? Int ?? 0
+                    log.itemQty = document["itemQty"] as? Int ?? 0
+                    log.numberOfHelpers = document["numberOfHelpers"] as? Int ?? 0
                     log.street = document["street"] as? String ?? ""
                     log.city = document["city"] as? String ?? ""
                     log.state = document["state"] as? String ?? ""
@@ -126,32 +129,16 @@ class PublicVisitLogDataAdapter {
                     log.whenVisit = (document["whenVisit"] as? Timestamp)?.dateValue() ?? Date()
                     log.whereVisit = document["whereVisit"] as? String ?? ""
                     log.peopleHelped = document["peopleHelped"] as? Int ?? 0
+                    log.itemQty = document["itemQty"] as? Int ?? 0
+                    log.numberOfHelpers = document["numberOfHelpers"] as? Int ?? 0
                     log.whatGiven = document["whatGiven"] as? [String] ?? []
                     log.isFlagged = document["isFlagged"] as? Bool ?? false
                     log.flaggedByUser = document["flaggedByUser"] as? String ?? ""
 
-                    let components = log.whereVisit
-                        .components(separatedBy: ",")
-                        .map { $0.trimmingCharacters(in: .whitespaces) }
-                        .filter { !$0.isEmpty }
-
-                    if components.count >= 4 {
-                        log.street = components.dropLast(3).joined(separator: ", ")
-                        log.city = components[components.count - 3]
-                        log.state = components[components.count - 2]
-                    } else if components.count == 3 {
-                        log.street = components[0]
-                        log.city = components[1]
-                        log.state = components[2]
-                    } else if components.count == 2 {
-                        log.street = ""
-                        log.city = components[0]
-                        log.state = components[1]
-                    } else if components.count == 1 {
-                        log.street = ""
-                        log.city = components[0]
-                        log.state = ""
-                    }
+                    let (street, city, state) = self.parseAddressComponents(from: log.whereVisit)
+                    log.street = street
+                    log.city = city
+                    log.state = state
 
                     if let uid = document["uid"] as? String {
                         log.uid = uid
@@ -210,4 +197,27 @@ class PublicVisitLogDataAdapter {
                 }
             }
     }
+    
+    func parseAddressComponents(from whereVisit: String) -> (street: String, city: String, state: String) {
+        let components = whereVisit
+            .components(separatedBy: ",")
+            .map { $0.trimmingCharacters(in: .whitespaces) }
+            .filter { !$0.isEmpty }
+
+        if components.count >= 4 {
+            let street = components.dropLast(3).joined(separator: ", ")
+            let city = components[components.count - 3]
+            let state = components[components.count - 2]
+            return (street, city, state)
+        } else if components.count == 3 {
+            return (components[0], components[1], components[2])
+        } else if components.count == 2 {
+            return ("", components[0], components[1])
+        } else if components.count == 1 {
+            return ("", components[0], "")
+        } else {
+            return ("", "", "")
+        }
+    }
+
 }
