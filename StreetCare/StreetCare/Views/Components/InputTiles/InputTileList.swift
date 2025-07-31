@@ -147,7 +147,9 @@ struct InputTileList: View {
                                 checkbox("Legal/Lawyer", isChecked: $visitLog.furtherLegal)
                                 checkbox("Other", isChecked: $visitLog.furtherOther)
                                 if visitLog.furtherOther {
-                                    AutoGrowingTextEditor(text: $visitLog.furtherOtherNotes, placeholder: NSLocalizedString("furtherOtherNotes", comment: ""))
+//                                    AutoGrowingTextEditor(text: $visitLog.furtherOtherNotes, placeholder: NSLocalizedString("furtherOtherNotes", comment: ""))
+                                    // Using otherNotes as placeholder instead furtherOtherNotes as furtherOtherNotes is not provided
+                                    AutoGrowingTextEditor(text: $visitLog.furtherOtherNotes, placeholder: NSLocalizedString("otherNotes", comment: ""))
                                 }
                             }
                         }
