@@ -86,6 +86,7 @@ struct VisitLogView: View {
         span: MKCoordinateSpan(latitudeDelta: 0.01, longitudeDelta: 0.01)
     )
     @State private var mapLocations: [MapLocation] = []
+    let placeholderDate = Date(timeIntervalSince1970: 0)
     var body: some View {
         ScrollView {
             VStack {
@@ -148,10 +149,13 @@ struct VisitLogView: View {
                     title: Text("Confirm Sharing"),
                     message: Text("""
                     The following information will be shared when posted to the community:
-                    - Your Name
-                    - Your Profile Picture
-                    - Your Location
-                    - Type of Help Provided
+                    - Name & Profile Picture
+                    - Date & Time of Interaction
+                    - City, State
+                    - People Helped
+                    - Type of Help Offered
+                    - Items Donated
+                    - People Who Joined
                     """),
                     primaryButton: .default(Text("Confirm")) {
                                 let db = Firestore.firestore()
@@ -330,10 +334,13 @@ struct VisitLogView: View {
 
     @ViewBuilder
     private func locationSection() -> some View {
+        let whereVisitText = log.whereVisit.isEmpty ? "null" : log.whereVisit
+        let locationDescText = log.locationDescription.isEmpty ? "null" : log.locationDescription
+
         VisitLogDetailRow(
             title: "Where was your Interaction?",
-            detail1: log.whereVisit,
-            detail2: log.locationDescription,
+            detail1: whereVisitText,
+            detail2: locationDescText,
             separator: ", ",
             onEdit: {
                 editedLocationText = log.whereVisit
@@ -381,11 +388,13 @@ struct VisitLogView: View {
 
     @ViewBuilder
     private func peopleHelpedSection() -> some View {
-        if log.peopleHelped > 0 {
+        let peopleHelpedText = (log.peopleHelped == 0) ? "null" : "\(log.peopleHelped)"
+        let descriptionText = log.peopleHelpedDescription.isEmpty ? "null" : log.peopleHelpedDescription
+        //if log.peopleHelped > 0 {
             VisitLogDetailRow(
                 title: "Describe who you supported and how many individuals were involved.",
-                detail1: "\(log.peopleHelped)",
-                detail2: log.peopleHelpedDescription,
+                detail1: peopleHelpedText,
+                detail2: descriptionText,
                 separator: ", ",
                 onEdit: {
                     editedPeopleHelped = log.peopleHelped
@@ -432,12 +441,13 @@ struct VisitLogView: View {
             ) {
                 EmptyView()
             }
-        }
+        //}
     }
     
     @ViewBuilder
     private func providedhelpSection() -> some View {
-        if !log.whatGiven.isEmpty {
+        let supportText = log.whatGiven.isEmpty ? "null" : log.whatGiven.joined(separator: ", ")
+        //if !log.whatGiven.isEmpty {
             HStack {
                 Text("What kind of support did you provide?")
                     .screenLeft()
@@ -461,7 +471,7 @@ struct VisitLogView: View {
                 }
             }
             
-            Text(log.whatGiven.joined(separator: ", "))
+            Text(supportText)
                 .screenLeft()
                 .font(.system(size: 15.0))
                 .padding(EdgeInsets(top: 10.0, leading: 20.0, bottom: 10.0, trailing: 20.0))
@@ -518,16 +528,18 @@ struct VisitLogView: View {
             ) {
                 EmptyView()
             }
-        }
+        //}
     }
 
     @ViewBuilder
     private func itemQtySection() -> some View {
-        if log.itemQty > 0 {
+        let qtyText = (log.itemQty == 0) ? "null" : "\(log.itemQty)"
+        let descText = log.itemQtyDescription.isEmpty ? "null" : log.itemQtyDescription
+        //if log.itemQty > 0 {
             VisitLogDetailRow(
                 title: "How many items did you donate?",
-                detail1: "\(log.itemQty)",
-                detail2: log.itemQtyDescription,
+                detail1: qtyText,
+                detail2: descText,
                 separator: ", ",
                 onEdit: {
                     editedItemQty = log.itemQty
@@ -576,12 +588,12 @@ struct VisitLogView: View {
             ) {
                 EmptyView()
             }
-        }
+        //}
     }
 
     @ViewBuilder
     private func ratingSection() -> some View {
-        if log.rating > 0 {
+        //if log.rating > 0 {
             HStack {
                 Text("How would you rate your outreach experience?")
                     .screenLeft()
@@ -650,56 +662,62 @@ struct VisitLogView: View {
             ) {
                 EmptyView()
             }
-        }
+        //}
     }
 
     @ViewBuilder
     private func durationSection() -> some View {
-        if log.durationHours > 0 || log.durationMinutes > 0 {
+        let durationText = (log.durationHours == 0 && log.durationMinutes == 0)
+            ? "null"
+            : "\(log.durationHours) hours and \(log.durationMinutes) minutes"
+
+        VStack {
             VisitLogDetailRow(
                 title: "How much time did you spend on the outreach?",
-                detail1: "\(log.durationHours) hours and \(log.durationMinutes) minutes",
+                detail1: durationText,
                 onEdit: {
                     navigateToEditDuration = true
                 },
                 canEdit: log.isFromOldCollection
             )
-        }
-        NavigationLink(
-            destination: InputTileDuration(
-                questionNumber: 1,
-                totalQuestions: 1,
-                tileWidth: 350,
-                tileHeight: 280,
-                questionLine1: "How much time did",
-                questionLine2: "you spend on the",
-                questionLine3: "outreach?",
-                hours: $log.durationHours,
-                minutes: $log.durationMinutes,
-                nextAction: {
-                    let adapter = VisitLogDataAdapter()
-                    adapter.updateVisitLogField(log.id, field: "durationHours", value: log.durationHours) {
-                        adapter.updateVisitLogField(log.id, field: "durationMinutes", value: log.durationMinutes) {
-                            navigateToEditDuration = false
+
+            NavigationLink(
+                destination: InputTileDuration(
+                    questionNumber: 1,
+                    totalQuestions: 1,
+                    tileWidth: 350,
+                    tileHeight: 280,
+                    questionLine1: "How much time did",
+                    questionLine2: "you spend on the",
+                    questionLine3: "outreach?",
+                    hours: $log.durationHours,
+                    minutes: $log.durationMinutes,
+                    nextAction: {
+                        let adapter = VisitLogDataAdapter()
+                        adapter.updateVisitLogField(log.id, field: "durationHours", value: log.durationHours) {
+                            adapter.updateVisitLogField(log.id, field: "durationMinutes", value: log.durationMinutes) {
+                                navigateToEditDuration = false
+                            }
                         }
-                    }
-                },
-                previousAction: { navigateToEditDuration = false },
-                skipAction: { navigateToEditDuration = false },
-                buttonMode: .update
-            ),
-            isActive: $navigateToEditDuration
-        ) {
-            EmptyView()
+                    },
+                    previousAction: { navigateToEditDuration = false },
+                    skipAction: { navigateToEditDuration = false },
+                    buttonMode: .update
+                ),
+                isActive: $navigateToEditDuration
+            ) {
+                EmptyView()
+            }
         }
     }
-    
+
     @ViewBuilder
     private func numberOfHelpersSection() -> some View {
-        if log.numberOfHelpers > 0 {
+        let helpersText = (log.numberOfHelpers == 0) ? "null" : "\(log.numberOfHelpers)"
+        //if log.numberOfHelpers > 0 {
             VisitLogDetailRow(
                 title: "Who helped you prepare or joined?",
-                detail1: "\(log.numberOfHelpers)",
+                detail1: helpersText,
                 detail2: log.numberOfHelpersComment,
                 separator: ", ",
                 onEdit: {
@@ -749,14 +767,15 @@ struct VisitLogView: View {
             ) {
                 EmptyView()
             }
-        }
+        //}
     }
     @ViewBuilder
     private func peopleNeedFurtherHelpSection() -> some View {
-        if log.peopleNeedFurtherHelp > 0 {
+        let peopleNeedHelpText = (log.peopleNeedFurtherHelp == 0) ? "null" : "\(log.peopleNeedFurtherHelp)"
+        //if log.peopleNeedFurtherHelp > 0 {
             VisitLogDetailRow(
                 title: "How many people still need support?",
-                detail1: "\(log.peopleNeedFurtherHelp)",
+                detail1: peopleNeedHelpText,
                 detail2: log.peopleNeedFurtherHelpComment,
                 separator: ", ",
                 onEdit: {
@@ -812,15 +831,16 @@ struct VisitLogView: View {
             ) {
                 EmptyView()
             }
-        }
+        //}
     }
 
     @ViewBuilder
     private func volunteerAgainSection() -> some View {
-        if !log.volunteerAgain.isEmpty {
+        let volunteerText = log.volunteerAgain.isEmpty ? "null" : log.volunteerAgain
+        //if !log.volunteerAgain.isEmpty {
             VisitLogDetailRow(
                 title: "Would you like to volunteer again?",
-                detail1: log.volunteerAgain,
+                detail1: volunteerText,
                 onEdit: {
                     editedVolunteerAgain = log.volunteerAgain
                     navigateToEditVolunteerAgain = true
@@ -850,15 +870,17 @@ struct VisitLogView: View {
             ) {
                 EmptyView()
             }
-        }
+        //}
     }
 
     @ViewBuilder
     private func followUpSection() -> some View {
-        if log.followUpWhenVisit != Date.distantPast {
+        //if log.followUpWhenVisit != Date.distantPast {
             VisitLogDetailRow(
                 title: "Is there a planned date to interact with them again?",
-                detail1: log.followUpWhenVisit.formatted(date: .abbreviated, time: .omitted),
+                detail1: Calendar.current.isDate(log.followUpWhenVisit, equalTo: placeholderDate, toGranularity: .day)
+                    ? "No further date"
+                    : log.followUpWhenVisit.formatted(date: .abbreviated, time: .omitted),
                 onEdit: {
                     editedFollowUpDate = log.followUpWhenVisit
                     navigateToEditFollowUpDate = true
@@ -890,15 +912,16 @@ struct VisitLogView: View {
                 isActive: $navigateToEditFollowUpDate
             ) {
             EmptyView()
-        }
+        //}
         }
     }
     @ViewBuilder
     private func furthernotesSection() -> some View {
-        if log.furtherOtherNotes.count > 0 {
+        let notesText = log.furtherOtherNotes.isEmpty ? "null" : log.furtherOtherNotes
+        //if log.furtherOtherNotes.count > 0 {
             VisitLogDetailRow(
                 title: "Is there anything future volunteers should know?",
-                detail1: "\(log.furtherOtherNotes)",
+                detail1: notesText,
                 onEdit: {
                     editedFurtherOtherNotes = log.furtherOtherNotes
                     navigateToEditFurtherOtherNotes = true
@@ -931,13 +954,24 @@ struct VisitLogView: View {
             ) {
                 EmptyView()
             }
-        }
+        //}
     }
     
 
     @ViewBuilder
     private func furtherSupportNeededSection() -> some View {
-        if log.furtherFoodAndDrinks || log.furtherClothes || log.furtherHygiene || log.furtherWellness || log.furtherMedical || log.furtherSocial || log.furtherLegal || log.furtherOther {
+        let needsList = [
+                log.furtherFoodAndDrinks ? "Food & Drinks" : nil,
+                log.furtherClothes ? "Clothes" : nil,
+                log.furtherHygiene ? "Hygiene Products" : nil,
+                log.furtherWellness ? "Wellness/Emotional Support" : nil,
+                log.furtherMedical ? "Medical Help" : nil,
+                log.furtherSocial ? "Social Worker/Psychiatrist" : nil,
+                log.furtherLegal ? "Legal/Lawyer" : nil,
+                (log.furtherOther && !log.furtherOtherNotes.isEmpty) ? log.furtherOtherNotes : nil
+            ].compactMap { $0 }
+            let needsText = needsList.isEmpty ? "null" : needsList.joined(separator: ", ")
+        //if log.furtherFoodAndDrinks || log.furtherClothes || log.furtherHygiene || log.furtherWellness || log.furtherMedical || log.furtherSocial || log.furtherLegal || log.furtherOther {
             let needs = [
                 log.furtherFoodAndDrinks ? "Food & Drinks" : nil,
                 log.furtherClothes ? "Clothes" : nil,
@@ -951,13 +985,13 @@ struct VisitLogView: View {
 
             VisitLogDetailRow(
                 title: "What kind of support do they still need?",
-                detail1: needs,
+                detail1: needsText,
                 onEdit: {
                     navigateToEditFurtherSupport = true
                 },
                 canEdit: log.isFromOldCollection
             )
-        }
+        //}
 
         NavigationLink(
             destination: InputTileList(

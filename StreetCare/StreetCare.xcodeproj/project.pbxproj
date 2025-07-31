@@ -105,6 +105,7 @@
 		7A03D7432DE11E300027D5E7 /* (null) in Sources */ = {isa = PBXBuildFile; };
 		8A1569362E0B4A3C00984FED /* PublicInteractionPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1569352E0B4A3C00984FED /* PublicInteractionPopupView.swift */; };
 		8A1569382E0B9E8D00984FED /* PublicPopupSheetModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1569372E0B9E8D00984FED /* PublicPopupSheetModifier.swift */; };
+		8A36A1D82E2F197F00437188 /* KeyboardHeightObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A36A1D72E2F197F00437188 /* KeyboardHeightObserver.swift */; };
 		8AFB16252DEE97D70015671E /* (null) in Sources */ = {isa = PBXBuildFile; };
 		A459D493C5D37756A585D3EA /* Pods_StreetCare.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B3FB734328ABC03284A67BF /* Pods_StreetCare.framework */; };
 		BE9D1DCE2A37626C00072835 /* ImagePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9D1DCD2A37626C00072835 /* ImagePickerView.swift */; };
@@ -223,6 +224,7 @@
 		74FE99502CC9FFAB00D0C5D0 /* EventCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventCardView.swift; sourceTree = "<group>"; };
 		8A1569352E0B4A3C00984FED /* PublicInteractionPopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicInteractionPopupView.swift; sourceTree = "<group>"; };
 		8A1569372E0B9E8D00984FED /* PublicPopupSheetModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicPopupSheetModifier.swift; sourceTree = "<group>"; };
+		8A36A1D72E2F197F00437188 /* KeyboardHeightObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardHeightObserver.swift; sourceTree = "<group>"; };
 		BE9D1DCD2A37626C00072835 /* ImagePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerView.swift; sourceTree = "<group>"; };
 		BE9D1DD22A377E9100072835 /* StorgeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorgeManager.swift; sourceTree = "<group>"; };
 		BE9D1DD42A37819E00072835 /* AvatarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarView.swift; sourceTree = "<group>"; };
@@ -311,6 +313,7 @@
 				4CB7D8C829F687100002495E /* InputTileComplete.swift */,
 				4CB7D8CF29F8DD040002495E /* InputTileDuration.swift */,
 				4C2F5A6F29FE6B0A00CFD288 /* InputTileVolunteerAgain.swift */,
+				8A36A1D72E2F197F00437188 /* KeyboardHeightObserver.swift */,
 			);
 			path = InputTiles;
 			sourceTree = "<group>";

@@ -1,8 +1,3 @@
-//
-//  KeyboardHeightObserver.swift
-//  StreetCare
-//
-//
 
 import SwiftUI
 import Combine

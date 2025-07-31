@@ -15,7 +15,7 @@ struct PublicInteractionPopupView: View {
     var userType: String
     var onCancel: () -> Void
     var delegate : EventPopupViewDelegate?
-    
+    //@State var log: VisitLog
     @Binding var refresh: Bool
     @State private var showCustomAlert = false
     @State private var alertMessage = ""
@@ -113,14 +113,15 @@ struct PublicInteractionPopupView: View {
                 Image(systemName: "mappin.and.ellipse")
                     .foregroundColor(.gray)
                 Text(
-                    !visit.whereVisit.isEmpty
-                    ? visit.whereVisit
-                    : [visit.street, visit.city, visit.state, visit.stateAbbv, visit.zipcode]
+                    !visit.city.isEmpty && !visit.state.isEmpty
+                    ? "\(visit.city), \(visit.state)"
+                    : (!visit.whereVisit.isEmpty
+                       ? visit.whereVisit
+                       : [visit.city, visit.state]
                         .filter { !$0.isEmpty }
-                        .joined(separator: ", ")
+                        .joined(separator: ", "))
                 )
-
-                    .font(.system(size: 13))
+                .font(.system(size: 13))
             }
             
             HStack(spacing: 8) {
@@ -252,27 +253,30 @@ struct PublicInteractionPopupView: View {
         }*/
         //Without Caching
         .onAppear {
-                    imageLoader.uid = visit.uid
-                    imageLoader.getImage()
-                    let db = Firestore.firestore()
-                    db.collection("users")
-                        .whereField("uid", isEqualTo: visit.uid)
-                        .getDocuments { snapshot, error in
-                            if let error = error {
-                                print("Error fetching user info: \(error.localizedDescription)")
-                                return
-                            }
-                            
-                            if let document = snapshot?.documents.first {
-                                let data = document.data()
-                                
-                                // Username
-                                if let fetchedUsername = data["username"] as? String {
-                                    self.username = fetchedUsername
-                                }
-                            }
+            print("🔍 peopleHelped = \(visit.peopleHelped)")
+            print("🔍 People Who Joined = \(visit.numberOfHelpers)")
+            
+            imageLoader.uid = visit.uid
+            imageLoader.getImage()
+            let db = Firestore.firestore()
+            db.collection("users")
+                .whereField("uid", isEqualTo: visit.uid)
+                .getDocuments { snapshot, error in
+                    if let error = error {
+                        print("Error fetching user info: \(error.localizedDescription)")
+                        return
+                    }
+                    
+                    if let document = snapshot?.documents.first {
+                        let data = document.data()
+                        
+                        // Username
+                        if let fetchedUsername = data["username"] as? String {
+                            self.username = fetchedUsername
                         }
+                    }
                 }
+        }
         .cornerRadius(20)
         .toolbar(.hidden, for: .tabBar)
         .overlay(

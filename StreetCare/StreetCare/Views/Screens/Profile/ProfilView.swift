@@ -203,53 +203,39 @@ struct ProfilView: View {
     }
     
     private func updateCounts() {
-
+        
         self.outreaches = history.count
         
-        self.peopleHelped = history.reduce(0, { partialResult, visitLog in
-            partialResult + visitLog.peopleHelped
-        })
+        self.peopleHelped = history.reduce(0) { total, log in
+            if log.peopleHelped > 0 {
+                return total + log.peopleHelped
+            } else if let alt = Int(log.numberPeopleHelped ?? "") {
+                return total + alt
+            } else {
+                return total
+            }
+        }
         
-        self.itemsDonated = history.reduce(0, { partialResult, visitLog in
-            
-            var newDonations = 0
-            
-            if visitLog.foodAndDrinks {
-                newDonations += 1
+        self.itemsDonated = history.reduce(0) { total, log in
+            var count = 0
+
+            // Count standard boolean fields
+            if log.foodAndDrinks { count += 1 }
+            if log.clothes { count += 1 }
+            if log.hygiene { count += 1 }
+            if log.wellness { count += 1 }
+            if log.medical { count += 1 }
+            if log.social { count += 1 }
+            if log.legal { count += 1 }
+            if log.other { count += 1 }
+
+            // If nothing was found, check web-created logs
+            if count == 0 {
+                count += log.whatGiven.count
             }
 
-            if visitLog.clothes {
-                newDonations += 1
-            }
-
-            if visitLog.hygiene {
-                newDonations += 1
-            }
-            
-            if visitLog.wellness {
-                newDonations += 1
-            }
-                                               
-            if visitLog.medical {
-                newDonations += 1
-            }
-            
-            if visitLog.social {
-                newDonations += 1
-            }
-            
-            if visitLog.legal {
-                newDonations += 1
-            }
-                                               
-            if visitLog.other {
-                newDonations += 1
-            }
-
-            return partialResult + newDonations
-        })
-
-        
+            return total + count
+        }
     }
 
     
