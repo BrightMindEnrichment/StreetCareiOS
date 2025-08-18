@@ -247,6 +247,7 @@ class EventDataAdapter {
                             
                             event.createdAt = data["createdAt"] as? String
                             event.helpType = data["helpType"] as? String
+                                ?? (data["helpRequest"] as? [String: Any])?["helpType"] as? String
                             event.approved = data["approved"] as? Bool ?? false
                             event.totalSlots = Int(data["totalSlots"] as? String ?? "0")
                             event.helpRequest = data["helpRequest"] as? [String]

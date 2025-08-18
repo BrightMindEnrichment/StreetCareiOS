@@ -184,6 +184,7 @@ struct CommunityEventView: View {
             )
         }        .sheet(isPresented: $isNavigationActive, onDismiss: {
             isNavigationActive = false
+            adapter.refresh() 
         }) {
             NavigationStack {
                 OutreachFormView(isPresented: $isPresented, shouldDismissAll: $shouldDismissAll)

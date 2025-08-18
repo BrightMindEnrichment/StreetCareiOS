@@ -176,14 +176,31 @@ struct EventPopupView: View {
                 }
                 
                 HStack {
-                    if let skills = event.event.skills{
-                        ForEach(0..<skills.count, id: \.self) { index in
+                    if let skills = event.event.skills {
+                        let maxVisibleSkills = 4 // adjust this based on how many fit in one line
+                        let displaySkills = skills.prefix(maxVisibleSkills)
+                        let shouldShowEllipsis = skills.count > maxVisibleSkills
+                        
+                        ForEach(Array(displaySkills.enumerated()), id: \.offset) { index, skill in
                             HStack {
-                                Text("  \(NSLocalizedString(skills[index].lowercased().replacingOccurrences(of: " ", with: ""), comment: "").capitalized)  ")
+                                Text("  \(NSLocalizedString(skill.lowercased().replacingOccurrences(of: " ", with: ""), comment: "").capitalized)  ")
                                     .font(.system(size: 10))
-                            }.frame(height: 30.0).overlay(
+                            }
+                            .frame(height: 30.0)
+                            .overlay(
                                 RoundedRectangle(cornerRadius: 15.0)
-                                    .stroke(Color.gray.opacity(0.8), lineWidth: 0.7))
+                                    .stroke(Color.gray.opacity(0.8), lineWidth: 0.7)
+                            )
+                        }
+                        
+                        if shouldShowEllipsis {
+                            Text("  ...  ")
+                                .font(.system(size: 10))
+                                .frame(height: 30.0)
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 15.0)
+                                        .stroke(Color.gray.opacity(0.8), lineWidth: 0.7)
+                                )
                         }
                     }
                 }
