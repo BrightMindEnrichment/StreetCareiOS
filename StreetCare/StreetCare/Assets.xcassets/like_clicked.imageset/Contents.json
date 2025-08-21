@@ -1,12 +1,12 @@
 {
   "images" : [
     {
-      "filename" : "Property 1=Clicked-2.png",
+      "filename" : "Property 1=Clicked.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "Property 1=Clicked.png",
+      "filename" : "Property 1=Clicked-2.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
