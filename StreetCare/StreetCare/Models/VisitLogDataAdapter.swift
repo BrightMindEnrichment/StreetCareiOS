@@ -327,7 +327,7 @@ class VisitLogDataAdapter {
                     log.durationHours = document["durationHours"] as? Int ?? -1
                     log.durationMinutes = document["durationMinutes"] as? Int ?? -1
                     
-                    log.numberOfHelpers = document["numberOfHelpers"] as? Int ?? 0
+                    log.numberOfHelpers = Int(document["numberOfHelpers"] as? String ?? "") ?? 0
                     log.numberOfHelpersComment = document["numberOfHelpersComment"] as? String ?? ""
                     
                     log.peopleNeedFurtherHelp = document["peopleNeedFurtherHelp"] as? Int ?? 0
