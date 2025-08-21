@@ -15,6 +15,8 @@ struct EventCardView: View {
     var eventType: EventType
     var onCardTap: () -> Void
     @State private var showAlert = false
+    @State private var isLiked = false
+    @State private var didShare = false
     @State private var alertMessage = ""
     @Binding var popupRefresh: Bool
     @ObservedObject var loggedInUser: UserDetails
@@ -30,23 +32,41 @@ struct EventCardView: View {
                         .multilineTextAlignment(.leading)
 
                     Spacer()
+                    
+                    HStack(spacing: 6) {
+                        Image(systemName: "flag.fill")
+                            .foregroundColor(event.event.isFlagged ? .red : .gray)
+                            .font(.system(size: 16))
+                            .id(popupRefresh)
+                            .onTapGesture {
+                                Task {
+                                    guard let currentUser = Auth.auth().currentUser else { return }
+                                    let db = Firestore.firestore()
+                                    let eventRef = db.collection("outreachEventsDev").document(event.event.eventId ?? "")
+                                    let currentUserId = currentUser.uid
 
-                    Image(systemName: "flag.fill")
-                        .foregroundColor(event.event.isFlagged ? .red : .gray)
-                        .id(popupRefresh)
-                        .onTapGesture {
-                            Task {
-                                guard let currentUser = Auth.auth().currentUser else { return }
-                                let db = Firestore.firestore()
-                                let eventRef = db.collection("outreachEventsDev").document(event.event.eventId ?? "")
-                                let currentUserId = currentUser.uid
-
-                                if event.event.isFlagged {
-                                    if event.event.flaggedByUser == currentUserId || loggedInUser.userType == "Street Care Hub Leader" {
-                                        event.event.updateFlagStatus(newFlagState: false, userId: nil)
+                                    if event.event.isFlagged {
+                                        if event.event.flaggedByUser == currentUserId || loggedInUser.userType == "Street Care Hub Leader" {
+                                            event.event.updateFlagStatus(newFlagState: false, userId: nil)
+                                            let updates: [String: Any] = [
+                                                "isFlagged": false,
+                                                "flaggedByUser": NSNull()
+                                            ]
+                                            do {
+                                                try await eventRef.updateData(updates)
+                                                popupRefresh.toggle()
+                                            } catch {
+                                                print("Error updating flag status: \(error)")
+                                            }
+                                        } else {
+                                            alertMessage = "Only the user who flagged this event or a Street Care Hub Leader can unflag it."
+                                            showAlert = true
+                                        }
+                                    } else {
+                                        event.event.updateFlagStatus(newFlagState: true, userId: currentUserId)
                                         let updates: [String: Any] = [
-                                            "isFlagged": false,
-                                            "flaggedByUser": NSNull()
+                                            "isFlagged": true,
+                                            "flaggedByUser": currentUserId
                                         ]
                                         do {
                                             try await eventRef.updateData(updates)
@@ -54,31 +74,18 @@ struct EventCardView: View {
                                         } catch {
                                             print("Error updating flag status: \(error)")
                                         }
-                                    } else {
-                                        alertMessage = "Only the user who flagged this event or a Street Care Hub Leader can unflag it."
-                                        showAlert = true
-                                    }
-                                } else {
-                                    event.event.updateFlagStatus(newFlagState: true, userId: currentUserId)
-                                    let updates: [String: Any] = [
-                                        "isFlagged": true,
-                                        "flaggedByUser": currentUserId
-                                    ]
-                                    do {
-                                        try await eventRef.updateData(updates)
-                                        popupRefresh.toggle()
-                                    } catch {
-                                        print("Error updating flag status: \(error)")
                                     }
                                 }
                             }
-                        }
 
-                    Image(systemName: "checkmark.circle.fill")
-                        .foregroundColor(getVerificationColor(for: event.event.userType))
-                        .font(.system(size: 20))
-                        .padding(8)
+                        Image(systemName: "checkmark.circle.fill")
+                            .foregroundColor(getVerificationColor(for: event.event.userType))
+                            .font(.system(size: 16))
+                            .padding(.leading, 6)
+                    }
+                    .padding(.trailing, -6)
                 }
+                
 
                 HStack {
                     Image(systemName: "mappin.and.ellipse")
@@ -95,21 +102,65 @@ struct EventCardView: View {
                 }
 
                 if let helpType = event.event.helpType {
-                    HStack {
+                    let rawItems = helpType
+                        .split(separator: ",")
+                        .map {
+                            $0.trimmingCharacters(in: .whitespacesAndNewlines)
+                                .lowercased()
+                                .replacingOccurrences(of: ".", with: "")
+                                .replacingOccurrences(of: " ", with: "")
+                        }
+
+                    let localized = rawItems.map { NSLocalizedString($0, comment: "") }
+                    let capped = Array(localized.prefix(2))
+                    let pillText: String = {
+                        var text = capped.joined(separator: ", ")
+                        if localized.count > 2 {
+                            text += "…"
+                        }
+                        return text
+                    }()
+
+                    HStack(alignment: .top, spacing: 8) {
+                        // Left: help icon + blue pill
                         Image("HelpType")
                             .resizable()
-                            .frame(width: 20.0, height: 20.0)
-                        let help = helpType.split(separator: ",").map({
-                            NSLocalizedString($0.lowercased()
-                                .replacingOccurrences(of: ".", with: "")
-                                .replacingOccurrences(of: " ", with: ""), comment: "")
-                        }).joined(separator: ", ")
-                        Text(help.capitalized)
+                            .frame(width: 20, height: 20)
+
+                        Text(pillText.capitalized)
                             .font(.system(size: 13))
+                            .lineLimit(2)
+                            .truncationMode(.tail)
+                            .fixedSize(horizontal: false, vertical: true)
                             .padding(.horizontal, 10)
                             .padding(.vertical, 5)
                             .background(Color("Color87CEEB").opacity(0.4))
                             .cornerRadius(5)
+
+                        Spacer(minLength: 0)
+
+                        // Right: like + share (assets)
+                        HStack(spacing: 12) {
+                            Image(isLiked ? "like_clicked" : "like_un_clicked")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 16, height: 16)
+                                .onTapGesture {
+                                    isLiked.toggle()
+                                    // TODO: persist like toggle (likedEvents)
+                                }
+
+                            Image(didShare ? "share_clicked" : "share_un_clicked")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 16, height: 16)
+                                .onTapGesture {
+                                    didShare.toggle()
+                                    // TODO: present share sheet
+                                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) { didShare = false }
+                                }
+                        }
+                        .padding(.trailing, -6) // align with top-right flag/check
                     }
                 }
 
