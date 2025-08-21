@@ -209,8 +209,8 @@ struct ProfilView: View {
         self.peopleHelped = history.reduce(0) { total, log in
             if log.peopleHelped > 0 {
                 return total + log.peopleHelped
-            } else if let alt = Int(log.numberPeopleHelped ?? "") {
-                return total + alt
+            } else if log.numberOfHelpers > 0 {
+                return total + log.numberOfHelpers
             } else {
                 return total
             }
