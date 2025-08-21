@@ -22,6 +22,9 @@ struct EventPopupView: View {
     @State private var alertMessage = ""
     @Binding var refresh: Bool
     @State private var showCustomAlert = false
+    
+    @State private var isLikeClicked = false
+    @State private var isShareClicked = false
 
     var body: some View {
         
@@ -204,6 +207,32 @@ struct EventPopupView: View {
                         }
                     }
                 }
+                //Like and share
+                VStack {
+                    HStack {
+                        Spacer() // pushes items to the right
+                        Button(action: {
+                            isLikeClicked.toggle()
+                        }) {
+                            Image(isLikeClicked ? "like_clicked" : "like_un_clicked")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 20, height: 20)
+//                                .padding(2)
+                        }
+                        Button(action: {
+                            isShareClicked.toggle()
+                        }) {
+                            Image(isShareClicked ? "share_clicked" : "share_un_clicked")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 20, height: 20)
+//                                .padding(2)
+                        }
+                    }
+
+                }.frame(height: 20.0)
+                        
                 // TODO: need to persist data from previous screens
                 //            if let interest = event.event.participants?.count{
                 //                if let slots = event.event.totalSlots{
