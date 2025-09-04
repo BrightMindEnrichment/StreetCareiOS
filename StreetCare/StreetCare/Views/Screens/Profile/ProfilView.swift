@@ -265,7 +265,6 @@ struct ProfilView_Previews: PreviewProvider {
     }
 }
 
-LikeButton()
 
 struct LikeButton: View {
     @State private var isLiked = false
