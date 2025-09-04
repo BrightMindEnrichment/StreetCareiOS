@@ -264,3 +264,26 @@ struct ProfilView_Previews: PreviewProvider {
         ProfilView(selection: .constant(1),loginRequested: .constant(false))
     }
 }
+
+LikeButton()
+
+struct LikeButton: View {
+    @State private var isLiked = false
+    
+    var body: some View {
+        
+        Button(action: {
+            self.isLiked.toggle()
+            // Optionally: Save like state to Firebase here
+        }) {
+            
+            HStack {
+                Image(systemName: isLiked ? "heart.fill" : "heart") .foregroundColor(isLiked ? .red : .gray)
+                Text(isLiked ? "Liked" : "Like")
+            }
+        }
+    }
+}
+
+
+
