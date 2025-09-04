@@ -14,6 +14,8 @@ import FirebaseFirestore
 struct ProfilView: View {
     
     @State var user: User?
+    @State var userDetails: UserDetails? = UserDetails()
+    @State var isPresented: Bool = false
     @Binding var selection: Int
     @Binding var loginRequested: Bool
     let adapter = VisitLogDataAdapter()
@@ -70,6 +72,12 @@ struct ProfilView: View {
                         NavLinkButton(title:NSLocalizedString("badgesEarned", comment: ""), width: 160.0, height: 40.0,secondaryButton: true,noBorder: true, color: .blue)
                     }
                     Spacer()
+                    
+                    NavigationLink {
+                        LikedEventView(isPresented: $isPresented, loggedInUserDetails: userDetails ?? UserDetails(), eventType: .future)
+                    } label: {
+                        NavLinkButton(title: NSLocalizedString("Liked Posts", comment: ""), width: 160.0, height: 40.0,secondaryButton: true,noBorder: true, color: .blue)
+                    }
 
                     ImpactView(peopleHelped: peopleHelped, outreaches: outreaches, itemsDonated: itemsDonated)
                         .padding()
