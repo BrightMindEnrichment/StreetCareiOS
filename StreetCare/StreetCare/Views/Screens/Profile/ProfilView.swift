@@ -95,6 +95,12 @@ struct ProfilView: View {
                             showUserDeleteDialog = true
                         }
                     
+                    NavLinkButton(title: NSLocalizedString("LikeButtonTitle", comment: ""), width: 210.0, secondaryButton: true, noBorder: false, color: Color.red)
+                        .padding()
+                        .onTapGesture {
+                            showUserDeleteDialog = true
+                        }
+                    
                     Spacer()
                 }
                 else {
@@ -238,7 +244,6 @@ struct ProfilView: View {
         }
     }
 
-    
 } // end struct
 
 
@@ -266,6 +271,7 @@ struct ProfilView_Previews: PreviewProvider {
 }
 
 
+
 struct LikeButton: View {
     @State private var isLiked = false
     
@@ -277,7 +283,7 @@ struct LikeButton: View {
         }) {
             
             HStack {
-                Image(systemName: isLiked ? "heart.fill" : "heart") .foregroundColor(isLiked ? .red : .gray)
+                Image(systemName: isLiked ? "like_clicked" : "like_clicked") .foregroundColor(isLiked ? .red : .gray)
                 Text(isLiked ? "Liked" : "Like")
             }
         }
