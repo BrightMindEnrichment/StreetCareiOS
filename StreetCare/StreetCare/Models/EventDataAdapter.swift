@@ -262,7 +262,138 @@ class EventDataAdapter {
                 self.refreshLiked()
             }
     }
-    
+
+    func refreshLikedEvents() {
+        guard let user = Auth.auth().currentUser else {
+            self.events.removeAll()
+            self.delegate?.eventDataRefreshed(self.events)
+            return
+        }
+
+        let db = Firestore.firestore()
+        
+        // Step 1: get liked events for this user
+        db.collection("likedEvents")
+            .whereField("uid", isEqualTo: user.uid)
+            .getDocuments { snapshot, error in
+                if let error = error {
+                    print("Error fetching liked events: \(error)")
+                    self.events.removeAll()
+                    self.delegate?.eventDataRefreshed(self.events)
+                    return
+                }
+
+                guard let snapshot = snapshot, !snapshot.isEmpty else {
+                    // User hasn’t liked anything
+                    self.events.removeAll()
+                    self.delegate?.eventDataRefreshed(self.events)
+                    return
+                }
+
+                // Collect event IDs from likedEvents
+                let likedEventIds = snapshot.documents.compactMap { $0["eventId"] as? String }
+
+                // Step 2: fetch those events from outreachEventsDev
+                db.collection("outreachEventsDev")
+                    .whereField(FieldPath.documentID(), in: likedEventIds)
+                    .order(by: "eventDate", descending: true)
+                    .getDocuments { eventSnapshot, error in
+                        if let error = error {
+                            print("Error fetching liked event details: \(error)")
+                            self.events.removeAll()
+                            self.delegate?.eventDataRefreshed(self.events)
+                            return
+                        }
+
+                        self.events.removeAll()
+
+                        if let eventSnapshot = eventSnapshot {
+                            for document in eventSnapshot.documents {
+                                let data = document.data()
+                                if let status = data["status"] as? String, status == "approved" {
+                                    let event = Event()
+                                    event.eventId = document.documentID
+                                    
+                                    event.title = data["title"] as? String ?? ""
+                                    event.description = data["description"] as? String
+                                    event.isFlagged = data["isFlagged"] as? Bool ?? false
+                                    event.flaggedByUser = data["flaggedByUser"] as? String
+                                    event.emailAddress = data["emailAddress"] as? String
+                                    event.contactNumber = data["contactNumber"] as? String
+                                    event.consentStatus = data["consentStatus"] as? Bool ?? false
+                                    
+                                    if let location = data["location"] as? [String: Any] {
+                                        var field = ""
+                                        if let street = location["street"] as? String {
+                                            event.street = street
+                                            field += street
+                                        }
+                                        if let city = location["city"] as? String {
+                                            event.city = city
+                                            field += ", " + city
+                                        }
+                                        if let state = location["state"] as? String {
+                                            event.state = state
+                                            field += ", " + state
+                                        }
+                                        if let stateAbbv = location["stateAbbv"] as? String {
+                                            event.stateAbbv  = stateAbbv
+                                            field += ", " + stateAbbv
+                                        }
+                                        if let zipcode = location["zipcode"] as? String {
+                                            event.zipcode = zipcode
+                                            field += " " + zipcode
+                                        }
+                                        event.location = field
+                                    } else {
+                                        event.location = "Unknown"
+                                    }
+                                    
+                                    event.interest = data["interests"] as? Int ?? 0
+                                    event.eventDateStamp = data["eventDate"] as? Timestamp
+                                    event.eventDate = event.eventDateStamp?.dateValue()
+                                    event.eventStartTimeStamp = data["eventStartTime"] as? Timestamp
+                                    event.eventStartTime = event.eventStartTimeStamp?.dateValue()
+                                    event.eventEndTimeStamp = data["eventEndTime"] as? Timestamp
+                                    event.eventEndTime = event.eventEndTimeStamp?.dateValue()
+                                    event.timeZone = data["timeZone"] as? String
+                                    
+                                    event.uid = data["uid"] as? String
+                                    
+                                    // Fetch the username from the `users` collection
+                                    if let uid = event.uid {
+                                        db.collection("users").document(uid).getDocument { userDoc, error in
+                                            if let error = error {
+                                                print("Error fetching user data: \(error.localizedDescription)")
+                                            } else if let userDoc = userDoc, let userData = userDoc.data() {
+                                                event.userType = userData["Type"] as? String
+                                            }
+                                        }
+                                    }
+                                    
+                                    event.createdAt = data["createdAt"] as? String
+                                    event.helpType = data["helpType"] as? String
+                                        ?? (data["helpRequest"] as? [String: Any])?["helpType"] as? String
+                                    event.approved = data["approved"] as? Bool ?? false
+                                    event.totalSlots = Int(data["totalSlots"] as? String ?? "0")
+                                    event.helpRequest = data["helpRequest"] as? [String]
+                                    event.participants = data["participants"] as? [String]
+                                    event.skills = data["skills"] as? [String]
+                                    
+                                    // ✅ mark as liked
+                                    event.liked = true
+                                    
+                                    self.events.append(event)
+                                }
+                            }
+                        }
+
+                        // Step 3: notify UI via delegate
+                        self.delegate?.eventDataRefreshed(self.events)
+                    }
+            }
+    }
+
     
     //    GEDryQS4B9iq95ha11gF
     //    Printing description of user._userID:

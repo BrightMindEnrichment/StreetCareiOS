@@ -128,7 +128,53 @@ class SearchCommunityModel: ObservableObject {
             } else if eventType == .past {
                 filterAndSortEvents(eventType: .past, dateComparison: { $0 < $1 }, dayComparison: { $0 > $1 }, monthComparison: { $0 > $1 }, events: events)
             }
+        else if eventType == .all {
+            sortAllEvents(events: events) 
         }
+        }
+    
+    private func sortAllEvents(events: [Event]) {
+        var result = [EventData]()
+
+        // Sort events descending by date
+        let sortedArray = events.sorted { ($0.eventDate ?? Date()) > ($1.eventDate ?? Date()) }
+
+        for each in sortedArray {
+            if let dateValue = each.eventDate {
+                let dateObj = convertDateToEst(date: "\(dateValue)")
+                let data = EventData()
+                data.monthYear = formatDateString("\(dateObj)")
+                data.date.0 = formatDateString("\(dateObj)", format: "dd")
+                data.date.1 = formatDateString("\(dateObj)", format: "EEE").uppercased()
+                data.date.2 = formatDateString("\(dateObj)", format: "hh:mm a")
+                data.event = each
+                result.append(data)
+            }
+        }
+
+        // Group by month/year
+        let groupedEvents = result.group(by: { $0.monthYear })
+        let sortedEventsByMonth = groupedEvents.sorted { object1, object2 in
+            convertDate(from: object1.key)! > convertDate(from: object2.key)!
+        }
+
+        // Sort events within each month descending
+        let newEventsValuesSorted = sortedEventsByMonth.map { (key, events) -> (String, [EventData]) in
+            let sortedEvents = events.sorted { event1, event2 in
+                guard let day1 = event1.date.0, let day2 = event2.date.0,
+                      let day1Int = Int(day1), let day2Int = Int(day2) else { return false }
+                return day1Int > day2Int
+            }
+            return (key, sortedEvents)
+        }
+
+        sectionsAndItems.removeAll()
+        for (month, events) in newEventsValuesSorted {
+            sectionsAndItems.append(["\(month)": events])
+        }
+        tempSectionsAndItems = sectionsAndItems
+    }
+
     private func filterAndSortEvents(eventType: EventType, dateComparison: @escaping (Date, Date) -> Bool, dayComparison: @escaping (Int, Int) -> Bool, monthComparison: @escaping (Date, Date) -> Bool, events: [Event]) {
             var result = [EventData]()
             

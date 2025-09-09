@@ -59,6 +59,8 @@
 "futureEvents" = "Future Events";
 "pastEvents" = "Past Events";
 "publicinteractions" = "Public Interactions";
+"likedEvents" = "Liked Outreach Events";
+"noLikedEventsAvailable" = "No Liked Events Available";
 
 "before_para1" = "The first thing to remember is that homeless people are a diverse group of people just like everyone else, no matter how they look, no matter their gender, age, or race. Some have fallen on hard times. Some may be struggling with mental illness. But everyone wants to be treated with respect and dignity. Here are some steps to follow before you go:";
 
