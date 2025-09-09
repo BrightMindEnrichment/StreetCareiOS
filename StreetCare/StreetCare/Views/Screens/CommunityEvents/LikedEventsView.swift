@@ -28,17 +28,7 @@ struct LikedEventView: View {
     let formatter = DateFormatter()
     var eventType: EventType
     
-    var noEventsText: String {
-        if eventType == .future {
-            return NSLocalizedString("noFutureEventsAvailable", comment: "")
-        } else if eventType == .past {
-            return NSLocalizedString("noPastEventsAvailable", comment: "")
-        } else {
-            return NSLocalizedString("noHelpingRequestsAvailable", comment: "")
-        }
-    }
-    
-    var body: some View {
+   var body: some View {
         VStack {
             // 🔹 Search + Filter UI (copied from CommunityEventView)
             HStack {
@@ -180,6 +170,8 @@ struct LikedEventView: View {
             return [.last7Days, .last30Days, .last60Days, .last90Days, .otherPast, .reset]
         } else if eventType == .future {
             return [.next7Days, .next30Days, .next60Days, .next90Days, .otherUpcoming, .reset]
+        }else if eventType == .all {
+            return [.last7Days, .last30Days, .next7Days, .next30Days, .reset]
         } else {
             return []
         }

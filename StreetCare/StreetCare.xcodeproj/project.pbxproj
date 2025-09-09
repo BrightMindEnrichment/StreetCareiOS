@@ -109,6 +109,7 @@
 		8AFB16252DEE97D70015671E /* (null) in Sources */ = {isa = PBXBuildFile; };
 		A459D493C5D37756A585D3EA /* Pods_StreetCare.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B3FB734328ABC03284A67BF /* Pods_StreetCare.framework */; };
 		B5B5F2322E5D20300048F01E /* LikedEventsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B5F2312E5D202F0048F01E /* LikedEventsView.swift */; };
+		B5EF4E402E6E01E200E2528C /* LikedBadgesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5EF4E3F2E6E01CD00E2528C /* LikedBadgesView.swift */; };
 		BE9D1DCE2A37626C00072835 /* ImagePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9D1DCD2A37626C00072835 /* ImagePickerView.swift */; };
 		BE9D1DD12A376B3800072835 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = BE9D1DD02A376B3800072835 /* FirebaseStorage */; };
 		BE9D1DD32A377E9100072835 /* StorgeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9D1DD22A377E9100072835 /* StorgeManager.swift */; };
@@ -227,6 +228,7 @@
 		8A1569372E0B9E8D00984FED /* PublicPopupSheetModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicPopupSheetModifier.swift; sourceTree = "<group>"; };
 		8A36A1D72E2F197F00437188 /* KeyboardHeightObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardHeightObserver.swift; sourceTree = "<group>"; };
 		B5B5F2312E5D202F0048F01E /* LikedEventsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikedEventsView.swift; sourceTree = "<group>"; };
+		B5EF4E3F2E6E01CD00E2528C /* LikedBadgesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikedBadgesView.swift; sourceTree = "<group>"; };
 		BE9D1DCD2A37626C00072835 /* ImagePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerView.swift; sourceTree = "<group>"; };
 		BE9D1DD22A377E9100072835 /* StorgeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorgeManager.swift; sourceTree = "<group>"; };
 		BE9D1DD42A37819E00072835 /* AvatarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AvatarView.swift; sourceTree = "<group>"; };
@@ -410,6 +412,7 @@
 		4CB65E4C29DA6D8500684BD1 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				B5EF4E3F2E6E01CD00E2528C /* LikedBadgesView.swift */,
 				C2CCCA692CF00CEB001C9BE0 /* AddHelpRequestForm.swift */,
 				71FA51022BCEC4B300D0DA6C /* AfterOutreachView.swift */,
 				71B0D5C42B9214B70061033B /* BadgesView.swift */,
@@ -697,6 +700,7 @@
 				74DC15792D66D05000EF58AE /* ImageSliderView.swift in Sources */,
 				7453ABBB2D66D3BC00469896 /* AppDescriptionView.swift in Sources */,
 				4CB65E6229DA91C000684BD1 /* VideoInformation.swift in Sources */,
+				B5EF4E402E6E01E200E2528C /* LikedBadgesView.swift in Sources */,
 				4C85F0E92A089F9600FFEDC8 /* PlaylistsView.swift in Sources */,
 				4C17ED512A00A3610013EF52 /* VisitLogUnauthorized.swift in Sources */,
 				4C85F0EF2A08A7A100FFEDC8 /* GrowingTextView.swift in Sources */,

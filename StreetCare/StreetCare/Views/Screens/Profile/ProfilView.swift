@@ -74,7 +74,7 @@ struct ProfilView: View {
                     Spacer()
                     
                     NavigationLink {
-                        LikedEventView(isPresented: $isPresented, loggedInUserDetails: userDetails ?? UserDetails(), eventType: .future)
+                        LikedBadgesView()
                     } label: {
                         NavLinkButton(title: NSLocalizedString("Liked Posts", comment: ""), width: 160.0, height: 40.0,secondaryButton: true,noBorder: true, color: .blue)
                     }
