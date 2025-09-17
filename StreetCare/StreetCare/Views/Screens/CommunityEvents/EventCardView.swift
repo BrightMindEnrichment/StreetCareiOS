@@ -200,6 +200,8 @@ struct EventCardView: View {
                                                     event.event.liked = isLiked
                                                     event.event.interest = newCount // if you show a count
                                                 }
+                                                // notify popup (if shown) to sync its UI
+                                                popupRefresh.toggle()
                                             } else {
                                                 alertMessage = "Failed to update like. Please try again."
                                                 showAlert = true
@@ -233,13 +235,21 @@ struct EventCardView: View {
             .background(Color.white)
             .cornerRadius(15)
             .shadow(radius: 5)
-        }
+        }   // <-- end of ZStack { ... } (the main content)
         .onTapGesture {
             onCardTap()
         }
+        .onAppear {
+            // initialize local UI from model when the card first appears
+            isLiked = event.event.liked
+        }
+        .onChange(of: popupRefresh) { _ in
+            // popup or other components changed the model — refresh local UI
+            isLiked = event.event.liked
+        }
         .alert(isPresented: $showAlert) {
             Alert(
-                title: Text("Unflag Error"),
+                title: Text("Please Login"),
                 message: Text(alertMessage),
                 dismissButton: .default(Text("OK")){
                     showLogin = true
@@ -247,9 +257,9 @@ struct EventCardView: View {
             )
         }
         .sheet(isPresented: $showLogin) {
-                    NavigationStack {
-                        LoginView(selection: $loginSelection)
-                    }
-                }
+            NavigationStack {
+                LoginView(selection: $loginSelection)
+            }
+        }
     }
 }

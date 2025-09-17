@@ -125,12 +125,11 @@ struct CommunityEventView: View {
                                                 event: event,
                                                 eventType: eventType,
                                                 onCardTap: {
-                                                    currentData.date = event.date
-                                                    currentData.monthYear = event.monthYear
-                                                    currentData.event = event.event
+                                                    // share the same EventData instance instead of copying fields
+                                                    currentData = event
                                                     isBottomSheetPresented.toggle()
                                                 },
-                                                popupRefresh: $popupRefresh, // ✅ pass down the binding,
+                                                popupRefresh: $popupRefresh,
                                                 loggedInUser: loggedInUserDetails
                                             )
                                         }
