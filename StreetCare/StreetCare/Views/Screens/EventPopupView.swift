@@ -22,12 +22,16 @@ struct EventPopupView: View {
     @State private var alertMessage = ""
     @Binding var refresh: Bool
     @State private var showCustomAlert = false
-    
     @State private var isLikeClicked = false
     @State private var isShareClicked = false
+    @State private var isProcessing = false
 
     // MARK: - Like handling
     private func toggleLike() async {
+        // prevent concurrent requests
+        await MainActor.run { isProcessing = true }
+        defer { Task { await MainActor.run { isProcessing = false } } }
+
         // 1) Require login
         guard let user = Auth.auth().currentUser else {
             await MainActor.run {
@@ -274,23 +278,50 @@ struct EventPopupView: View {
                         }
                     }
                 }
-                //Like and share
+                // Like and share — likes count on the left
                 VStack {
                     HStack {
-                        Spacer() // pushes items to the right
-                        Button {
-                            Task {
-                                await toggleLike()
+                        Spacer() // pushes the group to the right
+
+                        HStack(spacing: 8) {
+                            // Likes count (left)
+                            Text("\(event.event.interest ?? 0)")
+                                .font(.system(size: 14, weight: .semibold))
+                                .foregroundColor(.black)
+                                .accessibilityLabel("Likes: \(event.event.interest ?? 0)")
+
+                            // Like button
+                            Button {
+                                Task {
+                                    await toggleLike()
+                                }
+                            } label: {
+                                Image(isLikeClicked ? "like_clicked" : "like_un_clicked")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 20, height: 20)
+                                    .opacity(isProcessing ? 0.6 : 1.0)
                             }
-                        } label: {
-                            Image(isLikeClicked ? "like_clicked" : "like_un_clicked")
+                            .disabled(isProcessing)
+
+                            // Optional spinner when processing
+                            if isProcessing {
+                                ProgressView()
+                                    .scaleEffect(0.7)
+                            }
+                        }
+
+                        // Share button (right)
+                        Button(action: { isShareClicked.toggle() }) {
+                            Image(isShareClicked ? "share_clicked" : "share_un_clicked")
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 20, height: 20)
                         }
                     }
+                }
+                .frame(height: 20.0)
 
-                }.frame(height: 20.0)
                         
                 // TODO: need to persist data from previous screens
                 //            if let interest = event.event.participants?.count{
