@@ -9,6 +9,7 @@ import Foundation
 import SwiftUI
 import Firebase
 import FirebaseFirestore
+import UIKit
 
 struct EventCardView: View {
     @ObservedObject var event: EventData
@@ -23,6 +24,8 @@ struct EventCardView: View {
     @State private var alertMessage = ""
     @Binding var popupRefresh: Bool
     @ObservedObject var loggedInUser: UserDetails
+    // Share sheet
+    @State private var shareItems: [Any] = []
 
     var body: some View {
         ZStack {
@@ -207,13 +210,26 @@ struct EventCardView: View {
                                         }
                                     }
 
+                            // SHARE
                             Image(didShare ? "share_clicked" : "share_un_clicked")
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 16, height: 16)
                                 .onTapGesture {
+                                    let id = event.event.eventId ?? ""
+                                    let urlString = "https://streetcarenow.org/outreachsignup/\(id)"
+
+                                    // Copy to clipboard
+                                    UIPasteboard.general.string = urlString
+
+                                    // Present native share sheet
+                                    if let url = URL(string: urlString) {
+                                        shareItems = [url]
+                                        showShareSheet = true
+                                    }
+
+                                    // little pulse
                                     didShare.toggle()
-                                    // TODO: present share sheet
                                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) { didShare = false }
                                 }
                         }
@@ -246,10 +262,25 @@ struct EventCardView: View {
                 }
             )
         }
-        .sheet(isPresented: $showLogin) {
+        // Native share sheet
+        .sheet(isPresented: $showShareSheet) {
+            ActivityView(activityItems: shareItems)
+        }
+        .fullScreenCover(isPresented: $showLogin) {
                     NavigationStack {
                         LoginView(selection: $loginSelection)
                     }
                 }
     }
+}
+// Tiny helper to present UIActivityViewController in SwiftUI
+struct ActivityView: UIViewControllerRepresentable {
+    var activityItems: [Any]
+    var applicationActivities: [UIActivity]? = nil
+
+    func makeUIViewController(context: Context) -> UIActivityViewController {
+        UIActivityViewController(activityItems: activityItems,
+                                 applicationActivities: applicationActivities)
+    }
+    func updateUIViewController(_ vc: UIActivityViewController, context: Context) {}
 }

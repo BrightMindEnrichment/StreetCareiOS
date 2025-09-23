@@ -25,7 +25,8 @@ struct EventPopupView: View {
     
     @State private var isLikeClicked = false
     @State private var isShareClicked = false
-
+    @State private var shareItems: [Any] = []
+    @State private var showShareSheet = false
     var body: some View {
         
         let _ = refresh
@@ -221,18 +222,28 @@ struct EventPopupView: View {
 //                                .padding(2)
                         }
                         Button(action: {
-                            isShareClicked.toggle()
+                            let id = event.event.eventId ?? ""
+                            let urlString = "https://streetcarenow.org/outreachsignup/\(id)"
+
+                            UIPasteboard.general.string = urlString
+
+                            if let url = URL(string: urlString) {
+                                shareItems = [url]
+                                showShareSheet = true
+                            }
+
+                            isShareClicked = true
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
+                                isShareClicked = false
+                            }
                         }) {
                             Image(isShareClicked ? "share_clicked" : "share_un_clicked")
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 20, height: 20)
-//                                .padding(2)
                         }
                     }
-
                 }.frame(height: 20.0)
-                        
                 // TODO: need to persist data from previous screens
                 //            if let interest = event.event.participants?.count{
                 //                if let slots = event.event.totalSlots{
@@ -331,6 +342,9 @@ struct EventPopupView: View {
                     print("title: \(event.event.title)")
                     print("description: \(String(describing: event.event.description))")
                     
+                }
+                .sheet(isPresented: $showShareSheet) {
+                    ActivityView(activityItems: shareItems)
                 }
 
         )
