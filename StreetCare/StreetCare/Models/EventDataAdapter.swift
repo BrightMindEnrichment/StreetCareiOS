@@ -306,7 +306,6 @@ class EventDataAdapter {
                         }
 
                         self.events.removeAll()
-
                         if let eventSnapshot = eventSnapshot {
                             for document in eventSnapshot.documents {
                                 let data = document.data()
@@ -834,7 +833,7 @@ class EventDataAdapter {
         func fetchEvents(order: Bool = false) {
             let targetDate = Timestamp(date: Date()) // Current date and time
             
-            db.collection("outreachEvents")
+            db.collection("outreachEventsDev")
                 .whereField("status", isEqualTo: "approved")
                 .whereField("eventDate", isGreaterThanOrEqualTo: targetDate)
                 .order(by: "eventDate", descending: order) // Use the order parameter to toggle sorting
@@ -852,7 +851,17 @@ class EventDataAdapter {
                         event.title = data["title"] as? String ?? "Untitled Event"
                         event.description = data["description"] as? String
                         event.eventDate = (data["eventDate"] as? Timestamp)?.dateValue()
-                        event.location = data["location"] as? String
+                        if let location = data["location"] as? [String: Any] {
+                            var field = ""
+                            if let street = location["street"] as? String { field += street }
+                            if let city = location["city"] as? String { field += ", \(city)" }
+                            if let state = location["state"] as? String { field += ", \(state)" }
+                            if let stateAbbv = location["stateAbbv"] as? String { field += ", \(stateAbbv)" }
+                            if let zipcode = location["zipcode"] as? String { field += " \(zipcode)" }
+                            event.location = field
+                        } else {
+                            event.location = "Unknown"
+                        }
                         event.helpRequest = data["helpRequest"] as? [String]
                         event.skills = data["skills"] as? [String]
                         event.interest = data["interest"] as? Int
