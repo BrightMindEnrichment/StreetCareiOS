@@ -19,6 +19,8 @@ struct EventCardView: View {
     @State private var didShare = false
     @State private var showLogin = false
     @State private var showShareSheet = false
+    @State private var isProcessing = false
+    @State private var suppressCardTap = false
     @State private var loginSelection = 0
     @State private var alertMessage = ""
     @Binding var popupRefresh: Bool
@@ -142,84 +144,125 @@ struct EventCardView: View {
 
                         Spacer(minLength: 0)
 
-                        // Right: like + share (assets)
+                        // Right: like + share (assets) — likes count on the left
                         HStack(spacing: 12) {
-                            Image(isLiked ? "like_clicked" : "like_un_clicked")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 16, height: 16)
-                                .onTapGesture {
-                                        Task {
-                                            // 1) Require login
-                                            guard let user = Auth.auth().currentUser else {
-                                                alertMessage = "Please sign in to like events."
-                                                showAlert = true
-                                                return
-                                            }
-                                            // 2) Need a valid event id
-                                            guard let eventId = event.event.eventId, !eventId.isEmpty else { return }
+                            HStack(spacing: 6) {
+                                // Likes count first (left)
+                                Text("\(event.event.interest ?? 0)")
+                                    .font(.system(size: 13, weight: .medium))
+                                    .foregroundColor(.black)
+                                    .accessibilityLabel("Likes count: \(event.event.interest ?? 0)")
 
-                                            // 3) Firestore transaction: update interests + per-user mapping
-                                            let db = Firestore.firestore()
-                                            let eventRef = db.collection("outreachEventsDev").document(eventId)
-                                            let likedDocId = "\(user.uid)_\(eventId)"
-                                            let likedRef = db.collection("likedEvents").document(likedDocId)
+                                // Like image using a high-priority gesture so it wins over the parent .onTapGesture
+                                Image(isLiked ? "like_clicked" : "like_un_clicked")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 16, height: 16)
+                                    .scaleEffect(isLiked ? 1.15 : 1.0)
+                                    .highPriorityGesture(
+                                        TapGesture().onEnded {
+                                            Task {
+                                                // set suppression & processing immediately on main actor
+                                                await MainActor.run {
+                                                    suppressCardTap = true
+                                                    isProcessing = true
+                                                }
 
-                                            let resultAny = try? await db.runTransaction({ (txn, errorPointer) -> Any? in
-                                                do {
-                                                    let snap = try txn.getDocument(eventRef)
-                                                    let current = (snap.data()?["interests"] as? Int) ?? 0
-
-                                                    if isLiked {
-                                                        // UNLIKE: decrement & remove mapping
-                                                        let next = max(0, current - 1)
-                                                        txn.updateData(["interests": next], forDocument: eventRef)
-                                                        txn.deleteDocument(likedRef)
-                                                        return next
-                                                    } else {
-                                                        // LIKE: increment & add mapping
-                                                        let next = current + 1
-                                                        txn.updateData(["interests": next], forDocument: eventRef)
-                                                        txn.setData([
-                                                            "uid": user.uid,
-                                                            "eventId": eventId,
-                                                            "createdAt": FieldValue.serverTimestamp()
-                                                        ], forDocument: likedRef, merge: true)
-                                                        return next
+                                                // 1) Require login
+                                                guard let user = Auth.auth().currentUser else {
+                                                    await MainActor.run {
+                                                        alertMessage = "Please sign in to like events."
+                                                        showAlert = true
+                                                        isProcessing = false
+                                                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) { suppressCardTap = false }
                                                     }
-                                                } catch let err as NSError {
-                                                    errorPointer?.pointee = err
-                                                    return nil
+                                                    return
                                                 }
-                                            })
 
-                                            // 4) Update UI/model or show error
-                                            if let newCount = resultAny as? Int {
-                                                withAnimation {
-                                                    isLiked.toggle()
-                                                    event.event.liked = isLiked
-                                                    event.event.interest = newCount // if you show a count
+                                                // 2) Need a valid event id
+                                                guard let eventId = event.event.eventId, !eventId.isEmpty else {
+                                                    await MainActor.run {
+                                                        isProcessing = false
+                                                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) { suppressCardTap = false }
+                                                    }
+                                                    return
                                                 }
-                                                // notify popup (if shown) to sync its UI
-                                                popupRefresh.toggle()
-                                            } else {
-                                                alertMessage = "Failed to update like. Please try again."
-                                                showAlert = true
+
+                                                // 3) Firestore transaction
+                                                let db = Firestore.firestore()
+                                                let eventRef = db.collection("outreachEventsDev").document(eventId)
+                                                let likedDocId = "\(user.uid)_\(eventId)"
+                                                let likedRef = db.collection("likedEvents").document(likedDocId)
+
+                                                let resultAny = try? await db.runTransaction({ (txn, errorPointer) -> Any? in
+                                                    do {
+                                                        let snap = try txn.getDocument(eventRef)
+                                                        let current = (snap.data()?["interests"] as? Int) ?? 0
+
+                                                        if isLiked {
+                                                            // UNLIKE
+                                                            let next = max(0, current - 1)
+                                                            txn.updateData(["interests": next], forDocument: eventRef)
+                                                            txn.deleteDocument(likedRef)
+                                                            return next
+                                                        } else {
+                                                            // LIKE
+                                                            let next = current + 1
+                                                            txn.updateData(["interests": next], forDocument: eventRef)
+                                                            txn.setData([
+                                                                "uid": user.uid,
+                                                                "eventId": eventId,
+                                                                "createdAt": FieldValue.serverTimestamp()
+                                                            ], forDocument: likedRef, merge: true)
+                                                            return next
+                                                        }
+                                                    } catch let err as NSError {
+                                                        errorPointer?.pointee = err
+                                                        return nil
+                                                    }
+                                                })
+
+                                                // 4) Update UI/model or show error
+                                                if let newCount = resultAny as? Int {
+                                                    await MainActor.run {
+                                                        withAnimation {
+                                                            isLiked.toggle()
+                                                            event.event.liked = isLiked
+                                                            event.event.interest = newCount
+                                                        }
+                                                        popupRefresh.toggle()
+                                                        // release suppression after a short delay
+                                                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) {
+                                                            suppressCardTap = false
+                                                        }
+                                                        isProcessing = false
+                                                    }
+                                                } else {
+                                                    await MainActor.run {
+                                                        alertMessage = "Failed to update like. Please try again."
+                                                        showAlert = true
+                                                        isProcessing = false
+                                                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) { suppressCardTap = false }
+                                                    }
+                                                }
                                             }
                                         }
-                                    }
+                                    )
+                                    .disabled(isProcessing)
+                            }
 
+                            // Share icon (kept right of like)
                             Image(didShare ? "share_clicked" : "share_un_clicked")
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 16, height: 16)
                                 .onTapGesture {
                                     didShare.toggle()
-                                    // TODO: present share sheet
                                     DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) { didShare = false }
                                 }
                         }
                         .padding(.trailing, -6) // align with top-right flag/check
+
                     }
                 }
 
@@ -237,8 +280,15 @@ struct EventCardView: View {
             .shadow(radius: 5)
         }   // <-- end of ZStack { ... } (the main content)
         .onTapGesture {
-            onCardTap()
+            if !suppressCardTap {
+                onCardTap()
+            } else {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) {
+                    suppressCardTap = false
+                }
+            }
         }
+
         .onAppear {
             // initialize local UI from model when the card first appears
             isLiked = event.event.liked
