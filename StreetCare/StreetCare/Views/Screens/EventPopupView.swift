@@ -24,6 +24,8 @@ struct EventPopupView: View {
     @State private var showCustomAlert = false
     @State private var isLikeClicked = false
     @State private var isShareClicked = false
+    @State private var shareItems: [Any] = []
+    @State private var showShareSheet = false
     @State private var isProcessing = false
 
     // MARK: - Like handling
@@ -95,8 +97,6 @@ struct EventPopupView: View {
             }
         }
     }
-
-    
     var body: some View {
         
         let _ = refresh
@@ -310,19 +310,29 @@ struct EventPopupView: View {
                                     .scaleEffect(0.7)
                             }
                         }
+                        Button(action: {
+                            let id = event.event.eventId ?? ""
+                            let urlString = "https://streetcarenow.org/outreachsignup/\(id)"
 
-                        // Share button (right)
-                        Button(action: { isShareClicked.toggle() }) {
+                            UIPasteboard.general.string = urlString
+
+                            if let url = URL(string: urlString) {
+                                shareItems = [url]
+                                showShareSheet = true
+                            }
+
+                            isShareClicked = true
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
+                                isShareClicked = false
+                            }
+                        }) {
                             Image(isShareClicked ? "share_clicked" : "share_un_clicked")
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 20, height: 20)
                         }
                     }
-                }
-                .frame(height: 20.0)
-
-                        
+                }.frame(height: 20.0)
                 // TODO: need to persist data from previous screens
                 //            if let interest = event.event.participants?.count{
                 //                if let slots = event.event.totalSlots{
@@ -427,6 +437,9 @@ struct EventPopupView: View {
             .onChange(of: refresh) { _ in
                 // If the parent/card toggles popupRefresh, re-sync popup UI from the shared model
                 isLikeClicked = event.event.liked
+            }
+           .sheet(isPresented: $showShareSheet) {
+                ActivityView(activityItems: shareItems)
             }
 
         )
