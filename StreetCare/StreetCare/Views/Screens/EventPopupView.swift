@@ -22,11 +22,81 @@ struct EventPopupView: View {
     @State private var alertMessage = ""
     @Binding var refresh: Bool
     @State private var showCustomAlert = false
-    
     @State private var isLikeClicked = false
     @State private var isShareClicked = false
     @State private var shareItems: [Any] = []
     @State private var showShareSheet = false
+    @State private var isProcessing = false
+
+    // MARK: - Like handling
+    private func toggleLike() async {
+        // prevent concurrent requests
+        await MainActor.run { isProcessing = true }
+        defer { Task { await MainActor.run { isProcessing = false } } }
+
+        // 1) Require login
+        guard let user = Auth.auth().currentUser else {
+            await MainActor.run {
+                alertMessage = "Please sign in to like events."
+                showAlert = true
+            }
+            return
+        }
+
+        // 2) Need a valid event id
+        guard let eventId = event.event.eventId, !eventId.isEmpty else { return }
+
+        // 3) Firestore transaction: update interests + per-user mapping
+        let db = Firestore.firestore()
+        let eventRef = db.collection("outreachEventsDev").document(eventId)
+        let likedDocId = "\(user.uid)_\(eventId)"
+        let likedRef = db.collection("likedEvents").document(likedDocId)
+
+        let resultAny = try? await db.runTransaction({ (txn, errorPointer) -> Any? in
+            do {
+                let snap = try txn.getDocument(eventRef)
+                let current = (snap.data()?["interests"] as? Int) ?? 0
+
+                if isLikeClicked {
+                    // UNLIKE: decrement & remove mapping
+                    let next = max(0, current - 1)
+                    txn.updateData(["interests": next], forDocument: eventRef)
+                    txn.deleteDocument(likedRef)
+                    return next
+                } else {
+                    // LIKE: increment & add mapping
+                    let next = current + 1
+                    txn.updateData(["interests": next], forDocument: eventRef)
+                    txn.setData([
+                        "uid": user.uid,
+                        "eventId": eventId,
+                        "createdAt": FieldValue.serverTimestamp()
+                    ], forDocument: likedRef, merge: true)
+                    return next
+                }
+            } catch let err as NSError {
+                errorPointer?.pointee = err
+                return nil
+            }
+        })
+
+        // 4) Update UI/model or show error
+        if let newCount = resultAny as? Int {
+            await MainActor.run {
+                withAnimation {
+                    isLikeClicked.toggle()
+                    event.event.liked = isLikeClicked
+                    event.event.interest = newCount
+                    refresh.toggle() // notify parent if needed
+                }
+            }
+        } else {
+            await MainActor.run {
+                alertMessage = "Failed to update like. Please try again."
+                showAlert = true
+            }
+        }
+    }
     var body: some View {
         
         let _ = refresh
@@ -208,18 +278,37 @@ struct EventPopupView: View {
                         }
                     }
                 }
-                //Like and share
+                // Like and share — likes count on the left
                 VStack {
                     HStack {
-                        Spacer() // pushes items to the right
-                        Button(action: {
-                            isLikeClicked.toggle()
-                        }) {
-                            Image(isLikeClicked ? "like_clicked" : "like_un_clicked")
-                                .resizable()
-                                .scaledToFit()
-                                .frame(width: 20, height: 20)
-//                                .padding(2)
+                        Spacer() // pushes the group to the right
+
+                        HStack(spacing: 8) {
+                            // Likes count (left)
+                            Text("\(event.event.interest ?? 0)")
+                                .font(.system(size: 14, weight: .semibold))
+                                .foregroundColor(.black)
+                                .accessibilityLabel("Likes: \(event.event.interest ?? 0)")
+
+                            // Like button
+                            Button {
+                                Task {
+                                    await toggleLike()
+                                }
+                            } label: {
+                                Image(isLikeClicked ? "like_clicked" : "like_un_clicked")
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 20, height: 20)
+                                    .opacity(isProcessing ? 0.6 : 1.0)
+                            }
+                            .disabled(isProcessing)
+
+                            // Optional spinner when processing
+                            if isProcessing {
+                                ProgressView()
+                                    .scaleEffect(0.7)
+                            }
                         }
                         Button(action: {
                             let id = event.event.eventId ?? ""
@@ -334,18 +423,24 @@ struct EventPopupView: View {
                     .frame(maxWidth: .infinity, maxHeight: .infinity)
                 }
             }
-                .onAppear {
-                    print("EventPopupView appeared")
-                    print("Consent Box: \(event.event.consentStatus)")
-                    print("Email: \(event.event.emailAddress ?? "nil")")
-                    print("Contact Number: \(event.event.contactNumber ?? "nil")")
-                    print("title: \(event.event.title)")
-                    print("description: \(String(describing: event.event.description))")
-                    
-                }
-                .sheet(isPresented: $showShareSheet) {
-                    ActivityView(activityItems: shareItems)
-                }
+            .onAppear {
+                print("EventPopupView appeared")
+                print("Consent Box: \(event.event.consentStatus)")
+                print("Email: \(event.event.emailAddress ?? "nil")")
+                print("Contact Number: \(event.event.contactNumber ?? "nil")")
+                print("title: \(event.event.title)")
+                print("description: \(String(describing: event.event.description))")
+                
+                // initialize popup UI from model
+                isLikeClicked = event.event.liked
+            }
+            .onChange(of: refresh) { _ in
+                // If the parent/card toggles popupRefresh, re-sync popup UI from the shared model
+                isLikeClicked = event.event.liked
+            }
+           .sheet(isPresented: $showShareSheet) {
+                ActivityView(activityItems: shareItems)
+            }
 
         )
     }
