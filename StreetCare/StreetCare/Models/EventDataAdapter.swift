@@ -867,7 +867,7 @@ class EventDataAdapter {
                         
                         // Wrap Event in EventData
                         let eventData = EventData()
-                        eventData.event = event
+                        eventData.setEvent(event)
                         return eventData
                     } ?? []
                 }
