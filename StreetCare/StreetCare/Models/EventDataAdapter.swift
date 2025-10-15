@@ -165,11 +165,12 @@ class EventDataAdapter {
         let settings = FirestoreSettings()
         Firestore.firestore().settings = settings
         let db = Firestore.firestore()
+        
         db.collection("outreachEventsDev")
             .order(by: "eventDate", descending: true) // Fetch all events first
             .getDocuments { querySnapshot, error in
                 
-                // clear out all the old data
+                // clear out old data
                 self.events.removeAll()
                 
                 if let error = error {
@@ -181,11 +182,10 @@ class EventDataAdapter {
                     for document in querySnapshot.documents {
                         let data = document.data()
                         
-                        // ✅ Filter only approved events in Swift
+                        // ✅ Only approved events
                         if let status = data["status"] as? String, status == "approved" {
                             let event = Event()
                             event.eventId = document.documentID
-                            
                             event.title = data["title"] as? String ?? ""
                             event.description = data["description"] as? String
                             event.isFlagged = data["isFlagged"] as? Bool ?? false
@@ -202,19 +202,19 @@ class EventDataAdapter {
                                 }
                                 if let city = location["city"] as? String {
                                     event.city = city
-                                    field +=  ", " + city
+                                    field += ", " + city
                                 }
                                 if let state = location["state"] as? String {
                                     event.state = state
-                                    field +=  ", " + state
+                                    field += ", " + state
                                 }
                                 if let stateAbbv = location["stateAbbv"] as? String {
-                                    event.stateAbbv  = stateAbbv
-                                    field +=  ", " + stateAbbv
+                                    event.stateAbbv = stateAbbv
+                                    field += ", " + stateAbbv
                                 }
                                 if let zipcode = location["zipcode"] as? String {
                                     event.zipcode = zipcode
-                                    field +=  " " + zipcode
+                                    field += " " + zipcode
                                 }
                                 event.location = field
                             } else {
@@ -228,13 +228,9 @@ class EventDataAdapter {
                             event.eventStartTime = event.eventStartTimeStamp?.dateValue()
                             event.eventEndTimeStamp = data["eventEndTime"] as? Timestamp
                             event.eventEndTime = event.eventEndTimeStamp?.dateValue()
-                           // print("📍 TimeZone from Firestore: \(data["timeZone"] ?? "nil")")
                             event.timeZone = data["timeZone"] as? String
-                            
-                            
                             event.uid = data["uid"] as? String
                             
-                            // Fetch the username from the `users` collection
                             if let uid = event.uid {
                                 db.collection("users").document(uid).getDocument { userDoc, error in
                                     if let error = error {
@@ -259,8 +255,53 @@ class EventDataAdapter {
                     }
                 }
                 
+                // Refresh liked flags
                 self.refreshLiked()
+                
+                // 👇 Add this: start real-time like listener
+                self.listenForLikeUpdates()
             }
+    }
+    func listenForLikeUpdates() {
+        let db = Firestore.firestore()
+        
+        // Avoid multiple listeners stacking
+        // (Optional: keep a reference if you want to stop listening later)
+        db.collection("users").addSnapshotListener { snapshot, error in
+            guard let snapshot = snapshot else {
+                print("⚠️ No snapshot in like listener: \(error?.localizedDescription ?? "unknown error")")
+                return
+            }
+
+            // Build frequency map (eventId → total likes)
+            var updatedCounts: [String: Int] = [:]
+            
+            for doc in snapshot.documents {
+                if let likedEvents = doc.data()["likedOutreachEvents"] as? [String] {
+                    for eventId in likedEvents {
+                        updatedCounts[eventId, default: 0] += 1
+                    }
+                }
+            }
+
+            // Update UI on main thread
+            DispatchQueue.main.async {
+                var didChange = false
+                for i in 0..<self.events.count {
+                    let id = self.events[i].eventId ?? ""
+                    if let newCount = updatedCounts[id],
+                       self.events[i].interest != newCount {
+                        self.events[i].interest = newCount
+                        didChange = true
+                    }
+                }
+                
+                if didChange {
+                    self.delegate?.eventDataRefreshed(self.events)
+                    print("♻️ Like counts updated in real time (\(updatedCounts.count) events affected)")
+                }
+            }
+        }
     }
 
     func refreshLikedEvents() {

@@ -307,7 +307,7 @@ struct VisitImpactView: View {
                         .font(.title2)
                         .fontWeight(.bold)
                         .foregroundColor(.black)
-                    Text("We’re bringing this feature to mobile soon.\nPlease continue on the website for now.")
+                    Text("We’re bringing this feature to mobile soon.\nPlease continue your submission on the website for now.")
                         .font(.body)
                         .multilineTextAlignment(.center)
                         .foregroundColor(.black)
