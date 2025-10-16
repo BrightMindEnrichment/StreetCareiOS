@@ -102,11 +102,11 @@
 		74FE994C2CC9F23F00D0C5D0 /* EventEnums.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74FE994B2CC9F23F00D0C5D0 /* EventEnums.swift */; };
 		74FE994F2CC9FF5F00D0C5D0 /* SearchCommunityModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74FE994E2CC9FF5F00D0C5D0 /* SearchCommunityModel.swift */; };
 		74FE99512CC9FFAB00D0C5D0 /* EventCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74FE99502CC9FFAB00D0C5D0 /* EventCardView.swift */; };
-		7A03D72D2DE102290027D5E7 /* (null) in Resources */ = {isa = PBXBuildFile; };
-		7A03D7432DE11E300027D5E7 /* (null) in Sources */ = {isa = PBXBuildFile; };
+		7A03D72D2DE102290027D5E7 /* BuildFile in Resources */ = {isa = PBXBuildFile; };
+		7A03D7432DE11E300027D5E7 /* BuildFile in Sources */ = {isa = PBXBuildFile; };
 		8A1569362E0B4A3C00984FED /* PublicInteractionPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1569352E0B4A3C00984FED /* PublicInteractionPopupView.swift */; };
 		8A1569382E0B9E8D00984FED /* PublicPopupSheetModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1569372E0B9E8D00984FED /* PublicPopupSheetModifier.swift */; };
-		8AFB16252DEE97D70015671E /* (null) in Sources */ = {isa = PBXBuildFile; };
+		8AFB16252DEE97D70015671E /* BuildFile in Sources */ = {isa = PBXBuildFile; };
 		A459D493C5D37756A585D3EA /* Pods_StreetCare.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B3FB734328ABC03284A67BF /* Pods_StreetCare.framework */; };
 		B5B5F2322E5D20300048F01E /* LikedEventsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B5F2312E5D202F0048F01E /* LikedEventsView.swift */; };
 		B5EF4E402E6E01E200E2528C /* LikedBadgesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5EF4E3F2E6E01CD00E2528C /* LikedBadgesView.swift */; };
@@ -250,6 +250,8 @@
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		EDB93D152DB1D18300C7174F /* Fonts */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+			);
 			path = Fonts;
 			sourceTree = "<group>";
 		};
@@ -603,7 +605,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7A03D72D2DE102290027D5E7 /* (null) in Resources */,
+				7A03D72D2DE102290027D5E7 /* BuildFile in Resources */,
 				1AAFF0882E46541600700EB8 /* Secrets.plist in Resources */,
 				4C82441429EC99A8003D1575 /* Localizable.strings in Resources */,
 				4CB65D9729D016B000684BD1 /* Preview Assets.xcassets in Resources */,
@@ -645,13 +647,9 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-StreetCare/Pods-StreetCare-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-StreetCare/Pods-StreetCare-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -666,13 +664,9 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-StreetCare/Pods-StreetCare-resources-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-			);
 			name = "[CP] Copy Pods Resources";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-StreetCare/Pods-StreetCare-resources-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -686,7 +680,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7A03D7432DE11E300027D5E7 /* (null) in Sources */,
+				7A03D7432DE11E300027D5E7 /* BuildFile in Sources */,
 				74FDD8282D64917100E23293 /* GoogleMapView.swift in Sources */,
 				74FDD8292D64917100E23293 /* MapViewModel.swift in Sources */,
 				4CB7D8CE29F8DCBC0002495E /* TimeDurationPicker.swift in Sources */,
@@ -758,7 +752,7 @@
 				4C17ED532A00A4470013EF52 /* NavLinkButton.swift in Sources */,
 				71B0D5CB2B9225670061033B /* Badge.swift in Sources */,
 				7153D3F52BB5AA8300226F34 /* CustomAlertView.swift in Sources */,
-				8AFB16252DEE97D70015671E /* (null) in Sources */,
+				8AFB16252DEE97D70015671E /* BuildFile in Sources */,
 				1F5C88602C1CDF2D00684361 /* Common.swift in Sources */,
 				4CB65E6329DA91C000684BD1 /* FileDataAdapter.swift in Sources */,
 				BE9D1DDB2A3F745400072835 /* ScreenLeft.swift in Sources */,
@@ -949,7 +943,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.5.21;
+				MARKETING_VERSION = 1.5.22;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bme.StreetCare;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -982,7 +976,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.5.21;
+				MARKETING_VERSION = 1.5.22;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bme.StreetCare;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
