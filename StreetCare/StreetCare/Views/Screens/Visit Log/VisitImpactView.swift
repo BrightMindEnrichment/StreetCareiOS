@@ -313,7 +313,7 @@ struct VisitImpactView: View {
                         .foregroundColor(.black)
                         .padding(.horizontal)
                     Button(action: {
-                        if let url = URL(string: "https://streetcarenow.org/profile/interactionFormLog") {
+                        if let url = URL(string: "https://streetcarenow.org/profile/interactionLogForm") {
                             UIApplication.shared.open(url)
                         }
                     }) {
