@@ -65,20 +65,20 @@ struct ProfilView: View {
                         NavLinkButton(title: NSLocalizedString("editProfile", comment: ""), width: 160.0, height: 40.0,secondaryButton: true,noBorder: true, color: .blue)
                     }
                    // Spacer().frame(height: 10)
-
                     NavigationLink {
                         BadgesView()
                     } label: {
                         NavLinkButton(title:NSLocalizedString("badgesEarned", comment: ""), width: 160.0, height: 40.0,secondaryButton: true,noBorder: true, color: .blue)
                     }
                     Spacer()
-                    
+                    //Temp disable
+                    /*
                     NavigationLink {
                         LikedBadgesView()
                     } label: {
                         NavLinkButton(title: NSLocalizedString("Liked Posts", comment: ""), width: 160.0, height: 40.0,secondaryButton: true,noBorder: true, color: .blue)
                     }
-
+                    */
                     ImpactView(peopleHelped: peopleHelped, outreaches: outreaches, itemsDonated: itemsDonated)
                         .padding()
                     

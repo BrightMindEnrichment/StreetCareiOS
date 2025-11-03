@@ -36,260 +36,302 @@ struct VisitImpactView: View {
     @State private var didReceiveNewLogs = false
    
     @AppStorage("hideProvidedHelpAlert") private var hideProvidedHelpAlert: Bool = false
+    //Popup control state variable
+    @State private var showWebRedirectPopup = true
 
 
     var body: some View {
         ZStack{
-            NavigationStack {
-                VStack {
-                    Text(NSLocalizedString("interactionLog", comment: "").uppercased()).font(.system(size: 18, weight: .bold)).padding()
-                    ImpactView(peopleHelped: peopleHelped, outreaches: outreaches, itemsDonated: itemsDonated)
-                    //Spacer(minLength: -5)
-                    Button(action: {
-                        if user != nil {
-                            if hideProvidedHelpAlert {
-                                isNavigationActive = true
+            //Conditionally hide background when popup is active
+            if !showWebRedirectPopup {
+                NavigationStack {
+                    VStack {
+                        Text(NSLocalizedString("interactionLog", comment: "").uppercased()).font(.system(size: 18, weight: .bold)).padding()
+                        ImpactView(peopleHelped: peopleHelped, outreaches: outreaches, itemsDonated: itemsDonated)
+                        //Spacer(minLength: -5)
+                        Button(action: {
+                            if user != nil {
+                                if hideProvidedHelpAlert {
+                                    isNavigationActive = true
+                                } else {
+                                    showCustomAlert = true
+                                }
                             } else {
-                                showCustomAlert = true
+                                showLoginMessage = true
                             }
+                        }) {
+                            ZStack {
+                                NavLinkButton(title: NSLocalizedString("addNew", comment: "") + "+", width: 197.0, height: 40.0)
+                                    .clipShape(Capsule())
+                            }
+                        }
+                        .alert(NSLocalizedString("loginRequiredTitle", comment: ""), isPresented: $showLoginMessage) {
+                            Button("OK", role: .cancel) {
+                                selection = 3
+                            }
+                            Button("Cancel", role: .destructive) { }
+                        } message: {
+                            Text(NSLocalizedString("loginRequiredMessage", comment: ""))
+                        }
+                        
+                        .navigationDestination(isPresented: $isNavigationActive) {
+                            VisitLogEntry()
+                        }
+                        
+                        //Spacer(minLength: 15.0)
+                        Divider().frame(maxWidth: UIScreen.main.bounds.width - 150 ,minHeight: 0.5)
+                            .background(Color.black)
+                            .padding(.top, 8)
+                        //Spacer(minLength: 10.0)
+                        
+                        Text(NSLocalizedString("history", comment: "").uppercased())
+                            .font(.custom("Poppins-Regular", size: 20))
+                        //.font(.system(size: 16))
+                            .fontWeight(.bold)
+                            .padding(.top, 8)
+                        
+                        if history.isEmpty {
+                            Text(NSLocalizedString("noLoggedHistory", comment: ""))
+                                .font(.custom("Poppins-Light", size: 14))
+                                .foregroundColor(.secondary)
+                                .multilineTextAlignment(.center)
+                                .padding(.top, 8)
                         } else {
-                            showLoginMessage = true
+                            List(Array(history.enumerated()), id: \.element.id) { index, item in
+                                HStack(alignment: .top, spacing: 3) {
+                                    ZStack {
+                                        // Top vertical line (connects to the top of the circle)
+                                        if index != 0 {
+                                            Rectangle()
+                                                .fill(Color.black) // Use lighter gray for better visibility
+                                                .frame(width: 1, height: 70) // Adjusted height
+                                                .offset(x: -5, y: -20) // Adjusted y-offset for correct alignment
+                                        }
+                                        
+                                        // Bottom vertical line (connects from the bottom of the circle)
+                                        if index != history.count - 1 {
+                                            Rectangle()
+                                                .fill(Color.black)
+                                                .frame(width: 1, height: 70) // Adjusted height
+                                                .offset(x: -5, y: 50) // Adjusted y-offset
+                                        }
+                                        
+                                        // Circle indicator
+                                        Circle()
+                                            .fill(Color(red: 1.0, green: 0.933, blue: 0.0))
+                                            .frame(width: 13, height: 50)
+                                            .overlay(
+                                                Circle()
+                                                    .stroke(Color.black, lineWidth: 1)
+                                            )
+                                            .offset(x: -5, y: 15) // Centering the circle with respect to lines
+                                    }
+                                    .frame(width: 5) // Ensuring proper spacing
+                                    
+                                    GeometryReader { geo in
+                                        ZStack {
+                                            Circle()
+                                                .fill(Color.gray.opacity(0.1))
+                                                .frame(width: 55, height: 55)
+                                            
+                                            Image("VisitLogIcon")
+                                                .resizable()
+                                                .scaledToFit()
+                                                .clipShape(Circle())
+                                                .frame(width: 55, height: 55)
+                                        }
+                                        .position(x: 40, y: geo.size.height / 2 - 5) // center based on card height
+                                    }
+                                    .frame(width: 0) // enough to hold the icon
+                                    .zIndex(1)
+                                    
+                                    VStack(spacing: 1) {
+                                        HStack(alignment: .top, spacing: 5) {
+                                            Image("MapPin")
+                                                .font(.system(size: 14))
+                                                .foregroundColor(.black)
+                                                .padding(.top, 6)
+                                            // Extract street and state from `item.whereVisit`
+                                            let components = item.whereVisit.components(separatedBy: ", ").filter { !$0.isEmpty }
+                                            
+                                            let street = components.indices.contains(0) ? components[0] : ""
+                                            let city = components.indices.contains(1) ? components[1] : ""
+                                            let state = components.indices.contains(2) ? components[2] : ""  // no split
+                                            let stateAbbr = stateAbbreviations[state] ?? state  // supports both "OK" and "Oklahoma"
+                                            
+                                            VStack(alignment: .leading, spacing: 2) {
+                                                if components.count >= 3 {
+                                                    Text(street)
+                                                        .font(.system(size: 13.0))
+                                                        .lineLimit(2)
+                                                        .fixedSize(horizontal: false, vertical: true)
+                                                        .frame(maxWidth: UIScreen.main.bounds.width * 0.4, alignment: .leading)
+                                                    
+                                                    Text("\(city), \(stateAbbr)")
+                                                        .font(.system(size: 13.0))
+                                                }  else if components.count >= 1 {
+                                                    let city = components.indices.contains(0) ? components[0] : ""
+                                                    let fullState = components.indices.contains(1) ? components[1] : ""
+                                                    let stateAbbr = stateAbbreviations[fullState] ?? fullState
+                                                    Text("\(city), \(stateAbbr)")
+                                                        .font(.system(size: 13.0))
+                                                    
+                                                } else {
+                                                    Text("No location available")
+                                                        .font(.system(size: 13.0))
+                                                }
+                                            }
+                                            .padding(.top, 5)
+                                            Spacer()
+                                        }
+                                        .padding(.leading, 20)
+                                        HStack {
+                                            Image("Clock") // Clock icon
+                                                .font(.system(size: 14))
+                                                .foregroundColor(.black)
+                                                .padding(.trailing, -5)
+                                            Text("\(item.whenVisit.formatted(date: .abbreviated, time: .omitted)) | \(item.whenVisit.formatted(date: .omitted, time: .shortened))").font(.system(size: 13)).lineLimit(1).layoutPriority(1)
+                                            GeometryReader { geo in
+                                                ZStack {
+                                                    VStack(spacing: 3) {
+                                                        Button("Details") {
+                                                            print("Details tapped")
+                                                        }
+                                                        .font(.custom("Poppins-SemiBold", size: 13))
+                                                        .foregroundColor(Color(red: 1.0, green: 0.933, blue: 0.0))
+                                                        .padding(.horizontal, 16)
+                                                        .padding(.vertical, 4)
+                                                        .background(
+                                                            Capsule()
+                                                                .fill(Color(red: 0, green: 0.16, blue: 0.145))
+                                                        )
+                                                        .frame(width: 80)
+                                                        
+                                                        if adapter.publishedLogIDs.contains(item.id) {
+                                                            Text("PUBLISHED")
+                                                                .font(.caption2)
+                                                                .fontWeight(.bold)
+                                                                .foregroundColor(.white)
+                                                                .padding(.vertical, 2)
+                                                                .frame(width: 70)
+                                                                .background(RoundedRectangle(cornerRadius: 6).fill(Color("PublishedGreen")))
+                                                        } else if adapter.pendingLogIDs.contains(item.id) {
+                                                            Text("PENDING")
+                                                                .font(.caption2)
+                                                                .fontWeight(.bold)
+                                                                .foregroundColor(.white)
+                                                                .padding(.vertical, 2)
+                                                                .frame(width: 70)
+                                                                .background(RoundedRectangle(cornerRadius: 6).fill(Color("Pending")))
+                                                        } else if adapter.rejectedLogIDs.contains(item.id) {
+                                                            Text("REJECTED")
+                                                                .font(.caption2)
+                                                                .fontWeight(.bold)
+                                                                .foregroundColor(.white)
+                                                                .padding(.vertical, 2)
+                                                                .frame(width: 70)
+                                                                .background(RoundedRectangle(cornerRadius: 6).fill(Color("RejectedRed")))
+                                                        }
+                                                        
+                                                        NavigationLink(destination: VisitLogView(log: item)) {
+                                                            EmptyView()
+                                                        }
+                                                        .opacity(0)
+                                                    }
+                                                    .offset(y: 15)
+                                                }
+                                                .position(
+                                                    x: geo.size.width / 2 ,
+                                                    y: 0
+                                                )
+                                            }
+                                            .frame(height: 50) //room you want for the button
+                                            
+                                        }
+                                        .padding(.top, -8)
+                                        .padding(.leading, 20)
+                                    }
+                                    .padding(.top, 10) // keep top spacing
+                                    .padding(.bottom, 0) // reduce bottom spacing
+                                    .padding(.leading, 55)
+                                    .background(Color.white)
+                                    .clipShape(HalfCapsuleShape())
+                                    .shadow(color: Color.black.opacity(0.2), radius: 5, x: 0, y: 3)
+                                    
+                                    
+                                    
+                                }
+                                .padding(.horizontal, 5) // Add padding to space out cards
+                                .padding(.trailing, 0) //card right side padding
+                                .listRowSeparatorTint(.clear, edges: .all)
+                                .listSectionSeparatorTint(.clear, edges: .all)
+                            }
+                            .listStyle(PlainListStyle())
+                            .scrollContentBackground(.hidden)
+                            .background(Color.clear)
+                        }
+                        
+                        Spacer()
+                    }
+                    .loadingAnimation(isLoading: isLoading)
+                    .navigationBarTitleDisplayMode(.inline)
+                    .onAppear {
+                        print("Impact view onAppear")
+                        adapter.delegate = self
+                        Auth.auth().addStateDidChangeListener { _, currentUser in
+                            self.user = currentUser
+                        }
+                        if Auth.auth().currentUser != nil {
+                            adapter.refresh()
+                            adapter.refresh_new()
+                            //adapter.refreshWebProd()
+                            self.isLoading = true
+                        } else {
+                            adapter.resetLogs()
+                            history = [VisitLog]()
+                            peopleHelped = 0
+                            outreaches = 0
+                            itemsDonated = 0
+                        }
+                        //Show popup when view appears
+                        showWebRedirectPopup = true
+                    }
+                }
+            }
+            //Full-screen popup that hides everything
+            if showWebRedirectPopup {
+                Color.black.opacity(0.6)
+                    .ignoresSafeArea()
+                VStack(spacing: 20) {
+                    Text("Almost there!")
+                        .font(.title2)
+                        .fontWeight(.bold)
+                        .foregroundColor(.black)
+                    Text("We’re bringing this feature to mobile soon.\nPlease continue your submission on the website for now.")
+                        .font(.body)
+                        .multilineTextAlignment(.center)
+                        .foregroundColor(.black)
+                        .padding(.horizontal)
+                    Button(action: {
+                        if let url = URL(string: "https://streetcarenow.org/profile/interactionLogForm") {
+                            UIApplication.shared.open(url)
                         }
                     }) {
-                        ZStack {
-                            NavLinkButton(title: NSLocalizedString("addNew", comment: "") + "+", width: 197.0, height: 40.0)
-                                .clipShape(Capsule())
-                        }
+                        Text("Continue on Website")
+                            .fontWeight(.bold)
+                            .frame(maxWidth: .infinity)
+                            .padding()
+                            .background(Color("PrimaryColor"))
+                            .foregroundColor(.black)
+                            .cornerRadius(12)
                     }
-                    .alert(NSLocalizedString("loginRequiredTitle", comment: ""), isPresented: $showLoginMessage) {
-                        Button("OK", role: .cancel) {
-                            selection = 3
-                        }
-                        Button("Cancel", role: .destructive) { }
-                    } message: {
-                        Text(NSLocalizedString("loginRequiredMessage", comment: ""))
-                    }
-                    
-                    .navigationDestination(isPresented: $isNavigationActive) {
-                        VisitLogEntry()
-                    }
-                    
-                    //Spacer(minLength: 15.0)
-                    Divider().frame(maxWidth: UIScreen.main.bounds.width - 150 ,minHeight: 0.5)
-                        .background(Color.black)
-                        .padding(.top, 8)
-                    //Spacer(minLength: 10.0)
-                    
-                    Text(NSLocalizedString("history", comment: "").uppercased())
-                        .font(.custom("Poppins-Regular", size: 20))
-                    //.font(.system(size: 16))
-                        .fontWeight(.bold)
-                        .padding(.top, 8)
-                    
-                    if history.isEmpty {
-                        Text(NSLocalizedString("noLoggedHistory", comment: ""))
-                            .font(.custom("Poppins-Light", size: 14))
-                            .foregroundColor(.secondary)
-                            .multilineTextAlignment(.center)
-                            .padding(.top, 8)
-                    } else {
-                        List(Array(history.enumerated()), id: \.element.id) { index, item in
-                            HStack(alignment: .top, spacing: 3) {
-                                ZStack {
-                                    // Top vertical line (connects to the top of the circle)
-                                    if index != 0 {
-                                        Rectangle()
-                                            .fill(Color.black) // Use lighter gray for better visibility
-                                            .frame(width: 1, height: 70) // Adjusted height
-                                            .offset(x: -5, y: -20) // Adjusted y-offset for correct alignment
-                                    }
-                                    
-                                    // Bottom vertical line (connects from the bottom of the circle)
-                                    if index != history.count - 1 {
-                                        Rectangle()
-                                            .fill(Color.black)
-                                            .frame(width: 1, height: 70) // Adjusted height
-                                            .offset(x: -5, y: 50) // Adjusted y-offset
-                                    }
-                                    
-                                    // Circle indicator
-                                    Circle()
-                                        .fill(Color(red: 1.0, green: 0.933, blue: 0.0))
-                                        .frame(width: 13, height: 50)
-                                        .overlay(
-                                            Circle()
-                                                .stroke(Color.black, lineWidth: 1)
-                                        )
-                                        .offset(x: -5, y: 15) // Centering the circle with respect to lines
-                                }
-                                .frame(width: 5) // Ensuring proper spacing
-                                
-                                GeometryReader { geo in
-                                    ZStack {
-                                        Circle()
-                                            .fill(Color.gray.opacity(0.1))
-                                            .frame(width: 55, height: 55)
-                                        
-                                        Image("VisitLogIcon")
-                                            .resizable()
-                                            .scaledToFit()
-                                            .clipShape(Circle())
-                                            .frame(width: 55, height: 55)
-                                    }
-                                    .position(x: 40, y: geo.size.height / 2 - 5) // center based on card height
-                                }
-                                .frame(width: 0) // enough to hold the icon
-                                .zIndex(1)
-                                
-                                VStack(spacing: 1) {
-                                    HStack(alignment: .top, spacing: 5) {
-                                        Image("MapPin")
-                                            .font(.system(size: 14))
-                                            .foregroundColor(.black)
-                                            .padding(.top, 6)
-                                        // Extract street and state from `item.whereVisit`
-                                        let components = item.whereVisit.components(separatedBy: ", ").filter { !$0.isEmpty }
-                                        
-                                        let street = components.indices.contains(0) ? components[0] : ""
-                                        let city = components.indices.contains(1) ? components[1] : ""
-                                        let state = components.indices.contains(2) ? components[2] : ""  // no split
-                                        let stateAbbr = stateAbbreviations[state] ?? state  // supports both "OK" and "Oklahoma"
-
-                                        VStack(alignment: .leading, spacing: 2) {
-                                            if components.count >= 3 {
-                                                Text(street)
-                                                    .font(.system(size: 13.0))
-                                                    .lineLimit(2)
-                                                    .fixedSize(horizontal: false, vertical: true)
-                                                    .frame(maxWidth: UIScreen.main.bounds.width * 0.4, alignment: .leading)
-                                                
-                                                Text("\(city), \(stateAbbr)")
-                                                    .font(.system(size: 13.0))
-                                            }  else if components.count >= 1 {
-                                                let city = components.indices.contains(0) ? components[0] : ""
-                                                let fullState = components.indices.contains(1) ? components[1] : ""
-                                                let stateAbbr = stateAbbreviations[fullState] ?? fullState
-                                                Text("\(city), \(stateAbbr)")
-                                                    .font(.system(size: 13.0))
-                                                
-                                            } else {
-                                                Text("No location available")
-                                                    .font(.system(size: 13.0))
-                                            }
-                                        }
-                                        .padding(.top, 5)
-                                        Spacer()
-                                    }
-                                    .padding(.leading, 20)
-                                    HStack {
-                                        Image("Clock") // Clock icon
-                                            .font(.system(size: 14))
-                                            .foregroundColor(.black)
-                                            .padding(.trailing, -5)
-                                        Text("\(item.whenVisit.formatted(date: .abbreviated, time: .omitted)) | \(item.whenVisit.formatted(date: .omitted, time: .shortened))").font(.system(size: 13)).lineLimit(1).layoutPriority(1)
-                                        GeometryReader { geo in
-                                            ZStack {
-                                                VStack(spacing: 3) {
-                                                    Button("Details") {
-                                                        print("Details tapped")
-                                                    }
-                                                    .font(.custom("Poppins-SemiBold", size: 13))
-                                                    .foregroundColor(Color(red: 1.0, green: 0.933, blue: 0.0))
-                                                    .padding(.horizontal, 16)
-                                                    .padding(.vertical, 4)
-                                                    .background(
-                                                        Capsule()
-                                                            .fill(Color(red: 0, green: 0.16, blue: 0.145))
-                                                    )
-                                                    .frame(width: 80)
-
-                                                    if adapter.publishedLogIDs.contains(item.id) {
-                                                        Text("PUBLISHED")
-                                                            .font(.caption2)
-                                                            .fontWeight(.bold)
-                                                            .foregroundColor(.white)
-                                                            .padding(.vertical, 2)
-                                                            .frame(width: 70)
-                                                            .background(RoundedRectangle(cornerRadius: 6).fill(Color("PublishedGreen")))
-                                                    } else if adapter.pendingLogIDs.contains(item.id) {
-                                                        Text("PENDING")
-                                                            .font(.caption2)
-                                                            .fontWeight(.bold)
-                                                            .foregroundColor(.white)
-                                                            .padding(.vertical, 2)
-                                                            .frame(width: 70)
-                                                            .background(RoundedRectangle(cornerRadius: 6).fill(Color("Pending")))
-                                                    } else if adapter.rejectedLogIDs.contains(item.id) {
-                                                        Text("REJECTED")
-                                                            .font(.caption2)
-                                                            .fontWeight(.bold)
-                                                            .foregroundColor(.white)
-                                                            .padding(.vertical, 2)
-                                                            .frame(width: 70)
-                                                            .background(RoundedRectangle(cornerRadius: 6).fill(Color("RejectedRed")))
-                                                    }
-
-                                                    NavigationLink(destination: VisitLogView(log: item)) {
-                                                        EmptyView()
-                                                    }
-                                                    .opacity(0)
-                                                }
-                                                .offset(y: 15)
-                                            }
-                                            .position(
-                                                x: geo.size.width / 2 ,
-                                                y: 0
-                                            )
-                                        }
-                                        .frame(height: 50) //room you want for the button
-                                        
-                                    }
-                                    .padding(.top, -8)
-                                    .padding(.leading, 20)
-                                }
-                                .padding(.top, 10) // keep top spacing
-                                .padding(.bottom, 0) // reduce bottom spacing
-                                .padding(.leading, 55)
-                                .background(Color.white)
-                                .clipShape(HalfCapsuleShape())
-                                .shadow(color: Color.black.opacity(0.2), radius: 5, x: 0, y: 3)
-                                
-                                
-                                
-                            }
-                            .padding(.horizontal, 5) // Add padding to space out cards
-                            .padding(.trailing, 0) //card right side padding
-                            .listRowSeparatorTint(.clear, edges: .all)
-                            .listSectionSeparatorTint(.clear, edges: .all)
-                        }
-                        .listStyle(PlainListStyle())
-                        .scrollContentBackground(.hidden)
-                        .background(Color.clear)
-                    }
-                    
-                    Spacer()
+                    .padding(.horizontal, 20)
                 }
-                .loadingAnimation(isLoading: isLoading)
-                .navigationBarTitleDisplayMode(.inline)
-                .onAppear {
-                    print("Impact view onAppear")
-                    adapter.delegate = self
-                    Auth.auth().addStateDidChangeListener { _, currentUser in
-                        self.user = currentUser
-                    }
-                    if Auth.auth().currentUser != nil {
-                        adapter.refresh()
-                        adapter.refresh_new()
-                        //adapter.refreshWebProd()
-                        self.isLoading = true
-                    } else {
-                        adapter.resetLogs()
-                        history = [VisitLog]()
-                        peopleHelped = 0
-                        outreaches = 0
-                        itemsDonated = 0
-                    }
-                }
+                .padding()
+                .background(Color.white)
+                .cornerRadius(20)
+                .shadow(radius: 10)
+                .frame(maxWidth: 320)
             }
             if showCustomAlert {
                 Color.black.opacity(0.4)
@@ -345,7 +387,6 @@ struct VisitImpactView: View {
                 .frame(maxWidth: 300)
             }
         }
-
     }
     
     private func mergeLogs() {

@@ -148,6 +148,8 @@ struct EventCardView: View {
                         Spacer(minLength: 0)
 
                         // Right: like + share (assets) — likes count on the left
+                        //Temporarily disable like and share
+                        /*
                         HStack(spacing: 12) {
                             HStack(spacing: 6) {
                                 // Likes count first (left)
@@ -194,36 +196,47 @@ struct EventCardView: View {
                                                 // 3) Firestore transaction
                                                 let db = Firestore.firestore()
                                                 let eventRef = db.collection("outreachEventsDev").document(eventId)
-                                                let likedDocId = "\(user.uid)_\(eventId)"
-                                                let likedRef = db.collection("likedEvents").document(likedDocId)
+                                                let usersQuery = try await db.collection("users")
+                                                    .whereField("uid", isEqualTo: user.uid)
+                                                    .getDocuments()
+
+                                                guard let existingUserDoc = usersQuery.documents.first else {
+                                                    print("⚠️ No matching user doc found for \(user.uid)")
+                                                    return
+                                                }
+
+                                                let userRef = db.collection("users").document(existingUserDoc.documentID)
 
                                                 let resultAny = try? await db.runTransaction({ (txn, errorPointer) -> Any? in
                                                     do {
+                                                        // Read current event likes
                                                         let snap = try txn.getDocument(eventRef)
                                                         let current = (snap.data()?["interests"] as? Int) ?? 0
 
-                                                        if isLiked {
-                                                            // UNLIKE
-                                                            let next = max(0, current - 1)
-                                                            txn.updateData(["interests": next], forDocument: eventRef)
-                                                            txn.deleteDocument(likedRef)
-                                                            return next
-                                                        } else {
-                                                            // LIKE
-                                                            let next = current + 1
-                                                            txn.updateData(["interests": next], forDocument: eventRef)
-                                                            txn.setData([
-                                                                "uid": user.uid,
-                                                                "eventId": eventId,
-                                                                "createdAt": FieldValue.serverTimestamp()
-                                                            ], forDocument: likedRef, merge: true)
-                                                            return next
-                                                        }
+                                                        // 1) ensure user doc exists (important if it's not there yet)
+                                                        //    merge:true means we won't overwrite anything
+                                                        txn.setData(["uid": user.uid], forDocument: userRef, merge: true)
+
+                                                        // 2) compute next like count
+                                                        let next = isLiked ? max(0, current - 1) : (current + 1)
+
+                                                        // 3) update event like count
+                                                        txn.updateData(["interests": next], forDocument: eventRef)
+
+                                                        // 4) update user's likedOutreachEvents array
+                                                        let op: [String: Any] = isLiked
+                                                            ? ["likedOutreachEvents": FieldValue.arrayRemove([eventId])]
+                                                            : ["likedOutreachEvents": FieldValue.arrayUnion([eventId])]
+
+                                                        txn.updateData(op, forDocument: userRef)
+
+                                                        return next
                                                     } catch let err as NSError {
                                                         errorPointer?.pointee = err
                                                         return nil
                                                     }
                                                 })
+
 
                                                 // 4) Update UI/model or show error
                                                 if let newCount = resultAny as? Int {
@@ -276,6 +289,7 @@ struct EventCardView: View {
                                 }
                         }
                         .padding(.trailing, -6) // align with top-right flag/check
+                         */
 
                     }
                 }

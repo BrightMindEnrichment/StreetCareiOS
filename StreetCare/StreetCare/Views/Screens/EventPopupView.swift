@@ -333,6 +333,7 @@ struct EventPopupView: View {
                         }
                     }
                 }.frame(height: 20.0)
+
                 // TODO: need to persist data from previous screens
                 //            if let interest = event.event.participants?.count{
                 //                if let slots = event.event.totalSlots{
