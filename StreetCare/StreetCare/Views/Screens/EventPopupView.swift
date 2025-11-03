@@ -279,8 +279,6 @@ struct EventPopupView: View {
                     }
                 }
                 // Like and share — likes count on the left
-                //Temp Disable
-                /*
                 VStack {
                     HStack {
                         Spacer() // pushes the group to the right
@@ -335,7 +333,7 @@ struct EventPopupView: View {
                         }
                     }
                 }.frame(height: 20.0)
-                 */
+
                 // TODO: need to persist data from previous screens
                 //            if let interest = event.event.participants?.count{
                 //                if let slots = event.event.totalSlots{
