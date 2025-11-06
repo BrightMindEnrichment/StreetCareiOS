@@ -12,6 +12,7 @@
 		1F5C885E2C1CA29C00684361 /* CommunityEventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F5C885D2C1CA29C00684361 /* CommunityEventView.swift */; };
 		1F5C88602C1CDF2D00684361 /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F5C885F2C1CDF2D00684361 /* Common.swift */; };
 		1F96F05B2C236AD3009E3A49 /* HelpRequestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F96F05A2C236AD3009E3A49 /* HelpRequestView.swift */; };
+		27D3B9CF2EB9753B00B9884D /* InputTileFollowUpDate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27D3B9CE2EB9752600B9884D /* InputTileFollowUpDate.swift */; };
 		4C0E4F9829DA9450009D33C1 /* Log.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C0E4F9729DA9450009D33C1 /* Log.swift */; };
 		4C0E4F9A29DAC905009D33C1 /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C0E4F9929DAC905009D33C1 /* WebView.swift */; };
 		4C0E4F9C29DAC977009D33C1 /* YoutubeCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C0E4F9B29DAC977009D33C1 /* YoutubeCellView.swift */; };
@@ -136,6 +137,7 @@
 		1F5C885D2C1CA29C00684361 /* CommunityEventView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityEventView.swift; sourceTree = "<group>"; };
 		1F5C885F2C1CDF2D00684361 /* Common.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
 		1F96F05A2C236AD3009E3A49 /* HelpRequestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelpRequestView.swift; sourceTree = "<group>"; };
+		27D3B9CE2EB9752600B9884D /* InputTileFollowUpDate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputTileFollowUpDate.swift; sourceTree = "<group>"; };
 		2CBA18332B467FF476F7CBCC /* Pods-StreetCare.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StreetCare.debug.xcconfig"; path = "Target Support Files/Pods-StreetCare/Pods-StreetCare.debug.xcconfig"; sourceTree = "<group>"; };
 		4C0E4F9729DA9450009D33C1 /* Log.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Log.swift; sourceTree = "<group>"; };
 		4C0E4F9929DAC905009D33C1 /* WebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
@@ -308,6 +310,7 @@
 		4C82448C29EF9E0B003D1575 /* InputTiles */ = {
 			isa = PBXGroup;
 			children = (
+				27D3B9CE2EB9752600B9884D /* InputTileFollowUpDate.swift */,
 				6B1D42C82E2F26440016E5BE /* KeyboardHeightObserver.swift */,
 				C2E9F1242DBB410600541E47 /* InputTileNotes.swift */,
 				4CA8693229E3D05300BB6972 /* InputTile.swift */,
@@ -764,6 +767,7 @@
 				BE9D1DDB2A3F745400072835 /* ScreenLeft.swift in Sources */,
 				4CB65E6429DA91C000684BD1 /* InformationCategory.swift in Sources */,
 				4CB65E6629DA91C000684BD1 /* Endpoints.swift in Sources */,
+				27D3B9CF2EB9753B00B9884D /* InputTileFollowUpDate.swift in Sources */,
 				4CB65E4A29DA6A1200684BD1 /* WhatToBringView.swift in Sources */,
 				BE9D1DD92A3A419A00072835 /* LoadingView.swift in Sources */,
 				4C0E4FF129DDF726009D33C1 /* DonateView.swift in Sources */,
