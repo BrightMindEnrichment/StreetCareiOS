@@ -219,86 +219,68 @@ struct VisitLogEntry: View {
                     }
                     
                 case 9:
-                    InputTileNumber(
-                        questionNumber: 2,
-                        totalQuestions: 7,
-                        tileWidth: 360,
-                        tileHeight: 500,
-                        question1: NSLocalizedString("questionNinePartOne", comment: ""),
-                        question2: NSLocalizedString("questionNinePartTwo", comment: ""),
-                        question3: "",
-                        question4: "",
-                        descriptionLabel: nil,
-                        disclaimerText: nil,
-                        placeholderText: NSLocalizedString("aq2des", comment: ""),
-                        number: $visitLog.numberOfHelpers,
-                        generalDescription: $visitLog.numberOfHelpersComment,
-                        generalDescription2: .constant(""),
-                        nextAction: {
-                            questionNumber += 1
-                        },
-                        previousAction: {
-                            questionNumber -= 1
-                        },
-                        skipAction: {
-                            questionNumber += 1
-                        }
-                    )
-                    .padding(.bottom, keyboard.currentHeight == 0 ? 0 : 24)
-                    .animation(.easeOut(duration: 0.16), value: keyboard.currentHeight)
-                  
-                
-                    
-                case 10:
-                    InputTileNumber(
-                        questionNumber: 3,
-                        totalQuestions: 7,
-                        tileWidth: 360,
-                        tileHeight: 580,
-                        question1: NSLocalizedString("questionTenPartOne", comment: ""),
-                        question2: NSLocalizedString("questionTenPartTwo", comment: ""),
-                        question3: "",
-                        question4: "",
-                        descriptionLabel: "Description",
-                        descriptionLabel2: "Location Description",
-                        disclaimerText: "",
-                        placeholderText: NSLocalizedString("peopledescription", comment: ""),
-                        placeholderText2: NSLocalizedString("questionTenPlaceholder", comment: ""),
-                        number: $visitLog.peopleNeedFurtherHelp,
-                        generalDescription: $visitLog.peopleNeedFurtherHelpComment,
-                        generalDescription2: $visitLog.peopleNeedFurtherHelpLocation,
-                        nextAction: {
-                            questionNumber += 1
-                        },
-                        previousAction: {
-                            questionNumber -= 1
-                        },
-                        skipAction: {
-                            questionNumber += 1
-                        },
-                        showTextEditor2: true
-                    )
-                    .padding(.bottom, keyboard.currentHeight == 0 ? 0 : 50)
-                    .animation(.easeOut(duration: 0.16), value: keyboard.currentHeight)
-                
-                 case 11:
                     InputTileList(
-                        questionNumber: 4,
-                        totalQuestions: 7,
+                        questionNumber: 2,
+                        totalQuestions: 4,
                         optionCount: 5,
                         size: CGSize(width: 360, height: 450),
-                        question1: NSLocalizedString("questionElevenPartOne", comment: ""),
-                        question2: NSLocalizedString("questionElevenPartTwo", comment: ""),
+                        question1: NSLocalizedString("questionNinePartOne", comment: ""),
+                        question2: NSLocalizedString("questionNinePartTwo", comment: ""),
                         visitLog: visitLog,
                         nextAction: { questionNumber += 1 },
                         previousAction: { questionNumber -= 1 },
                         skipAction: { questionNumber += 1 },
                         buttonMode: .navigation,
                         showProgressBar: true,
-                        supportMode: .needed
-                    )   .padding(.bottom, keyboard.currentHeight == 0 ? 0 : 50)
-                        .animation(.easeOut(duration: 0.16), value: keyboard.currentHeight)
+                        supportMode: .provided
+                    )
+                    .padding(.bottom, keyboard.currentHeight == 0 ? 0 : keyboard.currentHeight - 250)
+                    .animation(.easeOut(duration: 0.16), value: keyboard.currentHeight)
+                  
+                
                     
+                case 10:
+                    InputTileList(
+                        questionNumber: 3,
+                        totalQuestions: 4,
+                        optionCount: 5,
+                        size: CGSize(width: 360, height: 450),
+                        question1: NSLocalizedString("questionTenPartOne", comment: ""),
+                        question2: NSLocalizedString("questionTenPartTwo", comment: ""),
+                        visitLog: visitLog,
+                        nextAction: { questionNumber += 1 },
+                        previousAction: { questionNumber -= 1 },
+                        skipAction: { questionNumber += 1 },
+                        buttonMode: .navigation,
+                        showProgressBar: true,
+                        supportMode: .provided
+                    )
+                    .padding(.bottom, keyboard.currentHeight == 0 ? 0 : keyboard.currentHeight - 250)
+                    .animation(.easeOut(duration: 0.16), value: keyboard.currentHeight)
+                
+                 case 11:
+                    InputTileFollowUpDate(
+                            questionNumber: 4,
+                            totalQuestions: 4,
+                            question1: NSLocalizedString("questionElevenPartOne", comment: ""),
+                            question2: NSLocalizedString("questionElevenPartTwo", comment: ""),
+                            showSkip: false,
+                            initialDateValue: rawDate,
+                            datetimeValue: $rawDate,
+                            convertedDate: $visitLog.whenVisit,        // needs to be changes
+                            additionalDetails: $visitLog.peopleHelpedDescription, // needs to be changes
+                            nextAction: {
+                                questionNumber += 1
+                            },
+                            skipAction: {
+                                questionNumber += 1
+                            },
+                            previousAction: {
+                                questionNumber -= 1
+                            }
+                        )
+                        .padding(.bottom, keyboard.currentHeight == 0 ? 0 : 24)
+                        .animation(.easeOut(duration: 0.16), value: keyboard.currentHeight)
                case 14:
                     InputTileVolunteerAgain(questionNumber: 7, totalQuestions: 7, question1: NSLocalizedString("questionFourteenPartOne", comment: ""), question2: NSLocalizedString("questionFourteenPartTwo", comment: ""), volunteerAgain: $visitLog.volunteerAgain) {
                         isComplete = true
