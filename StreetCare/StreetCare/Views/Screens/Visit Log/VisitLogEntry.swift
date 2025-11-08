@@ -345,6 +345,20 @@ struct VisitLogEntry: View {
                         buttonMode: .navigation
                     )
                     
+                    
+                case 15:
+                    InputTileConsent(
+                        size: CGSize(width: 360, height: 450),
+                               submitAction: {
+                                   // Move to next question after consent is given
+                                   questionNumber += 1
+                                  //navigateNext = true
+                               }
+                           )
+                           .padding(.bottom, keyboard.currentHeight == 0 ? 0 : 50)
+                           .animation(.easeOut(duration: 0.16), value: keyboard.currentHeight)
+
+                   
                 case 100:
                     InputTileComplete(log: visitLog) {
                         visitLog.followUpWhenVisit = placeholderDate
