@@ -3,6 +3,7 @@
 //  StreetCare
 //
 //  Created by Michael on 4/26/23.
+//  Updated to fix placeholderDate and provide canonical model.
 //
 
 import Foundation
@@ -15,7 +16,12 @@ class VisitLog: ObservableObject, Identifiable {
     @Published var itemQtyWeb: String = "0"               // from visitLogWebProd
     @Published var source: String = "" // "webProd" or "new"
     @Published var id: String
+
+    // Date/Time
     @Published var whenVisit = Date()
+    @Published var whenVisitEnd: Date = Date(timeIntervalSince1970: 0)
+    @Published var followUpWhenVisit: Date = Date(timeIntervalSince1970: 0)
+
     @Published var user = UserDetails()
     @Published var username: String = "Firstname Lastname"
     @Published var userType: String = "Account Holder"
@@ -56,7 +62,7 @@ class VisitLog: ObservableObject, Identifiable {
     @Published var furtherOther = false
     @Published var furtherOtherNotes = ""
     @Published var whatGivenFurther: [String] = []
-    @Published var followUpWhenVisit: Date = placeholderDate
+
     @Published var futureNotes = ""
     @Published var volunteerAgain = ""
     @Published var lastEdited = Date()
@@ -74,6 +80,7 @@ class VisitLog: ObservableObject, Identifiable {
     @Published var zipcode = ""
     @Published var status = "pending"
     var isFromOldCollection: Bool = true
+
     init(id: String) {
         self.id = id
     }
@@ -118,6 +125,7 @@ class VisitLog: ObservableObject, Identifiable {
         task.resume()
     }
 }
+
 class PublicVisitLogData: ObservableObject, Identifiable {
     @Published var monthYear : String = ""
     @Published var date : (String?, String?, String?) = ("","","")
