@@ -5,7 +5,6 @@
 //  Created by Sahana Hemraj on 11/10/25.
 //
 
-
 import SwiftUI
 
 // Struct to hold the input fields for Question 2
@@ -23,14 +22,14 @@ struct InputTileDetails: View {
     
     var questionNumber: Int
     var totalQuestions: Int
-    var cardTitle: String // e.g., "When was your Interaction?" or "Personal details"
+    var cardTitle: String
     var showSkip: Bool
     var showPrevious: Bool
     
     // Bindings for Question 1: Date/Time
-    @Binding var rawDate: Date // Start Date/Time
-    @Binding var rawEndDate: Date? // End Date/Time (Optional)
-    @Binding var timeZoneIdentifier: String // Timezone selection
+    @Binding var rawDate: Date
+    @Binding var rawEndDate: Date?
+    @Binding var timeZoneIdentifier: String
 
     // Bindings for Question 2: Personal Details
     @Binding var personalDetails: PersonalDetails
@@ -60,27 +59,34 @@ struct InputTileDetails: View {
     
     var body: some View {
         VStack(spacing: 0) {
-            // Header: "Log Your Interaction"
-            Text("Log Your Interaction")
-                .font(.title)
-                .fontWeight(.bold)
-                .padding(.top, 20)
             
-            // Progress Bar (It will use the SegmentedProgressBar defined in VisitLogEntry.swift)
+            // 1. PROGRESS BAR: Moved to the very top (outside the card)
             SegmentedProgressBar(totalSegments: totalQuestions, filledSegments: questionNumber, tileWidth: 360)
-                .padding(.vertical, 10)
+                .padding(.top, 20)
+                .padding(.bottom, 10)
             
-            // Question Card
+            
+            // 2. Question Card
             VStack(alignment: .leading, spacing: 20) {
-                // Question/Step Number
+                
+                // ➡️ RE-ADD Question/Step Number
                 Text("Question \(questionNumber)/\(totalQuestions)")
                     .font(.subheadline)
                     .foregroundColor(.gray)
+                    .foregroundColor(.gray)
                 
-                // Card Title
-                Text(cardTitle)
+                // Horizontal Separator (Line) as seen in Figma
+                Divider()
+                    .padding(.top, -10) // Pull it closer to the question number
+
+                // Card Title (When was your Interaction? - keep two-line formatting)
+                Text(cardTitle.replacingOccurrences(of: " Interaction?", with: "\nInteraction?"))
                     .font(.title2)
                     .fontWeight(.bold)
+                    .frame(maxWidth: .infinity, alignment: .center)
+                    .multilineTextAlignment(.center)
+                    .padding(.vertical, 5)
+                    .padding(.bottom, 10)
                 
                 // Content Switch
                 Group {
@@ -113,23 +119,26 @@ struct InputTileDetails: View {
                         Button(action: skipAction) {
                             Text("Skip")
                                 .fontWeight(.semibold)
-                                .padding(10)
+                                .padding(.vertical, 16)
                                 .foregroundColor(Color("PrimaryColor"))
                         }
                         .padding(.leading, 10)
                     }
 
                     Button(action: nextAction) {
-                        Text("Next")
-                            .frame(maxWidth: .infinity)
-                            .padding()
-                            .background(Color("PrimaryColor"))
-                            .foregroundColor(.white)
-                            .cornerRadius(8)
+                            Text("Next")
+                                .padding(.horizontal, 40) // Make it compact but wide enough
+                                .padding(.vertical, 12)  // Adjust vertical height
+                                .background(Color("SecondaryColor"))
+                                // ➡️ CHANGE FONT COLOR HERE
+                                .foregroundColor(Color("PrimaryColor"))
+                                .cornerRadius(8)
+                        }
+                        .disabled(isNextButtonDisabled)
                     }
-                    .disabled(isNextButtonDisabled)
-                }
-                .padding(.top, 10)
+                    // ➡️ ADD THIS TO THE OUTER HSTACK TO CENTER COMPACT BUTTONS:
+                    .frame(maxWidth: .infinity, alignment: .center)
+                    .padding(.top, 10)
             }
             .padding(20)
             .background(Color.white)
@@ -145,46 +154,88 @@ struct InputTileDetails: View {
     var interactionTimeContent: some View {
         VStack(alignment: .leading, spacing: 15) {
             
-            // Start Time
-            VStack(alignment: .leading) {
-                Text("Start Time:")
-                    .font(.footnote)
-                    .foregroundColor(.gray)
+            // Start Time Label
+            Text("Start Time:")
+                .font(.footnote)
+                .foregroundColor(.gray)
+                .fontWeight(.bold)
+            
+            // Start Time PICKERS
+            HStack(spacing: 10) {
                 
-                HStack {
-                    // Start Time - Date Picker
-                    DatePicker(
-                        "",
-                        selection: $rawDate,
-                        displayedComponents: .date
-                    )
-                    .labelsHidden()
-                    .datePickerStyle(.compact) // CORRECTED
-                    .frame(maxWidth: .infinity)
+                // ⭐️ Start Time - Date Picker (Custom Style)
+                ZStack {
+                    DatePicker("", selection: $rawDate, displayedComponents: .date)
+                        .labelsHidden()
+                        .datePickerStyle(.compact)
+                        .opacity(0.01)
                     
-                    // Start Time - Time Picker
-                    DatePicker(
-                        "",
-                        selection: $rawDate,
-                        displayedComponents: .hourAndMinute
+                    HStack(spacing: 8) {
+                        Image(systemName: "calendar")
+                            .foregroundColor(.gray)
+                        // ➡️ FIXED DATE FORMATTING: MM/DD/YYYY
+                        Text(rawDate, format: .dateTime.month(.twoDigits).day(.twoDigits).year())
+                            .font(.subheadline)
+                            .fontWeight(.semibold)
+                            .foregroundColor(.black)
+                        Spacer()
+                    }
+                    .padding(.horizontal, 12)
+                    .padding(.vertical, 8)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .background(Color.white)
+                    .cornerRadius(8)
+                    .shadow(color: Color.black.opacity(0.1), radius: 3, x: 0, y: 1)
+                    // ➡️ ADD HIGHLIGHT (BORDER):
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 8)
+                            .stroke(Color.gray.opacity(0.4), lineWidth: 1)
                     )
-                    .labelsHidden()
-                    .datePickerStyle(.compact) // CORRECTED
-                    .frame(maxWidth: .infinity)
                 }
-                .padding(8)
-                .background(Color(.systemGray6))
-                .cornerRadius(5)
+                .frame(maxWidth: .infinity)
+                
+                // ⭐️ Start Time - Time Picker (Custom Style)
+                ZStack {
+                    DatePicker("", selection: $rawDate, displayedComponents: .hourAndMinute)
+                        .labelsHidden()
+                        .datePickerStyle(.compact)
+                        .opacity(0.01)
+
+                    HStack(spacing: 8) {
+                        Image(systemName: "clock")
+                            .foregroundColor(.gray)
+                        Text(rawDate, style: .time)
+                            .font(.subheadline)
+                            .fontWeight(.semibold)
+                            .foregroundColor(.black)
+                        Spacer()
+                    }
+                    .padding(.horizontal, 12)
+                    .padding(.vertical, 8)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .background(Color.white)
+                    .cornerRadius(8)
+                    .shadow(color: Color.black.opacity(0.1), radius: 3, x: 0, y: 1)
+                    // ➡️ ADD HIGHLIGHT (BORDER):
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 8)
+                            .stroke(Color.gray.opacity(0.4), lineWidth: 1)
+                    )
+                }
+                .frame(maxWidth: .infinity)
             }
             
-            // End Time
-            VStack(alignment: .leading) {
-                Text("End Time:")
-                    .font(.footnote)
-                    .foregroundColor(.gray)
+            // End Time Label
+            Text("End Time:")
+                .font(.footnote)
+                .foregroundColor(.black)
                 
-                HStack {
-                    // Date Picker (Binding to rawEndDate, defaulting to rawDate if nil)
+            
+            // End Time PICKERS
+            HStack(spacing: 10) {
+                
+                // ⭐️ End Time - Date Picker (Custom Style)
+                ZStack {
                     DatePicker(
                         "",
                         selection: Binding(
@@ -195,9 +246,29 @@ struct InputTileDetails: View {
                     )
                     .labelsHidden()
                     .datePickerStyle(.compact)
-                    .frame(maxWidth: .infinity)
-                    
-                    // Time Picker (Binding to rawEndDate, defaulting to rawDate if nil)
+                    .opacity(0.01)
+
+                    HStack(spacing: 8) {
+                        Image(systemName: "calendar")
+                            .foregroundColor(.gray)
+                        // ➡️ FIXED DATE FORMATTING: MM/DD/YYYY
+                        Text(rawEndDate ?? rawDate, format: .dateTime.month(.twoDigits).day(.twoDigits).year())
+                            .font(.subheadline)
+                            .fontWeight(.semibold)
+                            .foregroundColor(.black)
+                        Spacer()
+                    }
+                    .padding(.horizontal, 12)
+                    .padding(.vertical, 8)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .background(Color.white)
+                    .cornerRadius(8)
+                    .shadow(color: Color.black.opacity(0.1), radius: 3, x: 0, y: 1)
+                }
+                .frame(maxWidth: .infinity)
+
+                // ⭐️ End Time - Time Picker (Custom Style)
+                ZStack {
                     DatePicker(
                         "",
                         selection: Binding(
@@ -208,27 +279,57 @@ struct InputTileDetails: View {
                     )
                     .labelsHidden()
                     .datePickerStyle(.compact)
-                    .frame(maxWidth: .infinity)
+                    .opacity(0.01)
+
+                    HStack(spacing: 8) {
+                        Image(systemName: "clock")
+                            .foregroundColor(.gray)
+                        Text(rawEndDate ?? rawDate, style: .time)
+                            .font(.subheadline)
+                            .fontWeight(.semibold)
+                            .foregroundColor(.black)
+                        Spacer()
+                    }
+                    .padding(.horizontal, 12)
+                    .padding(.vertical, 8)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .background(Color.white)
+                    .cornerRadius(8)
+                    .shadow(color: Color.black.opacity(0.1), radius: 3, x: 0, y: 1)
                 }
-                .padding(8)
-                .background(Color(.systemGray6))
-                .cornerRadius(5)
+                .frame(maxWidth: .infinity)
             }
-            
-            // Time Zone
-            Picker("Time Zone", selection: $timeZoneIdentifier) {
-                ForEach(timezones, id: \.self) { identifier in
-                    Text(identifier.replacingOccurrences(of: "_", with: " ").components(separatedBy: "/").last ?? identifier)
-                        .tag(identifier)
+
+            // TIME ZONE PICKER (Styling is complete)
+            HStack {
+                // ➡️ CHANGE THIS LINE:
+                Image(systemName: "globe")
+                    // .foregroundColor(Color("PrimaryColor"))
+                    .foregroundColor(.gray)
+                    .padding(.leading, 8)
+                
+                Picker("", selection: $timeZoneIdentifier) {
+                    ForEach(timezones, id: \.self) { identifier in
+                        Text(identifier.replacingOccurrences(of: "_", with: " ").components(separatedBy: "/").last ?? identifier)
+                            .tag(identifier)
+                    }
                 }
+                .pickerStyle(.menu)
+                .labelsHidden()
+                .frame(maxWidth: .infinity, alignment: .leading)
             }
-            .pickerStyle(.menu)
-            .frame(maxWidth: .infinity)
-            .padding(8)
-            .background(Color(.systemGray6))
-            .cornerRadius(5)
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(.vertical, 8)
+            .background(Color.white)
+            .cornerRadius(8)
+            .shadow(color: Color.black.opacity(0.1), radius: 3, x: 0, y: 1)
+            .overlay(
+                RoundedRectangle(cornerRadius: 8)
+                    .stroke(Color.gray.opacity(0.4), lineWidth: 1)
+            )
         }
     }
+    
     
     // MARK: - Q2 Content: Personal Details
     var personalDetailsContent: some View {
@@ -243,9 +344,8 @@ struct InputTileDetails: View {
     // Helper to determine if the Next button should be disabled
     var isNextButtonDisabled: Bool {
         if currentQuestionType == .personalDetails {
-            return personalDetails.firstName.isEmpty // Assuming First Name is required
+            return personalDetails.firstName.isEmpty
         } else if currentQuestionType == .interactionTime {
-            // Check if end date is after start date if present
             if let endDate = rawEndDate, endDate < rawDate {
                 return true
             }
@@ -254,7 +354,7 @@ struct InputTileDetails: View {
     }
 }
 
-// Custom text field component for Question 2
+// Custom text field component for Question 2 (also needs white background/shadow)
 struct InputTextField: View {
     var placeholder: String
     @Binding var text: String
@@ -264,12 +364,19 @@ struct InputTextField: View {
         TextField(placeholder, text: $text)
             .keyboardType(keyboardType)
             .padding()
-            .background(Color(.systemGray6))
+            // ➡️ Change to white background and add shadow
+            .background(Color.white)
             .cornerRadius(5)
+            .shadow(color: Color.black.opacity(0.1), radius: 3, x: 0, y: 1)
+            .overlay(
+                // Add a very subtle light gray stroke to define the box
+                RoundedRectangle(cornerRadius: 5)
+                    .stroke(Color.gray.opacity(0.3), lineWidth: 0.5)
+            )
     }
 }
 
-
+// This struct must be defined once as a top-level struct (Outside InputTileDetails)
 struct SegmentedProgressBar: View {
     var totalSegments: Int
     var filledSegments: Int
@@ -279,7 +386,7 @@ struct SegmentedProgressBar: View {
     
     var body: some View {
         let totalSpacing = spacing * CGFloat(totalSegments - 1)
-        let segmentWidth = (tileWidth - totalSpacing) / CGFloat(totalSegments)
+        let segmentWidth = (tileWidth - totalSpacing - 40) / CGFloat(totalSegments)
         
         HStack(spacing: spacing) {
             ForEach(0..<totalSegments, id: \.self) { index in
@@ -289,9 +396,6 @@ struct SegmentedProgressBar: View {
             }
         }
         .frame(width: tileWidth)
+        .padding(.horizontal, 20)
     }
 }
-
-
-
-
