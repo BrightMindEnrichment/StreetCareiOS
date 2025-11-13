@@ -63,7 +63,7 @@ struct InputTileDetails: View {
             // 1. PROGRESS BAR: Moved to the very top (outside the card)
             SegmentedProgressBar(totalSegments: totalQuestions, filledSegments: questionNumber, tileWidth: 360)
                 .padding(.top, 20)
-                .padding(.bottom, 10)
+                .padding(.bottom, 20)
             
             
             // 2. Question Card
@@ -80,12 +80,12 @@ struct InputTileDetails: View {
 
                 // Card Title (When was your Interaction? - keep two-line formatting)
                 Text(cardTitle.replacingOccurrences(of: " Interaction?", with: "\nInteraction?"))
-                    .font(.title2)
+                    .font(.title)
                     .fontWeight(.bold)
                     .frame(maxWidth: .infinity, alignment: .center)
                     .multilineTextAlignment(.center)
                     .padding(.vertical, 5)
-                    .padding(.bottom, 10)
+                    .padding(.bottom, 0)
                 
                 // Content Switch
                 Group {
@@ -132,6 +132,7 @@ struct InputTileDetails: View {
                                 // ➡️ CHANGE FONT COLOR HERE
                                 .foregroundColor(Color("PrimaryColor"))
                                 .cornerRadius(30)
+                                .fontWeight(.bold)
                         }
                         .disabled(isNextButtonDisabled)
                     }
@@ -151,11 +152,12 @@ struct InputTileDetails: View {
     
     // MARK: - Q1 Content: Interaction Time
     var interactionTimeContent: some View {
-        VStack(alignment: .leading, spacing: 15) {
+        VStack(alignment: .leading, spacing: 10) {
+            
             
             // Start Time Label
             Text("Start Time:")
-                .font(.footnote)
+                .font(.subheadline)
                 .foregroundColor(.black)
             
             // Start Time PICKERS
@@ -174,7 +176,7 @@ struct InputTileDetails: View {
                         // ➡️ FIXED DATE FORMATTING: MM/DD/YYYY
                         Text(rawDate, format: .dateTime.month(.twoDigits).day(.twoDigits).year())
                             .font(.subheadline)
-                            .fontWeight(.semibold)
+                            //.fontWeight(.semibold)
                             .foregroundColor(.black)
                         Spacer()
                     }
@@ -204,7 +206,7 @@ struct InputTileDetails: View {
                             .foregroundColor(.black)
                         Text(rawDate, style: .time)
                             .font(.subheadline)
-                            .fontWeight(.semibold)
+                            //.fontWeight(.semibold)
                             .foregroundColor(.black)
                         Spacer()
                     }
@@ -225,7 +227,7 @@ struct InputTileDetails: View {
             
             // End Time Label
             Text("End Time:")
-                .font(.footnote)
+                .font(.subheadline)
                 .foregroundColor(.black)
             
                 
@@ -253,7 +255,7 @@ struct InputTileDetails: View {
                         // ➡️ FIXED DATE FORMATTING: MM/DD/YYYY
                         Text(rawEndDate ?? rawDate, format: .dateTime.month(.twoDigits).day(.twoDigits).year())
                             .font(.subheadline)
-                            .fontWeight(.semibold)
+                            //.fontWeight(.semibold)
                             .foregroundColor(.black)
                         Spacer()
                     }
@@ -289,7 +291,7 @@ struct InputTileDetails: View {
                             .foregroundColor(.black)
                         Text(rawEndDate ?? rawDate, style: .time)
                             .font(.subheadline)
-                            .fontWeight(.semibold)
+                            //.fontWeight(.semibold)
                             .foregroundColor(.black)
                         Spacer()
                     }
@@ -306,6 +308,7 @@ struct InputTileDetails: View {
                 }
                 .frame(maxWidth: .infinity)
             }
+            .padding(.bottom, 15)
 
             // TIME ZONE PICKER (Styling is complete)
             HStack {
@@ -321,13 +324,18 @@ struct InputTileDetails: View {
                             .tag(identifier)
                     }
                 }
+                .padding(.horizontal, -15)
                 .pickerStyle(.menu)
                 .labelsHidden()
                 .frame(maxWidth: .infinity, alignment: .leading)
+                
+//                Image(systemName: "chevron.down")
+//                        .foregroundColor(.gray)
+//                        .padding(.trailing, 8)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
-            .padding(.horizontal, 10)
-            .padding(.vertical, 10)
+            .padding(.horizontal, 15)
+            .padding(.vertical, 5)
             .background(Color.white)
             .cornerRadius(8)
             .shadow(color: Color.black.opacity(0.15), radius: 4, x: 0, y: 2)
@@ -335,6 +343,8 @@ struct InputTileDetails: View {
                 RoundedRectangle(cornerRadius: 8)
                     .stroke(Color.black.opacity(0.4), lineWidth: 1)
             )
+            .padding(.bottom, 20)
+            .padding(.horizontal, 10)
         }
     }
     
@@ -389,7 +399,7 @@ struct SegmentedProgressBar: View {
     var totalSegments: Int
     var filledSegments: Int
     var tileWidth: CGFloat
-    var segmentHeight: CGFloat = 8
+    var segmentHeight: CGFloat = 12
     var spacing: CGFloat = 8
     
     var body: some View {
