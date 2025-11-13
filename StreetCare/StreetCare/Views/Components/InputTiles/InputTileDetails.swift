@@ -72,8 +72,7 @@ struct InputTileDetails: View {
                 // ➡️ RE-ADD Question/Step Number
                 Text("Question \(questionNumber)/\(totalQuestions)")
                     .font(.subheadline)
-                    .foregroundColor(.gray)
-                    .foregroundColor(.gray)
+                    .foregroundColor(.black)
                 
                 // Horizontal Separator (Line) as seen in Figma
                 Divider()
@@ -127,12 +126,12 @@ struct InputTileDetails: View {
 
                     Button(action: nextAction) {
                             Text("Next")
-                                .padding(.horizontal, 40) // Make it compact but wide enough
+                                .padding(.horizontal, 30) // Make it compact but wide enough
                                 .padding(.vertical, 12)  // Adjust vertical height
                                 .background(Color("SecondaryColor"))
                                 // ➡️ CHANGE FONT COLOR HERE
                                 .foregroundColor(Color("PrimaryColor"))
-                                .cornerRadius(8)
+                                .cornerRadius(30)
                         }
                         .disabled(isNextButtonDisabled)
                     }
@@ -157,8 +156,7 @@ struct InputTileDetails: View {
             // Start Time Label
             Text("Start Time:")
                 .font(.footnote)
-                .foregroundColor(.gray)
-                .fontWeight(.bold)
+                .foregroundColor(.black)
             
             // Start Time PICKERS
             HStack(spacing: 10) {
@@ -172,7 +170,7 @@ struct InputTileDetails: View {
                     
                     HStack(spacing: 8) {
                         Image(systemName: "calendar")
-                            .foregroundColor(.gray)
+                            .foregroundColor(.black)
                         // ➡️ FIXED DATE FORMATTING: MM/DD/YYYY
                         Text(rawDate, format: .dateTime.month(.twoDigits).day(.twoDigits).year())
                             .font(.subheadline)
@@ -180,16 +178,16 @@ struct InputTileDetails: View {
                             .foregroundColor(.black)
                         Spacer()
                     }
-                    .padding(.horizontal, 12)
-                    .padding(.vertical, 8)
+                    .padding(.horizontal, 10)
+                    .padding(.vertical, 12)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .background(Color.white)
                     .cornerRadius(8)
-                    .shadow(color: Color.black.opacity(0.1), radius: 3, x: 0, y: 1)
+                    .shadow(color: Color.black.opacity(0.15), radius: 4, x: 0, y: 2)
                     // ➡️ ADD HIGHLIGHT (BORDER):
                     .overlay(
                         RoundedRectangle(cornerRadius: 8)
-                            .stroke(Color.gray.opacity(0.4), lineWidth: 1)
+                            .stroke(Color.black.opacity(0.4), lineWidth: 1)
                     )
                 }
                 .frame(maxWidth: .infinity)
@@ -203,23 +201,23 @@ struct InputTileDetails: View {
 
                     HStack(spacing: 8) {
                         Image(systemName: "clock")
-                            .foregroundColor(.gray)
+                            .foregroundColor(.black)
                         Text(rawDate, style: .time)
                             .font(.subheadline)
                             .fontWeight(.semibold)
                             .foregroundColor(.black)
                         Spacer()
                     }
-                    .padding(.horizontal, 12)
-                    .padding(.vertical, 8)
+                    .padding(.horizontal, 10)
+                    .padding(.vertical, 12)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .background(Color.white)
                     .cornerRadius(8)
-                    .shadow(color: Color.black.opacity(0.1), radius: 3, x: 0, y: 1)
+                    .shadow(color: Color.black.opacity(0.15), radius: 4, x: 0, y: 2)
                     // ➡️ ADD HIGHLIGHT (BORDER):
                     .overlay(
                         RoundedRectangle(cornerRadius: 8)
-                            .stroke(Color.gray.opacity(0.4), lineWidth: 1)
+                            .stroke(Color.black.opacity(0.4), lineWidth: 1)
                     )
                 }
                 .frame(maxWidth: .infinity)
@@ -229,6 +227,7 @@ struct InputTileDetails: View {
             Text("End Time:")
                 .font(.footnote)
                 .foregroundColor(.black)
+            
                 
             
             // End Time PICKERS
@@ -250,7 +249,7 @@ struct InputTileDetails: View {
 
                     HStack(spacing: 8) {
                         Image(systemName: "calendar")
-                            .foregroundColor(.gray)
+                            .foregroundColor(.black)
                         // ➡️ FIXED DATE FORMATTING: MM/DD/YYYY
                         Text(rawEndDate ?? rawDate, format: .dateTime.month(.twoDigits).day(.twoDigits).year())
                             .font(.subheadline)
@@ -258,12 +257,16 @@ struct InputTileDetails: View {
                             .foregroundColor(.black)
                         Spacer()
                     }
-                    .padding(.horizontal, 12)
-                    .padding(.vertical, 8)
+                    .padding(.horizontal, 10)
+                    .padding(.vertical, 12)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .background(Color.white)
                     .cornerRadius(8)
-                    .shadow(color: Color.black.opacity(0.1), radius: 3, x: 0, y: 1)
+                    .shadow(color: Color.black.opacity(0.15), radius: 4, x: 0, y: 2)
+                    .overlay(
+                                        RoundedRectangle(cornerRadius: 8)
+                                            .stroke(Color.black.opacity(0.4), lineWidth: 1)
+                                    )
                 }
                 .frame(maxWidth: .infinity)
 
@@ -283,19 +286,23 @@ struct InputTileDetails: View {
 
                     HStack(spacing: 8) {
                         Image(systemName: "clock")
-                            .foregroundColor(.gray)
+                            .foregroundColor(.black)
                         Text(rawEndDate ?? rawDate, style: .time)
                             .font(.subheadline)
                             .fontWeight(.semibold)
                             .foregroundColor(.black)
                         Spacer()
                     }
-                    .padding(.horizontal, 12)
-                    .padding(.vertical, 8)
+                    .padding(.horizontal, 10)
+                    .padding(.vertical, 12)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .background(Color.white)
                     .cornerRadius(8)
-                    .shadow(color: Color.black.opacity(0.1), radius: 3, x: 0, y: 1)
+                    .shadow(color: Color.black.opacity(0.15), radius: 4, x: 0, y: 2)
+                    .overlay(
+                                        RoundedRectangle(cornerRadius: 8)
+                                            .stroke(Color.black.opacity(0.4), lineWidth: 1)
+                                    )
                 }
                 .frame(maxWidth: .infinity)
             }
@@ -305,7 +312,7 @@ struct InputTileDetails: View {
                 // ➡️ CHANGE THIS LINE:
                 Image(systemName: "globe")
                     // .foregroundColor(Color("PrimaryColor"))
-                    .foregroundColor(.gray)
+                    .foregroundColor(.black)
                     .padding(.leading, 8)
                 
                 Picker("", selection: $timeZoneIdentifier) {
@@ -319,13 +326,14 @@ struct InputTileDetails: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
-            .padding(.vertical, 8)
+            .padding(.horizontal, 10)
+            .padding(.vertical, 10)
             .background(Color.white)
             .cornerRadius(8)
-            .shadow(color: Color.black.opacity(0.1), radius: 3, x: 0, y: 1)
+            .shadow(color: Color.black.opacity(0.15), radius: 4, x: 0, y: 2)
             .overlay(
                 RoundedRectangle(cornerRadius: 8)
-                    .stroke(Color.gray.opacity(0.4), lineWidth: 1)
+                    .stroke(Color.black.opacity(0.4), lineWidth: 1)
             )
         }
     }
@@ -366,12 +374,12 @@ struct InputTextField: View {
             .padding()
             // ➡️ Change to white background and add shadow
             .background(Color.white)
-            .cornerRadius(5)
-            .shadow(color: Color.black.opacity(0.1), radius: 3, x: 0, y: 1)
+            .cornerRadius(8)
+            .shadow(color: Color.black.opacity(0.15), radius: 4, x: 0, y: 2)
             .overlay(
                 // Add a very subtle light gray stroke to define the box
-                RoundedRectangle(cornerRadius: 5)
-                    .stroke(Color.gray.opacity(0.3), lineWidth: 0.5)
+                RoundedRectangle(cornerRadius: 8)
+                    .stroke(Color.black.opacity(0.4), lineWidth: 1)
             )
     }
 }
