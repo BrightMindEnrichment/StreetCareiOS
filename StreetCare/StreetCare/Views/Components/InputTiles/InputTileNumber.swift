@@ -236,9 +236,15 @@ struct InputTileNumber: View {
                         } else{
                             VStack(spacing: 4) {
                                 Text(question1).font(.title2).fontWeight(.bold)
-                                if !question2.isEmpty {Text(question2).font(.title2).fontWeight(.bold)}
-                                if !question3.isEmpty {Text(question3).font(.title2).fontWeight(.bold)}
-                                if !question4.isEmpty {Text(question4).font(.title2).fontWeight(.bold)}
+                                if !question2.isEmpty {
+                                    Text(question2).font(.title2).fontWeight(.bold)
+                                }
+                                if !question3.isEmpty {
+                                    Text(question3).font(.title2).fontWeight(.bold)
+                                }
+                                if !question4.isEmpty {
+                                    Text(question4).font(.title2).fontWeight(.bold)
+                                }
                             }
                             .padding(.vertical)
                             // Single number stepper for default behavior
