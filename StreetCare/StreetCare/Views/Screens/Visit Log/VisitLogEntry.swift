@@ -188,35 +188,42 @@ struct VisitLogEntry: View {
                     
                 case 7:
                     
-                    InputTileMoreQuestions(question1: NSLocalizedString("questionSevenPartOne", comment: "") , question2: NSLocalizedString("questionSevenPartTwo", comment: ""), question3:NSLocalizedString("questionSevenPartThree", comment: ""), questionNumber: 6, totalQuestions: 6) {
-                       // saveVisitLog()
-                        questionNumber = 100
-                    } skipAction: {
-                        questionNumber -= 1
-                    } yesAction: {
-                        questionNumber += 1
-                    } noAction: {
-                        saveVisitLog()
-                        isComplete = true
-                        questionNumber = 100
-                    }
+                    InputTileMoreQuestions(
+                        question1: NSLocalizedString("questionSevenPartOne", comment: ""),
+                        question2: NSLocalizedString("questionSevenPartTwo", comment: ""),
+                        question3: NSLocalizedString("questionSevenPartThree", comment: ""),
+                        questionNumber: 6,
+                        totalQuestions: 6,
+                        nextAction: {
+                            // Example: Save or move forward
+                            questionNumber = 100
+                        },
+                        skipAction: {
+                            questionNumber -= 1
+                        },
+                        yesAction: {
+                            questionNumber += 1
+                        },
+                        noAction: {
+                            saveVisitLog()
+                            isComplete = true
+                            questionNumber = 100
+                        },
+                        previousAction: {
+                            questionNumber -= 1
+                        }
+                    )
+
                 case 8:
-                    InputTileDuration(
-                        questionNumber: 1,
-                        totalQuestions: 7,
+                    InputTileIndividualInteraction(
+                        questionTitle: "Question 1/4",
+                        skipAction: { questionNumber = 100 },
+                        previousAction: { questionNumber = 7 },
+                        nextAction: { questionNumber += 1 },
                         tileWidth: 360,
-                        tileHeight: 361,
-                        questionLine1: NSLocalizedString("questionEightPartOne", comment: ""),
-                        questionLine2: NSLocalizedString("questionEightPartTwo", comment: ""),
-                        questionLine3: NSLocalizedString("questionEightPartThree", comment: ""),
-                        hours: $visitLog.durationHours, minutes: $visitLog.durationMinutes
-                    ) {
-                        questionNumber += 1
-                    } previousAction: {
-                        questionNumber -= 1
-                    } skipAction: {
-                        questionNumber += 1
-                    }
+                        tileHeight: 500
+                    )
+
                     
                 case 9:
                     InputTileNumber(
