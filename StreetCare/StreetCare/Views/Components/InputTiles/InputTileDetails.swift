@@ -58,13 +58,14 @@ struct InputTileDetails: View {
     // ➡️ START MODIFICATION 1: Add custom formatter
         // Custom formatter for time with timezone abbreviation (e.g., "6:30 PM CST")
         private var timeWithAbbreviationFormatter: DateFormatter {
-            let formatter = DateFormatter()
-            // "h:mm a" for time, "z" for timezone abbreviation
-            formatter.dateFormat = "h:mm a z"
-            // Crucially, set the TimeZone based on the selected identifier binding
-            formatter.timeZone = TimeZone(identifier: timeZoneIdentifier)
-            return formatter
-        }
+        let formatter = DateFormatter()
+        formatter.dateFormat = "h:mm a"   // <-- KEEP THIS, DO NOT ADD z
+        formatter.timeZone = TimeZone(identifier: timeZoneIdentifier)
+        return formatter
+    }
+    private var tzAbbreviation: String {
+        TimeZone(identifier: timeZoneIdentifier)?.abbreviation() ?? ""
+    }
     
     // MARK: - Body
     
@@ -240,7 +241,12 @@ struct InputTileDetails: View {
                         Image(systemName: "clock")
                             .foregroundColor(.black)
                         // ➡️ MODIFICATION 2: Change to use the custom formatter
-                                                Text(timeWithAbbreviationFormatter.string(from: rawDate))
+                                                // Use local time-only formatting (no timezone) so start/end times remain unchanged
+                        Text("\(timeWithAbbreviationFormatter.string(from: rawDate)) \(tzAbbreviation)")
+                            .fixedSize(horizontal: true, vertical: false) 
+                            .font(.subheadline)
+                            .foregroundColor(.black)
+
                                                     .font(.subheadline)
                                                     //.fontWeight(.semibold)
                                                     .foregroundColor(.black)
@@ -328,7 +334,10 @@ struct InputTileDetails: View {
                                 
                                 // ⭐️ FIX: Use the custom timeWithAbbreviationFormatter here ⭐️
                                 // This is the line that needs updating:
-                                Text(timeWithAbbreviationFormatter.string(from: rawEndDate ?? rawDate))
+                        Text("\(timeWithAbbreviationFormatter.string(from: (rawEndDate ?? rawDate))) \(tzAbbreviation)")
+                            .fixedSize(horizontal: true, vertical: false)
+                            .font(.subheadline)
+                            .foregroundColor(.black)
                                 
                                     // Add the layout fix again for safety (if you removed it previously)
                                     .fixedSize(horizontal: true, vertical: false)
@@ -352,41 +361,52 @@ struct InputTileDetails: View {
             }
             .padding(.bottom, 15)
 
-            // TIME ZONE PICKER (Styling is complete)
-            HStack {
-                // ➡️ CHANGE THIS LINE:
-                Image(systemName: "globe")
-                    // .foregroundColor(Color("PrimaryColor"))
-                    .foregroundColor(.black)
-                    .padding(.leading, 8)
-                
-                Picker("", selection: $timeZoneIdentifier) {
-                    ForEach(timezones, id: \.self) { identifier in
-                        Text(identifier.replacingOccurrences(of: "_", with: " ").components(separatedBy: "/").last ?? identifier)
-                            .tag(identifier)
+            
+            // MARK: - TIMEZONE PICKER (Figma style: city (ABBR) + black chevron)
+            Menu {
+                ForEach(timezones, id: \.self) { identifier in
+                    let city = identifier.split(separator: "/").last?.replacingOccurrences(of: "_", with: " ") ?? identifier
+                    let abbr = TimeZone(identifier: identifier)?.abbreviation() ?? ""
+                    Button(action: {
+                        timeZoneIdentifier = identifier
+                    }) {
+                        Text("\(city) (\(abbr))")
                     }
                 }
-                .padding(.horizontal, -15)
-                .pickerStyle(.menu)
-                .labelsHidden()
-                .frame(maxWidth: .infinity, alignment: .leading)
-                
-//                Image(systemName: "chevron.down")
-//                        .foregroundColor(.gray)
-//                        .padding(.trailing, 8)
+            } label: {
+                HStack(spacing: 12) {
+                    Image(systemName: "globe")
+                        .foregroundColor(.black)
+
+                    // selected city text
+                    let selCity = timeZoneIdentifier.split(separator: "/").last?.replacingOccurrences(of: "_", with: " ") ?? timeZoneIdentifier
+                    let selAbbr = TimeZone(identifier: timeZoneIdentifier)?.abbreviation() ?? ""
+                    Text("\(selCity) (\(selAbbr))")
+                        .foregroundColor(.black)
+                        .font(.system(size: 18))
+
+                    Spacer()
+
+                    Image(systemName: "arrowtriangle.down.fill")
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 12, height: 8)   // tweak sizes to match Figma
+                        .foregroundColor(.black)
+
+                }
+                .padding(.leading, 16)
+                .padding(.trailing, 18)   // important for chevron spacing
+                .padding(.vertical, 14)
+                .background(Color.white)
+                .cornerRadius(12)
+                .overlay(
+                    RoundedRectangle(cornerRadius: 12)
+                        .stroke(Color.gray.opacity(0.6), lineWidth: 1.2)
+                )
+                .shadow(color: Color.black.opacity(0.10), radius: 4, x: 0, y: 2)
             }
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .padding(.horizontal, 15)
-            .padding(.vertical, 5)
-            .background(Color.white)
-            .cornerRadius(8)
-            .shadow(color: Color.black.opacity(0.15), radius: 4, x: 0, y: 2)
-            .overlay(
-                RoundedRectangle(cornerRadius: 8)
-                    .stroke(Color.black.opacity(0.4), lineWidth: 1)
-            )
-            .padding(.bottom, 20)
             .padding(.horizontal, 10)
+            .padding(.bottom, 16)
         }
     }
     
