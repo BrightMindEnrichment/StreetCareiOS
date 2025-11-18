@@ -140,38 +140,20 @@ struct InputTileDetails: View {
                 
                 // Navigation/Action Buttons
                 HStack {
-                    if showPrevious {
-                        Button(action: previousAction) {
-                            Text("Previous")
-                                .font(.body)
-                                .padding(.horizontal, 20)
-                                .padding(.vertical, 10)
-                                .background(Color.white) // White background
-                                .foregroundColor(.black) // Dark text color
-                                .cornerRadius(25) // Highly rounded for capsule shape
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 25)
-                                        // Use a dark color for the border to match the input fields/Next button outline
-                                        .stroke(Color("SecondaryColor"), lineWidth: 1.5)
-                                )
-                        }
+                    Spacer()
+                    Button(action: nextAction) {
+                        Text("Next")
+                            .padding(.horizontal, 30)
+                            .padding(.vertical, 12)
+                            .background(Color("SecondaryColor"))
+                            .foregroundColor(Color("PrimaryColor"))
+                            .cornerRadius(30)
+                            .fontWeight(.bold)
                     }
                     Spacer()
-                    
-                    
+                }
+                .padding(.top, 8)
 
-                    Button(action: nextAction) {
-                            Text("Next")
-                                .padding(.horizontal, 30) // Make it compact but wide enough
-                                .padding(.vertical, 12)  // Adjust vertical height
-                                .background(Color("SecondaryColor"))
-                                // ➡️ CHANGE FONT COLOR HERE
-                                .foregroundColor(Color("PrimaryColor"))
-                                .cornerRadius(30)
-                                .fontWeight(.bold)
-                        }
-                        .disabled(isNextButtonDisabled)
-                    }
                     // ➡️ ADD THIS TO THE OUTER HSTACK TO CENTER COMPACT BUTTONS:
                     .frame(maxWidth: .infinity, alignment: .center)
                     .padding(.top, 8)
