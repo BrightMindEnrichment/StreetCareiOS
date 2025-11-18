@@ -467,12 +467,14 @@ struct SegmentedProgressBar: View {
         HStack(spacing: spacing) {
             ForEach(0..<totalSegments, id: \.self) { index in
                 Capsule()
+                    // Fill logic: segments before 'filledSegments' are primary color
                     .fill(index < filledSegments ? Color("PrimaryColor") : Color("SecondaryColor"))
                     .frame(width: segmentWidth, height: segmentHeight)
-                    // ⭐️ ADD THIS: Add a black stroke (border) only if the segment is filled
+                    
                     .overlay(
                         RoundedRectangle(cornerRadius: 100) // Use high corner radius for capsule
-                            .stroke(index < filledSegments ? Color.black : Color.clear, lineWidth: 1.5)
+                            // ⭐️ MODIFIED LOGIC: Apply stroke only when index matches the current, active segment (filledSegments - 1)
+                            .stroke(index == filledSegments - 1 ? Color.black : Color.clear, lineWidth: 1.5)
                     )
             }
         }
