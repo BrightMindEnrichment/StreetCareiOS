@@ -254,6 +254,7 @@ struct InputTileDetails: View {
                 //.frame(maxWidth: .infinity)
                 .frame(width: 145)
             }
+            .frame(width: 300)
             .padding(.horizontal, 12)
             
             // End Time Label
@@ -389,7 +390,7 @@ struct InputTileDetails: View {
                 }
                 .padding(.leading, 16)
                 .padding(.trailing, 18)   // important for chevron spacing
-                .padding(.vertical, 14)
+                .padding(.vertical, 10)
                 .background(Color.white)
                 .cornerRadius(12)
                 .overlay(
