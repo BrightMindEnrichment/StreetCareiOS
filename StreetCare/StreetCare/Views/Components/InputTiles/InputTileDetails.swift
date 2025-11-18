@@ -140,40 +140,56 @@ struct InputTileDetails: View {
                 
                 // Navigation/Action Buttons
                 // ---------- NAVIGATION / ACTION BUTTONS ----------
+                // ---------- NAVIGATION / ACTION BUTTONS ----------
                 HStack {
-                    // Previous button (left)
-                    if showPrevious {
-                        Button(action: previousAction) {
-                            Text("Previous")
-                                .font(.body)
-                                .padding(.horizontal, 20)
-                                .padding(.vertical, 10)
-                                .background(Color.white)
-                                .foregroundColor(.black)
-                                .cornerRadius(25)
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 25)
-                                        .stroke(Color("SecondaryColor"), lineWidth: 1.5)
-                                )
+                    if currentQuestionType == .interactionTime {
+                        // Q1: center the Next button only
+                        Spacer()
+                        Button(action: nextAction) {
+                            Text("Next")
+                                .padding(.horizontal, 30)
+                                .padding(.vertical, 12)
+                                .background(Color("SecondaryColor"))
+                                .foregroundColor(Color("PrimaryColor"))
+                                .cornerRadius(30)
+                                .fontWeight(.bold)
                         }
-                        .buttonStyle(.plain)
-                    }
+                        Spacer()
+                    } else {
+                        // Q2+ : previous on left, next on right (unchanged)
+                        if showPrevious {
+                            Button(action: previousAction) {
+                                Text("Previous")
+                                    .font(.body)
+                                    .padding(.horizontal, 20)
+                                    .padding(.vertical, 10)
+                                    .background(Color.white)
+                                    .foregroundColor(.black)
+                                    .cornerRadius(25)
+                                    .overlay(
+                                        RoundedRectangle(cornerRadius: 25)
+                                            .stroke(Color("SecondaryColor"), lineWidth: 1.5)
+                                    )
+                            }
+                            .buttonStyle(.plain)
+                        }
 
-                    Spacer()   // ← pushes Next to the right
+                        Spacer()
 
-                    // Next button (right)
-                    Button(action: nextAction) {
-                        Text("Next")
-                            .padding(.horizontal, 30)
-                            .padding(.vertical, 12)
-                            .background(Color("SecondaryColor"))
-                            .foregroundColor(Color("PrimaryColor"))
-                            .cornerRadius(30)
-                            .fontWeight(.bold)
+                        Button(action: nextAction) {
+                            Text("Next")
+                                .padding(.horizontal, 30)
+                                .padding(.vertical, 12)
+                                .background(Color("SecondaryColor"))
+                                .foregroundColor(Color("PrimaryColor"))
+                                .cornerRadius(30)
+                                .fontWeight(.bold)
+                        }
+                        .disabled(isNextButtonDisabled)
                     }
-                    .disabled(isNextButtonDisabled)
                 }
                 .padding(.top, 8)
+
 
 
                     // ➡️ ADD THIS TO THE OUTER HSTACK TO CENTER COMPACT BUTTONS:
