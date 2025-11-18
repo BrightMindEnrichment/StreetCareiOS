@@ -195,6 +195,7 @@ struct InputTileDetails: View {
             Text("Start Time:")
                 .font(.subheadline)
                 .foregroundColor(.black)
+                .padding(.leading, 20)
             
             // Start Time PICKERS
             HStack(spacing: 10) {
@@ -277,6 +278,7 @@ struct InputTileDetails: View {
             Text("End Time:")
                 .font(.subheadline)
                 .foregroundColor(.black)
+                .padding(.leading, 20)
             
                 
             
