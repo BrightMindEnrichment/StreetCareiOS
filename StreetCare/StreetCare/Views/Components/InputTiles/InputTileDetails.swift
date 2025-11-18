@@ -462,6 +462,7 @@ struct InputTextField: View {
         TextField(placeholder, text: $text)
             .keyboardType(keyboardType)
             .padding(.vertical, 8)
+            .padding(.leading, 12)
             // ➡️ Change to white background and add shadow
             .background(Color.white)
             .cornerRadius(8)
