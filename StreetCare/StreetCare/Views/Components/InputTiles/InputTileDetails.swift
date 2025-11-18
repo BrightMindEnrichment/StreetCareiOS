@@ -79,7 +79,7 @@ struct InputTileDetails: View {
             
             
             // 2. Question Card
-            VStack(alignment: .leading, spacing: 20) {
+            VStack(alignment: .leading, spacing: currentQuestionType == .personalDetails ? 2 : 20) {
                 
                 // InputTileDetails.swift - Around Line 100
 
@@ -435,7 +435,8 @@ struct InputTileDetails: View {
             InputTextField(placeholder: "Email", text: $personalDetails.email, keyboardType: .emailAddress)
             InputTextField(placeholder: "Phone Number", text: $personalDetails.phoneNumber, keyboardType: .phonePad)
         }
-        .padding(.vertical, 30)
+        .padding(.top, 10)
+        .padding(.bottom, 0)
         .padding(.horizontal, 10)
     }
     
