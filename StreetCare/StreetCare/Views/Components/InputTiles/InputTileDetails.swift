@@ -390,7 +390,7 @@ struct InputTileDetails: View {
                 }
                 .padding(.leading, 16)
                 .padding(.trailing, 18)   // important for chevron spacing
-                .padding(.vertical, 10)
+                .padding(.vertical, 12)
                 .background(Color.white)
                 .cornerRadius(12)
                 .overlay(
@@ -469,6 +469,11 @@ struct SegmentedProgressBar: View {
                 Capsule()
                     .fill(index < filledSegments ? Color("PrimaryColor") : Color("SecondaryColor"))
                     .frame(width: segmentWidth, height: segmentHeight)
+                    // ⭐️ ADD THIS: Add a black stroke (border) only if the segment is filled
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 100) // Use high corner radius for capsule
+                            .stroke(index < filledSegments ? Color.black : Color.clear, lineWidth: 1.5)
+                    )
             }
         }
         .frame(width: tileWidth)
