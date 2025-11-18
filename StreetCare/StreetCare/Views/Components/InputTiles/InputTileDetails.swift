@@ -139,8 +139,29 @@ struct InputTileDetails: View {
                 }
                 
                 // Navigation/Action Buttons
+                // ---------- NAVIGATION / ACTION BUTTONS ----------
                 HStack {
-                    Spacer()
+                    // Previous button (left)
+                    if showPrevious {
+                        Button(action: previousAction) {
+                            Text("Previous")
+                                .font(.body)
+                                .padding(.horizontal, 20)
+                                .padding(.vertical, 10)
+                                .background(Color.white)
+                                .foregroundColor(.black)
+                                .cornerRadius(25)
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 25)
+                                        .stroke(Color("SecondaryColor"), lineWidth: 1.5)
+                                )
+                        }
+                        .buttonStyle(.plain)
+                    }
+
+                    Spacer()   // ← pushes Next to the right
+
+                    // Next button (right)
                     Button(action: nextAction) {
                         Text("Next")
                             .padding(.horizontal, 30)
@@ -150,9 +171,10 @@ struct InputTileDetails: View {
                             .cornerRadius(30)
                             .fontWeight(.bold)
                     }
-                    Spacer()
+                    .disabled(isNextButtonDisabled)
                 }
                 .padding(.top, 8)
+
 
                     // ➡️ ADD THIS TO THE OUTER HSTACK TO CENTER COMPACT BUTTONS:
                     .frame(maxWidth: .infinity, alignment: .center)
@@ -451,6 +473,9 @@ struct InputTextField: View {
             )
     }
 }
+
+        
+        
 
 // This struct must be defined once as a top-level struct (Outside InputTileDetails)
 struct SegmentedProgressBar: View {
