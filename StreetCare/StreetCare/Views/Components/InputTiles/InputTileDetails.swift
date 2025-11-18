@@ -198,6 +198,7 @@ struct InputTileDetails: View {
             
             // Start Time PICKERS
             HStack(spacing: 10) {
+                //Spacer()
                 
                 // ⭐️ Start Time - Date Picker (Custom Style)
                 ZStack {
@@ -212,12 +213,12 @@ struct InputTileDetails: View {
                         // ➡️ FIXED DATE FORMATTING: MM/DD/YYYY
                         Text(rawDate, format: .dateTime.month(.twoDigits).day(.twoDigits).year())
                             .font(.subheadline)
-                            //.fontWeight(.semibold)
+                        //.fontWeight(.semibold)
                             .foregroundColor(.black)
-                        Spacer()
+                        //Spacer()
                     }
                     .padding(.horizontal, 10)
-                    .padding(.vertical, 12)
+                    .padding(.vertical,12)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .background(Color.white)
                     .cornerRadius(8)
@@ -228,7 +229,10 @@ struct InputTileDetails: View {
                             .stroke(Color.black.opacity(0.4), lineWidth: 1)
                     )
                 }
-                .frame(maxWidth: .infinity)
+                .frame(width: 145)
+            
+                //.frame(maxWidth: .infinity, alignment: .leading)
+
                 
                 // ⭐️ Start Time - Time Picker (Custom Style)
                 ZStack {
@@ -243,14 +247,14 @@ struct InputTileDetails: View {
                         // ➡️ MODIFICATION 2: Change to use the custom formatter
                                                 // Use local time-only formatting (no timezone) so start/end times remain unchanged
                         Text("\(timeWithAbbreviationFormatter.string(from: rawDate)) \(tzAbbreviation)")
-                            .fixedSize(horizontal: true, vertical: false) 
+                            .fixedSize(horizontal: true, vertical: false)
                             .font(.subheadline)
                             .foregroundColor(.black)
 
                                                     .font(.subheadline)
                                                     //.fontWeight(.semibold)
                                                     .foregroundColor(.black)
-                                                Spacer()
+                                                //Spacer()
                     }
                     .padding(.horizontal, 10)
                     .padding(.vertical, 12)
@@ -264,8 +268,10 @@ struct InputTileDetails: View {
                             .stroke(Color.black.opacity(0.4), lineWidth: 1)
                     )
                 }
-                .frame(maxWidth: .infinity)
+                //.frame(maxWidth: .infinity)
+                .frame(width: 145)
             }
+            .padding(.horizontal, 12)
             
             // End Time Label
             Text("End Time:")
@@ -299,7 +305,7 @@ struct InputTileDetails: View {
                             .font(.subheadline)
                             //.fontWeight(.semibold)
                             .foregroundColor(.black)
-                        Spacer()
+                        //Spacer()
                     }
                     .padding(.horizontal, 10)
                     .padding(.vertical, 12)
@@ -312,7 +318,8 @@ struct InputTileDetails: View {
                                             .stroke(Color.black.opacity(0.4), lineWidth: 1)
                                     )
                 }
-                .frame(maxWidth: .infinity)
+                //.frame(maxWidth: .infinity)
+                .frame(width: 145)
 
                 // ⭐️ End Time - Time Picker (Custom Style)
                 ZStack {
@@ -344,7 +351,7 @@ struct InputTileDetails: View {
                                     
                                     .font(.subheadline)
                                     .foregroundColor(.black)
-                                Spacer()
+                                //Spacer()
                             }
                     .padding(.horizontal, 10)
                     .padding(.vertical, 12)
@@ -357,8 +364,10 @@ struct InputTileDetails: View {
                                             .stroke(Color.black.opacity(0.4), lineWidth: 1)
                                     )
                 }
-                .frame(maxWidth: .infinity)
+                //.frame(maxWidth: .infinity)
+                .frame(width: 145)
             }
+            .padding(.horizontal, 12)
             .padding(.bottom, 15)
 
             
