@@ -69,23 +69,52 @@ struct InputTileDetails: View {
             // 2. Question Card
             VStack(alignment: .leading, spacing: 20) {
                 
+                // InputTileDetails.swift - Around Line 100
+
                 // ➡️ RE-ADD Question/Step Number
-                Text("Question \(questionNumber)/\(totalQuestions)")
-                    .font(.subheadline)
-                    .foregroundColor(.black)
-                
+                HStack { // <--- Wrap Question number and Skip button in an HStack
+                    Text("Question \(questionNumber)/\(totalQuestions)")
+                        .font(.subheadline)
+                        .foregroundColor(.black)
+                    
+                    Spacer() // Pushes the Skip button to the right
+
+                    // SKIP Button (Top Right Badge Style)
+                    if showSkip {
+                        Button(action: skipAction) {
+                            Text("Skip")
+                                .font(.subheadline)
+                                .padding(.horizontal, 12)
+                                .padding(.vertical, 6)
+                                .background(Color.white)
+                                .foregroundColor(.black)
+                                .cornerRadius(20)
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 20)
+                                        .stroke(Color.black.opacity(0.4), lineWidth: 1) // Subtle border
+                                )
+                        }
+                        .buttonStyle(.plain)
+                    }
+                }
+                .padding(.bottom, 0) // Creates space before the divider
+
                 // Horizontal Separator (Line) as seen in Figma
-                Divider()
-                    .padding(.top, -10) // Pull it closer to the question number
+                                if currentQuestionType != .personalDetails { // ⬅️ ADD THIS CONDITIONAL CHECK
+                                    Divider()
+                                        .padding(.top, -10) // Pulls the divider up
+                                }
 
                 // Card Title (When was your Interaction? - keep two-line formatting)
-                Text(cardTitle.replacingOccurrences(of: " Interaction?", with: "\nInteraction?"))
-                    .font(.title)
-                    .fontWeight(.bold)
-                    .frame(maxWidth: .infinity, alignment: .center)
-                    .multilineTextAlignment(.center)
-                    .padding(.vertical, 5)
-                    .padding(.bottom, 0)
+                if currentQuestionType == .interactionTime {
+                    Text(cardTitle.replacingOccurrences(of: " Interaction?", with: "\nInteraction?"))
+                        .font(.title)
+                        .fontWeight(.bold)
+                        .frame(maxWidth: .infinity, alignment: .center)
+                        .multilineTextAlignment(.center)
+                        .padding(.vertical, 5)
+                        .padding(.bottom, 0)
+                }
                 
                 // Content Switch
                 Group {
@@ -102,27 +131,22 @@ struct InputTileDetails: View {
                     if showPrevious {
                         Button(action: previousAction) {
                             Text("Previous")
-                                .frame(maxWidth: .infinity)
-                                .padding()
-                                .background(Color.white)
-                                .foregroundColor(Color("PrimaryColor"))
-                                .cornerRadius(8)
+                                .font(.body)
+                                .padding(.horizontal, 20)
+                                .padding(.vertical, 10)
+                                .background(Color.white) // White background
+                                .foregroundColor(.black) // Dark text color
+                                .cornerRadius(25) // Highly rounded for capsule shape
                                 .overlay(
-                                    RoundedRectangle(cornerRadius: 8)
-                                        .stroke(Color("PrimaryColor"), lineWidth: 1)
+                                    RoundedRectangle(cornerRadius: 25)
+                                        // Use a dark color for the border to match the input fields/Next button outline
+                                        .stroke(Color("SecondaryColor"), lineWidth: 1.5)
                                 )
                         }
                     }
+                    Spacer()
                     
-                    if showSkip {
-                        Button(action: skipAction) {
-                            Text("Skip")
-                                .fontWeight(.semibold)
-                                .padding(.vertical, 16)
-                                .foregroundColor(Color("PrimaryColor"))
-                        }
-                        .padding(.leading, 10)
-                    }
+                    
 
                     Button(action: nextAction) {
                             Text("Next")
@@ -138,13 +162,13 @@ struct InputTileDetails: View {
                     }
                     // ➡️ ADD THIS TO THE OUTER HSTACK TO CENTER COMPACT BUTTONS:
                     .frame(maxWidth: .infinity, alignment: .center)
-                    .padding(.top, 10)
+                    .padding(.top, 8)
             }
-            .padding(20)
+            .padding(12)
             .background(Color.white)
             .cornerRadius(15)
             .shadow(radius: 5)
-            .padding(.horizontal)
+            .padding(.horizontal, 30)
             
             Spacer()
         }
@@ -357,6 +381,8 @@ struct InputTileDetails: View {
             InputTextField(placeholder: "Email", text: $personalDetails.email, keyboardType: .emailAddress)
             InputTextField(placeholder: "Phone Number", text: $personalDetails.phoneNumber, keyboardType: .phonePad)
         }
+        .padding(.vertical, 30)
+        .padding(.horizontal, 10)
     }
     
     // Helper to determine if the Next button should be disabled
@@ -381,7 +407,7 @@ struct InputTextField: View {
     var body: some View {
         TextField(placeholder, text: $text)
             .keyboardType(keyboardType)
-            .padding()
+            .padding(.vertical, 8)
             // ➡️ Change to white background and add shadow
             .background(Color.white)
             .cornerRadius(8)
