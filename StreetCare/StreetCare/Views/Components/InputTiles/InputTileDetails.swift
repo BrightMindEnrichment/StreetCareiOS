@@ -59,7 +59,7 @@ struct InputTileDetails: View {
         // Custom formatter for time with timezone abbreviation (e.g., "6:30 PM CST")
         private var timeWithAbbreviationFormatter: DateFormatter {
         let formatter = DateFormatter()
-        formatter.dateFormat = "h:mm a"   // <-- KEEP THIS, DO NOT ADD z
+        formatter.dateFormat = "h:mma"   // <-- KEEP THIS, DO NOT ADD z
         formatter.timeZone = TimeZone(identifier: timeZoneIdentifier)
         return formatter
     }
@@ -124,7 +124,8 @@ struct InputTileDetails: View {
                         .fontWeight(.bold)
                         .frame(maxWidth: .infinity, alignment: .center)
                         .multilineTextAlignment(.center)
-                        .padding(.vertical, 5)
+                        .padding(.top, 0)     // reduce top space
+                        .padding(.bottom, 5)  // keep bottom spacing
                         .padding(.bottom, 0)
                 }
                 
@@ -208,7 +209,7 @@ struct InputTileDetails: View {
     
     // MARK: - Q1 Content: Interaction Time
     var interactionTimeContent: some View {
-        VStack(alignment: .leading, spacing: 10) {
+        VStack(alignment: .leading, spacing: 4) {
             
             
             // Start Time Label
