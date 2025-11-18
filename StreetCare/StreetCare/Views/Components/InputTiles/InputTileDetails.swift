@@ -55,6 +55,17 @@ struct InputTileDetails: View {
             .sorted()
     }()
     
+    // ➡️ START MODIFICATION 1: Add custom formatter
+        // Custom formatter for time with timezone abbreviation (e.g., "6:30 PM CST")
+        private var timeWithAbbreviationFormatter: DateFormatter {
+            let formatter = DateFormatter()
+            // "h:mm a" for time, "z" for timezone abbreviation
+            formatter.dateFormat = "h:mm a z"
+            // Crucially, set the TimeZone based on the selected identifier binding
+            formatter.timeZone = TimeZone(identifier: timeZoneIdentifier)
+            return formatter
+        }
+    
     // MARK: - Body
     
     var body: some View {
@@ -228,11 +239,12 @@ struct InputTileDetails: View {
                     HStack(spacing: 8) {
                         Image(systemName: "clock")
                             .foregroundColor(.black)
-                        Text(rawDate, style: .time)
-                            .font(.subheadline)
-                            //.fontWeight(.semibold)
-                            .foregroundColor(.black)
-                        Spacer()
+                        // ➡️ MODIFICATION 2: Change to use the custom formatter
+                                                Text(timeWithAbbreviationFormatter.string(from: rawDate))
+                                                    .font(.subheadline)
+                                                    //.fontWeight(.semibold)
+                                                    .foregroundColor(.black)
+                                                Spacer()
                     }
                     .padding(.horizontal, 10)
                     .padding(.vertical, 12)
@@ -311,14 +323,20 @@ struct InputTileDetails: View {
                     .opacity(0.01)
 
                     HStack(spacing: 8) {
-                        Image(systemName: "clock")
-                            .foregroundColor(.black)
-                        Text(rawEndDate ?? rawDate, style: .time)
-                            .font(.subheadline)
-                            //.fontWeight(.semibold)
-                            .foregroundColor(.black)
-                        Spacer()
-                    }
+                                Image(systemName: "clock")
+                                    .foregroundColor(.black)
+                                
+                                // ⭐️ FIX: Use the custom timeWithAbbreviationFormatter here ⭐️
+                                // This is the line that needs updating:
+                                Text(timeWithAbbreviationFormatter.string(from: rawEndDate ?? rawDate))
+                                
+                                    // Add the layout fix again for safety (if you removed it previously)
+                                    .fixedSize(horizontal: true, vertical: false)
+                                    
+                                    .font(.subheadline)
+                                    .foregroundColor(.black)
+                                Spacer()
+                            }
                     .padding(.horizontal, 10)
                     .padding(.vertical, 12)
                     .frame(maxWidth: .infinity, alignment: .leading)
