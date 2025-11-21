@@ -78,6 +78,7 @@
 		4CB7D8CC29F8D5B00002495E /* VisitLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB7D8CB29F8D5B00002495E /* VisitLog.swift */; };
 		4CB7D8CE29F8DCBC0002495E /* TimeDurationPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB7D8CD29F8DCBC0002495E /* TimeDurationPicker.swift */; };
 		4CB7D8D029F8DD040002495E /* InputTileDuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB7D8CF29F8DD040002495E /* InputTileDuration.swift */; };
+		5E7609AF2ECFFE94000070C2 /* Secrets.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5E7609AE2ECFFE94000070C2 /* Secrets.plist */; };
 		6B1D42C92E2F26670016E5BE /* KeyboardHeightObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B1D42C82E2F26440016E5BE /* KeyboardHeightObserver.swift */; };
 		6D308B612DD2ACA00098A3EC /* PublicVisitLogDataAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D308B602DD2AC880098A3EC /* PublicVisitLogDataAdapter.swift */; };
 		6D308B692DDE9E870098A3EC /* PublicLogViewCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D308B682DDE9E820098A3EC /* PublicLogViewCard.swift */; };
@@ -107,7 +108,6 @@
 		8A1569382E0B9E8D00984FED /* PublicPopupSheetModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1569372E0B9E8D00984FED /* PublicPopupSheetModifier.swift */; };
 		8AFB16252DEE97D70015671E /* (null) in Sources */ = {isa = PBXBuildFile; };
 		8D24D5FC2EB651B100E774D8 /* InputTileConsent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D24D5FB2EB651B100E774D8 /* InputTileConsent.swift */; };
-		8D24D6222EB65A3E00E774D8 /* Secrets.plist in Resources */ = {isa = PBXBuildFile; fileRef = 8D24D6212EB65A3E00E774D8 /* Secrets.plist */; };
 		A459D493C5D37756A585D3EA /* Pods_StreetCare.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B3FB734328ABC03284A67BF /* Pods_StreetCare.framework */; };
 		B5B5F2322E5D20300048F01E /* LikedEventsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B5F2312E5D202F0048F01E /* LikedEventsView.swift */; };
 		B5EF4E402E6E01E200E2528C /* LikedBadgesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5EF4E3F2E6E01CD00E2528C /* LikedBadgesView.swift */; };
@@ -203,6 +203,7 @@
 		4CB7D8CD29F8DCBC0002495E /* TimeDurationPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeDurationPicker.swift; sourceTree = "<group>"; };
 		4CB7D8CF29F8DD040002495E /* InputTileDuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputTileDuration.swift; sourceTree = "<group>"; };
 		5B3FB734328ABC03284A67BF /* Pods_StreetCare.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_StreetCare.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5E7609AE2ECFFE94000070C2 /* Secrets.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Secrets.plist; sourceTree = "<group>"; };
 		6B1D42C82E2F26440016E5BE /* KeyboardHeightObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardHeightObserver.swift; sourceTree = "<group>"; };
 		6D308B602DD2AC880098A3EC /* PublicVisitLogDataAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicVisitLogDataAdapter.swift; sourceTree = "<group>"; };
 		6D308B682DDE9E820098A3EC /* PublicLogViewCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicLogViewCard.swift; sourceTree = "<group>"; };
@@ -228,7 +229,6 @@
 		8A1569372E0B9E8D00984FED /* PublicPopupSheetModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicPopupSheetModifier.swift; sourceTree = "<group>"; };
 		8A36A1D72E2F197F00437188 /* KeyboardHeightObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardHeightObserver.swift; sourceTree = "<group>"; };
 		8D24D5FB2EB651B100E774D8 /* InputTileConsent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputTileConsent.swift; sourceTree = "<group>"; };
-		8D24D6212EB65A3E00E774D8 /* Secrets.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Secrets.plist; sourceTree = "<group>"; };
 		B5B5F2312E5D202F0048F01E /* LikedEventsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikedEventsView.swift; sourceTree = "<group>"; };
 		B5EF4E3F2E6E01CD00E2528C /* LikedBadgesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikedBadgesView.swift; sourceTree = "<group>"; };
 		BE9D1DCD2A37626C00072835 /* ImagePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerView.swift; sourceTree = "<group>"; };
@@ -331,7 +331,6 @@
 		4CB65D8329D016AE00684BD1 = {
 			isa = PBXGroup;
 			children = (
-				8D24D6212EB65A3E00E774D8 /* Secrets.plist */,
 				EDB93D152DB1D18300C7174F /* Fonts */,
 				BE9D1DCF2A376B3800072835 /* Frameworks */,
 				D864E90A530FD26B201E4F4F /* Pods */,
@@ -363,6 +362,7 @@
 				4CB65E4F29DA6FE900684BD1 /* LinkData.swift */,
 				1F5C885F2C1CDF2D00684361 /* Common.swift */,
 				74FE994B2CC9F23F00D0C5D0 /* EventEnums.swift */,
+				5E7609AE2ECFFE94000070C2 /* Secrets.plist */,
 			);
 			path = StreetCare;
 			sourceTree = "<group>";
@@ -607,7 +607,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7A03D72D2DE102290027D5E7 /* (null) in Resources */,
-				8D24D6222EB65A3E00E774D8 /* Secrets.plist in Resources */,
+				5E7609AF2ECFFE94000070C2 /* Secrets.plist in Resources */,
 				4C82441429EC99A8003D1575 /* Localizable.strings in Resources */,
 				4CB65D9729D016B000684BD1 /* Preview Assets.xcassets in Resources */,
 				4CB65D9429D016B000684BD1 /* Assets.xcassets in Resources */,
