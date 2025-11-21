@@ -190,7 +190,7 @@ struct VisitLogEntry: View {
                     
                     InputTileMoreQuestions(question1: NSLocalizedString("questionSevenPartOne", comment: "") , question2: NSLocalizedString("questionSevenPartTwo", comment: ""), question3:NSLocalizedString("questionSevenPartThree", comment: ""), questionNumber: 6, totalQuestions: 6) {
                        // saveVisitLog()
-                        questionNumber = 100
+                        questionNumber = 15
                     } skipAction: {
                         questionNumber -= 1
                     } yesAction: {
@@ -198,7 +198,7 @@ struct VisitLogEntry: View {
                     } noAction: {
                         saveVisitLog()
                         isComplete = true
-                        questionNumber = 100
+                        questionNumber = 15
                     }
                 case 8:
                     InputTileDuration(
@@ -302,14 +302,14 @@ struct VisitLogEntry: View {
                case 14:
                     InputTileVolunteerAgain(questionNumber: 7, totalQuestions: 7, question1: NSLocalizedString("questionFourteenPartOne", comment: ""), question2: NSLocalizedString("questionFourteenPartTwo", comment: ""), volunteerAgain: $visitLog.volunteerAgain) {
                         isComplete = true
-                        questionNumber = 100
+                        questionNumber = 15
                         saveVisitLog()
                     } previousAction: {
                         questionNumber -= 1
                     } skipAction: {
                         saveVisitLog()
                         isComplete = true
-                        questionNumber = 100
+                        questionNumber = 15
                     }
                 case 12:
                     InputTileDate(questionNumber: 5, totalQuestions: 7, question1: NSLocalizedString("questionTwelevePartOne", comment: ""),question2: NSLocalizedString("questionTwelevePartTwo", comment: ""), question3: NSLocalizedString("questionTwelevePartThree", comment: ""), showSkip: true, isFollowUpDate: true, initialDateValue: initialRawDate, datetimeValue: $rawDate, convertedDate: $visitLog.followUpWhenVisit) {
@@ -345,6 +345,20 @@ struct VisitLogEntry: View {
                         buttonMode: .navigation
                     )
                     
+                    
+                case 15:
+                    InputTileConsent(
+                        size: CGSize(width: 360, height: 450),
+                               submitAction: {
+                                   // Move to next question after consent is given
+                                   questionNumber = 100
+                                  //navigateNext = true
+                               }
+                           )
+                           .padding(.bottom, keyboard.currentHeight == 0 ? 0 : 50)
+                           .animation(.easeOut(duration: 0.16), value: keyboard.currentHeight)
+
+                   
                 case 100:
                     InputTileComplete(log: visitLog) {
                         visitLog.followUpWhenVisit = placeholderDate

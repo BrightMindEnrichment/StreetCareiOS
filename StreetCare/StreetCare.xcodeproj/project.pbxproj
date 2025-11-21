@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1AAFF0882E46541600700EB8 /* Secrets.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1AAFF0872E46541600700EB8 /* Secrets.plist */; };
 		1F4A6E7E2C2E136700F4D07F /* EventPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F4A6E7D2C2E136700F4D07F /* EventPopupView.swift */; };
 		1F5C885E2C1CA29C00684361 /* CommunityEventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F5C885D2C1CA29C00684361 /* CommunityEventView.swift */; };
 		1F5C88602C1CDF2D00684361 /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F5C885F2C1CDF2D00684361 /* Common.swift */; };
@@ -79,6 +78,7 @@
 		4CB7D8CC29F8D5B00002495E /* VisitLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB7D8CB29F8D5B00002495E /* VisitLog.swift */; };
 		4CB7D8CE29F8DCBC0002495E /* TimeDurationPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB7D8CD29F8DCBC0002495E /* TimeDurationPicker.swift */; };
 		4CB7D8D029F8DD040002495E /* InputTileDuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB7D8CF29F8DD040002495E /* InputTileDuration.swift */; };
+		5E7609AF2ECFFE94000070C2 /* Secrets.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5E7609AE2ECFFE94000070C2 /* Secrets.plist */; };
 		6B1D42C92E2F26670016E5BE /* KeyboardHeightObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B1D42C82E2F26440016E5BE /* KeyboardHeightObserver.swift */; };
 		6D308B612DD2ACA00098A3EC /* PublicVisitLogDataAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D308B602DD2AC880098A3EC /* PublicVisitLogDataAdapter.swift */; };
 		6D308B692DDE9E870098A3EC /* PublicLogViewCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D308B682DDE9E820098A3EC /* PublicLogViewCard.swift */; };
@@ -107,6 +107,7 @@
 		8A1569362E0B4A3C00984FED /* PublicInteractionPopupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1569352E0B4A3C00984FED /* PublicInteractionPopupView.swift */; };
 		8A1569382E0B9E8D00984FED /* PublicPopupSheetModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A1569372E0B9E8D00984FED /* PublicPopupSheetModifier.swift */; };
 		8AFB16252DEE97D70015671E /* (null) in Sources */ = {isa = PBXBuildFile; };
+		8D24D5FC2EB651B100E774D8 /* InputTileConsent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D24D5FB2EB651B100E774D8 /* InputTileConsent.swift */; };
 		A459D493C5D37756A585D3EA /* Pods_StreetCare.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B3FB734328ABC03284A67BF /* Pods_StreetCare.framework */; };
 		B5B5F2322E5D20300048F01E /* LikedEventsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B5F2312E5D202F0048F01E /* LikedEventsView.swift */; };
 		B5EF4E402E6E01E200E2528C /* LikedBadgesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5EF4E3F2E6E01CD00E2528C /* LikedBadgesView.swift */; };
@@ -131,7 +132,6 @@
 
 /* Begin PBXFileReference section */
 		1784B66B50CD8167A950C87D /* Pods-StreetCare.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StreetCare.release.xcconfig"; path = "Target Support Files/Pods-StreetCare/Pods-StreetCare.release.xcconfig"; sourceTree = "<group>"; };
-		1AAFF0872E46541600700EB8 /* Secrets.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Secrets.plist; sourceTree = "<group>"; };
 		1F4A6E7D2C2E136700F4D07F /* EventPopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventPopupView.swift; sourceTree = "<group>"; };
 		1F5C885D2C1CA29C00684361 /* CommunityEventView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommunityEventView.swift; sourceTree = "<group>"; };
 		1F5C885F2C1CDF2D00684361 /* Common.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
@@ -203,6 +203,7 @@
 		4CB7D8CD29F8DCBC0002495E /* TimeDurationPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeDurationPicker.swift; sourceTree = "<group>"; };
 		4CB7D8CF29F8DD040002495E /* InputTileDuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputTileDuration.swift; sourceTree = "<group>"; };
 		5B3FB734328ABC03284A67BF /* Pods_StreetCare.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_StreetCare.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5E7609AE2ECFFE94000070C2 /* Secrets.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Secrets.plist; sourceTree = "<group>"; };
 		6B1D42C82E2F26440016E5BE /* KeyboardHeightObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardHeightObserver.swift; sourceTree = "<group>"; };
 		6D308B602DD2AC880098A3EC /* PublicVisitLogDataAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicVisitLogDataAdapter.swift; sourceTree = "<group>"; };
 		6D308B682DDE9E820098A3EC /* PublicLogViewCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicLogViewCard.swift; sourceTree = "<group>"; };
@@ -227,6 +228,7 @@
 		8A1569352E0B4A3C00984FED /* PublicInteractionPopupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicInteractionPopupView.swift; sourceTree = "<group>"; };
 		8A1569372E0B9E8D00984FED /* PublicPopupSheetModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicPopupSheetModifier.swift; sourceTree = "<group>"; };
 		8A36A1D72E2F197F00437188 /* KeyboardHeightObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardHeightObserver.swift; sourceTree = "<group>"; };
+		8D24D5FB2EB651B100E774D8 /* InputTileConsent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputTileConsent.swift; sourceTree = "<group>"; };
 		B5B5F2312E5D202F0048F01E /* LikedEventsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikedEventsView.swift; sourceTree = "<group>"; };
 		B5EF4E3F2E6E01CD00E2528C /* LikedBadgesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikedBadgesView.swift; sourceTree = "<group>"; };
 		BE9D1DCD2A37626C00072835 /* ImagePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerView.swift; sourceTree = "<group>"; };
@@ -321,6 +323,7 @@
 				4CB7D8CF29F8DD040002495E /* InputTileDuration.swift */,
 				4C2F5A6F29FE6B0A00CFD288 /* InputTileVolunteerAgain.swift */,
 				8A36A1D72E2F197F00437188 /* KeyboardHeightObserver.swift */,
+				8D24D5FB2EB651B100E774D8 /* InputTileConsent.swift */,
 			);
 			path = InputTiles;
 			sourceTree = "<group>";
@@ -359,7 +362,7 @@
 				4CB65E4F29DA6FE900684BD1 /* LinkData.swift */,
 				1F5C885F2C1CDF2D00684361 /* Common.swift */,
 				74FE994B2CC9F23F00D0C5D0 /* EventEnums.swift */,
-				1AAFF0872E46541600700EB8 /* Secrets.plist */,
+				5E7609AE2ECFFE94000070C2 /* Secrets.plist */,
 			);
 			path = StreetCare;
 			sourceTree = "<group>";
@@ -604,7 +607,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7A03D72D2DE102290027D5E7 /* (null) in Resources */,
-				1AAFF0882E46541600700EB8 /* Secrets.plist in Resources */,
+				5E7609AF2ECFFE94000070C2 /* Secrets.plist in Resources */,
 				4C82441429EC99A8003D1575 /* Localizable.strings in Resources */,
 				4CB65D9729D016B000684BD1 /* Preview Assets.xcassets in Resources */,
 				4CB65D9429D016B000684BD1 /* Assets.xcassets in Resources */,
@@ -689,6 +692,7 @@
 				7A03D7432DE11E300027D5E7 /* (null) in Sources */,
 				74FDD8282D64917100E23293 /* GoogleMapView.swift in Sources */,
 				74FDD8292D64917100E23293 /* MapViewModel.swift in Sources */,
+				8D24D5FC2EB651B100E774D8 /* InputTileConsent.swift in Sources */,
 				4CB7D8CE29F8DCBC0002495E /* TimeDurationPicker.swift in Sources */,
 				4CB65D9F29D0DEAE00684BD1 /* VisitLogView.swift in Sources */,
 				71FA51052BD1909500D0DA6C /* SplashView.swift in Sources */,
