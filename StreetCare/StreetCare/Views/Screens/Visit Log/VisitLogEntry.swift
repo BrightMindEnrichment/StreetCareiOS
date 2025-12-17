@@ -227,7 +227,9 @@ struct VisitLogEntry: View {
                         question1: NSLocalizedString("questionNinePartOne", comment: ""),
                         question2: NSLocalizedString("questionNinePartTwo", comment: ""),
                         visitLog: visitLog,
-                        nextAction: { questionNumber += 1 },
+                        nextAction: {
+                            visitLog.helpProvidedCategory = visitLog.whatGiven
+                            questionNumber += 1 },
                         previousAction: { questionNumber -= 1 },
                         skipAction: { questionNumber += 1 },
                         buttonMode: .navigation,
@@ -248,12 +250,14 @@ struct VisitLogEntry: View {
                         question1: NSLocalizedString("questionTenPartOne", comment: ""),
                         question2: NSLocalizedString("questionTenPartTwo", comment: ""),
                         visitLog: visitLog,
-                        nextAction: { questionNumber += 1 },
+                        nextAction: {
+                            visitLog.furtherHelpCategory = visitLog.whatGivenFurther
+                            questionNumber += 1 },
                         previousAction: { questionNumber -= 1 },
                         skipAction: { questionNumber += 1 },
                         buttonMode: .navigation,
                         showProgressBar: true,
-                        supportMode: .provided
+                        supportMode: .needed
                     )
                     .padding(.bottom, keyboard.currentHeight == 0 ? 0 : keyboard.currentHeight - 250)
                     .animation(.easeOut(duration: 0.16), value: keyboard.currentHeight)
@@ -267,8 +271,8 @@ struct VisitLogEntry: View {
                             showSkip: false,
                             initialDateValue: rawDate,
                             datetimeValue: $rawDate,
-                            convertedDate: $visitLog.whenVisit,        // needs to be changes
-                            additionalDetails: $visitLog.peopleHelpedDescription, // needs to be changes
+                            convertedDate: $visitLog.helpRequestFollowUpTimestamp,
+                            additionalDetails: $visitLog.helpRequestAdditionalDetails,
                             nextAction: {
                                 questionNumber += 1
                             },

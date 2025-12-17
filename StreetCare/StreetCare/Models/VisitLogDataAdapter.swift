@@ -82,6 +82,43 @@ class VisitLogDataAdapter {
             }
         }
     }
+    
+    //Create HelpRequest document for this VisitLog
+    private func createHelpRequest(for log: VisitLog) {
+            let db = Firestore.firestore()
+            let helpReqId = UUID().uuidString
+
+            let helpRequestData: [String: Any] = [
+                "interactionLogDocId": log.id,
+                "timestampOfInteraction": Timestamp(date: log.whenVisit),
+                "helpProvidedCategory": log.helpProvidedCategory,
+                "furtherHelpCategory": log.furtherHelpCategory,
+                "followUpTimestamp": log.helpRequestFollowUpTimestamp == placeholderDate
+                    ? nil
+                    : Timestamp(date: log.helpRequestFollowUpTimestamp),
+
+                "additionalDetails": log.helpRequestAdditionalDetails,
+            ]
+
+            // Create HelpRequest document
+            db.collection("HelpRequestDev").document(helpReqId).setData(helpRequestData) { error in
+                if let error = error {
+                    print("helpRequestData : ", helpRequestData)
+                    print("Error creating HelpRequest: \(error.localizedDescription)")
+                    return
+                }
+
+                print("HelpRequest created with ID: \(helpReqId)")
+
+                //Attach HelpRequest ID to the VisitLog document (1:N)
+                db.collection("VisitLogBook_New")
+                    .document(log.id)
+                    .updateData([
+                        "helpRequestDocIds": FieldValue.arrayUnion([helpReqId])
+                    ])
+            }
+        }
+    
     func addVisitLog(_ visitLog: VisitLog) {
         guard let user = Auth.auth().currentUser else {
             print("No user?")
@@ -159,7 +196,9 @@ class VisitLogDataAdapter {
             "isPublic": visitLog.isPublic,
             "isFlagged": visitLog.isFlagged,
             "flaggedByUser": visitLog.flaggedByUser,
-            "status": visitLog.status
+            "status": visitLog.status,
+            
+            "helpRequestDocIds": visitLog.helpRequestDocIds
         ]
         
         print("User UID:", user.uid)
@@ -171,6 +210,9 @@ class VisitLogDataAdapter {
                 print("⚠️ Error writing VisitLog: \(error.localizedDescription)")
             } else {
                 print("✅ Document successfully written with ID \(visitLog.id) to \(collectionName)!")
+                if visitLog.helpRequestDocIds.isEmpty {
+                    self.createHelpRequest(for: visitLog)
+                }
             }
         }
     }

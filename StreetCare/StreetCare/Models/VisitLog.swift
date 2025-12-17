@@ -73,6 +73,14 @@ class VisitLog: ObservableObject, Identifiable {
     @Published var stateAbbv = ""
     @Published var zipcode = ""
     @Published var status = "pending"
+    
+    // Fields for the HelpRequest Case 9, 10 and 11.
+    @Published var helpProvidedCategory: [String] = []
+    @Published var furtherHelpCategory: [String] = []
+    @Published var helpRequestFollowUpTimestamp: Date = placeholderDate
+    @Published var helpRequestAdditionalDetails: String = ""
+    @Published var helpRequestDocIds: [String] = []
+    
     var isFromOldCollection: Bool = true
     init(id: String) {
         self.id = id

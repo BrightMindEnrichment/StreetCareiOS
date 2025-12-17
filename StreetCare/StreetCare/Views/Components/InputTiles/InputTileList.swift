@@ -59,7 +59,7 @@ struct InputTileList: View {
             if visitLog.furtherOther {
                 selected.append(visitLog.furtherOtherNotes.isEmpty ? "Other" : visitLog.furtherOtherNotes)
             }
-            visitLog.whatGiven = selected // Reused for further support too
+            visitLog.whatGivenFurther = selected // Reused for further support too
         }
     }
     
