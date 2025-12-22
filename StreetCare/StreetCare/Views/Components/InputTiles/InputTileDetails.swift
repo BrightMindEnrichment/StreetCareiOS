@@ -7,6 +7,8 @@
 
 import SwiftUI
 
+
+
 // Struct to hold the input fields for Question 2
 struct PersonalDetails {
     var firstName: String = ""
@@ -228,30 +230,30 @@ struct InputTileDetails: View {
                         .labelsHidden()
                         .datePickerStyle(.compact)
                         .opacity(0.01)
-                    
+                        .allowsHitTesting(true)
+
                     HStack(spacing: 8) {
                         Image(systemName: "calendar")
                             .foregroundColor(.black)
-                        // ➡️ FIXED DATE FORMATTING: MM/DD/YYYY
+
                         Text(rawDate, format: .dateTime.month(.twoDigits).day(.twoDigits).year())
                             .font(.subheadline)
-                        //.fontWeight(.semibold)
                             .foregroundColor(.black)
-                        //Spacer()
                     }
                     .padding(.horizontal, 10)
-                    .padding(.vertical,12)
+                    .padding(.vertical, 12)
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .background(Color.white)
                     .cornerRadius(8)
                     .shadow(color: Color.black.opacity(0.15), radius: 4, x: 0, y: 2)
-                    // ➡️ ADD HIGHLIGHT (BORDER):
-                    .overlay(
+                    .overlay(                                  // ✅ MOVE BORDER HERE
                         RoundedRectangle(cornerRadius: 8)
                             .stroke(Color.black.opacity(0.4), lineWidth: 1)
                     )
+                    .allowsHitTesting(false)
                 }
                 .frame(width: 145)
+
             
                 //.frame(maxWidth: .infinity, alignment: .leading)
 
@@ -262,21 +264,15 @@ struct InputTileDetails: View {
                         .labelsHidden()
                         .datePickerStyle(.compact)
                         .opacity(0.01)
+                        .allowsHitTesting(true)
 
                     HStack(spacing: 8) {
                         Image(systemName: "clock")
                             .foregroundColor(.black)
-                        // ➡️ MODIFICATION 2: Change to use the custom formatter
-                                                // Use local time-only formatting (no timezone) so start/end times remain unchanged
+
                         Text("\(timeWithAbbreviationFormatter.string(from: rawDate)) \(tzAbbreviation)")
-                            .fixedSize(horizontal: true, vertical: false)
                             .font(.subheadline)
                             .foregroundColor(.black)
-
-                                                    .font(.subheadline)
-                                                    //.fontWeight(.semibold)
-                                                    .foregroundColor(.black)
-                                                //Spacer()
                     }
                     .padding(.horizontal, 10)
                     .padding(.vertical, 12)
@@ -284,14 +280,14 @@ struct InputTileDetails: View {
                     .background(Color.white)
                     .cornerRadius(8)
                     .shadow(color: Color.black.opacity(0.15), radius: 4, x: 0, y: 2)
-                    // ➡️ ADD HIGHLIGHT (BORDER):
                     .overlay(
                         RoundedRectangle(cornerRadius: 8)
                             .stroke(Color.black.opacity(0.4), lineWidth: 1)
                     )
+                    .allowsHitTesting(false)
                 }
-                //.frame(maxWidth: .infinity)
                 .frame(width: 145)
+
             }
             .frame(width: 300)
             .padding(.horizontal, 12)
@@ -320,16 +316,18 @@ struct InputTileDetails: View {
                     .labelsHidden()
                     .datePickerStyle(.compact)
                     .opacity(0.01)
+                    .allowsHitTesting(true)
 
                     HStack(spacing: 8) {
                         Image(systemName: "calendar")
                             .foregroundColor(.black)
-                        // ➡️ FIXED DATE FORMATTING: MM/DD/YYYY
-                        Text(rawEndDate ?? rawDate, format: .dateTime.month(.twoDigits).day(.twoDigits).year())
-                            .font(.subheadline)
-                            //.fontWeight(.semibold)
-                            .foregroundColor(.black)
-                        //Spacer()
+
+                        Text(
+                            rawEndDate ?? rawDate,
+                            format: .dateTime.month(.twoDigits).day(.twoDigits).year()
+                        )
+                        .font(.subheadline)
+                        .foregroundColor(.black)
                     }
                     .padding(.horizontal, 10)
                     .padding(.vertical, 12)
@@ -338,12 +336,13 @@ struct InputTileDetails: View {
                     .cornerRadius(8)
                     .shadow(color: Color.black.opacity(0.15), radius: 4, x: 0, y: 2)
                     .overlay(
-                                        RoundedRectangle(cornerRadius: 8)
-                                            .stroke(Color.black.opacity(0.4), lineWidth: 1)
-                                    )
+                        RoundedRectangle(cornerRadius: 8)
+                            .stroke(Color.black.opacity(0.4), lineWidth: 1)
+                    )
+                    .allowsHitTesting(false)
                 }
-                //.frame(maxWidth: .infinity)
                 .frame(width: 145)
+
 
                 // ⭐️ End Time - Time Picker (Custom Style)
                 ZStack {
@@ -358,25 +357,16 @@ struct InputTileDetails: View {
                     .labelsHidden()
                     .datePickerStyle(.compact)
                     .opacity(0.01)
+                    .allowsHitTesting(true)
 
                     HStack(spacing: 8) {
-                                Image(systemName: "clock")
-                                    .foregroundColor(.black)
-                                
-                                // ⭐️ FIX: Use the custom timeWithAbbreviationFormatter here ⭐️
-                                // This is the line that needs updating:
+                        Image(systemName: "clock")
+                            .foregroundColor(.black)
+
                         Text("\(timeWithAbbreviationFormatter.string(from: (rawEndDate ?? rawDate))) \(tzAbbreviation)")
-                            .fixedSize(horizontal: true, vertical: false)
                             .font(.subheadline)
                             .foregroundColor(.black)
-                                
-                                    // Add the layout fix again for safety (if you removed it previously)
-                                    .fixedSize(horizontal: true, vertical: false)
-                                    
-                                    .font(.subheadline)
-                                    .foregroundColor(.black)
-                                //Spacer()
-                            }
+                    }
                     .padding(.horizontal, 10)
                     .padding(.vertical, 12)
                     .frame(maxWidth: .infinity, alignment: .leading)
@@ -384,11 +374,11 @@ struct InputTileDetails: View {
                     .cornerRadius(8)
                     .shadow(color: Color.black.opacity(0.15), radius: 4, x: 0, y: 2)
                     .overlay(
-                                        RoundedRectangle(cornerRadius: 8)
-                                            .stroke(Color.black.opacity(0.4), lineWidth: 1)
-                                    )
+                        RoundedRectangle(cornerRadius: 8)
+                            .stroke(Color.black.opacity(0.4), lineWidth: 1)
+                    )
+                    .allowsHitTesting(false)
                 }
-                //.frame(maxWidth: .infinity)
                 .frame(width: 145)
             }
             .padding(.horizontal, 12)
