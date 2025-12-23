@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Combine
 
 struct InputTileIndividualInteraction: View {
     var questionTitle: String
@@ -57,7 +58,6 @@ struct InputTileIndividualInteraction: View {
             .frame(height: 38)
             .background(Color.white)
             .overlay(
-                // MODIFICATION: Thinner border (lineWidth: 0.5)
                 RoundedRectangle(cornerRadius: 8)
                     .stroke(Color.black, lineWidth: 0.5)
             )
@@ -76,7 +76,6 @@ struct InputTileIndividualInteraction: View {
         .frame(height: 38)
         .background(Color.white)
         .overlay(
-            // MODIFICATION: Thinner border (lineWidth: 0.5)
             RoundedRectangle(cornerRadius: 8)
                 .stroke(Color.black, lineWidth: 0.5)
         )
@@ -130,14 +129,24 @@ struct InputTileIndividualInteraction: View {
                     .padding(.horizontal, 10)
                     .frame(maxWidth: .infinity, minHeight: 38, maxHeight: 38)
                     .overlay(
-                        // MODIFICATION: Thinner border (lineWidth: 0.5) for the Menu
                         RoundedRectangle(cornerRadius: 8)
                             .stroke(Color.black, lineWidth: 0.5)
                     )
                 }
                 
+                // ZIP CODE FIELD
                 borderedTextField("Zip Code", text: $zipCode)
                     .keyboardType(.numberPad)
+                    .onChange(of: zipCode) { newValue in
+                        // Filter out any non-numeric characters
+                        let filtered = newValue.filter { "0123456789".contains($0) }
+                        // Limit to 5 characters (Standard US Zip)
+                        if filtered.count > 5 {
+                            zipCode = String(filtered.prefix(5))
+                        } else {
+                            zipCode = filtered
+                        }
+                    }
             }
             
             HStack(spacing: 12) {
