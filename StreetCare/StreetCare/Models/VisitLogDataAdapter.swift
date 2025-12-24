@@ -87,9 +87,13 @@ class VisitLogDataAdapter {
     private func createHelpRequest(for log: VisitLog) {
             let db = Firestore.firestore()
             let helpReqId = UUID().uuidString
+            let fullName = "\(log.recipientFirstName) \(log.recipientLastName)".trimmingCharacters(in: .whitespaces)
 
             let helpRequestData: [String: Any] = [
                 "interactionLogDocId": log.id,
+                "firstName": fullName,
+               // "lastName": log.recipientLastName,
+                "locationLandmark": log.concatenatedLandmark,
                 "timestampOfInteraction": Timestamp(date: log.whenVisit),
                 "helpProvidedCategory": log.helpProvidedCategory,
                 "furtherHelpCategory": log.furtherHelpCategory,

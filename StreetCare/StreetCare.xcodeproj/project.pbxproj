@@ -110,6 +110,7 @@
 		8AFB16252DEE97D70015671E /* (null) in Sources */ = {isa = PBXBuildFile; };
 		A459D493C5D37756A585D3EA /* Pods_StreetCare.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B3FB734328ABC03284A67BF /* Pods_StreetCare.framework */; };
 		B5B5F2322E5D20300048F01E /* LikedEventsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5B5F2312E5D202F0048F01E /* LikedEventsView.swift */; };
+		B5DB89182EFC6EF20024AEFE /* InputTileIndividualInteraction.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5DB89172EFC6EEE0024AEFE /* InputTileIndividualInteraction.swift */; };
 		B5EF4E402E6E01E200E2528C /* LikedBadgesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5EF4E3F2E6E01CD00E2528C /* LikedBadgesView.swift */; };
 		BE9D1DCE2A37626C00072835 /* ImagePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BE9D1DCD2A37626C00072835 /* ImagePickerView.swift */; };
 		BE9D1DD12A376B3800072835 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = BE9D1DD02A376B3800072835 /* FirebaseStorage */; };
@@ -230,6 +231,7 @@
 		8A1569372E0B9E8D00984FED /* PublicPopupSheetModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicPopupSheetModifier.swift; sourceTree = "<group>"; };
 		8A36A1D72E2F197F00437188 /* KeyboardHeightObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardHeightObserver.swift; sourceTree = "<group>"; };
 		B5B5F2312E5D202F0048F01E /* LikedEventsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikedEventsView.swift; sourceTree = "<group>"; };
+		B5DB89172EFC6EEE0024AEFE /* InputTileIndividualInteraction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputTileIndividualInteraction.swift; sourceTree = "<group>"; };
 		B5EF4E3F2E6E01CD00E2528C /* LikedBadgesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LikedBadgesView.swift; sourceTree = "<group>"; };
 		BE9D1DCD2A37626C00072835 /* ImagePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerView.swift; sourceTree = "<group>"; };
 		BE9D1DD22A377E9100072835 /* StorgeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorgeManager.swift; sourceTree = "<group>"; };
@@ -310,6 +312,7 @@
 		4C82448C29EF9E0B003D1575 /* InputTiles */ = {
 			isa = PBXGroup;
 			children = (
+				B5DB89172EFC6EEE0024AEFE /* InputTileIndividualInteraction.swift */,
 				27D3B9CE2EB9752600B9884D /* InputTileFollowUpDate.swift */,
 				6B1D42C82E2F26440016E5BE /* KeyboardHeightObserver.swift */,
 				C2E9F1242DBB410600541E47 /* InputTileNotes.swift */,
@@ -769,6 +772,7 @@
 				4CB65E6629DA91C000684BD1 /* Endpoints.swift in Sources */,
 				27D3B9CF2EB9753B00B9884D /* InputTileFollowUpDate.swift in Sources */,
 				4CB65E4A29DA6A1200684BD1 /* WhatToBringView.swift in Sources */,
+				B5DB89182EFC6EF20024AEFE /* InputTileIndividualInteraction.swift in Sources */,
 				BE9D1DD92A3A419A00072835 /* LoadingView.swift in Sources */,
 				4C0E4FF129DDF726009D33C1 /* DonateView.swift in Sources */,
 				BE9D1DD32A377E9100072835 /* StorgeManager.swift in Sources */,
