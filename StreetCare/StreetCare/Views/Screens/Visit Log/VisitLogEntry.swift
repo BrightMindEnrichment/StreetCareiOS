@@ -47,16 +47,16 @@ struct VisitLogEntry: View {
                 case 1:   
                     InputTileDate(questionNumber: 1, totalQuestions: 6, question1: NSLocalizedString("questionOne", comment: ""),question2: NSLocalizedString("interaction", comment: "") + "?",question3: "", showSkip: false,  initialDateValue: rawDate, datetimeValue: $rawDate, convertedDate: $visitLog.whenVisit ) {
 
-                        questionNumber += 1
+                        questionNumber = 3
                     } skipAction: {
-                        questionNumber += 1
+                        questionNumber = 3
                     } previousAction: {
                         questionNumber -= 1
                     }
                     
-                case 2:
+                case 3:
                         InputTileLocation(
-                            questionNumber: 2,
+                            questionNumber: 3,
                             totalQuestions: 6,
                             question1: NSLocalizedString("questionTwo", comment: ""),
                             question2: NSLocalizedString("interaction", comment: "") + "?",
@@ -96,34 +96,34 @@ struct VisitLogEntry: View {
                     .padding(.bottom, keyboard.currentHeight == 0 ? 0 : keyboard.currentHeight - 270)
                     .animation(.easeOut(duration: 0.16), value: keyboard.currentHeight)
                     
-                case 3:
-                                InputTileNumber(
-                                        questionNumber: 3,
-                                        totalQuestions: 6,
-                                        tileWidth: 360,
-                                        tileHeight: 520,
-                                        question1: NSLocalizedString("questionThreePartOne", comment: ""),
-                                        question2: NSLocalizedString("questionThreePartTwo", comment: ""),
-                                        question3: NSLocalizedString("questionThreePartThree", comment: ""),
-                                        question4: NSLocalizedString("questionThreePartFour", comment: ""),
-                                        descriptionLabel: "Description",
-                                        disclaimerText: NSLocalizedString("disclaimer", comment: ""),
-                                        placeholderText: NSLocalizedString("peopledescription", comment: ""),
-                                        number: $visitLog.peopleHelped,
-                                        generalDescription: $visitLog.peopleHelpedDescription,
-                                        generalDescription2: .constant(""),
-                                        nextAction: {
-                                                    questionNumber += 1
-                                                },
-                                        previousAction: {
-                                                    questionNumber -= 1
-                                                },
-                                        skipAction: {
-                                                    questionNumber += 1
-                                                }
-                                        )
-                                .padding(.bottom, keyboard.currentHeight == 0 ? 0 : 35)
-                                .animation(.easeOut(duration: 0.16), value: keyboard.currentHeight)
+//                case 3:
+//                                InputTileNumber(
+//                                        questionNumber: 3,
+//                                        totalQuestions: 6,
+//                                        tileWidth: 360,
+//                                        tileHeight: 520,
+//                                        question1: NSLocalizedString("questionThreePartOne", comment: ""),
+//                                        question2: NSLocalizedString("questionThreePartTwo", comment: ""),
+//                                        question3: NSLocalizedString("questionThreePartThree", comment: ""),
+//                                        question4: NSLocalizedString("questionThreePartFour", comment: ""),
+//                                        descriptionLabel: "Description",
+//                                        disclaimerText: NSLocalizedString("disclaimer", comment: ""),
+//                                        placeholderText: NSLocalizedString("peopledescription", comment: ""),
+//                                        number: $visitLog.peopleHelped,
+//                                        generalDescription: $visitLog.peopleHelpedDescription,
+//                                        generalDescription2: .constant(""),
+//                                        nextAction: {
+//                                                    questionNumber += 1
+//                                                },
+//                                        previousAction: {
+//                                                    questionNumber -= 1
+//                                                },
+//                                        skipAction: {
+//                                                    questionNumber += 1
+//                                                }
+//                                        )
+//                                .padding(.bottom, keyboard.currentHeight == 0 ? 0 : 35)
+//                                .animation(.easeOut(duration: 0.16), value: keyboard.currentHeight)
                                
                     
                 case 4:
