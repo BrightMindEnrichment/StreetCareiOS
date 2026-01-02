@@ -48,10 +48,10 @@ class PublicVisitLogDataAdapter {
         let db = Firestore.firestore()
         let storage = Storage.storage()
 
-        db.collection("visitLogWebProd")
-            .whereField("public", isEqualTo: true)
+        db.collection("VisitLogBook_New")
+            .whereField("isPublic", isEqualTo: true)
             .whereField("status", isEqualTo: "approved")
-            .order(by: "dateTime", descending: true)
+            .order(by: "timeStamp", descending: true)
             .getDocuments { snapshot, error in
                 guard let documents = snapshot?.documents, error == nil else {
                     print("⚠️ Error fetching WebProd logs: \(error?.localizedDescription ?? "")")
@@ -67,8 +67,8 @@ class PublicVisitLogDataAdapter {
                     log.source = "webProd"
 
 
-                    log.isPublic = document["public"] as? Bool ?? false
-                    log.whenVisit = (document["dateTime"] as? Timestamp)?.dateValue() ?? Date()
+                    log.isPublic = document["isPublic"] as? Bool ?? false
+                    log.whenVisit = (document["timeStamp"] as? Timestamp)?.dateValue() ?? Date()
                     log.peopleHelped = document["peopleHelped"] as? Int ?? 0
                     log.itemQty = document["itemQty"] as? Int ?? 0
                     log.numberOfHelpers = document["numberOfHelpers"] as? Int ?? 0
@@ -79,8 +79,8 @@ class PublicVisitLogDataAdapter {
                     log.whatGiven = document["whatGiven"] as? [String] ?? []
                     log.isFlagged = document["isFlagged"] as? Bool ?? false
                     log.flaggedByUser = document["flaggedByUser"] as? String ?? ""
-                    log.description = document["description"] as? String ?? ""
-                    log.numberPeopleHelped = document["numberPeopleHelped"] as? String ?? "0"
+                    log.description = document["peopleHelpedDescription"] as? String ?? ""
+                    log.numberPeopleHelped = document["numberOfHelpers"] as? String ?? "0"
                     log.itemQtyWeb = document["itemQty"] as? String ?? "0"
 
                     if let uid = document["uid"] as? String {
@@ -113,7 +113,7 @@ class PublicVisitLogDataAdapter {
             .order(by: "whenVisit", descending: true)
             .getDocuments { snapshot, error in
                 guard let documents = snapshot?.documents, error == nil else {
-                    print("⚠️ Error fetching VisitLogBook_New: \(error?.localizedDescription ?? "")")
+                    print("⚠️ Error fetching visitLogWebProd: \(error?.localizedDescription ?? "")")
                     completion([])
                     return
                 }

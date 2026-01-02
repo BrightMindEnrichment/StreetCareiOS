@@ -62,7 +62,7 @@ struct PublicInteractionPopupView: View {
                         Task {
                             guard let currentUser = Auth.auth().currentUser else { return }
                             let db = Firestore.firestore()
-                            let collectionName = visit.source == "webProd" ? "visitLogWebProd" : "VisitLogBook_New"
+                            let collectionName = visit.source == "webProd" ? "VisitLogBook_New" : "VisitLogBook_New"
                             let ref = db.collection(collectionName).document(visit.id)
                             
                             if visit.isFlagged {

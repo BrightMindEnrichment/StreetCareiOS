@@ -251,7 +251,7 @@ class VisitLogDataAdapter {
         db.collection("VisitLogBook").document(logId).delete { _ in
             completion()
         }
-        db.collection("visitLogWebProd").document(logId).delete { _ in
+        db.collection("VisitLogBook_New").document(logId).delete { _ in
             completion()
         }
         db.collection("VisitLogBook_New").document(logId).delete { _ in
@@ -473,7 +473,7 @@ class VisitLogDataAdapter {
                 }
             }
             //fetch logs from visitLogWebProd
-            db.collection("visitLogWebProd").whereField("uid", isEqualTo: user.uid).getDocuments { querySnapshot, error in
+            db.collection("VisitLogBook_New").whereField("uid", isEqualTo: user.uid).getDocuments { querySnapshot, error in
                 if let error = error {
                     print("⚠️ Error fetching WebProd logs: \(error.localizedDescription)")
                 } else {
@@ -490,7 +490,7 @@ class VisitLogDataAdapter {
                         log.whereVisit = [log.street, log.city, log.state, log.zipcode]
                             .filter { !$0.isEmpty }
                             .joined(separator: ", ")
-                        log.numberPeopleHelped = document["numberPeopleHelped"] as? String ?? "0"
+                        log.numberPeopleHelped = document["numberOfHelpers"] as? String ?? "0"
                         log.itemQty = document["itemQty"] as? Int ?? 0
                         log.whatGiven = document["whatGiven"] as? [String] ?? []
                         log.rating = document["rating"] as? Int ?? 0
@@ -498,7 +498,7 @@ class VisitLogDataAdapter {
                         log.isFlagged = document["isFlagged"] as? Bool ?? false
                         log.flaggedByUser = document["flaggedByUser"] as? String ?? ""
                         log.uid = document["uid"] as? String ?? ""
-                        log.isPublic = document["public"] as? Bool ?? false
+                        log.isPublic = document["isPublic"] as? Bool ?? false
                         if log.isPublic {
                             switch log.status.lowercased() {
                             case "approved":
@@ -511,7 +511,7 @@ class VisitLogDataAdapter {
                                 break
                             }
                         }
-                        log.whenVisit = (document["dateTime"] as? Timestamp)?.dateValue() ?? Date()
+                        log.whenVisit = (document["timeStamp"] as? Timestamp)?.dateValue() ?? Date()
                         log.isFromOldCollection = true
                         if let whenVisit = document["whenVisit"] as? Timestamp {
                             log.whenVisit = whenVisit.dateValue()

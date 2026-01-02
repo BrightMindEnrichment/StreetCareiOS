@@ -159,14 +159,14 @@ struct VisitLogView: View {
                     """),
                     primaryButton: .default(Text("Confirm")) {
                                 let db = Firestore.firestore()
-                                let collectionName = log.source == "webProd" ? "visitLogWebProd" : "VisitLogBook_New"
+                                let collectionName = log.source == "webProd" ? "VisitLogBook_New" : "VisitLogBook_New"
                                 
                                 var updateData: [String: Any] = [
                                     "status": "pending"
                                 ]
                                 
                                 if log.source == "webProd" {
-                                    updateData["public"] = true  //Use correct field name
+                                    updateData["isPublic"] = true  //Use correct field name
                                 } else {
                                     updateData["isPublic"] = true
                                 }

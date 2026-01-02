@@ -673,10 +673,10 @@ class EventDataAdapter {
         let db = Firestore.firestore()
         print("Fetching public visit logs from Firebase...")
 
-        db.collection("visitLogWebProd")
-            .whereField("public", isEqualTo: true)
+        db.collection("VisitLogBook_New")
+            .whereField("isPublic", isEqualTo: true)
             .whereField("status", isEqualTo: "approved")
-            .order(by: "dateTime", descending: true)
+            .order(by: "timeStamp", descending: true)
             .limit(to: 50)
             .getDocuments { [weak self] (snapshot, error) in
                 guard let self = self else { return }
@@ -720,7 +720,7 @@ class EventDataAdapter {
 
                         let address = "\(street), \(city), \(state) \(zipcode)"
                         let title = titleArray.joined(separator: ", ")
-                        let description = data["description"] as? String
+                        let description = data["peopleHelpedDescription"] as? String
 
                         // ✅ Check cache first
                         if let cachedCoordinates = self.getCachedCoordinates(for: address) {
