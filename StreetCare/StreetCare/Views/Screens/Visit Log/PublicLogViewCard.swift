@@ -182,7 +182,7 @@ struct RoundedCorner: Shape {
 func updateFlagStatus(log: VisitLog, isFlagged: Bool, flaggedByUser: String?) {
     Task {
         let db = Firestore.firestore()
-        let collectionName = log.source == "webProd" ? "visitLogWebProd" : "VisitLogBook_New"
+        let collectionName = log.source == "webProd" ? "VisitLogBook_New" : "VisitLogBook_New"
         let ref = db.collection(collectionName).document(log.id)
         
         let updates: [String: Any] = [
