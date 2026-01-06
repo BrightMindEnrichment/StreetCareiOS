@@ -34,7 +34,7 @@ struct VisitLogEntry: View {
     
     var body: some View {
         NavigationStack {
-            VStack {
+            VStack(spacing: 10) {
                 
                 if !isComplete{
                     Text(NSLocalizedString("logYourInteraction", comment: ""))
@@ -146,11 +146,6 @@ struct VisitLogEntry: View {
                     .animation(.easeOut(duration: 0.16), value: keyboard.currentHeight)
                 
                 case 5:
-                    // Temporary wrapper to convert Int to Int? for UI testing
-                    let tempNumber2 = Binding<Int?>(
-                        get: { visitLog.itemQty },
-                        set: { visitLog.itemQty = $0 ?? 0 }
-                    )
                     InputTileNumber(
                         questionNumber: 5,
                         totalQuestions: 7,
@@ -162,12 +157,15 @@ struct VisitLogEntry: View {
                         question4: "",
                         descriptionLabel: "",
                         disclaimerText: "",
-                        placeholderText: "Enter notes here",
-                        number: $visitLog.itemQty,
-                        number2: tempNumber2,
+                        placeholderText: "",
+                        number: $visitLog.numPeopleHelped,
+                        number2: Binding<Int?>(
+                            get: { visitLog.numPeopleJoined },
+                            set: { visitLog.numPeopleJoined = $0 ?? 0 }
+                        ),
                         dualNumberMode: true,
                         showTextEditor: false,
-                        generalDescription: $visitLog.itemQtyDescription,
+                        generalDescription: .constant(""),
                         generalDescription2: .constant(""),
                         nextAction: {
                             questionNumber += 1
@@ -178,6 +176,7 @@ struct VisitLogEntry: View {
                         skipAction: {
                             questionNumber += 1
                         },
+                        showProgressBar: true
                     )
                     .padding(.bottom, keyboard.currentHeight == 0 ? 0 : 35)
                     .animation(.easeOut(duration: 0.16), value: keyboard.currentHeight)
@@ -197,8 +196,8 @@ struct VisitLogEntry: View {
                         editorHeaderLine2: NSLocalizedString("whatItemsIncludedLine2", comment: ""),
                         disclaimerText: "",
                         placeholderText: "Enter notes here",
-                        number: $visitLog.itemQty,
-                        generalDescription: $visitLog.itemQtyDescription,
+                        number: $visitLog.carePackagesDistributed,
+                        generalDescription: $visitLog.carePackageContents,
                         generalDescription2: .constant(""),
                         nextAction: {
                             questionNumber += 1
@@ -209,6 +208,7 @@ struct VisitLogEntry: View {
                         skipAction: {
                             questionNumber += 1
                         },
+                        showProgressBar: true
                     )
                     .padding(.bottom, keyboard.currentHeight == 0 ? 0 : 35)
                     .animation(.easeOut(duration: 0.16), value: keyboard.currentHeight)

@@ -167,6 +167,14 @@ struct InputTileNumber: View {
                     .fontWeight(.bold)
                     .padding(.bottom, 20)
             }
+            if showProgressBar {
+                SegmentedProgressBar(
+                    totalSegments: totalQuestions,
+                    filledSegments: questionNumber,
+                    tileWidth: tileWidth
+                )
+                .padding(.bottom, 24)
+            }
 
             ZStack {
                 BasicTile(size: CGSize(width: tileWidth, height: tileHeight))
@@ -402,16 +410,16 @@ struct InputTileNumber: View {
             }
         }
 
-        if showProgressBar {
-            SegmentedProgressBar(
-                totalSegments: totalQuestions,
-                filledSegments: questionNumber,
-                tileWidth: tileWidth
-            )
-            Text(NSLocalizedString("progress", comment: ""))
-                .font(.footnote)
-                .padding(.top, 4)
-                .fontWeight(.bold)
-        }
+//        if showProgressBar {
+//            SegmentedProgressBar(
+//                totalSegments: totalQuestions,
+//                filledSegments: questionNumber,
+//                tileWidth: tileWidth
+//            )
+//            Text(NSLocalizedString("progress", comment: ""))
+//                .font(.footnote)
+//                .padding(.top, 4)
+//                .fontWeight(.bold)
+//        }
     }    
 }

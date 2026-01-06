@@ -82,84 +82,144 @@ class VisitLogDataAdapter {
             }
         }
     }
+//    func addVisitLog(_ visitLog: VisitLog) {
+//        guard let user = Auth.auth().currentUser else {
+//            print("No user?")
+//            return
+//        }
+//        
+////        let collectionName = "VisitLogBook_New"
+//        let collectionName = "InteractionLogDev"
+//        let db = Firestore.firestore()
+//        
+//        var userData: [String: Any] = [
+//            "whenVisit": Timestamp(date: visitLog.whenVisit),
+//            "whereVisit": visitLog.whereVisit,
+//            "locationDescription": visitLog.locationDescription,
+//            "peopleHelped": visitLog.peopleHelped,
+//            "peopleHelpedDescription": visitLog.peopleHelpedDescription,
+//            "foodAndDrinks": visitLog.foodAndDrinks,
+//            "clothes": visitLog.clothes,
+//            "hygiene": visitLog.hygiene,
+//            "wellness": visitLog.wellness,
+//            "medical": visitLog.medical,
+//            "social": visitLog.social,
+//            "legal": visitLog.legal,
+//            "other": visitLog.other,
+//            //"whatGiven": visitLog.whatGiven,
+//            "whatGiven": [
+//                visitLog.foodAndDrinks ? "Food and Drinks" : nil,
+//                visitLog.clothes ? "Clothes" : nil,
+//                visitLog.hygiene ? "Hygiene" : nil,
+//                visitLog.wellness ? "Wellness" : nil,
+//                visitLog.medical ? "Medical" : nil,
+//                visitLog.social ? "Social" : nil,
+//                visitLog.legal ? "Legal" : nil,
+//                visitLog.other ? "Other" : nil
+//            ].compactMap { $0 },
+//            "otherNotes": visitLog.otherNotes,
+////            "itemQty": visitLog.itemQty,
+//            "numPeopleHelped": visitLog.numPeopleHelped,
+//            "numPeopleJoined": visitLog.numPeopleJoined,
+//            "carePackagesDistributed": visitLog.carePackagesDistributed,
+//            "carePackageContents": visitLog.carePackageContents,
+//            "itemQtyDescription": visitLog.itemQtyDescription,
+//            "rating": visitLog.rating,
+//            "ratingNotes": visitLog.ratingNotes,
+//            "durationHours": visitLog.durationHours,
+//            "durationMinutes": visitLog.durationMinutes,
+//            "numberOfHelpers": visitLog.numberOfHelpers,
+//            "numberOfHelpersComment": visitLog.numberOfHelpersComment,
+//            "peopleNeedFurtherHelp": visitLog.peopleNeedFurtherHelp,
+//            "peopleNeedFurtherHelpComment": visitLog.peopleNeedFurtherHelpComment,
+//            "peopleNeedFurtherHelpLocation": visitLog.peopleNeedFurtherHelpLocation,
+//            "furtherFoodAndDrinks": visitLog.furtherFoodAndDrinks,
+//            "furtherClothes": visitLog.furtherClothes,
+//            "furtherHygiene": visitLog.furtherHygiene,
+//            "furtherWellness": visitLog.furtherWellness,
+//            "furtherMedical": visitLog.furtherMedical,
+//            "furtherSocial": visitLog.furtherSocial,
+//            "furtherLegal": visitLog.furtherLegal,
+//            "furtherOther": visitLog.furtherOther,
+//            "furtherOtherNotes": visitLog.furtherOtherNotes,
+//            //"whatGivenFurther": visitLog.whatGivenFurther,
+//            "whatGivenFurther": [
+//                visitLog.furtherFoodAndDrinks ? "Food and Drinks" : nil,
+//                visitLog.furtherClothes ? "Clothes" : nil,
+//                visitLog.furtherHygiene ? "Hygiene" : nil,
+//                visitLog.furtherWellness ? "Wellness" : nil,
+//                visitLog.furtherMedical ? "Medical" : nil,
+//                visitLog.furtherSocial ? "Social" : nil,
+//                visitLog.furtherLegal ? "Legal" : nil,
+//                visitLog.furtherOther ? "Other" : nil
+//            ].compactMap { $0 },
+////            "followUpWhenVisit": visitLog.followUpWhenVisit,
+//            "followUpWhenVisit": visitLog.followUpWhenVisit == placeholderDate ? nil : Timestamp(date: visitLog.followUpWhenVisit),
+//            "futureNotes": visitLog.futureNotes,
+//            "volunteerAgain": visitLog.volunteerAgain,
+//            "lastEdited": Timestamp(date: Date()),
+//            "type": visitLog.type,
+//            "timeStamp": Timestamp(date: visitLog.timeStamp),
+//            "uid": user.uid,
+//            "isPublic": visitLog.isPublic,
+//            "isFlagged": visitLog.isFlagged,
+//            "flaggedByUser": visitLog.flaggedByUser,
+//            "status": visitLog.status
+//        ]
+//        
+//        print("User UID:", user.uid)
+//        print("VisitLog UID:", visitLog.uid)
+//        print("userData keys:", userData.keys.sorted())
+//        let docRef = db.collection(collectionName).document(visitLog.id) // Use visitLog.id
+//        docRef.setData(userData) { error in
+//            if let error = error {
+//                print("⚠️ Error writing VisitLog: \(error.localizedDescription)")
+//            } else {
+//                print("✅ Document successfully written with ID \(visitLog.id) to \(collectionName)!")
+//            }
+//        }
+//    }
     func addVisitLog(_ visitLog: VisitLog) {
         guard let user = Auth.auth().currentUser else {
             print("No user?")
             return
         }
         
-        let collectionName = "VisitLogBook_New"
+//        let collectionName = "VisitLogBook_New"
+        let collectionName = "InteractionLogDev"
         let db = Firestore.firestore()
         
         var userData: [String: Any] = [
-            "whenVisit": Timestamp(date: visitLog.whenVisit),
-            "whereVisit": visitLog.whereVisit,
-            "locationDescription": visitLog.locationDescription,
-            "peopleHelped": visitLog.peopleHelped,
-            "peopleHelpedDescription": visitLog.peopleHelpedDescription,
-            "foodAndDrinks": visitLog.foodAndDrinks,
-            "clothes": visitLog.clothes,
-            "hygiene": visitLog.hygiene,
-            "wellness": visitLog.wellness,
-            "medical": visitLog.medical,
-            "social": visitLog.social,
-            "legal": visitLog.legal,
-            "other": visitLog.other,
-            //"whatGiven": visitLog.whatGiven,
-            "whatGiven": [
-                visitLog.foodAndDrinks ? "Food and Drinks" : nil,
-                visitLog.clothes ? "Clothes" : nil,
-                visitLog.hygiene ? "Hygiene" : nil,
-                visitLog.wellness ? "Wellness" : nil,
-                visitLog.medical ? "Medical" : nil,
-                visitLog.social ? "Social" : nil,
-                visitLog.legal ? "Legal" : nil,
-                visitLog.other ? "Other" : nil
-            ].compactMap { $0 },
-            "otherNotes": visitLog.otherNotes,
-            "itemQty": visitLog.itemQty,
-            "itemQtyDescription": visitLog.itemQtyDescription,
-            "rating": visitLog.rating,
-            "ratingNotes": visitLog.ratingNotes,
-            "durationHours": visitLog.durationHours,
-            "durationMinutes": visitLog.durationMinutes,
-            "numberOfHelpers": visitLog.numberOfHelpers,
-            "numberOfHelpersComment": visitLog.numberOfHelpersComment,
-            "peopleNeedFurtherHelp": visitLog.peopleNeedFurtherHelp,
-            "peopleNeedFurtherHelpComment": visitLog.peopleNeedFurtherHelpComment,
-            "peopleNeedFurtherHelpLocation": visitLog.peopleNeedFurtherHelpLocation,
-            "furtherFoodAndDrinks": visitLog.furtherFoodAndDrinks,
-            "furtherClothes": visitLog.furtherClothes,
-            "furtherHygiene": visitLog.furtherHygiene,
-            "furtherWellness": visitLog.furtherWellness,
-            "furtherMedical": visitLog.furtherMedical,
-            "furtherSocial": visitLog.furtherSocial,
-            "furtherLegal": visitLog.furtherLegal,
-            "furtherOther": visitLog.furtherOther,
-            "furtherOtherNotes": visitLog.furtherOtherNotes,
-            //"whatGivenFurther": visitLog.whatGivenFurther,
-            "whatGivenFurther": [
-                visitLog.furtherFoodAndDrinks ? "Food and Drinks" : nil,
-                visitLog.furtherClothes ? "Clothes" : nil,
-                visitLog.furtherHygiene ? "Hygiene" : nil,
-                visitLog.furtherWellness ? "Wellness" : nil,
-                visitLog.furtherMedical ? "Medical" : nil,
-                visitLog.furtherSocial ? "Social" : nil,
-                visitLog.furtherLegal ? "Legal" : nil,
-                visitLog.furtherOther ? "Other" : nil
-            ].compactMap { $0 },
-//            "followUpWhenVisit": visitLog.followUpWhenVisit,
-            "followUpWhenVisit": visitLog.followUpWhenVisit == placeholderDate ? nil : Timestamp(date: visitLog.followUpWhenVisit),
-            "futureNotes": visitLog.futureNotes,
-            "volunteerAgain": visitLog.volunteerAgain,
-            "lastEdited": Timestamp(date: Date()),
-            "type": visitLog.type,
-            "timeStamp": Timestamp(date: visitLog.timeStamp),
-            "uid": user.uid,
-            "isPublic": visitLog.isPublic,
-            "isFlagged": visitLog.isFlagged,
-            "flaggedByUser": visitLog.flaggedByUser,
-            "status": visitLog.status
+            "addr1": "789 Newark Ave, Jersey City, NJ 07306, USA",
+                "addr2": "",
+            "carePackageContents": visitLog.carePackageContents,          // null
+            "carePackagesDistributed": visitLog.carePackagesDistributed,
+                "city": "Jersey City",
+                "country": "USA",
+                "email": "adamwarlock@gmai.com",
+                "endTimestamp": Timestamp(date: Date()),  // or a fixed Date if you want
+                "firstName": "Adam",
+                "helpRequestCount": 3,
+                "helpRequestDocIds": [
+                    "zntAweS6jll026eJwQmN",
+                    "ZZEvXBO2npdFlwKLtqFP",
+                    "kTfo5eRsP0IkqnQy33kq"
+                ],
+                "interactionDate": Timestamp(date: Date()),
+                "isPublic": false,
+                "lastActionPerformed": NSNull(),          // null
+                "lastModifiedTimestamp": Timestamp(date: Date()),
+                "lastName": "Warlock",
+                "listOfSupportsProvided": [],             // empty array (fill if needed)
+            "numPeopleHelped": visitLog.numPeopleHelped,
+            "numPeopleJoined": visitLog.numPeopleJoined,
+                "outreachId": "",
+                "phoneNumber": "",
+                "startTimestamp": Timestamp(date: Date()),
+                "state": "New Jersey",
+                "status": "Pending",
+                "userId": "",
+                "zipcode": "07306-3876"
         ]
         
         print("User UID:", user.uid)
