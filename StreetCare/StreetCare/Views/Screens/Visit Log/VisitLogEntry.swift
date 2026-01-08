@@ -43,6 +43,7 @@ struct VisitLogEntry: View {
     @State private var personalDetails = PersonalDetails()
     
     
+    
     var body: some View {
         NavigationStack {
             VStack {
@@ -67,6 +68,7 @@ struct VisitLogEntry: View {
                         rawEndDate: $rawEndDate,
                         timeZoneIdentifier: $selectedTimeZone,
                         personalDetails: $personalDetails,
+                        
                         nextAction: {
                             // Update visitLog.whenVisit based on rawDate and TimeZone here or in an extension/model method
                             questionNumber += 1
@@ -92,8 +94,17 @@ struct VisitLogEntry: View {
                         rawEndDate: $rawEndDate, // Required by component
                         timeZoneIdentifier: $selectedTimeZone, // Required by component
                         personalDetails: $personalDetails,
+//                        firstname: $personalDetails.firstname,
+//                        lastname: $personalDetails.lastname,
+//                        contactemail: $personalDetails.contactemail,
+//                        contactphone: $personalDetails.contactphone,
                         nextAction: {
                             // You might want to save personalDetails to a user profile or visitLog here
+                            // ⭐️ ADD THESE LINES HERE ⭐️
+                            visitLog.firstname = personalDetails.firstname
+                            visitLog.lastname = personalDetails.lastname
+                            visitLog.contactemail = personalDetails.contactemail
+                            visitLog.contactphone = personalDetails.contactphone
                             questionNumber += 1
                         },
                         skipAction: {

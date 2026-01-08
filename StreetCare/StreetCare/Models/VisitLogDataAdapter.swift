@@ -96,10 +96,10 @@ class VisitLogDataAdapter {
         // -------------------------
         // Identity / User (dummy-safe)
         // -------------------------
-        data["firstName"] = visitLog.contactName.isEmpty ? "Unknown" : visitLog.contactName
-        data["lastName"] = "User"
-        data["email"] = visitLog.contactEmail.isEmpty ? "unknown@email.com" : visitLog.contactEmail
-        data["phoneNumber"] = visitLog.contactPhone.isEmpty ? "" : visitLog.contactPhone
+        data["firstName"] = visitLog.firstname.isEmpty ? "Unknown" : visitLog.firstname
+        data["lastName"] = visitLog.lastname.isEmpty ? "Unknown" : visitLog.lastname
+        data["email"] = visitLog.contactemail.isEmpty ? "unknown@email.com" : visitLog.contactemail
+        data["phoneNumber"] = visitLog.contactphone.isEmpty ? "" : visitLog.contactphone
         data["userId"] = user.uid
 
         // -------------------------

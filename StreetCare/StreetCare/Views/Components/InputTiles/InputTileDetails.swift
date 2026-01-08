@@ -11,10 +11,10 @@ import SwiftUI
 
 // Struct to hold the input fields for Question 2
 struct PersonalDetails {
-    var firstName: String = ""
-    var lastName: String = ""
-    var email: String = ""
-    var phoneNumber: String = ""
+    var firstname: String = ""
+    var lastname: String = ""
+    var contactemail: String = ""
+    var contactphone: String = ""
 }
 
 // The main component for displaying question tiles
@@ -437,10 +437,10 @@ struct InputTileDetails: View {
     // MARK: - Q2 Content: Personal Details
     var personalDetailsContent: some View {
         VStack(spacing: 15) {
-            InputTextField(placeholder: "First Name *", text: $personalDetails.firstName)
-            InputTextField(placeholder: "Last Name", text: $personalDetails.lastName)
-            InputTextField(placeholder: "Email", text: $personalDetails.email, keyboardType: .emailAddress)
-            InputTextField(placeholder: "Phone Number", text: $personalDetails.phoneNumber, keyboardType: .phonePad)
+            InputTextField(placeholder: "First Name *", text: $personalDetails.firstname)
+            InputTextField(placeholder: "Last Name", text: $personalDetails.lastname)
+            InputTextField(placeholder: "Email", text: $personalDetails.contactemail, keyboardType: .emailAddress)
+            InputTextField(placeholder: "Phone Number", text: $personalDetails.contactphone, keyboardType: .phonePad)
         }
         .padding(.top, 10)
         .padding(.bottom, 0)
@@ -450,7 +450,7 @@ struct InputTileDetails: View {
     // Helper to determine if the Next button should be disabled
     var isNextButtonDisabled: Bool {
         if currentQuestionType == .personalDetails {
-            return personalDetails.firstName.isEmpty
+            return personalDetails.firstname.isEmpty
         } else if currentQuestionType == .interactionTime {
             if let endDate = rawEndDate, endDate < rawDate {
                 return true
