@@ -172,12 +172,13 @@ struct InputTileFollowUpDate: View {
 
                             Button(" " + NSLocalizedString("next", comment: "") + " ") {
                                 // Persist the selected date/time as-is
-                                if isFollowUpDate &&
-                                   Calendar.current.isDate(datetimeValue, equalTo: initialDateValue, toGranularity: .minute) {
-                                    convertedDate = datetimeValue
-                                } else {
-                                    convertedDate = datetimeValue
-                                }
+//                                if isFollowUpDate &&
+//                                   Calendar.current.isDate(datetimeValue, equalTo: initialDateValue, toGranularity: .minute) {
+//                                    convertedDate = datetimeValue
+//                                } else {
+//                                    convertedDate = datetimeValue
+//                                }
+                                convertedDate = datetimeValue
                                 nextAction()
                             }
                             .foregroundColor(Color("PrimaryColor"))
