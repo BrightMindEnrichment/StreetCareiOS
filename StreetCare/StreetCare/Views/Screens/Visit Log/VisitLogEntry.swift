@@ -70,7 +70,20 @@ struct VisitLogEntry: View {
                         personalDetails: $personalDetails,
                         
                         nextAction: {
-                            // Update visitLog.whenVisit based on rawDate and TimeZone here or in an extension/model method
+                            // 1. Update the Start and End dates in the model
+                            visitLog.whenVisit = rawDate
+                            
+                            // If rawEndDate is nil, default it to the start date
+                            visitLog.whenVisitEnd = rawEndDate ?? rawDate
+
+                            // 2. Extract the City name from the TimeZone identifier
+                            // Example: "America/Chicago" -> "Chicago"
+                            let cityName = selectedTimeZone.split(separator: "/").last?
+                                .replacingOccurrences(of: "_", with: " ") ?? selectedTimeZone
+                            
+                            visitLog.city = String(cityName)
+
+                            // 3. Proceed to the next question
                             questionNumber += 1
                         },
                         skipAction: {
