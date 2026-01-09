@@ -17,6 +17,8 @@ struct PersonalDetails {
     var contactphone: String = ""
 }
 
+
+
 // The main component for displaying question tiles
 struct InputTileDetails: View {
     
@@ -56,6 +58,27 @@ struct InputTileDetails: View {
         return identifiers.filter { $0.contains("/") && $0.split(separator: "/").count > 1 }
             .sorted()
     }()
+    
+    // 1. Get the current TimeZone object
+    private var selectedTimeZone: TimeZone {
+        TimeZone(identifier: timeZoneIdentifier) ?? .current
+    }
+
+    // 2. Helper to format the Date (MM/DD/YYYY)
+    private func formatDate(_ date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "MM/dd/yyyy"
+        formatter.timeZone = selectedTimeZone
+        return formatter.string(from: date)
+    }
+
+    // 3. Helper to format the Time (6:30 PM)
+    private func formatTime(_ date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "h:mm a"
+        formatter.timeZone = selectedTimeZone
+        return formatter.string(from: date)
+    }
     
     // ➡️ START MODIFICATION 1: Add custom formatter
         // Custom formatter for time with timezone abbreviation (e.g., "6:30 PM CST")
@@ -224,19 +247,39 @@ struct InputTileDetails: View {
             HStack(spacing: 10) {
                 //Spacer()
                 
-                // ⭐️ Start Time - Date Picker (Custom Style)
+               
+                // ⭐️ Start Date - Date Picker
+//                ZStack {
+//                    DatePicker("", selection: $rawDate, displayedComponents: .date)
+//                        .labelsHidden()
+//                        .datePickerStyle(.compact)
+//                        .opacity(0.01)
+//                        .allowsHitTesting(true)
+//                        // ➡️ This makes the calendar/picker wheels sync to the location:
+//                        .environment(\.timeZone, selectedTimeZone)
+//
+//                    HStack(spacing: 8) {
+//                        Image(systemName: "calendar")
+//                            .foregroundColor(.black)
+//
+//                        // Fixed the formatting logic and removed the typo
+//                        Text(rawDate.formatted(.dateTime.month(.twoDigits).day(.twoDigits).year().timeZone(selectedTimeZone)))
+//                            .font(.subheadline)
+//                            .foregroundColor(.black)
+//                    }
                 ZStack {
                     DatePicker("", selection: $rawDate, displayedComponents: .date)
                         .labelsHidden()
                         .datePickerStyle(.compact)
                         .opacity(0.01)
                         .allowsHitTesting(true)
+                        // ➡️ This line makes the "Calendar" sync to the location
+                        .environment(\.timeZone, selectedTimeZone)
 
                     HStack(spacing: 8) {
                         Image(systemName: "calendar")
-                            .foregroundColor(.black)
-
-                        Text(rawDate, format: .dateTime.month(.twoDigits).day(.twoDigits).year())
+                        // ➡️ Use the helper function here
+                        Text(formatDate(rawDate))
                             .font(.subheadline)
                             .foregroundColor(.black)
                     }
@@ -246,7 +289,7 @@ struct InputTileDetails: View {
                     .background(Color.white)
                     .cornerRadius(8)
                     .shadow(color: Color.black.opacity(0.15), radius: 4, x: 0, y: 2)
-                    .overlay(                                  // ✅ MOVE BORDER HERE
+                    .overlay(
                         RoundedRectangle(cornerRadius: 8)
                             .stroke(Color.black.opacity(0.4), lineWidth: 1)
                     )
@@ -265,12 +308,13 @@ struct InputTileDetails: View {
                         .datePickerStyle(.compact)
                         .opacity(0.01)
                         .allowsHitTesting(true)
+                        // ➡️ This line makes the "Clock Wheels" sync to the location
+                        .environment(\.timeZone, selectedTimeZone)
 
                     HStack(spacing: 8) {
                         Image(systemName: "clock")
-                            .foregroundColor(.black)
-
-                        Text("\(timeWithAbbreviationFormatter.string(from: rawDate)) \(tzAbbreviation)")
+                        // ➡️ Use the helper function here + the abbreviation
+                        Text("\(formatTime(rawDate)) \(selectedTimeZone.abbreviation() ?? "")")
                             .font(.subheadline)
                             .foregroundColor(.black)
                     }
