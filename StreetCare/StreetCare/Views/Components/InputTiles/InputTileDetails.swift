@@ -249,24 +249,6 @@ struct InputTileDetails: View {
                 
                
                 // ⭐️ Start Date - Date Picker
-//                ZStack {
-//                    DatePicker("", selection: $rawDate, displayedComponents: .date)
-//                        .labelsHidden()
-//                        .datePickerStyle(.compact)
-//                        .opacity(0.01)
-//                        .allowsHitTesting(true)
-//                        // ➡️ This makes the calendar/picker wheels sync to the location:
-//                        .environment(\.timeZone, selectedTimeZone)
-//
-//                    HStack(spacing: 8) {
-//                        Image(systemName: "calendar")
-//                            .foregroundColor(.black)
-//
-//                        // Fixed the formatting logic and removed the typo
-//                        Text(rawDate.formatted(.dateTime.month(.twoDigits).day(.twoDigits).year().timeZone(selectedTimeZone)))
-//                            .font(.subheadline)
-//                            .foregroundColor(.black)
-//                    }
                 ZStack {
                     DatePicker("", selection: $rawDate, displayedComponents: .date)
                         .labelsHidden()
@@ -349,84 +331,83 @@ struct InputTileDetails: View {
                 
                 // ⭐️ End Time - Date Picker (Custom Style)
                 ZStack {
-                    DatePicker(
-                        "",
-                        selection: Binding(
-                            get: { rawEndDate ?? rawDate },
-                            set: { rawEndDate = $0 }
-                        ),
-                        displayedComponents: .date
-                    )
-                    .labelsHidden()
-                    .datePickerStyle(.compact)
-                    .opacity(0.01)
-                    .allowsHitTesting(true)
-
-                    HStack(spacing: 8) {
-                        Image(systemName: "calendar")
-                            .foregroundColor(.black)
-
-                        Text(
-                            rawEndDate ?? rawDate,
-                            format: .dateTime.month(.twoDigits).day(.twoDigits).year()
+                        DatePicker(
+                            "",
+                            selection: Binding(
+                                get: { rawEndDate ?? rawDate },
+                                set: { rawEndDate = $0 }
+                            ),
+                            displayedComponents: .date
                         )
-                        .font(.subheadline)
-                        .foregroundColor(.black)
+                        .labelsHidden()
+                        .datePickerStyle(.compact)
+                        .opacity(0.01)
+                        .allowsHitTesting(true)
+                        .environment(\.timeZone, selectedTimeZone) // Syncs the calendar wheels
+
+                        HStack(spacing: 8) {
+                            Image(systemName: "calendar")
+                                .foregroundColor(.black)
+
+                            Text(formatDate(rawEndDate ?? rawDate))
+                                .font(.subheadline)
+                                .foregroundColor(.black)
+                        }
+                        .padding(.horizontal, 10)
+                        .padding(.vertical, 12)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .background(Color.white)
+                        .cornerRadius(8)
+                        .shadow(color: Color.black.opacity(0.15), radius: 4, x: 0, y: 2)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 8)
+                                .stroke(Color.black.opacity(0.4), lineWidth: 1)
+                        )
+                        .allowsHitTesting(false)
                     }
-                    .padding(.horizontal, 10)
-                    .padding(.vertical, 12)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .background(Color.white)
-                    .cornerRadius(8)
-                    .shadow(color: Color.black.opacity(0.15), radius: 4, x: 0, y: 2)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 8)
-                            .stroke(Color.black.opacity(0.4), lineWidth: 1)
-                    )
-                    .allowsHitTesting(false)
-                }
-                .frame(width: 145)
+                    .frame(width: 145)
 
 
                 // ⭐️ End Time - Time Picker (Custom Style)
                 ZStack {
-                    DatePicker(
-                        "",
-                        selection: Binding(
-                            get: { rawEndDate ?? rawDate },
-                            set: { rawEndDate = $0 }
-                        ),
-                        displayedComponents: .hourAndMinute
-                    )
-                    .labelsHidden()
-                    .datePickerStyle(.compact)
-                    .opacity(0.01)
-                    .allowsHitTesting(true)
+                        DatePicker(
+                            "",
+                            selection: Binding(
+                                get: { rawEndDate ?? rawDate },
+                                set: { rawEndDate = $0 }
+                            ),
+                            displayedComponents: .hourAndMinute
+                        )
+                        .labelsHidden()
+                        .datePickerStyle(.compact)
+                        .opacity(0.01)
+                        .allowsHitTesting(true)
+                        .environment(\.timeZone, selectedTimeZone) // Syncs the clock wheels
 
-                    HStack(spacing: 8) {
-                        Image(systemName: "clock")
-                            .foregroundColor(.black)
+                        HStack(spacing: 8) {
+                            Image(systemName: "clock")
+                                .foregroundColor(.black)
 
-                        Text("\(timeWithAbbreviationFormatter.string(from: (rawEndDate ?? rawDate))) \(tzAbbreviation)")
-                            .font(.subheadline)
-                            .foregroundColor(.black)
+                            Text("\(formatTime(rawEndDate ?? rawDate)) \(selectedTimeZone.abbreviation() ?? "")")
+                                .font(.subheadline)
+                                .foregroundColor(.black)
+                        }
+                        .padding(.horizontal, 10)
+                        .padding(.vertical, 12)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .background(Color.white)
+                        .cornerRadius(8)
+                        .shadow(color: Color.black.opacity(0.15), radius: 4, x: 0, y: 2)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 8)
+                                .stroke(Color.black.opacity(0.4), lineWidth: 1)
+                        )
+                        .allowsHitTesting(false)
                     }
-                    .padding(.horizontal, 10)
-                    .padding(.vertical, 12)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .background(Color.white)
-                    .cornerRadius(8)
-                    .shadow(color: Color.black.opacity(0.15), radius: 4, x: 0, y: 2)
-                    .overlay(
-                        RoundedRectangle(cornerRadius: 8)
-                            .stroke(Color.black.opacity(0.4), lineWidth: 1)
-                    )
-                    .allowsHitTesting(false)
+                    .frame(width: 145)
                 }
-                .frame(width: 145)
-            }
-            .padding(.horizontal, 12)
-            .padding(.bottom, 15)
+                .padding(.horizontal, 12)
+                .padding(.bottom, 15)
 
             
             // MARK: - TIMEZONE PICKER (Figma style: city (ABBR) + black chevron)
