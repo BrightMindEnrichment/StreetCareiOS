@@ -474,14 +474,15 @@ struct InputTileDetails: View {
     
     // Helper to determine if the Next button should be disabled
     var isNextButtonDisabled: Bool {
-        if currentQuestionType == .personalDetails {
+        switch currentQuestionType {
+        case .personalDetails:
+            // Returns true if the first name is empty
             return personalDetails.firstname.isEmpty
-        } else if currentQuestionType == .interactionTime {
-            if let endDate = rawEndDate, endDate < rawDate {
-                return true
-            }
+            
+        case .interactionTime:
+            // Merged logic: Returns true ONLY if an end date exists AND it's before the start date
+            return rawEndDate.map { $0 < rawDate } ?? false
         }
-        return false
     }
 }
 
