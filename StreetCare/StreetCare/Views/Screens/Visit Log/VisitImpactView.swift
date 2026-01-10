@@ -37,7 +37,7 @@ struct VisitImpactView: View {
    
     @AppStorage("hideProvidedHelpAlert") private var hideProvidedHelpAlert: Bool = false
     //Popup control state variable
-    @State private var showWebRedirectPopup = true
+    @State private var showWebRedirectPopup = false
 
 
     var body: some View {
@@ -294,7 +294,7 @@ struct VisitImpactView: View {
                             itemsDonated = 0
                         }
                         //Show popup when view appears
-                        showWebRedirectPopup = true
+                        showWebRedirectPopup = false
                     }
                 }
             }
