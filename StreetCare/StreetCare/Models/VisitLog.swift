@@ -73,6 +73,16 @@ class VisitLog: ObservableObject, Identifiable {
     @Published var stateAbbv = ""
     @Published var zipcode = ""
     @Published var status = "pending"
+    
+    // Contact fields for Q2 (personal details)
+    @Published var firstname: String = ""
+    @Published var lastname: String = ""
+    @Published var contactphone: String = ""
+    @Published var contactemail: String = ""
+
+    // End time (optional) for interactions (used when you want start+end)
+    @Published var whenVisitEnd: Date = Date(timeIntervalSince1970: 0)
+
     var isFromOldCollection: Bool = true
     init(id: String) {
         self.id = id
