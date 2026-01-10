@@ -266,11 +266,8 @@ struct VisitImpactView: View {
                         }
 
                         //Show popup when view appears
-                        showWebRedirectPopup = false
+//                        showWebRedirectPopup = false
 
-                        .listStyle(PlainListStyle())
-                        .scrollContentBackground(.hidden)
-                        .background(Color.clear)
                     }
                     
                     Spacer()
