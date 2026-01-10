@@ -82,6 +82,7 @@ class VisitLogDataAdapter {
             }
         }
     }
+
     func addVisitLog(_ visitLog: VisitLog) {
         guard let user = Auth.auth().currentUser else {
             print("❌ No authenticated user")
@@ -129,9 +130,10 @@ class VisitLogDataAdapter {
         // -------------------------
         // Counts / Required numbers
         // -------------------------
-        data["numPeopleHelped"] = visitLog.peopleHelped
-        data["numPeopleJoined"] = visitLog.numberOfHelpers
-        data["carePackagesDistributed"] = visitLog.itemQty
+        data["numPeopleHelped"] = visitLog.numPeopleHelped
+        data["numPeopleJoined"] = visitLog.numPeopleJoined
+        data["carePackageContents"] = visitLog.carePackageContents
+        data["carePackagesDistributed"] = visitLog.carePackagesDistributed
         data["helpRequestCount"] = 0
 
         // -------------------------

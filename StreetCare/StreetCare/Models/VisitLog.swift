@@ -36,6 +36,10 @@ class VisitLog: ObservableObject, Identifiable {
     @Published var whatGiven: [String] = []
     @Published var otherNotes = ""
     @Published var itemQty = 0
+    @Published var numPeopleHelped = 0
+    @Published var numPeopleJoined = 0
+    @Published var carePackagesDistributed = 0
+    @Published var carePackageContents: String = ""
     @Published var itemQtyDescription = ""
     @Published var rating = 0
     @Published var ratingNotes = ""

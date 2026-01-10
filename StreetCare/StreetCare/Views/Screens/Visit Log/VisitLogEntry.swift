@@ -46,7 +46,7 @@ struct VisitLogEntry: View {
     
     var body: some View {
         NavigationStack {
-            VStack {
+            VStack(spacing: 10) {
                 
                 if !isComplete{
                     Text(NSLocalizedString("logYourInteraction", comment: ""))
@@ -203,41 +203,26 @@ struct VisitLogEntry: View {
                     .animation(.easeOut(duration: 0.16), value: keyboard.currentHeight)
                     
                 case 5:
-                    // Original case 4 is now case 5 (Support Provided)
-                    InputTileList(
-                        questionNumber: 5, // UPDATED: was 4
-                        totalQuestions: totalQuestions,
-                        optionCount: 5,
-                        size: CGSize(width: 360, height: 450),
-                        question1: NSLocalizedString("questionFourPartOne", comment: ""),
-                        question2: NSLocalizedString("questionFourPartTwo", comment: ""),
-                        visitLog: visitLog,
-                        nextAction: { questionNumber += 1 },
-                        previousAction: { questionNumber -= 1 },
-                        skipAction: { questionNumber += 1 },
-                        buttonMode: .navigation,
-                        showProgressBar: true,
-                        supportMode: .provided
-                    )
-                    .padding(.bottom, keyboard.currentHeight == 0 ? 0 : keyboard.currentHeight - 250)
-                    .animation(.easeOut(duration: 0.16), value: keyboard.currentHeight)
-                    
-                case 6:
-                    // Original case 5 is now case 6 (Items Given)
                     InputTileNumber(
-                        questionNumber: 6, // UPDATED: was 5
-                        totalQuestions: totalQuestions,
+                        questionNumber: 5,
+                        totalQuestions: 7,
                         tileWidth: 360,
-                        tileHeight: 500,
+                        tileHeight: 467,
                         question1: NSLocalizedString("questionFivePartOne", comment: ""),
                         question2: NSLocalizedString("questionFivePartTwo", comment: ""),
-                        question3: "",
+                        question3: NSLocalizedString("questionFivePartThree", comment: ""),
                         question4: "",
                         descriptionLabel: "",
                         disclaimerText: "",
-                        placeholderText: "Enter notes here",
-                        number: $visitLog.itemQty,
-                        generalDescription: $visitLog.itemQtyDescription,
+                        placeholderText: "",
+                        number: $visitLog.numPeopleHelped,
+                        number2: Binding<Int?>(
+                            get: { visitLog.numPeopleJoined },
+                            set: { visitLog.numPeopleJoined = $0 ?? 0 }
+                        ),
+                        dualNumberMode: true,
+                        showTextEditor: false,
+                        generalDescription: .constant(""),
                         generalDescription2: .constant(""),
                         nextAction: {
                             questionNumber += 1
@@ -247,11 +232,43 @@ struct VisitLogEntry: View {
                         },
                         skipAction: {
                             questionNumber += 1
-                        }
+                        },
+                        showProgressBar: true
                     )
                     .padding(.bottom, keyboard.currentHeight == 0 ? 0 : 35)
                     .animation(.easeOut(duration: 0.16), value: keyboard.currentHeight)
-                    
+                case 6:
+                    InputTileNumber(
+                        questionNumber: 6,
+                        totalQuestions: 7,
+                        tileWidth: 360,
+                        tileHeight: 533,
+                        question1: NSLocalizedString("questionSixPartOne", comment: ""),
+                        question2: NSLocalizedString("questionSixPartTwo", comment: ""),
+                        question3: "",
+                        question4: "",
+                        descriptionLabel: "",
+                        editorHeaderLine1: NSLocalizedString("whatItemsIncludedLine1", comment: ""),
+                        editorHeaderLine2: NSLocalizedString("whatItemsIncludedLine2", comment: ""),
+                        disclaimerText: "",
+                        placeholderText: "Enter notes here",
+                        number: $visitLog.carePackagesDistributed,
+                        generalDescription: $visitLog.carePackageContents,
+                        generalDescription2: .constant(""),
+                        nextAction: {
+                            questionNumber += 1
+                        },
+                        previousAction: {
+                            questionNumber -= 1
+                        },
+                        skipAction: {
+                            questionNumber += 1
+                        },
+                        showProgressBar: true
+                    )
+                    .padding(.bottom, keyboard.currentHeight == 0 ? 0 : 35)
+                    .animation(.easeOut(duration: 0.16), value: keyboard.currentHeight)
+                  
                 case 7:
                     // Original case 6 is now case 7 (Rating)
                     InputTileRate(
