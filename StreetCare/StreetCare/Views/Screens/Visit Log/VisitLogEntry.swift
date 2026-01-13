@@ -461,20 +461,26 @@ struct VisitLogEntry: View {
                         buttonMode: .navigation
                     )
                     
-                    
                 case 15:
-                    InputTileConsent(
-                        size: CGSize(width: 360, height: 450),
-                               submitAction: {
-                                   // Move to next question after consent is given
-                                   questionNumber += 1
-                                  //navigateNext = true
-                               }
-                           )
-                           .padding(.bottom, keyboard.currentHeight == 0 ? 0 : 50)
-                           .animation(.easeOut(duration: 0.16), value: keyboard.currentHeight)
-
-                   
+                    // Original case 14 is now case 15 (Volunteer Again)
+                    InputTileVolunteerAgain(
+                        questionNumber: 7,
+                        totalQuestions: totalQuestions, // Total questions remains 7 for the follow-up flow
+                        question1: NSLocalizedString("questionFourteenPartOne", comment: ""),
+                        question2: NSLocalizedString("questionFourteenPartTwo", comment: ""),
+                        volunteerAgain: $visitLog.volunteerAgain
+                    ) {
+                        isComplete = true
+                        questionNumber = 100
+                        saveVisitLog()
+                    } previousAction: {
+                        questionNumber -= 1
+                    } skipAction: {
+                        saveVisitLog()
+                        isComplete = true
+                        questionNumber = 100
+                    }
+                    
                 case 100:
                     InputTileComplete(log: visitLog) {
                         // Ensure placeholderDate is defined or use a valid default
