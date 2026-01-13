@@ -2,7 +2,6 @@ import SwiftUI
 
 struct InputTileIndividualInteraction: View {
 
-    // CHANGE: Use @ObservedObject instead of @Binding for a class instance
     @ObservedObject var log: VisitLog
     
     var questionTitle: String
@@ -18,10 +17,23 @@ struct InputTileIndividualInteraction: View {
 
     @State private var selectedDate: Date = Date()
     @State private var selectedTime: Date = Date()
+    @State private var selectedTimeZone: TimeZone = .current // Added TimeZone State
+    
     @State private var showDatePicker = false
     @State private var showTimePicker = false
     
     let states = ["AL", "AK", "AZ", "AR", "CA", "CO", "CT", "DE", "FL", "GA", "HI", "ID", "IL", "IN", "IA", "KS", "KY", "LA", "ME", "MD", "MA", "MI", "MN", "MS", "MO", "MT", "NE", "NV", "NH", "NJ", "NM", "NY", "NC", "ND", "OH", "OK", "OR", "PA", "RI", "SC", "SD", "TN", "TX", "UT", "VT", "VA", "WA", "WV", "WI", "WY"]
+    
+    // List of common US Time Zones for easier selection
+    let timeZones: [TimeZone] = [
+        TimeZone(identifier: "America/New_York")!,
+        TimeZone(identifier: "America/Chicago")!,
+        TimeZone(identifier: "America/Denver")!,
+        TimeZone(identifier: "America/Phoenix")!,
+        TimeZone(identifier: "America/Los_Angeles")!,
+        TimeZone(identifier: "America/Anchorage")!,
+        TimeZone(identifier: "Pacific/Honolulu")!
+    ].sorted { $0.identifier < $1.identifier }
     
     private var dateFormatter: DateFormatter {
         let formatter = DateFormatter()
@@ -32,15 +44,19 @@ struct InputTileIndividualInteraction: View {
     private var timeFormatter: DateFormatter {
         let formatter = DateFormatter()
         formatter.dateFormat = "h:mma"
+        formatter.timeZone = selectedTimeZone // Respect the selected timezone
         return formatter
     }
     
     private func syncDateTimeToLog() {
-        let calendar = Calendar.current
+        var calendar = Calendar.current
+        calendar.timeZone = selectedTimeZone // Set calendar to selected timezone
+        
         let dateComponents = calendar.dateComponents([.year, .month, .day], from: selectedDate)
         let timeComponents = calendar.dateComponents([.hour, .minute], from: selectedTime)
         
         var combined = DateComponents()
+        combined.timeZone = selectedTimeZone
         combined.year = dateComponents.year
         combined.month = dateComponents.month
         combined.day = dateComponents.day
@@ -119,6 +135,7 @@ struct InputTileIndividualInteraction: View {
             }
             
             HStack(spacing: 12) {
+                // Date Button
                 Button(action: { showDatePicker.toggle() }) {
                     dateTile(iconName: "calendar") { Text(dateFormatter.string(from: selectedDate)) }
                 }
@@ -129,14 +146,34 @@ struct InputTileIndividualInteraction: View {
                     }.presentationDetents([.medium])
                 }
                 
+                // Time Button (Now includes Time Zone selection in sheet)
                 Button(action: { showTimePicker.toggle() }) {
-                    dateTile(iconName: "clock") { Text(timeFormatter.string(from: selectedTime)) }
+                    dateTile(iconName: "clock") {
+                        Text("\(timeFormatter.string(from: selectedTime)) (\(selectedTimeZone.abbreviation() ?? ""))")
+                    }
                 }
                 .sheet(isPresented: $showTimePicker) {
-                    VStack {
-                        DatePicker("", selection: $selectedTime, displayedComponents: .hourAndMinute).datePickerStyle(.wheel).labelsHidden()
-                        Button("Done") { syncDateTimeToLog(); showTimePicker = false }.padding()
-                    }.presentationDetents([.medium])
+                    VStack(spacing: 20) {
+                        Text("Select Time & Zone").font(.headline).padding(.top)
+                        
+                        DatePicker("", selection: $selectedTime, displayedComponents: .hourAndMinute)
+                            .datePickerStyle(.wheel)
+                            .labelsHidden()
+                        
+                        // Time Zone Picker
+                        Picker("Time Zone", selection: $selectedTimeZone) {
+                            ForEach(timeZones, id: \.identifier) { zone in
+                                Text(zone.identifier.replacingOccurrences(of: "_", with: " ")).tag(zone)
+                            }
+                        }
+                        .pickerStyle(.menu)
+                        .padding(.horizontal)
+                        
+                        Button("Done") { syncDateTimeToLog(); showTimePicker = false }
+                            .padding()
+                            .buttonStyle(.borderedProminent)
+                    }
+                    .presentationDetents([.medium])
                 }
             }
             

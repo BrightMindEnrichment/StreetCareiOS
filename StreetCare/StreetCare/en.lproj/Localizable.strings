@@ -242,9 +242,9 @@
 "questionFivePartTwo" = "did you share?";
 "questionSixPartOne" = "How would you rate your";
 "questionSixPartTwo" = "outreach experience?";
-"questionSevenPartOne" = "Would you like to";
-"questionSevenPartTwo" = "answer a few more";
-"questionSevenPartThree" = "questions?";
+"questionSevenPartOne" = "Would you like to provide";
+"questionSevenPartTwo" = "details for each person";
+"questionSevenPartThree" = "you supported?";
 "questionEightPartOne" = "How much time did";
 "questionEightPartTwo" = "you spend on the";
 "questionEightPartThree" = "outreach?";
