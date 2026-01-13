@@ -125,12 +125,9 @@ class VisitLogDataAdapter {
 >>>>>>> main
     func addVisitLog(_ visitLog: VisitLog) {
         guard let user = Auth.auth().currentUser else {
-            print("No user?")
             print("❌ No authenticated user")
             return
         }
-        
-        let collectionName = "VisitLogBook_New"
 
         let db = Firestore.firestore()
 <<<<<<< HEAD

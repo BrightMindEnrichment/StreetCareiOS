@@ -264,9 +264,6 @@ struct VisitImpactView: View {
                             .listRowSeparatorTint(.clear, edges: .all)
                             .listSectionSeparatorTint(.clear, edges: .all)
                         }
-                        .listStyle(PlainListStyle())
-                        .scrollContentBackground(.hidden)
-                        .background(Color.clear)
 
                         //Show popup when view appears
 //                        showWebRedirectPopup = false
