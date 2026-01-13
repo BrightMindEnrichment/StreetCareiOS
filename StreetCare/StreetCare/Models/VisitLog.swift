@@ -36,6 +36,10 @@ class VisitLog: ObservableObject, Identifiable {
     @Published var whatGiven: [String] = []
     @Published var otherNotes = ""
     @Published var itemQty = 0
+    @Published var numPeopleHelped = 0
+    @Published var numPeopleJoined = 0
+    @Published var carePackagesDistributed = 0
+    @Published var carePackageContents: String = ""
     @Published var itemQtyDescription = ""
     @Published var rating = 0
     @Published var ratingNotes = ""
@@ -74,6 +78,7 @@ class VisitLog: ObservableObject, Identifiable {
     @Published var zipcode = ""
     @Published var status = "pending"
     
+<<<<<<< HEAD
     // Fields for the HelpRequest Case 9, 10 and 11.
     @Published var helpProvidedCategory: [String] = []
     @Published var furtherHelpCategory: [String] = []
@@ -81,6 +86,17 @@ class VisitLog: ObservableObject, Identifiable {
     @Published var helpRequestAdditionalDetails: String = ""
     @Published var helpRequestDocIds: [String] = []
     
+=======
+    // Contact fields for Q2 (personal details)
+    @Published var firstname: String = ""
+    @Published var lastname: String = ""
+    @Published var contactphone: String = ""
+    @Published var contactemail: String = ""
+
+    // End time (optional) for interactions (used when you want start+end)
+    @Published var whenVisitEnd: Date = Date(timeIntervalSince1970: 0)
+
+>>>>>>> main
     var isFromOldCollection: Bool = true
     init(id: String) {
         self.id = id

@@ -224,6 +224,13 @@
 "questionFivePartTwo" = "compartiste?";
 "questionSixPartOne" = "¿Cómo calificarías tu";
 "questionSixPartTwo" = "experiencia de divulgación?";
+"questionFivePartOne" = "Número de personas atendidas";
+"questionFivePartTwo" = "Cuántas personas han";
+"questionFivePartThree" = "venido contigo?";
+"questionSixPartOne" = "numero de atencion";
+"questionSixPartTwo" = "paquetes entregados";
+"whatItemsIncludedLine1" = "¿Qué artículos se incluyeron?";
+"whatItemsIncludedLine2" = "en el paquete de ayuda?";
 "questionSevenPartOne" = "¿Quieres responder";
 "questionSevenPartTwo" = "algunas preguntas";
 "questionSevenPartThree" = "más?";

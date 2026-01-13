@@ -242,6 +242,13 @@
 "questionFivePartTwo" = "did you share?";
 "questionSixPartOne" = "How would you rate your";
 "questionSixPartTwo" = "outreach experience?";
+"questionFivePartOne" = "Number of people helped";
+"questionFivePartTwo" = "How many people have";
+"questionFivePartThree" = "joined you?";
+"questionSixPartOne" = "Number of care";
+"questionSixPartTwo" = "packages given out";
+"whatItemsIncludedLine1" = "What items were included";
+"whatItemsIncludedLine2" = "in the care package?";
 "questionSevenPartOne" = "Would you like to";
 "questionSevenPartTwo" = "answer a few more";
 "questionSevenPartThree" = "questions?";

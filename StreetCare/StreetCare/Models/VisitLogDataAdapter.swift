@@ -82,6 +82,7 @@ class VisitLogDataAdapter {
             }
         }
     }
+<<<<<<< HEAD
     
     //Create HelpRequest document for this VisitLog
     private func createHelpRequest(for log: VisitLog) {
@@ -119,14 +120,20 @@ class VisitLogDataAdapter {
             }
         }
     
+=======
+
+>>>>>>> main
     func addVisitLog(_ visitLog: VisitLog) {
         guard let user = Auth.auth().currentUser else {
             print("No user?")
+            print("❌ No authenticated user")
             return
         }
         
         let collectionName = "VisitLogBook_New"
+
         let db = Firestore.firestore()
+<<<<<<< HEAD
         
         var userData: [String: Any] = [
             "whenVisit": Timestamp(date: visitLog.whenVisit),
@@ -214,8 +221,75 @@ class VisitLogDataAdapter {
                     self.createHelpRequest(for: visitLog)
                 }
             }
+=======
+        let collectionName = "InteractionLogDev"
+
+        var data: [String: Any] = [:]
+
+        // -------------------------
+        // Identity / User (dummy-safe)
+        // -------------------------
+        data["firstName"] = visitLog.firstname.isEmpty ? "Unknown" : visitLog.firstname
+        data["lastName"] = visitLog.lastname.isEmpty ? "Unknown" : visitLog.lastname
+        data["email"] = visitLog.contactemail.isEmpty ? "unknown@email.com" : visitLog.contactemail
+        data["phoneNumber"] = visitLog.contactphone.isEmpty ? "" : visitLog.contactphone
+        data["userId"] = user.uid
+
+        // -------------------------
+        // Dates & Times (from Q1 screen)
+        // -------------------------
+        data["interactionDate"] = Timestamp(date: visitLog.whenVisit)
+        data["startTimestamp"] = Timestamp(date: visitLog.whenVisit)
+
+        if visitLog.whenVisitEnd.timeIntervalSince1970 > 0 {
+            data["endTimestamp"] = Timestamp(date: visitLog.whenVisitEnd)
+        } else {
+            data["endTimestamp"] = Timestamp(date: visitLog.whenVisit)
+>>>>>>> main
         }
+
+        data["lastModifiedTimestamp"] = Timestamp(date: Date())
+
+        // -------------------------
+        // Address (dummy-safe)
+        // -------------------------
+        data["addr1"] = visitLog.street.isEmpty ? "N/A" : visitLog.street
+        data["addr2"] = ""
+        data["city"] = visitLog.city.isEmpty ? "N/A" : visitLog.city
+        data["state"] = visitLog.state.isEmpty ? "N/A" : visitLog.state
+        data["zipcode"] = visitLog.zipcode.isEmpty ? "00000" : visitLog.zipcode
+        data["country"] = "USA"
+
+        // -------------------------
+        // Counts / Required numbers
+        // -------------------------
+        data["numPeopleHelped"] = visitLog.numPeopleHelped
+        data["numPeopleJoined"] = visitLog.numPeopleJoined
+        data["carePackageContents"] = visitLog.carePackageContents
+        data["carePackagesDistributed"] = visitLog.carePackagesDistributed
+        data["helpRequestCount"] = 0
+
+        // -------------------------
+        // Required backend flags
+        // -------------------------
+        data["status"] = "Pending"
+        data["isPublic"] = false
+        data["listOfSupportsProvided"] = []
+
+        print("🟢 Writing InteractionLogDev with data:")
+        print(data.keys.sorted())
+
+        db.collection(collectionName)
+            .document(visitLog.id)
+            .setData(data) { error in
+                if let error = error {
+                    print("❌ Firestore write failed:", error.localizedDescription)
+                } else {
+                    print("✅ InteractionLogDev write success:", visitLog.id)
+                }
+            }
     }
+
     /*func addVisitLog_Community(_ visitLog: VisitLog) {
      
      guard let user = Auth.auth().currentUser else {
