@@ -36,6 +36,8 @@ struct VisitImpactView: View {
     @State private var didReceiveNewLogs = false
    
     @AppStorage("hideProvidedHelpAlert") private var hideProvidedHelpAlert: Bool = false
+    //Popup control state variable
+    @State private var showWebRedirectPopup = false
 
 
     var body: some View {
@@ -262,9 +264,10 @@ struct VisitImpactView: View {
                             .listRowSeparatorTint(.clear, edges: .all)
                             .listSectionSeparatorTint(.clear, edges: .all)
                         }
-                        .listStyle(PlainListStyle())
-                        .scrollContentBackground(.hidden)
-                        .background(Color.clear)
+
+                        //Show popup when view appears
+//                        showWebRedirectPopup = false
+
                     }
                     
                     Spacer()
