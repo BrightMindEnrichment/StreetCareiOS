@@ -1,10 +1,3 @@
-//
-//  InputTileFollowUpDate.swift
-//  StreetCare
-//
-//  Created by Daivik Girish on 3/11/25.
-//
-
 
 import SwiftUI
 
@@ -34,7 +27,63 @@ struct InputTileFollowUpDate: View {
 
     @Environment(\.presentationMode) var presentationMode
     @State private var showSuccessAlert = false
-    let placeholderDate = Date(timeIntervalSince1970: 0) // Jan 1, 1970
+    let placeholderDate = Date(timeIntervalSince1970: 0)
+
+    //  Picker state
+    @State private var selectedDate: Date = Date()
+    @State private var selectedTime: Date = Date()
+    @State private var selectedTimeZone: TimeZone = .current
+
+    @State private var showDatePicker = false
+    @State private var showTimePicker = false
+
+    //  Formatters
+    private var dateFormatter: DateFormatter {
+        let f = DateFormatter()
+        f.dateFormat = "MM/dd/yyyy"
+        return f
+    }
+
+    private var timeFormatter: DateFormatter {
+        let f = DateFormatter()
+        f.dateFormat = "h:mma"
+        f.timeZone = selectedTimeZone
+        return f
+    }
+
+    //  Combine date + time + timezone
+    private func syncDateTime() {
+        var calendar = Calendar.current
+        calendar.timeZone = selectedTimeZone
+
+        let dateComponents = calendar.dateComponents([.year, .month, .day], from: selectedDate)
+        let timeComponents = calendar.dateComponents([.hour, .minute], from: selectedTime)
+
+        var combined = DateComponents()
+        combined.year = dateComponents.year
+        combined.month = dateComponents.month
+        combined.day = dateComponents.day
+        combined.hour = timeComponents.hour
+        combined.minute = timeComponents.minute
+        combined.timeZone = selectedTimeZone
+
+        if let finalDate = calendar.date(from: combined) {
+            datetimeValue = finalDate
+        }
+    }
+    
+    private func gmtOffsetString(for tz: TimeZone) -> String {
+        let hours = tz.secondsFromGMT() / 3600
+        return hours >= 0 ? "GMT+\(hours)" : "GMT\(hours)"
+    }
+
+    private var allTimeZones: [(id: String, tz: TimeZone)] {
+        TimeZone.knownTimeZoneIdentifiers
+            .compactMap { id in
+                TimeZone(identifier: id).map { (id, $0) }
+            }
+            .sorted { $0.id < $1.id }
+    }
 
     var body: some View {
         VStack(spacing: 0) {
@@ -77,85 +126,110 @@ struct InputTileFollowUpDate: View {
                             .padding(.horizontal)
                     }
 
-                    // Titles
-                    VStack {
-                        Text(question1).font(.title2).fontWeight(.bold).padding(.top, 6).padding(.bottom, 6)
-                    }
+                    // Title
+                    Text(question1)
+                        .font(.title2)
+                        .fontWeight(.bold)
+                        .padding(.top, 6)
+                        .padding(.bottom, 6)
 
-                    // Date + Time row
+                    // Date + Time pills
                     HStack(spacing: 12) {
-                        // Date
-                        HStack(spacing: 8) {
-                            Image(systemName: "calendar")
-                                .foregroundColor(.black)
 
-                            DatePicker(
-                                "",
-                                selection: $datetimeValue,
-                                displayedComponents: [.date]
+                        Button {
+                            showDatePicker = true
+                        } label: {
+                            dateTile(
+                                icon: "calendar",
+                                text: dateFormatter.string(from: selectedDate),
+                                width: 157
                             )
-                            .labelsHidden()
-                            .datePickerStyle(.compact)
                         }
-                        .padding(.leading, 12)
-                        .padding(.vertical, 10)
-                        .frame(width: 175, alignment: .leading)
+                        .sheet(isPresented: $showDatePicker) {
+                            VStack {
+                                DatePicker(
+                                    "",
+                                    selection: $selectedDate,
+                                    displayedComponents: .date
+                                )
+                                .datePickerStyle(.wheel)
+                                .labelsHidden()
+
+                                Button("Done") {
+                                    syncDateTime()
+                                    showDatePicker = false
+                                }
+                                .padding()
+                            }
+                            .presentationDetents([.medium])
+                        }
+
+                        Button {
+                            showTimePicker = true
+                        } label: {
+                            dateTile(
+                                icon: "clock",
+                                text: "\(timeFormatter.string(from: selectedTime)) \(selectedTimeZone.abbreviation() ?? "")",
+                                width: 157
+                            )
+                        }
+                        .sheet(isPresented: $showTimePicker) {
+                            VStack(spacing: 16) {
+
+                                DatePicker(
+                                    "",
+                                    selection: $selectedTime,
+                                    displayedComponents: .hourAndMinute
+                                )
+                                .datePickerStyle(.wheel)
+                                .labelsHidden()
+
+                                Divider()
+
+                                Picker("Time Zone", selection: $selectedTimeZone) {
+                                    ForEach(allTimeZones, id: \.id) { entry in
+                                        Text(
+                                            "\(entry.id.replacingOccurrences(of: "_", with: " ")) " +
+                                            "(\(gmtOffsetString(for: entry.tz)))"
+                                        )
+                                        .tag(entry.tz)
+                                    }
+                                }
+                                .pickerStyle(.wheel)
+
+                                Button("Done") {
+                                    syncDateTime()
+                                    showTimePicker = false
+                                }
+                                .padding()
+                            }
+                            .presentationDetents([.large])
+                        }
+                    }
+                    .frame(width: 335)
+                    .padding(.horizontal)
+
+                    Text(question2)
+                        .font(.title2)
+                        .fontWeight(.bold)
+                        .padding(.bottom, 12)
+                        .padding(.top, 10)
+
+                    // TextEditor
+                    TextEditor(text: $additionalDetails)
+                        .frame(height: 120)
+                        .padding(8)
                         .background(Color.white)
                         .overlay(
                             RoundedRectangle(cornerRadius: 10)
                                 .stroke(Color.black, lineWidth: 1)
                         )
                         .cornerRadius(10)
+                        .frame(width: 335)
+                        .padding(.horizontal)
+                        .padding(.top, 12)
 
-                        // Time
-                        HStack(spacing: 8) {
-                            Image(systemName: "clock")
-                                .foregroundColor(.black)
-
-                            DatePicker(
-                                "",
-                                selection: $datetimeValue,
-                                displayedComponents: [.hourAndMinute]
-                            )
-                            .labelsHidden()
-                            .datePickerStyle(.compact)
-                        }
-                        .padding(.leading, 12)
-                        .padding(.vertical, 10)
-                        .frame(width: 140, alignment: .leading)
-                        .background(Color.white)
-                        .overlay(
-                            RoundedRectangle(cornerRadius: 10)
-                                .stroke(Color.black, lineWidth: 1)
-                        )
-                        .cornerRadius(10)
-                    }
-                    .frame(width: 335)
-                    .padding(.horizontal)
-                    
-                    VStack {
-                        Text(question2).font(.title2).fontWeight(.bold)
-                    }
-                    .padding(.bottom, 12).padding(.top, 10)
-                    
-                    // Text box: Any additional details
-                    VStack(alignment: .leading, spacing: 8) {
-
-                        TextEditor(text: $additionalDetails)
-                            .frame(height: 120)
-                            .padding(8)
-                            .background(Color.white)
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 10)
-                                    .stroke(Color.black, lineWidth: 1)
-                            )
-                            .cornerRadius(10)
-                    }
-                    .frame(width: 335)
-                    .padding(.horizontal)
-                    .padding(.top, 12)
-
-                    // Navigation buttons
+                    // Navigation buttons (unchanged)
                     if buttonMode == .navigation {
                         HStack {
                             Button(NSLocalizedString("previous", comment: "")) {
@@ -171,13 +245,6 @@ struct InputTileFollowUpDate: View {
                             Spacer()
 
                             Button(" " + NSLocalizedString("next", comment: "") + " ") {
-                                // Persist the selected date/time as-is
-//                                if isFollowUpDate &&
-//                                   Calendar.current.isDate(datetimeValue, equalTo: initialDateValue, toGranularity: .minute) {
-//                                    convertedDate = datetimeValue
-//                                } else {
-//                                    convertedDate = datetimeValue
-//                                }
                                 convertedDate = datetimeValue
                                 nextAction()
                             }
@@ -218,6 +285,11 @@ struct InputTileFollowUpDate: View {
                 }
             }
         }
+        .onAppear {
+            selectedDate = datetimeValue
+            selectedTime = datetimeValue
+            selectedTimeZone = .current
+        }
         .navigationBarTitleDisplayMode(.inline)
         .navigationTitle("Interaction Log")
         .frame(width: size.width, height: size.height)
@@ -242,5 +314,25 @@ struct InputTileFollowUpDate: View {
                 .padding(.top, 4)
                 .fontWeight(.bold)
         }
+    }
+
+    //  Pill UI
+    private func dateTile(icon: String, text: String, width: CGFloat) -> some View {
+        HStack(spacing: 8) {
+            Image(systemName: icon)
+                .foregroundColor(.black)
+
+            Text(text)
+                .foregroundColor(.black)
+
+            Spacer()
+        }
+        .padding(.horizontal, 12)
+        .frame(width: width, height: 38, alignment: .leading)
+        .background(Color.white)
+        .overlay(
+            RoundedRectangle(cornerRadius: 10)
+                .stroke(Color.black, lineWidth: 1)
+        )
     }
 }
