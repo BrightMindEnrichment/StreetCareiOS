@@ -87,6 +87,7 @@ struct VisitLogView: View {
     )
     @State private var mapLocations: [MapLocation] = []
     let placeholderDate = Date(timeIntervalSince1970: 0)
+
     var body: some View {
         ScrollView {
             VStack {
@@ -128,13 +129,12 @@ struct VisitLogView: View {
                     }
                     .padding()
                 }
+
                 NavLinkButton(title: "Delete", width: 350.0, secondaryButton: true, noBorder: false, color: Color.red)
                     .padding()
                     .onTapGesture {
                         showDeleteDialog = true
                     }
-
-                
             }
         }
         .onAppear {
@@ -158,38 +158,67 @@ struct VisitLogView: View {
                     - People Who Joined
                     """),
                     primaryButton: .default(Text("Confirm")) {
-                                let db = Firestore.firestore()
-                                let collectionName = log.source == "webProd" ? "visitLogWebProd" : "VisitLogBook_New"
-                                
-                                var updateData: [String: Any] = [
-                                    "status": "pending"
-                                ]
-                                
-                                if log.source == "webProd" {
-                                    updateData["public"] = true  //Use correct field name
-                                } else {
-                                    updateData["isPublic"] = true
-                                }
 
-                                db.collection(collectionName).document(log.id).updateData(updateData) { error in
-                                    if let error = error {
-                                        print("Error sharing log: \(error.localizedDescription)")
-                                    } else {
-                                        print("Log successfully shared with community.")
-                                        hasShared = true
-                                    }
-                                    showConfirmationDialog = false
-                                }
-                            },
+                        let db = Firestore.firestore()
+
+                        // ✅ ADDITION:
+                        // Include InteractionLogDev as a valid backing collection for “Share with Community”
+                        // without disturbing your existing logic for webProd / VisitLogBook_New.
+                        let collectionName: String
+                        if log.source == "webProd" {
+                            collectionName = "visitLogWebProd"
+                        } else if log.source == "interactionLogDev" {
+                            collectionName = "InteractionLogDev"
+                        } else {
+                            collectionName = "VisitLogBook_New"
+                        }
+
+                        var updateData: [String: Any] = [
+                            "status": "pending"
+                        ]
+
+                        if log.source == "webProd" {
+                            updateData["public"] = true  //Use correct field name
+                        } else {
+                            updateData["isPublic"] = true
+                        }
+
+                        db.collection(collectionName).document(log.id).updateData(updateData) { error in
+                            if let error = error {
+                                print("Error sharing log: \(error.localizedDescription)")
+                            } else {
+                                print("Log successfully shared with community.")
+                                hasShared = true
+                                log.isPublic = true
+                                log.status = "pending"
+                            }
+                            showConfirmationDialog = false
+                        }
+                    },
                     secondaryButton: .cancel {
-                                    showConfirmationDialog = false
-                                }
+                        showConfirmationDialog = false
+                    }
                 )
             } else {
                 return Alert(
                     title: Text("Delete visit log?"),
                     message: Text("This action cannot be undone."),
                     primaryButton: .destructive(Text("OK")) {
+
+                        // ✅ ADDITION:
+                        // Keep your existing delete flow, but also delete from InteractionLogDev
+                        // if this detail view is showing a dev interaction log.
+                        if log.source == "interactionLogDev" {
+                            let db = Firestore.firestore()
+                            db.collection("InteractionLogDev").document(log.id).delete { error in
+                                if let error = error {
+                                    print("Error deleting InteractionLogDev doc: \(error.localizedDescription)")
+                                }
+                                presentation.wrappedValue.dismiss()
+                            }
+                            return
+                        }
+
                         let adapter = VisitLogDataAdapter()
                         adapter.deleteVisitLog(log.id) {
                             presentation.wrappedValue.dismiss()
@@ -221,7 +250,6 @@ struct VisitLogView: View {
                 RoundedRectangle(cornerRadius: 16)
                     .stroke(Color.black, lineWidth: 1)
             )
-            
         }
     }
     
@@ -245,6 +273,7 @@ struct VisitLogView: View {
             }
         }
     }
+
     private func reverseGeocode(latitude: Double, longitude: Double) {
         let baseUrl = "https://api.geoapify.com/v1/geocode/reverse"
         let latLonParams = "lat=\(latitude)&lon=\(longitude)&apiKey=fd35651164a04eac9266ccfb75aa125d"
@@ -291,6 +320,7 @@ struct VisitLogView: View {
 
         task.resume()
     }
+
     @ViewBuilder
     private func interactionDateSection() -> some View {
         VisitLogDetailRow(
@@ -390,279 +420,271 @@ struct VisitLogView: View {
     private func peopleHelpedSection() -> some View {
         let peopleHelpedText = (log.peopleHelped == 0) ? "null" : "\(log.peopleHelped)"
         let descriptionText = log.peopleHelpedDescription.isEmpty ? "null" : log.peopleHelpedDescription
-        //if log.peopleHelped > 0 {
-            VisitLogDetailRow(
-                title: "Describe who you supported and how many individuals were involved.",
-                detail1: peopleHelpedText,
-                detail2: descriptionText,
-                separator: ", ",
-                onEdit: {
-                    editedPeopleHelped = log.peopleHelped
-                    editedPeopleHelpedDescription = log.peopleHelpedDescription
-                    navigateToEdit = true
-                },
-                canEdit: log.isFromOldCollection
-            )
-            
-            NavigationLink(
-                destination: InputTileNumber(
-                    questionNumber: 1,
-                    totalQuestions: 1,
-                    tileWidth: 320,
-                    tileHeight: 560,
-                    question1: "Describe who you",
-                    question2: "supported and how",
-                    question3: "many individuals",
-                    question4: "were involved.",
-                    descriptionLabel: "Description",
-                    disclaimerText: NSLocalizedString("disclaimer", comment: ""),
-                    placeholderText: NSLocalizedString("peopledescription", comment: ""),
-                    number: $editedPeopleHelped,
-                    generalDescription: $editedPeopleHelpedDescription,
-                    generalDescription2: .constant(""),
-                    nextAction: {
-                        let adapter = VisitLogDataAdapter()
-                        adapter.updateVisitLogField(log.id, field: "peopleHelped", value: editedPeopleHelped) {
-                            adapter.updateVisitLogField(log.id, field: "peopleHelpedDescription", value: editedPeopleHelpedDescription) {
-                                log.peopleHelped = editedPeopleHelped
-                                log.peopleHelpedDescription = editedPeopleHelpedDescription
-                                isEditingPeopleHelped = false
-                            }
+        VisitLogDetailRow(
+            title: "Describe who you supported and how many individuals were involved.",
+            detail1: peopleHelpedText,
+            detail2: descriptionText,
+            separator: ", ",
+            onEdit: {
+                editedPeopleHelped = log.peopleHelped
+                editedPeopleHelpedDescription = log.peopleHelpedDescription
+                navigateToEdit = true
+            },
+            canEdit: log.isFromOldCollection
+        )
+        
+        NavigationLink(
+            destination: InputTileNumber(
+                questionNumber: 1,
+                totalQuestions: 1,
+                tileWidth: 320,
+                tileHeight: 560,
+                question1: "Describe who you",
+                question2: "supported and how",
+                question3: "many individuals",
+                question4: "were involved.",
+                descriptionLabel: "Description",
+                disclaimerText: NSLocalizedString("disclaimer", comment: ""),
+                placeholderText: NSLocalizedString("peopledescription", comment: ""),
+                number: $editedPeopleHelped,
+                generalDescription: $editedPeopleHelpedDescription,
+                generalDescription2: .constant(""),
+                nextAction: {
+                    let adapter = VisitLogDataAdapter()
+                    adapter.updateVisitLogField(log.id, field: "peopleHelped", value: editedPeopleHelped) {
+                        adapter.updateVisitLogField(log.id, field: "peopleHelpedDescription", value: editedPeopleHelpedDescription) {
+                            log.peopleHelped = editedPeopleHelped
+                            log.peopleHelpedDescription = editedPeopleHelpedDescription
+                            isEditingPeopleHelped = false
                         }
-                    },
-                    previousAction: {},
-                    skipAction: {
-                        navigateToEdit = false
-                    },
-                    showProgressBar: false,
-                    buttonMode: .update
-                ),
-                isActive: $navigateToEdit
-            ) {
-                EmptyView()
-            }
-        //}
+                    }
+                },
+                previousAction: {},
+                skipAction: {
+                    navigateToEdit = false
+                },
+                showProgressBar: false,
+                buttonMode: .update
+            ),
+            isActive: $navigateToEdit
+        ) {
+            EmptyView()
+        }
     }
     
     @ViewBuilder
     private func providedhelpSection() -> some View {
         let supportText = log.whatGiven.isEmpty ? "null" : log.whatGiven.joined(separator: ", ")
-        //if !log.whatGiven.isEmpty {
-            HStack {
-                Text("What kind of support did you provide?")
-                    .screenLeft()
-                    .font(.system(size: 16.0)).bold()
-                    .padding(EdgeInsets(top: 10.0, leading: 20.0, bottom: 0.0, trailing: 20.0))
-                
-                Spacer()
-                
-                if log.isFromOldCollection {
-                    Button(action: {
-                        editedSupportProvided = log
-                        navigateToEditSupportProvided = true
-                    }) {
-                        Image("Tab-VisitLog-Inactive")
-                            .resizable()
-                            .frame(width: 16, height: 16)
-                            .foregroundColor(.gray)
-                    }
-                    .buttonStyle(BorderlessButtonStyle())
-                    .padding(.trailing, 20.0)
-                }
-            }
-            
-            Text(supportText)
+        HStack {
+            Text("What kind of support did you provide?")
                 .screenLeft()
-                .font(.system(size: 15.0))
-                .padding(EdgeInsets(top: 10.0, leading: 20.0, bottom: 10.0, trailing: 20.0))
+                .font(.system(size: 16.0)).bold()
+                .padding(EdgeInsets(top: 10.0, leading: 20.0, bottom: 0.0, trailing: 20.0))
             
-            Rectangle()
-                .frame(width: 350.0, height: 2.0)
-                .foregroundColor(.gray)
+            Spacer()
             
-            NavigationLink(
-                destination: InputTileList(
-                    questionNumber: 1,
-                    totalQuestions: 1,
-                    optionCount: 8,
-                    size: CGSize(width: 350, height: 350),
-                    question1: "What kind of support",
-                    question2: "did you provide?",
-                    visitLog: editedSupportProvided,
-                    nextAction: {
-                        let updatedFields: [String: Any] = [
-                            "foodAndDrinks": editedSupportProvided.foodAndDrinks,
-                            "clothes": editedSupportProvided.clothes,
-                            "hygiene": editedSupportProvided.hygiene,
-                            "wellness": editedSupportProvided.wellness,
-                            "medical": editedSupportProvided.medical,
-                            "social": editedSupportProvided.social,
-                            "legal": editedSupportProvided.legal,
-                            "other": editedSupportProvided.other,
-                            "otherNotes": editedSupportProvided.otherNotes,
-                            "whatGiven": editedSupportProvided.whatGiven
-                        ]
-
-                        let adapter = VisitLogDataAdapter()
-                        adapter.updateVisitLogFields(log.id, fields: updatedFields) {
-                            log.foodAndDrinks = editedSupportProvided.foodAndDrinks
-                            log.clothes = editedSupportProvided.clothes
-                            log.hygiene = editedSupportProvided.hygiene
-                            log.wellness = editedSupportProvided.wellness
-                            log.medical = editedSupportProvided.medical
-                            log.social = editedSupportProvided.social
-                            log.legal = editedSupportProvided.legal
-                            log.other = editedSupportProvided.other
-                            log.otherNotes = editedSupportProvided.otherNotes
-                            log.whatGiven = editedSupportProvided.whatGiven
-                            log = editedSupportProvided
-                            navigateToEditSupportProvided = false
-                        }
-                    },
-                    previousAction: { navigateToEditSupportProvided = false },
-                    skipAction: { navigateToEditSupportProvided = false },
-                    buttonMode: .update,
-                    showProgressBar: false
-                ),
-                isActive: $navigateToEditSupportProvided
-            ) {
-                EmptyView()
+            if log.isFromOldCollection {
+                Button(action: {
+                    editedSupportProvided = log
+                    navigateToEditSupportProvided = true
+                }) {
+                    Image("Tab-VisitLog-Inactive")
+                        .resizable()
+                        .frame(width: 16, height: 16)
+                        .foregroundColor(.gray)
+                }
+                .buttonStyle(BorderlessButtonStyle())
+                .padding(.trailing, 20.0)
             }
-        //}
+        }
+        
+        Text(supportText)
+            .screenLeft()
+            .font(.system(size: 15.0))
+            .padding(EdgeInsets(top: 10.0, leading: 20.0, bottom: 10.0, trailing: 20.0))
+        
+        Rectangle()
+            .frame(width: 350.0, height: 2.0)
+            .foregroundColor(.gray)
+        
+        NavigationLink(
+            destination: InputTileList(
+                questionNumber: 1,
+                totalQuestions: 1,
+                optionCount: 8,
+                size: CGSize(width: 350, height: 350),
+                question1: "What kind of support",
+                question2: "did you provide?",
+                visitLog: editedSupportProvided,
+                nextAction: {
+                    let updatedFields: [String: Any] = [
+                        "foodAndDrinks": editedSupportProvided.foodAndDrinks,
+                        "clothes": editedSupportProvided.clothes,
+                        "hygiene": editedSupportProvided.hygiene,
+                        "wellness": editedSupportProvided.wellness,
+                        "medical": editedSupportProvided.medical,
+                        "social": editedSupportProvided.social,
+                        "legal": editedSupportProvided.legal,
+                        "other": editedSupportProvided.other,
+                        "otherNotes": editedSupportProvided.otherNotes,
+                        "whatGiven": editedSupportProvided.whatGiven
+                    ]
+
+                    let adapter = VisitLogDataAdapter()
+                    adapter.updateVisitLogFields(log.id, fields: updatedFields) {
+                        log.foodAndDrinks = editedSupportProvided.foodAndDrinks
+                        log.clothes = editedSupportProvided.clothes
+                        log.hygiene = editedSupportProvided.hygiene
+                        log.wellness = editedSupportProvided.wellness
+                        log.medical = editedSupportProvided.medical
+                        log.social = editedSupportProvided.social
+                        log.legal = editedSupportProvided.legal
+                        log.other = editedSupportProvided.other
+                        log.otherNotes = editedSupportProvided.otherNotes
+                        log.whatGiven = editedSupportProvided.whatGiven
+                        log = editedSupportProvided
+                        navigateToEditSupportProvided = false
+                    }
+                },
+                previousAction: { navigateToEditSupportProvided = false },
+                skipAction: { navigateToEditSupportProvided = false },
+                buttonMode: .update,
+                showProgressBar: false
+            ),
+            isActive: $navigateToEditSupportProvided
+        ) {
+            EmptyView()
+        }
     }
 
     @ViewBuilder
     private func itemQtySection() -> some View {
         let qtyText = (log.itemQty == 0) ? "null" : "\(log.itemQty)"
         let descText = log.itemQtyDescription.isEmpty ? "null" : log.itemQtyDescription
-        //if log.itemQty > 0 {
-            VisitLogDetailRow(
-                title: "How many items did you donate?",
-                detail1: qtyText,
-                detail2: descText,
-                separator: ", ",
-                onEdit: {
-                    editedItemQty = log.itemQty
-                    editedItemQtyDescription = log.itemQtyDescription 
-                    navigateToEditItems = true
-                },
-                canEdit: log.isFromOldCollection
-            )
-            
-            NavigationLink(
-                destination: InputTileNumber(
-                    questionNumber: 5,
-                    totalQuestions: 6,
-                    tileWidth: 300,
-                    tileHeight: 420,
-                    question1: "How many items",
-                    question2: "did you donate?",
-                    question3: "",
-                    question4: "",
-                    descriptionLabel: "",
-                    disclaimerText: "",
-                    placeholderText: "Enter notes here",
-                    number: $editedItemQty,
-                    generalDescription: $editedItemQtyDescription,
-                    generalDescription2: .constant(""),
-                    nextAction: {
-                        let adapter = VisitLogDataAdapter()
-                        adapter.updateVisitLogField(log.id, field: "itemQty", value: editedItemQty) {
-                            adapter.updateVisitLogField(log.id, field: "itemQtyDescription", value: editedItemQtyDescription) {
-                                log.itemQty = editedItemQty
-                                log.itemQtyDescription = editedItemQtyDescription
-                                navigateToEditItems = false
-                            }
+        VisitLogDetailRow(
+            title: "How many items did you donate?",
+            detail1: qtyText,
+            detail2: descText,
+            separator: ", ",
+            onEdit: {
+                editedItemQty = log.itemQty
+                editedItemQtyDescription = log.itemQtyDescription
+                navigateToEditItems = true
+            },
+            canEdit: log.isFromOldCollection
+        )
+        
+        NavigationLink(
+            destination: InputTileNumber(
+                questionNumber: 5,
+                totalQuestions: 6,
+                tileWidth: 300,
+                tileHeight: 420,
+                question1: "How many items",
+                question2: "did you donate?",
+                question3: "",
+                question4: "",
+                descriptionLabel: "",
+                disclaimerText: "",
+                placeholderText: "Enter notes here",
+                number: $editedItemQty,
+                generalDescription: $editedItemQtyDescription,
+                generalDescription2: .constant(""),
+                nextAction: {
+                    let adapter = VisitLogDataAdapter()
+                    adapter.updateVisitLogField(log.id, field: "itemQty", value: editedItemQty) {
+                        adapter.updateVisitLogField(log.id, field: "itemQtyDescription", value: editedItemQtyDescription) {
+                            log.itemQty = editedItemQty
+                            log.itemQtyDescription = editedItemQtyDescription
+                            navigateToEditItems = false
                         }
-                    },
-                    previousAction: {
-                        navigateToEditItems = false
-                    },
-                    skipAction: {
-                        navigateToEditItems = false
-                    },
-                    showProgressBar: false,
-                    buttonMode: .update
-                ),
-                isActive: $navigateToEditItems
-            ) {
-                EmptyView()
-            }
-        //}
+                    }
+                },
+                previousAction: {
+                    navigateToEditItems = false
+                },
+                skipAction: {
+                    navigateToEditItems = false
+                },
+                showProgressBar: false,
+                buttonMode: .update
+            ),
+            isActive: $navigateToEditItems
+        ) {
+            EmptyView()
+        }
     }
 
     @ViewBuilder
     private func ratingSection() -> some View {
-        //if log.rating > 0 {
-            HStack {
-                Text("How would you rate your outreach experience?")
-                    .screenLeft()
-                    .font(.system(size: 16.0)).bold()
-                    .padding(.leading, 20)
-                    .padding(.top, 10)
+        HStack {
+            Text("How would you rate your outreach experience?")
+                .screenLeft()
+                .font(.system(size: 16.0)).bold()
+                .padding(.leading, 20)
+                .padding(.top, 10)
 
-                Spacer()
+            Spacer()
 
-                if log.isFromOldCollection {
-                    Button(action: {
-                        editedRating = log.rating
-                        editedRatingComment = log.ratingNotes
-                        navigateToEditRating = true
-                    }) {
-                        Image("Tab-VisitLog-Inactive")
-                            .resizable()
-                            .frame(width: 16, height: 16)
-                            .foregroundColor(.gray)
-                    }
-                    .buttonStyle(BorderlessButtonStyle())
-                    .padding(.trailing, 20.0)
+            if log.isFromOldCollection {
+                Button(action: {
+                    editedRating = log.rating
+                    editedRatingComment = log.ratingNotes
+                    navigateToEditRating = true
+                }) {
+                    Image("Tab-VisitLog-Inactive")
+                        .resizable()
+                        .frame(width: 16, height: 16)
+                        .foregroundColor(.gray)
                 }
+                .buttonStyle(BorderlessButtonStyle())
+                .padding(.trailing, 20.0)
             }
+        }
 
-            RatingView(rating: $log.rating, readOnly: true)
+        RatingView(rating: $log.rating, readOnly: true)
+            .screenLeft()
+            .font(.system(size: 15.0))
+            .padding(.horizontal, 5)
+
+        if !log.ratingNotes.isEmpty {
+            Text(log.ratingNotes)
                 .screenLeft()
                 .font(.system(size: 15.0))
-                .padding(.horizontal, 5)
+                .padding(.horizontal, 20)
+                .padding(.bottom, 10)
+        }
 
-            if !log.ratingNotes.isEmpty {
-                Text(log.ratingNotes)
-                    .screenLeft()
-                    .font(.system(size: 15.0))
-                    .padding(.horizontal, 20)
-                    .padding(.bottom, 10)
-            }
+        Rectangle()
+            .frame(width: 350.0, height: 2.0)
+            .foregroundColor(.gray)
 
-            Rectangle()
-                .frame(width: 350.0, height: 2.0)
-                .foregroundColor(.gray)
-
-            NavigationLink(
-                destination: InputTileRate(
-                    questionNumber: 1,
-                    totalQuestions: 1,
-                    question1: "How would you rate your",
-                    question2: "outreach experience?",
-                    textValue: $editedRatingComment,
-                    rating: $editedRating,
-                    nextAction: {
-                        let adapter = VisitLogDataAdapter()
-                        adapter.updateVisitLogField(log.id, field: "rating", value: editedRating) {
-                            adapter.updateVisitLogField(log.id, field: "ratingComment", value: editedRatingComment) {
-                                log.rating = editedRating
-                                log.ratingNotes = editedRatingComment // ✅ update local model
-                                navigateToEditRating = false
-                            }
+        NavigationLink(
+            destination: InputTileRate(
+                questionNumber: 1,
+                totalQuestions: 1,
+                question1: "How would you rate your",
+                question2: "outreach experience?",
+                textValue: $editedRatingComment,
+                rating: $editedRating,
+                nextAction: {
+                    let adapter = VisitLogDataAdapter()
+                    adapter.updateVisitLogField(log.id, field: "rating", value: editedRating) {
+                        adapter.updateVisitLogField(log.id, field: "ratingComment", value: editedRatingComment) {
+                            log.rating = editedRating
+                            log.ratingNotes = editedRatingComment
+                            navigateToEditRating = false
                         }
-                    },
-                    previousAction: { navigateToEditRating = false },
-                    skipAction: { navigateToEditRating = false },
-                    buttonMode: .update
-                ),
-                isActive: $navigateToEditRating
-            ) {
-                EmptyView()
-            }
-        //}
+                    }
+                },
+                previousAction: { navigateToEditRating = false },
+                skipAction: { navigateToEditRating = false },
+                buttonMode: .update
+            ),
+            isActive: $navigateToEditRating
+        ) {
+            EmptyView()
+        }
     }
 
     @ViewBuilder
@@ -714,284 +736,264 @@ struct VisitLogView: View {
     @ViewBuilder
     private func numberOfHelpersSection() -> some View {
         let helpersText = (log.numberOfHelpers == 0) ? "null" : "\(log.numberOfHelpers)"
-        //if log.numberOfHelpers > 0 {
-            VisitLogDetailRow(
-                title: "Who helped you prepare or joined?",
-                detail1: helpersText,
-                detail2: log.numberOfHelpersComment,
-                separator: ", ",
-                onEdit: {
-                    editedHelpers = log.numberOfHelpers
-                    editedHelpersComment = log.numberOfHelpersComment
-                    navigateToEditHelpers = true
-                },
-                canEdit: log.isFromOldCollection
-            )
-            
-            NavigationLink(
-                destination: InputTileNumber(
-                    questionNumber: 4,
-                    totalQuestions: 6,
-                    tileWidth: 300,
-                    tileHeight: 420,
-                    question1: "Who helped you",
-                    question2: "prepare or joined?",
-                    question3: "",
-                    question4: "",
-                    descriptionLabel: "",
-                    disclaimerText: "",
-                    placeholderText: "Enter notes here",
-                    number: $editedHelpers,
-                    generalDescription: $editedHelpersComment,
-                    generalDescription2: .constant(""),
-                    nextAction: {
-                        let adapter = VisitLogDataAdapter()
-                        adapter.updateVisitLogField(log.id, field: "numberOfHelpers", value: editedHelpers) {
-                            adapter.updateVisitLogField(log.id, field: "numberOfHelpersComment", value: editedHelpersComment) {
-                                log.numberOfHelpers = editedHelpers
-                                log.numberOfHelpersComment = editedHelpersComment
-                                navigateToEditHelpers = false
-                            }
+        VisitLogDetailRow(
+            title: "Who helped you prepare or joined?",
+            detail1: helpersText,
+            detail2: log.numberOfHelpersComment,
+            separator: ", ",
+            onEdit: {
+                editedHelpers = log.numberOfHelpers
+                editedHelpersComment = log.numberOfHelpersComment
+                navigateToEditHelpers = true
+            },
+            canEdit: log.isFromOldCollection
+        )
+        
+        NavigationLink(
+            destination: InputTileNumber(
+                questionNumber: 4,
+                totalQuestions: 6,
+                tileWidth: 300,
+                tileHeight: 420,
+                question1: "Who helped you",
+                question2: "prepare or joined?",
+                question3: "",
+                question4: "",
+                descriptionLabel: "",
+                disclaimerText: "",
+                placeholderText: "Enter notes here",
+                number: $editedHelpers,
+                generalDescription: $editedHelpersComment,
+                generalDescription2: .constant(""),
+                nextAction: {
+                    let adapter = VisitLogDataAdapter()
+                    adapter.updateVisitLogField(log.id, field: "numberOfHelpers", value: editedHelpers) {
+                        adapter.updateVisitLogField(log.id, field: "numberOfHelpersComment", value: editedHelpersComment) {
+                            log.numberOfHelpers = editedHelpers
+                            log.numberOfHelpersComment = editedHelpersComment
+                            navigateToEditHelpers = false
                         }
-                    },
-                    previousAction: {
-                        navigateToEditHelpers = false
-                    },
-                    skipAction: {
-                        navigateToEditHelpers = false
-                    },
-                    showProgressBar: false,
-                    buttonMode: .update
-                ),
-                isActive: $navigateToEditHelpers
-            ) {
-                EmptyView()
-            }
-        //}
+                    }
+                },
+                previousAction: {
+                    navigateToEditHelpers = false
+                },
+                skipAction: {
+                    navigateToEditHelpers = false
+                },
+                showProgressBar: false,
+                buttonMode: .update
+            ),
+            isActive: $navigateToEditHelpers
+        ) {
+            EmptyView()
+        }
     }
+
     @ViewBuilder
     private func peopleNeedFurtherHelpSection() -> some View {
         let peopleNeedHelpText = (log.peopleNeedFurtherHelp == 0) ? "null" : "\(log.peopleNeedFurtherHelp)"
-        //if log.peopleNeedFurtherHelp > 0 {
-            VisitLogDetailRow(
-                title: "How many people still need support?",
-                detail1: peopleNeedHelpText,
-                detail2: log.peopleNeedFurtherHelpComment,
-                separator: ", ",
-                onEdit: {
-                    editedPeopleNeedHelp = log.peopleNeedFurtherHelp
-                    editedPeopleNeedHelpComment = log.peopleNeedFurtherHelpComment
-                    editedPeopleNeedHelpLocation = log.peopleNeedFurtherHelpLocation
-                    navigateToEditPeopleNeedHelp = true
-                },
-                canEdit: log.isFromOldCollection
-            )
-            
-            NavigationLink(
-                destination: InputTileNumber(
-                    questionNumber: 6,
-                    totalQuestions: 6,
-                    tileWidth: 360,
-                    tileHeight: 580,
-                    question1: "How many people",
-                    question2: "still need support?",
-                    question3: "",
-                    question4: "",
-                    descriptionLabel: "Description",
-                    descriptionLabel2: "Location Description",
-                    disclaimerText: "",
-                    placeholderText: "Enter notes here",
-                    number: $editedPeopleNeedHelp,
-                    generalDescription: $editedPeopleNeedHelpComment,
-                    generalDescription2: $editedPeopleNeedHelpLocation,
-                    nextAction: {
-                        let adapter = VisitLogDataAdapter()
-                        adapter.updateVisitLogField(log.id, field: "peopleNeedFurtherHelp", value: editedPeopleNeedHelp) {
-                            adapter.updateVisitLogField(log.id, field: "peopleNeedFurtherHelpComment", value: editedPeopleNeedHelpComment) {
-                                adapter.updateVisitLogField(log.id, field: "peopleNeedFurtherHelpLocation", value: editedPeopleNeedHelpLocation){
-                                    log.peopleNeedFurtherHelp = editedPeopleNeedHelp
-                                    log.peopleNeedFurtherHelpComment = editedPeopleNeedHelpComment
-                                    log.peopleNeedFurtherHelpLocation = editedPeopleNeedHelpLocation
-                                    navigateToEditPeopleNeedHelp = false
-                                }
+        VisitLogDetailRow(
+            title: "How many people still need support?",
+            detail1: peopleNeedHelpText,
+            detail2: log.peopleNeedFurtherHelpComment,
+            separator: ", ",
+            onEdit: {
+                editedPeopleNeedHelp = log.peopleNeedFurtherHelp
+                editedPeopleNeedHelpComment = log.peopleNeedFurtherHelpComment
+                editedPeopleNeedHelpLocation = log.peopleNeedFurtherHelpLocation
+                navigateToEditPeopleNeedHelp = true
+            },
+            canEdit: log.isFromOldCollection
+        )
+        
+        NavigationLink(
+            destination: InputTileNumber(
+                questionNumber: 6,
+                totalQuestions: 6,
+                tileWidth: 360,
+                tileHeight: 580,
+                question1: "How many people",
+                question2: "still need support?",
+                question3: "",
+                question4: "",
+                descriptionLabel: "Description",
+                descriptionLabel2: "Location Description",
+                disclaimerText: "",
+                placeholderText: "Enter notes here",
+                number: $editedPeopleNeedHelp,
+                generalDescription: $editedPeopleNeedHelpComment,
+                generalDescription2: $editedPeopleNeedHelpLocation,
+                nextAction: {
+                    let adapter = VisitLogDataAdapter()
+                    adapter.updateVisitLogField(log.id, field: "peopleNeedFurtherHelp", value: editedPeopleNeedHelp) {
+                        adapter.updateVisitLogField(log.id, field: "peopleNeedFurtherHelpComment", value: editedPeopleNeedHelpComment) {
+                            adapter.updateVisitLogField(log.id, field: "peopleNeedFurtherHelpLocation", value: editedPeopleNeedHelpLocation){
+                                log.peopleNeedFurtherHelp = editedPeopleNeedHelp
+                                log.peopleNeedFurtherHelpComment = editedPeopleNeedHelpComment
+                                log.peopleNeedFurtherHelpLocation = editedPeopleNeedHelpLocation
+                                navigateToEditPeopleNeedHelp = false
                             }
                         }
-                    },
-                    previousAction: {
-                        navigateToEditPeopleNeedHelp = false
-                    },
-                    skipAction: {
-                        navigateToEditPeopleNeedHelp = false
-                    },
-                    showProgressBar: false,
-                    showTextEditor2: true,
-                    buttonMode: .update
-                ),
-                isActive: $navigateToEditPeopleNeedHelp
-            ) {
-                EmptyView()
-            }
-        //}
+                    }
+                },
+                previousAction: {
+                    navigateToEditPeopleNeedHelp = false
+                },
+                skipAction: {
+                    navigateToEditPeopleNeedHelp = false
+                },
+                showProgressBar: false,
+                showTextEditor2: true,
+                buttonMode: .update
+            ),
+            isActive: $navigateToEditPeopleNeedHelp
+        ) {
+            EmptyView()
+        }
     }
 
     @ViewBuilder
     private func volunteerAgainSection() -> some View {
         let volunteerText = log.volunteerAgain.isEmpty ? "null" : log.volunteerAgain
-        //if !log.volunteerAgain.isEmpty {
-            VisitLogDetailRow(
-                title: "Would you like to volunteer again?",
-                detail1: volunteerText,
-                onEdit: {
-                    editedVolunteerAgain = log.volunteerAgain
-                    navigateToEditVolunteerAgain = true
-                },
-                canEdit: log.isFromOldCollection
-            )
+        VisitLogDetailRow(
+            title: "Would you like to volunteer again?",
+            detail1: volunteerText,
+            onEdit: {
+                editedVolunteerAgain = log.volunteerAgain
+                navigateToEditVolunteerAgain = true
+            },
+            canEdit: log.isFromOldCollection
+        )
 
-            NavigationLink(
-                destination: InputTileVolunteerAgain(
-                    questionNumber: 3,
-                    totalQuestions: 3,
-                    question1: "Would you be willing",
-                    question2: "to volunteer again?",
-                    volunteerAgain: $editedVolunteerAgain,
-                    nextAction: {
-                        let adapter = VisitLogDataAdapter()
-                        adapter.updateVisitLogField(log.id, field: "volunteerAgain", value: editedVolunteerAgain) {
-                            log.volunteerAgain = editedVolunteerAgain
-                            navigateToEditVolunteerAgain = false
-                        }
-                    },
-                    previousAction: { navigateToEditVolunteerAgain = false },
-                    skipAction: { navigateToEditVolunteerAgain = false },
-                    buttonMode: .update
-                ),
-                isActive: $navigateToEditVolunteerAgain
-            ) {
-                EmptyView()
-            }
-        //}
+        NavigationLink(
+            destination: InputTileVolunteerAgain(
+                questionNumber: 3,
+                totalQuestions: 3,
+                question1: "Would you be willing",
+                question2: "to volunteer again?",
+                volunteerAgain: $editedVolunteerAgain,
+                nextAction: {
+                    let adapter = VisitLogDataAdapter()
+                    adapter.updateVisitLogField(log.id, field: "volunteerAgain", value: editedVolunteerAgain) {
+                        log.volunteerAgain = editedVolunteerAgain
+                        navigateToEditVolunteerAgain = false
+                    }
+                },
+                previousAction: { navigateToEditVolunteerAgain = false },
+                skipAction: { navigateToEditVolunteerAgain = false },
+                buttonMode: .update
+            ),
+            isActive: $navigateToEditVolunteerAgain
+        ) {
+            EmptyView()
+        }
     }
 
     @ViewBuilder
     private func followUpSection() -> some View {
-        //if log.followUpWhenVisit != Date.distantPast {
-            VisitLogDetailRow(
-                title: "Is there a planned date to interact with them again?",
-                detail1: Calendar.current.isDate(log.followUpWhenVisit, equalTo: placeholderDate, toGranularity: .day)
-                    ? "No further date"
-                    : log.followUpWhenVisit.formatted(date: .abbreviated, time: .omitted),
-                onEdit: {
-                    editedFollowUpDate = log.followUpWhenVisit
-                    navigateToEditFollowUpDate = true
+        VisitLogDetailRow(
+            title: "Is there a planned date to interact with them again?",
+            detail1: Calendar.current.isDate(log.followUpWhenVisit, equalTo: placeholderDate, toGranularity: .day)
+                ? "No further date"
+                : log.followUpWhenVisit.formatted(date: .abbreviated, time: .omitted),
+            onEdit: {
+                editedFollowUpDate = log.followUpWhenVisit
+                navigateToEditFollowUpDate = true
             },
-                canEdit: log.isFromOldCollection
+            canEdit: log.isFromOldCollection
         )
-            NavigationLink(
-                destination: InputTileDate(
-                    questionNumber: 1,
-                    totalQuestions: 1,
-                    question1: "Is there a planned",
-                    question2: "date to interact",
-                    question3: "with them again?",
-                    showSkip: false,
-                    showProgressBar: false,
-                    buttonMode: .update,
-                    datetimeValue: $editedFollowUpDate,
-                    convertedDate: $editedFollowUpDate,
-                    nextAction: {
-                        let adapter = VisitLogDataAdapter()
-                        adapter.updateVisitLogField(log.id, field: "followUpWhenVisit", value: editedFollowUpDate) {
-                            log.followUpWhenVisit = editedFollowUpDate
-                            navigateToEditFollowUpDate = false
-                        }
-                    },
-                    skipAction: { navigateToEditFollowUpDate = false },
-                    previousAction: { navigateToEditFollowUpDate = false }
-                ),
-                isActive: $navigateToEditFollowUpDate
-            ) {
+        NavigationLink(
+            destination: InputTileDate(
+                questionNumber: 1,
+                totalQuestions: 1,
+                question1: "Is there a planned",
+                question2: "date to interact",
+                question3: "with them again?",
+                showSkip: false,
+                showProgressBar: false,
+                buttonMode: .update,
+                datetimeValue: $editedFollowUpDate,
+                convertedDate: $editedFollowUpDate,
+                nextAction: {
+                    let adapter = VisitLogDataAdapter()
+                    adapter.updateVisitLogField(log.id, field: "followUpWhenVisit", value: editedFollowUpDate) {
+                        log.followUpWhenVisit = editedFollowUpDate
+                        navigateToEditFollowUpDate = false
+                    }
+                },
+                skipAction: { navigateToEditFollowUpDate = false },
+                previousAction: { navigateToEditFollowUpDate = false }
+            ),
+            isActive: $navigateToEditFollowUpDate
+        ) {
             EmptyView()
-        //}
         }
     }
+
     @ViewBuilder
     private func furthernotesSection() -> some View {
         let notesText = log.furtherOtherNotes.isEmpty ? "null" : log.furtherOtherNotes
-        //if log.furtherOtherNotes.count > 0 {
-            VisitLogDetailRow(
-                title: "Is there anything future volunteers should know?",
-                detail1: notesText,
-                onEdit: {
-                    editedFurtherOtherNotes = log.furtherOtherNotes
-                    navigateToEditFurtherOtherNotes = true
+        VisitLogDetailRow(
+            title: "Is there anything future volunteers should know?",
+            detail1: notesText,
+            onEdit: {
+                editedFurtherOtherNotes = log.furtherOtherNotes
+                navigateToEditFurtherOtherNotes = true
+            },
+            canEdit: log.isFromOldCollection
+        )
+        NavigationLink(
+            destination: InputTileNotes(
+                questionNumber: 6,
+                totalQuestions: 7,
+                tileWidth: 300,
+                tileHeight: 350,
+                question1: "Is there anything future",
+                question2: "volunteers should",
+                question3: "know?",
+                placeholderText: "Enter notes here",
+                otherNotes: $editedFurtherOtherNotes,
+                nextAction: {
+                    let adapter = VisitLogDataAdapter()
+                    adapter.updateVisitLogField(log.id, field: "furtherOtherNotes", value: editedFurtherOtherNotes) {
+                        log.furtherOtherNotes = editedFurtherOtherNotes
+                        navigateToEditFurtherOtherNotes = false
+                    }
                 },
-                canEdit: log.isFromOldCollection
-            )
-            NavigationLink(
-                destination: InputTileNotes(
-                    questionNumber: 6,
-                    totalQuestions: 7,
-                    tileWidth: 300,
-                    tileHeight: 350,
-                    question1: "Is there anything future",
-                    question2: "volunteers should",
-                    question3: "know?",
-                    placeholderText: "Enter notes here",
-                    otherNotes: $editedFurtherOtherNotes,
-                    nextAction: {
-                        let adapter = VisitLogDataAdapter()
-                        adapter.updateVisitLogField(log.id, field: "furtherOtherNotes", value: editedFurtherOtherNotes) {
-                            log.furtherOtherNotes = editedFurtherOtherNotes
-                            navigateToEditFurtherOtherNotes = false
-                        }
-                    },
-                    previousAction: { navigateToEditFurtherOtherNotes = false },
-                    skipAction: { navigateToEditFurtherOtherNotes = false },
-                    buttonMode: .update
-                ),
-                isActive: $navigateToEditFurtherOtherNotes
-            ) {
-                EmptyView()
-            }
-        //}
+                previousAction: { navigateToEditFurtherOtherNotes = false },
+                skipAction: { navigateToEditFurtherOtherNotes = false },
+                buttonMode: .update
+            ),
+            isActive: $navigateToEditFurtherOtherNotes
+        ) {
+            EmptyView()
+        }
     }
-    
 
     @ViewBuilder
     private func furtherSupportNeededSection() -> some View {
         let needsList = [
-                log.furtherFoodAndDrinks ? "Food & Drinks" : nil,
-                log.furtherClothes ? "Clothes" : nil,
-                log.furtherHygiene ? "Hygiene Products" : nil,
-                log.furtherWellness ? "Wellness/Emotional Support" : nil,
-                log.furtherMedical ? "Medical Help" : nil,
-                log.furtherSocial ? "Social Worker/Psychiatrist" : nil,
-                log.furtherLegal ? "Legal/Lawyer" : nil,
-                (log.furtherOther && !log.furtherOtherNotes.isEmpty) ? log.furtherOtherNotes : nil
-            ].compactMap { $0 }
-            let needsText = needsList.isEmpty ? "null" : needsList.joined(separator: ", ")
-        //if log.furtherFoodAndDrinks || log.furtherClothes || log.furtherHygiene || log.furtherWellness || log.furtherMedical || log.furtherSocial || log.furtherLegal || log.furtherOther {
-            let needs = [
-                log.furtherFoodAndDrinks ? "Food & Drinks" : nil,
-                log.furtherClothes ? "Clothes" : nil,
-                log.furtherHygiene ? "Hygiene Products" : nil,
-                log.furtherWellness ? "Wellness/Emotional Support" : nil,
-                log.furtherMedical ? "Medical Help" : nil,
-                log.furtherSocial ? "Social Worker/Psychiatrist" : nil,
-                log.furtherLegal ? "Legal/Lawyer" : nil,
-                (log.furtherOther && !log.furtherOtherNotes.isEmpty) ? log.furtherOtherNotes : nil
-            ].compactMap { $0 }.joined(separator: ", ")
+            log.furtherFoodAndDrinks ? "Food & Drinks" : nil,
+            log.furtherClothes ? "Clothes" : nil,
+            log.furtherHygiene ? "Hygiene Products" : nil,
+            log.furtherWellness ? "Wellness/Emotional Support" : nil,
+            log.furtherMedical ? "Medical Help" : nil,
+            log.furtherSocial ? "Social Worker/Psychiatrist" : nil,
+            log.furtherLegal ? "Legal/Lawyer" : nil,
+            (log.furtherOther && !log.furtherOtherNotes.isEmpty) ? log.furtherOtherNotes : nil
+        ].compactMap { $0 }
 
-            VisitLogDetailRow(
-                title: "What kind of support do they still need?",
-                detail1: needsText,
-                onEdit: {
-                    navigateToEditFurtherSupport = true
-                },
-                canEdit: log.isFromOldCollection
-            )
-        //}
+        let needsText = needsList.isEmpty ? "null" : needsList.joined(separator: ", ")
+
+        VisitLogDetailRow(
+            title: "What kind of support do they still need?",
+            detail1: needsText,
+            onEdit: {
+                navigateToEditFurtherSupport = true
+            },
+            canEdit: log.isFromOldCollection
+        )
 
         NavigationLink(
             destination: InputTileList(
@@ -1005,7 +1007,6 @@ struct VisitLogView: View {
                 nextAction: {
                     let adapter = VisitLogDataAdapter()
 
-                    // Construct `whatGivenFurther` array
                     var selected: [String] = []
                     if log.furtherFoodAndDrinks { selected.append("Food & Drinks") }
                     if log.furtherClothes { selected.append("Clothes") }
@@ -1072,7 +1073,7 @@ struct VisitLogDetailRow: View {
 
                 Spacer()
 
-                if canEdit, let onEdit = onEdit {  // <-- Only show edit button if allowed
+                if canEdit, let onEdit = onEdit {
                     Button(action: onEdit) {
                         Image("Tab-VisitLog-Inactive")
                             .resizable()
@@ -1101,6 +1102,7 @@ struct VisitLogDetailRow: View {
         }
     }
 }
+
 struct MapLocation: Identifiable {
     let id = UUID()
     let name: String
@@ -1110,3 +1112,4 @@ struct MapLocation: Identifiable {
         CLLocationCoordinate2D(latitude: latitude, longitude: longitude)
     }
 }
+

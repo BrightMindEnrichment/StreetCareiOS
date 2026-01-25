@@ -18,6 +18,7 @@ struct VisitLogEntry: View {
     @State private var selectedLocation = CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0)
 
     @StateObject var visitLog = VisitLog(id: UUID().uuidString)
+    @StateObject private var adapter = VisitLogDataAdapter()
 
     var currentUser = Auth.auth().currentUser
     @State var isLoading = false
@@ -333,7 +334,15 @@ struct VisitLogEntry: View {
                                 title = "Individual Interaction \(individualInteractions.count + 1)"
                             }
 
-                            let newItem = IndividualInteractionItem(title: title)
+                            let newItem = IndividualInteractionItem(
+                                title: title,
+                                firstName: visitLog.recipientFirstName,
+                                lastName: visitLog.recipientLastName,
+                                helpProvidedCategory: visitLog.helpProvidedCategory,
+                                furtherHelpCategory: visitLog.furtherHelpCategory,
+                                additionalDetails: visitLog.helpRequestAdditionalDetails,
+                                followUpTimestamp: visitLog.helpRequestFollowUpTimestamp
+                            )
                             if isCreatingNewInteraction {
                                 individualInteractions.append(newItem)
                             } else if let idx = editingIndex,
@@ -477,7 +486,6 @@ struct VisitLogEntry: View {
     }
 
     func saveVisitLog() {
-        let adapter = VisitLogDataAdapter()
-        adapter.addVisitLog(self.visitLog)
+        adapter.addVisitLog(self.visitLog, interactions: individualInteractions)
     }
 }

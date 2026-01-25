@@ -11,11 +11,12 @@ import FirebaseFirestore
 
 struct VisitImpactView: View {
 
-    let adapter = VisitLogDataAdapter()
+    @StateObject private var adapter = VisitLogDataAdapter()
     @State var history = [VisitLog]()
 
     var currentUser = Auth.auth().currentUser
-
+    @State var logsInteractionDev = [VisitLog]()
+    @State private var didReceiveInteractionDev = false
     @State var peopleHelped = 0
     @State var outreaches = 0
     @State var itemsDonated = 0
@@ -74,6 +75,11 @@ struct VisitImpactView: View {
                     
                     .navigationDestination(isPresented: $isNavigationActive) {
                         VisitLogEntry()
+                            .onDisappear {
+                                            adapter.refresh()
+                                            adapter.refresh_new()
+                                            adapter.refreshInteractionLogDev()
+                                        }
                     }
                     
                     //Spacer(minLength: 15.0)
@@ -283,6 +289,7 @@ struct VisitImpactView: View {
                     if Auth.auth().currentUser != nil {
                         adapter.refresh()
                         adapter.refresh_new()
+                        adapter.refreshInteractionLogDev()
                         //adapter.refreshWebProd()
                         self.isLoading = true
                     } else {
@@ -356,8 +363,8 @@ struct VisitImpactView: View {
             .sorted { $0.whenVisit > $1.whenVisit }  // Sort newest first
     }
     private func tryMergeAndUpdate() {
-        guard didReceiveOldLogs && didReceiveNewLogs else { return }
-        self.history = (logsOld + logsNew)
+        guard didReceiveOldLogs && didReceiveNewLogs && didReceiveInteractionDev else { return }
+        self.history = (logsOld + logsNew + logsInteractionDev)
             .sorted { $0.whenVisit > $1.whenVisit }
         self.updateCounts()
         self.isLoading = false
@@ -474,7 +481,13 @@ extension VisitImpactView: VisitLogDataAdapterProtocol {
         self.didReceiveNewLogs = true
         tryMergeAndUpdate()
     }
-    
+    func visitLogDataRefreshedInteractionDev(_ logs: [VisitLog]) {
+        self.logsInteractionDev = logs
+        self.didReceiveInteractionDev = true
+        tryMergeAndUpdate()
+        tryMergeAndUpdate()
+        tryMergeAndUpdate()
+    }
 }
 
 

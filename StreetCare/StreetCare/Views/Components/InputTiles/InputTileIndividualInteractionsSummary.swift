@@ -3,14 +3,21 @@
 import SwiftUI
 
 // MARK: - Model (lightweight UI model)
-struct IndividualInteractionItem: Identifiable, Equatable {
-    let id: String
+struct IndividualInteractionItem: Identifiable {
+    let id = UUID()
     var title: String
 
-    init(id: String = UUID().uuidString, title: String) {
-        self.id = id
-        self.title = title
-    }
+    // person fields
+    var firstName: String
+    var lastName: String
+
+    // categories/details
+    var helpProvidedCategory: [String]
+    var furtherHelpCategory: [String]
+    var additionalDetails: String
+
+    // optional follow up
+    var followUpTimestamp: Date
 }
 
 // MARK: - Tile

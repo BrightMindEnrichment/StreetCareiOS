@@ -1,9 +1,6 @@
-//
-//  VisitLogDataAdapter.swift
-//  StreetCare
-//
-//  Created by Saheer on 1/15/26.
-//
+// // VisitLogEntry.swift
+// StreetCare //
+// Created by Saheer on 1/15/26. //
 
 import Foundation
 import FirebaseAuth
@@ -17,13 +14,16 @@ let placeholderDate = Date(timeIntervalSince1970: 0)
 protocol VisitLogDataAdapterProtocol {
     func visitLogDataRefreshed(_ logs: [VisitLog])
     func visitLogDataRefreshedNew(_ logs: [VisitLog])
+    func visitLogDataRefreshedInteractionDev(_ logs: [VisitLog])
 }
-
-class VisitLogDataAdapter {
+extension VisitLogDataAdapterProtocol {
+    func visitLogDataRefreshedInteractionDev(_ logs: [VisitLog]) { }
+}
+class VisitLogDataAdapter: ObservableObject{
 
     private let collectionName = "InteractionLogDev"
 
-    var visitLogs = [VisitLog]()
+    @Published var visitLogs = [VisitLog]()
     var delegate: VisitLogDataAdapterProtocol?
     var publishedLogIDs = Set<String>()
     var pendingLogIDs = Set<String>()
@@ -40,13 +40,13 @@ class VisitLogDataAdapter {
         let fallbackRef = db.collection("VisitLogBook_New").document(logId)
 
         // Try updating in the primary collection
-        primaryRef.getDocument { docSnapshot, error in
+        primaryRef.getDocument { docSnapshot, _ in
             if let doc = docSnapshot, doc.exists {
                 primaryRef.updateData([field: value]) { error in
                     if let error = error {
-                        print("⚠️ Error updating \(field) in VisitLogBook: \(error.localizedDescription)")
+                        print("Error updating \(field) in VisitLogBook: \(error.localizedDescription)")
                     } else {
-                        print("✅ \(field) updated successfully in VisitLogBook.")
+                        print("\(field) updated successfully in VisitLogBook.")
                         completion()
                     }
                 }
@@ -56,14 +56,14 @@ class VisitLogDataAdapter {
                     if let fallbackDoc = fallbackDocSnapshot, fallbackDoc.exists {
                         fallbackRef.updateData([field: value]) { error in
                             if let error = error {
-                                print("⚠️ Error updating \(field) in VisitLogBook_New: \(error.localizedDescription)")
+                                print("Error updating \(field) in VisitLogBook_New: \(error.localizedDescription)")
                             } else {
-                                print("✅ \(field) updated successfully in VisitLogBook_New.")
+                                print("\(field) updated successfully in VisitLogBook_New.")
                                 completion()
                             }
                         }
                     } else {
-                        print("❌ Document \(logId) not found in either collection.")
+                        print("Document \(logId) not found in either collection.")
                     }
                 }
             }
@@ -74,159 +74,73 @@ class VisitLogDataAdapter {
         let db = Firestore.firestore()
         db.collection("VisitLogBook_New").document(logId).updateData(fields) { error in
             if let error = error {
-                print("⚠️ Error updating fields: \(error.localizedDescription)")
+                print("Error updating fields: \(error.localizedDescription)")
             } else {
-                print("✅ All fields updated successfully.")
+                print("All fields updated successfully.")
                 completion()
             }
         }
     }
 
-    // Create HelpRequest document for this VisitLog
-    private func createHelpRequest(for log: VisitLog) {
+    // Create HelpRequest document for this InteractionLog
+    private func createHelpRequest(for log: VisitLog, interaction: IndividualInteractionItem) {
         let db = Firestore.firestore()
-        let helpReqId = UUID().uuidString
-        let fullName = "\(log.recipientFirstName) \(log.recipientLastName)".trimmingCharacters(in: .whitespaces)
 
-        let helpRequestData: [String: Any] = [
+        let docRef = db.collection("HelpRequestDev").document()
+        let helpReqId = docRef.documentID
+        var helpRequestData: [String: Any] = [
             "interactionLogDocId": log.id,
-            "firstName": fullName,
-            //"lastName": log.recipientLastName,
+            "firstName": interaction.firstName,
+
             "locationLandmark": log.concatenatedLandmark,
             "timestampOfInteraction": Timestamp(date: log.whenVisit),
-            "helpProvidedCategory": log.helpProvidedCategory,
-            "furtherHelpCategory": log.furtherHelpCategory,
-            "followUpTimestamp": log.helpRequestFollowUpTimestamp == placeholderDate
-                ? nil
-                : Timestamp(date: log.helpRequestFollowUpTimestamp),
-            "additionalDetails": log.helpRequestAdditionalDetails,
+            "helpProvidedCategory": interaction.helpProvidedCategory,
+            "furtherHelpCategory": interaction.furtherHelpCategory,
+            "additionalDetails": interaction.additionalDetails
         ]
 
-        // Create HelpRequest document
-        db.collection("HelpRequestDev").document(helpReqId).setData(helpRequestData) { error in
+        if interaction.followUpTimestamp != placeholderDate {
+            helpRequestData["followUpTimestamp"] = Timestamp(date: interaction.followUpTimestamp)
+        }
+
+        docRef.setData(helpRequestData) { error in
             if let error = error {
-                print("helpRequestData : ", helpRequestData)
-                print("Error creating HelpRequest: \(error.localizedDescription)")
+                print("Error creating HelpRequestDev:", error.localizedDescription)
                 return
             }
 
-            print("HelpRequest created with ID: \(helpReqId)")
-
-            // Attach HelpRequest ID to the VisitLog document (1:N)
             db.collection("InteractionLogDev")
                 .document(log.id)
                 .updateData([
                     "helpRequestDocIds": FieldValue.arrayUnion([helpReqId])
-                ])
+                ]) { err in
+                    if let err = err {
+                        print("❌ Failed to link HelpRequest → InteractionLog:", err.localizedDescription)
+                    } else {
+                        print("✅ Linked HelpRequest \(helpReqId) → InteractionLog \(log.id)")
+                    }
+                }
         }
     }
-
-    func addVisitLog(_ visitLog: VisitLog) {
+    func addVisitLog(_ visitLog: VisitLog, interactions: [IndividualInteractionItem]) {
         guard let user = Auth.auth().currentUser else {
-            print("❌ No authenticated user")
+            print("No authenticated user")
             return
         }
 
         let db = Firestore.firestore()
-
-        var userData: [String: Any] = [
-            "whenVisit": Timestamp(date: visitLog.whenVisit),
-            "whereVisit": visitLog.whereVisit,
-            "locationDescription": visitLog.locationDescription,
-            "peopleHelped": visitLog.peopleHelped,
-            "peopleHelpedDescription": visitLog.peopleHelpedDescription,
-            "foodAndDrinks": visitLog.foodAndDrinks,
-            "clothes": visitLog.clothes,
-            "hygiene": visitLog.hygiene,
-            "wellness": visitLog.wellness,
-            "medical": visitLog.medical,
-            "social": visitLog.social,
-            "legal": visitLog.legal,
-            "other": visitLog.other,
-            "whatGiven": [
-                visitLog.foodAndDrinks ? "Food and Drinks" : nil,
-                visitLog.clothes ? "Clothes" : nil,
-                visitLog.hygiene ? "Hygiene" : nil,
-                visitLog.wellness ? "Wellness" : nil,
-                visitLog.medical ? "Medical" : nil,
-                visitLog.social ? "Social" : nil,
-                visitLog.legal ? "Legal" : nil,
-                visitLog.other ? "Other" : nil
-            ].compactMap { $0 },
-            "otherNotes": visitLog.otherNotes,
-            "itemQty": visitLog.itemQty,
-            "itemQtyDescription": visitLog.itemQtyDescription,
-            "rating": visitLog.rating,
-            "ratingNotes": visitLog.ratingNotes,
-            "durationHours": visitLog.durationHours,
-            "durationMinutes": visitLog.durationMinutes,
-            "numberOfHelpers": visitLog.numberOfHelpers,
-            "numberOfHelpersComment": visitLog.numberOfHelpersComment,
-            "peopleNeedFurtherHelp": visitLog.peopleNeedFurtherHelp,
-            "peopleNeedFurtherHelpComment": visitLog.peopleNeedFurtherHelpComment,
-            "peopleNeedFurtherHelpLocation": visitLog.peopleNeedFurtherHelpLocation,
-            "furtherFoodAndDrinks": visitLog.furtherFoodAndDrinks,
-            "furtherClothes": visitLog.furtherClothes,
-            "furtherHygiene": visitLog.furtherHygiene,
-            "furtherWellness": visitLog.furtherWellness,
-            "furtherMedical": visitLog.furtherMedical,
-            "furtherSocial": visitLog.furtherSocial,
-            "furtherLegal": visitLog.furtherLegal,
-            "furtherOther": visitLog.furtherOther,
-            "furtherOtherNotes": visitLog.furtherOtherNotes,
-            "whatGivenFurther": [
-                visitLog.furtherFoodAndDrinks ? "Food and Drinks" : nil,
-                visitLog.furtherClothes ? "Clothes" : nil,
-                visitLog.furtherHygiene ? "Hygiene" : nil,
-                visitLog.furtherWellness ? "Wellness" : nil,
-                visitLog.furtherMedical ? "Medical" : nil,
-                visitLog.furtherSocial ? "Social" : nil,
-                visitLog.furtherLegal ? "Legal" : nil,
-                visitLog.furtherOther ? "Other" : nil
-            ].compactMap { $0 },
-            "followUpWhenVisit": visitLog.followUpWhenVisit == placeholderDate ? nil : Timestamp(date: visitLog.followUpWhenVisit),
-            "futureNotes": visitLog.futureNotes,
-            "volunteerAgain": visitLog.volunteerAgain,
-            "lastEdited": Timestamp(date: Date()),
-            "type": visitLog.type,
-            "timeStamp": Timestamp(date: visitLog.timeStamp),
-            "uid": user.uid,
-            "isPublic": visitLog.isPublic,
-            "isFlagged": visitLog.isFlagged,
-            "flaggedByUser": visitLog.flaggedByUser,
-            "status": visitLog.status,
-            "helpRequestDocIds": visitLog.helpRequestDocIds
-        ]
-
-        print("User UID:", user.uid)
-        print("VisitLog UID:", visitLog.uid)
-        print("userData keys:", userData.keys.sorted())
-
-        // ✅ FIX: collectionName is now non-empty
-        let docRef = db.collection(self.collectionName).document(visitLog.id)
-        docRef.setData(userData) { [weak self] error in
-            if let error = error {
-                print("⚠️ Error writing VisitLog: \(error.localizedDescription)")
-            } else {
-                print("✅ Document successfully written with ID \(visitLog.id) to \(self?.collectionName ?? "")!")
-                if visitLog.helpRequestDocIds.isEmpty {
-                    self?.createHelpRequest(for: visitLog)
-                }
-            }
-        }
-
         let collectionName = "InteractionLogDev"
 
         var data: [String: Any] = [:]
 
         // Identity / User (dummy-safe)
+        data["userId"] = user.uid
         data["firstName"] = visitLog.firstname.isEmpty ? "Unknown" : visitLog.firstname
         data["lastName"] = visitLog.lastname.isEmpty ? "Unknown" : visitLog.lastname
         data["email"] = visitLog.contactemail.isEmpty ? "unknown@email.com" : visitLog.contactemail
         data["phoneNumber"] = visitLog.contactphone.isEmpty ? "" : visitLog.contactphone
-        data["userId"] = user.uid
 
-        // Dates & Times (from Q1 screen)
+        // Dates & Times
         data["interactionDate"] = Timestamp(date: visitLog.whenVisit)
         data["startTimestamp"] = Timestamp(date: visitLog.whenVisit)
 
@@ -238,8 +152,14 @@ class VisitLogDataAdapter {
 
         data["lastModifiedTimestamp"] = Timestamp(date: Date())
 
-        // Address (dummy-safe)
-        data["addr1"] = visitLog.street.isEmpty ? "N/A" : visitLog.street
+        // Address
+        let addr1Value = !visitLog.street.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+            ? visitLog.street
+            : (!visitLog.whereVisit.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
+                ? visitLog.whereVisit
+                : "N/A")
+
+        data["addr1"] = addr1Value
         data["addr2"] = ""
         data["city"] = visitLog.city.isEmpty ? "N/A" : visitLog.city
         data["state"] = visitLog.state.isEmpty ? "N/A" : visitLog.state
@@ -251,23 +171,38 @@ class VisitLogDataAdapter {
         data["numPeopleJoined"] = visitLog.numPeopleJoined
         data["carePackageContents"] = visitLog.carePackageContents
         data["carePackagesDistributed"] = visitLog.carePackagesDistributed
-        data["helpRequestCount"] = 0
 
         // Required backend flags
+        data["helpRequestCount"] = 0
         data["status"] = "Pending"
         data["isPublic"] = false
         data["listOfSupportsProvided"] = []
 
-        print("🟢 Writing InteractionLogDev with data:")
+        // Link field that your rules allow
+        data["helpRequestDocIds"] = visitLog.helpRequestDocIds
+
+        // Debug: confirm payload matches allowlist
+        print("Writing InteractionLogDev with keys:")
         print(data.keys.sorted())
 
         db.collection(collectionName)
             .document(visitLog.id)
-            .setData(data) { error in
+            .setData(data) { [weak self] error in
                 if let error = error {
-                    print("❌ Firestore write failed:", error.localizedDescription)
-                } else {
-                    print("✅ InteractionLogDev write success:", visitLog.id)
+                    print("InteractionLogDev write failed:", error.localizedDescription)
+                    return
+                }
+
+                print("InteractionLogDev write success:", visitLog.id)
+                if interactions.isEmpty {
+                    print("No individual interactions to create HelpRequestDev docs for.")
+                    return
+                }
+
+                print("Creating \(interactions.count) HelpRequestDev docs for InteractionLog:", visitLog.id)
+
+                for item in interactions {
+                    self?.createHelpRequest(for: visitLog, interaction: item)
                 }
             }
     }
@@ -293,19 +228,13 @@ class VisitLogDataAdapter {
         Firestore.firestore().settings = FirestoreSettings()
         let db = Firestore.firestore()
 
-        db.collection("VisitLogBook").document(logId).delete { _ in
-            completion()
-        }
-        db.collection("visitLogWebProd").document(logId).delete { _ in
-            completion()
-        }
-        db.collection("VisitLogBook_New").document(logId).delete { _ in
-            completion()
-        }
+        db.collection("VisitLogBook").document(logId).delete { _ in completion() }
+        db.collection("visitLogWebProd").document(logId).delete { _ in completion() }
+        db.collection("VisitLogBook_New").document(logId).delete { _ in completion() }
     }
 
     func refresh_new() {
-        print("📥 refresh_new called")
+        print("refresh_new called")
         guard let user = Auth.auth().currentUser else {
             self.visitLogs = [VisitLog]()
             self.delegate?.visitLogDataRefreshed(self.visitLogs)
@@ -390,16 +319,16 @@ class VisitLogDataAdapter {
                        let lon = document["longitude"] as? Double {
                         log.location = CLLocationCoordinate2D(latitude: lat, longitude: lon)
                     }
-                    print("✅ Loaded log from VisitLogBook_New with id:", log.id)
+                    print("Loaded log from VisitLogBook_New with id:", log.id)
 
                     self.visitLogs.append(log)
                 }
             }
 
             if let snapshot = querySnapshot {
-                print("📄 Document count: \(snapshot.documents.count)")
+                print("Document count: \(snapshot.documents.count)")
                 for doc in snapshot.documents {
-                    print("📌 Doc ID: \(doc.documentID), Data: \(doc.data())")
+                    print("Doc ID: \(doc.documentID), Data: \(doc.data())")
                 }
             }
 
@@ -421,7 +350,73 @@ class VisitLogDataAdapter {
             self.delegate?.visitLogDataRefreshedNew(self.visitLogs)
         }
     }
+    func refreshInteractionLogDev() {
+        print("refreshInteractionLogDev called")
 
+        guard let user = Auth.auth().currentUser else {
+            DispatchQueue.main.async {
+                self.visitLogs = []
+                self.delegate?.visitLogDataRefreshedInteractionDev([])
+            }
+            return
+        }
+
+        let db = Firestore.firestore()
+
+        db.collection("InteractionLogDev")
+            .whereField("userId", isEqualTo: user.uid)
+            .getDocuments { snapshot, error in
+                if let error = error {
+                    print("Error fetching InteractionLogDev:", error.localizedDescription)
+                    DispatchQueue.main.async {
+                        self.delegate?.visitLogDataRefreshedInteractionDev([])
+                    }
+                    return
+                }
+
+                var logs: [VisitLog] = []
+
+                for doc in snapshot?.documents ?? [] {
+                    let data = doc.data()
+                    let log = VisitLog(id: doc.documentID)
+                    log.source = "interactionLogDev"
+
+                    log.firstname = data["firstName"] as? String ?? ""
+                    log.lastname  = data["lastName"] as? String ?? ""
+                    log.contactemail = data["email"] as? String ?? ""
+                    log.contactphone = data["phoneNumber"] as? String ?? ""
+                    let addr1 = data["addr1"] as? String ?? ""
+                    let city  = data["city"] as? String ?? ""
+                    let state = data["state"] as? String ?? ""
+                    let zip   = data["zipcode"] as? String ?? ""
+
+                    log.whereVisit = [addr1, city, state, zip]
+                        .filter { !$0.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty }
+                        .joined(separator: ", ")
+
+                    if let ts = data["startTimestamp"] as? Timestamp {
+                        log.whenVisit = ts.dateValue()
+                    }
+
+                    log.numPeopleHelped = data["numPeopleHelped"] as? Int ?? 0
+                    log.numPeopleJoined = data["numPeopleJoined"] as? Int ?? 0
+                    log.carePackagesDistributed = data["carePackagesDistributed"] as? Int ?? 0
+                    log.carePackageContents = data["carePackageContents"] as? String ?? ""
+
+                    log.status = data["status"] as? String ?? ""
+                    log.isPublic = data["isPublic"] as? Bool ?? false
+                    log.helpRequestDocIds = data["helpRequestDocIds"] as? [String] ?? []
+
+                    logs.append(log)
+                }
+                logs.sort { $0.whenVisit > $1.whenVisit }
+
+                DispatchQueue.main.async {
+                    self.delegate?.visitLogDataRefreshedInteractionDev(logs)
+                    print("InteractionLogDev loaded count:", logs.count)
+                }
+            }
+    }
     func refresh() {
         guard let user = Auth.auth().currentUser else {
             self.visitLogs = [VisitLog]()
@@ -478,7 +473,6 @@ class VisitLogDataAdapter {
                     log.type = document["type"] as? String ?? ""
                     log.status = document["status"] as? String ?? ""
                     log.flaggedByUser = document["flaggedByUser"] as? String ?? ""
-
                     log.volunteerAgain = document["volunteerAgain"] as? String ?? ""
                     log.isFromOldCollection = false
 
@@ -498,10 +492,9 @@ class VisitLogDataAdapter {
                 }
             }
 
-            // fetch logs from visitLogWebProd
             db.collection("visitLogWebProd").whereField("uid", isEqualTo: user.uid).getDocuments { querySnapshot, error in
                 if let error = error {
-                    print("⚠️ Error fetching WebProd logs: \(error.localizedDescription)")
+                    print("Error fetching WebProd logs: \(error.localizedDescription)")
                 } else {
                     for document in querySnapshot!.documents {
                         let log = VisitLog(id: document.documentID)
@@ -516,6 +509,7 @@ class VisitLogDataAdapter {
                         log.whereVisit = [log.street, log.city, log.state, log.zipcode]
                             .filter { !$0.isEmpty }
                             .joined(separator: ", ")
+
                         log.numberPeopleHelped = document["numberPeopleHelped"] as? String ?? "0"
                         log.itemQty = document["itemQty"] as? Int ?? 0
                         log.whatGiven = document["whatGiven"] as? [String] ?? []
