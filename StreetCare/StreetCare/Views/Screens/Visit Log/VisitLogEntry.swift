@@ -257,7 +257,7 @@ struct VisitLogEntry: View {
                 case 8:
                     InputTileIndividualInteraction(
                         log: visitLog,
-                        questionTitle: "Individual Details",
+                        questionTitle: "",
                         questionNumber: 1,
                         totalQuestions: 4,
                         skipAction: { questionNumber = 100 },

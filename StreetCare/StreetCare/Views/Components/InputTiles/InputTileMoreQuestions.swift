@@ -26,6 +26,17 @@ struct InputTileMoreQuestions: View {
     var body: some View {
 
         VStack(spacing: 0) {
+            // ✅ Progress bar below tile
+            SegmentedProgressBar(
+                totalSegments: totalQuestions,
+                filledSegments: questionNumber,
+                tileWidth: 300
+            )
+
+            Text(NSLocalizedString("", comment: ""))
+                .font(.footnote)
+                .padding(.top, 4)
+                .fontWeight(.bold)
             ZStack {
                 BasicTile(size: CGSize(width: size.width, height: size.height))
                 
@@ -94,17 +105,7 @@ struct InputTileMoreQuestions: View {
             .frame(width: size.width, height: size.height)
             
           
-            // ✅ Progress bar below tile
-            SegmentedProgressBar(
-                totalSegments: totalQuestions,
-                filledSegments: questionNumber,
-                tileWidth: 300
-            )
-
-            Text(NSLocalizedString("progress", comment: ""))
-                .font(.footnote)
-                .padding(.top, 4)
-                .fontWeight(.bold)
+           
         }
     }
 }

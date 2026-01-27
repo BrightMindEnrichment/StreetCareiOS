@@ -93,10 +93,9 @@ struct InputTileIndividualInteraction: View {
         VStack(alignment: .leading, spacing: 15) {
             HStack {
                 VStack(alignment: .leading) {
-                    Text("Question \(questionNumber) of \(totalQuestions)")
-                        .font(.caption)
-                        .foregroundColor(.gray)
-                    Text(questionTitle).font(.headline)
+                    Text(NSLocalizedString("question", comment: "") + " \(questionNumber)/\(totalQuestions)")
+                        .foregroundColor(.black)
+                   
                 }
                 Spacer()
                 if let skipAction = skipAction {
@@ -176,15 +175,17 @@ struct InputTileIndividualInteraction: View {
                     .presentationDetents([.medium])
                 }
             }
-            
-            Spacer()
+
             
             HStack {
                 if let previousAction = previousAction {
                     Button("Previous", action: previousAction)
                         .foregroundColor(Color("SecondaryColor"))
-                        .padding(.horizontal, 20).padding(.vertical, 10)
-                        .overlay(Capsule().stroke(Color("SecondaryColor"), lineWidth: 1))
+                        .font(.footnote)
+                        .padding(.horizontal, 16)
+                        .padding(.vertical, 8)
+                        .background(Capsule().fill(Color.white))
+                        .overlay(Capsule().stroke(Color("SecondaryColor"), lineWidth: 2))
                 }
                 Spacer()
                 if let nextAction = nextAction {
@@ -192,8 +193,11 @@ struct InputTileIndividualInteraction: View {
                         syncDateTimeToLog()
                         nextAction()
                     }) {
-                        Text("Next").foregroundColor(.white).fontWeight(.bold)
-                            .padding(.horizontal, 25).padding(.vertical, 10)
+                        Text("Next").fontWeight(.bold)
+                            .foregroundColor(Color("PrimaryColor"))
+                            .fontWeight(.bold)
+                            .padding(.horizontal, 16)
+                            .padding(.vertical, 8)
                             .background(Capsule().fill(Color("SecondaryColor")))
                     }
                 }
