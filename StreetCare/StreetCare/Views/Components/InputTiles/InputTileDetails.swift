@@ -513,7 +513,7 @@ struct InputTextField: View {
         
 
 // This struct must be defined once as a top-level struct (Outside InputTileDetails)
-struct SegmentedProgressBar: View {
+struct InputTileDetailsProgressBar: View {
     var totalSegments: Int
     var filledSegments: Int
     var tileWidth: CGFloat
