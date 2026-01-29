@@ -23,16 +23,24 @@ struct InputTileNumber: View {
     var question2: String
     var question3: String
     var question4: String
-    
     var descriptionLabel: String?
     var descriptionLabel2: String?
+    // Optional two-line header shown above the first notes editor.
+    // When provided, this header is used instead of descriptionLabel.
+    var editorHeaderLine1: String?
+    var editorHeaderLine2: String?
     var disclaimerText: String?
     var placeholderText: String?
     var placeholderText2: String?
     
     @Binding var number: Int
     @State private var numberString: String
-
+    // NEW: Optional second number binding for two-question screens
+    @Binding var number2: Int?
+    @State private var numberString2: String = ""
+    // Mode flag: when true, show Question1 + stepper, then Question2 + stepper
+    var dualNumberMode: Bool = false
+    
     @Binding var generalDescription: String
     @Binding var generalDescription2: String
     var showTextEditor: Bool = true
@@ -58,10 +66,15 @@ struct InputTileNumber: View {
         question4: String,
         descriptionLabel: String? = nil,
         descriptionLabel2: String? = nil,
+        editorHeaderLine1: String? = nil,   // NEW
+        editorHeaderLine2: String? = nil,    // NEW
         disclaimerText: String? = nil,
         placeholderText: String? = nil,
         placeholderText2: String? = nil,
         number: Binding<Int>,
+        number2: Binding<Int?> = .constant(nil),      // NEW: optional binding (defaults to nil)
+        dualNumberMode: Bool = false,                 // NEW: mode flag (defaults to false)
+        showTextEditor: Bool = true,                    //New: added to set texteditor false in case 5
         generalDescription: Binding<String>,
         generalDescription2: Binding<String>,
         nextAction: @escaping () -> Void,
@@ -81,19 +94,69 @@ struct InputTileNumber: View {
         self.question4 = question4
         self.descriptionLabel = descriptionLabel
         self.descriptionLabel2 = descriptionLabel2
+        self.editorHeaderLine1 = editorHeaderLine1
+        self.editorHeaderLine2 = editorHeaderLine2
         self.disclaimerText = disclaimerText
         self.placeholderText = placeholderText
         self.placeholderText2 = placeholderText2
         self._number = number
         self._numberString = State(initialValue: String(number.wrappedValue))
+        // NEW: Initialize second number binding and string
+        self._number2 = number2
+        self._numberString2 = State(initialValue: number2.wrappedValue != nil ? String(number2.wrappedValue!) : "0")
         self._generalDescription = generalDescription
         self._generalDescription2 = generalDescription2
         self.nextAction = nextAction
         self.previousAction = previousAction
         self.skipAction = skipAction
         self.showProgressBar = showProgressBar
+        self.showTextEditor = showTextEditor
         self.showTextEditor2 = showTextEditor2
         self.buttonMode = buttonMode
+        self.dualNumberMode = dualNumberMode // NEW: Set dual number mode
+    }
+    
+    // MARK: - Reusable Number Stepper Component
+    // This function creates a reusable +/- stepper UI for any number value
+    private func numberStepper(value: Binding<String>) -> some View {
+        HStack(spacing: 20) {
+            // Minus button - decrements the number (minimum 0)
+            Button(action: {
+                if let current = Int(value.wrappedValue), current > 0 {
+                    value.wrappedValue = "\(current - 1)"
+                }
+            }) {
+                Image(systemName: "minus")
+                    .foregroundColor(Color("PrimaryColor"))
+                    .frame(width: 30, height: 30)
+                    .background(Color("SecondaryColor"))
+                    .clipShape(Circle())
+            }
+
+            // Number text field (center-aligned, number pad keyboard)
+            TextField("", text: value)
+                .keyboardType(.numberPad)
+                .multilineTextAlignment(.center)
+                .font(.title2)
+                .fontWeight(.bold)
+                .frame(width: 60)
+                .textFieldStyle(PlainTextFieldStyle())
+
+            // Plus button - increments the number
+            Button(action: {
+                if let current = Int(value.wrappedValue) {
+                    value.wrappedValue = "\(current + 1)"
+                } else {
+                    value.wrappedValue = "1"
+                }
+            }) {
+                Image(systemName: "plus")
+                    .foregroundColor(Color("PrimaryColor"))
+                    .frame(width: 30, height: 30)
+                    .background(Color("SecondaryColor"))
+                    .clipShape(Circle())
+            }
+        }
     }
 
     var body: some View {
@@ -103,6 +166,14 @@ struct InputTileNumber: View {
                     .font(.title2)
                     .fontWeight(.bold)
                     .padding(.bottom, 20)
+            }
+            if showProgressBar {
+                SegmentedProgressBar(
+                    totalSegments: totalQuestions,
+                    filledSegments: questionNumber,
+                    tileWidth: tileWidth
+                )
+                .padding(.bottom, 24)
             }
 
             ZStack {
@@ -132,53 +203,77 @@ struct InputTileNumber: View {
                                 .background(Color.gray.opacity(0.3))
                                 .padding(.horizontal)
                         }
-
-                        VStack(spacing: 4) {
-                            Text(question1).font(.title2).fontWeight(.bold)
-                            Text(question2).font(.title2).fontWeight(.bold)
-                            Text(question3).font(.title2).fontWeight(.bold)
-                            Text(question4).font(.title2).fontWeight(.bold)
-                        }
-                        .padding(.vertical)
-
-                        HStack(spacing: 20) {
-                            Button(action: {
-                                if let current = Int(numberString), current > 0 {
-                                    numberString = "\(current - 1)"
+                        // Check if we need TWO number pickers or ONE
+                        if dualNumberMode {
+                            VStack(spacing: 36) { // space between the two sections
+                                // FIRST SECTION
+                                VStack(spacing: 0) {
+                                    // Header (one line)
+                                    VStack(spacing: 4) {
+                                        Text(question1)
+                                            .font(.title2)
+                                            .fontWeight(.bold)
+                                    }
+                                    
+                                    numberStepper(value: $numberString)
+                                    .padding(.top, 17)   // space from header to stepper
+                                    .padding(.bottom, 36) // slight breathing room after stepper
                                 }
-                            }) {
-                                Image(systemName: "minus")
-                                    .foregroundColor(Color("PrimaryColor"))
-                                    .frame(width: 30, height: 30)
-                                    .background(Color("SecondaryColor"))
-                                    .clipShape(Circle())
-                            }
 
-                            TextField("", text: $numberString)
-                                .keyboardType(.numberPad)
-                                .multilineTextAlignment(.center)
-                                .font(.title2)
-                                .fontWeight(.bold)
-                                .frame(width: 60)
-                                .textFieldStyle(PlainTextFieldStyle())
+                                // SECOND SECTION
+                                VStack(spacing: 0) {
+                                    // Header (two lines)
+                                    VStack(spacing: 4) {
+                                        Text(question2)
+                                            .font(.title2)
+                                            .fontWeight(.bold)
+                                        if !question3.isEmpty {
+                                            Text(question3)
+                                                .font(.title2)
+                                                .fontWeight(.bold)
+                                        }
+                                    }
 
-                            Button(action: {
-                                if let current = Int(numberString) {
-                                    numberString = "\(current + 1)"
-                                } else {
-                                    numberString = "1"
+                                    numberStepper(value: $numberString2)
+                                    .padding(.top, 17)   // space from header to stepper
+                                    .padding(.bottom, 0) // slight breathing room after stepper
                                 }
-                            }) {
-                                Image(systemName: "plus")
-                                    .foregroundColor(Color("PrimaryColor"))
-                                    .frame(width: 30, height: 30)
-                                    .background(Color("SecondaryColor"))
-                                    .clipShape(Circle())
                             }
+                            .padding(.top, 17)
+                            .padding(.bottom, 24)
+                        } else{
+                            VStack(spacing: 4) {
+                                Text(question1).font(.title2).fontWeight(.bold)
+                                if !question2.isEmpty {
+                                    Text(question2).font(.title2).fontWeight(.bold)
+                                }
+                                if !question3.isEmpty {
+                                    Text(question3).font(.title2).fontWeight(.bold)
+                                }
+                                if !question4.isEmpty {
+                                    Text(question4).font(.title2).fontWeight(.bold)
+                                }
+                            }
+                            .padding(.vertical)
+                            // Single number stepper for default behavior
+                            numberStepper(value: $numberString)
+                            .padding(.bottom)
                         }
-                        .padding(.bottom)
-
-                        if let label = descriptionLabel, !label.isEmpty {
+                        // Prefer the custom header if provided; otherwise keep the old descriptionLabel behavior.
+                        if let line1 = editorHeaderLine1, !line1.isEmpty {
+                            VStack(spacing: 4) {
+                                Text(line1)
+                                    .font(.title2)
+                                    .fontWeight(.bold)
+                                if let line2 = editorHeaderLine2, !line2.isEmpty {
+                                    Text(line2)
+                                        .font(.title2)
+                                        .fontWeight(.bold)
+                                }
+                            }
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .padding(.horizontal)
+                        }else if let label = descriptionLabel, !label.isEmpty {
                             Text(label)
                                 .font(.headline)
                                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -189,7 +284,7 @@ struct InputTileNumber: View {
                         if showTextEditor {
                             AutoGrowingTextEditor(text: $generalDescription, placeholder: placeholderText ?? "")
                         }
-
+                        
                         if let label = descriptionLabel2, !label.isEmpty {
                             Text(label)
                                 .font(.headline)
@@ -229,6 +324,14 @@ struct InputTileNumber: View {
                                 Button(" " + NSLocalizedString("next", comment: "") + " ") {
                                     if let validNumber = Int(numberString), validNumber >= 0 {
                                         number = validNumber
+                                        // NEW: also handle the second number only when dual mode is on
+                                        if dualNumberMode {
+                                            if let validNumber2 = Int(numberString2), validNumber2 >= 0 {
+                                                number2 = validNumber2
+                                            } else {
+                                                number2 = 0 // safe fallback when Binding<Int?> is used
+                                            }
+                                        }
                                         nextAction()
                                     } else {
                                         showAlert = true
@@ -261,6 +364,14 @@ struct InputTileNumber: View {
                                 Button("Update") {
                                     if let validNumber = Int(numberString), validNumber >= 0 {
                                         number = validNumber
+                                        // NEW: also handle the second number only when dual mode is on
+                                        if dualNumberMode {
+                                            if let validNumber2 = Int(numberString2), validNumber2 >= 0 {
+                                                number2 = validNumber2
+                                            } else {
+                                                number2 = 0
+                                            }
+                                        }
                                         showSuccessAlert = true
                                         nextAction()
                                     } else {
@@ -294,18 +405,21 @@ struct InputTileNumber: View {
         }
         .onAppear {
             numberString = String(number) // Sync on load
+            if let val = number2 {
+                numberString2 = String(val)
+            }
         }
 
-        if showProgressBar {
-            SegmentedProgressBar(
-                totalSegments: totalQuestions,
-                filledSegments: questionNumber,
-                tileWidth: tileWidth
-            )
-            Text(NSLocalizedString("progress", comment: ""))
-                .font(.footnote)
-                .padding(.top, 4)
-                .fontWeight(.bold)
-        }
-    }
+//        if showProgressBar {
+//            SegmentedProgressBar(
+//                totalSegments: totalQuestions,
+//                filledSegments: questionNumber,
+//                tileWidth: tileWidth
+//            )
+//            Text(NSLocalizedString("progress", comment: ""))
+//                .font(.footnote)
+//                .padding(.top, 4)
+//                .fontWeight(.bold)
+//        }
+    }    
 }

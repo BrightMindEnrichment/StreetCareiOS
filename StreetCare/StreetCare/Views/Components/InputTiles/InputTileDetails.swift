@@ -513,7 +513,7 @@ struct InputTextField: View {
         
 
 // This struct must be defined once as a top-level struct (Outside InputTileDetails)
-struct InputTileDetailsProgressBar: View {
+struct SegmentedProgressBar: View {
     var totalSegments: Int
     var filledSegments: Int
     var tileWidth: CGFloat
@@ -527,13 +527,10 @@ struct InputTileDetailsProgressBar: View {
         HStack(spacing: spacing) {
             ForEach(0..<totalSegments, id: \.self) { index in
                 Capsule()
-                    // Fill logic: segments before 'filledSegments' are primary color
                     .fill(index < filledSegments ? Color("PrimaryColor") : Color("SecondaryColor"))
                     .frame(width: segmentWidth, height: segmentHeight)
-                    
                     .overlay(
-                        RoundedRectangle(cornerRadius: 100) // Use high corner radius for capsule
-                            // ⭐️ MODIFIED LOGIC: Apply stroke only when index matches the current, active segment (filledSegments - 1)
+                        RoundedRectangle(cornerRadius: 100)
                             .stroke(index == filledSegments - 1 ? Color.black : Color.clear, lineWidth: 1.5)
                     )
             }
