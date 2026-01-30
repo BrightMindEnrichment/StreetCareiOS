@@ -116,28 +116,28 @@ struct InputTileComplete: View {
                     }
                 }
 
-
-                if !hasShared {
-                    HStack {
-                        Button("Share with Community") {
-                            showConfirmationDialog = true
-                        }
-                        .foregroundColor(Color.black)
-                        .frame(maxWidth: 180)
-                        .padding(.vertical, 12)
-                        .padding(.horizontal, 12)
-                        .font(.caption)
-                        .fontWeight(.bold)
-                        .background(
-                            Capsule()
-                                .fill(Color.white)
-                        )
-                        .overlay(
-                            Capsule()
-                                .stroke(Color("SecondaryColor"), lineWidth: 2)
-                        )
-                    }
-                }
+//
+//                if !hasShared {
+//                    HStack {
+//                        Button("Share with Community") {
+//                            showConfirmationDialog = true
+//                        }
+//                        .foregroundColor(Color.black)
+//                        .frame(maxWidth: 180)
+//                        .padding(.vertical, 12)
+//                        .padding(.horizontal, 12)
+//                        .font(.caption)
+//                        .fontWeight(.bold)
+//                        .background(
+//                            Capsule()
+//                                .fill(Color.white)
+//                        )
+//                        .overlay(
+//                            Capsule()
+//                                .stroke(Color("SecondaryColor"), lineWidth: 2)
+//                        )
+//                    }
+//                }
                 
             }
         }

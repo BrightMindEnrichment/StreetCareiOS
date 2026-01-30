@@ -287,7 +287,7 @@ struct VisitLogEntry: View {
                     }
                     .padding(.bottom, keyboard.currentHeight == 0 ? 0 : 4)
                     .animation(.easeOut(duration: 0.16), value: keyboard.currentHeight)
-                    
+
                 case 8:
                     // Original case 7 is now case 8 (More Questions Prompt)
                     InputTileMoreQuestions(
@@ -306,7 +306,7 @@ struct VisitLogEntry: View {
                     } noAction: {
                         saveVisitLog()
                         isComplete = true
-                        questionNumber = 100
+                        questionNumber = 15
                     }
                 
                 // Cases 9 through 14 must also be incremented by +1 and have totalQuestions updated.
@@ -410,6 +410,7 @@ struct VisitLogEntry: View {
                         buttonMode: .navigation,
                         showProgressBar: true,
                         supportMode: .needed
+
                     )
                     .padding(.bottom, keyboard.currentHeight == 0 ? 0 : 50)
                     .animation(.easeOut(duration: 0.16), value: keyboard.currentHeight)
@@ -460,27 +461,20 @@ struct VisitLogEntry: View {
                         },
                         buttonMode: .navigation
                     )
-                    
+                                
                 case 15:
-                    // Original case 14 is now case 15 (Volunteer Again)
-                    InputTileVolunteerAgain(
-                        questionNumber: 7,
-                        totalQuestions: totalQuestions, // Total questions remains 7 for the follow-up flow
-                        question1: NSLocalizedString("questionFourteenPartOne", comment: ""),
-                        question2: NSLocalizedString("questionFourteenPartTwo", comment: ""),
-                        volunteerAgain: $visitLog.volunteerAgain
-                    ) {
-                        isComplete = true
-                        questionNumber = 100
-                        saveVisitLog()
-                    } previousAction: {
-                        questionNumber -= 1
-                    } skipAction: {
-                        saveVisitLog()
-                        isComplete = true
-                        questionNumber = 100
-                    }
-                    
+                    InputTileConsent(
+                        size: CGSize(width: 360, height: 450),
+                               submitAction: {
+                                   // Move to next question after consent is given
+                                   questionNumber = 100
+                                  //navigateNext = true
+                               }
+                           )
+                           .padding(.bottom, keyboard.currentHeight == 0 ? 0 : 50)
+                           .animation(.easeOut(duration: 0.16), value: keyboard.currentHeight)
+
+                   
                 case 100:
                     InputTileComplete(log: visitLog) {
                         // Ensure placeholderDate is defined or use a valid default
