@@ -393,7 +393,7 @@ struct VisitLogEntry: View {
                             }
                         }
                     )
-                /*case 13:
+                case 13:
                     InputTileDate(
                         questionNumber: 5,
                         totalQuestions: totalQuestions,

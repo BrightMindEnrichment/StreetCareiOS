@@ -244,7 +244,7 @@ struct InputTileFollowUpDate: View {
 
                             Spacer()
 
-                            Button(" " + NSLocalizedString("next", comment: "") + " ") {
+                            Button(" " + NSLocalizedString("SAVE", comment: "") + " ") {
                                 convertedDate = datetimeValue
                                 nextAction()
                             }
