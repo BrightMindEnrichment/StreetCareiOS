@@ -305,6 +305,7 @@ struct VisitLogEntry: View {
                         buttonMode: .navigation,
                         showProgressBar: true,
                         supportMode: .needed
+
                     )
                     .padding(.bottom, keyboard.currentHeight == 0 ? 0 : keyboard.currentHeight - 250)
                     .animation(.easeOut(duration: 0.16), value: keyboard.currentHeight)
@@ -431,26 +432,20 @@ struct VisitLogEntry: View {
                         },
                         buttonMode: .navigation
                     )
-
+                                
                 case 15:
-                    InputTileVolunteerAgain(
-                        questionNumber: 7,
-                        totalQuestions: totalQuestions,
-                        question1: NSLocalizedString("questionFourteenPartOne", comment: ""),
-                        question2: NSLocalizedString("questionFourteenPartTwo", comment: ""),
-                        volunteerAgain: $visitLog.volunteerAgain
-                    ) {
-                        isComplete = true
-                        questionNumber = 100
-                        saveVisitLog()
-                    } previousAction: {
-                        questionNumber -= 1
-                    } skipAction: {
-                        saveVisitLog()
-                        isComplete = true
-                        questionNumber = 100
-                    }*/
+                    InputTileConsent(
+                        size: CGSize(width: 360, height: 450),
+                               submitAction: {
+                                   // Move to next question after consent is given
+                                   questionNumber = 100
+                                  //navigateNext = true
+                               }
+                           )
+                           .padding(.bottom, keyboard.currentHeight == 0 ? 0 : 50)
+                           .animation(.easeOut(duration: 0.16), value: keyboard.currentHeight)
 
+                   
                 case 100:
                     InputTileComplete(log: visitLog) {
                         saveVisitLog()

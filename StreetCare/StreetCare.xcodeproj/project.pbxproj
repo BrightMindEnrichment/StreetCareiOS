@@ -80,6 +80,7 @@
 		4CB7D8CC29F8D5B00002495E /* VisitLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB7D8CB29F8D5B00002495E /* VisitLog.swift */; };
 		4CB7D8CE29F8DCBC0002495E /* TimeDurationPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB7D8CD29F8DCBC0002495E /* TimeDurationPicker.swift */; };
 		4CB7D8D029F8DD040002495E /* InputTileDuration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4CB7D8CF29F8DD040002495E /* InputTileDuration.swift */; };
+		5E34EDD42F2B57CB0048948F /* InputTileConsent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5E34EDD32F2B57CB0048948F /* InputTileConsent.swift */; };
 		6B1D42C92E2F26670016E5BE /* KeyboardHeightObserver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B1D42C82E2F26440016E5BE /* KeyboardHeightObserver.swift */; };
 		6D308B612DD2ACA00098A3EC /* PublicVisitLogDataAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D308B602DD2AC880098A3EC /* PublicVisitLogDataAdapter.swift */; };
 		6D308B692DDE9E870098A3EC /* PublicLogViewCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6D308B682DDE9E820098A3EC /* PublicLogViewCard.swift */; };
@@ -208,6 +209,7 @@
 		4CB7D8CD29F8DCBC0002495E /* TimeDurationPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeDurationPicker.swift; sourceTree = "<group>"; };
 		4CB7D8CF29F8DD040002495E /* InputTileDuration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputTileDuration.swift; sourceTree = "<group>"; };
 		5B3FB734328ABC03284A67BF /* Pods_StreetCare.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_StreetCare.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5E34EDD32F2B57CB0048948F /* InputTileConsent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputTileConsent.swift; sourceTree = "<group>"; };
 		6B1D42C82E2F26440016E5BE /* KeyboardHeightObserver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardHeightObserver.swift; sourceTree = "<group>"; };
 		6D308B602DD2AC880098A3EC /* PublicVisitLogDataAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicVisitLogDataAdapter.swift; sourceTree = "<group>"; };
 		6D308B682DDE9E820098A3EC /* PublicLogViewCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicLogViewCard.swift; sourceTree = "<group>"; };
@@ -321,6 +323,7 @@
 				9532050B2EC2E8C600BDEFF9 /* InputTileDetails.swift */,
 				6B1D42C82E2F26440016E5BE /* KeyboardHeightObserver.swift */,
 				C2E9F1242DBB410600541E47 /* InputTileNotes.swift */,
+				5E34EDD32F2B57CB0048948F /* InputTileConsent.swift */,
 				4CA8693229E3D05300BB6972 /* InputTile.swift */,
 				4C82448D29EF9E58003D1575 /* InputTileLocation.swift */,
 				4C82448F29EF9EAB003D1575 /* InputTileDate.swift */,
@@ -737,6 +740,7 @@
 				4CB65DA729D0E85B00684BD1 /* InfoTile.swift in Sources */,
 				8A1569362E0B4A3C00984FED /* PublicInteractionPopupView.swift in Sources */,
 				4CB65E5429DA916600684BD1 /* VideoListView.swift in Sources */,
+				5E34EDD42F2B57CB0048948F /* InputTileConsent.swift in Sources */,
 				4CB7D8D029F8DD040002495E /* InputTileDuration.swift in Sources */,
 				4CA8693529E3FA8600BB6972 /* VisitLogEntry.swift in Sources */,
 				E2646D162CA74A5000D8AA42 /* ICanHelpView.swift in Sources */,
