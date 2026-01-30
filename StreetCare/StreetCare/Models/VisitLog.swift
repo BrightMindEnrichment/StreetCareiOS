@@ -78,6 +78,22 @@ class VisitLog: ObservableObject, Identifiable {
     @Published var zipcode = ""
     @Published var status = "pending"
     
+    // Fields for the HelpRequest Case 8
+    @Published var recipientFirstName: String = ""
+    @Published var recipientLastName: String = ""
+
+    var concatenatedLandmark: String {
+            let parts = [locationDescription, state, zipcode].filter { !$0.isEmpty }
+            return parts.joined(separator: ", ")
+        }
+    
+    // Fields for the HelpRequest Case 9, 10 and 11.
+    @Published var helpProvidedCategory: [String] = []
+    @Published var furtherHelpCategory: [String] = []
+    @Published var helpRequestFollowUpTimestamp: Date = placeholderDate
+    @Published var helpRequestAdditionalDetails: String = ""
+    @Published var helpRequestDocIds: [String] = []
+    
     // Contact fields for Q2 (personal details)
     @Published var firstname: String = ""
     @Published var lastname: String = ""

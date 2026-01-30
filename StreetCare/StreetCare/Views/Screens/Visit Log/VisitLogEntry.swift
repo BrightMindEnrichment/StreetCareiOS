@@ -2,62 +2,60 @@
 //  VisitLogEntry.swift
 //  StreetCare
 //
-//  Created by Michael on 4/10/23.
+//  Created by Saheer on 1/15/26.
 //
-
 
 import SwiftUI
 import FirebaseAuth
 import CoreLocation
 import CoreLocationUI
 
-// Make sure PersonalDetails struct is available (either defined in InputTileDetails
-// or copied here if it's needed by other files in VisitLogEntry)
-
 struct VisitLogEntry: View {
-    
+
     @Environment(\.presentationMode) var presentation
     @State private var questionNumber: Int = 1
-    @State var totalQuestions = 7 // UPDATED: Changed from 6 to 7 to include Personal Details (Q2)
+    @State var totalQuestions = 7
     @State private var selectedLocation = CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0)
-    
+
     @StateObject var visitLog = VisitLog(id: UUID().uuidString)
-    
+    @StateObject private var adapter = VisitLogDataAdapter()
+
     var currentUser = Auth.auth().currentUser
     @State var isLoading = false
     @State var isComplete = false
     @State private var volunteerAgain: Int = -1
-    
+
     @State var rawDate: Date = Date()
-    @State private var rawEndDate: Date? = Date().addingTimeInterval(3600) // NEW: For Q1 End time
-    @State private var selectedTimeZone: String = TimeZone.current.identifier // NEW: For Q1 Time Zone
-    
+    @State private var rawEndDate: Date? = Date().addingTimeInterval(3600)
+    @State private var selectedTimeZone: String = TimeZone.current.identifier
+
     @State private var initialRawDate: Date = Date()
     @State private var didSetInitialRawDate = false
     @State var adjustedDate: Date = Date()
-    
+
     @StateObject private var keyboard = KeyboardHeightObserver()
-    
-    // NEW: State for Personal Details (Question 2)
-    // NOTE: If PersonalDetails is defined in InputTileDetails.swift, ensure it is accessible here (e.g., public/internal).
+
+    // Personal details
     @State private var personalDetails = PersonalDetails()
-    
-    
-    
+    @State private var individualInteractions: [IndividualInteractionItem] = []
+    @State private var editingIndex: Int? = nil
+    @State private var didCommitOnThisPass: Bool = false
+    @State private var isCreatingNewInteraction: Bool = false
+
     var body: some View {
         NavigationStack {
             VStack(spacing: 10) {
-                
-                if !isComplete{
+
+                if !isComplete {
                     Text(NSLocalizedString("logYourInteraction", comment: ""))
                         .font(.title)
                         .fontWeight(.bold)
                         .padding()
                 }
-                
+
                 switch questionNumber {
+
                 case 1:
-                    // REPLACEMENT for InputTileDate (Q1: When was your Interaction?)
                     InputTileDetails(
                         questionNumber: 1,
                         totalQuestions: totalQuestions,
@@ -68,22 +66,14 @@ struct VisitLogEntry: View {
                         rawEndDate: $rawEndDate,
                         timeZoneIdentifier: $selectedTimeZone,
                         personalDetails: $personalDetails,
-                        
                         nextAction: {
-                            // 1. Update the Start and End dates in the model
                             visitLog.whenVisit = rawDate
-                            
-                            // If rawEndDate is nil, default it to the start date
                             visitLog.whenVisitEnd = rawEndDate ?? rawDate
 
-                            // 2. Extract the City name from the TimeZone identifier
-                            // Example: "America/Chicago" -> "Chicago"
                             let cityName = selectedTimeZone.split(separator: "/").last?
                                 .replacingOccurrences(of: "_", with: " ") ?? selectedTimeZone
-                            
                             visitLog.city = String(cityName)
 
-                            // 3. Proceed to the next question
                             questionNumber += 1
                         },
                         skipAction: {
@@ -94,26 +84,19 @@ struct VisitLogEntry: View {
                         },
                         currentQuestionType: .interactionTime
                     )
-                    
+
                 case 2:
-                    // NEW QUESTION (Q2: Personal Details)
                     InputTileDetails(
                         questionNumber: 2,
                         totalQuestions: totalQuestions,
-                        cardTitle: "Personal details", // Use NSLocalizedString for localization if available
+                        cardTitle: "Personal details",
                         showSkip: true,
                         showPrevious: true,
-                        rawDate: $rawDate, // Required by component, even if not used for Q2
-                        rawEndDate: $rawEndDate, // Required by component
-                        timeZoneIdentifier: $selectedTimeZone, // Required by component
+                        rawDate: $rawDate,
+                        rawEndDate: $rawEndDate,
+                        timeZoneIdentifier: $selectedTimeZone,
                         personalDetails: $personalDetails,
-//                        firstname: $personalDetails.firstname,
-//                        lastname: $personalDetails.lastname,
-//                        contactemail: $personalDetails.contactemail,
-//                        contactphone: $personalDetails.contactphone,
                         nextAction: {
-                            // You might want to save personalDetails to a user profile or visitLog here
-                            // ⭐️ ADD THESE LINES HERE ⭐️
                             visitLog.firstname = personalDetails.firstname
                             visitLog.lastname = personalDetails.lastname
                             visitLog.contactemail = personalDetails.contactemail
@@ -128,15 +111,13 @@ struct VisitLogEntry: View {
                         },
                         currentQuestionType: .personalDetails
                     )
-                    
+
                 case 3:
-                    // Original case 2 is now case 3 (Location)
                     InputTileLocation(
-                        questionNumber: 3, // UPDATED: question number is now 3
+                        questionNumber: 3,
                         totalQuestions: totalQuestions,
                         question1: NSLocalizedString("questionTwo", comment: ""),
                         question2: NSLocalizedString("interaction", comment: "") + "?",
-                        
                         textValue: Binding(
                             get: { visitLog.whereVisit },
                             set: { newValue in
@@ -158,24 +139,17 @@ struct VisitLogEntry: View {
                                 print("📝 Updated visitLog.locationDescription: \(visitLog.locationDescription)")
                             }
                         ),
-                        nextAction: {
-                            questionNumber += 1
-                        },
-                        previousAction: {
-                            questionNumber -= 1
-                        },
-                        skipAction: {
-                            questionNumber += 1
-                        },
+                        nextAction: { questionNumber += 1 },
+                        previousAction: { questionNumber -= 1 },
+                        skipAction: { questionNumber += 1 },
                         buttonMode: .navigation
                     )
                     .padding(.bottom, keyboard.currentHeight == 0 ? 0 : keyboard.currentHeight - 270)
                     .animation(.easeOut(duration: 0.16), value: keyboard.currentHeight)
-                    
+
                 case 4:
-                    // Original case 3 is now case 4 (People Helped)
                     InputTileNumber(
-                        questionNumber: 4, // UPDATED: was 3
+                        questionNumber: 4,
                         totalQuestions: totalQuestions,
                         tileWidth: 360,
                         tileHeight: 520,
@@ -189,19 +163,13 @@ struct VisitLogEntry: View {
                         number: $visitLog.peopleHelped,
                         generalDescription: $visitLog.peopleHelpedDescription,
                         generalDescription2: .constant(""),
-                        nextAction: {
-                            questionNumber += 1
-                        },
-                        previousAction: {
-                            questionNumber -= 1
-                        },
-                        skipAction: {
-                            questionNumber += 1
-                        }
+                        nextAction: { questionNumber += 1 },
+                        previousAction: { questionNumber -= 1 },
+                        skipAction: { questionNumber += 1 }
                     )
                     .padding(.bottom, keyboard.currentHeight == 0 ? 0 : 35)
                     .animation(.easeOut(duration: 0.16), value: keyboard.currentHeight)
-                    
+
                 case 5:
                     InputTileNumber(
                         questionNumber: 5,
@@ -224,19 +192,14 @@ struct VisitLogEntry: View {
                         showTextEditor: false,
                         generalDescription: .constant(""),
                         generalDescription2: .constant(""),
-                        nextAction: {
-                            questionNumber += 1
-                        },
-                        previousAction: {
-                            questionNumber -= 1
-                        },
-                        skipAction: {
-                            questionNumber += 1
-                        },
+                        nextAction: { questionNumber += 1 },
+                        previousAction: { questionNumber -= 1 },
+                        skipAction: { questionNumber += 1 },
                         showProgressBar: true
                     )
                     .padding(.bottom, keyboard.currentHeight == 0 ? 0 : 35)
                     .animation(.easeOut(duration: 0.16), value: keyboard.currentHeight)
+
                 case 6:
                     InputTileNumber(
                         questionNumber: 6,
@@ -255,156 +218,88 @@ struct VisitLogEntry: View {
                         number: $visitLog.carePackagesDistributed,
                         generalDescription: $visitLog.carePackageContents,
                         generalDescription2: .constant(""),
-                        nextAction: {
-                            questionNumber += 1
-                        },
-                        previousAction: {
-                            questionNumber -= 1
-                        },
-                        skipAction: {
-                            questionNumber += 1
-                        },
+                        nextAction: { questionNumber += 1 },
+                        previousAction: { questionNumber -= 1 },
+                        skipAction: { questionNumber += 1 },
                         showProgressBar: true
                     )
                     .padding(.bottom, keyboard.currentHeight == 0 ? 0 : 35)
                     .animation(.easeOut(duration: 0.16), value: keyboard.currentHeight)
-                  
-                case 7:
-                    // Original case 6 is now case 7 (Rating)
-                    InputTileRate(
-                        questionNumber: 7, // UPDATED: was 6
-                        totalQuestions: totalQuestions,
-                        question1: NSLocalizedString("questionSixPartOne", comment: ""),
-                        question2: NSLocalizedString("questionSixPartTwo", comment: ""),
-                        textValue: $visitLog.ratingNotes,
-                        rating: $visitLog.rating
-                    ) {
-                        questionNumber += 1
-                    } previousAction: {
-                        questionNumber -= 1
-                    } skipAction: {
-                        questionNumber += 1
-                    }
-                    .padding(.bottom, keyboard.currentHeight == 0 ? 0 : 4)
-                    .animation(.easeOut(duration: 0.16), value: keyboard.currentHeight)
 
-                case 8:
-                    // Original case 7 is now case 8 (More Questions Prompt)
+                case 7:
                     InputTileMoreQuestions(
-                        question1: NSLocalizedString("questionSevenPartOne", comment: "") ,
+                        question1: NSLocalizedString("questionSevenPartOne", comment: ""),
                         question2: NSLocalizedString("questionSevenPartTwo", comment: ""),
-                        question3:NSLocalizedString("questionSevenPartThree", comment: ""),
-                        questionNumber: totalQuestions,
-                        totalQuestions: totalQuestions
-                    ) {
-                        // saveVisitLog()
-                        questionNumber = 100
-                    } skipAction: {
-                        questionNumber -= 1
-                    } yesAction: {
-                        questionNumber += 1
-                    } noAction: {
-                        saveVisitLog()
-                        isComplete = true
-                        questionNumber = 15
-                    }
-                
-                // Cases 9 through 14 must also be incremented by +1 and have totalQuestions updated.
-                // Case 8 -> 9, Case 9 -> 10, Case 10 -> 11, Case 11 -> 12, Case 12 -> 13, Case 13 -> 14, Case 14 -> 15
-                
-                case 9:
-                    // Original case 8 is now case 9 (Duration)
-                    InputTileDuration(
-                        questionNumber: 1,
-                        totalQuestions: totalQuestions, // Total questions remains 7 for the follow-up flow
-                        tileWidth: 360,
-                        tileHeight: 361,
-                        questionLine1: NSLocalizedString("questionEightPartOne", comment: ""),
-                        questionLine2: NSLocalizedString("questionEightPartTwo", comment: ""),
-                        questionLine3: NSLocalizedString("questionEightPartThree", comment: ""),
-                        hours: $visitLog.durationHours, minutes: $visitLog.durationMinutes
-                    ) {
-                        questionNumber += 1
-                    } previousAction: {
-                        questionNumber -= 1
-                    } skipAction: {
-                        questionNumber += 1
-                    }
-                    
-                case 10:
-                    // Original case 9 is now case 10 (Number of Helpers)
-                    InputTileNumber(
-                        questionNumber: 2,
-                        totalQuestions: totalQuestions, // Total questions remains 7 for the follow-up flow
-                        tileWidth: 360,
-                        tileHeight: 500,
-                        question1: NSLocalizedString("questionNinePartOne", comment: ""),
-                        question2: NSLocalizedString("questionNinePartTwo", comment: ""),
-                        question3: "",
-                        question4: "",
-                        descriptionLabel: nil,
-                        disclaimerText: nil,
-                        placeholderText: NSLocalizedString("aq2des", comment: ""),
-                        number: $visitLog.numberOfHelpers,
-                        generalDescription: $visitLog.numberOfHelpersComment,
-                        generalDescription2: .constant(""),
+                        question3: NSLocalizedString("questionSevenPartThree", comment: ""),
+                        questionNumber: 6,
+                        totalQuestions: 6,
                         nextAction: {
+                            questionNumber = 100
+                        },
+                        skipAction: {
+                            questionNumber -= 1
+                        },
+                        yesAction: {
+                            isCreatingNewInteraction = true
+                            editingIndex = nil
+                            didCommitOnThisPass = false
                             questionNumber += 1
+                        },
+                        noAction: {
+                            saveVisitLog()
+                            isComplete = true
+                            questionNumber = 100
                         },
                         previousAction: {
                             questionNumber -= 1
-                        },
-                        skipAction: {
-                            questionNumber += 1
                         }
                     )
-                    .padding(.bottom, keyboard.currentHeight == 0 ? 0 : 24)
-                    .animation(.easeOut(duration: 0.16), value: keyboard.currentHeight)
-                    
-                case 11:
-                    // Original case 10 is now case 11 (Need Further Help)
-                    InputTileNumber(
-                        questionNumber: 3,
-                        totalQuestions: totalQuestions, // Total questions remains 7 for the follow-up flow
-                        tileWidth: 360,
-                        tileHeight: 580,
-                        question1: NSLocalizedString("questionTenPartOne", comment: ""),
-                        question2: NSLocalizedString("questionTenPartTwo", comment: ""),
-                        question3: "",
-                        question4: "",
-                        descriptionLabel: "Description",
-                        descriptionLabel2: "Location Description",
-                        disclaimerText: "",
-                        placeholderText: NSLocalizedString("peopledescription", comment: ""),
-                        placeholderText2: NSLocalizedString("questionTenPlaceholder", comment: ""),
-                        number: $visitLog.peopleNeedFurtherHelp,
-                        generalDescription: $visitLog.peopleNeedFurtherHelpComment,
-                        generalDescription2: $visitLog.peopleNeedFurtherHelpLocation,
-                        nextAction: {
-                            questionNumber += 1
-                        },
-                        previousAction: {
-                            questionNumber -= 1
-                        },
-                        skipAction: {
-                            questionNumber += 1
-                        },
-                        showTextEditor2: true
+                case 8:
+                    InputTileIndividualInteraction(
+                        log: visitLog,
+                        questionTitle: "",
+                        questionNumber: 1,
+                        totalQuestions: 4,
+                        skipAction: { questionNumber = 100 },
+                        previousAction: { questionNumber = 7 },
+                        nextAction: { questionNumber += 1 }
                     )
-                    .padding(.bottom, keyboard.currentHeight == 0 ? 0 : 50)
-                    .animation(.easeOut(duration: 0.16), value: keyboard.currentHeight)
-                    
-                case 12:
-                    // Original case 11 is now case 12 (Support Needed)
+
+                case 9:
                     InputTileList(
-                        questionNumber: 4,
-                        totalQuestions: totalQuestions, // Total questions remains 7 for the follow-up flow
+                        questionNumber: 2,
+                        totalQuestions: 4,
                         optionCount: 5,
                         size: CGSize(width: 360, height: 450),
-                        question1: NSLocalizedString("questionElevenPartOne", comment: ""),
-                        question2: NSLocalizedString("questionElevenPartTwo", comment: ""),
+                        question1: NSLocalizedString("questionNinePartOne", comment: ""),
+                        question2: NSLocalizedString("questionNinePartTwo", comment: ""),
                         visitLog: visitLog,
-                        nextAction: { questionNumber += 1 },
+                        nextAction: {
+                            visitLog.helpProvidedCategory = visitLog.whatGiven
+                            questionNumber += 1
+                        },
+                        previousAction: { questionNumber -= 1 },
+                        skipAction: { questionNumber += 1 },
+                        buttonMode: .navigation,
+                        showProgressBar: true,
+                        supportMode: .provided
+                    )
+                    .padding(.bottom, keyboard.currentHeight == 0 ? 0 : keyboard.currentHeight - 250)
+                    .animation(.easeOut(duration: 0.16), value: keyboard.currentHeight)
+
+                case 10:
+                    InputTileList(
+                        questionNumber: 3,
+                        totalQuestions: 4,
+                        optionCount: 5,
+                        size: CGSize(width: 360, height: 450),
+                        question1: NSLocalizedString("questionTenPartOne", comment: ""),
+                        question2: NSLocalizedString("questionTenPartTwo", comment: ""),
+                        visitLog: visitLog,
+                        nextAction: {
+                            visitLog.furtherHelpCategory = visitLog.whatGivenFurther
+                            questionNumber += 1
+                        },
                         previousAction: { questionNumber -= 1 },
                         skipAction: { questionNumber += 1 },
                         buttonMode: .navigation,
@@ -412,14 +307,96 @@ struct VisitLogEntry: View {
                         supportMode: .needed
 
                     )
-                    .padding(.bottom, keyboard.currentHeight == 0 ? 0 : 50)
+                    .padding(.bottom, keyboard.currentHeight == 0 ? 0 : keyboard.currentHeight - 250)
                     .animation(.easeOut(duration: 0.16), value: keyboard.currentHeight)
-                    
+                case 11:
+                    InputTileFollowUpDate(
+                        questionNumber: 4,
+                        totalQuestions: 4,
+                        question1: NSLocalizedString("questionElevenPartOne", comment: ""),
+                        question2: NSLocalizedString("questionElevenPartTwo", comment: ""),
+                        showSkip: false,
+                        initialDateValue: rawDate,
+                        datetimeValue: $rawDate,
+                        convertedDate: $visitLog.helpRequestFollowUpTimestamp,
+                        additionalDetails: $visitLog.helpRequestAdditionalDetails,
+                        nextAction: {
+                            if didCommitOnThisPass {
+                                questionNumber = 12
+                                return
+                            }
+
+                            didCommitOnThisPass = true
+
+                            let title: String
+                            if let idx = editingIndex {
+                                title = "Individual Interaction \(idx + 1)"
+                            } else {
+                                title = "Individual Interaction \(individualInteractions.count + 1)"
+                            }
+
+                            let newItem = IndividualInteractionItem(
+                                title: title,
+                                firstName: visitLog.recipientFirstName,
+                                lastName: visitLog.recipientLastName,
+                                helpProvidedCategory: visitLog.helpProvidedCategory,
+                                furtherHelpCategory: visitLog.furtherHelpCategory,
+                                additionalDetails: visitLog.helpRequestAdditionalDetails,
+                                followUpTimestamp: visitLog.helpRequestFollowUpTimestamp
+                            )
+                            if isCreatingNewInteraction {
+                                individualInteractions.append(newItem)
+                            } else if let idx = editingIndex,
+                                      idx >= 0,
+                                      idx < individualInteractions.count {
+                                individualInteractions[idx] = newItem
+                            }
+                            questionNumber = 12
+                        },
+                        skipAction: { questionNumber += 1 },
+                        previousAction: { questionNumber -= 1 }
+                    )
+                    .padding(.bottom, keyboard.currentHeight == 0 ? 0 : 24)
+                case 12:
+                    InputTileIndividualInteractionsSummary(
+                        questionNumber: 4,
+                        totalQuestions: 4,
+                        interactions: $individualInteractions,
+                        previousAction: {
+                            didCommitOnThisPass = false
+                            isCreatingNewInteraction = false
+                            questionNumber = 11
+                        },
+                        nextAction: {
+                            isCreatingNewInteraction = false
+                            editingIndex = nil
+                            questionNumber = 100
+                        },
+                        addMoreAction: {
+                            isCreatingNewInteraction = true
+                            editingIndex = nil
+                            didCommitOnThisPass = false
+                            questionNumber = 8
+                        },
+                        editAction: { _, index in
+                            isCreatingNewInteraction = false
+                            editingIndex = index
+                            didCommitOnThisPass = false
+                            questionNumber = 8
+                        },
+                        deleteAction: { _, index in
+                            if index >= 0 && index < individualInteractions.count {
+                                individualInteractions.remove(at: index)
+                            }
+                            if editingIndex == index {
+                                editingIndex = nil
+                            }
+                        }
+                    )
                 case 13:
-                    // Original case 12 is now case 13 (Follow-up Date)
                     InputTileDate(
                         questionNumber: 5,
-                        totalQuestions: totalQuestions, // Total questions remains 7 for the follow-up flow
+                        totalQuestions: totalQuestions,
                         question1: NSLocalizedString("questionTwelevePartOne", comment: ""),
                         question2: NSLocalizedString("questionTwelevePartTwo", comment: ""),
                         question3: NSLocalizedString("questionTwelevePartThree", comment: ""),
@@ -435,12 +412,11 @@ struct VisitLogEntry: View {
                     } previousAction: {
                         questionNumber -= 1
                     }
-                    
+
                 case 14:
-                    // Original case 13 is now case 14 (Other Notes)
                     InputTileNotes(
                         questionNumber: 6,
-                        totalQuestions: totalQuestions, // Total questions remains 7 for the follow-up flow
+                        totalQuestions: totalQuestions,
                         tileWidth: 360,
                         tileHeight: 380,
                         question1: NSLocalizedString("questionThirteenPartOne", comment: ""),
@@ -448,13 +424,8 @@ struct VisitLogEntry: View {
                         question3: NSLocalizedString("questionThirteenPartThree", comment: ""),
                         placeholderText: NSLocalizedString("aq6des", comment: ""),
                         otherNotes: $visitLog.furtherOtherNotes,
-                        nextAction: {
-                            //saveVisitLog()
-                            questionNumber += 1
-                        },
-                        previousAction: {
-                            questionNumber -= 1
-                        },
+                        nextAction: { questionNumber += 1 },
+                        previousAction: { questionNumber -= 1 },
                         skipAction: {
                             saveVisitLog()
                             questionNumber += 1
@@ -477,49 +448,39 @@ struct VisitLogEntry: View {
                    
                 case 100:
                     InputTileComplete(log: visitLog) {
-                        // Ensure placeholderDate is defined or use a valid default
-                        // visitLog.followUpWhenVisit = placeholderDate
-                        saveVisitLog() // Regular save
+                        saveVisitLog()
                         presentation.wrappedValue.dismiss()
                     } shareAction: {
-                        // saveVisitLog_Community() // Save for community
+                        // saveVisitLog_Community()
                     }
-                    
+
                 default:
                     Text("An error has occured")
                 }
             }
             .onAppear {
                 questionNumber = 1
-                
-                
+
                 if currentUser == nil {
                     self.isLoading = true
-                    
-                    Auth.auth().signInAnonymously { result, error in
+                    Auth.auth().signInAnonymously { _, _ in
                         print("signed in anon")
                         self.isLoading = false
                     }
                 }
             }
             .onChange(of: questionNumber) { newValue in
+                // keeping your existing logic exactly
                 if newValue == 12 && !didSetInitialRawDate {
                     initialRawDate = rawDate
                     didSetInitialRawDate = true
-                        }
-                    }
-        }.navigationTitle(NSLocalizedString("interactionLog", comment: ""))
-    } // end body
-    
-    
-    func saveVisitLog() {
-        let adapter = VisitLogDataAdapter()
-        adapter.addVisitLog(self.visitLog)
+                }
+            }
+        }
+        .navigationTitle(NSLocalizedString("interactionLog", comment: ""))
     }
-    
-    // Original SegmentedProgressBar definition should remain here.
-    // If you removed it previously, you need to ensure it is defined here:
-    /*
-    struct SegmentedProgressBar: View { ... }
-    */
+
+    func saveVisitLog() {
+        adapter.addVisitLog(self.visitLog, interactions: individualInteractions)
+    }
 }

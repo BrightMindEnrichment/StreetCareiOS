@@ -21,93 +21,91 @@ struct InputTileMoreQuestions: View {
     var skipAction: () -> ()
     var yesAction: () -> ()
     var noAction: () -> ()
+    var previousAction: () -> () // ✅ Added new action
 
     var body: some View {
 
-        ZStack {
-            BasicTile(size: CGSize(width: size.width, height: size.height))
-            
-            VStack {
-                VStack{
-                    Text(question1)
-                        .font(.title3)
-                        .padding(.bottom, 1)
-                        .fontWeight(.bold)
-                    Text(question2)
-                        .font(.title3)
-                        .padding(.bottom, 1)
-                        .fontWeight(.bold)
-                    Text(question3)
-                        .font(.title3)
-                        .fontWeight(.bold)
-                }
-                .padding(.vertical)
-                
-                HStack {
+        VStack(spacing: 0) {
+            // ✅ Progress bar below tile
+            SegmentedProgressBar(
+                totalSegments: totalQuestions,
+                filledSegments: questionNumber,
+                tileWidth: 300
+            )
 
-                    Button(" Yes ") {
-                        yesAction()
+            Text(NSLocalizedString("", comment: ""))
+                .font(.footnote)
+                .padding(.top, 4)
+                .fontWeight(.bold)
+            ZStack {
+                BasicTile(size: CGSize(width: size.width, height: size.height))
+                
+                VStack {
+                    VStack {
+                        Text(question1)
+                            .font(.title3)
+                            .padding(.bottom, 1)
+                            .fontWeight(.bold)
+                        Text(question2)
+                            .font(.title3)
+                            .padding(.bottom, 1)
+                            .fontWeight(.bold)
+                        Text(question3)
+                            .font(.title3)
+                            .fontWeight(.bold)
                     }
-                    .foregroundColor(Color("PrimaryColor"))
-                    .fontWeight(.bold)
-                    .padding(.horizontal, 16)
-                    .padding(.vertical, 8)
-                    .background(
-                        Capsule()
-                            .fill(Color("SecondaryColor"))
-                    )
-                    
-                    Button(" No ") {
-                        noAction()
+                    .padding(.vertical)
+
+                    // ✅ Yes / No Buttons
+                    HStack(spacing: 20) {
+                        Button(" Yes ") {
+                            yesAction()
+                        }
+                        .foregroundColor(Color("PrimaryColor"))
+                        .fontWeight(.bold)
+                        .padding(.horizontal, 16)
+                        .padding(.vertical, 8)
+                        .background(
+                            Capsule()
+                                .fill(Color("SecondaryColor"))
+                        )
+                        
+                        Button(" No ") {
+                            noAction()
+                        }
+                        .foregroundColor(Color("SecondaryColor"))
+                        .fontWeight(.bold)
+                        .padding(.horizontal, 16)
+                        .padding(.vertical, 8)
+                        .background(
+                            Capsule()
+                                .fill(Color.white)
+                        )
+                        .overlay(
+                            Capsule()
+                                .stroke(Color("SecondaryColor"), lineWidth: 2)
+                        )
+                    }
+
+                    // ✅ Centered "Previous" button below Yes/No
+                    Button(NSLocalizedString("previous", comment: "")) {
+                        previousAction()
                     }
                     .foregroundColor(Color("SecondaryColor"))
-                    .fontWeight(.bold)
+                    .font(.footnote)
                     .padding(.horizontal, 16)
                     .padding(.vertical, 8)
-                    .background(
-                        Capsule()
-                            .fill(Color.white) // Fill with white
-                    )
-                    .overlay(
-                        Capsule()
-                            .stroke(Color("SecondaryColor"), lineWidth: 2) // Stroke with dark green
-                    )
+                    .background(Capsule().fill(Color.white))
+                    .overlay(Capsule().stroke(Color("SecondaryColor"), lineWidth: 2))
+                    .padding(.top, 16)
+
                 }
                 .padding()
             }
+            .frame(width: size.width, height: size.height)
+            
+          
+           
         }
-        .frame(width: size.width, height: size.height)
-        SegmentedProgressBar(
-            totalSegments: totalQuestions,
-            filledSegments: questionNumber,
-            tileWidth: 300
-        )
-
-        Text(NSLocalizedString("progress", comment: ""))
-            .font(.footnote)
-            .padding(.top, 4)
-            .fontWeight(.bold)
-
-    } // end body
-} // end struct
-
-
-//struct InputTileMoreQuestions_Previews: PreviewProvider {
-//
-//    @State static var inputText = ""
-//
-//    static var previews: some View {
-//        InputTileMoreQuestions(questionNumber: 5, totalQuestions: 5, question: "Would you like to answer additional questions?") {
-//            // nothing
-//        } skipAction: {
-//            //
-//        } yesAction: {
-//            //
-//        } noAction: {
-//            //
-//        }
-//
-//    }
-//}
-
-
+    }
+}
