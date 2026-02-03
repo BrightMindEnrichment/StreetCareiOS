@@ -234,7 +234,7 @@ struct VisitLogEntry: View {
                         questionNumber: 6,
                         totalQuestions: 6,
                         nextAction: {
-                            questionNumber = 100
+                            questionNumber = 15
                         },
                         skipAction: {
                             questionNumber -= 1
@@ -248,7 +248,7 @@ struct VisitLogEntry: View {
                         noAction: {
                             saveVisitLog()
                             isComplete = true
-                            questionNumber = 100
+                            questionNumber = 15
                         },
                         previousAction: {
                             questionNumber -= 1
@@ -260,7 +260,7 @@ struct VisitLogEntry: View {
                         questionTitle: "",
                         questionNumber: 1,
                         totalQuestions: 4,
-                        skipAction: { questionNumber = 100 },
+                        skipAction: { questionNumber = 15 },
                         previousAction: { questionNumber = 7 },
                         nextAction: { questionNumber += 1 }
                     )
@@ -370,7 +370,7 @@ struct VisitLogEntry: View {
                         nextAction: {
                             isCreatingNewInteraction = false
                             editingIndex = nil
-                            questionNumber = 100
+                            questionNumber = 15
                         },
                         addMoreAction: {
                             isCreatingNewInteraction = true

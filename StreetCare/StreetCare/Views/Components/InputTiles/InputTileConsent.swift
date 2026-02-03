@@ -37,15 +37,15 @@ struct InputTileConsent: View {
                         }) {
                             ZStack {
                                 RoundedRectangle(cornerRadius: 4)
-                                    .stroke(Color.blue, lineWidth: 2)
+                                    .stroke(Color.black, lineWidth: 2)
                                     .frame(width: 24, height: 24)
-                                    .background(isAgreed ? Color.blue : Color.clear)
+                                    .background(isAgreed ? Color.black : Color.clear)
                                 if isAgreed {
                                     Image(systemName: "checkmark")
                                         .resizable()
                                         .scaledToFit()
                                         .frame(width: 14, height: 14)
-                                        .foregroundColor(.white)
+                                        .foregroundColor(.yellow)
                                 }
                             }
                         }
@@ -66,14 +66,15 @@ struct InputTileConsent: View {
                     Button(action: {
                         submitAction()
                     }) {
-                        Text("Submit")
+                        Text("SUBMIT")
                             .fontWeight(.bold)
-                            .frame(maxWidth: .infinity)
+                            .padding(.horizontal, 28)   // ⬅️ controls width
                             .padding(.vertical, 12)
                             .background(Color.black)
-                            .foregroundColor(Color("PrimaryColor"))
-                            .cornerRadius(10)
+                            .foregroundColor(.yellow)
+                            .cornerRadius(24)           // ⬅️ pill shape
                     }
+                    .frame(maxWidth: .infinity, alignment: .center)
                     .disabled(!isAgreed)
                     .padding(.horizontal)
                     
