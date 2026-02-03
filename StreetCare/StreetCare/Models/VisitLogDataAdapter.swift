@@ -362,7 +362,6 @@ class VisitLogDataAdapter: ObservableObject{
         }
 
         let db = Firestore.firestore()
-
         db.collection("InteractionLogDev")
             .whereField("userId", isEqualTo: user.uid)
             .getDocuments { snapshot, error in
@@ -373,7 +372,6 @@ class VisitLogDataAdapter: ObservableObject{
                     }
                     return
                 }
-
                 var logs: [VisitLog] = []
 
                 for doc in snapshot?.documents ?? [] {
@@ -398,7 +396,9 @@ class VisitLogDataAdapter: ObservableObject{
                         log.whenVisit = ts.dateValue()
                     }
 
-                    log.numPeopleHelped = data["numPeopleHelped"] as? Int ?? 0
+                    //log.numPeopleHelped = data["numPeopleHelped"] as? Int ?? 0
+                    
+                    log.peopleHelped = data["numPeopleHelped"] as? Int ?? 0
                     log.numPeopleJoined = data["numPeopleJoined"] as? Int ?? 0
                     log.carePackagesDistributed = data["carePackagesDistributed"] as? Int ?? 0
                     log.carePackageContents = data["carePackageContents"] as? String ?? ""

@@ -72,7 +72,6 @@ struct VisitImpactView: View {
                     } message: {
                         Text(NSLocalizedString("loginRequiredMessage", comment: ""))
                     }
-                    
                     .navigationDestination(isPresented: $isNavigationActive) {
                         VisitLogEntry()
                             .onDisappear {
@@ -384,7 +383,6 @@ struct VisitImpactView: View {
                 return total
             }
         }
-        
         self.itemsDonated = history.reduce(0) { total, log in
             var count = 0
 
