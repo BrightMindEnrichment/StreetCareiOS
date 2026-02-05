@@ -13,7 +13,7 @@ struct InputTileIndividualInteraction: View {
     var nextAction: (() -> Void)?
     
     var tileWidth: CGFloat = 360
-    var tileHeight: CGFloat = 520
+    var tileHeight: CGFloat = 460
 
     @State private var selectedDate: Date = Date()
     @State private var selectedTime: Date = Date()
@@ -71,7 +71,7 @@ struct InputTileIndividualInteraction: View {
     private func borderedTextField(_ placeholder: String, text: Binding<String>) -> some View {
         TextField(placeholder, text: text)
             .foregroundColor(.black)
-            .padding(.horizontal, 10)
+            .padding(.horizontal, 12)
             .frame(height: 38)
             .background(Color.white)
             .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.black, lineWidth: 0.5))
@@ -83,7 +83,7 @@ struct InputTileIndividualInteraction: View {
             content().foregroundColor(.black)
             Spacer()
         }
-        .padding(.horizontal, 10)
+        .padding(.horizontal, 12)
         .frame(height: 38)
         .background(Color.white)
         .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.black, lineWidth: 0.5))
@@ -109,7 +109,7 @@ struct InputTileIndividualInteraction: View {
             Divider()
             
             Group {
-                borderedTextField("First Name*", text: $log.recipientFirstName)
+                borderedTextField("First Name (Person You Interacted)*", text: $log.recipientFirstName)
                 borderedTextField("Last Name", text: $log.recipientLastName)
                 borderedTextField("Location or Landmark", text: $log.locationDescription)
             }
@@ -126,7 +126,7 @@ struct InputTileIndividualInteraction: View {
                         Spacer()
                         Image(systemName: "chevron.down").foregroundColor(.black)
                     }
-                    .padding(.horizontal, 10)
+                    .padding(.horizontal, 12)
                     .frame(maxWidth: .infinity, minHeight: 38, maxHeight: 38)
                     .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.black, lineWidth: 0.5))
                 }
