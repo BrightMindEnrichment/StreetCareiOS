@@ -239,12 +239,12 @@ struct InputTileDetails: View {
             
             // Start Time Label
             Text("Start Time:")
-                .font(.subheadline)
+                .font(.system(size: 16))
                 .foregroundColor(.black)
                 .padding(.leading, 20)
             
             // Start Time PICKERS
-            HStack(spacing: 10) {
+            HStack(spacing: 12) {
                 //Spacer()
                 
                
@@ -262,7 +262,7 @@ struct InputTileDetails: View {
                         Image(systemName: "calendar")
                         // ➡️ Use the helper function here
                         Text(formatDate(rawDate))
-                            .font(.subheadline)
+                            .font(.system(size: 16)) // Subheadline is roughly 15, so 16 increases it by 1
                             .foregroundColor(.black)
                     }
                     .padding(.horizontal, 10)
@@ -277,7 +277,7 @@ struct InputTileDetails: View {
                     )
                     .allowsHitTesting(false)
                 }
-                .frame(width: 145)
+                .frame(width: 155)
 
             
                 //.frame(maxWidth: .infinity, alignment: .leading)
@@ -297,7 +297,7 @@ struct InputTileDetails: View {
                         Image(systemName: "clock")
                         // ➡️ Use the helper function here + the abbreviation
                         Text("\(formatTime(rawDate)) \(selectedTimeZone.abbreviation() ?? "")")
-                            .font(.subheadline)
+                            .font(.system(size: 16)) // Subheadline is roughly 15, so 16 increases it by 1
                             .foregroundColor(.black)
                     }
                     .padding(.horizontal, 10)
@@ -312,22 +312,22 @@ struct InputTileDetails: View {
                     )
                     .allowsHitTesting(false)
                 }
-                .frame(width: 145)
+                .frame(width: 163)
 
             }
-            .frame(width: 300)
-            .padding(.horizontal, 12)
+            .frame(width: 300, alignment: .leading) // Forces alignment to the left
+            .padding(.leading, 12)
             
             // End Time Label
             Text("End Time:")
-                .font(.subheadline)
+                .font(.system(size: 16))
                 .foregroundColor(.black)
                 .padding(.leading, 20)
             
                 
             
             // End Time PICKERS
-            HStack(spacing: 10) {
+            HStack(spacing: 12) {
                 
                 // ⭐️ End Time - Date Picker (Custom Style)
                 ZStack {
@@ -350,7 +350,7 @@ struct InputTileDetails: View {
                                 .foregroundColor(.black)
 
                             Text(formatDate(rawEndDate ?? rawDate))
-                                .font(.subheadline)
+                                .font(.system(size: 16)) // Subheadline is roughly 15, so 16 increases it by 1
                                 .foregroundColor(.black)
                         }
                         .padding(.horizontal, 10)
@@ -365,7 +365,7 @@ struct InputTileDetails: View {
                         )
                         .allowsHitTesting(false)
                     }
-                    .frame(width: 145)
+                    .frame(width: 155)
 
 
                 // ⭐️ End Time - Time Picker (Custom Style)
@@ -389,7 +389,7 @@ struct InputTileDetails: View {
                                 .foregroundColor(.black)
 
                             Text("\(formatTime(rawEndDate ?? rawDate)) \(selectedTimeZone.abbreviation() ?? "")")
-                                .font(.subheadline)
+                                .font(.system(size: 16)) // Subheadline is roughly 15, so 16 increases it by 1
                                 .foregroundColor(.black)
                         }
                         .padding(.horizontal, 10)
@@ -404,7 +404,7 @@ struct InputTileDetails: View {
                         )
                         .allowsHitTesting(false)
                     }
-                    .frame(width: 145)
+                    .frame(width: 163)
                 }
                 .padding(.horizontal, 12)
                 .padding(.bottom, 15)
