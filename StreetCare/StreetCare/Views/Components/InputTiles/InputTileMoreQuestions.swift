@@ -104,7 +104,7 @@ struct InputTileMoreQuestions: View {
             }
             .frame(width: size.width, height: size.height)
             
-          
+          Spacer()
            
         }
     }
