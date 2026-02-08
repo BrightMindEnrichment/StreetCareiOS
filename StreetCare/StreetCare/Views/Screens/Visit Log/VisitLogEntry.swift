@@ -479,8 +479,28 @@ struct VisitLogEntry: View {
             }
         }
         .navigationTitle(NSLocalizedString("interactionLog", comment: ""))
+        //hiding default back button on top navigation bar and adding new Back functionality
+        .navigationBarBackButtonHidden(true)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button {
+                    handleBack()
+                } label: {
+                    HStack(spacing: 4) {
+                        Image(systemName: "chevron.left")
+                        Text("Back")
+                    }
+                }
+            }
+        }
     }
-
+    private func handleBack() {
+        if questionNumber > 1 {
+            questionNumber -= 1
+        } else {
+            presentation.wrappedValue.dismiss()
+        }
+    }
     func saveVisitLog() {
         adapter.addVisitLog(self.visitLog, interactions: individualInteractions)
     }
