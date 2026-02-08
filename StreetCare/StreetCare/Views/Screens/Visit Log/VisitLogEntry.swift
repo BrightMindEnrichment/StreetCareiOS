@@ -175,7 +175,7 @@ struct VisitLogEntry: View {
                         questionNumber: 5,
                         totalQuestions: 7,
                         tileWidth: 360,
-                        tileHeight: 467,
+                        tileHeight: 415,
                         question1: NSLocalizedString("questionFivePartOne", comment: ""),
                         question2: NSLocalizedString("questionFivePartTwo", comment: ""),
                         question3: NSLocalizedString("questionFivePartThree", comment: ""),
@@ -205,7 +205,7 @@ struct VisitLogEntry: View {
                         questionNumber: 6,
                         totalQuestions: 7,
                         tileWidth: 360,
-                        tileHeight: 533,
+                        tileHeight: 545,
                         question1: NSLocalizedString("questionSixPartOne", comment: ""),
                         question2: NSLocalizedString("questionSixPartTwo", comment: ""),
                         question3: "",
@@ -260,7 +260,7 @@ struct VisitLogEntry: View {
                         questionTitle: "",
                         questionNumber: 1,
                         totalQuestions: 4,
-                        skipAction: { questionNumber = 100 },
+                        skipAction: { questionNumber += 1 },
                         previousAction: { questionNumber = 7 },
                         nextAction: { questionNumber += 1 }
                     )
@@ -281,7 +281,7 @@ struct VisitLogEntry: View {
                         previousAction: { questionNumber -= 1 },
                         skipAction: { questionNumber += 1 },
                         buttonMode: .navigation,
-                        showProgressBar: true,
+                        showProgressBar: false,
                         supportMode: .provided
                     )
                     .padding(.bottom, keyboard.currentHeight == 0 ? 0 : keyboard.currentHeight - 250)
@@ -303,7 +303,7 @@ struct VisitLogEntry: View {
                         previousAction: { questionNumber -= 1 },
                         skipAction: { questionNumber += 1 },
                         buttonMode: .navigation,
-                        showProgressBar: true,
+                        showProgressBar: false,
                         supportMode: .needed
 
                     )
@@ -316,6 +316,7 @@ struct VisitLogEntry: View {
                         question1: NSLocalizedString("questionElevenPartOne", comment: ""),
                         question2: NSLocalizedString("questionElevenPartTwo", comment: ""),
                         showSkip: false,
+                        showProgressBar: false,
                         initialDateValue: rawDate,
                         datetimeValue: $rawDate,
                         convertedDate: $visitLog.helpRequestFollowUpTimestamp,
@@ -354,7 +355,7 @@ struct VisitLogEntry: View {
                             questionNumber = 12
                         },
                         skipAction: { questionNumber += 1 },
-                        previousAction: { questionNumber -= 1 }
+                        previousAction: { questionNumber -= 1 },
                     )
                     .padding(.bottom, keyboard.currentHeight == 0 ? 0 : 24)
                 case 12:

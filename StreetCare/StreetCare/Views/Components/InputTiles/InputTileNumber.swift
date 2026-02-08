@@ -173,7 +173,8 @@ struct InputTileNumber: View {
                     filledSegments: questionNumber,
                     tileWidth: tileWidth
                 )
-                .padding(.bottom, 24)
+                .padding(.top, 36)
+                .padding(.bottom, 36)
             }
 
             ZStack {
@@ -205,7 +206,7 @@ struct InputTileNumber: View {
                         }
                         // Check if we need TWO number pickers or ONE
                         if dualNumberMode {
-                            VStack(spacing: 36) { // space between the two sections
+                            VStack(spacing: 18) { // space between the two sections
                                 // FIRST SECTION
                                 VStack(spacing: 0) {
                                     // Header (one line)
@@ -216,8 +217,8 @@ struct InputTileNumber: View {
                                     }
                                     
                                     numberStepper(value: $numberString)
-                                    .padding(.top, 17)   // space from header to stepper
-                                    .padding(.bottom, 36) // slight breathing room after stepper
+                                    .padding(.top, 18)   // space from header to stepper
+                                    .padding(.bottom, 14) // slight breathing room after stepper
                                 }
 
                                 // SECOND SECTION
@@ -235,12 +236,12 @@ struct InputTileNumber: View {
                                     }
 
                                     numberStepper(value: $numberString2)
-                                    .padding(.top, 17)   // space from header to stepper
+                                    .padding(.top, 18)   // space from header to stepper
                                     .padding(.bottom, 0) // slight breathing room after stepper
                                 }
                             }
                             .padding(.top, 17)
-                            .padding(.bottom, 24)
+                            .padding(.bottom, 0)
                         } else{
                             VStack(spacing: 4) {
                                 Text(question1).font(.title2).fontWeight(.bold)
@@ -257,7 +258,6 @@ struct InputTileNumber: View {
                             .padding(.vertical)
                             // Single number stepper for default behavior
                             numberStepper(value: $numberString)
-                            .padding(.bottom)
                         }
                         // Prefer the custom header if provided; otherwise keep the old descriptionLabel behavior.
                         if let line1 = editorHeaderLine1, !line1.isEmpty {
@@ -271,8 +271,7 @@ struct InputTileNumber: View {
                                         .fontWeight(.bold)
                                 }
                             }
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .padding(.horizontal)
+                            .padding(.vertical)
                         }else if let label = descriptionLabel, !label.isEmpty {
                             Text(label)
                                 .font(.headline)
@@ -346,7 +345,7 @@ struct InputTileNumber: View {
                                     Alert(title: Text("Invalid Input"), message: Text("Please enter a valid number."), dismissButton: .default(Text("OK")))
                                 }
                             }
-                            .padding(.top)
+                            
                         } else if buttonMode == .update {
                             HStack {
                                 Button("Cancel") {
@@ -388,6 +387,7 @@ struct InputTileNumber: View {
                         }
                     }
                     .padding()
+//                    .frame(maxHeight: .infinity, alignment: .top)
                 }
             }
         }
@@ -409,17 +409,6 @@ struct InputTileNumber: View {
                 numberString2 = String(val)
             }
         }
-
-//        if showProgressBar {
-//            SegmentedProgressBar(
-//                totalSegments: totalQuestions,
-//                filledSegments: questionNumber,
-//                tileWidth: tileWidth
-//            )
-//            Text(NSLocalizedString("progress", comment: ""))
-//                .font(.footnote)
-//                .padding(.top, 4)
-//                .fontWeight(.bold)
-//        }
-    }    
+        Spacer()
+    }
 }
