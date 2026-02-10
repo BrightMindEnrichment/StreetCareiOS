@@ -260,7 +260,7 @@ struct VisitLogEntry: View {
                         questionTitle: "",
                         questionNumber: 1,
                         totalQuestions: 4,
-                        skipAction: { questionNumber = 15 },
+                        skipAction: { questionNumber += 1 },
                         previousAction: { questionNumber = 7 },
                         nextAction: { questionNumber += 1 }
                     )

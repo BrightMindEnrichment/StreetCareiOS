@@ -406,7 +406,6 @@ class VisitLogDataAdapter: ObservableObject{
                     log.status = data["status"] as? String ?? ""
                     log.isPublic = data["isPublic"] as? Bool ?? false
                     log.helpRequestDocIds = data["helpRequestDocIds"] as? [String] ?? []
-
                     logs.append(log)
                 }
                 logs.sort { $0.whenVisit > $1.whenVisit }
@@ -417,6 +416,7 @@ class VisitLogDataAdapter: ObservableObject{
                 }
             }
     }
+    
     func refresh() {
         guard let user = Auth.auth().currentUser else {
             self.visitLogs = [VisitLog]()
