@@ -41,18 +41,33 @@ struct VisitLogEntry: View {
     @State private var editingIndex: Int? = nil
     @State private var didCommitOnThisPass: Bool = false
     @State private var isCreatingNewInteraction: Bool = false
+    
+    private var headerTitle: String {
+        switch questionNumber {
+        // For the specific data entry steps
+        case 8, 9, 10, 11:
+            return "Individual Interaction \(individualInteractions.count + 1)"
+            
+        // For the summary and follow-up steps
+        case 12, 13:
+            return "Individual Interaction"
+            
+        // Default title for steps 1-7 and others
+        default:
+            return NSLocalizedString("logYourInteraction", comment: "")
+        }
+    }
 
     var body: some View {
         NavigationStack {
             VStack(spacing: 10) {
 
-                if !isComplete {
-                    Text(NSLocalizedString("logYourInteraction", comment: ""))
+                if !isComplete && questionNumber != 100 {
+                    Text(headerTitle)
                         .font(.title)
                         .fontWeight(.bold)
                         .padding()
                 }
-
                 switch questionNumber {
 
                 case 1:
@@ -264,7 +279,6 @@ struct VisitLogEntry: View {
                         previousAction: { questionNumber = 7 },
                         nextAction: { questionNumber += 1 }
                     )
-
                 case 9:
                     InputTileList(
                         questionNumber: 2,
