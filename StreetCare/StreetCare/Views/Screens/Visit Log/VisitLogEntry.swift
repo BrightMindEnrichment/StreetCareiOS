@@ -284,7 +284,7 @@ struct VisitLogEntry: View {
                         questionNumber: 2,
                         totalQuestions: 4,
                         optionCount: 5,
-                        size: CGSize(width: 360, height: 450),
+                        size: CGSize(width: 360, height: 520),
                         question1: NSLocalizedString("questionNinePartOne", comment: ""),
                         question2: NSLocalizedString("questionNinePartTwo", comment: ""),
                         visitLog: visitLog,
@@ -295,7 +295,7 @@ struct VisitLogEntry: View {
                         previousAction: { questionNumber -= 1 },
                         skipAction: { questionNumber += 1 },
                         buttonMode: .navigation,
-                        showProgressBar: true,
+                        showProgressBar: false,
                         supportMode: .provided
                     )
                     .padding(.bottom, keyboard.currentHeight == 0 ? 0 : keyboard.currentHeight - 250)
@@ -306,7 +306,7 @@ struct VisitLogEntry: View {
                         questionNumber: 3,
                         totalQuestions: 4,
                         optionCount: 5,
-                        size: CGSize(width: 360, height: 450),
+                        size: CGSize(width: 360, height: 520),
                         question1: NSLocalizedString("questionTenPartOne", comment: ""),
                         question2: NSLocalizedString("questionTenPartTwo", comment: ""),
                         visitLog: visitLog,
@@ -317,7 +317,7 @@ struct VisitLogEntry: View {
                         previousAction: { questionNumber -= 1 },
                         skipAction: { questionNumber += 1 },
                         buttonMode: .navigation,
-                        showProgressBar: true,
+                        showProgressBar: false,
                         supportMode: .needed
 
                     )
@@ -330,6 +330,7 @@ struct VisitLogEntry: View {
                         question1: NSLocalizedString("questionElevenPartOne", comment: ""),
                         question2: NSLocalizedString("questionElevenPartTwo", comment: ""),
                         showSkip: false,
+                        showProgressBar: false,
                         initialDateValue: rawDate,
                         datetimeValue: $rawDate,
                         convertedDate: $visitLog.helpRequestFollowUpTimestamp,
