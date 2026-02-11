@@ -1,13 +1,13 @@
 PODS:
-  - ExytePopupView (2.9.1):
+  - ExytePopupView (4.0.0):
     - SwiftUIIntrospect
   - GoogleMaps (9.1.1):
     - GoogleMaps/Maps (= 9.1.1)
   - GoogleMaps/Base (9.1.1)
   - GoogleMaps/Maps (9.1.1):
     - GoogleMaps/Base
-  - GooglePlaces (9.3.0)
-  - SwiftUIIntrospect (1.1.3)
+  - GooglePlaces (10.8.0)
+  - SwiftUIIntrospect (26.0.0)
 
 DEPENDENCIES:
   - ExytePopupView
@@ -22,10 +22,10 @@ SPEC REPOS:
     - SwiftUIIntrospect
 
 SPEC CHECKSUMS:
-  ExytePopupView: 9287a6d5705371d0ae10cc47d7af86f8421baf1e
+  ExytePopupView: d51acf7a270ee16b0f4a6ad04c431d865cf86106
   GoogleMaps: 80ea184ed6bf44139f383a8b0e248ba3ec1cc8c9
-  GooglePlaces: 310d8c240eb4bf7aaeecec0de71fe75d086dbf4a
-  SwiftUIIntrospect: 622899b318ecf437d0bef44b79bec10c69efb86f
+  GooglePlaces: 816b0649f4a596387ebeb790d9d60ffa9230fdcb
+  SwiftUIIntrospect: 74b21afe4589aa3979192844ac1cbba381712e61
 
 PODFILE CHECKSUM: 1058a8729f38b59185ea17eddbc97e12c55c5414
 
