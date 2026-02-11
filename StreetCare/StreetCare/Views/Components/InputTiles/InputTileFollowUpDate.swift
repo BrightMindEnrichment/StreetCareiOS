@@ -302,7 +302,7 @@ struct InputTileFollowUpDate: View {
                 }
             )
         }
-        Spacer()
+
         if showProgressBar {
             SegmentedProgressBar(
                 totalSegments: totalQuestions,

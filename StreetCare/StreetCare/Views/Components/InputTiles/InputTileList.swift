@@ -230,7 +230,6 @@ struct InputTileList: View {
                 }
             )
         }
-        Spacer()
         
         if showProgressBar {
             SegmentedProgressBar(
