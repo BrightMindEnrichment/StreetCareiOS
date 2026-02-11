@@ -227,17 +227,7 @@ struct ProfilView: View {
         }
         self.itemsDonated = history.reduce(0) { total, log in
             var count = 0
-
-            // Count standard boolean fields
-            if log.foodAndDrinks { count += 1 }
-            if log.clothes { count += 1 }
-            if log.hygiene { count += 1 }
-            if log.wellness { count += 1 }
-            if log.medical { count += 1 }
-            if log.social { count += 1 }
-            if log.legal { count += 1 }
-            if log.other { count += 1 }
-
+            count = log.listOfSupportsProvided.count
             // If nothing was found, check web-created logs
             if count == 0 {
                 count += log.whatGiven.count

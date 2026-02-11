@@ -10,6 +10,7 @@ import SwiftUI
 enum SupportMode {
     case provided
     case needed
+    case support
 }
 
 struct InputTileList: View {
@@ -60,6 +61,19 @@ struct InputTileList: View {
                 selected.append(visitLog.furtherOtherNotes.isEmpty ? "Other" : visitLog.furtherOtherNotes)
             }
             visitLog.whatGivenFurther = selected // Reused for further support too
+        //this is for what kind help was provided interaction case 4
+        case .support:
+            if visitLog.supportFoodAndDrinks { selected.append("Food & Drinks") }
+            if visitLog.supportClothes { selected.append("Clothes") }
+            if visitLog.supportHygiene { selected.append("Hygiene Products") }
+            if visitLog.supportWellness { selected.append("Wellness/Emotional Support") }
+            if visitLog.supportMedical { selected.append("Medical Help") }
+            if visitLog.supportSocial { selected.append("Social Worker/Psychiatrist") }
+            if visitLog.supportLegal { selected.append("Legal/Lawyer") }
+            if visitLog.supportOther {
+                selected.append(visitLog.supportOtherNotes.isEmpty ? "Other" : visitLog.supportOtherNotes)
+            }
+            visitLog.whatGivenSupport = selected
         }
     }
     
@@ -151,6 +165,18 @@ struct InputTileList: View {
                                     // Using otherNotes as placeholder instead furtherOtherNotes as furtherOtherNotes is not provided
                                     AutoGrowingTextEditor(text: $visitLog.furtherOtherNotes, placeholder: NSLocalizedString("otherNotes", comment: ""))
                                 }
+                            case .support:
+                                checkbox("Food & Drinks", isChecked: $visitLog.supportFoodAndDrinks)
+                                checkbox("Clothes", isChecked: $visitLog.supportClothes)
+                                checkbox("Hygiene Products", isChecked: $visitLog.supportHygiene)
+                                checkbox("Wellness/Emotional Support", isChecked: $visitLog.supportWellness)
+                                checkbox("Medical Help", isChecked: $visitLog.supportMedical)
+                                checkbox("Social Worker/Psychiatrist", isChecked: $visitLog.supportSocial)
+                                checkbox("Legal/Lawyer", isChecked: $visitLog.supportLegal)
+                                checkbox("Other", isChecked: $visitLog.supportOther)
+                                if visitLog.supportOther {
+                                    AutoGrowingTextEditor(text: $visitLog.supportOtherNotes, placeholder: NSLocalizedString("otherNotes", comment: ""))
+                                }
                             }
                         }
                         .padding()
@@ -213,7 +239,9 @@ struct InputTileList: View {
                 }
                 if supportMode == .provided {
                     SupportChangeObserverProvided(visitLog: visitLog, onUpdate: updateSupportArray)
-                } else {
+                }else if supportMode == .support{
+                    SupportChangeObserverSupport(visitLog: visitLog, onUpdate: updateSupportArray)
+                }else {
                     SupportChangeObserverNeeded(visitLog: visitLog, onUpdate: updateSupportArray)
                 }
             }
@@ -261,6 +289,24 @@ struct SupportChangeObserverProvided: View {
             .onChange(of: visitLog.legal) { onUpdate() }
             .onChange(of: visitLog.other) { onUpdate() }
             .onChange(of: visitLog.otherNotes) { onUpdate() }
+    }
+}
+
+struct SupportChangeObserverSupport: View {
+    @ObservedObject var visitLog: VisitLog
+    var onUpdate: () -> Void
+
+    var body: some View {
+        EmptyView()
+            .onChange(of: visitLog.supportFoodAndDrinks) { onUpdate() }
+            .onChange(of: visitLog.supportClothes) { onUpdate() }
+            .onChange(of: visitLog.supportHygiene) { onUpdate() }
+            .onChange(of: visitLog.supportWellness) { onUpdate() }
+            .onChange(of: visitLog.supportMedical) { onUpdate() }
+            .onChange(of: visitLog.supportSocial) { onUpdate() }
+            .onChange(of: visitLog.supportLegal) { onUpdate() }
+            .onChange(of: visitLog.supportOther) { onUpdate() }
+            .onChange(of: visitLog.supportOtherNotes) { onUpdate() }
     }
 }
 

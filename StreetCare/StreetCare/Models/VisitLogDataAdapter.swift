@@ -176,7 +176,7 @@ class VisitLogDataAdapter: ObservableObject{
         data["helpRequestCount"] = 0
         data["status"] = "Pending"
         data["isPublic"] = false
-        data["listOfSupportsProvided"] = []
+        data["listOfSupportsProvided"] = visitLog.listOfSupportsProvided
 
         // Link field that your rules allow
         data["helpRequestDocIds"] = visitLog.helpRequestDocIds
@@ -402,7 +402,7 @@ class VisitLogDataAdapter: ObservableObject{
                     log.numPeopleJoined = data["numPeopleJoined"] as? Int ?? 0
                     log.carePackagesDistributed = data["carePackagesDistributed"] as? Int ?? 0
                     log.carePackageContents = data["carePackageContents"] as? String ?? ""
-
+                    log.listOfSupportsProvided = data["listOfSupportsProvided"] as? [String] ?? []
                     log.status = data["status"] as? String ?? ""
                     log.isPublic = data["isPublic"] as? Bool ?? false
                     log.helpRequestDocIds = data["helpRequestDocIds"] as? [String] ?? []
