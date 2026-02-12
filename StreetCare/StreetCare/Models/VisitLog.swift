@@ -23,6 +23,15 @@ class VisitLog: ObservableObject, Identifiable {
     @Published var photoURL: String = ""
     @Published var whereVisit = ""
     @Published var locationDescription = ""
+    @Published var supportFoodAndDrinks = false
+    @Published var supportClothes = false
+    @Published var supportHygiene = false
+    @Published var supportWellness = false
+    @Published var supportMedical = false
+    @Published var supportSocial = false
+    @Published var supportLegal = false
+    @Published var supportOther = false
+    @Published var supportOtherNotes = ""
     @Published var peopleHelped = 0
     @Published var peopleHelpedDescription = ""
     @Published var foodAndDrinks = false
@@ -86,6 +95,9 @@ class VisitLog: ObservableObject, Identifiable {
             let parts = [locationDescription, state, zipcode].filter { !$0.isEmpty }
             return parts.joined(separator: ", ")
         }
+    //Fields for interaction Case 3
+    @Published var listOfSupportsProvided: [String] = []
+    @Published var whatGivenSupport: [String] = []
     
     // Fields for the HelpRequest Case 9, 10 and 11.
     @Published var helpProvidedCategory: [String] = []

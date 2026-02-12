@@ -176,7 +176,7 @@ class VisitLogDataAdapter: ObservableObject{
         data["helpRequestCount"] = 0
         data["status"] = "Pending"
         data["isPublic"] = false
-        data["listOfSupportsProvided"] = []
+        data["listOfSupportsProvided"] = visitLog.listOfSupportsProvided
 
         // Link field that your rules allow
         data["helpRequestDocIds"] = visitLog.helpRequestDocIds
@@ -362,7 +362,6 @@ class VisitLogDataAdapter: ObservableObject{
         }
 
         let db = Firestore.firestore()
-
         db.collection("InteractionLogDev")
             .whereField("userId", isEqualTo: user.uid)
             .getDocuments { snapshot, error in
@@ -373,7 +372,6 @@ class VisitLogDataAdapter: ObservableObject{
                     }
                     return
                 }
-
                 var logs: [VisitLog] = []
 
                 for doc in snapshot?.documents ?? [] {
@@ -398,15 +396,16 @@ class VisitLogDataAdapter: ObservableObject{
                         log.whenVisit = ts.dateValue()
                     }
 
-                    log.numPeopleHelped = data["numPeopleHelped"] as? Int ?? 0
+                    //log.numPeopleHelped = data["numPeopleHelped"] as? Int ?? 0
+                    
+                    log.peopleHelped = data["numPeopleHelped"] as? Int ?? 0
                     log.numPeopleJoined = data["numPeopleJoined"] as? Int ?? 0
                     log.carePackagesDistributed = data["carePackagesDistributed"] as? Int ?? 0
                     log.carePackageContents = data["carePackageContents"] as? String ?? ""
-
+                    log.listOfSupportsProvided = data["listOfSupportsProvided"] as? [String] ?? []
                     log.status = data["status"] as? String ?? ""
                     log.isPublic = data["isPublic"] as? Bool ?? false
                     log.helpRequestDocIds = data["helpRequestDocIds"] as? [String] ?? []
-
                     logs.append(log)
                 }
                 logs.sort { $0.whenVisit > $1.whenVisit }
@@ -417,6 +416,7 @@ class VisitLogDataAdapter: ObservableObject{
                 }
             }
     }
+    
     func refresh() {
         guard let user = Auth.auth().currentUser else {
             self.visitLogs = [VisitLog]()

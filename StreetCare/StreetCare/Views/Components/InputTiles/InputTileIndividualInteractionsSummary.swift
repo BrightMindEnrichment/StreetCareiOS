@@ -29,7 +29,7 @@ struct InputTileIndividualInteractionsSummary: View {
     var totalQuestions: Int
 
     // Size similar to your other tiles
-    var size: CGSize = CGSize(width: 360, height: 500)
+    var size: CGSize = CGSize(width: 360, height: 370)
 
     // Header text
     var headerTitle: String = "Individual Interaction"
@@ -67,38 +67,38 @@ struct InputTileIndividualInteractionsSummary: View {
                 VStack(spacing: 0) {
 
                     // Top bar (matches your screenshot style: title centered, close on left)
-                    HStack {
-                        if showTopClose {
-                            Button {
-                                // Close the whole flow
-                                presentationMode.wrappedValue.dismiss()
-                            } label: {
-                                Image(systemName: "xmark.circle.fill")
-                                    .font(.title3)
-                                    .foregroundColor(.red)
-                            }
-                        } else {
-                            Spacer().frame(width: 24)
-                        }
-
-                        Spacer()
-
-                        Text(headerTitle)
-                            .font(.headline)
-                            .foregroundColor(.black)
-
-                        Spacer()
-
-                        // symmetry spacer so title stays centered
-                        Spacer().frame(width: 24)
-                    }
-                    .padding(.horizontal, 16)
-                    .padding(.top, 8)
-
-                    Divider()
-                        .background(Color.gray.opacity(0.3))
-                        .padding(.horizontal, 12)
-                        .padding(.top, 6)
+//                    HStack {
+//                        if showTopClose {
+//                            Button {
+//                                // Close the whole flow
+//                                presentationMode.wrappedValue.dismiss()
+//                            } label: {
+//                                Image(systemName: "xmark.circle.fill")
+//                                    .font(.title3)
+//                                    .foregroundColor(.red)
+//                            }
+//                        } else {
+//                            Spacer().frame(width: 24)
+//                        }
+//
+//                        Spacer()
+//
+//                        Text(headerTitle)
+//                            .font(.headline)
+//                            .foregroundColor(.black)
+//
+//                        Spacer()
+//
+//                        // symmetry spacer so title stays centered
+//                        Spacer().frame(width: 24)
+//                    }
+//                    .padding(.horizontal, 16)
+//                    .padding(.top, 8)
+//
+//                    Divider()
+//                        .background(Color.gray.opacity(0.3))
+//                        .padding(.horizontal, 12)
+//                        .padding(.top, 6)
 
                     // Optional question header (off by default to match screenshot 3)
                     if showQuestionHeader {
@@ -112,12 +112,6 @@ struct InputTileIndividualInteractionsSummary: View {
                         .padding(.top, 8)
                     }
 
-                    // Big Title
-                    Text(bigTitle)
-                        .font(.title)
-                        .fontWeight(.bold)
-                        .padding(.top, 14)
-                        .padding(.bottom, 8)
 
                     // List area
                     VStack(spacing: 10) {
@@ -129,7 +123,10 @@ struct InputTileIndividualInteractionsSummary: View {
                                     .font(.subheadline)
                                     .foregroundColor(.gray)
                                     .multilineTextAlignment(.center)
-                                    .padding(.top, 20)
+                                    .lineLimit(nil)
+                                    .fixedSize(horizontal: false, vertical: true)
+                                    .padding(.horizontal, 20)
+//                                    .padding(.top, 20)
 
                                 Button {
                                     addMoreAction()
@@ -162,18 +159,21 @@ struct InputTileIndividualInteractionsSummary: View {
                                         )
                                     }
                                 }
-                                .padding(.horizontal, 14)
+//                                .padding(.horizontal, 14)
                                 .padding(.top, 4)
                                 .padding(.bottom, 8)
                             }
-                            .frame(width: 350, height: 205)
-
+//                            .frame(width: 350, height: 205)
+                            .frame(maxHeight: 205)
                             // Helper text
                             Text("Click “Add More”\nto add Individual Interaction logs")
                                 .font(.subheadline)
                                 .foregroundColor(.gray)
                                 .multilineTextAlignment(.center)
-                                .padding(.top, 2)
+                                .lineLimit(nil)
+                                .fixedSize(horizontal: false, vertical: true)
+                                .padding(.horizontal, 20)
+//                                .padding(.top, 2)
 
                             // Add More
                             Button {
@@ -205,6 +205,7 @@ struct InputTileIndividualInteractionsSummary: View {
                                     .clipShape(Capsule())
                             }
                             .padding(.top, 10)
+                            .padding(.bottom, 18)
                         }
                     }
                     .padding(.horizontal, 8)
@@ -212,28 +213,30 @@ struct InputTileIndividualInteractionsSummary: View {
                     Spacer(minLength: 0)
 
                     // Bottom nav buttons (optional; screenshot shows only NEXT, but you can keep Previous)
-                    HStack {
-                        Button("Previous") {
-                            previousAction()
-                        }
-                        .foregroundColor(Color("SecondaryColor"))
-                        .font(.footnote)
-                        .padding(.horizontal, 16)
-                        .padding(.vertical, 8)
-                        .background(Capsule().fill(Color.white))
-                        .overlay(Capsule().stroke(Color("SecondaryColor"), lineWidth: 2))
-
-                        Spacer()
-
-                        // If you want “NEXT” only (like screenshot), comment this out
-                        // and rely on the big NEXT button above.
-                    }
-                    .padding(.horizontal, 18)
-                    .padding(.bottom, 14)
+//                    HStack {
+//                        Button("Previous") {
+//                            previousAction()
+//                        }
+//                        .foregroundColor(Color("SecondaryColor"))
+//                        .font(.footnote)
+//                        .padding(.horizontal, 16)
+//                        .padding(.vertical, 8)
+//                        .background(Capsule().fill(Color.white))
+//                        .overlay(Capsule().stroke(Color("SecondaryColor"), lineWidth: 2))
+//
+//                        Spacer()
+//
+//                        // If you want “NEXT” only (like screenshot), comment this out
+//                        // and rely on the big NEXT button above.
+//                    }
+//                    .padding(.horizontal, 18)
+//                    .padding(.bottom, 14)
+                    
                 }
             }
         }
         .frame(width: size.width, height: size.height)
+        Spacer()
 
         // Progress bar (optional)
         if showProgressBar {
@@ -279,6 +282,7 @@ struct InputTileIndividualInteractionsSummary: View {
         }
         .padding(.horizontal, 14)
         .padding(.vertical, 12)
+        .frame(maxWidth: .infinity)   
         .background(Color("SecondaryColor"))
         .cornerRadius(10)
         .overlay(

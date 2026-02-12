@@ -86,6 +86,8 @@ struct InputTileConsent: View {
         .navigationBarTitleDisplayMode(.inline)
         .navigationTitle("Consent")
         .frame(width: size.width, height: size.height)
+        .padding(.top, 36)
+        Spacer()
     }
 }
 

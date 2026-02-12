@@ -11,13 +11,14 @@ import CoreLocation
 import CoreLocationUI
 
 struct VisitLogEntry: View {
-
+    
     @Environment(\.presentationMode) var presentation
     @State private var questionNumber: Int = 1
     @State var totalQuestions = 7
     @State private var selectedLocation = CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0)
 
     @StateObject var visitLog = VisitLog(id: UUID().uuidString)
+    @State private var currentInteractionLog = VisitLog(id: UUID().uuidString)
     @StateObject private var adapter = VisitLogDataAdapter()
 
     var currentUser = Auth.auth().currentUser
@@ -41,6 +42,13 @@ struct VisitLogEntry: View {
     @State private var editingIndex: Int? = nil
     @State private var didCommitOnThisPass: Bool = false
     @State private var isCreatingNewInteraction: Bool = false
+    
+    //Store question number for back button from case 15 to 7 and case 15 to 12
+    @State private var previousQuestion: Int? = nil
+    private func goTo(_ next: Int) {
+        previousQuestion = questionNumber
+        questionNumber = next
+    }
     
     private var headerTitle: String {
         switch questionNumber {
@@ -162,27 +170,48 @@ struct VisitLogEntry: View {
                     .padding(.bottom, keyboard.currentHeight == 0 ? 0 : keyboard.currentHeight - 270)
                     .animation(.easeOut(duration: 0.16), value: keyboard.currentHeight)
 
+//                case 4:
+//                    InputTileNumber(
+//                        questionNumber: 4,
+//                        totalQuestions: totalQuestions,
+//                        tileWidth: 360,
+//                        tileHeight: 520,
+//                        question1: NSLocalizedString("questionThreePartOne", comment: ""),
+//                        question2: NSLocalizedString("questionThreePartTwo", comment: ""),
+//                        question3: NSLocalizedString("questionThreePartThree", comment: ""),
+//                        question4: NSLocalizedString("questionThreePartFour", comment: ""),
+//                        descriptionLabel: "Description",
+//                        disclaimerText: NSLocalizedString("disclaimer", comment: ""),
+//                        placeholderText: NSLocalizedString("peopledescription", comment: ""),
+//                        number: $visitLog.peopleHelped,
+//                        generalDescription: $visitLog.peopleHelpedDescription,
+//                        generalDescription2: .constant(""),
+//                        nextAction: { questionNumber += 1 },
+//                        previousAction: { questionNumber -= 1 },
+//                        skipAction: { questionNumber += 1 }
+//                    )
+//                    .padding(.bottom, keyboard.currentHeight == 0 ? 0 : 35)
+//                    .animation(.easeOut(duration: 0.16), value: keyboard.currentHeight)
                 case 4:
-                    InputTileNumber(
+                    InputTileList(
                         questionNumber: 4,
-                        totalQuestions: totalQuestions,
-                        tileWidth: 360,
-                        tileHeight: 520,
-                        question1: NSLocalizedString("questionThreePartOne", comment: ""),
-                        question2: NSLocalizedString("questionThreePartTwo", comment: ""),
-                        question3: NSLocalizedString("questionThreePartThree", comment: ""),
-                        question4: NSLocalizedString("questionThreePartFour", comment: ""),
-                        descriptionLabel: "Description",
-                        disclaimerText: NSLocalizedString("disclaimer", comment: ""),
-                        placeholderText: NSLocalizedString("peopledescription", comment: ""),
-                        number: $visitLog.peopleHelped,
-                        generalDescription: $visitLog.peopleHelpedDescription,
-                        generalDescription2: .constant(""),
-                        nextAction: { questionNumber += 1 },
+                        totalQuestions: 7,
+                        optionCount: 5,
+                        size: CGSize(width: 360, height: 450),
+                        question1: NSLocalizedString("questionFourPartOne", comment: ""),
+                        question2: NSLocalizedString("questionFourPartTwo", comment: ""),
+                        visitLog: visitLog,
+                        nextAction: {
+                            visitLog.listOfSupportsProvided = visitLog.whatGivenSupport
+                            questionNumber += 1
+                        },
                         previousAction: { questionNumber -= 1 },
-                        skipAction: { questionNumber += 1 }
+                        skipAction: { questionNumber += 1 },
+                        buttonMode: .navigation,
+                        showProgressBar: false,
+                        supportMode: .support
                     )
-                    .padding(.bottom, keyboard.currentHeight == 0 ? 0 : 35)
+                    .padding(.bottom, keyboard.currentHeight == 0 ? 0 : keyboard.currentHeight - 250)
                     .animation(.easeOut(duration: 0.16), value: keyboard.currentHeight)
 
                 case 5:
@@ -190,7 +219,7 @@ struct VisitLogEntry: View {
                         questionNumber: 5,
                         totalQuestions: 7,
                         tileWidth: 360,
-                        tileHeight: 467,
+                        tileHeight: 415,
                         question1: NSLocalizedString("questionFivePartOne", comment: ""),
                         question2: NSLocalizedString("questionFivePartTwo", comment: ""),
                         question3: NSLocalizedString("questionFivePartThree", comment: ""),
@@ -220,7 +249,7 @@ struct VisitLogEntry: View {
                         questionNumber: 6,
                         totalQuestions: 7,
                         tileWidth: 360,
-                        tileHeight: 533,
+                        tileHeight: 545,
                         question1: NSLocalizedString("questionSixPartOne", comment: ""),
                         question2: NSLocalizedString("questionSixPartTwo", comment: ""),
                         question3: "",
@@ -249,7 +278,7 @@ struct VisitLogEntry: View {
                         questionNumber: 6,
                         totalQuestions: 6,
                         nextAction: {
-                            questionNumber = 15
+                            goTo(15)
                         },
                         skipAction: {
                             questionNumber -= 1
@@ -261,9 +290,9 @@ struct VisitLogEntry: View {
                             questionNumber += 1
                         },
                         noAction: {
-                            saveVisitLog()
+//                            saveVisitLog()
                             isComplete = true
-                            questionNumber = 15
+                            goTo(15)
                         },
                         previousAction: {
                             questionNumber -= 1
@@ -271,11 +300,12 @@ struct VisitLogEntry: View {
                     )
                 case 8:
                     InputTileIndividualInteraction(
-                        log: visitLog,
+//                        log: visitLog,
+                        log: currentInteractionLog,
                         questionTitle: "",
                         questionNumber: 1,
                         totalQuestions: 4,
-                        skipAction: { questionNumber = 15 },
+                        skipAction: { questionNumber += 1 },
                         previousAction: { questionNumber = 7 },
                         nextAction: { questionNumber += 1 }
                     )
@@ -287,15 +317,15 @@ struct VisitLogEntry: View {
                         size: CGSize(width: 360, height: 450),
                         question1: NSLocalizedString("questionNinePartOne", comment: ""),
                         question2: NSLocalizedString("questionNinePartTwo", comment: ""),
-                        visitLog: visitLog,
+                        visitLog: currentInteractionLog,
                         nextAction: {
-                            visitLog.helpProvidedCategory = visitLog.whatGiven
+                            currentInteractionLog.helpProvidedCategory = currentInteractionLog.whatGiven
                             questionNumber += 1
                         },
                         previousAction: { questionNumber -= 1 },
                         skipAction: { questionNumber += 1 },
                         buttonMode: .navigation,
-                        showProgressBar: true,
+                        showProgressBar: false,
                         supportMode: .provided
                     )
                     .padding(.bottom, keyboard.currentHeight == 0 ? 0 : keyboard.currentHeight - 250)
@@ -309,15 +339,15 @@ struct VisitLogEntry: View {
                         size: CGSize(width: 360, height: 450),
                         question1: NSLocalizedString("questionTenPartOne", comment: ""),
                         question2: NSLocalizedString("questionTenPartTwo", comment: ""),
-                        visitLog: visitLog,
+                        visitLog: currentInteractionLog,
                         nextAction: {
-                            visitLog.furtherHelpCategory = visitLog.whatGivenFurther
+                            currentInteractionLog.furtherHelpCategory = currentInteractionLog.whatGivenFurther
                             questionNumber += 1
                         },
                         previousAction: { questionNumber -= 1 },
                         skipAction: { questionNumber += 1 },
                         buttonMode: .navigation,
-                        showProgressBar: true,
+                        showProgressBar: false,
                         supportMode: .needed
 
                     )
@@ -330,10 +360,11 @@ struct VisitLogEntry: View {
                         question1: NSLocalizedString("questionElevenPartOne", comment: ""),
                         question2: NSLocalizedString("questionElevenPartTwo", comment: ""),
                         showSkip: false,
+                        showProgressBar: false,
                         initialDateValue: rawDate,
                         datetimeValue: $rawDate,
-                        convertedDate: $visitLog.helpRequestFollowUpTimestamp,
-                        additionalDetails: $visitLog.helpRequestAdditionalDetails,
+                        convertedDate: $currentInteractionLog.helpRequestFollowUpTimestamp,
+                        additionalDetails: $currentInteractionLog.helpRequestAdditionalDetails,
                         nextAction: {
                             if didCommitOnThisPass {
                                 questionNumber = 12
@@ -351,12 +382,12 @@ struct VisitLogEntry: View {
 
                             let newItem = IndividualInteractionItem(
                                 title: title,
-                                firstName: visitLog.recipientFirstName,
-                                lastName: visitLog.recipientLastName,
-                                helpProvidedCategory: visitLog.helpProvidedCategory,
-                                furtherHelpCategory: visitLog.furtherHelpCategory,
-                                additionalDetails: visitLog.helpRequestAdditionalDetails,
-                                followUpTimestamp: visitLog.helpRequestFollowUpTimestamp
+                                firstName: currentInteractionLog.recipientFirstName,
+                                lastName: currentInteractionLog.recipientLastName,
+                                helpProvidedCategory: currentInteractionLog.helpProvidedCategory,
+                                furtherHelpCategory: currentInteractionLog.furtherHelpCategory,
+                                additionalDetails: currentInteractionLog.helpRequestAdditionalDetails,
+                                followUpTimestamp: currentInteractionLog.helpRequestFollowUpTimestamp
                             )
                             if isCreatingNewInteraction {
                                 individualInteractions.append(newItem)
@@ -365,10 +396,11 @@ struct VisitLogEntry: View {
                                       idx < individualInteractions.count {
                                 individualInteractions[idx] = newItem
                             }
+                            currentInteractionLog = VisitLog(id: UUID().uuidString)
                             questionNumber = 12
                         },
                         skipAction: { questionNumber += 1 },
-                        previousAction: { questionNumber -= 1 }
+                        previousAction: { questionNumber -= 1 },
                     )
                     .padding(.bottom, keyboard.currentHeight == 0 ? 0 : 24)
                 case 12:
@@ -384,12 +416,13 @@ struct VisitLogEntry: View {
                         nextAction: {
                             isCreatingNewInteraction = false
                             editingIndex = nil
-                            questionNumber = 15
+                            goTo(15)
                         },
                         addMoreAction: {
                             isCreatingNewInteraction = true
                             editingIndex = nil
                             didCommitOnThisPass = false
+                            currentInteractionLog = VisitLog(id: UUID().uuidString)   //  RESET
                             questionNumber = 8
                         },
                         editAction: { _, index in
@@ -405,7 +438,8 @@ struct VisitLogEntry: View {
                             if editingIndex == index {
                                 editingIndex = nil
                             }
-                        }
+                        },
+                        showProgressBar:false,
                     )
                 case 13:
                     InputTileDate(
@@ -451,6 +485,7 @@ struct VisitLogEntry: View {
                     InputTileConsent(
                         size: CGSize(width: 360, height: 450),
                                submitAction: {
+                                   saveVisitLog()
                                    // Move to next question after consent is given
                                    questionNumber = 100
                                   //navigateNext = true
@@ -462,7 +497,7 @@ struct VisitLogEntry: View {
                    
                 case 100:
                     InputTileComplete(log: visitLog) {
-                        saveVisitLog()
+//                        saveVisitLog()
                         presentation.wrappedValue.dismiss()
                     } shareAction: {
                         // saveVisitLog_Community()
@@ -492,8 +527,31 @@ struct VisitLogEntry: View {
             }
         }
         .navigationTitle(NSLocalizedString("interactionLog", comment: ""))
+        //hiding default back button on top navigation bar and adding new Back functionality
+        .navigationBarBackButtonHidden(true)
+        .toolbar {
+            ToolbarItem(placement: .navigationBarLeading) {
+                Button {
+                    handleBack()
+                } label: {
+                    HStack(spacing: 4) {
+                        Image(systemName: "chevron.left")
+                        Text("Back")
+                    }
+                }
+            }
+        }
     }
-
+    private func handleBack() {
+        if let prev = previousQuestion {
+            questionNumber = prev
+            previousQuestion = nil   // clear after use
+        } else if questionNumber > 1 {
+            questionNumber -= 1
+        } else {
+            presentation.wrappedValue.dismiss()
+        }
+    }
     func saveVisitLog() {
         adapter.addVisitLog(self.visitLog, interactions: individualInteractions)
     }

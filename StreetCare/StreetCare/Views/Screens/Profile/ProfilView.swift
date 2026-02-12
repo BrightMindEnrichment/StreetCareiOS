@@ -25,7 +25,10 @@ struct ProfilView: View {
     @EnvironmentObject var googleSignIn: UserAuthModel
     @State private var didReceiveOldLogs = false
     @State private var didReceiveNewLogs = false
-
+    
+    @State var logsInteractionDev = [VisitLog]()
+    @State private var didReceiveInteractionDev = false
+    
     @State var peopleHelped = 0
     @State var outreaches = 0
     @State var itemsDonated = 0
@@ -113,6 +116,7 @@ struct ProfilView: View {
                     adapter.delegate = self
                     adapter.refresh()
                     adapter.refresh_new()
+                    adapter.refreshInteractionLogDev()
                     //adapter.refreshWebProd()
                     storage.uid = u.uid
                     // 🔽 ADDED: Check Firestore for photoUrl (for web-created accounts)
@@ -195,8 +199,8 @@ struct ProfilView: View {
            loginRequested = false
        }
     private func tryMergeAndUpdate() {
-        guard didReceiveOldLogs && didReceiveNewLogs else { return }
-        self.history = (logsOld + logsNew)
+        guard didReceiveOldLogs && didReceiveNewLogs && didReceiveInteractionDev else { return }
+        self.history = (logsOld + logsNew + logsInteractionDev)
             .sorted { $0.whenVisit > $1.whenVisit }
         self.updateCounts()
         self.isLoading = false
@@ -210,7 +214,8 @@ struct ProfilView: View {
     private func updateCounts() {
         
         self.outreaches = history.count
-        
+        print("outreaches",self.outreaches)
+        print("history",self.history)
         self.peopleHelped = history.reduce(0) { total, log in
             if log.peopleHelped > 0 {
                 return total + log.peopleHelped
@@ -220,20 +225,9 @@ struct ProfilView: View {
                 return total
             }
         }
-        
         self.itemsDonated = history.reduce(0) { total, log in
             var count = 0
-
-            // Count standard boolean fields
-            if log.foodAndDrinks { count += 1 }
-            if log.clothes { count += 1 }
-            if log.hygiene { count += 1 }
-            if log.wellness { count += 1 }
-            if log.medical { count += 1 }
-            if log.social { count += 1 }
-            if log.legal { count += 1 }
-            if log.other { count += 1 }
-
+            count = log.listOfSupportsProvided.count
             // If nothing was found, check web-created logs
             if count == 0 {
                 count += log.whatGiven.count
@@ -259,6 +253,12 @@ extension ProfilView: VisitLogDataAdapterProtocol {
     func visitLogDataRefreshedNew(_ logs: [VisitLog]) {
         self.logsNew = logs
         self.didReceiveNewLogs = true
+        tryMergeAndUpdate()
+    }
+    
+    func visitLogDataRefreshedInteractionDev(_ logs: [VisitLog]) {
+        self.logsInteractionDev = logs
+        self.didReceiveInteractionDev = true
         tryMergeAndUpdate()
     }
 }
