@@ -18,6 +18,7 @@ struct VisitLogEntry: View {
     @State private var selectedLocation = CLLocationCoordinate2D(latitude: 0.0, longitude: 0.0)
 
     @StateObject var visitLog = VisitLog(id: UUID().uuidString)
+    @State private var currentInteractionLog = VisitLog(id: UUID().uuidString)
     @StateObject private var adapter = VisitLogDataAdapter()
 
     var currentUser = Auth.auth().currentUser
@@ -299,7 +300,8 @@ struct VisitLogEntry: View {
                     )
                 case 8:
                     InputTileIndividualInteraction(
-                        log: visitLog,
+//                        log: visitLog,
+                        log: currentInteractionLog,
                         questionTitle: "",
                         questionNumber: 1,
                         totalQuestions: 4,
@@ -315,9 +317,9 @@ struct VisitLogEntry: View {
                         size: CGSize(width: 360, height: 450),
                         question1: NSLocalizedString("questionNinePartOne", comment: ""),
                         question2: NSLocalizedString("questionNinePartTwo", comment: ""),
-                        visitLog: visitLog,
+                        visitLog: currentInteractionLog,
                         nextAction: {
-                            visitLog.helpProvidedCategory = visitLog.whatGiven
+                            currentInteractionLog.helpProvidedCategory = currentInteractionLog.whatGiven
                             questionNumber += 1
                         },
                         previousAction: { questionNumber -= 1 },
@@ -337,9 +339,9 @@ struct VisitLogEntry: View {
                         size: CGSize(width: 360, height: 450),
                         question1: NSLocalizedString("questionTenPartOne", comment: ""),
                         question2: NSLocalizedString("questionTenPartTwo", comment: ""),
-                        visitLog: visitLog,
+                        visitLog: currentInteractionLog,
                         nextAction: {
-                            visitLog.furtherHelpCategory = visitLog.whatGivenFurther
+                            currentInteractionLog.furtherHelpCategory = currentInteractionLog.whatGivenFurther
                             questionNumber += 1
                         },
                         previousAction: { questionNumber -= 1 },
@@ -361,8 +363,8 @@ struct VisitLogEntry: View {
                         showProgressBar: false,
                         initialDateValue: rawDate,
                         datetimeValue: $rawDate,
-                        convertedDate: $visitLog.helpRequestFollowUpTimestamp,
-                        additionalDetails: $visitLog.helpRequestAdditionalDetails,
+                        convertedDate: $currentInteractionLog.helpRequestFollowUpTimestamp,
+                        additionalDetails: $currentInteractionLog.helpRequestAdditionalDetails,
                         nextAction: {
                             if didCommitOnThisPass {
                                 questionNumber = 12
@@ -380,12 +382,12 @@ struct VisitLogEntry: View {
 
                             let newItem = IndividualInteractionItem(
                                 title: title,
-                                firstName: visitLog.recipientFirstName,
-                                lastName: visitLog.recipientLastName,
-                                helpProvidedCategory: visitLog.helpProvidedCategory,
-                                furtherHelpCategory: visitLog.furtherHelpCategory,
-                                additionalDetails: visitLog.helpRequestAdditionalDetails,
-                                followUpTimestamp: visitLog.helpRequestFollowUpTimestamp
+                                firstName: currentInteractionLog.recipientFirstName,
+                                lastName: currentInteractionLog.recipientLastName,
+                                helpProvidedCategory: currentInteractionLog.helpProvidedCategory,
+                                furtherHelpCategory: currentInteractionLog.furtherHelpCategory,
+                                additionalDetails: currentInteractionLog.helpRequestAdditionalDetails,
+                                followUpTimestamp: currentInteractionLog.helpRequestFollowUpTimestamp
                             )
                             if isCreatingNewInteraction {
                                 individualInteractions.append(newItem)
@@ -394,6 +396,7 @@ struct VisitLogEntry: View {
                                       idx < individualInteractions.count {
                                 individualInteractions[idx] = newItem
                             }
+                            currentInteractionLog = VisitLog(id: UUID().uuidString)
                             questionNumber = 12
                         },
                         skipAction: { questionNumber += 1 },
@@ -419,6 +422,7 @@ struct VisitLogEntry: View {
                             isCreatingNewInteraction = true
                             editingIndex = nil
                             didCommitOnThisPass = false
+                            currentInteractionLog = VisitLog(id: UUID().uuidString)   //  RESET
                             questionNumber = 8
                         },
                         editAction: { _, index in
@@ -434,7 +438,8 @@ struct VisitLogEntry: View {
                             if editingIndex == index {
                                 editingIndex = nil
                             }
-                        }
+                        },
+                        showProgressBar:false,
                     )
                 case 13:
                     InputTileDate(
