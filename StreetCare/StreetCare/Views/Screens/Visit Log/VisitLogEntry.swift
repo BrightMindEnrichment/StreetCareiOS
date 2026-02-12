@@ -194,7 +194,7 @@ struct VisitLogEntry: View {
 //                    .animation(.easeOut(duration: 0.16), value: keyboard.currentHeight)
                 case 4:
                     InputTileList(
-                        questionNumber: 3,
+                        questionNumber: 4,
                         totalQuestions: 7,
                         optionCount: 5,
                         size: CGSize(width: 360, height: 450),
