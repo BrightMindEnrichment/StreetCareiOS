@@ -299,10 +299,12 @@ struct InputTileDetails: View {
                         Text("\(formatTime(rawDate)) \(selectedTimeZone.abbreviation() ?? "")")
                             .font(.system(size: 16)) // Subheadline is roughly 15, so 16 increases it by 1
                             .foregroundColor(.black)
+                            .lineLimit(1)          // ⬅️ Add this
+                            .minimumScaleFactor(0.5)
                     }
                     .padding(.horizontal, 10)
                     .padding(.vertical, 12)
-                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .frame(width: 163, height: 45)
                     .background(Color.white)
                     .cornerRadius(8)
                     .shadow(color: Color.black.opacity(0.15), radius: 4, x: 0, y: 2)
@@ -352,10 +354,12 @@ struct InputTileDetails: View {
                             Text(formatDate(rawEndDate ?? rawDate))
                                 .font(.system(size: 16)) // Subheadline is roughly 15, so 16 increases it by 1
                                 .foregroundColor(.black)
+                                .lineLimit(1)          // ⬅️ Add this
+                                .minimumScaleFactor(0.5)
                         }
                         .padding(.horizontal, 10)
                         .padding(.vertical, 12)
-                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .frame(width: 163, height: 45)
                         .background(Color.white)
                         .cornerRadius(8)
                         .shadow(color: Color.black.opacity(0.15), radius: 4, x: 0, y: 2)
