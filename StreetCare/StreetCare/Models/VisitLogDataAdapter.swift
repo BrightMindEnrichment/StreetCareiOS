@@ -175,7 +175,7 @@ class VisitLogDataAdapter: ObservableObject{
         // Required backend flags
         data["helpRequestCount"] = 0
         data["status"] = "Pending"
-        data["isPublic"] = false
+        data["isPublic"] = visitLog.isPublic
         data["listOfSupportsProvided"] = visitLog.listOfSupportsProvided
 
         // Link field that your rules allow

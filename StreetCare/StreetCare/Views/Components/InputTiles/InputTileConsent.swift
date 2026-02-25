@@ -11,7 +11,7 @@ struct InputTileConsent: View {
     var size: CGSize
     var submitAction: () -> ()
     
-    @State private var isAgreed: Bool = false
+    @Binding var isAgreed: Bool
     
     var body: some View {
         VStack(spacing: 0) {
@@ -94,6 +94,7 @@ struct InputTileConsent: View {
 #Preview {
     InputTileConsent(
         size: CGSize(width: 350, height: 300),
-        submitAction: {}
+        submitAction: {},
+        isAgreed: .constant(false)
     )
 }

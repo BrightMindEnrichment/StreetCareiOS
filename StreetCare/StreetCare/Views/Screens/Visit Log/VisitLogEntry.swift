@@ -489,7 +489,7 @@ struct VisitLogEntry: View {
                                    // Move to next question after consent is given
                                    questionNumber = 100
                                   //navigateNext = true
-                               }
+                               }, isAgreed: $visitLog.isPublic
                            )
                            .padding(.bottom, keyboard.currentHeight == 0 ? 0 : 50)
                            .animation(.easeOut(duration: 0.16), value: keyboard.currentHeight)
