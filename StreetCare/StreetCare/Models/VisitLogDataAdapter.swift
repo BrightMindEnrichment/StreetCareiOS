@@ -135,9 +135,10 @@ class VisitLogDataAdapter: ObservableObject{
 
         // Identity / User (dummy-safe)
         data["userId"] = user.uid
-        data["firstName"] = visitLog.firstname.isEmpty ? "Unknown" : visitLog.firstname
-        data["lastName"] = visitLog.lastname.isEmpty ? "Unknown" : visitLog.lastname
-        data["email"] = visitLog.contactemail.isEmpty ? "unknown@email.com" : visitLog.contactemail
+        data["outreachId"] = NSNull()
+        data["firstName"] = visitLog.firstname.isEmpty ? "" : visitLog.firstname
+        data["lastName"] = visitLog.lastname.isEmpty ? "" : visitLog.lastname
+        data["email"] = visitLog.contactemail.isEmpty ? "" : visitLog.contactemail
         data["phoneNumber"] = visitLog.contactphone.isEmpty ? "" : visitLog.contactphone
 
         // Dates & Times
@@ -157,13 +158,13 @@ class VisitLogDataAdapter: ObservableObject{
             ? visitLog.street
             : (!visitLog.whereVisit.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty
                 ? visitLog.whereVisit
-                : "N/A")
+                : "")
 
         data["addr1"] = addr1Value
         data["addr2"] = ""
-        data["city"] = visitLog.city.isEmpty ? "N/A" : visitLog.city
-        data["state"] = visitLog.state.isEmpty ? "N/A" : visitLog.state
-        data["zipcode"] = visitLog.zipcode.isEmpty ? "00000" : visitLog.zipcode
+        data["city"] = visitLog.city.isEmpty ? "" : visitLog.city
+        data["state"] = visitLog.state.isEmpty ? "" : visitLog.state
+        data["zipcode"] = visitLog.zipcode.isEmpty ? "" : visitLog.zipcode
         data["country"] = "USA"
 
         // Counts / Required numbers
@@ -174,7 +175,7 @@ class VisitLogDataAdapter: ObservableObject{
 
         // Required backend flags
         data["helpRequestCount"] = 0
-        data["status"] = "Pending"
+        data["status"] = "pending"
         data["isPublic"] = false
         data["listOfSupportsProvided"] = visitLog.listOfSupportsProvided
 
