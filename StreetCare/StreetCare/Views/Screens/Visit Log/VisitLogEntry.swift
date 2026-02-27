@@ -54,6 +54,11 @@ struct VisitLogEntry: View {
         switch questionNumber {
         // For the specific data entry steps
         case 8, 9, 10, 11:
+            if !isCreatingNewInteraction,
+               let idx = editingIndex,
+               individualInteractions.indices.contains(idx) {
+                return "Individual Interaction \(idx + 1)"
+            }
             return "Individual Interaction \(individualInteractions.count + 1)"
             
         // For the summary and follow-up steps
