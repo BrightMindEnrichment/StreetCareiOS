@@ -54,6 +54,11 @@ struct VisitLogEntry: View {
         switch questionNumber {
         // For the specific data entry steps
         case 8, 9, 10, 11:
+            if !isCreatingNewInteraction,
+               let idx = editingIndex,
+               individualInteractions.indices.contains(idx) {
+                return "Individual Interaction \(idx + 1)"
+            }
             return "Individual Interaction \(individualInteractions.count + 1)"
             
         // For the summary and follow-up steps
@@ -403,7 +408,7 @@ struct VisitLogEntry: View {
                         previousAction: { questionNumber -= 1 },
                     )
                     .padding(.bottom, keyboard.currentHeight == 0 ? 0 : 24)
-                case 12:
+                case 12: //Individual Interactions Summary Page
                     InputTileIndividualInteractionsSummary(
                         questionNumber: 4,
                         totalQuestions: 4,
@@ -434,9 +439,15 @@ struct VisitLogEntry: View {
                         deleteAction: { _, index in
                             if index >= 0 && index < individualInteractions.count {
                                 individualInteractions.remove(at: index)
+                                renumberIndividualInteractionTitles()
                             }
-                            if editingIndex == index {
-                                editingIndex = nil
+                            // Keep editing index aligned with the mutated array.
+                            if let currentEditingIndex = editingIndex {
+                                if currentEditingIndex == index {
+                                    editingIndex = nil
+                                } else if currentEditingIndex > index {
+                                    editingIndex = currentEditingIndex - 1
+                                }
                             }
                         },
                         showProgressBar:false,
@@ -554,5 +565,12 @@ struct VisitLogEntry: View {
     }
     func saveVisitLog() {
         adapter.addVisitLog(self.visitLog, interactions: individualInteractions)
+    }
+    
+    // Rebuild titles to match the current list order.
+    private func renumberIndividualInteractionTitles() {
+        for idx in individualInteractions.indices {
+            individualInteractions[idx].title = "Individual Interaction \(idx + 1)"
+        }
     }
 }
