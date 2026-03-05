@@ -268,11 +268,11 @@ struct InputTileIndividualInteractionsSummary: View {
 
             Spacer()
 
-            Button(action: onEdit) {
-                Image(systemName: "pencil")
-                    .foregroundColor(.white)
-                    .font(.subheadline)
-            }
+//            Button(action: onEdit) {
+//                Image(systemName: "pencil")
+//                    .foregroundColor(.white)
+//                    .font(.subheadline)
+//            }
 
             Button(action: onDelete) {
                 Image(systemName: "xmark.circle.fill")
