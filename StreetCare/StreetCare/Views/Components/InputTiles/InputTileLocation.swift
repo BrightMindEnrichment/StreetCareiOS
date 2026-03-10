@@ -24,11 +24,11 @@ struct InputTileLocation: View {
     @State var locationManager: LocationManager!
     @State var isLoading = false
 
-    @State private var street = ""
-    @State private var state = ""
-    @State private var city = ""
-    @State private var zipcode = ""
-    @State private var stateAbbreviation = ""
+    @Binding var street: String
+    @Binding var city: String
+    @Binding var state: String
+    @Binding var stateAbbreviation: String
+    @Binding var zipcode: String
 
     @State private var showAddressSearch = false
     @State private var didPrefillFields = false
@@ -83,6 +83,15 @@ struct InputTileLocation: View {
                 )
                 .padding(.top, 24)
                 .padding(.bottom, 24)
+                .onAppear {
+                    if !didPrefillFields {
+                        city = ""
+                        state = ""
+                        stateAbbreviation = ""
+                        zipcode = ""
+                        didPrefillFields = true
+                    }
+                }
             }
 
             // CARD
