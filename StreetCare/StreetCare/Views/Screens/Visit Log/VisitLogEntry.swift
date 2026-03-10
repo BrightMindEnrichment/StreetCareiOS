@@ -289,6 +289,7 @@ struct VisitLogEntry: View {
                             questionNumber -= 1
                         },
                         yesAction: {
+                            isComplete = false // start add Individual Interactions
                             isCreatingNewInteraction = true
                             editingIndex = nil
                             didCommitOnThisPass = false

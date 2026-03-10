@@ -117,7 +117,7 @@ struct InputTileFollowUpDate: View {
                             }
                         }
                         .padding(.horizontal)
-                        .padding(.top, 10)
+                        .padding(.top, 12)
 
                         Divider()
                             .background(Color.gray.opacity(0.3))
