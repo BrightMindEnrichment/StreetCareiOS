@@ -112,7 +112,8 @@ class VisitLogDataAdapter: ObservableObject{
             db.collection("InteractionLogDev")
                 .document(log.id)
                 .updateData([
-                    "helpRequestDocIds": FieldValue.arrayUnion([helpReqId])
+                    "helpRequestDocIds": FieldValue.arrayUnion([helpReqId]),
+                    "helpRequestCount": FieldValue.increment(Int64(1))
                 ]) { err in
                     if let err = err {
                         print("❌ Failed to link HelpRequest → InteractionLog:", err.localizedDescription)
@@ -174,7 +175,7 @@ class VisitLogDataAdapter: ObservableObject{
         data["carePackagesDistributed"] = visitLog.carePackagesDistributed
 
         // Required backend flags
-        data["helpRequestCount"] = 0
+        data["helpRequestCount"] = visitLog.helpRequestDocIds.count
         data["status"] = "pending"
         data["isPublic"] = visitLog.isPublic
         data["listOfSupportsProvided"] = visitLog.listOfSupportsProvided
