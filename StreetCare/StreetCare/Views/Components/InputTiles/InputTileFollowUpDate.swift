@@ -94,9 +94,7 @@ struct InputTileFollowUpDate: View {
                     .padding(.bottom, 50)
             }
 
-            ZStack {
-                BasicTile(size: size)
-
+            ZStack(alignment: .top) {
                 VStack {
                     if buttonMode == .navigation {
                         HStack {
@@ -119,7 +117,7 @@ struct InputTileFollowUpDate: View {
                             }
                         }
                         .padding(.horizontal)
-                        .padding(.top, 4)
+                        .padding(.top, 10)
 
                         Divider()
                             .background(Color.gray.opacity(0.3))
@@ -282,9 +280,18 @@ struct InputTileFollowUpDate: View {
                         }
                         .padding()
                     }
+                   
+                    
                 }
+                .frame(width: size.width, alignment: .top)
+                .background(Color("BackgroundColor"))
+                .clipShape(RoundedRectangle(cornerRadius: 10))
+                .shadow(color: Color.black.opacity(0.08), radius: 4, x: 0, y: 0)
+                .shadow(color: Color.black.opacity(0.15), radius: 8, x: 0, y: 6)
             }
+            .frame(width: size.width, alignment: .top)
         }
+        .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
         .onAppear {
             selectedDate = datetimeValue
             selectedTime = datetimeValue
@@ -292,7 +299,6 @@ struct InputTileFollowUpDate: View {
         }
         .navigationBarTitleDisplayMode(.inline)
         .navigationTitle("Interaction Log")
-        .frame(width: size.width, height: size.height)
         .alert(isPresented: $showSuccessAlert) {
             Alert(
                 title: Text("Updated"),
@@ -303,7 +309,7 @@ struct InputTileFollowUpDate: View {
             )
         }
 
-        if showProgressBar {
+      /*  if showProgressBar {
             SegmentedProgressBar(
                 totalSegments: totalQuestions,
                 filledSegments: questionNumber,
@@ -313,7 +319,7 @@ struct InputTileFollowUpDate: View {
                 .font(.footnote)
                 .padding(.top, 4)
                 .fontWeight(.bold)
-        }
+        }*/
     }
 
     //  Pill UI
