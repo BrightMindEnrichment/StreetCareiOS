@@ -183,7 +183,7 @@ struct InputTileIndividualInteraction: View {
                                     .foregroundColor(.black)
                                 
                                 // Shows GMT +/- Offset instead of long city names
-                                Text(getGMTOffset(for: log.timezone))
+                                Text(getGMTOffset(for: visitLog.timezone)) // Use 'visitLog' as the source of truth
                                     .font(.system(size: 10, weight: .bold))
                                     .foregroundColor(.black) // Changed to solid black
                             }
