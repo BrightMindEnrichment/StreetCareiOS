@@ -709,25 +709,52 @@ struct VisitLogEntry: View {
                         totalQuestions: totalQuestions,
                         question1: NSLocalizedString("questionTwo", comment: ""),
                         question2: NSLocalizedString("interaction", comment: "") + "?",
+                        
                         textValue: Binding(
                             get: { visitLog.whereVisit },
                             set: { visitLog.whereVisit = $0 }
                         ),
+                        
                         location: Binding(
                             get: { visitLog.location },
                             set: { visitLog.location = $0 }
                         ),
+                        
                         locationDescription: Binding(
                             get: { visitLog.locationDescription },
                             set: { visitLog.locationDescription = $0 }
                         ),
+
+                        street: Binding(
+                            get: { visitLog.street },
+                            set: { visitLog.street = $0 }
+                        ),
+
+                        city: Binding(
+                            get: { visitLog.city },
+                            set: { visitLog.city = $0 }
+                        ),
+
+                        state: Binding(
+                            get: { visitLog.state },
+                            set: { visitLog.state = $0 }
+                        ),
+
+                        stateAbbreviation: Binding(
+                            get: { visitLog.stateAbbv },
+                            set: { visitLog.stateAbbv = $0 }
+                        ),
+
+                        zipcode: Binding(
+                            get: { visitLog.zipcode },
+                            set: { visitLog.zipcode = $0 }
+                        ),
+
                         nextAction: { questionNumber += 1 },
                         previousAction: { questionNumber -= 1 },
                         skipAction: { questionNumber += 1 },
                         buttonMode: .navigation
                     )
-                    .padding(.bottom, keyboard.currentHeight == 0 ? 0 : keyboard.currentHeight - 270)
-                    .animation(.easeOut(duration: 0.16), value: keyboard.currentHeight)
 
                 case 4:
                     InputTileList(

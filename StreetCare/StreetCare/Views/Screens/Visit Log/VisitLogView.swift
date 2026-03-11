@@ -78,6 +78,11 @@ struct VisitLogView: View {
     @State private var navigateToEditLocation = false
     @State private var editedLocationText = ""
     @State private var editedLocationCoord = CLLocationCoordinate2D()
+    @State private var editedStreet = ""
+    @State private var editedCity = ""
+    @State private var editedState = ""
+    @State private var editedStateAbbv = ""
+    @State private var editedZipcode = ""
     @State private var lat: Double = 0.0
     @State private var lon: Double = 0.0
     @State private var resolvedAddress: String = ""
@@ -376,6 +381,13 @@ struct VisitLogView: View {
                 editedLocationText = log.whereVisit
                 editedLocationCoord = log.location
                 editedLocationDescription = log.locationDescription
+
+                editedStreet = log.street
+                editedCity = log.city
+                editedState = log.state
+                editedStateAbbv = log.stateAbbv
+                editedZipcode = log.zipcode
+
                 navigateToEditLocation = true
             },
             canEdit: log.isFromOldCollection
@@ -390,22 +402,39 @@ struct VisitLogView: View {
                 textValue: $editedLocationText,
                 location: $editedLocationCoord,
                 locationDescription: $editedLocationDescription,
+
+                street: $editedStreet,
+                city: $editedCity,
+                state: $editedState,
+                stateAbbreviation: $editedStateAbbv,
+                zipcode: $editedZipcode,
+
                 nextAction: {
                     let adapter = VisitLogDataAdapter()
+
                     adapter.updateVisitLogField(log.id, field: "whereVisit", value: editedLocationText) {
                         adapter.updateVisitLogField(log.id, field: "location", value: [
                             "latitude": editedLocationCoord.latitude,
                             "longitude": editedLocationCoord.longitude
                         ]) {
-                            adapter.updateVisitLogField(log.id, field: "locationDescription", value: editedLocationDescription){
+                            adapter.updateVisitLogField(log.id, field: "locationDescription", value: editedLocationDescription) {
+
                                 log.whereVisit = editedLocationText
                                 log.location = editedLocationCoord
                                 log.locationDescription = editedLocationDescription
+
+                                log.street = editedStreet
+                                log.city = editedCity
+                                log.state = editedState
+                                log.stateAbbv = editedStateAbbv
+                                log.zipcode = editedZipcode
+
                                 navigateToEditLocation = false
                             }
                         }
                     }
                 },
+
                 previousAction: { navigateToEditLocation = false },
                 skipAction: { navigateToEditLocation = false },
                 buttonMode: .update
@@ -979,7 +1008,7 @@ struct VisitLogView: View {
             log.furtherHygiene ? "Hygiene Products" : nil,
             log.furtherWellness ? "Wellness/Emotional Support" : nil,
             log.furtherMedical ? "Medical Help" : nil,
-            log.furtherSocial ? "Social Worker/Psychiatrist" : nil,
+            log.furtherSocial ? "Social Work/Psychiatrist" : nil,
             log.furtherLegal ? "Legal/Lawyer" : nil,
             (log.furtherOther && !log.furtherOtherNotes.isEmpty) ? log.furtherOtherNotes : nil
         ].compactMap { $0 }
@@ -1013,7 +1042,7 @@ struct VisitLogView: View {
                     if log.furtherHygiene { selected.append("Hygiene Products") }
                     if log.furtherWellness { selected.append("Wellness/Emotional Support") }
                     if log.furtherMedical { selected.append("Medical Help") }
-                    if log.furtherSocial { selected.append("Social Worker/Psychiatrist") }
+                    if log.furtherSocial { selected.append("Social Work/Psychiatrist") }
                     if log.furtherLegal { selected.append("Legal/Lawyer") }
                     if log.furtherOther {
                         selected.append(log.furtherOtherNotes.isEmpty ? "Other" : log.furtherOtherNotes)

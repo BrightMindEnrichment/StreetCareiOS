@@ -90,13 +90,19 @@ class VisitLogDataAdapter: ObservableObject{
         let helpReqId = docRef.documentID
         var helpRequestData: [String: Any] = [
             "interactionLogDocId": log.id,
+            "interactionLogFirstName": log.firstname,
             "firstName": interaction.firstName,
-
+            "lastName": interaction.lastName,
             "locationLandmark": log.concatenatedLandmark,
             "timestampOfInteraction": Timestamp(date: log.whenVisit),
             "helpProvidedCategory": interaction.helpProvidedCategory,
             "furtherHelpCategory": interaction.furtherHelpCategory,
-            "additionalDetails": interaction.additionalDetails
+            "additionalDetails": interaction.additionalDetails,
+            "isPublic": log.isPublic,
+            "status": "pending",
+            "lastModifiedTimestamp": Timestamp(date: Date()),
+            "lastActionPerformed": "submit",
+            "isCompleted": false
         ]
 
         if interaction.followUpTimestamp != placeholderDate {
@@ -112,7 +118,8 @@ class VisitLogDataAdapter: ObservableObject{
             db.collection("InteractionLogDev")
                 .document(log.id)
                 .updateData([
-                    "helpRequestDocIds": FieldValue.arrayUnion([helpReqId])
+                    "helpRequestDocIds": FieldValue.arrayUnion([helpReqId]),
+                    "helpRequestCount": FieldValue.increment(Int64(1))
                 ]) { err in
                     if let err = err {
                         print("❌ Failed to link HelpRequest → InteractionLog:", err.localizedDescription)
@@ -174,7 +181,7 @@ class VisitLogDataAdapter: ObservableObject{
         data["carePackagesDistributed"] = visitLog.carePackagesDistributed
 
         // Required backend flags
-        data["helpRequestCount"] = 0
+        data["helpRequestCount"] = visitLog.helpRequestDocIds.count
         data["status"] = "pending"
         data["isPublic"] = visitLog.isPublic
         data["listOfSupportsProvided"] = visitLog.listOfSupportsProvided
