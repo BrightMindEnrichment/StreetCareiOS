@@ -82,15 +82,15 @@ struct InputTileDetails: View {
     
     // ➡️ START MODIFICATION 1: Add custom formatter
         // Custom formatter for time with timezone abbreviation (e.g., "6:30 PM CST")
-        private var timeWithAbbreviationFormatter: DateFormatter {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "h:mma"   // <-- KEEP THIS, DO NOT ADD z
-        formatter.timeZone = TimeZone(identifier: timeZoneIdentifier)
-        return formatter
-    }
-    private var tzAbbreviation: String {
-        TimeZone(identifier: timeZoneIdentifier)?.abbreviation() ?? ""
-    }
+//        private var timeWithAbbreviationFormatter: DateFormatter {
+//        let formatter = DateFormatter()
+//        formatter.dateFormat = "h:mma"   // <-- KEEP THIS, DO NOT ADD z
+//        formatter.timeZone = TimeZone(identifier: timeZoneIdentifier)
+//        return formatter
+//    }
+//    private var tzAbbreviation: String {
+//        TimeZone(identifier: timeZoneIdentifier)?.abbreviation() ?? ""
+//    }
     
     // MARK: - Body
     
@@ -295,8 +295,8 @@ struct InputTileDetails: View {
 
                     HStack(spacing: 8) {
                         Image(systemName: "clock")
-                        // ➡️ Use the helper function here + the abbreviation
-                        Text("\(formatTime(rawDate)) \(selectedTimeZone.abbreviation() ?? "")")
+                        // REMOVED: selectedTimeZone.abbreviation()
+                        Text(formatTime(rawDate))
                             .font(.subheadline)
                             .foregroundColor(.black)
                     }
@@ -384,14 +384,15 @@ struct InputTileDetails: View {
                         .allowsHitTesting(true)
                         .environment(\.timeZone, selectedTimeZone) // Syncs the clock wheels
 
-                        HStack(spacing: 8) {
-                            Image(systemName: "clock")
-                                .foregroundColor(.black)
+                    HStack(spacing: 8) {
+                        Image(systemName: "clock")
+                            .foregroundColor(.black)
 
-                            Text("\(formatTime(rawEndDate ?? rawDate)) \(selectedTimeZone.abbreviation() ?? "")")
-                                .font(.subheadline)
-                                .foregroundColor(.black)
-                        }
+                        // REMOVED: selectedTimeZone.abbreviation()
+                        Text(formatTime(rawEndDate ?? rawDate))
+                            .font(.subheadline)
+                            .foregroundColor(.black)
+                    }
                         .padding(.horizontal, 10)
                         .padding(.vertical, 12)
                         .frame(maxWidth: .infinity, alignment: .leading)
