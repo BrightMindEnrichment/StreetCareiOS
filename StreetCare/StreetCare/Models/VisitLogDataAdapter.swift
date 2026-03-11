@@ -90,13 +90,19 @@ class VisitLogDataAdapter: ObservableObject{
         let helpReqId = docRef.documentID
         var helpRequestData: [String: Any] = [
             "interactionLogDocId": log.id,
+            "interactionLogFirstName": log.firstname,
             "firstName": interaction.firstName,
-
+            "lastName": interaction.lastName,
             "locationLandmark": log.concatenatedLandmark,
             "timestampOfInteraction": Timestamp(date: log.whenVisit),
             "helpProvidedCategory": interaction.helpProvidedCategory,
             "furtherHelpCategory": interaction.furtherHelpCategory,
-            "additionalDetails": interaction.additionalDetails
+            "additionalDetails": interaction.additionalDetails,
+            "isPublic": log.isPublic,
+            "status": "pending",
+            "lastModifiedTimestamp": Timestamp(date: Date()),
+            "lastActionPerformed": "submit",
+            "isCompleted": false
         ]
 
         if interaction.followUpTimestamp != placeholderDate {
