@@ -42,7 +42,7 @@ struct InputTileList: View {
             if visitLog.hygiene { selected.append("Hygiene Products") }
             if visitLog.wellness { selected.append("Wellness/Emotional Support") }
             if visitLog.medical { selected.append("Medical Help") }
-            if visitLog.social { selected.append("Social Worker/Psychiatrist") }
+            if visitLog.social { selected.append("Social Work/Psychiatrist") }
             if visitLog.legal { selected.append("Legal/Lawyer") }
             if visitLog.other {
                 selected.append(visitLog.otherNotes.isEmpty ? "Other" : visitLog.otherNotes)
@@ -55,7 +55,7 @@ struct InputTileList: View {
             if visitLog.furtherHygiene { selected.append("Hygiene Products") }
             if visitLog.furtherWellness { selected.append("Wellness/Emotional Support") }
             if visitLog.furtherMedical { selected.append("Medical Help") }
-            if visitLog.furtherSocial { selected.append("Social Worker/Psychiatrist") }
+            if visitLog.furtherSocial { selected.append("Social Work/Psychiatrist") }
             if visitLog.furtherLegal { selected.append("Legal/Lawyer") }
             if visitLog.furtherOther {
                 selected.append(visitLog.furtherOtherNotes.isEmpty ? "Other" : visitLog.furtherOtherNotes)
@@ -68,7 +68,7 @@ struct InputTileList: View {
             if visitLog.supportHygiene { selected.append("Hygiene Products") }
             if visitLog.supportWellness { selected.append("Wellness/Emotional Support") }
             if visitLog.supportMedical { selected.append("Medical Help") }
-            if visitLog.supportSocial { selected.append("Social Worker/Psychiatrist") }
+            if visitLog.supportSocial { selected.append("Social Work/Psychiatrist") }
             if visitLog.supportLegal { selected.append("Legal/Lawyer") }
             if visitLog.supportOther {
                 selected.append(visitLog.supportOtherNotes.isEmpty ? "Other" : visitLog.supportOtherNotes)
@@ -144,7 +144,7 @@ struct InputTileList: View {
                                 checkbox("Hygiene Products", isChecked: $visitLog.hygiene) // fix to $visitLog.hygiene if renamed
                                 checkbox("Wellness/Emotional Support", isChecked: $visitLog.wellness)
                                 checkbox("Medical Help", isChecked: $visitLog.medical)
-                                checkbox("Social Worker/Psychiatrist", isChecked: $visitLog.social)
+                                checkbox("Social Work/Psychiatrist", isChecked: $visitLog.social)
                                 checkbox("Legal/Lawyer", isChecked: $visitLog.legal)
                                 checkbox("Other", isChecked: $visitLog.other)
                                 if visitLog.other {
@@ -157,7 +157,7 @@ struct InputTileList: View {
                                 checkbox("Hygiene Products", isChecked: $visitLog.furtherHygiene) // fix to $visitLog.furtherHygiene if renamed
                                 checkbox("Wellness/Emotional Support", isChecked: $visitLog.furtherWellness)
                                 checkbox("Medical Help", isChecked: $visitLog.furtherMedical)
-                                checkbox("Social Worker/Psychiatrist", isChecked: $visitLog.furtherSocial)
+                                checkbox("Social Work/Psychiatrist", isChecked: $visitLog.furtherSocial)
                                 checkbox("Legal/Lawyer", isChecked: $visitLog.furtherLegal)
                                 checkbox("Other", isChecked: $visitLog.furtherOther)
                                 if visitLog.furtherOther {
@@ -171,7 +171,7 @@ struct InputTileList: View {
                                 checkbox("Hygiene Products", isChecked: $visitLog.supportHygiene)
                                 checkbox("Wellness/Emotional Support", isChecked: $visitLog.supportWellness)
                                 checkbox("Medical Help", isChecked: $visitLog.supportMedical)
-                                checkbox("Social Worker/Psychiatrist", isChecked: $visitLog.supportSocial)
+                                checkbox("Social Work/Psychiatrist", isChecked: $visitLog.supportSocial)
                                 checkbox("Legal/Lawyer", isChecked: $visitLog.supportLegal)
                                 checkbox("Other", isChecked: $visitLog.supportOther)
                                 if visitLog.supportOther {

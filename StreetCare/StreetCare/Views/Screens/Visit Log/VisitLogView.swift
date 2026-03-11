@@ -1008,7 +1008,7 @@ struct VisitLogView: View {
             log.furtherHygiene ? "Hygiene Products" : nil,
             log.furtherWellness ? "Wellness/Emotional Support" : nil,
             log.furtherMedical ? "Medical Help" : nil,
-            log.furtherSocial ? "Social Worker/Psychiatrist" : nil,
+            log.furtherSocial ? "Social Work/Psychiatrist" : nil,
             log.furtherLegal ? "Legal/Lawyer" : nil,
             (log.furtherOther && !log.furtherOtherNotes.isEmpty) ? log.furtherOtherNotes : nil
         ].compactMap { $0 }
@@ -1042,7 +1042,7 @@ struct VisitLogView: View {
                     if log.furtherHygiene { selected.append("Hygiene Products") }
                     if log.furtherWellness { selected.append("Wellness/Emotional Support") }
                     if log.furtherMedical { selected.append("Medical Help") }
-                    if log.furtherSocial { selected.append("Social Worker/Psychiatrist") }
+                    if log.furtherSocial { selected.append("Social Work/Psychiatrist") }
                     if log.furtherLegal { selected.append("Legal/Lawyer") }
                     if log.furtherOther {
                         selected.append(log.furtherOtherNotes.isEmpty ? "Other" : log.furtherOtherNotes)
