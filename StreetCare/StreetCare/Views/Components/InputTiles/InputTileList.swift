@@ -87,9 +87,7 @@ struct InputTileList: View {
                     .padding(.bottom, 50)
             }
             
-            ZStack {
-                BasicTile(size: CGSize(width: size.width, height: size.height))
-                
+            ZStack(alignment: .top) {                
                 VStack {
                     if buttonMode == .navigation {
                         HStack {
@@ -237,6 +235,11 @@ struct InputTileList: View {
                     }
                     
                 }
+                .frame(width: size.width, alignment: .top)
+                .background(Color("BackgroundColor"))
+                .clipShape(RoundedRectangle(cornerRadius: 10))
+                .shadow(color: Color.black.opacity(0.08), radius: 4, x: 0, y: 0)
+                .shadow(color: Color.black.opacity(0.15), radius: 8, x: 0, y: 6)
                 if supportMode == .provided {
                     SupportChangeObserverProvided(visitLog: visitLog, onUpdate: updateSupportArray)
                 }else if supportMode == .support{
@@ -244,11 +247,12 @@ struct InputTileList: View {
                 }else {
                     SupportChangeObserverNeeded(visitLog: visitLog, onUpdate: updateSupportArray)
                 }
-            }
+            }.frame(width: size.width, alignment: .top)
         }
         .navigationBarTitleDisplayMode(.inline)
         .navigationTitle("Interaction Log")
-        .frame(width: size.width, height: size.height)
+        .frame(maxWidth: .infinity, alignment: .top)
+        .padding(.bottom, 20)
         .alert(isPresented: $showSuccessAlert) {
             Alert(
                 title: Text("Updated"),
@@ -259,7 +263,7 @@ struct InputTileList: View {
             )
         }
         
-        if showProgressBar {
+     /*   if showProgressBar {
             SegmentedProgressBar(
                 totalSegments: totalQuestions,
                 filledSegments: questionNumber,
@@ -269,7 +273,7 @@ struct InputTileList: View {
                 .font(.footnote)
                 .padding(.top, 4)
                 .fontWeight(.bold)
-        }
+        }*/
 
     } // end body
     
