@@ -20,6 +20,8 @@ struct InputTileFollowUpDate: View {
     @Binding var datetimeValue: Date
     @Binding var convertedDate: Date
     @Binding var additionalDetails: String
+    
+    var selectedTimeZone: String = TimeZone.current.identifier
 
     var nextAction: () -> ()
     var skipAction: () -> ()
@@ -32,7 +34,10 @@ struct InputTileFollowUpDate: View {
     //  Picker state
     @State private var selectedDate: Date = Date()
     @State private var selectedTime: Date = Date()
-    @State private var selectedTimeZone: TimeZone = .current
+    // Computed property to turn the passed string into a TimeZone object
+        private var timeZoneObject: TimeZone {
+            TimeZone(identifier: selectedTimeZone) ?? .current
+        }
 
     @State private var showDatePicker = false
     @State private var showTimePicker = false
@@ -47,15 +52,15 @@ struct InputTileFollowUpDate: View {
     private var timeFormatter: DateFormatter {
         let f = DateFormatter()
         f.dateFormat = "h:mma"
-        f.timeZone = selectedTimeZone
+        f.timeZone = timeZoneObject
         return f
     }
 
     //  Combine date + time + timezone
     private func syncDateTime() {
         var calendar = Calendar.current
-        calendar.timeZone = selectedTimeZone
-
+        calendar.timeZone = timeZoneObject
+        
         let dateComponents = calendar.dateComponents([.year, .month, .day], from: selectedDate)
         let timeComponents = calendar.dateComponents([.hour, .minute], from: selectedTime)
 
@@ -65,7 +70,7 @@ struct InputTileFollowUpDate: View {
         combined.day = dateComponents.day
         combined.hour = timeComponents.hour
         combined.minute = timeComponents.minute
-        combined.timeZone = selectedTimeZone
+        combined.timeZone = timeZoneObject
 
         if let finalDate = calendar.date(from: combined) {
             datetimeValue = finalDate
@@ -167,43 +172,47 @@ struct InputTileFollowUpDate: View {
                         Button {
                             showTimePicker = true
                         } label: {
-                            dateTile(
-                                icon: "clock",
-                                text: "\(timeFormatter.string(from: selectedTime)) \(selectedTimeZone.abbreviation() ?? "")",
-                                width: 157
-                            )
+                            // Custom label to support two lines (Time + GMT)
+                            HStack(spacing: 8) {
+                                Image(systemName: "clock").foregroundColor(.black)
+                                
+                                VStack(alignment: .leading, spacing: 0) {
+                                    Text(timeFormatter.string(from: selectedTime))
+                                        .foregroundColor(.black)
+                                    
+                                    // Static GMT Offset Label
+                                    Text(gmtOffsetString(for: timeZoneObject))
+                                        .font(.system(size: 10, weight: .bold))
+                                        .foregroundColor(.black)
+                                }
+                                Spacer()
+                            }
+                            .padding(.horizontal, 12)
+                            .frame(width: 157, height: 42, alignment: .leading) // Height increased for 2 lines
+                            .background(Color.white)
+                            .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color.black, lineWidth: 1))
                         }
                         .sheet(isPresented: $showTimePicker) {
                             VStack(spacing: 16) {
-
-                                DatePicker(
-                                    "",
-                                    selection: $selectedTime,
-                                    displayedComponents: .hourAndMinute
-                                )
-                                .datePickerStyle(.wheel)
-                                .labelsHidden()
-
-                                Divider()
-
-                                Picker("Time Zone", selection: $selectedTimeZone) {
-                                    ForEach(allTimeZones, id: \.id) { entry in
-                                        Text(
-                                            "\(entry.id.replacingOccurrences(of: "_", with: " ")) " +
-                                            "(\(gmtOffsetString(for: entry.tz)))"
-                                        )
-                                        .tag(entry.tz)
-                                    }
-                                }
-                                .pickerStyle(.wheel)
+                                Text("Select Time")
+                                    .font(.headline)
+                                    .padding(.top, 30) // Increased padding here
+                                
+                                DatePicker("", selection: $selectedTime, displayedComponents: .hourAndMinute)
+                        
+                                    .datePickerStyle(.wheel)
+                                    .labelsHidden()
+                                    // Force the wheel to respect the visit's timezone
+                                    .environment(\.timeZone, timeZoneObject)
 
                                 Button("Done") {
                                     syncDateTime()
                                     showTimePicker = false
                                 }
                                 .padding()
+                                .buttonStyle(.borderedProminent)
                             }
-                            .presentationDetents([.large])
+                            .presentationDetents([.fraction(0.4)]) // Smaller height since Picker is gone
                         }
                     }
                     .frame(width: 335)
@@ -288,7 +297,7 @@ struct InputTileFollowUpDate: View {
         .onAppear {
             selectedDate = datetimeValue
             selectedTime = datetimeValue
-            selectedTimeZone = .current
+            // No longer resetting selectedTimeZone to .current
         }
         .navigationBarTitleDisplayMode(.inline)
         .navigationTitle("Interaction Log")
