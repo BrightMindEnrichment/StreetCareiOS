@@ -831,7 +831,7 @@ struct VisitLogEntry: View {
                         skipAction: { questionNumber += 1 },
                         showProgressBar: true
                     )
-                    .padding(.bottom, keyboard.currentHeight == 0 ? 0 : 35)
+                    .padding(.bottom, keyboard.currentHeight == 0 ? 10 : 120)
                     .animation(.easeOut(duration: 0.16), value: keyboard.currentHeight)
 
                 case 7:

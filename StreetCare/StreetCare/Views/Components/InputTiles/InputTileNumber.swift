@@ -174,7 +174,7 @@ struct InputTileNumber: View {
                     tileWidth: tileWidth
                 )
                 .padding(.top, 36)
-                .padding(.bottom, 36)
+                .padding(.bottom, 24)
             }
 
             ZStack {
@@ -281,7 +281,7 @@ struct InputTileNumber: View {
                         }
 
                         if showTextEditor {
-                            AutoGrowingTextEditor(text: $generalDescription, placeholder: placeholderText ?? "")
+                            AutoGrowingTextEditor(text: $generalDescription, placeholder: placeholderText ?? "").frame(height: 120)
                         }
                         
                         if let label = descriptionLabel2, !label.isEmpty {
