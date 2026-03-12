@@ -74,6 +74,7 @@ class VisitLog: ObservableObject, Identifiable {
     @Published var volunteerAgain = ""
     @Published var lastEdited = Date()
     @Published var timeStamp = Date()
+    @Published var timezone: String = TimeZone.current.identifier
     @Published var type = "iOS"
     @Published var uid = ""
     @Published var isPublic = false

@@ -2,7 +2,9 @@ import SwiftUI
 
 struct InputTileIndividualInteraction: View {
 
+    @ObservedObject var visitLog: VisitLog  // Add this line
     @ObservedObject var log: VisitLog
+    
     
     var questionTitle: String
     var questionNumber: Int
@@ -17,7 +19,10 @@ struct InputTileIndividualInteraction: View {
 
     @State private var selectedDate: Date = Date()
     @State private var selectedTime: Date = Date()
-    @State private var selectedTimeZone: TimeZone = .current
+    // This replaces the @State line above
+    private var selectedTimeZone: TimeZone {
+        TimeZone(identifier: visitLog.timezone) ?? .current
+    }
     
     @State private var showDatePicker = false
     @State private var showTimePicker = false
@@ -43,7 +48,8 @@ struct InputTileIndividualInteraction: View {
     private var timeFormatter: DateFormatter {
         let formatter = DateFormatter()
         formatter.dateFormat = "h:mma"
-        formatter.timeZone = selectedTimeZone
+        // Forces the time text to match the selected visit timezone
+        formatter.timeZone = TimeZone(identifier: log.timezone) ?? .current
         return formatter
     }
     
@@ -86,6 +92,14 @@ struct InputTileIndividualInteraction: View {
         .frame(height: 38)
         .background(Color.white)
         .overlay(RoundedRectangle(cornerRadius: 8).stroke(Color.black, lineWidth: 0.5))
+    }
+    
+    private func getGMTOffset(for identifier: String) -> String {
+        guard let tz = TimeZone(identifier: identifier) else { return "GMT" }
+        let seconds = tz.secondsFromGMT()
+        let hours = seconds / 3600
+        let sign = hours >= 0 ? "+" : "-"
+        return "GMT \(sign)\(abs(hours))"
     }
     
     var body: some View {
@@ -161,27 +175,33 @@ struct InputTileIndividualInteraction: View {
                         .presentationDetents([.medium])
                     }
                     
+                    // NEW: Static Timezone UI
                     Button(action: { showTimePicker.toggle() }) {
                         dateTile(iconName: "clock") {
-                            Text("\(timeFormatter.string(from: selectedTime)) (\(selectedTimeZone.abbreviation() ?? ""))")
+                            VStack(alignment: .leading, spacing: 0) {
+                                Text(timeFormatter.string(from: selectedTime))
+                                    .foregroundColor(.black)
+                                
+                                // Shows GMT +/- Offset instead of long city names
+                                Text(getGMTOffset(for: visitLog.timezone)) // Use 'visitLog' as the source of truth
+                                    .font(.system(size: 10, weight: .bold))
+                                    .foregroundColor(.black) // Changed to solid black
+                            }
                         }
                     }
                     .sheet(isPresented: $showTimePicker) {
                         VStack(spacing: 20) {
-                            Text("Select Time & Zone").font(.headline).padding(.top)
+                            Text("Select Time")
+                                .font(.headline)
+                                .padding(.top, 30) // Increased padding here
                             
                             DatePicker("", selection: $selectedTime, displayedComponents: .hourAndMinute)
+                    
                                 .datePickerStyle(.wheel)
                                 .labelsHidden()
+                                .environment(\.timeZone, TimeZone(identifier: log.timezone) ?? .current)
                             
-                            Picker("Time Zone", selection: $selectedTimeZone) {
-                                ForEach(timeZones, id: \.identifier) { zone in
-                                    Text(zone.identifier.replacingOccurrences(of: "_", with: " "))
-                                        .tag(zone)
-                                }
-                            }
-                            .pickerStyle(.menu)
-                            .padding(.horizontal)
+                            // TimeZone Picker REMOVED from here
                             
                             Button("Done") {
                                 syncDateTimeToLog()
@@ -190,7 +210,7 @@ struct InputTileIndividualInteraction: View {
                             .padding()
                             .buttonStyle(.borderedProminent)
                         }
-                        .presentationDetents([.medium])
+                        .presentationDetents([.fraction(0.4)])
                     }
                 }
                 
