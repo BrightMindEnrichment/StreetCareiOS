@@ -772,7 +772,7 @@ struct VisitLogEntry: View {
                         previousAction: { questionNumber -= 1 },
                         skipAction: { questionNumber += 1 },
                         buttonMode: .navigation,
-                        showProgressBar: false,
+                        showProgressBar: true,
                         supportMode: .support
                     )
                     .padding(.bottom, keyboard.currentHeight == 0 ? 0 : keyboard.currentHeight - 250)

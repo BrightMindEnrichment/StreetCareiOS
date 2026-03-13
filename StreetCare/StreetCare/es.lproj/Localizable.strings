@@ -225,8 +225,8 @@
 "questionFivePartThree" = "venido contigo?";
 "questionSixPartOne" = "numero de atencion";
 "questionSixPartTwo" = "paquetes entregados";
-"whatItemsIncludedLine1" = "¿Qué artículos se incluyeron?";
-"whatItemsIncludedLine2" = "en el paquete de ayuda?";
+"whatItemsIncludedLine1" = "¿Qué artículos de cuidado se incluyeron?";
+"whatItemsIncludedLine2" = "";//"en el paquete de ayuda?";
 "questionSevenPartOne" = "¿Quieres responder";
 "questionSevenPartTwo" = "algunas preguntas";
 "questionSevenPartThree" = "más?";
