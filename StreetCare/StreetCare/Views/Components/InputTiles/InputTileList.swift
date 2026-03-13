@@ -86,6 +86,14 @@ struct InputTileList: View {
                 //.padding(.top, 16)
                     .padding(.bottom, 50)
             }
+            if showProgressBar {
+                SegmentedProgressBar(
+                    totalSegments: totalQuestions,
+                    filledSegments: questionNumber,
+                    tileWidth: size.width
+                )
+                .padding(.bottom, 24)
+            }
             
             ZStack(alignment: .top) {                
                 VStack {
