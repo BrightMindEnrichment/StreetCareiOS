@@ -246,8 +246,8 @@
 "questionFivePartThree" = "joined you?";
 "questionSixPartOne" = "Number of care";
 "questionSixPartTwo" = "items given out";
-"whatItemsIncludedLine1" = "What items were included";
-"whatItemsIncludedLine2" = "in the care package?";
+"whatItemsIncludedLine1" = "What care items were included?";
+"whatItemsIncludedLine2" = "";
 "questionEightPartOne" = "How much time did";
 "questionEightPartTwo" = "you spend on the";
 "questionEightPartThree" = "outreach?";
