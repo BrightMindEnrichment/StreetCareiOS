@@ -263,6 +263,11 @@
 			path = Fonts;
 			sourceTree = "<group>";
 		};
+		FDD0AE6B2F69FD75004B1949 /* Config */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Config;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -362,6 +367,7 @@
 		4CB65D8E29D016AE00684BD1 /* StreetCare */ = {
 			isa = PBXGroup;
 			children = (
+				FDD0AE6B2F69FD75004B1949 /* Config */,
 				4C7D61812A21FAB600ABC2A6 /* Info.plist */,
 				4C82441229EC99A8003D1575 /* Localizable.strings */,
 				4CB65DAC29D36D1200684BD1 /* GoogleService-Info.plist */,
@@ -559,6 +565,7 @@
 			);
 			fileSystemSynchronizedGroups = (
 				EDB93D152DB1D18300C7174F /* Fonts */,
+				FDD0AE6B2F69FD75004B1949 /* Config */,
 			);
 			name = StreetCare;
 			packageProductDependencies = (
@@ -866,6 +873,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				FIRESTORE_ENV = development;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -927,6 +935,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				FIRESTORE_ENV = production;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -969,7 +978,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.5.21;
+				MARKETING_VERSION = 2.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bme.StreetCare;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
@@ -1002,7 +1011,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.5.21;
+				MARKETING_VERSION = 2.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.bme.StreetCare;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;

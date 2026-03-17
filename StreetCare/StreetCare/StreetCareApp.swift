@@ -18,12 +18,14 @@ class AppDelegate: NSObject, UIApplicationDelegate {
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
 
         FirebaseApp.configure()
-        
+        print("Firestore environment: \(FirestoreEnvironment.current.rawValue)")
+
         if let path = Bundle.main.path(forResource: "Secrets", ofType: "plist"),
            let dict = NSDictionary(contentsOfFile: path),
            let googleMapsAPIKey = dict["GoogleMapsAPIKey"] as? String,
            !googleMapsAPIKey.isEmpty {
-            print("Google Maps initialiing with :: googleMapsAPIKey :: " + googleMapsAPIKey)
+        
+         //   print("Google Maps initialiing with :: googleMapsAPIKey :: " + googleMapsAPIKey)
             GMSServices.provideAPIKey(googleMapsAPIKey)
             testGoogleMapsAPIKey { isValid in
                 if isValid {

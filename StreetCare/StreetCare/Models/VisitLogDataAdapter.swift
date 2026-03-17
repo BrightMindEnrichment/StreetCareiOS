@@ -21,7 +21,7 @@ extension VisitLogDataAdapterProtocol {
 }
 class VisitLogDataAdapter: ObservableObject{
 
-    private let collectionName = "InteractionLogDev"
+    private let collectionName = FirestoreCollectionNames.current.interactionLogs
 
     @Published var visitLogs = [VisitLog]()
     var delegate: VisitLogDataAdapterProtocol?
@@ -86,7 +86,7 @@ class VisitLogDataAdapter: ObservableObject{
     private func createHelpRequest(for log: VisitLog, interaction: IndividualInteractionItem) {
         let db = Firestore.firestore()
 
-        let docRef = db.collection("HelpRequestDev").document()
+        let docRef = db.collection(FirestoreCollectionNames.current.interactionHelpRequests).document()
         let helpReqId = docRef.documentID
         var helpRequestData: [String: Any] = [
             "interactionLogDocId": log.id,
@@ -115,7 +115,7 @@ class VisitLogDataAdapter: ObservableObject{
                 return
             }
 
-            db.collection("InteractionLogDev")
+            db.collection(FirestoreCollectionNames.current.interactionLogs)
                 .document(log.id)
                 .updateData([
                     "helpRequestDocIds": FieldValue.arrayUnion([helpReqId]),
@@ -136,7 +136,7 @@ class VisitLogDataAdapter: ObservableObject{
         }
 
         let db = Firestore.firestore()
-        let collectionName = "InteractionLogDev"
+        let collectionName = FirestoreCollectionNames.current.interactionLogs
 
         var data: [String: Any] = [:]
 
@@ -190,7 +190,7 @@ class VisitLogDataAdapter: ObservableObject{
         data["helpRequestDocIds"] = visitLog.helpRequestDocIds
 
         // Debug: confirm payload matches allowlist
-        print("Writing InteractionLogDev with keys:")
+        print("Writing \(FirestoreCollectionNames.current.interactionLogs) with keys:")
         print(data.keys.sorted())
 
         db.collection(collectionName)
@@ -370,7 +370,8 @@ class VisitLogDataAdapter: ObservableObject{
         }
 
         let db = Firestore.firestore()
-        db.collection("InteractionLogDev")
+        print(FirestoreCollectionNames.current.interactionLogs)
+        db.collection(FirestoreCollectionNames.current.interactionLogs)
             .whereField("userId", isEqualTo: user.uid)
             .getDocuments { snapshot, error in
                 if let error = error {
@@ -385,7 +386,7 @@ class VisitLogDataAdapter: ObservableObject{
                 for doc in snapshot?.documents ?? [] {
                     let data = doc.data()
                     let log = VisitLog(id: doc.documentID)
-                    log.source = "interactionLogDev"
+                    log.source = "interactionLog"
 
                     log.firstname = data["firstName"] as? String ?? ""
                     log.lastname  = data["lastName"] as? String ?? ""
