@@ -197,18 +197,18 @@ struct VisitImpactView: View {
                                         GeometryReader { geo in
                                             ZStack {
                                                 VStack(spacing: 3) {
-                                                    Button("Details") {
-                                                        print("Details tapped")
-                                                    }
-                                                    .font(.custom("Poppins-SemiBold", size: 13))
-                                                    .foregroundColor(Color(red: 1.0, green: 0.933, blue: 0.0))
-                                                    .padding(.horizontal, 16)
-                                                    .padding(.vertical, 4)
-                                                    .background(
-                                                        Capsule()
-                                                            .fill(Color(red: 0, green: 0.16, blue: 0.145))
-                                                    )
-                                                    .frame(width: 80)
+//                                                    Button("Details") {
+//                                                        print("Details tapped")
+//                                                    }
+//                                                    .font(.custom("Poppins-SemiBold", size: 13))
+//                                                    .foregroundColor(Color(red: 1.0, green: 0.933, blue: 0.0))
+//                                                    .padding(.horizontal, 16)
+//                                                    .padding(.vertical, 4)
+//                                                    .background(
+//                                                        Capsule()
+//                                                            .fill(Color(red: 0, green: 0.16, blue: 0.145))
+//                                                    )
+//                                                    .frame(width: 80)
 
                                                     if adapter.publishedLogIDs.contains(item.id) {
                                                         Text("PUBLISHED")
