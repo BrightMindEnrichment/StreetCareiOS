@@ -41,22 +41,24 @@ struct InputTileMoreQuestions: View {
                 BasicTile(size: CGSize(width: size.width, height: size.height))
                 
                 VStack {
-                    VStack {
+                    Spacer() // Pushes content from top to center
+
+                    VStack(spacing: 1) { // Grouped questions
                         Text(question1)
                             .font(.title3)
-                            .padding(.bottom, 1)
                             .fontWeight(.bold)
                         Text(question2)
                             .font(.title3)
-                            .padding(.bottom, 1)
                             .fontWeight(.bold)
                         Text(question3)
                             .font(.title3)
                             .fontWeight(.bold)
                     }
-                    .padding(.vertical)
+                    .multilineTextAlignment(.center)
 
-                    // ✅ Yes / No Buttons
+                    Spacer() // Balances space between text and buttons
+
+                    // Yes / No Buttons
                     HStack(spacing: 20) {
                         Button(" Yes ") {
                             yesAction()
@@ -65,10 +67,7 @@ struct InputTileMoreQuestions: View {
                         .fontWeight(.bold)
                         .padding(.horizontal, 16)
                         .padding(.vertical, 8)
-                        .background(
-                            Capsule()
-                                .fill(Color("SecondaryColor"))
-                        )
+                        .background(Capsule().fill(Color("SecondaryColor")))
                         
                         Button(" No ") {
                             noAction()
@@ -77,17 +76,11 @@ struct InputTileMoreQuestions: View {
                         .fontWeight(.bold)
                         .padding(.horizontal, 16)
                         .padding(.vertical, 8)
-                        .background(
-                            Capsule()
-                                .fill(Color.white)
-                        )
-                        .overlay(
-                            Capsule()
-                                .stroke(Color("SecondaryColor"), lineWidth: 2)
-                        )
+                        .background(Capsule().fill(Color.white))
+                        .overlay(Capsule().stroke(Color("SecondaryColor"), lineWidth: 2))
                     }
 
-                    // ✅ Centered "Previous" button below Yes/No
+                    // Previous button
                     Button(NSLocalizedString("previous", comment: "")) {
                         previousAction()
                     }
@@ -99,8 +92,10 @@ struct InputTileMoreQuestions: View {
                     .overlay(Capsule().stroke(Color("SecondaryColor"), lineWidth: 2))
                     .padding(.top, 16)
 
+                    Spacer() // Pushes content from bottom to center
                 }
                 .padding()
+                .frame(width: size.width, height: size.height) // Added to allow Spacers to expand
             }
             .frame(width: size.width, height: size.height)
             
