@@ -172,8 +172,8 @@ struct VisitLogView: View {
                         let collectionName: String
                         if log.source == "webProd" {
                             collectionName = "visitLogWebProd"
-                        } else if log.source == "interactionLogDev" {
-                            collectionName = "InteractionLogDev"
+                        } else if log.source == FirestoreCollectionNames.current.interactionLogs {
+                            collectionName = FirestoreCollectionNames.current.interactionLogs
                         } else {
                             collectionName = "VisitLogBook_New"
                         }
@@ -213,9 +213,9 @@ struct VisitLogView: View {
                         // ✅ ADDITION:
                         // Keep your existing delete flow, but also delete from InteractionLogDev
                         // if this detail view is showing a dev interaction log.
-                        if log.source == "interactionLogDev" {
+                        if log.source == FirestoreCollectionNames.current.interactionLogs {
                             let db = Firestore.firestore()
-                            db.collection("InteractionLogDev").document(log.id).delete { error in
+                            db.collection(FirestoreCollectionNames.current.interactionLogs).document(log.id).delete { error in
                                 if let error = error {
                                     print("Error deleting InteractionLogDev doc: \(error.localizedDescription)")
                                 }
