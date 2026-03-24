@@ -7,7 +7,6 @@
 //
 
 import SwiftUI
-import ExytePopupView
 
 struct ItemToBring: Identifiable, Equatable {
     let imageName: String
