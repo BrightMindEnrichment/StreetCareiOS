@@ -22,7 +22,6 @@
 		4C2F5A7029FE6B0A00CFD288 /* InputTileVolunteerAgain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C2F5A6F29FE6B0A00CFD288 /* InputTileVolunteerAgain.swift */; };
 		4C2F5A7229FF1D4500CFD288 /* VisitLogDataAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C2F5A7129FF1D4500CFD288 /* VisitLogDataAdapter.swift */; };
 		4C2F5A7429FF439C00CFD288 /* AchievementBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C2F5A7329FF439C00CFD288 /* AchievementBadge.swift */; };
-		4C2F5A7629FF456A00CFD288 /* VisitImpactView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C2F5A7529FF456A00CFD288 /* VisitImpactView.swift */; };
 		4C2F5A7829FF731A00CFD288 /* ListConnectorDecorationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C2F5A7729FF731A00CFD288 /* ListConnectorDecorationView.swift */; };
 		4C7136BB2A01F7E90060EB7D /* ForgotPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7136BA2A01F7E90060EB7D /* ForgotPasswordView.swift */; };
 		4C7136BD2A02034B0060EB7D /* ImpactView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C7136BC2A02034B0060EB7D /* ImpactView.swift */; };
@@ -152,7 +151,6 @@
 		4C2F5A6F29FE6B0A00CFD288 /* InputTileVolunteerAgain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InputTileVolunteerAgain.swift; sourceTree = "<group>"; };
 		4C2F5A7129FF1D4500CFD288 /* VisitLogDataAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisitLogDataAdapter.swift; sourceTree = "<group>"; };
 		4C2F5A7329FF439C00CFD288 /* AchievementBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AchievementBadge.swift; sourceTree = "<group>"; };
-		4C2F5A7529FF456A00CFD288 /* VisitImpactView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisitImpactView.swift; sourceTree = "<group>"; };
 		4C2F5A7729FF731A00CFD288 /* ListConnectorDecorationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListConnectorDecorationView.swift; sourceTree = "<group>"; };
 		4C7136BA2A01F7E90060EB7D /* ForgotPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordView.swift; sourceTree = "<group>"; };
 		4C7136BC2A02034B0060EB7D /* ImpactView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImpactView.swift; sourceTree = "<group>"; };
@@ -263,6 +261,11 @@
 			path = Fonts;
 			sourceTree = "<group>";
 		};
+		FD10EC032F9DA0F800390435 /* VisitImpact */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = VisitImpact;
+			sourceTree = "<group>";
+		};
 		FDD0AE6B2F69FD75004B1949 /* Config */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = Config;
@@ -293,10 +296,10 @@
 		4C17ED4F2A00A3390013EF52 /* Visit Log */ = {
 			isa = PBXGroup;
 			children = (
+				FD10EC032F9DA0F800390435 /* VisitImpact */,
 				6D308B6A2DDEA0610098A3EC /* PublicVisitLogViewModel.swift */,
 				6D308B682DDE9E820098A3EC /* PublicLogViewCard.swift */,
 				74FDD8232D64907C00E23293 /* GoogleMaps */,
-				4C2F5A7529FF456A00CFD288 /* VisitImpactView.swift */,
 				ED1A73152DADD3BC004E3D17 /* NotLoggedInView.swift */,
 				4CA8693429E3FA8600BB6972 /* VisitLogEntry.swift */,
 				4CB65D9E29D0DEAE00684BD1 /* VisitLogView.swift */,
@@ -565,6 +568,7 @@
 			);
 			fileSystemSynchronizedGroups = (
 				EDB93D152DB1D18300C7174F /* Fonts */,
+				FD10EC032F9DA0F800390435 /* VisitImpact */,
 				FDD0AE6B2F69FD75004B1949 /* Config */,
 			);
 			name = StreetCare;
@@ -769,7 +773,6 @@
 				8A1569382E0B9E8D00984FED /* PublicPopupSheetModifier.swift in Sources */,
 				BE9D1DCE2A37626C00072835 /* ImagePickerView.swift in Sources */,
 				4CB65DA329D0DEDA00684BD1 /* ProfilView.swift in Sources */,
-				4C2F5A7629FF456A00CFD288 /* VisitImpactView.swift in Sources */,
 				6D85BF3B2DE4BA6500C31C92 /* UserDetails.swift in Sources */,
 				6D308B692DDE9E870098A3EC /* PublicLogViewCard.swift in Sources */,
 				BEA872762A290F360053D4F4 /* ProfileDetail.swift in Sources */,
