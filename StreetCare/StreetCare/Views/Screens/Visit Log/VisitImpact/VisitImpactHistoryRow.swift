@@ -20,14 +20,30 @@ struct VisitImpactHistoryRow: View {
                 rowContent
             }
             .buttonStyle(.plain)
-            .sheet(isPresented: $isShowingInteractionLogDetail) {
-                InteractionLogDetailSheet(log: item)
+            .fullScreenCover(isPresented: $isShowingInteractionLogDetail) {
+                interactionLogDetailOverlay
             }
         } else {
             NavigationLink(destination: VisitLogView(log: item)) {
                 rowContent
             }
             .buttonStyle(.plain)
+        }
+    }
+
+    @ViewBuilder
+    private var interactionLogDetailOverlay: some View {
+        if #available(iOS 16.4, *) {
+            InteractionLogDetailOverlay(
+                log: item,
+                isPresented: $isShowingInteractionLogDetail
+            )
+            .presentationBackground(.clear)
+        } else {
+            InteractionLogDetailOverlay(
+                log: item,
+                isPresented: $isShowingInteractionLogDetail
+            )
         }
     }
 
@@ -40,35 +56,6 @@ struct VisitImpactHistoryRow: View {
         .padding(.horizontal, 5)
         .padding(.trailing, 0)
         .contentShape(Rectangle())
-    }
-}
-
-private struct InteractionLogDetailSheet: View {
-    let log: VisitLog
-    @State private var measuredHeight: CGFloat = 420
-
-    var body: some View {
-        InteractionLogDetailView(log: log)
-            .background(
-                GeometryReader { proxy in
-                    Color.clear
-                        .preference(key: InteractionLogDetailHeightKey.self, value: proxy.size.height)
-                }
-            )
-            .onPreferenceChange(InteractionLogDetailHeightKey.self) { newHeight in
-                let maxHeight = UIScreen.main.bounds.height * 0.9
-                measuredHeight = min(max(newHeight, 1), maxHeight)
-            }
-            .presentationDetents([.height(measuredHeight)])
-            .presentationDragIndicator(.visible)
-    }
-}
-
-private struct InteractionLogDetailHeightKey: PreferenceKey {
-    static var defaultValue: CGFloat = 0
-
-    static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
-        value = max(value, nextValue())
     }
 }
 

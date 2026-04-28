@@ -1,15 +1,16 @@
 import SwiftUI
+import UIKit
 
 struct InteractionLogDetailView: View {
     let log: VisitLog
 
     var body: some View {
         detailCard
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .padding(.horizontal, 10)
+            .frame(maxWidth: .infinity, alignment: .topLeading)
+            .padding(.horizontal, 15)
             .padding(.top, 16)
-            .padding(.bottom, 16)
-            .background(Color.white.ignoresSafeArea())
+            .padding(.bottom, 40)
+            .background(Color.white)
     }
 
     private var detailCard: some View {
@@ -204,6 +205,99 @@ struct InteractionLogDetailView: View {
 
         let normalized = stateValue.trimmingCharacters(in: .whitespacesAndNewlines)
         return stateAbbreviations[normalized] ?? normalized
+    }
+}
+
+struct InteractionLogDetailOverlay: View {
+    let log: VisitLog
+    @Binding var isPresented: Bool
+    @State private var isPanelVisible = false
+    @State private var isOverlayVisible = false
+    @State private var isDismissing = false
+    @GestureState private var dragOffset: CGFloat = 0
+
+    var body: some View {
+        ZStack(alignment: .bottom) {
+            Color.black.opacity(isOverlayVisible ? 0.32 : 0)
+                .ignoresSafeArea()
+                .onTapGesture {
+                    dismiss()
+                }
+
+            bottomPanel
+                .offset(y: panelOffset)
+                .gesture(
+                    DragGesture()
+                        .updating($dragOffset) { value, state, _ in
+                            state = max(value.translation.height, 0)
+                        }
+                        .onEnded { value in
+                            if value.translation.height > 80 {
+                                dismiss()
+                            }
+                        }
+                )
+        }
+        .ignoresSafeArea()
+        .onAppear {
+            present()
+        }
+        .animation(.easeInOut(duration: 0.18), value: isOverlayVisible)
+        .animation(.spring(response: 0.35, dampingFraction: 0.88), value: isPanelVisible)
+        .animation(.interactiveSpring(response: 0.28, dampingFraction: 0.86), value: dragOffset)
+    }
+
+    private var panelOffset: CGFloat {
+        isPanelVisible ? max(dragOffset, 0) : UIScreen.main.bounds.height
+    }
+
+    private var bottomPanel: some View {
+        VStack(spacing: 0) {
+            Capsule()
+                .fill(Color.gray.opacity(0.35))
+                .frame(width: 42, height: 5)
+                .padding(.top, 10)
+                .padding(.bottom, 4)
+
+            InteractionLogDetailView(log: log)
+        }
+        .frame(maxWidth: .infinity, alignment: .bottom)
+        .background(Color.white)
+        .clipShape(RoundedCorner(radius: 32, corners: [.topLeft, .topRight]))
+        .shadow(color: Color.black.opacity(0.18), radius: 18, x: 0, y: -4)
+    }
+
+    private func dismiss() {
+        guard !isDismissing else { return }
+
+        isDismissing = true
+        withAnimation(.easeInOut(duration: 0.22)) {
+            isOverlayVisible = false
+            isPanelVisible = false
+        }
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.22) {
+            isPresented = false
+        }
+    }
+
+    private func present() {
+        isPanelVisible = false
+        isOverlayVisible = false
+
+        DispatchQueue.main.async {
+            withAnimation(.spring(response: 0.35, dampingFraction: 0.88)) {
+                isPanelVisible = true
+            }
+        }
+
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.28) {
+            guard !isDismissing else { return }
+
+            withAnimation(.easeInOut(duration: 0.18)) {
+                isOverlayVisible = true
+            }
+        }
     }
 }
 
