@@ -97,10 +97,15 @@ struct CommunityView: View {
 
                         if appSettings.mapsAvailable {
                             VStack {
-                                VStack(alignment: .leading, spacing: 8) {
-                                    Text(NSLocalizedString("map", comment: ""))
-                                        .font(.title)
+                                VStack(alignment: .leading, spacing: 12) { // 1. Align everything in this block to the left
                                     
+                                    // The "Map" Title
+                                    Text(NSLocalizedString("map", comment: ""))
+                                        .font(.title2)
+                                        .bold()
+                                        .padding(.leading, 20) // 2. Matches the standard left margin of the app
+                                    
+                                    // The Map Box
                                     ZStack {
                                         GoogleMapView(viewModel: mapViewModel)
                                             .edgesIgnoringSafeArea(.all)
@@ -112,14 +117,17 @@ struct CommunityView: View {
                                                 .progressViewStyle(CircularProgressViewStyle(tint: .blue))
                                         }
                                     }
+                                    .frame(height: 300)
+                                    .frame(maxWidth: .infinity)
+                                    .clipShape(RoundedRectangle(cornerRadius: 16)) // 3. Clips the map to the rounded corners
                                     .overlay(
                                         RoundedRectangle(cornerRadius: 16)
-                                            .stroke(Color.black, lineWidth: 1)
+                                            .stroke(Color.black.opacity(0.1), lineWidth: 1) // 4. Subtle border like Android
                                     )
-                                    .frame(width: 370, height: 300)
-                                    .shadow(radius: 2)
+                                    .padding(.horizontal, 16) // 5. Standard horizontal padding
+                                    .shadow(color: Color.black.opacity(0.1), radius: 4, x: 0, y: 2)
                                 }
-                                .frame(width: 370, alignment: .leading)
+                                .padding(.top, 24) // 6. Separation from the buttons above
                                 
                                 HStack {
                                     Circle()
