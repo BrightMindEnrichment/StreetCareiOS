@@ -1,8 +1,6 @@
 import SwiftUI
 
 struct NotLoggedInView: View {
-    @State private var showGuestWarning = false
-    @State private var navigateToImpact = false
     @Binding var loginRequested: Bool
     @Binding var selection: Int
     var body: some View {
@@ -33,10 +31,10 @@ struct NotLoggedInView: View {
                     }
                     
                     
-                    Button {
-                        showGuestWarning = true
+                    NavigationLink {
+                        SignUpView()
                     } label: {
-                        Text(NSLocalizedString("guest", comment: ""))
+                        Text(NSLocalizedString("signUpButtonTitle", comment: ""))
                             .fontWeight(.bold)
                             .foregroundColor(.black)
                             .frame(width: 189, height: 40)
@@ -47,26 +45,6 @@ struct NotLoggedInView: View {
                                     .stroke(Color.black, lineWidth: 2)
                             )
                     }
-
-                  
-                    .alert(NSLocalizedString("guestWarningTitle", comment: ""), isPresented: $showGuestWarning) {
-                        Button("Cancel", role: .destructive) {
-                          }
-                          Button("OK", role: .cancel) {
-                            navigateToImpact = true
-                          }
-                        
-                    } message: {
-                        Text(NSLocalizedString("guestWarningMessage", comment: ""))
-                    }
-                }
-                
-                // Hidden NavigationLink triggered by the flag
-                NavigationLink(
-                    destination: VisitImpactView(selection: $selection),
-                    isActive: $navigateToImpact
-                ) {
-                    EmptyView()
                 }
             }
             .padding(.top, 10)
